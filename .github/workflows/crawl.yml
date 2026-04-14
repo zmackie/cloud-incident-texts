@@ -1,9 +1,7 @@
-name: Crawl Incidents
+name: Crawl & Analyze Incidents
 
 on:
   # ── Manual trigger ──────────────────────────────────────────────────────
-  # Use mode=crawl for the initial full crawl of all incidents.
-  # Use mode=monitor-once to run a one-off check for new incidents.
   workflow_dispatch:
     inputs:
       mode:
@@ -20,28 +18,36 @@ on:
         default: false
         type: boolean
       vision:
-        description: "Enable Claude vision OCR fallback (requires ANTHROPIC_API_KEY)"
+        description: "Enable Claude vision OCR fallback"
         required: false
         default: false
         type: boolean
       workers:
-        description: "Parallel workers for crawl (default: 5)"
+        description: "Parallel crawl workers (default: 5)"
         required: false
         default: "5"
         type: string
+      reanalyze:
+        description: "Re-analyze all incidents even if already analyzed"
+        required: false
+        default: false
+        type: boolean
+      analyze_workers:
+        description: "Parallel analysis workers (default: 3)"
+        required: false
+        default: "3"
+        type: string
 
   # ── Scheduled trigger ───────────────────────────────────────────────────
-  # Runs daily at 06:00 UTC in monitor-once mode.
-  # Detects new incidents in the ramimac/aws-customer-security-incidents
-  # README and crawls any that haven't been captured yet.
+  # Runs daily at 06:00 UTC: check for new incidents, crawl them, analyze.
   schedule:
     - cron: '0 6 * * *'
 
 jobs:
-  run:
+  crawl-and-analyze:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # needed to push crawled articles + state back to repo
+      contents: write   # push crawled articles + analysis back to repo
 
     steps:
       - uses: actions/checkout@v4
@@ -52,10 +58,16 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: uv sync
 
-      # Resolve effective run mode: scheduled runs always use monitor-once
+      # ── Fetch MITRE ATT&CK cloud technique data ───────────────────────────
+      # Writes data/mitre_attack_cloud.json if it doesn't already exist.
+      # Use --force to refresh when a new ATT&CK version is released.
+      - name: Fetch MITRE ATT&CK data
+        run: uv run python scripts/fetch_attack_data.py
+
+      # ── Resolve effective run mode ─────────────────────────────────────────
       - name: Determine run mode
         id: mode
         run: |
@@ -65,10 +77,8 @@ jobs:
             echo "run_mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
           fi
 
-      # ── Initial full crawl (manual only) ─────────────────────────────────
-      # Fetches every link across all incidents and saves markdown to
-      # data/articles/<incident-slug>/link_NN.md via jina.ai reader.
-      - name: Run crawl
+      # ── Initial full crawl (manual only) ──────────────────────────────────
+      - name: Run full crawl
         if: steps.mode.outputs.run_mode == 'crawl'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -80,8 +90,7 @@ jobs:
             ${{ inputs.vision && '--vision' || '' }} \
             --workers ${{ inputs.workers || '5' }}
 
-      # ── Scheduled / one-shot monitor ─────────────────────────────────────
-      # Checks the README SHA; if it changed, crawls any new incidents.
+      # ── Daily incremental monitor ──────────────────────────────────────────
       - name: Run monitor (one-shot)
         if: steps.mode.outputs.run_mode == 'monitor-once'
         env:
@@ -93,10 +102,25 @@ jobs:
             --once \
             ${{ (inputs.vision == true) && '--vision' || '' }}
 
-      # ── Commit crawled articles + state back to the repo ─────────────────
-      # Articles (data/articles/) are markdown files representing the full
-      # corpus – this is the point of the repo.  State files track what has
-      # been processed so future scheduled runs can skip already-done work.
+      # ── ATT&CK analysis ───────────────────────────────────────────────────
+      # Reads every crawled incident in data/articles/ and calls Claude to
+      # extract a structured MITRE ATT&CK mapping.  Skips incidents that
+      # already have an attack_analysis.json (idempotent).
+      # Also writes scenario_template.json per incident (gitignored).
+      - name: Analyze incidents
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          uv run python scripts/analyze.py \
+            ${{ (inputs.reanalyze == true) && '--reanalyze' || '' }} \
+            --workers ${{ inputs.analyze_workers || '3' }}
+
+      # ── Commit data back to the repo ──────────────────────────────────────
+      # Commits:
+      #   data/articles/   - crawled markdown corpus
+      #   data/analysis/   - ATT&CK analysis JSON (scenario_template.json excluded by .gitignore)
+      #   data/mitre_attack_cloud.json
+      #   data/incidents.json, data/crawl_summary.json, etc.
       - name: Commit data back to repo
         run: |
           git config user.name "github-actions[bot]"
@@ -105,11 +129,25 @@ jobs:
           if git diff --staged --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "chore: update incident corpus [skip ci]"
+            git commit -m "chore: update incident corpus and ATT&CK analysis [skip ci]"
             git push
           fi
 
-      # ── Artifacts (redundant backup, 30-day retention) ───────────────────
+      # ── Trigger site deploy ───────────────────────────────────────────────
+      # After committing new analysis data, kick off the site build + deploy.
+      # Uses a repository_dispatch event so the deploy workflow can also be
+      # triggered independently (e.g. after a site code change).
+      - name: Trigger site deployment
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }}/dispatches \
+            --method POST \
+            -f event_type=analysis-updated \
+            -f '{"client_payload": {"run_id": "${{ github.run_id }}"}}'
+
+      # ── Artifact backup (30-day retention) ───────────────────────────────
       - name: Upload data outputs as artifact
         if: always()
         uses: actions/upload-artifact@v4

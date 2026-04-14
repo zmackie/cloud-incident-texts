@@ -1,6 +1,7 @@
 name: Crawl Incidents
 
 on:
+  # Manual one-off runs
   workflow_dispatch:
     inputs:
       mode:
@@ -27,6 +28,10 @@ on:
         default: "5"
         type: string
 
+  # Scheduled incremental monitoring — checks for new incidents every 6 hours
+  schedule:
+    - cron: "0 */6 * * *"
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -34,6 +39,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Need full history so we can push back
+          fetch-depth: 0
 
       - uses: astral-sh/setup-uv@v5
         with:
@@ -42,8 +50,24 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      # Normalise inputs — scheduled runs always do monitor-once with vision on
+      - name: Resolve run parameters
+        id: params
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "mode=monitor-once"   >> $GITHUB_OUTPUT
+            echo "vision=true"         >> $GITHUB_OUTPUT
+            echo "refresh=false"       >> $GITHUB_OUTPUT
+            echo "workers=5"           >> $GITHUB_OUTPUT
+          else
+            echo "mode=${{ inputs.mode }}"       >> $GITHUB_OUTPUT
+            echo "vision=${{ inputs.vision }}"   >> $GITHUB_OUTPUT
+            echo "refresh=${{ inputs.refresh }}" >> $GITHUB_OUTPUT
+            echo "workers=${{ inputs.workers }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Check API key (vision mode)
-        if: inputs.vision
+        if: steps.params.outputs.vision == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
@@ -55,25 +79,25 @@ jobs:
           echo "ANTHROPIC_API_KEY is set."
 
       - name: Run crawl
-        if: inputs.mode == 'crawl'
+        if: steps.params.outputs.mode == 'crawl'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run python scripts/crawl.py \
-            ${{ inputs.refresh && '--refresh' || '' }} \
-            ${{ inputs.vision && '--vision' || '' }} \
-            --workers ${{ inputs.workers }}
+            ${{ steps.params.outputs.refresh == 'true' && '--refresh' || '' }} \
+            ${{ steps.params.outputs.vision == 'true' && '--vision' || '' }} \
+            --workers ${{ steps.params.outputs.workers }}
 
       - name: Run monitor (one-shot)
-        if: inputs.mode == 'monitor-once'
+        if: steps.params.outputs.mode == 'monitor-once'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run python scripts/monitor.py \
             --once \
-            ${{ inputs.vision && '--vision' || '' }}
+            ${{ steps.params.outputs.vision == 'true' && '--vision' || '' }}
 
       - name: Commit and push data
         run: |

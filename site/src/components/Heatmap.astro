@@ -1,0 +1,308 @@
+---
+// MITRE ATT&CK matrix heatmap component
+// Data loaded client-side from /data/
+---
+<div id="heatmap-container">
+  <div class="loading" id="heatmap-loading">Loading ATT&CK matrix…</div>
+</div>
+
+<div class="tooltip" id="heatmap-tooltip"></div>
+
+<style>
+  #heatmap-container {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+
+  .matrix-wrap {
+    display: flex;
+    gap: 6px;
+    min-width: max-content;
+    padding: 0.5rem 0;
+  }
+
+  .tactic-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 130px;
+  }
+
+  .tactic-header {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    padding: 4px 6px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tech-cell {
+    border-radius: 3px;
+    padding: 4px 6px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    border: 1px solid transparent;
+    min-height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+  }
+
+  .tech-cell:hover {
+    opacity: 1 !important;
+    border-color: rgba(255,255,255,0.3);
+    transform: scale(1.04);
+    z-index: 2;
+    position: relative;
+  }
+
+  .tech-cell.zero {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border);
+    opacity: 0.5;
+  }
+
+  .tech-cell .tech-id {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    opacity: 0.8;
+    line-height: 1;
+  }
+
+  .tech-cell .tech-name {
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.2;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .legend-gradient {
+    width: 120px;
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  .legend-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+</style>
+
+<script>
+import * as d3 from "d3";
+
+const DATA_BASE = "/data";
+
+async function loadData() {
+  const [freqData, metaData] = await Promise.all([
+    fetch(`${DATA_BASE}/technique_frequency.json`).then(r => r.ok ? r.json() : {}),
+    fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+  ]);
+  return { freqData, metaData };
+}
+
+function buildHeatmap(freqData: Record<string, any>, metaData: Record<string, any>) {
+  const tactics: Record<string, any> = metaData.tactics || {};
+  const allTechniques: Record<string, any> = metaData.techniques || {};
+
+  // Order tactics by ATT&CK kill chain order
+  const TACTIC_ORDER = [
+    "TA0043", // Reconnaissance
+    "TA0042", // Resource Development
+    "TA0001", // Initial Access
+    "TA0002", // Execution
+    "TA0003", // Persistence
+    "TA0004", // Privilege Escalation
+    "TA0005", // Defense Evasion
+    "TA0006", // Credential Access
+    "TA0007", // Discovery
+    "TA0008", // Lateral Movement
+    "TA0009", // Collection
+    "TA0011", // Command and Control
+    "TA0010", // Exfiltration
+    "TA0040", // Impact
+  ];
+
+  const orderedTactics = TACTIC_ORDER
+    .filter(id => tactics[id])
+    .map(id => ({ id, ...tactics[id] }));
+
+  // Group techniques by tactic, parent techniques first
+  const techByTactic: Record<string, any[]> = {};
+  for (const [tid, tech] of Object.entries(allTechniques)) {
+    for (const tacticId of (tech.tactic_ids || [])) {
+      if (!techByTactic[tacticId]) techByTactic[tacticId] = [];
+      techByTactic[tacticId].push({ id: tid, ...tech });
+    }
+  }
+
+  // Sort each column: parents first, subtechniques after their parent
+  for (const tacticId in techByTactic) {
+    techByTactic[tacticId].sort((a, b) => {
+      const pa = a.is_subtechnique ? a.parent_id : a.id;
+      const pb = b.is_subtechnique ? b.parent_id : b.id;
+      if (pa !== pb) return pa.localeCompare(pb);
+      return a.id.localeCompare(b.id);
+    });
+  }
+
+  const maxCount = Math.max(1, ...Object.values(freqData).map((v: any) => v.count || 0));
+  const colorScale = d3.scaleSequentialLog(d3.interpolateOranges).domain([1, maxCount]);
+
+  // Build DOM
+  const container = document.getElementById("heatmap-container")!;
+  container.innerHTML = "";
+
+  const wrap = document.createElement("div");
+  wrap.className = "matrix-wrap";
+
+  for (const tactic of orderedTactics) {
+    const col = document.createElement("div");
+    col.className = "tactic-col";
+
+    const header = document.createElement("div");
+    header.className = "tactic-header";
+    header.textContent = tactic.name;
+    header.title = tactic.name;
+    col.appendChild(header);
+
+    const techniques = techByTactic[tactic.id] || [];
+    for (const tech of techniques) {
+      const freq = freqData[tech.id];
+      const count = freq?.count || 0;
+
+      const cell = document.createElement("div");
+      cell.className = "tech-cell" + (count === 0 ? " zero" : "");
+
+      if (count > 0) {
+        const color = colorScale(count);
+        cell.style.background = color;
+        // Ensure text contrast
+        const rgb = d3.color(color) as d3.RGBColor | null;
+        const luminance = rgb ? (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255 : 0.5;
+        cell.style.color = luminance > 0.55 ? "#0d1117" : "#e6edf3";
+      }
+
+      const idEl = document.createElement("div");
+      idEl.className = "tech-id";
+      idEl.textContent = tech.id;
+      cell.appendChild(idEl);
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "tech-name";
+      nameEl.textContent = tech.name;
+      cell.appendChild(nameEl);
+
+      // Tooltip
+      cell.addEventListener("mousemove", (e) => {
+        const tip = document.getElementById("heatmap-tooltip")!;
+        const incidents = freq?.incidents || [];
+        tip.innerHTML = `
+          <span class="tid">${tech.id}</span>
+          <strong>${tech.name}</strong>
+          <div style="color:var(--text-muted);margin-top:4px">
+            <b style="color:var(--accent)">${count}</b> incident${count !== 1 ? "s" : ""}
+            ${tactic.name}
+          </div>
+          ${incidents.length ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted)">${incidents.slice(0,5).join("<br>")}</div>` : ""}
+        `;
+        tip.classList.add("visible");
+        const x = (e as MouseEvent).clientX + 12;
+        const y = (e as MouseEvent).clientY - 10;
+        tip.style.left = Math.min(x, window.innerWidth - 300) + "px";
+        tip.style.top = y + "px";
+      });
+
+      cell.addEventListener("mouseleave", () => {
+        document.getElementById("heatmap-tooltip")!.classList.remove("visible");
+      });
+
+      if (count > 0) {
+        cell.style.cursor = "pointer";
+        cell.addEventListener("click", () => {
+          window.location.href = `/incidents?technique=${tech.id}`;
+        });
+      }
+
+      col.appendChild(cell);
+    }
+
+    wrap.appendChild(col);
+  }
+
+  container.appendChild(wrap);
+
+  // Legend
+  const legend = document.createElement("div");
+  legend.className = "legend";
+
+  const canvas = document.createElement("canvas");
+  canvas.className = "legend-gradient";
+  canvas.width = 120;
+  canvas.height = 10;
+  const ctx = canvas.getContext("2d")!;
+  const grad = ctx.createLinearGradient(0, 0, 120, 0);
+  for (let i = 0; i <= 10; i++) {
+    grad.addColorStop(i / 10, colorScale(Math.max(1, Math.pow(maxCount, i / 10))));
+  }
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 120, 10);
+
+  const labels = document.createElement("div");
+  labels.className = "legend-labels";
+  labels.innerHTML = `<span>1</span><span>${maxCount}</span>`;
+
+  const legendLabel = document.createElement("span");
+  legendLabel.textContent = "Incident frequency";
+
+  legend.appendChild(legendLabel);
+  const gradWrap = document.createElement("div");
+  gradWrap.style.display = "flex";
+  gradWrap.style.flexDirection = "column";
+  gradWrap.style.gap = "2px";
+  gradWrap.appendChild(canvas);
+  gradWrap.appendChild(labels);
+  legend.appendChild(gradWrap);
+  container.appendChild(legend);
+}
+
+async function init() {
+  try {
+    const { freqData, metaData } = await loadData();
+    buildHeatmap(freqData, metaData);
+  } catch (err) {
+    const container = document.getElementById("heatmap-container")!;
+    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">
+      No data yet — run the analysis pipeline to populate the heatmap.
+    </div>`;
+    console.error("Heatmap error:", err);
+  }
+}
+
+init();
+</script>

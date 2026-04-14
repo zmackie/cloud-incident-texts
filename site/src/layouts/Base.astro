@@ -1,0 +1,271 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Real cloud security incidents mapped to MITRE ATT&CK for Cloud" } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} · Cloud Incident ATT&CK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --bg: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-tertiary: #21262d;
+        --border: #30363d;
+        --text: #e6edf3;
+        --text-muted: #8b949e;
+        --accent: #ff6b35;
+        --accent-dim: rgba(255, 107, 53, 0.15);
+        --blue: #58a6ff;
+        --blue-dim: rgba(88, 166, 255, 0.15);
+        --green: #3fb950;
+        --yellow: #d29922;
+        --purple: #bc8cff;
+        --font-body: "Inter", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", "Fira Code", monospace;
+        --radius: 6px;
+        --radius-lg: 12px;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { font-size: 15px; }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      a { color: var(--blue); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      code, .mono {
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        background: var(--bg-tertiary);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+      }
+
+      /* Nav */
+      nav {
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        height: 52px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-brand {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+      }
+
+      .nav-brand .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: inline-block;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      /* Page layout */
+      .page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+
+      .page-header {
+        margin-bottom: 2rem;
+      }
+
+      .page-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-subtitle {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* Cards */
+      .card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+      }
+
+      /* Stat chips */
+      .stats-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .stat-chip {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .stat-chip .value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        color: var(--accent);
+        line-height: 1;
+      }
+
+      .stat-chip .label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Badge */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2em 0.6em;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        font-family: var(--font-mono);
+        background: var(--bg-tertiary);
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+      }
+
+      .badge.accent { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+      .badge.blue   { background: var(--blue-dim);   color: var(--blue);   border-color: var(--blue); }
+
+      /* Confidence bar */
+      .confidence {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .confidence-bar {
+        height: 4px;
+        width: 60px;
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .confidence-bar .fill {
+        height: 100%;
+        border-radius: 2px;
+        background: var(--green);
+        transition: width 0.3s ease;
+      }
+
+      /* Tooltip */
+      .tooltip {
+        position: fixed;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.6rem 0.9rem;
+        font-size: 0.82rem;
+        pointer-events: none;
+        z-index: 9999;
+        max-width: 280px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+
+      .tooltip.visible { opacity: 1; }
+      .tooltip strong { color: var(--text); display: block; margin-bottom: 0.25rem; }
+      .tooltip .tid { font-family: var(--font-mono); color: var(--accent); font-size: 0.78rem; }
+
+      /* Loading state */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: var(--bg); }
+      ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="nav-brand">
+        <span class="dot"></span>
+        Cloud Incident ATT&CK
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Heatmap</a></li>
+        <li><a href="/graph">Attack Graph</a></li>
+        <li><a href="/incidents">Incidents</a></li>
+      </ul>
+    </nav>
+    <slot />
+  </body>
+</html>

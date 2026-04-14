@@ -1,3 +1,17 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests>=2.31.0",
+#   "beautifulsoup4>=4.12.0",
+#   "trafilatura>=1.8.0",
+#   "pdfplumber>=0.10.0",
+#   "pypdf>=4.0.0",
+#   "anthropic>=0.25.0",
+#   "lxml>=5.0.0",
+#   "pillow>=10.0.0",
+#   "schedule>=1.2.1",
+# ]
+# ///
 """
 Monitor the aws-customer-security-incidents README for new incidents.
 

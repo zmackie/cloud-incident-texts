@@ -73,6 +73,7 @@ def extract_html(html: str, url: str = "") -> str:
         include_tables=True,
         no_fallback=False,
         favor_recall=True,
+        output_format="markdown",
     )
     if text and len(text) > 200:
         return text

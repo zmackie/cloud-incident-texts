@@ -61,7 +61,62 @@ def article_dir(incident: dict) -> Path:
 
 def already_crawled(incident: dict) -> bool:
     d = article_dir(incident)
-    return (d / "metadata.json").exists()
+    return (d / "index.md").exists()
+
+
+def _unique_stem(d: Path, stem: str) -> str:
+    """Return stem (or stem-2, stem-3, …) that isn't already taken in d."""
+    candidate = stem
+    n = 2
+    while (d / f"{candidate}.md").exists():
+        candidate = f"{stem}-{n}"
+        n += 1
+    return candidate
+
+
+def _write_index(d: Path, incident: dict, results: list) -> None:
+    name = incident.get("name", "Unknown")
+    date = incident.get("date", "")
+    root_cause = incident.get("root_cause", "")
+    escalation = incident.get("escalation_vectors", "")
+    impact = incident.get("impact", "")
+    inc_type = incident.get("type", "")
+
+    lines = [
+        "---",
+        f'name: "{name}"',
+        f'date: "{date}"',
+        f"type: {inc_type}",
+        f'root_cause: "{root_cause}"',
+        f'escalation_vectors: "{escalation}"',
+        f'impact: "{impact}"',
+        "---",
+        "",
+        f"# {name}",
+        "",
+    ]
+    for label, value in [
+        ("Date", date), ("Root Cause", root_cause),
+        ("Escalation Vectors", escalation), ("Impact", impact),
+    ]:
+        if value:
+            lines.append(f"**{label}:** {value}  ")
+
+    if results:
+        lines += ["", "## Sources", ""]
+        for r in results:
+            if r.get("file"):
+                lines.append(
+                    f"- [{r['link_text']}]({r['file']}) "
+                    f"— {r['chars']:,} chars via `{r['method']}`"
+                )
+            else:
+                lines.append(
+                    f"- [{r['link_text']}]({r['url']}) "
+                    f"— ⚠️ failed ({r.get('error', 'unknown')})"
+                )
+
+    (d / "index.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
@@ -70,24 +125,21 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
     d = article_dir(incident)
     d.mkdir(parents=True, exist_ok=True)
 
-    # Save metadata (incident fields without the links)
-    meta = {k: v for k, v in incident.items() if k != "links"}
-    meta["links"] = incident.get("links", [])
-    meta["crawl_status"] = []
-
     results = []
     for i, link in enumerate(incident.get("links", [])):
         url = link.get("url", "")
+        link_text = link.get("text", "") or f"link-{i:02d}"
         if not url or url.startswith("#"):
             continue
         log.info("  [%s] fetching link %d: %s", name[:40], i + 1, url)
         r = extract_url(url, use_vision=use_vision)
-        out_file = d / f"link_{i:02d}.txt"
+        stem = _unique_stem(d, _slug(link_text) or f"link-{i:02d}")
+        out_file = d / f"{stem}.md"
         if r["text"]:
             out_file.write_text(r["text"], encoding="utf-8")
         results.append({
             "url": url,
-            "link_text": link.get("text", ""),
+            "link_text": link_text,
             "file": out_file.name if r["text"] else None,
             "method": r["method"],
             "error": r["error"],
@@ -95,8 +147,7 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
         })
         time.sleep(0.5)  # polite rate-limit
 
-    meta["crawl_status"] = results
-    (d / "metadata.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    _write_index(d, incident, results)
     ok = sum(1 for r in results if r.get("chars", 0) > 0)
     log.info("[%s] done – %d/%d links captured", name[:40], ok, len(results))
     return {"name": name, "ok": ok, "total": len(results)}

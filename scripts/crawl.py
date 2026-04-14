@@ -82,7 +82,7 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
             continue
         log.info("  [%s] fetching link %d: %s", name[:40], i + 1, url)
         r = extract_url(url, use_vision=use_vision)
-        out_file = d / f"link_{i:02d}.txt"
+        out_file = d / f"link_{i:02d}.md"
         if r["text"]:
             out_file.write_text(r["text"], encoding="utf-8")
         results.append({
@@ -93,7 +93,7 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
             "error": r["error"],
             "chars": len(r["text"]),
         })
-        time.sleep(0.5)  # polite rate-limit
+        time.sleep(1.0)  # polite rate-limit (jina free tier: ~20 req/min)
 
     meta["crawl_status"] = results
     (d / "metadata.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")

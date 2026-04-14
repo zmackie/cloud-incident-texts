@@ -97,7 +97,7 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
 
     meta["crawl_status"] = results
     (d / "metadata.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
-    ok = sum(1 for r in results if r["text"] if "text" in r else r.get("chars", 0) > 0)
+    ok = sum(1 for r in results if r.get("chars", 0) > 0)
     log.info("[%s] done – %d/%d links captured", name[:40], ok, len(results))
     return {"name": name, "ok": ok, "total": len(results)}
 

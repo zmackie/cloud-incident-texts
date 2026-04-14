@@ -1,0 +1,83 @@
+name: Crawl Incidents
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode"
+        required: true
+        default: "crawl"
+        type: choice
+        options:
+          - crawl
+          - monitor-once
+      refresh:
+        description: "Re-fetch incident list even if cached (crawl mode only)"
+        required: false
+        default: false
+        type: boolean
+      vision:
+        description: "Enable Claude vision OCR fallback (requires ANTHROPIC_API_KEY)"
+        required: false
+        default: false
+        type: boolean
+      workers:
+        description: "Parallel workers for crawl (default: 5)"
+        required: false
+        default: "5"
+        type: string
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run crawl
+        if: inputs.mode == 'crawl'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run python scripts/crawl.py \
+            ${{ inputs.refresh && '--refresh' || '' }} \
+            ${{ inputs.vision && '--vision' || '' }} \
+            --workers ${{ inputs.workers }}
+
+      - name: Run monitor (one-shot)
+        if: inputs.mode == 'monitor-once'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run python scripts/monitor.py \
+            --once \
+            ${{ inputs.vision && '--vision' || '' }}
+
+      - name: Upload crawled articles
+        if: inputs.mode == 'crawl'
+        uses: actions/upload-artifact@v4
+        with:
+          name: articles
+          path: data/articles/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Upload data outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: |
+            data/incidents.json
+            data/crawl_summary.json
+            data/monitor_state.json
+            data/changelog.jsonl
+          if-no-files-found: ignore
+          retention-days: 30

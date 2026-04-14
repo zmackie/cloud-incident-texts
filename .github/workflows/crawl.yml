@@ -48,7 +48,20 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync
+        run: |
+          uv sync
+          # Install heavy OCR stack only when vision is enabled
+          if [ "${{ steps.params.outputs.vision }}" = "true" ]; then
+            uv sync --extra ocr
+          fi
+
+      # Cache Hugging Face model weights so we don't re-download on every run
+      - name: Cache HuggingFace models
+        if: steps.params.outputs.vision == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-chandra-ocr-2
 
       # Normalise inputs — scheduled runs always do monitor-once with vision on
       - name: Resolve run parameters
@@ -66,23 +79,35 @@ jobs:
             echo "workers=${{ inputs.workers }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Check API key (vision mode)
+      - name: Check API keys (vision mode)
         if: steps.params.outputs.vision == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          ok=true
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::warning::HF_TOKEN secret not set — Chandra OCR model download may fail or be rate-limited."
+            echo "::warning::Add HF_TOKEN at: Settings → Secrets and variables → Actions → New repository secret"
+          else
+            echo "HF_TOKEN is set."
+          fi
           if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::vision=true but ANTHROPIC_API_KEY secret is not set."
-            echo "::error::Add it at: Settings → Secrets and variables → Actions → New repository secret"
+            echo "::warning::ANTHROPIC_API_KEY not set — Claude vision fallback will be skipped."
+          else
+            echo "ANTHROPIC_API_KEY is set."
+          fi
+          if [ -z "$HF_TOKEN" ] && [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::vision=true but neither HF_TOKEN nor ANTHROPIC_API_KEY is set. At least one is required."
             exit 1
           fi
-          echo "ANTHROPIC_API_KEY is set."
 
       - name: Run crawl
         if: steps.params.outputs.mode == 'crawl'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           uv run python scripts/crawl.py \
             ${{ steps.params.outputs.refresh == 'true' && '--refresh' || '' }} \
@@ -94,6 +119,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           uv run python scripts/monitor.py \
             --once \

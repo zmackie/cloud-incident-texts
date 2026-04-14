@@ -119,7 +119,75 @@ def extract_pdf_bytes(data: bytes) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Claude vision OCR  (the "OCR papers" approach)
+# Chandra OCR  (datalab-to/chandra-ocr-2 via CLI)
+# ---------------------------------------------------------------------------
+
+def ocr_with_chandra(content: bytes, mime: str) -> str:
+    """
+    Run Chandra OCR on a PDF or image, returning markdown.
+
+    Calls the `chandra` CLI (from chandra-ocr[hf]) via subprocess so we stay
+    independent of its internal Python API, which is undocumented.
+
+    Requires:  pip install chandra-ocr[hf]   (or uv sync --extra ocr)
+    Optional:  HF_TOKEN env var for authenticated model downloads.
+    """
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path as _Path
+
+    if not shutil.which("chandra"):
+        log.debug("chandra CLI not found – skipping Chandra OCR")
+        return ""
+
+    suffix = ".pdf" if "pdf" in mime else ".png"
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = _Path(tmp)
+        in_file = tmp / f"input{suffix}"
+        out_dir = tmp / "out"
+        in_file.write_bytes(content)
+
+        env = {**os.environ}
+        # Surface HF_TOKEN under the name the HF hub library expects
+        token = os.environ.get("HF_TOKEN")
+        if token:
+            env.setdefault("HUGGING_FACE_HUB_TOKEN", token)
+
+        try:
+            proc = subprocess.run(
+                [
+                    "chandra", str(in_file), str(out_dir),
+                    "--method", "hf",
+                    "--no-images",          # skip embedded image extraction
+                ],
+                capture_output=True,
+                text=True,
+                timeout=300,
+                env=env,
+            )
+        except subprocess.TimeoutExpired:
+            log.warning("Chandra OCR timed out")
+            return ""
+        except Exception as e:
+            log.warning("Chandra OCR subprocess error: %s", e)
+            return ""
+
+        if proc.returncode != 0:
+            log.warning("Chandra OCR exited %d: %s", proc.returncode, proc.stderr[:200])
+            return ""
+
+        md_files = sorted(out_dir.glob("**/*.md"))
+        if not md_files:
+            log.warning("Chandra OCR produced no markdown output")
+            return ""
+
+        # Concatenate pages if multi-page output
+        return "\n\n".join(f.read_text(encoding="utf-8") for f in md_files)
+
+
+# ---------------------------------------------------------------------------
+# Claude vision OCR  (fallback when Chandra is unavailable)
 # ---------------------------------------------------------------------------
 
 def _pdf_to_images(data: bytes, max_pages: int = 10) -> list[bytes]:
@@ -224,6 +292,13 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
             return result
 
         if use_vision:
+            log.info("Trying Chandra OCR for PDF: %s", url)
+            text = ocr_with_chandra(resp.content, "application/pdf")
+            if text:
+                result["text"] = text
+                result["method"] = "chandra_ocr"
+                return result
+
             log.info("Falling back to Claude vision OCR for PDF: %s", url)
             text = ocr_with_claude(resp.content, "application/pdf")
             if text:

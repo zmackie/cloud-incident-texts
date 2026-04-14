@@ -9,12 +9,15 @@
 #   "anthropic>=0.25.0",
 #   "lxml>=5.0.0",
 #   "pillow>=10.0.0",
+#   "youtube-transcript-api>=0.6.2",
 # ]
 # ///
 """
 Content extraction utilities – URL → clean markdown.
 
 Strategy (applied in order, first success wins):
+0. YouTube transcript – if URL is a YouTube video, fetch the transcript via
+                     youtube-transcript-api (no Jina / page scrape).
 1. Jina AI reader  – r.jina.ai/<url> returns markdown for HTML *and* PDFs,
                      handles JS-rendered pages, web archives, etc.
                      Free without an API key; set JINA_API_KEY for higher limits.
@@ -25,9 +28,11 @@ Strategy (applied in order, first success wins):
 """
 import io
 import os
+import re
 import base64
 import logging
 from typing import Optional
+from urllib.parse import urlparse, parse_qs
 
 import requests
 import trafilatura
@@ -208,6 +213,141 @@ def ocr_with_claude(content: bytes, mime: str, prompt: str = "") -> str:
 
 
 # ---------------------------------------------------------------------------
+# 5. YouTube transcript extraction
+# ---------------------------------------------------------------------------
+
+_YT_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}
+
+
+def _youtube_video_id(url: str) -> Optional[str]:
+    """Return the 11-char video id for a YouTube URL, or None if not YouTube."""
+    try:
+        u = urlparse(url)
+    except Exception:
+        return None
+    host = (u.hostname or "").lower()
+    if host not in _YT_HOSTS:
+        return None
+    if host == "youtu.be":
+        vid = u.path.lstrip("/").split("/", 1)[0]
+    elif u.path.startswith("/watch"):
+        vid = parse_qs(u.query).get("v", [""])[0]
+    elif u.path.startswith("/shorts/") or u.path.startswith("/embed/"):
+        parts = u.path.strip("/").split("/")
+        vid = parts[1] if len(parts) > 1 else ""
+    else:
+        vid = ""
+    return vid if re.fullmatch(r"[A-Za-z0-9_-]{11}", vid or "") else None
+
+
+def extract_youtube(url: str) -> str:
+    """
+    Fetch the transcript for a YouTube video and return it as markdown.
+
+    Returns "" if the URL isn't YouTube, the transcript is unavailable,
+    or the library isn't installed.
+    """
+    vid = _youtube_video_id(url)
+    if not vid:
+        return ""
+
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        from youtube_transcript_api._errors import (
+            TranscriptsDisabled, NoTranscriptFound, VideoUnavailable,
+        )
+    except ImportError:
+        log.warning("youtube-transcript-api not installed")
+        return ""
+
+    try:
+        transcripts = YouTubeTranscriptApi.list_transcripts(vid)
+        # Prefer manually-created English, then any manual, then auto English,
+        # then any auto-generated.
+        for finder in (
+            lambda: transcripts.find_manually_created_transcript(["en", "en-US", "en-GB"]),
+            lambda: next(iter(transcripts._manually_created_transcripts.values())),
+            lambda: transcripts.find_generated_transcript(["en", "en-US", "en-GB"]),
+            lambda: next(iter(transcripts._generated_transcripts.values())),
+        ):
+            try:
+                t = finder()
+                entries = t.fetch()
+                break
+            except (NoTranscriptFound, StopIteration, AttributeError):
+                continue
+        else:
+            return ""
+    except (TranscriptsDisabled, VideoUnavailable) as e:
+        log.debug("YouTube transcript unavailable for %s: %s", url, e)
+        return ""
+    except Exception as e:
+        log.debug("YouTube transcript fetch failed for %s: %s", url, e)
+        return ""
+
+    # Format as plain text with simple timestamp markers every minute or so.
+    lines = []
+    last_mark = -60
+    for e in entries:
+        # entries may be dicts (older API) or FetchedTranscriptSnippet objects (newer).
+        start = e["start"] if isinstance(e, dict) else getattr(e, "start", 0.0)
+        text = e["text"] if isinstance(e, dict) else getattr(e, "text", "")
+        text = text.replace("\n", " ").strip()
+        if not text:
+            continue
+        if start - last_mark >= 60:
+            mm, ss = divmod(int(start), 60)
+            lines.append(f"\n[{mm:02d}:{ss:02d}]")
+            last_mark = start
+        lines.append(text)
+
+    body = " ".join(lines).strip()
+    if not body:
+        return ""
+
+    header = (
+        f"Title: YouTube transcript ({vid})\n\n"
+        f"URL Source: {url}\n\n"
+        f"Markdown Content:\n"
+    )
+    return header + body
+
+
+# ---------------------------------------------------------------------------
+# 6. Source classification
+# ---------------------------------------------------------------------------
+
+_ARCHIVE_HOSTS = {
+    "web.archive.org", "archive.org", "archive.ph", "archive.today",
+    "archive.is", "webcache.googleusercontent.com",
+}
+
+
+def classify_source(url: str, content_type: str = "") -> str:
+    """
+    Classify a source URL into one of:
+        article, pdf, youtube, archive, other
+    """
+    try:
+        u = urlparse(url)
+    except Exception:
+        return "other"
+    host = (u.hostname or "").lower()
+    path = (u.path or "").lower()
+    ct = (content_type or "").lower()
+
+    if host in _YT_HOSTS:
+        return "youtube"
+    if host in _ARCHIVE_HOSTS:
+        return "archive"
+    if path.endswith(".pdf") or "pdf" in ct:
+        return "pdf"
+    if "html" in ct or ct == "" or ct.startswith("text/"):
+        return "article"
+    return "other"
+
+
+# ---------------------------------------------------------------------------
 # Main entry point
 # ---------------------------------------------------------------------------
 
@@ -215,9 +355,19 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
     """
     Fetch a URL and extract its text content as markdown.
 
-    Returns a dict with keys: url, text, method, error
+    Returns a dict with keys: url, text, method, error, source_type
     """
-    result = {"url": url, "text": "", "method": "", "error": ""}
+    result = {"url": url, "text": "", "method": "", "error": "",
+              "source_type": classify_source(url)}
+
+    # 0 ── YouTube: pull transcript directly
+    if result["source_type"] == "youtube":
+        text = extract_youtube(url)
+        if text:
+            result["text"] = text
+            result["method"] = "youtube_transcript"
+            return result
+        # fall through to Jina for at least the video description
 
     # 1 ── Jina AI reader (handles HTML + PDFs + JS pages)
     text = extract_with_jina(url)
@@ -234,6 +384,7 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
 
     # 3 ── PDF path: pdfplumber → Claude vision
     if _is_pdf(resp):
+        result["source_type"] = "pdf"
         text = extract_pdf_bytes(resp.content)
         if text.strip():
             result["text"] = text

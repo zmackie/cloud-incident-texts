@@ -32,7 +32,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from parse_readme import load_or_fetch
-from extract import extract_url
+from extract import extract_url, classify_source
+from clean import clean_markdown
 
 logging.basicConfig(
     level=logging.INFO,
@@ -64,7 +65,8 @@ def already_crawled(incident: dict) -> bool:
     return (d / "metadata.json").exists()
 
 
-def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
+def crawl_incident(incident: dict, use_vision: bool = False,
+                   clean: bool = True) -> dict:
     """Fetch every link for one incident, save results, return summary."""
     name = incident.get("name") or incident.get("report", "?")
     d = article_dir(incident)
@@ -82,17 +84,54 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
             continue
         log.info("  [%s] fetching link %d: %s", name[:40], i + 1, url)
         r = extract_url(url, use_vision=use_vision)
-        out_file = d / f"link_{i:02d}.md"
-        if r["text"]:
-            out_file.write_text(r["text"], encoding="utf-8")
-        results.append({
+        source_type = r.get("source_type") or classify_source(url)
+
+        raw_file = d / f"link_{i:02d}.raw.md"
+        clean_file = d / f"link_{i:02d}.md"
+
+        entry = {
             "url": url,
             "link_text": link.get("text", ""),
-            "file": out_file.name if r["text"] else None,
+            "file": None,
+            "raw_file": None,
             "method": r["method"],
+            "source_type": source_type,
             "error": r["error"],
             "chars": len(r["text"]),
-        })
+            "cleanup_method": "",
+            "title": "",
+            "author": "",
+            "published": "",
+        }
+
+        if r["text"]:
+            raw_file.write_text(r["text"], encoding="utf-8")
+            entry["raw_file"] = raw_file.name
+
+            if clean:
+                try:
+                    cleaned = clean_markdown(
+                        r["text"], url=url, source_type=source_type,
+                        use_llm=True,
+                    )
+                    clean_file.write_text(cleaned.to_markdown(), encoding="utf-8")
+                    entry["file"] = clean_file.name
+                    entry["cleanup_method"] = cleaned.cleanup_method
+                    entry["title"] = cleaned.title
+                    entry["author"] = cleaned.author
+                    entry["published"] = cleaned.published
+                except Exception as e:
+                    log.warning("cleanup failed for %s: %s", url, e)
+                    # Fall back to raw as the primary file.
+                    clean_file.write_text(r["text"], encoding="utf-8")
+                    entry["file"] = clean_file.name
+                    entry["cleanup_method"] = "error"
+            else:
+                clean_file.write_text(r["text"], encoding="utf-8")
+                entry["file"] = clean_file.name
+                entry["cleanup_method"] = "skipped"
+
+        results.append(entry)
         time.sleep(1.0)  # polite rate-limit (jina free tier: ~20 req/min)
 
     meta["crawl_status"] = results
@@ -102,7 +141,8 @@ def crawl_incident(incident: dict, use_vision: bool = False) -> dict:
     return {"name": name, "ok": ok, "total": len(results)}
 
 
-def crawl_all(refresh: bool = False, use_vision: bool = False, workers: int = 5):
+def crawl_all(refresh: bool = False, use_vision: bool = False,
+              workers: int = 5, clean: bool = True):
     data = load_or_fetch(cache=not refresh)
     incidents = data["all"]
     log.info("Loaded %d incidents total", len(incidents))
@@ -118,7 +158,10 @@ def crawl_all(refresh: bool = False, use_vision: bool = False, workers: int = 5)
 
     summary = []
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(crawl_incident, inc, use_vision): inc for inc in todo}
+        futures = {
+            pool.submit(crawl_incident, inc, use_vision, clean): inc
+            for inc in todo
+        }
         for future in as_completed(futures):
             try:
                 result = future.result()
@@ -143,6 +186,9 @@ if __name__ == "__main__":
     parser.add_argument("--refresh", action="store_true", help="Re-fetch incident list")
     parser.add_argument("--vision", action="store_true", help="Enable Claude vision OCR fallback")
     parser.add_argument("--workers", type=int, default=5, help="Parallel workers (default: 5)")
+    parser.add_argument("--no-clean", action="store_true",
+                        help="Skip Claude-based markdown cleanup pass")
     args = parser.parse_args()
 
-    crawl_all(refresh=args.refresh, use_vision=args.vision, workers=args.workers)
+    crawl_all(refresh=args.refresh, use_vision=args.vision,
+              workers=args.workers, clean=not args.no_clean)

@@ -1,6 +1,9 @@
 name: Crawl Incidents
 
 on:
+  # ── Manual trigger ──────────────────────────────────────────────────────
+  # Use mode=crawl for the initial full crawl of all incidents.
+  # Use mode=monitor-once to run a one-off check for new incidents.
   workflow_dispatch:
     inputs:
       mode:
@@ -27,11 +30,23 @@ on:
         default: "5"
         type: string
 
+  # ── Scheduled trigger ───────────────────────────────────────────────────
+  # Runs daily at 06:00 UTC in monitor-once mode.
+  # Detects new incidents in the ramimac/aws-customer-security-incidents
+  # README and crawls any that haven't been captured yet.
+  schedule:
+    - cron: '0 6 * * *'
+
 jobs:
   run:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push crawled articles + state back to repo
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: astral-sh/setup-uv@v5
         with:
@@ -40,44 +55,66 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      # Resolve effective run mode: scheduled runs always use monitor-once
+      - name: Determine run mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "run_mode=monitor-once" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── Initial full crawl (manual only) ─────────────────────────────────
+      # Fetches every link across all incidents and saves markdown to
+      # data/articles/<incident-slug>/link_NN.md via jina.ai reader.
       - name: Run crawl
-        if: inputs.mode == 'crawl'
+        if: steps.mode.outputs.run_mode == 'crawl'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run python scripts/crawl.py \
             ${{ inputs.refresh && '--refresh' || '' }} \
             ${{ inputs.vision && '--vision' || '' }} \
-            --workers ${{ inputs.workers }}
+            --workers ${{ inputs.workers || '5' }}
 
+      # ── Scheduled / one-shot monitor ─────────────────────────────────────
+      # Checks the README SHA; if it changed, crawls any new incidents.
       - name: Run monitor (one-shot)
-        if: inputs.mode == 'monitor-once'
+        if: steps.mode.outputs.run_mode == 'monitor-once'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run python scripts/monitor.py \
             --once \
-            ${{ inputs.vision && '--vision' || '' }}
+            ${{ (inputs.vision == true) && '--vision' || '' }}
 
-      - name: Upload crawled articles
-        if: inputs.mode == 'crawl'
+      # ── Commit crawled articles + state back to the repo ─────────────────
+      # Articles (data/articles/) are markdown files representing the full
+      # corpus – this is the point of the repo.  State files track what has
+      # been processed so future scheduled runs can skip already-done work.
+      - name: Commit data back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore: update incident corpus [skip ci]"
+            git push
+          fi
+
+      # ── Artifacts (redundant backup, 30-day retention) ───────────────────
+      - name: Upload data outputs as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: articles
-          path: data/articles/
-          if-no-files-found: warn
-          retention-days: 30
-
-      - name: Upload data outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: data
-          path: |
-            data/incidents.json
-            data/crawl_summary.json
-            data/monitor_state.json
-            data/changelog.jsonl
+          name: incident-data-${{ github.run_id }}
+          path: data/
           if-no-files-found: ignore
           retention-days: 30

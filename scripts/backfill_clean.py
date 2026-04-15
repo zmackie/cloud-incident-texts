@@ -57,6 +57,17 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 ARTICLES_DIR = DATA_DIR / "articles"
 
 _RAW_FILE_RE = re.compile(r"^link_(\d+)\.md$")
+_CLEANUP_METHOD_RE = re.compile(r"^cleanup_method:\s*\"?([A-Za-z_]+)\"?\s*$", re.MULTILINE)
+
+
+def _existing_cleanup_method(clean_path: Path) -> Optional[str]:
+    """Read the cleanup_method field from a clean file's frontmatter."""
+    try:
+        head = clean_path.read_text(encoding="utf-8", errors="replace")[:2000]
+    except Exception:
+        return None
+    m = _CLEANUP_METHOD_RE.search(head)
+    return m.group(1) if m else None
 
 # Simple YAML-ish frontmatter reader that matches what Cleaned.to_markdown
 # emits: `key: value` or `key: "quoted value"`, one per line, terminated
@@ -163,7 +174,8 @@ def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> tuple[list[str], set
 
 
 def clean_one_link(raw_md: Path, url: str, source_type: str,
-                   use_llm: bool, dry_run: bool) -> dict:
+                   use_llm: bool, dry_run: bool,
+                   redo_fallback: bool = False) -> dict:
     """Clean a single link_NN.md -> link_NN.clean.md."""
     clean_path = raw_md.with_name(raw_md.stem + ".clean.md")
     result = {
@@ -196,8 +208,14 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
         return result
 
     if clean_path.exists():
-        result["action"] = "skip_already_clean"
-        return result
+        existing_method = _existing_cleanup_method(clean_path)
+        if redo_fallback and existing_method and existing_method != "llm":
+            # Previous run produced a non-LLM clean; caller wants a retry.
+            result["previous_cleanup_method"] = existing_method
+        else:
+            result["action"] = "skip_already_clean"
+            result["cleanup_method"] = existing_method or ""
+            return result
 
     try:
         cleaned = clean_markdown(
@@ -222,7 +240,8 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
     return result
 
 
-def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict]:
+def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
+                      redo_fallback: bool = False) -> list[dict]:
     """Migrate + clean every link in one incident directory."""
     meta = _load_metadata(slug_dir)
     if meta is None:
@@ -263,7 +282,8 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
         existing_status = status_by_file.get(raw_md.name) or {}
         source_type = existing_status.get("source_type") or classify_source(url)
 
-        r = clean_one_link(raw_md, url, source_type, use_llm, dry_run)
+        r = clean_one_link(raw_md, url, source_type, use_llm, dry_run,
+                           redo_fallback=redo_fallback)
         results.append(r)
 
         if r["action"] == "cleaned" and not dry_run and existing_status:
@@ -319,7 +339,8 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
 
 
 def backfill_all(workers: int, use_llm: bool, dry_run: bool,
-                 only: Optional[str] = None) -> None:
+                 only: Optional[str] = None,
+                 redo_fallback: bool = False) -> None:
     if not ARTICLES_DIR.exists():
         log.error("No articles directory at %s", ARTICLES_DIR)
         return
@@ -338,7 +359,7 @@ def backfill_all(workers: int, use_llm: bool, dry_run: bool,
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
-            pool.submit(backfill_incident, d, use_llm, dry_run): d
+            pool.submit(backfill_incident, d, use_llm, dry_run, redo_fallback): d
             for d in slugs
         }
         for fut in as_completed(futures):
@@ -371,6 +392,10 @@ def main(argv: Optional[list[str]] = None) -> int:
                    help="Report actions without writing any files")
     p.add_argument("--only", default=None,
                    help="Backfill a single incident slug (for testing)")
+    p.add_argument("--redo-fallback", action="store_true",
+                   help="Re-run clean files whose frontmatter cleanup_method "
+                        "is not 'llm' (e.g. fallback_heuristic, raw). "
+                        "LLM-cleaned files are still skipped.")
     args = p.parse_args(argv)
 
     backfill_all(
@@ -378,6 +403,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         use_llm=not args.no_llm,
         dry_run=args.dry_run,
         only=args.only,
+        redo_fallback=args.redo_fallback,
     )
     return 0
 

@@ -1,0 +1,19 @@
+---
+title: LA Times homicide website throttles cryptojacking attack
+url: "https://web.archive.org/web/20210413201832/https://www.tripwire.com/state-of-security/security-data-protection/la-times-website-cryptojacking-attack/"
+source_type: archive
+source_domain: web.archive.org
+cleanup_method: llm
+---
+
+LA Times homicide website throttles cryptojacking attack
+Whoever hacked the LA Times’ interactive county murder map probably hoped to make a killing mining cryptocurrency – but swift action from a security researcher has put paid to their plans.
+Security researcher Troy Mursch, whose blog has focused on cryptomining threats in recent months, raised the alarm on Twitter, after discovering that an Amazon AWS S3 bucket belonging to the LA Times had been left wide open, granting global write-access to anyone who fancied dropping their code on the server.
+An unauthorised third party had taken advantage of the sloppy cloud security, and meddled with a Javascript file. In this way, Coinhive cryptomining code was added to an LA Times website called “The Homicide Report”, which lives at homicide.latimes.com.
+Unlike some cryptojacking attacks the miner was throttled to reduce the impact on visitors’ CPUs and make it harder for users to spot that something was awry. Perhaps this is how the attack appears to have gone unnoticed since February 9th.
+Interestingly, Mursch reports that the Coinhive site key used in the cryptojacking attack against the LA Times is the same one that was used recently in the attack which impacted thousands of government websites in the UK and United States earlier this month, and had previously been used against Indian news websites.
+In some ways I’m pleased to hear that whoever tampered with the LA Times Homicide Report’s website code was only interested in mining cryptocurrency. Things might have been much worse if the Javascript code had been altered to install a keylogger harvesting passwords, or exploit vulnerabilities to plant malware on visiting computers.
+But that’s not to say that cryptojacking is a victimless crime from the visiting web surfer’s point of view. It is still their computers’ resources that are being hijacked, and their electricity and battery life which is being used.
+The message to other online companies is that there needs to be close attention to the code which runs on your website, and that if you use cloud services like Amazon AWS S3 to ensure that they are set up with the right permissions.
+As Ben Layer described last week, it has become easier than ever for anyone to identify leaky Amazon AWS S3 buckets that could be spilling information or – as in this case – actually allowing hackers to plant malicious code.
+It’s therefore little wonder that Amazon appears to be putting more effort into warning customers of the potential risks, and making available free tools that can identify unsecured S3 buckets.

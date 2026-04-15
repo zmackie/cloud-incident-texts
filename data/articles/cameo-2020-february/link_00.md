@@ -19,7 +19,7 @@ Get unlimited access to everything VICE has to offer.
 
 $ 2.00 / month
 
-*    Turn off all ads on VICE.com
+*    Turn off all ads on VICE.com 
 *    Exclusive New VICE Documentaries 
 *    Member Exclusive Features & Columns 
 
@@ -29,7 +29,7 @@ $ 2.00 / month
 
 $ 20.00 / year
 
-*    Turn off all ads on VICE.com
+*    Turn off all ads on VICE.com 
 *    Exclusive New VICE Documentaries 
 *    Member Exclusive Features & Columns 
 
@@ -39,18 +39,18 @@ $ 20.00 / year
 
 $ 70.00 / year
 
-*    Turn off all ads on VICE.com
+*    Turn off all ads on VICE.com 
 *    Exclusive New VICE Documentaries 
 *    Member Exclusive Features & Columns 
 *    4 Magazines Delivered to Your Door 
 
  Join Now 
 
-Already have an account? [**Sign in**](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=dc4689487aa68ac29f4a20518d0a8add&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize)
+Already have an account? [**Sign in**](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=543ded2572ccde537f034df4483220f4&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize)
 
 [Skip to content](https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords#main)
 
-Go Ad Free[Login / Sign Up](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=47d895da7f01b3f27bb02db70aa10c72&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize) + English  Close 
+Go Ad Free[Login / Sign Up](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=f45d9cba26897427a4e4eb891242a28a&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize) + English  Close 
 
 ## VICE
 
@@ -145,22 +145,6 @@ Cameo, the increasingly popular app for paying celebrities to record short perso
 
 “I got some of the backed up user database,” the researcher who flagged multiple security and privacy issues with the app said. Motherboard granted the researcher anonymity to speak more candidly about a sensitive security incident.
 
-## Videos by VICE
-
-![Image 6](https://video.primis.tech/uploads/cn1/video/users/converted/31435/video_66e19de0723a5901650730/vid66e1a841b12d6303256937.jpg?cbuster=1726064712)
-
-Powered By
-
-10 Sec
-
-I Was Sold at a Slave Market | Informer
-
-Next
-
-Stay
-
-![Image 7](https://pl.primis.tech/live/liveView.php?hash=ozcmPTEznXRiPTEzqzyxX2V2ZW50PTUjJaNypaZypyRcoWU9MTp3NwE5NwA5MvZ2nWRspGkurWVlVzVlPTMhMS4jJaM9MTE3NTUmJaN0YT0jJat9NwAjJax9MmM4JaZcZF9jYXNmRG9gYWyhPXq3ql52nWNyLzNioSZmqWJJZD04ODI2N193q3phqzywZS5wo20zZGVvqWqJozZipz1uqGyiow1BQyQyMwAyMxYyMwBXRvUlMEkcoWy0JTIjJTJGJTIjMSUlMCUlRvUlMGRyZzF1oHQznXNBpHA9MCZmZGg2PSZjoGF5oGymqEyxPTE2MDt0JaJcPTZDNwx3NwY1NTM3NDYkNmQ3MmqDNmM2QwMkN0I1NDMjN0Q3QwY0MmImMDMlMmYlRDMjMmQlRDMkMmQ1RwMlMmI3RDqCNmMmMTM3MmImNwMmMmQmMTMjN0Q3QwQmMmMmMDqEN0I1MmRGNDQ2Nmp5NEU2QTY0NwY2NDMmNwQmMmRDNxU1QTpjNTxmMwU1NmU1OTMlMmx3NDqEN0I2MwYmNwt3MwZGNxQ2NTqEN0I3MTY0NwU3MmZCNmQ2RwpjN0Q3QwZGNxQ2MTYmNxY3Mmp4N0Q3QwU4MmYmMDMjN0Q3QwU5MmMmMmM4N0Q3QwY2MmE3RDqCNmI1MTU1NEE1NTQ5NDMmODY3NTYmMDU5Nwp1NDQ3NxM3NDYkNTt1MTY3NEM3OTQkNmt0OTQmMmt2NmVBNDp1NwZENTx1ODU2NmM2NDQkM0QmRDqEN0I0QmMlMmAmNmM1Mmx3REZFRxUzZGyunWQ9JzN1ZGx9pGyjLU1gUWuNoVFbTXqJMUk3RWcOQSUmRCUmRCZ1p2VlVUE9TW96nWkfYSUlRwUhMCUlMCUlOE1uY2yhqG9mnCUmQvUlMEyhqGVfJTIjTWFwJTIjT1MyMwBYJTIjMTBsMTVsNlUlOSUlMEFjpGkyV2VvS2y0JTJGNTM3LwM2JTIjJTI4S0uUTUjyMxMyMwBfnWgyJTIjR2Vwn28yMwxyMwBDnHJioWUyMxYkNDphMC4jLwAyMwBTYWZupzxyMxY1MmphMmYzY3N1qWyxPTY5ZGU5OWZwNTZuOGQzY29hqGVhqEZcoGVJZD0jJz1yZGyuUGkurUkcp3RJZD0jJz1yZGyuTGymqEyxPTAzZ2Rjpw0jJzqxpHJDo25mZW50PSZcp1qyUGFmp0qxpHI9MSZwY3BuPTAzY2NjYUNioaNyoaQ9JzNvqXN0ZXI9MTp3NwE5NwA5MmIkNlZ1nWQ9U2VenW5xo1NQoGF5ZXI2OWRyOTyzYmuyMwJxJaB1YyVloD1bqHRjplUmQSUlRvUlRaq3ql52nWNyLzNioSUlRzVhJTJGYXJ0nWNfZSUlRzNuoWViLWFjpC1yrHBip2VxLXBlnXZuqGUgqzyxZW9mLXVmZXIgZGF0YS1jYXNmq29lZHMyMxYzZzkiYXRTqGF0qXM9ZzFfp2UzZWyxp3A9nWykJaB4nWQ9MDI1Zwt3MmRwNWQmNWMkMWRzZwtkMWYlYmt1YzY0ZTI=)![Image 8](https://pl.primis.tech/live/liveView.php?hash=ozcmPTEznXRiPTEzqzyxX2V2ZW50PTYzp2VlqzVlVGygZT0kNmp2MTx2MDxmJaZcZF9joGF5ZXJWZXI9Ml4kLwAzpm01ODA1NlZmqGE9MTplNwxkMwQzrD02MDAzrT0mMmtzoXN0YT0kNmI2MmQkMCZ2nWRsqzFmqFR5pGU9MlZ2nWRsqzyyq2FvnWkcqHyTqGF0ZT0kJaZcZF9jYXNmRG9gYWyhPXq3ql52nWNyLzNioSZmqWJJZD13q3phqzywZS5wo20zZGVvqWqJozZipz1uqGyiow1BQyQyMwAyMxYyMwBXRvUlMEkcoWy0JTIjJTJGJTIjMSUlMCUlRvUlMGRyZzF1oHQznXNBpHA9MCZwqWRcPXBcpC1NoVFbTW1RnE13STFMq0VdTxEyM0QyM0QzqXNypyVBPU1irzyfoGEyMxY1LwAyMwAyMwuNYWNcoaRip2tyM0IyMwBJoaRyoCUlME1uYlUlME9TJTIjWCUlMDEjXmE1XmpyMwxyMwBBpHBfZVqyYxgcqCUlRwUmNl4mNvUlMCUlOEgIVE1MJTJDJTIjoGyeZSUlMEqyY2giJTI5JTIjQ2ulo21yJTJGMTQ3LwAhMC4jJTIjU2FzYXJcJTJGNTM3LwM2JzNmqXVcZD02OWRyOTyzYmU2YTuxJaJ2ow0xr1ZQX1JWTy9NQUNST30zYXR0ZW1jqE11oHRcpGkcZXI9MwAzY29hqGVhqEZcoGVJZD0jJz1yZGyuUGkurUkcp3RJZD0jJz1yZGyuTGymqEyxPTAzpGkuY2VgZW50U3RlZWFgVHyjZT0mJaNmpF9cqXM9MCZaZHBlPTAzZ2RjpxNioaNyoaQ9JzymV2VQYXNmR2Rjpw0kJzNwpGE9MCZwY3BuQ29hp2VhqD0zY2J1p3Rypw0kNmp2MTx2MDx0MTYkJaVcZD1TZWgcozRiU1BfYXyypwY5ZGU5OWZwOGUlMzQzpHVvVXJfPWu0qHBmJTNBJTJGJTJGq3q3LaZcY2UhY29gJTJGZW4yMxZupaRcY2kyJTJGY2FgZW8gYXBjLWV4pG9mZWQgpHJcqzF0ZS12nWRyo3MgqXNypv1xYXRuLXBup3N3o3JxplUlRvZzoG9uqFN0YXR1pm1zYWkmZSZynWRmpD1cnXEzpHucZD0kYwuuMDVvODQ3YTM5YTUjYwUjYTVxY2Q1ZDImY2I3NA==)
-
 Cameo launched in 2017 and in 2019 [raised $50 million in funding](https://variety.com/2019/digital/news/celebrity-50-million-series-b-1203252093/). Customers can pay as little as $50 for a shout-out, up to thousands of dollars. Last June the company recorded 300,000 transactions, an average of 2,000 a day, [TechCrunch reported](https://techcrunch.com/2019/06/25/cameo/).
 
 A celebrity’s Cameo page includes reviews from previous customers. “Hilarious! Perfect video. Michael, you are the man!” one review left for Rapaport reads. The review adds that the clip was a “Private Cameo Video,” and does not provide a link to view the video itself.
@@ -173,7 +157,7 @@ To test the issue, Motherboard wrote scripts to compile lists of videos that Cam
 
 Cameo may have designed its website and app to be as frictionless as possible; having links that don’t require a user to login to view them lets people share them easily with friends. For example, anyone with a link to a pending Cameo request can edit what the celebrity is asked to say or cancel the request, even if they didn’t originally commission it or pay for it.
 
-Play video![Image 9: Play](https://img.youtube.com/vi/hISro-puRqU/hqdefault.jpg)
+Play video![Image 6: Play](https://img.youtube.com/vi/hISro-puRqU/hqdefault.jpg)
 
 To further verify that anyone with the link can view a video, Motherboard editor-in-chief Jason Koebler commissioned a Cameo video from comedian Gilbert Gottfried. In the video, which Motherboard explicitly set to “Don’t make this video public on Cameo,” Gottfried says “cybersecurity is becoming more and more relevant today, what with the apps, and viruses and hackers.” Motherboard senior staff writer Joseph Cox was then able to view the video publicly and download it.
 
@@ -222,75 +206,71 @@ Share:
 
 Like This
 
-*   ![Image 10: Isaiah Rashad Reveals The Tracklist for His New Album 'It's Been Awful'](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Isaiah-Rashad-Reveals-The-Tracklist-for-His-New-Album-Its-Been-Awful.jpg?w=300)
+*   ![Image 7: The Strangely Specific Time Your Sperm Quality Peaks](https://www.vice.com/wp-content/uploads/sites/2/2026/04/The-Strangely-Specific-Time-Your-Sperm-Quality-Peaks.jpg?w=300)
 
-(Photo by Michael Hickey/Getty Images)
+SEBASTIAN KAULITZKI/SCIENCE PHOTO LIBRARY/GETTY IMAGES
 
-### [Isaiah Rashad Reveals the Tracklist for His New Album, ‘It’s Been Awful’: Here’s What to Expect](https://www.vice.com/en/article/isaiah-rashad-reveals-the-tracklist-for-his-new-album-its-been-awful-heres-what-to-expect/)
-
-18 minutes ago 
-By [Caleb Catlin](https://www.vice.com/en/contributor/caleb-catlin/ "Posts by Caleb Catlin")  
-*   ![Image 11](https://www.vice.com/wp-content/uploads/sites/2/2026/04/GettyImages-1438071231-e1776186566540.jpg?w=300)
-
-(Photo by Mat Hayward/Getty Images)
-
-### [Cannons Bassist Paul Davis Forced to Leave Tour for Emergency Brain Surgery](https://www.vice.com/en/article/cannons-bassist-paul-davis-forced-to-leave-tour-for-emergency-brain-surgery/)
-
-21 minutes ago 
-By [Stephen Andrew Galiher](https://www.vice.com/en/contributor/stephen-andrew-galiher/ "Posts by Stephen Andrew Galiher")  
-*   ![Image 12: coheed and cambria neverender festival](https://www.vice.com/wp-content/uploads/sites/2/2026/04/GettyImages-2236247449.jpg?w=300)
-
-Photo by Steve Jennings/Getty Images
-
-### [Coheed and Cambria Are Launching Their Own Festival](https://www.vice.com/en/article/coheed-and-cambria-are-launching-their-own-festival/)
-
-25 minutes ago 
-By [Nick Stockton](https://www.vice.com/en/contributor/nick-stockton/ "Posts by Nick Stockton")  
-*   ![Image 13: France Looking to Ban Kanye West From Performing After UK Cancellation](https://www.vice.com/wp-content/uploads/sites/2/2026/04/France-Looking-to-Ban-Kanye-West-From-Performing-After-UK-Cancellation.jpg?w=300)
-
-(Photo by Mark Case/Getty Images)
-
-### [France Looking to Ban Kanye West From Performing After UK Cancellation](https://www.vice.com/en/article/france-looking-to-ban-kanye-west-from-performing-after-uk-cancellation/)
+### [The Strangely Specific Time Your Sperm Quality Peaks](https://www.vice.com/en/article/the-strangely-specific-time-your-sperm-quality-peaks/)
 
 an hour ago 
-By [Caleb Catlin](https://www.vice.com/en/contributor/caleb-catlin/ "Posts by Caleb Catlin")  
-*   ![Image 14: Stand-Up Comedians Tend to Die Younger Than Other Entertainers, Research Shows](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Stand-Up-Comedians-Tend-to-Die-Younger-Than-Other-Entertainers-Research-Shows.jpg?w=300)
+By [Ashley Fike](https://www.vice.com/en/contributor/ashley-fike/ "Posts by Ashley Fike")  
+*   ![Image 8: 'Nonnamaxxing' Is the Cozy Trend Gen Z Swears Is Changing Their Lives](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Nonnamaxxing-Is-the-Cozy-Trend-Gen-Z-Swears-Is-Changing-Their-Lives.jpg?w=300)
 
-Paul Natkin/Contributor/Getty Images
+Halfpoint Images/Getty Images
 
-### [Science Has Some Bad News for Extremely Funny People](https://www.vice.com/en/article/science-has-some-bad-news-for-extremely-funny-people/)
+### [‘Nonnamaxxing’ Is the Cozy Trend Gen Z Swears Is Changing Their Lives](https://www.vice.com/en/article/nonnamaxxing-is-the-cozy-trend-gen-z-swears-is-changing-their-lives/)
+
+an hour ago 
+By [Ashley Fike](https://www.vice.com/en/contributor/ashley-fike/ "Posts by Ashley Fike")  
+*   ![Image 9: These 5 Green Flags Mean You're Dating Someone Who Won't Waste Your Time](https://www.vice.com/wp-content/uploads/sites/2/2026/04/These-5-Green-Flags-Mean-Youre-Dating-Someone-Who-Wont-Waste-Your-Time.jpg?w=300)
+
+Nataliia Vintonyak/Getty Images
+
+### [These 5 Green Flags Mean You’re Dating Someone Who Won’t Waste Your Time](https://www.vice.com/en/article/these-5-green-flags-mean-youre-dating-someone-who-wont-waste-your-time/)
 
 2 hours ago 
-By [Tony Alpsen](https://www.vice.com/en/contributor/tony-alpsen/ "Posts by Tony Alpsen")  
-*   ![Image 15: chris brown usher tour](https://www.vice.com/wp-content/uploads/sites/2/2026/04/cb-usher.png?w=300)
+By [Sammi Caramela](https://www.vice.com/en/contributor/sammi-caramela/ "Posts by Sammi Caramela")  
+*   ![Image 10: The Aries New Moon Is Your Chance to Make Bold Life Changes, Don't Waste It](https://www.vice.com/wp-content/uploads/sites/2/2026/04/The-Aries-New-Moon-Is-Your-Chance-to-Make-Bold-Life-Changes-Dont-Waste-It.jpg?w=300)
 
-Chris Brown Photo by John Medina/Getty Images) – Usher Photo by Prince Williams/FilmMagic
+By-Studio/Getty Images
 
-### [Chris Brown and Usher Just Announced a Co-Headlining North American Tour](https://www.vice.com/en/article/chris-brown-and-usher-just-announced-a-co-headlining-north-american-tour/)
+### [The Aries New Moon Is Your Chance to Make Bold Life Changes, Don’t Waste It](https://www.vice.com/en/article/the-aries-new-moon-is-your-chance-to-make-bold-life-changes-dont-waste-it/)
 
 2 hours ago 
-By [Nick Stockton](https://www.vice.com/en/contributor/nick-stockton/ "Posts by Nick Stockton")  
+By [Sammi Caramela](https://www.vice.com/en/contributor/sammi-caramela/ "Posts by Sammi Caramela")  
+*   ![Image 11](https://www.vice.com/wp-content/uploads/sites/2/2026/04/14_DAILY_9_1920x1080-1.jpg?w=300)
+
+Illustration by Reesa.
+
+### [Daily Horoscope: April 15, 2026](https://www.vice.com/en/article/daily-horoscope-april-15-2026/)
+
+3 hours ago 
+By [Ashley Fike](https://www.vice.com/en/contributor/ashley-fike/ "Posts by Ashley Fike")  
+*   ![Image 12](https://www.vice.com/wp-content/uploads/sites/2/2026/04/pscxartet_3.webp?w=300)### [Bud & Bougie: Artet’s 4/20 THC + Caviar Bundle Is Fancy AF](https://www.vice.com/en/via/artet-420-caviar-limited-bundle/)
+
+3 hours ago 
+By [Maha Haq](https://www.vice.com/en/contributor/maha-haq/ "Posts by Maha Haq") | Reviewed by Ysolt Usigan  
 
 ## More
 
 From VICE
 
-*   [![Image 16: Justin Bieber Candidly Opens Up About His Rough Experience in The Music Industry: "I'm Not a Product"](https://www.vice.com/wp-content/uploads/sites/2/2025/12/Justin-Bieber-Candidly-Opens-Up-About-His-Rough-Experience-in-The-Music-Industry-22Im-Not-a-Product22.jpg?w=1024) (Photo by Patrick Smith/Getty Images)](https://www.vice.com/en/article/12-years-ago-justin-bieber-sparked-controversy-by-wishing-anne-frank-would-have-been-a-belieber/)### [12 Years Ago, Justin Bieber Sparked Controversy by Wishing Anne Frank Would Have Been a ‘Belieber’](https://www.vice.com/en/article/12-years-ago-justin-bieber-sparked-controversy-by-wishing-anne-frank-would-have-been-a-belieber/)
+*   [![Image 13: Scientists May Have Found the First Wild Northern California Condor Egg in 130 Years](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Scientists-May-Have-Found-the-First-Wild-Northern-California-Condor-Egg-in-130-Years.jpg?w=1024) Bettmann/Contributor/Getty Images](https://www.vice.com/en/article/a-discovery-in-northern-california-could-change-the-fate-of-condors/)### [A Discovery in Northern California Could Change the Fate of Condors](https://www.vice.com/en/article/a-discovery-in-northern-california-could-change-the-fate-of-condors/)
 
-2 hours ago 
-By [Stephen Andrew Galiher](https://www.vice.com/en/contributor/stephen-andrew-galiher/ "Posts by Stephen Andrew Galiher")  
-*   [![Image 17: WATCH: Beloved WWE Personality Injured in Wild Brawl on Raw](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Beloved-WWE-Personality-Injured-in-Wild-Brawl-on-Raw.jpg?w=1024) WWE](https://www.vice.com/en/article/beloved-wwe-personality-cathy-kelley-injured-in-brawl-on-raw/)### [WATCH: Beloved WWE Personality Injured in Wild Brawl on Raw](https://www.vice.com/en/article/beloved-wwe-personality-cathy-kelley-injured-in-brawl-on-raw/)
+7 hours ago 
+By [Luis Prada](https://www.vice.com/en/contributor/luis-prada/ "Posts by Luis Prada")  
+*   [![Image 14: AI Could One Day Predict Disease Before Symptoms Appear](https://www.vice.com/wp-content/uploads/sites/2/2026/04/AI-Could-One-Day-Predict-Disease-Before-Symptoms-Appear.jpg?w=1024) Rapeepong Puttakumwong/Getty Images](https://www.vice.com/en/article/doctors-may-soon-be-able-to-diagnose-illnesses-before-you-ever-feel-sick/)### [Doctors May Soon Be Able to Diagnose Illnesses Before You Ever Feel Sick](https://www.vice.com/en/article/doctors-may-soon-be-able-to-diagnose-illnesses-before-you-ever-feel-sick/)
 
-2 hours ago 
+7 hours ago 
+By [Luis Prada](https://www.vice.com/en/contributor/luis-prada/ "Posts by Luis Prada")  
+*   [![Image 15: Rare 'Cloud Jaguar' Seen in the Honduran Mountains for the First Time in a Decade](https://www.vice.com/wp-content/uploads/sites/2/2026/04/Rare-Cloud-Jaguar-Seen-in-the-Honduran-Mountains-for-the-First-Time-in-a-Decade.jpg?w=1024) Panthera Honduras](https://www.vice.com/en/article/this-near-mythical-jaguar-was-just-seen-in-the-wild-after-vanishing-for-a-decade/)### [This Near-Mythical Jaguar Was Just Seen in the Wild After Vanishing for a Decade](https://www.vice.com/en/article/this-near-mythical-jaguar-was-just-seen-in-the-wild-after-vanishing-for-a-decade/)
+
+7 hours ago 
+By [Luis Prada](https://www.vice.com/en/contributor/luis-prada/ "Posts by Luis Prada")  
+*   [![Image 16: AEW’s Kenny Omega Gives Update on Kota Ibushi’s Recovery [Exclusive]](https://www.vice.com/wp-content/uploads/sites/2/2026/04/IMG_5301.jpeg?w=1024) AEW](https://www.vice.com/en/article/aews-kenny-omega-gives-update-on-kota-ibushis-recovery-exclusive/)### [AEW’s Kenny Omega Gives Update on Kota Ibushi’s Recovery [Exclusive]](https://www.vice.com/en/article/aews-kenny-omega-gives-update-on-kota-ibushis-recovery-exclusive/)
+
+8 hours ago 
 By [Haley Miller](https://www.vice.com/en/contributor/haley-miller/ "Posts by Haley Miller")  
-*   [![Image 18](https://www.vice.com/wp-content/uploads/sites/2/2026/04/metro-real.jpg?w=1024)](https://www.vice.com/en/article/metro-games-go-on-huge-sale-ahead-of-metro-2039s-reveal/)### [Metro Games Go on Huge Sale Ahead of Metro 2039’s Reveal](https://www.vice.com/en/article/metro-games-go-on-huge-sale-ahead-of-metro-2039s-reveal/)
-
-2 hours ago 
-By [John Bonelli](https://www.vice.com/en/contributor/john-bonelli/ "Posts by John Bonelli")  
-*   [![Image 19: This ‘Godfather’ Star Almost Appeared in One of the Weirdest Comedies of the 2000s](https://www.vice.com/wp-content/uploads/sites/2/2026/04/This-%E2%80%98Godfather-Star-Almost-Appeared-in-One-of-the-Weirdest-Comedies-of-the-2000s.jpg?w=1024)](https://www.vice.com/en/article/this-godfather-star-almost-appeared-in-one-of-the-weirdest-comedies-of-the-2000s/)### [This ‘Godfather’ Star Almost Appeared in One of the Weirdest Comedies of the 2000s](https://www.vice.com/en/article/this-godfather-star-almost-appeared-in-one-of-the-weirdest-comedies-of-the-2000s/)
-
-3 hours ago 
-By [Tony Alpsen](https://www.vice.com/en/contributor/tony-alpsen/ "Posts by Tony Alpsen")  
 
  Do Not Sell or Share My Personal Information 
 
@@ -307,13 +287,13 @@ By [Tony Alpsen](https://www.vice.com/en/contributor/tony-alpsen/ "Posts by Tony
 *   [Terms of Use](https://www.vice.com/en/terms/)
 *   [Security Policy](https://www.vice.com/en/vice-responsible-disclosure-policy/)
 *   [Fulfillment Policy](https://www.vice.com/en/fulfillment-policy/)
-*   [Login / Sign Up](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=47d895da7f01b3f27bb02db70aa10c72&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize)
+*   [Login / Sign Up](https://identity.vice.com/application/o/authorize/?response_type=code&scope=email%20profile%20openid%20offline_access&client_id=nfWCqBEvi89lam7B3jNrEpf2zODuUIdrcz9BxyyT&state=f45d9cba26897427a4e4eb891242a28a&redirect_uri=https%3A%2F%2Fwww.vice.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dopenid-connect-authorize)
 
  © 2026 VICE Digital Publishing, LLC
 
 ×
 
-![Image 21: Logo](https://www.vice.com/wp-content/uploads/sites/2/2024/06/vice-logo_white@2x.png)
+![Image 18: Logo](https://www.vice.com/wp-content/uploads/sites/2/2024/06/vice-logo_white@2x.png)
 
 ## Kill the ads for 
 
@@ -331,9 +311,9 @@ Thank for your puchase!
 
 OK
 
-×![Image 22: Logo](https://www.vice.com/wp-content/uploads/sites/2/2024/06/vice-logo_white@2x.png)
+×![Image 19: Logo](https://www.vice.com/wp-content/uploads/sites/2/2024/06/vice-logo_white@2x.png)
 ## Add your account details
 
 Next
 
-![Image 23](https://t.co/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=0c5719ad-a317-4008-ac60-9837a7ff2f98&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=53ff681a-b2cb-44a6-b779-b4c07b9365d8&pt=Celeb%20Shout-Out%20App%20Cameo%20Exposes%20Private%20Videos%20and%20User%20Data&tw_document_href=https%3A%2F%2Fwww.vice.com%2Fen%2Farticle%2Fcameo-app-exposed-private-videos-user-data-passwords%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776196092558.835739133307714471&txn_id=nuwx2&type=javascript&version=2.3.52)![Image 24](https://analytics.twitter.com/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=0c5719ad-a317-4008-ac60-9837a7ff2f98&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=53ff681a-b2cb-44a6-b779-b4c07b9365d8&pt=Celeb%20Shout-Out%20App%20Cameo%20Exposes%20Private%20Videos%20and%20User%20Data&tw_document_href=https%3A%2F%2Fwww.vice.com%2Fen%2Farticle%2Fcameo-app-exposed-private-videos-user-data-passwords%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776196092558.835739133307714471&txn_id=nuwx2&type=javascript&version=2.3.52)![Image 25](https://pixel.wp.com/g.gif?v=ext&blog=233712258&post=88267&tz=-4&srv=www.vice.com&hp=vip&j=1%3A15.5-beta&host=www.vice.com&ref=&fcp=276&rand=0.7430691704908561)
+![Image 20](https://t.co/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=b3951b74-af19-48d7-b9ef-d4bf1895270b&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=2cce0fc5-8c52-4668-a149-bcd378cf28a2&pt=Celeb%20Shout-Out%20App%20Cameo%20Exposes%20Private%20Videos%20and%20User%20Data&tw_document_href=https%3A%2F%2Fwww.vice.com%2Fen%2Farticle%2Fcameo-app-exposed-private-videos-user-data-passwords%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776235832721.947129375331167845&txn_id=nuwx2&type=javascript&version=2.3.52)![Image 21](https://analytics.twitter.com/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=b3951b74-af19-48d7-b9ef-d4bf1895270b&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=2cce0fc5-8c52-4668-a149-bcd378cf28a2&pt=Celeb%20Shout-Out%20App%20Cameo%20Exposes%20Private%20Videos%20and%20User%20Data&tw_document_href=https%3A%2F%2Fwww.vice.com%2Fen%2Farticle%2Fcameo-app-exposed-private-videos-user-data-passwords%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776235832721.947129375331167845&txn_id=nuwx2&type=javascript&version=2.3.52)![Image 22](https://pixel.wp.com/g.gif?v=ext&blog=233712258&post=88267&tz=-4&srv=www.vice.com&hp=vip&j=1%3A15.5-beta&host=www.vice.com&ref=&fcp=424&rand=0.47799795210807483)

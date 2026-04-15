@@ -220,6 +220,11 @@ StrictlyVC kicks off the year in SF. Get in the room for unfiltered fireside cha
     *   [Anthony Ha](https://techcrunch.com/author/anthony-ha/)
 
 *   
+### [Anthropic temporarily banned OpenClaw’s creator from accessing Claude](https://techcrunch.com/2026/04/10/anthropic-temporarily-banned-openclaws-creator-from-accessing-claude/)
+
+    *   [Julie Bort](https://techcrunch.com/author/julie-bort/)
+
+*   
 ### [France to ditch Windows for Linux to reduce reliance on US tech](https://techcrunch.com/2026/04/10/france-to-ditch-windows-for-linux-to-reduce-reliance-on-us-tech/)
 
     *   [Zack Whittaker](https://techcrunch.com/author/zack-whittaker/)
@@ -233,11 +238,6 @@ StrictlyVC kicks off the year in SF. Get in the room for unfiltered fireside cha
 ### [This founder helped build SpaceX’s most powerful rocket engine. Now he’s building a ‘fighter jet for orbit.’](https://techcrunch.com/2026/04/09/portal-raises-50-million-to-build-a-new-kind-of-high-power-rocket-engine/)
 
     *   [Tim Fernholz](https://techcrunch.com/author/tim-fernholz/)
-
-*   
-### [Developer of VeraCrypt encryption software says Windows users may face boot-up issues after Microsoft locked his account](https://techcrunch.com/2026/04/08/veracrypt-encryption-software-windows-microsoft-lock-boot-issues/)
-
-    *   [Zack Whittaker](https://techcrunch.com/author/zack-whittaker/)
 
  Loading the next article 
 
@@ -277,14 +277,6 @@ StrictlyVC kicks off the year in SF. Get in the room for unfiltered fireside cha
 
 © 2026 TechCrunch Media LLC.
 
-![Image 7](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=3014608&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=0&rand=0.09145975710164367)
+![Image 7](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=3014608&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=312&rand=0.4809085491931532)
 
 Some areas of this page may shift around if you resize the browser window. Be sure to check heading and document order.
-
-advertisement
-
-advertisement
-
-advertisement
-
-![Image 8](https://dt.adsafeprotected.com/dt?adspot_id=ryghhm_728x90_)

@@ -2,7 +2,7 @@ Title: Security update
 
 URL Source: https://www.uber.com/newsroom/security-update/
 
-Published Time: Tue, 14 Apr 2026 18:53:47 GMT
+Published Time: Wed, 15 Apr 2026 06:53:05 GMT
 
 Markdown Content:
 # Security update
@@ -167,7 +167,7 @@ June 7, 2025
 
 ## Select your preferred language
 
-[English](https://www.uber.com/us/en/newsroom/security-update/)
+[English](https://www.uber.com/us/en/newsroom/security-update/?%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3Futm_source=https%3A%2F%2Fwww.zoost.ai%2F&%3Futm_source=https%3A%2F%2Fwww.zoost.ai%2F)
 
 *   [News](https://www.uber.com/us/en/newsroom/)  
 *   [About us](https://www.uber.com/us/en/about/)  
@@ -180,7 +180,7 @@ EN
 
 ## Select your preferred language
 
-[English](https://www.uber.com/us/en/newsroom/security-update/)
+[English](https://www.uber.com/us/en/newsroom/security-update/?%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3Futm_source=https%3A%2F%2Fwww.zoost.ai%2F&%3Futm_source=https%3A%2F%2Fwww.zoost.ai%2F)
 
 [## Ride](https://m.uber.com/looking/)
 

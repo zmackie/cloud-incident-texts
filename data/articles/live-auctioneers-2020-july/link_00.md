@@ -2,7 +2,7 @@ Title: Live Auctioneers | Washington State
 
 URL Source: https://www.atg.wa.gov/live-auctioneers/
 
-Published Time: Tue, 14 Apr 2026 19:37:38 GMT
+Published Time: Wed, 15 Apr 2026 06:50:50 GMT
 
 Markdown Content:
 # Live Auctioneers | Washington State
@@ -78,6 +78,7 @@ Search
     *   [Hate Crimes & Bias Incidents Hotline](https://www.atg.wa.gov/report-hate) 
     *   [Veteran and Military Resources](https://www.atg.wa.gov/veteran-and-military-resources) 
     *   [Campaign Finance Law Enforcement](https://www.atg.wa.gov/enforcement-campaign-finance-laws) 
+    *   [Veterans & Military Resources-test page](https://www.atg.wa.gov/vmrtest) 
 
     *    Criminal Justice & Public Safety  
 
@@ -230,6 +231,7 @@ Number of Washingtonians Affected:
 *   [Homicide Investigation Tracking System (HITS)](https://www.atg.wa.gov/homicide-investigation-tracking-system-hits)
 *   [Financial Crimes Unit](https://www.atg.wa.gov/financial-crimes-unit "Financial Crimes Unit")
 *   [Firearms](https://www.atg.wa.gov/firearms)
+*   [Veterans & Military Resources-test page](https://www.atg.wa.gov/vmrtest)
 
 ## Initiatives
 
@@ -297,5 +299,3 @@ Number of Washingtonians Affected:
 OFFICE HOURS: 8:00 AM - 5:00 PM Monday - Friday Closed Weekends & State Holidays
 
 [](https://www.atg.wa.gov/live-auctioneers/#)
-
-ShareThis Copy and Paste

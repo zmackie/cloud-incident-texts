@@ -65,8 +65,6 @@ Videos you watch may be added to the TV's watch history and influence TV recomme
 
 Cancel Confirm
 
-Video unavailable
-
 [](https://www.youtube.com/watch?v=f066e7WndTQ)
 
 Share
@@ -79,9 +77,9 @@ An error occurred while retrieving sharing information. Please try again later.
 
 0:00
 
-[](https://www.youtube.com/watch?v=f066e7WndTQ)[](https://www.youtube.com/watch?v=9OY6LtamqRQ "Next (SHIFT+n)")
+[](https://www.youtube.com/watch?v=f066e7WndTQ)[](https://www.youtube.com/watch?v=q0wxT-Ij4XU "Next (SHIFT+n)")
 
-0:00 / 46:31
+0:00 / 0:00
 
 Live
 
@@ -91,7 +89,7 @@ Live
 
 •
 
-[23:33 LUCR-3: Cloud Clepto & SaaS-y Scattered Spider Shenanigans - Ian Ahl fwd:cloudsec 896 views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=dFktwwpjR90)[20:45 Open-Sourcing AWS Pentest Methodology - Lizzie Moratti fwd:cloudsec 1.7K views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=q51Fe_B6qY4)[30:42 The Ransomware Defense Strategies That Worked - Yotam Meitar & Azeem Aleem, Sygnia | CRESTCon UK CREST Videos 270 views • 3 years ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=3F8_3NSG-Qo)[26:28 Nicholas Carlini - Black-hat LLMs | [un]prompted 2026 unprompted 261K views • 2 weeks ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=1sd26pWhfmg)[23:56 Permission Impossible: Hidden Dangers of Azure RBAC and API Vulnerabilities fwd:cloudsec 322 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=u-fJ6EbfrYc)[27:11 A Candid Perspective on the Cloud Threat Landscape: What’s Real, What’s Not, and What Should Change fwd:cloudsec 128 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=8c3unhWyFGA)[27:31 Cybersecurity Architecture: Networks IBM Technology 495K views • 2 years ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=sesacY7Xz3c)[39:51 DEF CON 33 - Recording PCAPs from Stingrays With a $20 Hotspot - Cooper Quintin, oopsbagel DEFCONConference 42K views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=meC2JqNAbCA)[23:07 Sweet Deception: Mastering AWS Honey Tokens to Detect and Outsmart Attackers fwd:cloudsec 350 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=R75ZTBnUwXk)[49:26 Claude Mythos, Project Glasswing and AI cybersecurity risks IBM Technology 17K views • 4 days ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=Yae74guiqq8)[25:48 Ransomware protection with immutable AWS Backup - it's complicated fwd:cloudsec 312 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=9OY6LtamqRQ)[1:00:11 Pepe Escobar: China Just HUMILIATED Trump’s Blockade Plan - Iran Takes FULL Control of Hormuz Dialogue Works 78K views • Streamed 3 hours ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=46I3oA-N6bM)
+[23:33 LUCR-3: Cloud Clepto & SaaS-y Scattered Spider Shenanigans - Ian Ahl fwd:cloudsec 896 views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=dFktwwpjR90)[23:56 Permission Impossible: Hidden Dangers of Azure RBAC and API Vulnerabilities fwd:cloudsec 322 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=u-fJ6EbfrYc)[20:45 Open-Sourcing AWS Pentest Methodology - Lizzie Moratti fwd:cloudsec 1.7K views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=q51Fe_B6qY4)[25:48 Ransomware protection with immutable AWS Backup - it's complicated fwd:cloudsec 312 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=9OY6LtamqRQ)[42:55 Linn Zaw Win | Extending Power Apps with JavaScript or TypeScript Update Days: Power Platform 68 views • 2 weeks ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=JiCNOC3vNqs)[55:00 The World's Most Important Machine Veritasium 26M views • 3 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=MiUHjLxm3V0)[27:49 Trump's Stupid Ballroom Ruled Illegal LegalEagle 315K views • 11 hours ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=q0wxT-Ij4XU)[Open Your Third Eye For Healing At All Levels | Emotional, Physical, Mental & Spiritual Healing Inner Calm Meditation Music 139 watching • 1 month ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=TTr8YlEbSLc)[31:15 Cybersecurity Architecture: Who Are You? Identity and Access Management IBM Technology 478K views • 2 years ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=5uNifnVlBy4)[36:54 But what is quantum computing? (Grover's Algorithm)3Blue1Brown 3.3M views • 11 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=RQWpF2Gb-gU)[24:45 EU Compliancy Cloud Framework-ish Smackdown fwd:cloudsec 34 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=nuQE2zmJ4jo)[27:11 A Candid Perspective on the Cloud Threat Landscape: What’s Real, What’s Not, and What Should Change fwd:cloudsec 128 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=8c3unhWyFGA)
 
 # Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
 
@@ -184,7 +182,7 @@ Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study
 
 2024 Jun 21
 
-Speaker: Yotam Meitar Yotam has spent the last ten years managing and responding to some of the most sophisticated global cyber operations. He’s worked with technical teams and executives to defeat attacks and leverage cyber as a competitive advantage across incident response, purple teaming, posture enhancements, and executive wargames. In his current role, Yotam focuses on developing cloud-specific incident response methodology and collaborating with practitioners on developing robust cloud security frameworks. Yotam’s previous positions include Director of Incident Response at Sygnia and command positions in the IDF. Abstract: Ransom attacks in the cloud are on the rise. Unlike traditional ransomware operations in which attackers fully compromise an on-prem environment before encrypting critical systems, most cloud ransom attack attacks follow a more straightforward playbook: compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data. The speed and sophistication of these attacks are creating new challenges defenders must adapt to in order to survive. In this session we’ll share the details of a real-world incident response to a sophisticated cloud ransom attack, in which paying the ransom only started the clock on the real battle. Validating the scope of stolen information under looming legal deadlines through unique data forensics, uncovering expert impersonation of a unique identity provider, and revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access, were all instrumental to the success of this incident response. In addition to the thrilling minute-by-minute technical story, we’ll share key takeaways and intelligence for performing cloud incident response against these rising attacks in a rapidly evolving threat landscape. [https://fwdcloudsec.org/](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbkVlTXItX3NHbnhhXzBzay1hY1NveVR0cHNfZ3xBQ3Jtc0tuZWFta3lNenM0X3ZSMGFGYVVNWnNVM1ZBSmduTXBSczZCX0ZKb2Z1dFh6U2RiZF92RTdJMEdfanBkNV8wemtxbTZ0WS1fV0VwaFNESWpoYVFtblpMWks0a2txdGFGcTZab2s0RkRGNnJ5QjUtXzBYNA&q=https%3A%2F%2Ffwdcloudsec.org%2F&v=f066e7WndTQ)…...more 
+Speaker: Yotam Meitar Yotam has spent the last ten years managing and responding to some of the most sophisticated global cyber operations. He’s worked with technical teams and executives to defeat attacks and leverage cyber as a competitive advantage across incident response, purple teaming, posture enhancements, and executive wargames. In his current role, Yotam focuses on developing cloud-specific incident response methodology and collaborating with practitioners on developing robust cloud security frameworks. Yotam’s previous positions include Director of Incident Response at Sygnia and command positions in the IDF. Abstract: Ransom attacks in the cloud are on the rise. Unlike traditional ransomware operations in which attackers fully compromise an on-prem environment before encrypting critical systems, most cloud ransom attack attacks follow a more straightforward playbook: compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data. The speed and sophistication of these attacks are creating new challenges defenders must adapt to in order to survive. In this session we’ll share the details of a real-world incident response to a sophisticated cloud ransom attack, in which paying the ransom only started the clock on the real battle. Validating the scope of stolen information under looming legal deadlines through unique data forensics, uncovering expert impersonation of a unique identity provider, and revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access, were all instrumental to the success of this incident response. In addition to the thrilling minute-by-minute technical story, we’ll share key takeaways and intelligence for performing cloud incident response against these rising attacks in a rapidly evolving threat landscape. [https://fwdcloudsec.org/](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbmJBT2NJMEVZY2ctQm5ZRWZzdXRHVzBpMXRFZ3xBQ3Jtc0tsZmljX1ZBblY1dlhvUUZwTnl5aXdUVGExYUVocTR0aHQyamJ0Q3EtYkMwN19mNHdyM3dseVROb1VURldsY1RzSTEzUjdrZ0J2ZnI4RWJ4clJmNTZzeW9Ma2tQZy05OW1ENmhUdFNBT1R3cVlLMkN6MA&q=https%3A%2F%2Ffwdcloudsec.org%2F&v=f066e7WndTQ)…...more 
 
 ...more Show less 
 
@@ -220,39 +218,9 @@ fwd:cloudsec
 
 896 views • 1 year ago
 
-[![Image 16](https://i.ytimg.com/vi/q51Fe_B6qY4/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYNCBlKF0wDw==&rs=AOn4CLCNhZffNHm7s62V_ZQn9JBSW0TLOw) 20:45](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
+[![Image 16](https://i.ytimg.com/vi/u-fJ6EbfrYc/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBhKGUwDw==&rs=AOn4CLCuHPQfyPI0iWZgvNeLBZL-GX61tw) 23:56](https://www.youtube.com/watch?v=u-fJ6EbfrYc&pp=ugUEEgJlbg%3D%3D)
 
 ![Image 17](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Open-Sourcing AWS Pentest Methodology - Lizzie Moratti](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
-
-fwd:cloudsec
-
-1.7K views • 1 year ago
-
-[![Image 18](https://i.ytimg.com/vi/3F8_3NSG-Qo/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLB8D90DhGMNG2E-z61xvIgUPUb6aA) 30:42](https://www.youtube.com/watch?v=3F8_3NSG-Qo)
-
-![Image 19](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [The Ransomware Defense Strategies That Worked - Yotam Meitar & Azeem Aleem, Sygnia | CRESTCon UK](https://www.youtube.com/watch?v=3F8_3NSG-Qo)
-
-CREST Videos
-
-270 views • 3 years ago
-
-[![Image 20](https://i.ytimg.com/vi/1sd26pWhfmg/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYciBmKDYwDw==&rs=AOn4CLBt7WXxX8nkpd5tR-g5lISUM690rQ) 26:28](https://www.youtube.com/watch?v=1sd26pWhfmg)
-
-![Image 21](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Nicholas Carlini - Black-hat LLMs | [un]prompted 2026](https://www.youtube.com/watch?v=1sd26pWhfmg)
-
-unprompted
-
-261K views • 2 weeks ago
-
-[![Image 22](https://i.ytimg.com/vi/u-fJ6EbfrYc/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBhKGUwDw==&rs=AOn4CLCuHPQfyPI0iWZgvNeLBZL-GX61tw) 23:56](https://www.youtube.com/watch?v=u-fJ6EbfrYc&pp=ugUEEgJlbg%3D%3D)
-
-![Image 23](https://www.youtube.com/watch?v=f066e7WndTQ)
 
 ### [Permission Impossible: Hidden Dangers of Azure RBAC and API Vulnerabilities](https://www.youtube.com/watch?v=u-fJ6EbfrYc&pp=ugUEEgJlbg%3D%3D)
 
@@ -260,9 +228,101 @@ fwd:cloudsec
 
 322 views • 6 months ago
 
-[![Image 24](https://i.ytimg.com/vi/8c3unhWyFGA/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVCBgKGUwDw==&rs=AOn4CLAzpJoqgW8VriOnjIbkBGeNxWOB-A) 27:11](https://www.youtube.com/watch?v=8c3unhWyFGA)
+[![Image 18](https://i.ytimg.com/vi/q51Fe_B6qY4/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYNCBlKF0wDw==&rs=AOn4CLCNhZffNHm7s62V_ZQn9JBSW0TLOw) 20:45](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
+
+![Image 19](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Open-Sourcing AWS Pentest Methodology - Lizzie Moratti](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
+
+fwd:cloudsec
+
+1.7K views • 1 year ago
+
+[![Image 20](https://i.ytimg.com/vi/9OY6LtamqRQ/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBgKGUwDw==&rs=AOn4CLBne8GQ8MofuYCa0QNLjpCw-EzujA) 25:48](https://www.youtube.com/watch?v=9OY6LtamqRQ)
+
+![Image 21](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Ransomware protection with immutable AWS Backup - it's complicated](https://www.youtube.com/watch?v=9OY6LtamqRQ)
+
+fwd:cloudsec
+
+312 views • 6 months ago
+
+[![Image 22](https://i.ytimg.com/vi/JiCNOC3vNqs/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLDDwkHQDCQE3iHXPunXw9F_cGCK3g) 42:55](https://www.youtube.com/watch?v=JiCNOC3vNqs)
+
+![Image 23](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Linn Zaw Win | Extending Power Apps with JavaScript or TypeScript](https://www.youtube.com/watch?v=JiCNOC3vNqs)
+
+Update Days: Power Platform
+
+68 views • 2 weeks ago
+
+[![Image 24](https://i.ytimg.com/vi/MiUHjLxm3V0/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLDhVfu5Md1lPa015tdhO21P0lUQXA) 55:00](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
 
 ![Image 25](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [The World's Most Important Machine](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
+
+Veritasium
+
+26M views • 3 months ago
+
+[![Image 26](https://i.ytimg.com/vi/q0wxT-Ij4XU/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLAVLCvKTcUQJ1ePRqBBoksJPQ3D-g) 27:49](https://www.youtube.com/watch?v=q0wxT-Ij4XU&pp=0gcJCdMKAYcqIYzv)
+
+![Image 27](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Trump's Stupid Ballroom Ruled Illegal](https://www.youtube.com/watch?v=q0wxT-Ij4XU&pp=0gcJCdMKAYcqIYzv)
+
+LegalEagle
+
+315K views • 11 hours ago
+
+New
+
+[![Image 28](https://i.ytimg.com/vi/TTr8YlEbSLc/hqdefault.jpg?v=69ad562f&sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLA1HAZSVftHcGD8zh3RqNTCpg5HYg) LIVE](https://www.youtube.com/watch?v=TTr8YlEbSLc)
+
+![Image 29](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Open Your Third Eye For Healing At All Levels | Emotional, Physical, Mental & Spiritual Healing](https://www.youtube.com/watch?v=TTr8YlEbSLc)
+
+Inner Calm Meditation Music
+
+139 watching
+
+[![Image 30](https://i.ytimg.com/vi/5uNifnVlBy4/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLAl_-pz_naeAyPVoLq9qEKCgdcpYA) 31:15](https://www.youtube.com/watch?v=5uNifnVlBy4)
+
+![Image 31](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Cybersecurity Architecture: Who Are You? Identity and Access Management](https://www.youtube.com/watch?v=5uNifnVlBy4)
+
+IBM Technology
+
+478K views • 2 years ago
+
+[![Image 32](https://i.ytimg.com/vi/RQWpF2Gb-gU/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLCmbFVW0LkNJ1QgKtTQYopIh_9EVQ) 36:54](https://www.youtube.com/watch?v=RQWpF2Gb-gU&pp=ugUEEgJlbg%3D%3D)
+
+![Image 33](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [But what is quantum computing? (Grover's Algorithm)](https://www.youtube.com/watch?v=RQWpF2Gb-gU&pp=ugUEEgJlbg%3D%3D)
+
+3Blue1Brown
+
+3.3M views • 11 months ago
+
+[![Image 34](https://i.ytimg.com/vi/nuQE2zmJ4jo/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBgKGUwDw==&rs=AOn4CLB6spUWKdeOEL6xEIGGIzq8qHlviw) 24:45](https://www.youtube.com/watch?v=nuQE2zmJ4jo)
+
+![Image 35](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [EU Compliancy Cloud Framework-ish Smackdown](https://www.youtube.com/watch?v=nuQE2zmJ4jo)
+
+fwd:cloudsec
+
+34 views • 6 months ago
+
+[![Image 36](https://i.ytimg.com/vi/8c3unhWyFGA/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVCBgKGUwDw==&rs=AOn4CLAzpJoqgW8VriOnjIbkBGeNxWOB-A) 27:11](https://www.youtube.com/watch?v=8c3unhWyFGA)
+
+![Image 37](https://www.youtube.com/watch?v=f066e7WndTQ)
 
 ### [A Candid Perspective on the Cloud Threat Landscape: What’s Real, What’s Not, and What Should Change](https://www.youtube.com/watch?v=8c3unhWyFGA)
 
@@ -270,9 +330,41 @@ fwd:cloudsec
 
 128 views • 6 months ago
 
-[![Image 26](https://i.ytimg.com/vi/sesacY7Xz3c/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLD1XlAdea4pMVZHeyAastXNvrtOQw) 27:31](https://www.youtube.com/watch?v=sesacY7Xz3c)
+[![Image 38](https://i.ytimg.com/vi/g2U6GqBfc48/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLA2kIKxEr3a2nMKR6DegJDJhgCl4Q) 30:08](https://www.youtube.com/watch?v=g2U6GqBfc48&pp=0gcJCdMKAYcqIYzv)
 
-![Image 27](https://www.youtube.com/watch?v=f066e7WndTQ)
+![Image 39](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Soft Blue Grey Gradient Light | Soft Neutral Aesthetic Background for Filming & Photos (No Sound)](https://www.youtube.com/watch?v=g2U6GqBfc48&pp=0gcJCdMKAYcqIYzv)
+
+Moodcraft Studio
+
+6.2K views • 3 months ago
+
+[![Image 40](https://i.ytimg.com/vi/YXL4Juf2Qzs/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLBNsfj_s4Y2knr4eGJZ3UdmbmmbKQ) 34:44](https://www.youtube.com/watch?v=YXL4Juf2Qzs)
+
+![Image 41](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [Today in Politics | Explainer](https://www.youtube.com/watch?v=YXL4Juf2Qzs)
+
+Heather Cox Richardson
+
+20K views • 3 hours ago
+
+New
+
+[![Image 42](https://www.youtube.com/watch?v=f066e7WndTQ) 52:56](https://www.youtube.com/watch?v=tgD8L9gYeBs)
+
+![Image 43](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [The Most Famous (TV) Doctor Of All Time | Noah Wyle](https://www.youtube.com/watch?v=tgD8L9gYeBs)
+
+Doctor Mike
+
+2.7M views • 9 months ago
+
+[![Image 44](https://www.youtube.com/watch?v=f066e7WndTQ) 27:31](https://www.youtube.com/watch?v=sesacY7Xz3c)
+
+![Image 45](https://www.youtube.com/watch?v=f066e7WndTQ)
 
 ### [Cybersecurity Architecture: Networks](https://www.youtube.com/watch?v=sesacY7Xz3c)
 
@@ -280,68 +372,50 @@ IBM Technology
 
 495K views • 2 years ago
 
-[![Image 28](https://i.ytimg.com/vi/meC2JqNAbCA/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYfyATKFUwDw==&rs=AOn4CLDw0_p4f-dWEuroju4lwphhIeyw-A) 39:51](https://www.youtube.com/watch?v=meC2JqNAbCA&pp=ugUEEgJlbg%3D%3D)
+[![Image 46](https://www.youtube.com/watch?v=f066e7WndTQ) 1:01:19](https://www.youtube.com/watch?v=pqKhinZt3wM)
 
-![Image 29](https://www.youtube.com/watch?v=f066e7WndTQ)
+![Image 47](https://www.youtube.com/watch?v=f066e7WndTQ)
 
-### [DEF CON 33 - Recording PCAPs from Stingrays With a $20 Hotspot - Cooper Quintin, oopsbagel](https://www.youtube.com/watch?v=meC2JqNAbCA&pp=ugUEEgJlbg%3D%3D)
-
-DEFCONConference
-
-42K views • 6 months ago
-
-[![Image 30](https://i.ytimg.com/vi/R75ZTBnUwXk/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYWCBhKGUwDw==&rs=AOn4CLDvZjoHOFSc5lDcHQIJ5hM5icAHpg) 23:07](https://www.youtube.com/watch?v=R75ZTBnUwXk)
-
-![Image 31](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Sweet Deception: Mastering AWS Honey Tokens to Detect and Outsmart Attackers](https://www.youtube.com/watch?v=R75ZTBnUwXk)
-
-fwd:cloudsec
-
-350 views • 6 months ago
-
-[![Image 32](https://i.ytimg.com/vi/Yae74guiqq8/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLCyi8T5fb2T6LxncmOENPqP7yuuAg) 49:26](https://www.youtube.com/watch?v=Yae74guiqq8)
-
-![Image 33](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Claude Mythos, Project Glasswing and AI cybersecurity risks](https://www.youtube.com/watch?v=Yae74guiqq8)
-
-IBM Technology
-
-17K views • 4 days ago
-
-New
-
-[![Image 34](https://i.ytimg.com/vi/9OY6LtamqRQ/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBgKGUwDw==&rs=AOn4CLBne8GQ8MofuYCa0QNLjpCw-EzujA) 25:48](https://www.youtube.com/watch?v=9OY6LtamqRQ&pp=0gcJCdMKAYcqIYzv)
-
-![Image 35](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Ransomware protection with immutable AWS Backup - it's complicated](https://www.youtube.com/watch?v=9OY6LtamqRQ&pp=0gcJCdMKAYcqIYzv)
-
-fwd:cloudsec
-
-312 views • 6 months ago
-
-[![Image 36](https://i.ytimg.com/vi/46I3oA-N6bM/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLBXj9vNbpLjsrH2JUhmgCayLDcYdw) 1:00:11](https://www.youtube.com/watch?v=46I3oA-N6bM)
-
-![Image 37](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Pepe Escobar: China Just HUMILIATED Trump’s Blockade Plan - Iran Takes FULL Control of Hormuz](https://www.youtube.com/watch?v=46I3oA-N6bM)
+### [Col. Larry Wilkerson: “It’s Over”: Iran Wipes Out Trump’s Bully Tactic on Live Map](https://www.youtube.com/watch?v=pqKhinZt3wM)
 
 Dialogue Works
 
-78K views • Streamed 3 hours ago
+168K views • Streamed 11 hours ago
 
 New
 
-[![Image 38](https://www.youtube.com/watch?v=f066e7WndTQ) 55:00](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
+[![Image 48](https://www.youtube.com/watch?v=f066e7WndTQ) 1:36:49](https://www.youtube.com/watch?v=pDKlaJM_vys&pp=ugUEEgJlbg%3D%3D)
 
-![Image 39](https://www.youtube.com/watch?v=f066e7WndTQ)
+![Image 49](https://www.youtube.com/watch?v=f066e7WndTQ)
 
-### [The World's Most Important Machine](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
+### [URGENT UPDATE - The Iran War Expert: The Most Dangerous Stage Begins Now](https://www.youtube.com/watch?v=pDKlaJM_vys&pp=ugUEEgJlbg%3D%3D)
 
-Veritasium
+The Diary Of A CEO
 
-26M views • 3 months ago
+3M views • 2 days ago
+
+New
+
+[![Image 50](https://www.youtube.com/watch?v=f066e7WndTQ) 34:56](https://www.youtube.com/watch?v=HiyzzcuaAac)
+
+![Image 51](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [How Your Brain Works & Changes | Huberman Lab Essentials](https://www.youtube.com/watch?v=HiyzzcuaAac)
+
+Andrew Huberman
+
+643K views • 1 year ago
+
+[![Image 52](https://www.youtube.com/watch?v=f066e7WndTQ) 1:00:00](https://www.youtube.com/watch?v=icOiCU6faAY)
+
+![Image 53](https://www.youtube.com/watch?v=f066e7WndTQ)
+
+### [1 HOUR OF BRIGHT TEAL SCREEN | PLAIN BRIGHT TEAL COLOR](https://www.youtube.com/watch?v=icOiCU6faAY)
+
+Color Hour
+
+12K views • 1 year ago
+
+Show more
 
 [[](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/watch?v=f066e7WndTQ)

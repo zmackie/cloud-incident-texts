@@ -11,12 +11,12 @@ Markdown Content:
 
 ![Image 1](https://archive.ph/oU2ZL/9e2114bb973c03dd95f2bc9ffd21d46c928d46aa/scr.png)archived 31 Oct 2019 03:08:27 UTC
 
-[archive.today webpage capture](https://archive.today/)Saved from[![Image 2](blob:https://d6fd114dz3a3n9.archive.ph/0e25721aeece149d96a1894227c705aa)history](https://archive.ph/https://www.nytimes.com/2019/10/30/technology/uber-lyndacom-hacks-guilty-plea.html "2 snapshots from https://www.nytimes.com/2019/10/30/technology/uber-lyndacom-hacks-guilty-plea.html") ←prior [next→](https://archive.ph/3HJHV "4 Jan 2025 22:01:23 UTC")31 Oct 2019 03:08:27 UTC
+[archive.today webpage capture](https://archive.today/)Saved from[![Image 2](blob:https://d91wy58rzghx2l.archive.ph/0e25721aeece149d96a1894227c705aa)history](https://archive.ph/https://www.nytimes.com/2019/10/30/technology/uber-lyndacom-hacks-guilty-plea.html "2 snapshots from https://www.nytimes.com/2019/10/30/technology/uber-lyndacom-hacks-guilty-plea.html") ←prior [next→](https://archive.ph/3HJHV "4 Jan 2025 22:01:23 UTC")31 Oct 2019 03:08:27 UTC
 All snapshots**from host**[www.nytimes.com](https://archive.ph/www.nytimes.com)
 [Webpage](https://archive.ph/oU2ZL)[Screenshot](https://archive.ph/oU2ZL/image)
-[![Image 3](blob:https://d6fd114dz3a3n9.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/oU2ZL/share)[![Image 4](blob:https://d6fd114dz3a3n9.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/oU2ZL.zip)[![Image 5](blob:https://d6fd114dz3a3n9.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/oU2ZL/abuse)[![Image 6](blob:https://d6fd114dz3a3n9.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
+[![Image 3](blob:https://d91wy58rzghx2l.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/oU2ZL/share)[![Image 4](blob:https://d91wy58rzghx2l.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/oU2ZL.zip)[![Image 5](blob:https://d91wy58rzghx2l.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/oU2ZL/abuse)[![Image 6](blob:https://d91wy58rzghx2l.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
 
-[![Image 7: close](blob:https://d6fd114dz3a3n9.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/oU2ZL)
+[![Image 7: close](blob:https://d91wy58rzghx2l.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/oU2ZL)
 
 Reddit
 
@@ -46,7 +46,7 @@ SEARCH
 
 [Technology](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/technology)
 
-[](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+[](https://archive.ph/NjIxd)
 
 [Log In](https://archive.ph/o/oU2ZL/https://myaccount.nytimes.com/auth/login?response_type=cookie&client_id=vi)
 
@@ -56,9 +56,9 @@ SEARCH
 
 [Technology](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/technology)|2 Plead Guilty in 2016 Uber and Lynda.com Hacks
 
-[](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+[](https://archive.ph/NjIxd)
 
-[](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+[](https://archive.ph/NjIxd)
 
 [Subscribe](https://archive.ph/o/oU2ZL/https://www.nytimes.com/subscription/multiproduct/lp8HYKU.html?campaignId=6W74R)
 
@@ -81,11 +81,11 @@ Supported by
 
 Guilty pleas to charges of hacking and an extortion conspiracy cap a legal saga that ensnared the tech companies in data breach scandals.
 
-[![Image 8: The Uber breach affected more than 57 million people, as the hackers gained access to the names, phone numbers and email addresses of riders and drivers who used the service.](https://d6fd114dz3a3n9.archive.ph/oU2ZL/661e6eb0845d429156fff662f32797f690bacb7e)](https://d6fd114dz3a3n9.archive.ph/oU2ZL/661e6eb0845d429156fff662f32797f690bacb7e)
+[![Image 8: The Uber breach affected more than 57 million people, as the hackers gained access to the names, phone numbers and email addresses of riders and drivers who used the service.](https://d91wy58rzghx2l.archive.ph/oU2ZL/661e6eb0845d429156fff662f32797f690bacb7e)](https://d91wy58rzghx2l.archive.ph/oU2ZL/661e6eb0845d429156fff662f32797f690bacb7e)
 
 The Uber breach affected more than 57 million people, as the hackers gained access to the names, phone numbers and email addresses of riders and drivers who used the service.Credit...Sarahbeth Maney for The New York Times
 
-[![Image 9: Mike Isaac](https://d6fd114dz3a3n9.archive.ph/oU2ZL/07d0e6a501537a976af1388d59216e43b8f951ee.jpg)](https://archive.ph/o/oU2ZL/https://www.nytimes.com/by/mike-isaac)
+[![Image 9: Mike Isaac](https://d91wy58rzghx2l.archive.ph/oU2ZL/07d0e6a501537a976af1388d59216e43b8f951ee.jpg)](https://archive.ph/o/oU2ZL/https://www.nytimes.com/by/mike-isaac)
 
 By [Mike Isaac](https://archive.ph/o/oU2ZL/https://www.nytimes.com/by/mike-isaac)
 
@@ -142,13 +142,13 @@ Advertisement
 
 ## Site Index
 
-[](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+[](https://archive.ph/NjIxd)
 
-[Go to Home Page »](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+[Go to Home Page »](https://archive.ph/NjIxd)
 
 news
 
-*   [home page](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+*   [home page](https://archive.ph/NjIxd)
 *   [world](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/world)
 *   [U.S.](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/us)
 *   [politics](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/politics)
@@ -225,7 +225,7 @@ listings & more
 
 ### news
 
-*   [home page](https://archive.ph/o/oU2ZL/https://www.nytimes.com/)
+*   [home page](https://archive.ph/NjIxd)
 *   [world](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/world)
 *   [U.S.](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/us)
 *   [politics](https://archive.ph/o/oU2ZL/https://www.nytimes.com/section/politics)

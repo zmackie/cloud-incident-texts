@@ -29,10 +29,10 @@ Markdown Content:
     *   [![Image 4: Stolen Rockstar Games analytics data leaked by extortion gang](https://www.bleepstatic.com/content/hl-images/2026/04/13/thumb/211x130_rockstar-logo-lg.jpg) Stolen Rockstar Games analytics data leaked by extortion gang](https://www.bleepingcomputer.com/news/security/stolen-rockstar-games-analytics-data-leaked-by-extortion-gang/)
     *   [![Image 5: New Booking.com data breach forces reservation PIN resets](https://www.bleepstatic.com/content/hl-images/2026/04/13/thumb/211x130_Booking.jpg) New Booking.com data breach forces reservation PIN resets](https://www.bleepingcomputer.com/news/security/new-bookingcom-data-breach-forces-reservation-pin-resets/)
 
-    *   [![Image 6: Microsoft releases Windows 10 KB5082200 extended security update](https://www.bleepstatic.com/content/hl-images/2024/09/10/thumb/211x130_windows-10-gradient.jpg) Microsoft releases Windows 10 KB5082200 extended security update](https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5082200-extended-security-update/)
-    *   [![Image 7: McGraw-Hill confirms data breach following extortion threat](https://www.bleepstatic.com/content/hl-images/2026/04/14/thumb/211x130_McGraw-Hill_Education_wordmark.svg.jpg) McGraw-Hill confirms data breach following extortion threat](https://www.bleepingcomputer.com/news/security/mcgraw-hill-confirms-data-breach-following-extortion-threat/)
-    *   [![Image 8: Windows 11 cumulative updates KB5083769 & KB5082052 released](https://www.bleepstatic.com/content/hl-images/2024/07/18/thumb/211x130_Windows11.jpg) Windows 11 cumulative updates KB5083769 & KB5082052 released](https://www.bleepingcomputer.com/news/microsoft/windows-11-cumulative-updates-kb5083769-and-kb5082052-released/)
-    *   [![Image 9: Microsoft April 2026 Patch Tuesday fixes 167 flaws, 2 zero-days](https://www.bleepstatic.com/content/hl-images/2024/10/08/thumb/211x130_patch_tuesday_microsoft.jpg) Microsoft April 2026 Patch Tuesday fixes 167 flaws, 2 zero-days](https://www.bleepingcomputer.com/news/microsoft/microsoft-april-2026-patch-tuesday-fixes-167-flaws-2-zero-days/)
+    *   [![Image 6: Microsoft adds Windows protections for malicious Remote Desktop files](https://www.bleepstatic.com/content/hl-images/2025/05/28/thumb/211x130_Windows-headpic.jpg) Microsoft adds Windows protections for malicious Remote Desktop files](https://www.bleepingcomputer.com/news/microsoft/microsoft-adds-windows-protections-for-malicious-remote-desktop-files/)
+    *   [![Image 7: Crypto-exchange Kraken extorted by hackers after insider breach](https://www.bleepstatic.com/content/hl-images/2026/04/14/thumb/211x130_Kraken.jpg) Crypto-exchange Kraken extorted by hackers after insider breach](https://www.bleepingcomputer.com/news/security/crypto-exchange-kraken-extorted-by-hackers-after-insider-breach/)
+    *   [![Image 8: Over 100 Chrome Web Store extensions steal user accounts, data](https://www.bleepstatic.com/content/hl-images/2026/03/13/thumb/211x130_Google_Chrome.jpg) Over 100 Chrome Web Store extensions steal user accounts, data](https://www.bleepingcomputer.com/news/security/over-100-chrome-extensions-in-web-store-target-users-accounts-and-data/)
+    *   [![Image 9: Microsoft releases Windows 10 KB5082200 extended security update](https://www.bleepstatic.com/content/hl-images/2024/09/10/thumb/211x130_windows-10-gradient.jpg) Microsoft releases Windows 10 KB5082200 extended security update](https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5082200-extended-security-update/)
 
 *   [Tutorials](https://www.bleepingcomputer.com/tutorials/)
 
@@ -210,6 +210,22 @@ Not a member yet? [Register Now](https://www.bleepingcomputer.com/forums/index.p
 
 ### You may also like:
 
+Discover more
+
+Malware removal tools
+
+Antivirus software
+
+Network security appliances
+
+Ethical hacking tools
+
+Antivirus software subscriptions
+
+Hardware security keys
+
+Malware removal service
+
 [![Image 38: ThreatLocker](https://www.bleepstatic.com/c/t/tl-400-500.jpg)](https://www.threatlocker.com/because-a-fast-response-isnt-fast-enough?utm_source=bleeping_computer&utm_medium=sponsor&utm_campaign=not_fast_enough_financial_4-26&utm_content=not_fast_enough_financial-400x500&utm_term=display)
 
  Upcoming Webinar
@@ -218,21 +234,21 @@ Not a member yet? [Register Now](https://www.bleepingcomputer.com/forums/index.p
 
 Popular Stories
 
-*   [![Image 40: Hacker bitcoin](https://www.bleepstatic.com/content/hl-images/2026/04/10/thumb/292x176_Hacker_bitcoin.jpg) Over 20,000 crypto fraud victims identified in international crackdown](https://www.bleepingcomputer.com/news/security/police-identifies-20-000-victims-in-international-crypto-fraud-crackdown/)
-*   [![Image 41: Marimo](https://www.bleepstatic.com/content/hl-images/2026/04/10/thumb/292x176_Marimo.jpg) Critical Marimo pre-auth RCE flaw now under active exploitation](https://www.bleepingcomputer.com/news/security/critical-marimo-pre-auth-rce-flaw-now-under-active-exploitation/)
-*   [![Image 42: Adobe](https://www.bleepstatic.com/content/hl-images/2026/04/13/thumb/292x176_Adobe.jpg) Adobe rolls out emergency fix for Acrobat, Reader zero-day flaw](https://www.bleepingcomputer.com/news/security/adobe-rolls-out-emergency-fix-for-acrobat-reader-zero-day-flaw/)
+*   [![Image 40: Marimo](https://www.bleepstatic.com/content/hl-images/2026/04/10/thumb/292x176_Marimo.jpg) Critical Marimo pre-auth RCE flaw now under active exploitation](https://www.bleepingcomputer.com/news/security/critical-marimo-pre-auth-rce-flaw-now-under-active-exploitation/)
+*   [![Image 41: Adobe](https://www.bleepstatic.com/content/hl-images/2026/04/13/thumb/292x176_Adobe.jpg) Adobe rolls out emergency fix for Acrobat, Reader zero-day flaw](https://www.bleepingcomputer.com/news/security/adobe-rolls-out-emergency-fix-for-acrobat-reader-zero-day-flaw/)
+*   [![Image 42: Rockstar Games](https://www.bleepstatic.com/content/hl-images/2026/04/13/thumb/292x176_rockstar-logo-lg.jpg) Stolen Rockstar Games analytics data leaked by extortion gang](https://www.bleepingcomputer.com/news/security/stolen-rockstar-games-analytics-data-leaked-by-extortion-gang/)
 
 Sponsor Posts
 
-*   [![Image 43: See how you can strengthen identity assurance across your existing IAM, SSO & PAM stack.](https://www.bleepstatic.com/content/posts/2026/04/06/thumb/100x82_token-login-prompt.jpg) See how you can strengthen identity assurance across your existing IAM, SSO & PAM stack.](https://www.tokencore.com/?utm_campaign=41564278-Content-Syndication-BleepingComputer-When-Attackers-Already-Have-the-Keys&utm_source=BleepingComputer&utm_medium=Content-Syndication)
-*   [![Image 44: AI is a data-breach time bomb: Read the new report](https://www.bleepstatic.com/content/posts/2026/04/08/thumb/100x82_storm-cloud-infostealer.jpg) AI is a data-breach time bomb: Read the new report](https://info.varonis.com/en/state-of-data-security-report-2025?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer_referral&utm_content=article)
-*   [![Image 45: Overdue a password health-check? Audit your Active Directory for free](https://www.bleepstatic.com/content/posts/2026/04/06/thumb/100x82_specops-mobile-device-lock.jpg) Overdue a password health-check? Audit your Active Directory for free](https://specopssoft.com/product/specops-password-auditor/?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer_referral_na&utm_content=article)
+*   [![Image 43: Overdue a password health-check? Audit your Active Directory for free](https://www.bleepstatic.com/content/posts/2026/04/06/thumb/100x82_specops-mobile-device-lock.jpg) Overdue a password health-check? Audit your Active Directory for free](https://specopssoft.com/product/specops-password-auditor/?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer_referral_na&utm_content=article)
+*   [![Image 44: For an in-depth review of CISA KEV data, read the research around The Broken Physics of Remediation for yourself](https://www.bleepstatic.com/content/posts/2026/04/08/thumb/100x82_qualys-looking-over-datacenter.jpg) For an in-depth review of CISA KEV data, read the research around The Broken Physics of Remediation for yourself](https://www.qualys.com/forms/whitepapers/the-broken-physics-of-remediation)
+*   [![Image 45: See how you can strengthen identity assurance across your existing IAM, SSO & PAM stack.](https://www.bleepstatic.com/content/posts/2026/04/06/thumb/100x82_token-login-prompt.jpg) See how you can strengthen identity assurance across your existing IAM, SSO & PAM stack.](https://www.tokencore.com/?utm_campaign=41564278-Content-Syndication-BleepingComputer-When-Attackers-Already-Have-the-Keys&utm_source=BleepingComputer&utm_medium=Content-Syndication)
 *   [![Image 46: Overdue a password health-check? Audit your Active Directory for free](https://www.bleepstatic.com/content/posts/2026/04/01/thumb/100x82_specops-transporter.jpg) Overdue a password health-check? Audit your Active Directory for free](https://specopssoft.com/product/specops-password-auditor/?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer_referral_na&utm_content=article)
-*   [![Image 47: For an in-depth review of CISA KEV data, read the research around The Broken Physics of Remediation for yourself](https://www.bleepstatic.com/content/posts/2026/04/08/thumb/100x82_qualys-looking-over-datacenter.jpg) For an in-depth review of CISA KEV data, read the research around The Broken Physics of Remediation for yourself](https://www.qualys.com/forms/whitepapers/the-broken-physics-of-remediation)
+*   [![Image 47: AI is a data-breach time bomb: Read the new report](https://www.bleepstatic.com/content/posts/2026/04/08/thumb/100x82_storm-cloud-infostealer.jpg) AI is a data-breach time bomb: Read the new report](https://info.varonis.com/en/state-of-data-security-report-2025?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer_referral&utm_content=article)
 
  Upcoming Webinar
 
-[![Image 48: Webinar](https://www.bleepstatic.com/content/webinar-images/flare-4-30-400-500.jpg)](https://www.bleepingcomputer.com/rd/79/)
+[![Image 48: Webinar](https://www.bleepstatic.com/content/webinar-images/Kaseya_400-500_red.jpg)](https://www.bleepingcomputer.com/rd/81/)
 
 ##### Follow us:
 
@@ -316,4 +332,4 @@ Submitting...
 
 [SUBMIT](https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/# "Submit")
 
-![Image 50](https://a.pub.network/core/imgs/1.png?x=2026-04-14T19%3A39%3A57.494)
+![Image 50](https://a.pub.network/core/imgs/1.png?x=2026-04-15T07%3A03%3A36.789)

@@ -30,17 +30,15 @@ Markdown Content:
 
 in this second part of the series, we’ll share the details of a real-world sophisticated, long-term attack in the cloud.
 
-[![Image 1](blob:http://localhost/9d497db6fc8ad37378d2515d2e72e888)![Image 2](blob:http://localhost/25f0a10ac45dbc175a57b1ea5557fdaf)![Image 3](https://www.datocms-assets.com/75231/1715198924-yotam-meitar-author-image.webp?fit=crop&fm=jpg&h=100&w=100)](https://www.wiz.io/authors/yotam-meitar)
+[![Image 1](blob:http://localhost/9d497db6fc8ad37378d2515d2e72e888)![Image 2](blob:http://localhost/25f0a10ac45dbc175a57b1ea5557fdaf)](https://www.wiz.io/authors/yotam-meitar)
 
 [Yotam Meitar](https://www.wiz.io/authors/yotam-meitar)
 
 September 4, 2024
 
-4 minute read
+![Image 4](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 5](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)
 
-![Image 5](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 6](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)
-
-![Image 8](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 9](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)![Image 10](https://www.datocms-assets.com/75231/1696894917-flag-copy-2x.png?fm=webp)
+![Image 7](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 8](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)
 
 Effective response to cloud and hybrid attacks can be uniquely challenging. In this three-part series, we discuss how implementing intelligence-driven contextualized incident response allows defenders to turn attackers’ advantages in the cloud against them and respond more effectively to threats.
 
@@ -64,7 +62,7 @@ Once access to the main production cloud environment was established, attackers 
 
 Unlike destructive attacks such as ransomware which usually reveal their existence by performing encryption, wiping data or taking down systems, this attack was purely a data-theft operation. Attackers were clearly content with maintaining their access to sensitive data, remaining under the radar of the victim organization’s security teams for well over a year.
 
-![Image 12](blob:http://localhost/fb4ce946eefa3101f0d46517e170ea54)
+![Image 10](blob:http://localhost/fb4ce946eefa3101f0d46517e170ea54)
 
 In addition to successfully exfiltrating highly sensitive organizational data and establishing a robust foothold in the cloud environment, attackers were also diligent in covering their tracks. Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands and modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed, significantly increased their ability to maintain stealth. When the organization finally realized something may be wrong, the attack had been going on for over 17 months. Fig. 1 depicts a high-level overview of the attack.
 
@@ -93,11 +91,11 @@ Table of contents
 
 ## Continue reading
 
-[![Image 14](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 15](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)](https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-3-the-response)
+[![Image 12](blob:http://localhost/ace1c299e6c7b82bccc982d7e4564141)![Image 13](blob:http://localhost/9f3daed11f71370ff1b9f237a0e7406e)](https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-3-the-response)
 
 [### Uncovering Hybrid Cloud Attacks Part 3 – The Response](https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-3-the-response)
 
-[![Image 17](blob:http://localhost/a1c012726d81c8b715f69e117d296cc0)![Image 18](blob:http://localhost/25f0a10ac45dbc175a57b1ea5557fdaf)](https://www.wiz.io/authors/yotam-meitar)
+[![Image 15](blob:http://localhost/a1c012726d81c8b715f69e117d296cc0)![Image 16](blob:http://localhost/25f0a10ac45dbc175a57b1ea5557fdaf)](https://www.wiz.io/authors/yotam-meitar)
 
 [Yotam Meitar](https://www.wiz.io/authors/yotam-meitar)
 
@@ -105,11 +103,11 @@ September 4, 2024
 
 In the final section of this blog series on uncovering complex hybrid cloud attacks, we’ll share key elements of the response to the real-world sophisticated cloud attack outlined in Part 2.
 
-[![Image 20](blob:http://localhost/de6414e3199ec0f9ed09f25c7cc583a6)![Image 21](blob:http://localhost/40ca459d2bb349c6f3cd8b87b50fac08)](https://www.wiz.io/blog/preventing-risk-of-request-collapsing-in-web-caching)
+[![Image 18](blob:http://localhost/de6414e3199ec0f9ed09f25c7cc583a6)![Image 19](blob:http://localhost/40ca459d2bb349c6f3cd8b87b50fac08)](https://www.wiz.io/blog/preventing-risk-of-request-collapsing-in-web-caching)
 
 [### Avoiding security incidents due to request collapsing](https://www.wiz.io/blog/preventing-risk-of-request-collapsing-in-web-caching)
 
-[![Image 23](blob:http://localhost/8382d43a5951cabdafff13717a07ecfd)![Image 24](blob:http://localhost/9577380ff7b6214576c77b3653871c8f)](https://www.wiz.io/authors/scott-piper)
+[![Image 21](blob:http://localhost/8382d43a5951cabdafff13717a07ecfd)![Image 22](blob:http://localhost/9577380ff7b6214576c77b3653871c8f)](https://www.wiz.io/authors/scott-piper)
 
 [Scott Piper](https://www.wiz.io/authors/scott-piper)
 
@@ -117,11 +115,11 @@ September 3, 2024
 
 This feature of caching services can result in unexpected behavior. Here's how to prevent sensitive data from being accidentally exposed.
 
-[![Image 26](blob:http://localhost/bd1a3647783c8ce5be54a9c8ae5cfcc6)![Image 27](blob:http://localhost/949e2ce028f4da0221d9ebd40fceb086)](https://www.wiz.io/blog/frost-and-sullivan-radar-report-recognizes-wiz-cspm-leader)
+[![Image 24](blob:http://localhost/bd1a3647783c8ce5be54a9c8ae5cfcc6)![Image 25](blob:http://localhost/949e2ce028f4da0221d9ebd40fceb086)](https://www.wiz.io/blog/frost-and-sullivan-radar-report-recognizes-wiz-cspm-leader)
 
 [### Frost & Sullivan recognizes Wiz as Cloud Security Posture Management leader](https://www.wiz.io/blog/frost-and-sullivan-radar-report-recognizes-wiz-cspm-leader)
 
-[![Image 29](blob:http://localhost/4b4ec125508466c5ab5d8f2f7039df17)![Image 30](blob:http://localhost/d5e3869952a98d22dfe3f33c55296bf9)](https://www.wiz.io/authors/jiong-liu)
+[![Image 27](blob:http://localhost/4b4ec125508466c5ab5d8f2f7039df17)![Image 28](blob:http://localhost/d5e3869952a98d22dfe3f33c55296bf9)](https://www.wiz.io/authors/jiong-liu)
 
 [Jiong Liu](https://www.wiz.io/authors/jiong-liu)
 

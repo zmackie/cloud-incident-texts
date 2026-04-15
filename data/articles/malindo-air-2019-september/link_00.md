@@ -218,27 +218,27 @@ Read Shared Watched Editor's Choice
 
 2
 
-### [How to Harness Advanced Intelligence Capabilities to Strengthen Cyber Defence](https://www.infosecurity-magazine.com/webinars/prm/the-intelligence-edge-clarity-and/)
-
-[Webinar](https://www.infosecurity-magazine.com/webinars/)12 March 2026
-
-3
-
 ### [How to Recover From a Cyber-Attack: A Step-by-Step Playbook](https://www.infosecurity-magazine.com/webinars/prm/recover-from-cyberattack-playbook/)
 
 [Webinar](https://www.infosecurity-magazine.com/webinars/)24 March 2026
 
+3
+
+### [How to Harness Advanced Intelligence Capabilities to Strengthen Cyber Defence](https://www.infosecurity-magazine.com/webinars/prm/the-intelligence-edge-clarity-and/)
+
+[Webinar](https://www.infosecurity-magazine.com/webinars/)12 March 2026
+
 4
+
+### [Mastering Emerging Regulations: DORA, NIS2 and AI Act Compliance](https://www.infosecurity-magazine.com/webinars/prm/mastering-emerging-regulations/)
+
+[Webinar](https://www.infosecurity-magazine.com/webinars/)17 July 2025
+
+5
 
 ### [Revisiting CIA: Developing Your Security Strategy in the SaaS Shared Reality](https://www.infosecurity-magazine.com/webinars/prm/security-strategy-saas-shared/)
 
 [Webinar](https://www.infosecurity-magazine.com/webinars/)11 December 2025
-
-5
-
-### [Risk-Based IT Compliance: The Case for Business-Driven Cyber Risk Quantification](https://www.infosecurity-magazine.com/webinars/prm/businessdriven-cyber-risk/)
-
-[Webinar](https://www.infosecurity-magazine.com/webinars/)23 October 2025
 
 6
 
@@ -254,23 +254,29 @@ Read Shared Watched Editor's Choice
 
 2
 
+### [Why Resilience‑Focused Cloud Design Is Your Best Defense Against Modern Attacks](https://www.infosecurity-magazine.com/webinars/prm/resilience-focused-cloud-booz-allen/)
+
+[Webinar](https://www.infosecurity-magazine.com/webinars/)9 April 2026
+
+3
+
 ### [AI Security and Governance Virtual Summit](https://www.infosecurity-magazine.com/summits/prm/ai-security-gov-virtual-summit-2026/)
 
 [Virtual Summit](https://www.infosecurity-magazine.com/summits/)13:10–17:50 GMT, 28 April 2026
 
-3
+4
 
 ### [High-Tech Sector Overtakes Finance as Top Target for Cyber-Attacks, Mandiant Reports](https://www.infosecurity-magazine.com/news/high-tech-top-target-cyberattacks/)
 
 [News](https://www.infosecurity-magazine.com/news/)23 March 2026
 
-4
+5
 
 ### [Tycoon2FA Phishing Service Resumes Activity Post-Takedown](https://www.infosecurity-magazine.com/news/tycoon2fa-phishing-service-resumes/)
 
 [News](https://www.infosecurity-magazine.com/news/)23 March 2026
 
-5
+6
 
 ## The magazine
 

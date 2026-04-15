@@ -336,17 +336,17 @@ Click/Scan to Subscribe
 
 [![Image 73: qr-code](https://img-2.outlookindia.com/outlookindia/outlook-img/oli-subscription-qr-new.png)](https://subscription.outlookindia.com/newoffer/website-offers.php)
 
-*   [Previous Story![Image 74: LinkedIn](https://media.assettype.com/outlookbusiness/2026-04-14/02qhmyvx/Shashvat-Nakrani?auto=format%2Ccompress&fit=max&format=webp&w=376&dpr=2.0) Who Is Shashvat Nakrani? The Co-founder Who Built BharatPe at 19, Now Steps Back](https://www.outlookbusiness.com/corporate/who-is-shashvat-nakrani-the-co-founder-who-built-bharatpe-at-19-now-steps-back)
-*   [Next Story What the Fragile US–Iran Truce Means for Global Oil Prices | Explained ![Image 75: What the Fragile US–Iran Truce Means for Global Oil Prices | Explained](https://media.assettype.com/outlookbusiness/2026-04-09/rcfaukdi/gf.png?auto=format%2Ccompress&fit=max&format=webp&w=376&dpr=2.0)](https://www.outlookbusiness.com/markets/what-the-fragile-usiran-truce-means-for-global-oil-prices-explained)
+*   [Previous Story![Image 74: How Global Risks Are Reshaping Indian Migration Abroad—Explained](https://media.assettype.com/outlookbusiness/2026-04-14/tq8v057l/passport.jpg?auto=format%2Ccompress&fit=max&format=webp&w=376&dpr=2.0) How Global Risks Are Reshaping Indian Migration Abroad—Explained](https://www.outlookbusiness.com/economy-and-policy/global-risks-indian-migration-h1b-nri-insurance-explained)
+*   [Next Story How Quality Testing Norms Are Squeezing Indian MSMEs ![Image 75: How Quality Testing Norms Are Squeezing Indian MSMEs](https://media.assettype.com/outlookbusiness/2026-04-14/vmq4ov9i/standard-quality-control-collage-concept.jpg?auto=format%2Ccompress&fit=max&format=webp&w=376&dpr=2.0)](https://www.outlookbusiness.com/economy-and-policy/how-quality-testing-norms-are-squeezing-indian-msmes)
 
 ### Advertisement
 
 ##### MOST POPULAR
 
-*   ![Image 76: Number 1](https://images.assettype.com/outlookindia/2024-02/a8ad731c-a142-4df5-90b9-fdbd2fc5201b/1.png)[What the Fragile US–Iran Truce Means for Global Oil Prices | Explained](https://www.outlookbusiness.com/markets/what-the-fragile-usiran-truce-means-for-global-oil-prices-explained) 
-*   ![Image 78: Number 2](https://images.assettype.com/outlookindia/2024-02/80df6341-8c8b-49a0-94cb-ca9687bd2a18/2.png)[US-Iran Peace Talks: Where India’s Focus Lies as Mediation Moves Next Door](https://www.outlookbusiness.com/economy-and-policy/us-iran-peace-talks-where-indias-focus-lies-as-mediation-moves-next-door) 
-*   ![Image 80: Number 3](https://images.assettype.com/outlookindia/2024-02/ee9a4c3f-5841-497f-8ac2-ab0d4689dd02/3.png)[Is MakeMyTrip Influencing the Hotel Prices You See? Short-Selling Controversy Explained](https://www.outlookbusiness.com/corporate/is-makemytrip-influencing-the-hotel-prices-you-see-short-selling-controversy-explained) 
-*   ![Image 82: Number 4](https://images.assettype.com/outlookindia/2024-02/4f8abcc1-6b27-46df-b3aa-a77f73795851/4.png)[The $100 Million Question: How Emergent’s ARR Debate is Forcing Re-evaluation of SaaS Metrics](https://www.outlookbusiness.com/corporate/the-100-million-question-how-emergents-arr-debate-is-forcing-re-evaluation-of-saas-metrics) 
+*   ![Image 76: Number 1](https://images.assettype.com/outlookindia/2024-02/a8ad731c-a142-4df5-90b9-fdbd2fc5201b/1.png)[How Quality Testing Norms Are Squeezing Indian MSMEs](https://www.outlookbusiness.com/economy-and-policy/how-quality-testing-norms-are-squeezing-indian-msmes) 
+*   ![Image 78: Number 2](https://images.assettype.com/outlookindia/2024-02/80df6341-8c8b-49a0-94cb-ca9687bd2a18/2.png)[Hormuz Tensions Explained: Oil Shock, China Pressure & India Impact](https://www.outlookbusiness.com/economy-and-policy/hormuz-blockade-explained-why-trumps-move-could-shake-oil-china-and-india) 
+*   ![Image 80: Number 3](https://images.assettype.com/outlookindia/2024-02/ee9a4c3f-5841-497f-8ac2-ab0d4689dd02/3.png)[What the Fragile US–Iran Truce Means for Global Oil Prices | Explained](https://www.outlookbusiness.com/markets/what-the-fragile-usiran-truce-means-for-global-oil-prices-explained) 
+*   ![Image 82: Number 4](https://images.assettype.com/outlookindia/2024-02/4f8abcc1-6b27-46df-b3aa-a77f73795851/4.png)[US-Iran Peace Talks: Where India’s Focus Lies as Mediation Moves Next Door](https://www.outlookbusiness.com/economy-and-policy/us-iran-peace-talks-where-indias-focus-lies-as-mediation-moves-next-door) 
 
 ### Advertisement
 

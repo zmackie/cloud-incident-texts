@@ -14,9 +14,9 @@ Markdown Content:
 [archive.today webpage capture](https://archive.today/)Saved from no other snapshots from this url 23 Sep 2022 02:28:51 UTC
 All snapshots**from host**[www.databreaches.net](https://archive.ph/www.databreaches.net)
 [Webpage](https://archive.ph/rsmmS)[Screenshot](https://archive.ph/rsmmS/image)
-[![Image 2](blob:https://dflcvdrmdix8wg.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/rsmmS/share)[![Image 3](blob:https://dflcvdrmdix8wg.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/rsmmS.zip)[![Image 4](blob:https://dflcvdrmdix8wg.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/rsmmS/abuse)[![Image 5](blob:https://dflcvdrmdix8wg.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
+[![Image 2](blob:https://dgk1xndcng818h.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/rsmmS/share)[![Image 3](blob:https://dgk1xndcng818h.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/rsmmS.zip)[![Image 4](blob:https://dgk1xndcng818h.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/rsmmS/abuse)[![Image 5](blob:https://dgk1xndcng818h.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
 
-[![Image 6: close](blob:https://dflcvdrmdix8wg.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/rsmmS)
+[![Image 6: close](blob:https://dgk1xndcng818h.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/rsmmS)
 
 Reddit
 
@@ -248,7 +248,7 @@ Browse by News Section
 
 If you can, please donate XMR to our Monero wallet because the entities whose breaches we expose are definitely not supporting our work and are generally trying to chill our speech!
 
-![Image 7: Donate- Scan QR Code](https://dflcvdrmdix8wg.archive.ph/rsmmS/b68729c0695972e862f4c769bfbc46b6ac9524b0.png)
+![Image 7: Donate- Scan QR Code](https://dgk1xndcng818h.archive.ph/rsmmS/b68729c0695972e862f4c769bfbc46b6ac9524b0.png)
 
 45tom5wrGBrCyLAspSsBsnA7PjSLtyT3LG9RaKSszqJmF4yzq5DPknXJqWJ2tL2b5WddEhwVXWyWfRoRD6AfYGAFFxUidN8
 
@@ -268,7 +268,7 @@ As of August 19, 2022 this site has not received any government requests for inf
 
  Powered by [WordPress](https://archive.ph/o/rsmmS/wordpress.org/). Designed by [Magee Themes](https://archive.ph/o/rsmmS/www.mageewp.com/). 
 
-![Image 8: Light](blob:https://dflcvdrmdix8wg.archive.ph/bc71f0b007213a1f48ae60a6aa11d11e)![Image 9: Dark](blob:https://dflcvdrmdix8wg.archive.ph/49a7b52e015d91457b6531ac625fcc5a)
+![Image 8: Light](blob:https://dgk1xndcng818h.archive.ph/bc71f0b007213a1f48ae60a6aa11d11e)![Image 9: Dark](blob:https://dgk1xndcng818h.archive.ph/49a7b52e015d91457b6531ac625fcc5a)
 
  
 

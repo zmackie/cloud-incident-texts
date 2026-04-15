@@ -548,6 +548,12 @@ def main():
         ok, skipped, errors, len(results),
     )
 
+    # Exit non-zero when every attempted analysis failed so CI surfaces the
+    # problem rather than committing stale outputs and triggering a deploy.
+    if errors > 0 and ok == 0:
+        log.error("All analyses failed — check ANTHROPIC_API_KEY and model availability.")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

@@ -131,3 +131,50 @@ def test_clean_markdown_sets_drop_ranges(raw_text: str):
     # ranges must be valid (start <= end, positive)
     for start, end in result.drop_ranges:
         assert 1 <= start <= end
+
+
+# ---------------------------------------------------------------------------
+# Regression: heading titles wrapped in markdown links should not cause the
+# heuristic to repeatedly "match" title_needle against URL slug text and
+# land start_idx at a late section.
+# ---------------------------------------------------------------------------
+
+def test_heuristic_ignores_slug_in_linked_headings():
+    body = (
+        "Junk preamble line\n"
+        "# [Real Article Title](https://site.tld/real-article-title)\n"
+        "Body paragraph one.\n"
+        "## [Indicators of Compromise](https://site.tld/real-article-title#iocs)\n"
+        "IoC content that must not become the sole surviving section.\n"
+    )
+    cleaned = heuristic_clean(body, title="Real Article Title")
+    assert "Body paragraph one." in cleaned, (
+        "linked section heading must not hijack start_idx away from the "
+        "real title heading"
+    )
+    assert "Real Article Title" in cleaned
+
+
+# ---------------------------------------------------------------------------
+# Regression: re-running clean on a file that already has frontmatter must
+# be idempotent — no nested `---` frontmatter blocks.
+# ---------------------------------------------------------------------------
+
+def test_clean_markdown_already_clean_is_idempotent():
+    already = (
+        "---\n"
+        'title: "Something"\n'
+        'url: "https://example.com/x"\n'
+        "---\n"
+        "\n"
+        "Real body text.\n"
+    )
+    result = clean_markdown(already, use_llm=False)
+    assert result.cleanup_method == "already_clean"
+    rendered = result.to_markdown()
+    assert rendered.count("---\n") == 2, (
+        f"expected exactly one frontmatter block, got: {rendered!r}"
+    )
+    # Round-trip: rendering then re-cleaning yields the same output.
+    result2 = clean_markdown(rendered, use_llm=False)
+    assert result2.to_markdown() == rendered

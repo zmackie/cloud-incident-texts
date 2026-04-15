@@ -88,6 +88,12 @@ class Cleaned:
 
     def to_markdown(self) -> str:
         """Render as a markdown file with YAML-ish frontmatter."""
+        if self.cleanup_method == "already_clean":
+            # Input already had frontmatter; body_md holds the full original
+            # file verbatim. Return it unchanged so re-running clean.py on a
+            # .clean.md file is an idempotent no-op (no nested frontmatter).
+            out = self.body_md
+            return out if out.endswith("\n") else out + "\n"
         fm_fields = [
             ("title", self.title),
             ("url", self.url),
@@ -205,8 +211,18 @@ def _heuristic_drop_ranges(body: str, title: str = "") -> list[DropRange]:
         if not m:
             continue
         heading = m.group(1).strip()
-        norm = re.sub(r"\W+", "", heading).lower()
-        if any(skip in heading.lower() for skip in (
+        # Jina commonly emits headings as markdown links, e.g.
+        # `## [Section Name](https://site.tld/article-slug#anchor)`. The
+        # raw heading string therefore contains the URL (and often the
+        # article slug, which is a close cousin of the page title). If we
+        # normalized that verbatim every section heading would appear to
+        # contain title_needle and `title_matches[-1]` would land on a
+        # late section — truncating the body to its tail. Strip the URL
+        # portion of markdown links and any autolinks before normalizing.
+        heading_text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", heading)
+        heading_text = re.sub(r"<[^>]+>", "", heading_text)
+        norm = re.sub(r"\W+", "", heading_text).lower()
+        if any(skip in heading_text.lower() for skip in (
             "cookie", "privacy", "consent", "menu", "navigation",
             "customize", "preferences", "skip to", "select your",
         )):

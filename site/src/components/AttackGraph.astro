@@ -83,7 +83,13 @@
 <script>
 import * as d3 from "d3";
 
-const DATA_BASE = "/data";
+const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 const TACTIC_COLORS: Record<string, string> = {
   "TA0043": "#e05252", // Reconnaissance
@@ -218,11 +224,11 @@ function renderGraph(graphData: any, metaData: any) {
 
   nodeSel.on("mousemove", (event: MouseEvent, d: any) => {
     tip.innerHTML = `
-      <span class="tid">${d.id}</span>
-      <strong>${d.name}</strong>
+      <span class="tid">${esc(d.id)}</span>
+      <strong>${esc(d.name)}</strong>
       <div style="color:var(--text-muted);margin-top:4px">
         <b style="color:var(--accent)">${d.count}</b> incident${d.count !== 1 ? "s" : ""}
-        &nbsp;·&nbsp; ${d.tactic_name || ""}
+        &nbsp;·&nbsp; ${esc(d.tactic_name || "")}
       </div>
     `;
     tip.classList.add("visible");

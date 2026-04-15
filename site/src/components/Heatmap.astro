@@ -116,7 +116,13 @@
 <script>
 import * as d3 from "d3";
 
-const DATA_BASE = "/data";
+const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 async function loadData() {
   const [freqData, metaData] = await Promise.all([
@@ -223,13 +229,13 @@ function buildHeatmap(freqData: Record<string, any>, metaData: Record<string, an
         const tip = document.getElementById("heatmap-tooltip")!;
         const incidents = freq?.incidents || [];
         tip.innerHTML = `
-          <span class="tid">${tech.id}</span>
-          <strong>${tech.name}</strong>
+          <span class="tid">${esc(tech.id)}</span>
+          <strong>${esc(tech.name)}</strong>
           <div style="color:var(--text-muted);margin-top:4px">
             <b style="color:var(--accent)">${count}</b> incident${count !== 1 ? "s" : ""}
-            ${tactic.name}
+            ${esc(tactic.name)}
           </div>
-          ${incidents.length ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted)">${incidents.slice(0,5).join("<br>")}</div>` : ""}
+          ${incidents.length ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted)">${incidents.slice(0,5).map(esc).join("<br>")}</div>` : ""}
         `;
         tip.classList.add("visible");
         const x = (e as MouseEvent).clientX + 12;
@@ -245,7 +251,7 @@ function buildHeatmap(freqData: Record<string, any>, metaData: Record<string, an
       if (count > 0) {
         cell.style.cursor = "pointer";
         cell.addEventListener("click", () => {
-          window.location.href = `/incidents?technique=${tech.id}`;
+          window.location.href = `${import.meta.env.BASE_URL}incidents?technique=${tech.id}`;
         });
       }
 

@@ -125,7 +125,13 @@ const TACTIC_COLORS: Record<string, string> = {
   "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
 };
 
-const DATA_BASE = "/data";
+const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 async function loadIncident(slug: string) {
   const [incident, metaData] = await Promise.all([
@@ -175,11 +181,11 @@ function renderTimeline(incident: any, metaData: any) {
 
     inner.innerHTML += `
       <div class="step-num">Step ${step.step}</div>
-      <div class="step-tid" style="color:${color}">${step.technique_id}</div>
-      <div class="step-name">${step.technique_name || techInfo.name || step.technique_id}</div>
-      <div class="step-desc">${step.description || ""}</div>
+      <div class="step-tid" style="color:${esc(color)}">${esc(step.technique_id)}</div>
+      <div class="step-name">${esc(step.technique_name || techInfo.name || step.technique_id)}</div>
+      <div class="step-desc">${esc(step.description || "")}</div>
       ${(step.aws_services_involved || []).length
-        ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${s}</span>`).join("")}</div>`
+        ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${esc(s)}</span>`).join("")}</div>`
         : ""}
     `;
 
@@ -196,11 +202,11 @@ function renderTimeline(incident: any, metaData: any) {
         }
       }
       tip.innerHTML = `
-        <span class="tid">${step.technique_id}</span>
-        <strong>${step.technique_name}</strong>
-        ${tacticName ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">${tacticName}</div>` : ""}
-        ${step.description ? `<div style="margin-top:6px;font-size:0.78rem">${step.description}</div>` : ""}
-        ${evidenceQuote ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted);font-style:italic;border-left:2px solid var(--border);padding-left:6px">"${evidenceQuote}"</div>` : ""}
+        <span class="tid">${esc(step.technique_id)}</span>
+        <strong>${esc(step.technique_name)}</strong>
+        ${tacticName ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">${esc(tacticName)}</div>` : ""}
+        ${step.description ? `<div style="margin-top:6px;font-size:0.78rem">${esc(step.description)}</div>` : ""}
+        ${evidenceQuote ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted);font-style:italic;border-left:2px solid var(--border);padding-left:6px">&ldquo;${esc(evidenceQuote)}&rdquo;</div>` : ""}
       `;
       tip.classList.add("visible");
       tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 300) + "px";

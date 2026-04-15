@@ -138,7 +138,13 @@ import Base from "../layouts/Base.astro";
 </style>
 
 <script>
-const DATA_BASE = "/data";
+const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 let allIncidents: any[] = [];
 
@@ -152,7 +158,7 @@ async function loadIncidents() {
 
 function renderCard(inc: any): HTMLElement {
   const card = document.createElement("a");
-  card.href = `/incident?slug=${inc.slug}`;
+  card.href = `${import.meta.env.BASE_URL}incident?slug=${encodeURIComponent(inc.slug)}`;
   card.className = "incident-card";
 
   const confPct = Math.round((inc.confidence_score || 0) * 100);
@@ -160,16 +166,16 @@ function renderCard(inc: any): HTMLElement {
   const services = (inc.aws_services || []).slice(0, 5);
 
   card.innerHTML = `
-    <div class="incident-name">${inc.name}</div>
+    <div class="incident-name">${esc(inc.name)}</div>
     <div class="incident-meta">
-      ${inc.impact_type ? `<span class="impact-badge">${inc.impact_type}</span>` : ""}
+      ${inc.impact_type ? `<span class="impact-badge">${esc(inc.impact_type)}</span>` : ""}
       <div class="confidence">
         <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
         <span>${confPct}% confidence</span>
       </div>
     </div>
-    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${t}</span>`).join("")}${inc.technique_ids.length > 8 ? `<span class="tech-badge">+${inc.technique_ids.length - 8}</span>` : ""}</div>` : ""}
-    ${services.length ? `<div class="services-list">${services.map((s: string) => `<span class="badge">${s}</span>`).join("")}</div>` : ""}
+    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${inc.technique_ids.length > 8 ? `<span class="tech-badge">+${inc.technique_ids.length - 8}</span>` : ""}</div>` : ""}
+    ${services.length ? `<div class="services-list">${services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}</div>` : ""}
   `;
 
   return card;

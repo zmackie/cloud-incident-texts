@@ -135,7 +135,13 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
 </style>
 
 <script>
-const DATA_BASE = "/data";
+const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 const TACTIC_COLORS: Record<string, string> = {
   "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
@@ -175,14 +181,14 @@ async function init() {
     const confPct = Math.round((incident.confidence_score || 0) * 100);
     headerEl.outerHTML = `
       <div>
-        <div class="incident-title">${incident.incident_slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())}</div>
+        <div class="incident-title">${esc(incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem">
-          ${incident.impact_type ? `<span class="badge accent">${incident.impact_type}</span>` : ""}
+          ${incident.impact_type ? `<span class="badge accent">${esc(incident.impact_type)}</span>` : ""}
           <div class="confidence">
             <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
             <span>${confPct}% confidence</span>
           </div>
-          ${(incident.aws_services || []).map((s: string) => `<span class="badge">${s}</span>`).join("")}
+          ${(incident.aws_services || []).map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}
         </div>
       </div>
     `;
@@ -198,15 +204,15 @@ async function init() {
 
       const group = document.createElement("div");
       group.className = "tactic-group";
-      group.innerHTML = `<div class="tactic-name" style="color:${color}">${tactic.tactic_name || tacticMeta.name || tactic.tactic_id}</div>`;
+      group.innerHTML = `<div class="tactic-name" style="color:${esc(color)}">${esc(tactic.tactic_name || tacticMeta.name || tactic.tactic_id)}</div>`;
 
       for (const tech of (tactic.techniques || [])) {
         const techMeta = techniques[tech.technique_id] || {};
         const row = document.createElement("div");
         row.className = "tech-row";
         row.innerHTML = `
-          <span class="tid">${tech.technique_id}</span>
-          <span>${tech.technique_name || techMeta.name || ""}</span>
+          <span class="tid">${esc(tech.technique_id)}</span>
+          <span>${esc(tech.technique_name || techMeta.name || "")}</span>
           ${tech.inferred ? `<span class="inferred-tag">inferred</span>` : ""}
           ${!tech.validated ? `<span class="inferred-tag" style="color:var(--text-muted);border-color:var(--text-muted)">unvalidated</span>` : ""}
         `;

@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   output: "static",
-  // Set base if deploying to a GitHub Pages subdirectory, e.g.:
-  // base: "/cloud-incident-texts",
+  // GitHub Pages project site deploys to /<repo-name>/
+  // Change to "/" if using a custom domain or organisation root page.
+  base: "/cloud-incident-texts",
 });

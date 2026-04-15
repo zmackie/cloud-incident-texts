@@ -30,6 +30,7 @@ import io
 import os
 import re
 import base64
+import ipaddress
 import logging
 from typing import Optional
 from urllib.parse import urlparse, parse_qs
@@ -49,6 +50,42 @@ from sources import (  # noqa: F401
 )
 
 log = logging.getLogger(__name__)
+
+# Maximum response size (50 MB) to prevent memory/disk exhaustion
+_MAX_RESPONSE_BYTES = 50 * 1024 * 1024
+
+# Cloud metadata IP ranges that must never be fetched (SSRF protection)
+_BLOCKED_HOSTS = {
+    "169.254.169.254",       # AWS / GCP instance metadata
+    "metadata.google.internal",
+    "100.100.100.200",       # Alibaba Cloud metadata
+}
+
+
+def _is_safe_url(url: str) -> bool:
+    """Return True if the URL uses an allowed scheme and does not target internal resources."""
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return False
+
+    if parsed.scheme not in ("http", "https"):
+        return False
+
+    hostname = parsed.hostname or ""
+    if hostname in _BLOCKED_HOSTS:
+        return False
+
+    # Block link-local and loopback IPs
+    try:
+        addr = ipaddress.ip_address(hostname)
+        if addr.is_private or addr.is_loopback or addr.is_link_local:
+            return False
+    except ValueError:
+        pass  # hostname is a domain name, not an IP – that's fine
+
+    return True
+
 
 # Shared HTTP session with browser-like headers
 _SESSION = requests.Session()
@@ -103,8 +140,22 @@ def extract_with_jina(url: str) -> str:
 
 def _fetch_raw(url: str, timeout: int = 20) -> Optional[requests.Response]:
     try:
-        resp = _SESSION.get(url, timeout=timeout, allow_redirects=True)
+        resp = _SESSION.get(url, timeout=timeout, allow_redirects=True, stream=True)
         resp.raise_for_status()
+
+        # Enforce a maximum response size to prevent memory/disk exhaustion
+        content_length = resp.headers.get("Content-Length")
+        if content_length and int(content_length) > _MAX_RESPONSE_BYTES:
+            log.warning("Response too large (%s bytes) for %s – skipping", content_length, url)
+            resp.close()
+            return None
+
+        # Read the body (honours Content-Length when available)
+        _ = resp.content
+        if len(resp.content) > _MAX_RESPONSE_BYTES:
+            log.warning("Response body exceeded %d bytes for %s – skipping", _MAX_RESPONSE_BYTES, url)
+            return None
+
         return resp
     except Exception as e:
         log.warning("fetch failed %s: %s", url, e)
@@ -452,6 +503,12 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
             result["source_type"], url,
             content_type=probe_ct, snippet=probe_snippet,
         )
+
+    # Validate URL scheme and block internal/metadata targets (SSRF protection)
+    if not _is_safe_url(url):
+        log.warning("Blocked unsafe URL: %s", url)
+        result["error"] = "blocked_unsafe_url"
+        return result
 
     # 1 ── Jina AI reader (handles HTML + PDFs + JS pages)
     text = extract_with_jina(url)

@@ -121,6 +121,67 @@ def _head_content_type(url: str, timeout: int = 10) -> str:
     return ""
 
 
+def _probe_source_type(url: str, timeout: int = 10) -> tuple[str, bytes]:
+    """
+    Probe a URL for its true content type without downloading the full body.
+
+    Returns ``(content_type, snippet)``:
+      * HEAD is attempted first (cheapest). Many CDNs / API gateways
+        reject HEAD (405/403) or omit Content-Type entirely.
+      * On HEAD failure we follow up with a ``Range: bytes=0-2047`` GET,
+        which virtually always works and exposes both the response
+        Content-Type and the first 2KB of the body. The snippet lets us
+        detect PDFs by magic bytes (``%PDF-``) even when the server
+        lies / omits the header.
+
+    Either element may be empty if the server rejects both probes.
+    """
+    ct = _head_content_type(url, timeout=timeout)
+    snippet = b""
+    if ct:
+        return ct, snippet
+    try:
+        resp = _SESSION.get(
+            url,
+            timeout=timeout,
+            allow_redirects=True,
+            headers={"Range": "bytes=0-2047"},
+            stream=True,
+        )
+        if resp.status_code < 400:
+            ct = resp.headers.get("content-type", "") or ""
+            try:
+                snippet = next(resp.iter_content(chunk_size=2048), b"") or b""
+            except Exception:
+                snippet = b""
+            resp.close()
+    except Exception as e:
+        log.debug("Range GET probe failed for %s: %s", url, e)
+    return ct, snippet
+
+
+_PDF_MAGIC = b"%PDF-"
+
+
+def _refine_source_type(
+    current: str, url: str, content_type: str = "", snippet: bytes = b"",
+) -> str:
+    """Upgrade a URL-heuristic source_type using richer signals.
+
+    Accepts the caller-known content-type and an optional response
+    snippet; if either screams "PDF" the return value is ``pdf``.
+    Otherwise the result is whatever ``classify_source`` says.
+    """
+    refined = classify_source(url, content_type=content_type)
+    if refined in ("article", "other") and snippet.startswith(_PDF_MAGIC):
+        return "pdf"
+    # Never downgrade away from a more specific type already established
+    # by the caller (youtube / archive / pdf from URL suffix).
+    if current not in ("", "article", "other") and refined in ("article", "other"):
+        return current
+    return refined
+
+
 def _is_pdf(resp: requests.Response) -> bool:
     ct = resp.headers.get("content-type", "").lower()
     return "pdf" in ct or resp.url.lower().endswith(".pdf")
@@ -366,13 +427,20 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
         # fall through to Jina for at least the video description
 
     # URL-only heuristics miss PDFs served from signed / query endpoints
-    # (no ".pdf" suffix).  Do a cheap HEAD probe to pick up the real
-    # Content-Type before Jina swallows it.  Skip for YouTube/archive
-    # since those are already correctly classified from the host.
+    # (no ".pdf" suffix). Probe the real content type *before* Jina's
+    # successful return locks source_type in as "article". Relying on
+    # HEAD alone is insufficient — many CDNs/API gateways reject HEAD
+    # with 403/405 or omit Content-Type — so _probe_source_type falls
+    # back to a `Range: bytes=0-2047` GET and also returns a snippet so
+    # PDFs without a proper header are still caught via magic bytes.
+    # Skip for YouTube/archive since those are already correctly
+    # classified from the host.
     if result["source_type"] in ("article", "other"):
-        ct = _head_content_type(url)
-        if ct:
-            result["source_type"] = classify_source(url, content_type=ct)
+        probe_ct, probe_snippet = _probe_source_type(url)
+        result["source_type"] = _refine_source_type(
+            result["source_type"], url,
+            content_type=probe_ct, snippet=probe_snippet,
+        )
 
     # 1 ── Jina AI reader (handles HTML + PDFs + JS pages)
     text = extract_with_jina(url)

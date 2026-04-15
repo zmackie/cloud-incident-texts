@@ -145,7 +145,7 @@ jobs:
           gh api repos/${{ github.repository }}/dispatches \
             --method POST \
             -f event_type=analysis-updated \
-            -f '{"client_payload": {"run_id": "${{ github.run_id }}"}}'
+            -f 'client_payload[run_id]=${{ github.run_id }}'
 
       # ── Artifact backup (30-day retention) ───────────────────────────────
       - name: Upload data outputs as artifact

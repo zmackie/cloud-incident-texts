@@ -212,7 +212,8 @@ function applyFilters() {
   const params = new URLSearchParams(window.location.search);
   const techFilter = params.get("technique");
   if (techFilter) {
-    return allIncidents.filter(inc => (inc.technique_ids || []).includes(techFilter));
+    renderGrid(filtered.filter(inc => (inc.technique_ids || []).includes(techFilter)));
+    return;
   }
 
   renderGrid(filtered);

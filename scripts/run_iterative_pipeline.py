@@ -252,7 +252,7 @@ def main() -> None:
         artifact = artifact_dir / "iteration_report.json"
         artifact.write_text(json.dumps(run_report, indent=2), encoding="utf-8")
         LOG.error("Analysis failed for %s", args.slug)
-        return
+        sys.exit(1)
 
     # 2) Load and sanity-check structured output
     analysis = _load_analysis(args.slug)

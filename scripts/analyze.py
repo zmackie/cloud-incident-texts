@@ -848,6 +848,9 @@ def main():
             except Exception as exc:
                 d = futures[future]
                 log.error("Unexpected error for %s: %s", d.name, exc)
+                # Count worker-level exceptions the same as analysis errors so
+                # they aren't silently excluded from the exit-code check below.
+                results.append({"slug": d.name, "status": "error", "error": str(exc)})
 
     ok = sum(1 for r in results if r["status"] == "ok")
     skipped = sum(1 for r in results if r["status"].startswith("skipped"))

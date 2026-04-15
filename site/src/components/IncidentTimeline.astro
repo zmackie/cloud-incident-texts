@@ -167,6 +167,13 @@ function esc(s: unknown): string {
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+function safeUrl(url: string): string {
+  try {
+    const p = new URL(url).protocol;
+    return (p === "https:" || p === "http:") ? url : "#";
+  } catch { return "#"; }
+}
+
 async function loadIncident(slug: string) {
   const [incident, metaData] = await Promise.all([
     fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
@@ -212,7 +219,7 @@ function renderTimeline(incident: any, metaData: any) {
     const sources = step.evidence_sources || [];
     const sourceLinks = sources.slice(0, 3).map((s: string) => {
       const label = s.replace(/^https?:\/\//, "");
-      return `<a class="step-source-link" href="${esc(s)}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
+      return `<a class="step-source-link" href="${safeUrl(s)}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
     }).join("");
 
     const stepEl = document.createElement("div");
@@ -243,7 +250,7 @@ function renderTimeline(incident: any, metaData: any) {
     const tacticName = tactics[tacticId]?.name || "";
     inner.addEventListener("mousemove", (e: MouseEvent) => {
       const sourceList = sources.length
-        ? `<div style="margin-top:8px">${sources.slice(0, 3).map((s: string) => `<a href="${esc(s)}" target="_blank" rel="noreferrer" style="color:var(--blue)">source</a>`).join(" · ")}</div>`
+        ? `<div style="margin-top:8px">${sources.slice(0, 3).map((s: string) => `<a href="${safeUrl(s)}" target="_blank" rel="noreferrer" style="color:var(--blue)">source</a>`).join(" · ")}</div>`
         : "";
       tip.innerHTML = `
         <span class="tid">${esc(step.technique_id)}</span>

@@ -41,7 +41,10 @@ from pathlib import Path
 from typing import Optional
 
 from clean import clean_markdown, has_frontmatter
-from extract import classify_source
+# Import from the lightweight `sources` module — NOT from `extract` —
+# so this CLI does not transitively require requests/trafilatura/bs4,
+# which aren't listed in this script's inline dependency header.
+from sources import classify_source
 
 logging.basicConfig(
     level=logging.INFO,

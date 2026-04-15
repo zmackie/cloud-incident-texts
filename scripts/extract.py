@@ -38,6 +38,15 @@ import requests
 import trafilatura
 from bs4 import BeautifulSoup
 
+# Re-export from the lightweight sources module so callers can keep
+# `from extract import classify_source` working while keeping the
+# classifier itself free of heavy HTTP/parsing dependencies.
+from sources import (  # noqa: F401
+    YT_HOSTS as _YT_HOSTS,
+    ARCHIVE_HOSTS as _ARCHIVE_HOSTS,
+    classify_source,
+)
+
 log = logging.getLogger(__name__)
 
 # Shared HTTP session with browser-like headers
@@ -227,8 +236,6 @@ def ocr_with_claude(content: bytes, mime: str, prompt: str = "") -> str:
 # 5. YouTube transcript extraction
 # ---------------------------------------------------------------------------
 
-_YT_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}
-
 
 def _youtube_video_id(url: str) -> Optional[str]:
     """Return the 11-char video id for a YouTube URL, or None if not YouTube."""
@@ -332,37 +339,8 @@ def extract_youtube(url: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# 6. Source classification
+# 6. Source classification — see scripts/sources.py (imported above).
 # ---------------------------------------------------------------------------
-
-_ARCHIVE_HOSTS = {
-    "web.archive.org", "archive.org", "archive.ph", "archive.today",
-    "archive.is", "webcache.googleusercontent.com",
-}
-
-
-def classify_source(url: str, content_type: str = "") -> str:
-    """
-    Classify a source URL into one of:
-        article, pdf, youtube, archive, other
-    """
-    try:
-        u = urlparse(url)
-    except Exception:
-        return "other"
-    host = (u.hostname or "").lower()
-    path = (u.path or "").lower()
-    ct = (content_type or "").lower()
-
-    if host in _YT_HOSTS:
-        return "youtube"
-    if host in _ARCHIVE_HOSTS:
-        return "archive"
-    if path.endswith(".pdf") or "pdf" in ct:
-        return "pdf"
-    if "html" in ct or ct == "" or ct.startswith("text/"):
-        return "article"
-    return "other"
 
 
 # ---------------------------------------------------------------------------

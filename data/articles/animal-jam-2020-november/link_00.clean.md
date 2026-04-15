@@ -1,0 +1,22 @@
+---
+title: Animal Jam suffers hack exposing 46 million user records after staff Slack channel compromised
+url: "https://web.archive.org/web/20210122070047/https://www.theregister.com/2020/11/12/animal_jam_breached/"
+published: 2020-11-12
+source_type: archive
+source_domain: web.archive.org
+cleanup_method: llm
+---
+
+Updated Child-friendly games website Animal Jam suffered a hack that exposed 46 million user records after a staff Slack channel was compromised by malicious people who discovered a private AWS key.
+Animal Jam chief exec Clary Stacey confirmed the hack after Bleeping Computer spotted information from the compromised AWS server being posted on stolen data bazaar raidforums[.]com.
+At the time of writing, users of the forum were claiming to have decrypted at least part of the encrypted databases stolen.
+In a statement, game developer Wildworks said: “We believe our vendor’s server was compromised some time between October 10-12, 2020. It was not apparent at the time that a database of account names was accessed as a result of the break-in, and all relevant systems were altered and secured against further intrusion. The database theft most likely occurred in the same October 10-12, 2020 time window.”
+Bleeping Computer alleged 46 million player usernames and SHA-1 hashed passwords were stolen and leaked. Animal Jam usernames are said to be human-moderated to ensure kids playing games on the site weren’t using their own real names.
+The site claims to have 130 million registered accounts. Wildworks said “approximately 32 million” usernames and passwords had been pinched.
+About 12,000 parents’ full names and billing addresses were stolen, though Wildworks said “otherwise no billing information was stolen.”
+“The passwords released in this breach were encrypted and unreadable by normal means. However, if your account was secured with a weak password to begin with (for example, a very short password, or one using dictionary words), it would be possible for knowledgable hackers to break the encryption and expose your password as plain text,” continued Wildworks.
+The full statement is available on its website.
+A few years ago a poorly secured MongoDB database powering a suite of Internet of Things smart children’s toys was repeatedly held to ransom by malicious people, as we reported at the time. Meanwhile, a leaked AWS private key that same year let other malicious people rack up a $64,000 bill on DXC Technologies’ tab after they abused their illicit access to corporate infrastructure. ®
+Updated at 08:41 UTC on 16 November 2020 to add:
+Slack got in touch to say: "We can confirm that an unauthorized user gained access to the WildWorks' Slack workspace through compromised WildWorks user credentials. There has been no breach to Slack's infrastructure. This may have been the result of malware or the re-use of credentials previously exposed.
+"Slack recommends all users practice strong security measures by utilizing two-factor authentication and ensuring their computer software and anti-virus software is up to date. We also strongly encourage customers to utilize password managers like 1Password, or, at a minimum, create new, unique passwords for every service they use."

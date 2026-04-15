@@ -9,12 +9,15 @@
 #   "anthropic>=0.25.0",
 #   "lxml>=5.0.0",
 #   "pillow>=10.0.0",
+#   "youtube-transcript-api>=0.6.2",
 # ]
 # ///
 """
 Content extraction utilities – URL → clean markdown.
 
 Strategy (applied in order, first success wins):
+0. YouTube transcript – if URL is a YouTube video, fetch the transcript via
+                     youtube-transcript-api (no Jina / page scrape).
 1. Jina AI reader  – r.jina.ai/<url> returns markdown for HTML *and* PDFs,
                      handles JS-rendered pages, web archives, etc.
                      Free without an API key; set JINA_API_KEY for higher limits.
@@ -25,13 +28,25 @@ Strategy (applied in order, first success wins):
 """
 import io
 import os
+import re
 import base64
 import logging
 from typing import Optional
+from urllib.parse import urlparse, parse_qs
 
 import requests
 import trafilatura
 from bs4 import BeautifulSoup
+
+# Re-export from the lightweight sources module so callers can keep
+# `from extract import classify_source` working while keeping the
+# classifier itself free of heavy HTTP/parsing dependencies.
+from sources import (  # noqa: F401
+    YT_HOSTS as _YT_HOSTS,
+    ARCHIVE_HOSTS as _ARCHIVE_HOSTS,
+    _unwrap_archive,
+    classify_source,
+)
 
 log = logging.getLogger(__name__)
 
@@ -94,6 +109,83 @@ def _fetch_raw(url: str, timeout: int = 20) -> Optional[requests.Response]:
     except Exception as e:
         log.warning("fetch failed %s: %s", url, e)
         return None
+
+
+def _head_content_type(url: str, timeout: int = 10) -> str:
+    """Cheap HEAD request just to read Content-Type. Returns "" on failure."""
+    try:
+        resp = _SESSION.head(url, timeout=timeout, allow_redirects=True)
+        if resp.status_code < 400:
+            return resp.headers.get("content-type", "") or ""
+    except Exception as e:
+        log.debug("HEAD failed for %s: %s", url, e)
+    return ""
+
+
+def _probe_source_type(url: str, timeout: int = 10) -> tuple[str, bytes]:
+    """
+    Probe a URL for its true content type without downloading the full body.
+
+    Returns ``(content_type, snippet)``:
+      * HEAD is attempted first (cheapest). Many CDNs / API gateways
+        reject HEAD (405/403) or omit Content-Type entirely.
+      * On HEAD failure we follow up with a ``Range: bytes=0-2047`` GET,
+        which virtually always works and exposes both the response
+        Content-Type and the first 2KB of the body. The snippet lets us
+        detect PDFs by magic bytes (``%PDF-``) even when the server
+        lies / omits the header.
+
+    Either element may be empty if the server rejects both probes.
+    """
+    ct = _head_content_type(url, timeout=timeout)
+    snippet = b""
+    if ct:
+        return ct, snippet
+    try:
+        resp = _SESSION.get(
+            url,
+            timeout=timeout,
+            allow_redirects=True,
+            headers={"Range": "bytes=0-2047"},
+            stream=True,
+        )
+        try:
+            if resp.status_code < 400:
+                ct = resp.headers.get("content-type", "") or ""
+                try:
+                    snippet = next(resp.iter_content(chunk_size=2048), b"") or b""
+                except Exception:
+                    snippet = b""
+        finally:
+            # Always release the socket — on 4xx/5xx we previously left
+            # the streamed response open, which leaks connections and can
+            # exhaust the session pool across a large crawl.
+            resp.close()
+    except Exception as e:
+        log.debug("Range GET probe failed for %s: %s", url, e)
+    return ct, snippet
+
+
+_PDF_MAGIC = b"%PDF-"
+
+
+def _refine_source_type(
+    current: str, url: str, content_type: str = "", snippet: bytes = b"",
+) -> str:
+    """Upgrade a URL-heuristic source_type using richer signals.
+
+    Accepts the caller-known content-type and an optional response
+    snippet; if either screams "PDF" the return value is ``pdf``.
+    Otherwise the result is whatever ``classify_source`` says.
+    """
+    refined = classify_source(url, content_type=content_type)
+    if refined in ("article", "other") and snippet.startswith(_PDF_MAGIC):
+        return "pdf"
+    # Never downgrade away from a more specific type already established
+    # by the caller (youtube / archive / pdf from URL suffix).
+    if current not in ("", "article", "other") and refined in ("article", "other"):
+        return current
+    return refined
 
 
 def _is_pdf(resp: requests.Response) -> bool:
@@ -208,6 +300,122 @@ def ocr_with_claude(content: bytes, mime: str, prompt: str = "") -> str:
 
 
 # ---------------------------------------------------------------------------
+# 5. YouTube transcript extraction
+# ---------------------------------------------------------------------------
+
+
+def _youtube_video_id(url: str) -> Optional[str]:
+    """Return the 11-char video id for a YouTube URL, or None if not YouTube.
+
+    Archive-wrapped URLs (e.g. web.archive.org/.../youtube.com/watch?v=...)
+    are unwrapped so the inner URL can match the YouTube host set.
+    """
+    url = _unwrap_archive(url)
+    try:
+        u = urlparse(url)
+    except Exception:
+        return None
+    host = (u.hostname or "").lower()
+    if host not in _YT_HOSTS:
+        return None
+    if host == "youtu.be":
+        vid = u.path.lstrip("/").split("/", 1)[0]
+    elif u.path.startswith("/watch"):
+        vid = parse_qs(u.query).get("v", [""])[0]
+    elif u.path.startswith("/shorts/") or u.path.startswith("/embed/"):
+        parts = u.path.strip("/").split("/")
+        vid = parts[1] if len(parts) > 1 else ""
+    else:
+        vid = ""
+    return vid if re.fullmatch(r"[A-Za-z0-9_-]{11}", vid or "") else None
+
+
+def extract_youtube(url: str) -> str:
+    """
+    Fetch the transcript for a YouTube video and return it as markdown.
+
+    Returns "" if the URL isn't YouTube, the transcript is unavailable,
+    or the library isn't installed.
+    """
+    vid = _youtube_video_id(url)
+    if not vid:
+        return ""
+
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        from youtube_transcript_api._errors import (
+            TranscriptsDisabled, NoTranscriptFound, VideoUnavailable,
+        )
+    except ImportError:
+        log.warning("youtube-transcript-api not installed")
+        return ""
+
+    try:
+        # youtube-transcript-api >=1.0 removed the static `list_transcripts`
+        # classmethod in favor of the instance method `.list()` on
+        # `YouTubeTranscriptApi()`.  Support both so the extractor keeps
+        # working across the version ranges allowed by pyproject.toml.
+        try:
+            transcripts = YouTubeTranscriptApi().list(vid)
+        except AttributeError:
+            transcripts = YouTubeTranscriptApi.list_transcripts(vid)
+        # Prefer manually-created English, then any manual, then auto English,
+        # then any auto-generated.
+        for finder in (
+            lambda: transcripts.find_manually_created_transcript(["en", "en-US", "en-GB"]),
+            lambda: next(iter(transcripts._manually_created_transcripts.values())),
+            lambda: transcripts.find_generated_transcript(["en", "en-US", "en-GB"]),
+            lambda: next(iter(transcripts._generated_transcripts.values())),
+        ):
+            try:
+                t = finder()
+                entries = t.fetch()
+                break
+            except (NoTranscriptFound, StopIteration, AttributeError):
+                continue
+        else:
+            return ""
+    except (TranscriptsDisabled, VideoUnavailable) as e:
+        log.debug("YouTube transcript unavailable for %s: %s", url, e)
+        return ""
+    except Exception as e:
+        log.debug("YouTube transcript fetch failed for %s: %s", url, e)
+        return ""
+
+    # Format as plain text with simple timestamp markers every minute or so.
+    lines = []
+    last_mark = -60
+    for e in entries:
+        # entries may be dicts (older API) or FetchedTranscriptSnippet objects (newer).
+        start = e["start"] if isinstance(e, dict) else getattr(e, "start", 0.0)
+        text = e["text"] if isinstance(e, dict) else getattr(e, "text", "")
+        text = text.replace("\n", " ").strip()
+        if not text:
+            continue
+        if start - last_mark >= 60:
+            mm, ss = divmod(int(start), 60)
+            lines.append(f"\n[{mm:02d}:{ss:02d}]")
+            last_mark = start
+        lines.append(text)
+
+    body = " ".join(lines).strip()
+    if not body:
+        return ""
+
+    header = (
+        f"Title: YouTube transcript ({vid})\n\n"
+        f"URL Source: {url}\n\n"
+        f"Markdown Content:\n"
+    )
+    return header + body
+
+
+# ---------------------------------------------------------------------------
+# 6. Source classification — see scripts/sources.py (imported above).
+# ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
 # Main entry point
 # ---------------------------------------------------------------------------
 
@@ -215,9 +423,35 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
     """
     Fetch a URL and extract its text content as markdown.
 
-    Returns a dict with keys: url, text, method, error
+    Returns a dict with keys: url, text, method, error, source_type
     """
-    result = {"url": url, "text": "", "method": "", "error": ""}
+    result = {"url": url, "text": "", "method": "", "error": "",
+              "source_type": classify_source(url)}
+
+    # 0 ── YouTube: pull transcript directly
+    if result["source_type"] == "youtube":
+        text = extract_youtube(url)
+        if text:
+            result["text"] = text
+            result["method"] = "youtube_transcript"
+            return result
+        # fall through to Jina for at least the video description
+
+    # URL-only heuristics miss PDFs served from signed / query endpoints
+    # (no ".pdf" suffix). Probe the real content type *before* Jina's
+    # successful return locks source_type in as "article". Relying on
+    # HEAD alone is insufficient — many CDNs/API gateways reject HEAD
+    # with 403/405 or omit Content-Type — so _probe_source_type falls
+    # back to a `Range: bytes=0-2047` GET and also returns a snippet so
+    # PDFs without a proper header are still caught via magic bytes.
+    # Skip for YouTube/archive since those are already correctly
+    # classified from the host.
+    if result["source_type"] in ("article", "other"):
+        probe_ct, probe_snippet = _probe_source_type(url)
+        result["source_type"] = _refine_source_type(
+            result["source_type"], url,
+            content_type=probe_ct, snippet=probe_snippet,
+        )
 
     # 1 ── Jina AI reader (handles HTML + PDFs + JS pages)
     text = extract_with_jina(url)
@@ -234,6 +468,7 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
 
     # 3 ── PDF path: pdfplumber → Claude vision
     if _is_pdf(resp):
+        result["source_type"] = "pdf"
         text = extract_pdf_bytes(resp.content)
         if text.strip():
             result["text"] = text

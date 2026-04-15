@@ -1,11 +1,14 @@
 ---
-title: Expel-Annual-Threat-Report-2025-013025.pdf
+title: Expel Annual Threat Report 2025
 url: "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
-published: "Fri, 31 Jan 2025 16:15:16 GMT"
+author: Aaron Walton, Christine Billie, Matt Jastram
+published: 2025-01-30
 source_type: pdf
 source_domain: expel.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
+
+Annual Threat Report 2025 
 
 # Cybersecurity insights, resilience recommendations, and predictions Letter from the CEO 
 
@@ -1055,13 +1058,3 @@ Scout Scholes
 Designer 
 
 Mel Todas 
-
-Annual Threat Report 2025 31 A B O U T E X P E L 
-
-Expel is the leading managed detection and response (MDR) provider trusted by some 
-
-of the world’s most recognizable brands to expel their adversaries, minimize risk, and build security resilience. Expel’s 24x7x365 coverage spans the widest breadth of attack surfaces, including cloud, with 100% transparency. We combine world-class security practitioners and our AI-driven platform, Expel Workbench™, to ingest billions 
-
-of events monthly and still achieve a 20-minute critical alert MTTR. Expel augments 
-
-existing programs to help customers maximize their security investments and focus on building trust—with their customers, partners, and employees. For more information, visit our website , check out our blog , or follow us on LinkedIn .

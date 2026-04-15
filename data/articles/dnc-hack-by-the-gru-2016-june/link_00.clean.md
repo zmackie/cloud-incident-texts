@@ -1,10 +1,11 @@
 ---
 title: gov-uscourts-nysd-492363-216-0.pdf
 url: "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-published: "Tue, 14 Apr 2026 19:35:58 GMT"
+author: Michael Eisenkraft, Joseph M. Sellers, Geoffrey A. Graber, Julia A. Horwitz, Alison S. Deich, Eric S. Berelovich
+published: 2019-01-17
 source_type: article
 source_domain: www.politico.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
 
 IN THE UNITED STATES DISTRI CT COURT 
@@ -45,89 +46,6 @@ RICHARD W. GATES, III;
 
 Defendants. 
 
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
-
-)
 
 Civil Action No. 1:18 -cv -03501 
 

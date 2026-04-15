@@ -1,19 +1,20 @@
 ---
-title: TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf
+title: "2023 Cloud Risk Report: The Rise of the Cloud-Conscious Adversary"
 url: "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
-published: "Wed, 20 Sep 2023 14:00:39 GMT"
+author: CrowdStrike
+published: 2023-10-01
 source_type: pdf
 source_domain: www.dlt.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
-
-# The Rise of the Cloud-Conscious Adversary 
-
-Presented by: 2© 2023 CrowdStrike, Inc. All rights reserved. 
 
 2023 Cloud Risk Report 
 
-The Rise of the Cloud-Conscious Adversary 
+
+# The Rise of the Cloud-Conscious Adversary 
+
+
+
 
 # Contents Executive Summary  3Cloud Threat Landscape Overview  5
 
@@ -43,17 +44,11 @@ New Avenues of Attack  16
 
 The Future of Cloud Threats  22 Top 5 Steps to Defend a Cloud Environment  23 CrowdStrike’s Unified Approach to Cloud Security  24 About CrowdStrike  25 2023 Cloud Risk Report 
 
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 3Executive Summary 
 
 Cloud-conscious cyberattacks skyrocketed from 2021 to 2022: Observed cloud exploitation cases grew by 95% and cases involving adversaries targeting cloud environments have nearly tripled, increasing 288% year-over-year. 1Defending cloud environments from this activity requires knowledge of what threat actors are doing — how they’re breaking in and moving laterally, which resources they target and the steps they take to evade detection. The CrowdStrike 2023 Cloud Risk Report puts a spotlight on adversaries targeting enterprise cloud environments and the tactics, techniques and procedures (TTPs) they employ. It uncovers key trends in adversary activity, shares real-world stories of recent attacks on cloud environments, reveals critical oversights that are leaving organizations vulnerable, and offers guidance for defending against increasingly cloud-conscious adversaries. 1 CrowdStrike 2023 Global Threat Report 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 4Among the key findings: 
 
@@ -79,7 +74,6 @@ Human error drives cloud risk.
 
 ¼ 36% of cloud environments had insecure cloud service provider default settings.* 
 
-The findings in this report are drawn from data and observations from real-world cyberattacks. These incidents were uncovered, analyzed and neutralized by CrowdStrike Falcon® Cloud Security, CrowdStrike Falcon® Intelligence, CrowdStrike® Falcon OverWatch™ managed threat hunting, and incident response engagements. CrowdStrike expects cloud targeting to continue to accelerate. As threats evolve, it is imperative organizations learn what they are up against in order to effectively protect cloud environments. © 2023 CrowdStrike, Inc. All rights reserved. 
 
 5Cloud Threat Landscape Overview 
 
@@ -87,9 +81,6 @@ The findings in this report are drawn from data and observations from real-world
 
 Cloud-conscious adversaries, which abuse cloud-specific features to achieve their goals, pose significant risk to cloud environments. They have a deep understanding of cloud infrastructure and continue to refine their tactics to abuse cloud services and exploit cloud vulnerabilities and misconfigurations. Defending against these threat actors requires an understanding of the motivations, strategies and techniques they use to infiltrate the cloud. Below are four prolific adversaries and their unique tactics. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 6
 
@@ -97,9 +88,6 @@ The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights r
 
 SCATTERED SPIDER is growing aggressive in their use of cloud-conscious TTPs, seeking to monetize their operations by extorting victims. For example, in the spring of 2023, they deployed ransomware from a cloud staging environment for the first time. In this incident, CrowdStrike observed SCATTERED SPIDER using the Azure run command feature to execute a PowerShell script. This script deployed a remote monitoring and management tool, which was then used to modify user accounts and passwords as a means to escalate privileges. With greater privileges, the threat actor used a cloud orchestration tool to deploy the Alphv Sphynx ransomware, which primarily targets ESXi environments, to extort victims. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 7
 
@@ -107,9 +95,6 @@ The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights r
 
 COZY BEAR was observed using credential theft to access cloud environments, including Microsoft 365 tenants, as a foundational tactic. The threat actor was able to subvert authentication with a single-sign-on (SSO) provider, with multifactor authentication (MFA) enabled, by stealing session cookies stored in Chrome browser profiles. Cookies stolen within a valid session time window can be saved in an adversary-controlled web browser installed on a compromised machine in a target environment; these can then be used to authenticate and access services. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 8
 
@@ -117,9 +102,6 @@ The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights r
 
 COSMIC WOLF targeted data stored within a victim’s cloud environment during an intrusion in the technology sector. The adversary compromised the cloud environment using a stolen credential, which allowed them to interact with the cloud environment using the command line. Using this method, the adversary altered security group settings to allow direct Secure Shell access from malicious infrastructure. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 9
 
@@ -127,9 +109,6 @@ The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights r
 
 LABYRINTH CHOLLIMA has extensively used cloud services such as Google Drive and Microsoft OneDrive to host malware or conduct C2. The threat actor was observed delivering malicious macro documents to victims over WhatsApp, as well as using text-based SaaS solutions such as GitHub to store files such as second-stage payloads. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 10 Cloud-Conscious Adversaries Require Cloud-Focused Protection 
 
@@ -141,11 +120,6 @@ The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights r
 
 ¼ Container security : Enables teams to perform detection, investigation and threat hunting tasks on containers, even those that have been decommissioned. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 11 
 
@@ -173,11 +147,7 @@ Defense Evasion
 
 Some threat actors tried to evade defenses by deactivating security products running inside virtual machines. Others attempted to masquerade as valid users by choosing proxy exits close to expected victim locations or naming newly created virtual machines to align with the victim’s naming scheme. As cloud adoption continues to grow across business environments, adversaries are using the cloud to expand the impact of their attacks. Though the goals of adversaries’ operations in the cloud are often similar to their intrusion ambitions outside cloud environments — i.e., gain initial access, gain persistence and move laterally — the short-lived nature of some cloud environments means adversaries may need a more tenacious approach to succeed. In 67% of cloud security incidents CrowdStrike observed, IAM roles were found with privileges elevated beyond what was required, indicating an organization may have incorrectly set permissions, or an adversary may have subverted the role to compromise the environment and move laterally. In 28% of incidents CrowdStrike observed, adversaries manually deleted an instance to remove evidence and evade detection. Cloud exploitation increased from 2021 to 2022, with the total number of observed cloud exploitation growing by 95% and cases involving cloud-conscious threat actors increasing 
 
-288%. **2023 Global Threat Report 12 © 2023 CrowdStrike, Inc. All rights reserved. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 
 
 # Cloud Misconfigurations: An Open Door to Adversaries 
 
@@ -199,7 +169,6 @@ Most cloud service providers have default security policies; however, these may 
 
 ¼ Open Databases, Caches and Storage Buckets: Databases or object caches that are made public without sufficient authentication and authorization controls can expose the entire database or cache to opportunistic adversaries that can use them for data theft, destruction or tampering. 
 
-¼ Neglected Cloud Infrastructure: Cloud applications or workloads that are spun up to support a short-term need, and then neglected once the team has moved on from the exercise, create significant risk. Cloud infrastructure not maintained by the security team can give threat actors an opportunity to search for sensitive data left behind. © 2023 CrowdStrike, Inc. All rights reserved. 
 
 13 
 
@@ -215,9 +184,6 @@ The widespread adoption of container technologies with improper configurations, 
 
 # 24% of workloads have root-like capabilities 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 14 
 
@@ -228,21 +194,11 @@ Analysis shows threat actors most commonly achieved initial access into containe
 
 Figure 1. MITRE ATT&CK® heat map of threats to containers 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 15 © 2023 CrowdStrike, Inc. All rights reserved. 
-
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 15 Cloud Threat Activity: Real-World Observations 
 
 The trends and techniques CrowdStrike has observed in the wild relate to credentials and identities, lateral movement across IT environments and cloud misconfiguration abuse. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 16 © 2023 CrowdStrike, Inc. All rights reserved. 
-
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 16 
 
@@ -250,11 +206,6 @@ The Rise of the Cloud-Conscious Adversary 16 © 2023 CrowdStrike, Inc. All right
 
 CrowdStrike often sees adversaries attempting to collect cloud credentials after they have established a foothold in a victim environment. By collecting valid credentials, adversaries can expose new assets or open new attack pathways. In the first quarter of 2023, CrowdStrike identified an unknown adversary targeting multiple Linux cloud hosts hosting vulnerable web applications. The malicious activity observed included attempted cloud credential harvesting and attempted deployment of a Sliver implant. The Sliver case study details the TTPs observed in this intrusion, which targeted a global retail entity. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 17 © 2023 CrowdStrike, Inc. All rights reserved. 
-
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 17 
 
@@ -292,11 +243,7 @@ The adversary attempted to harvest the cloud credentials via the Instance metada
 
 curl -k http://[REDACTED IP Address]/ latest/ meta-data/iam/security-credentials/ [REDACTED IAM Role] 
 
-## Unknown Adversary Deploys Sliver Implant and Targets Cloud Credentials To defend against this attack 2023 Cloud Risk Report 
 
-The Rise of the Cloud-Conscious Adversary 18 © 2023 CrowdStrike, Inc. All rights reserved. 
-
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 18 Lateral Movement: 
 
@@ -306,15 +253,11 @@ Beware the Pivot: Adversaries Gain Cloud Access from Traditional IT Devices
 
 CrowdStrike uncovered a series of interactive intrusions exploiting CVE-2022-29464, which allowed unrestricted file upload and remote code execution. These campaigns were consistent with China-nexus targeted intrusion activity. The next case study details TTPs observed in an intrusion against multiple Linux hosts at a technology entity in the APJ region, where the adversary was seen moving into the victim’s cloud environment. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 19 © 2023 CrowdStrike, Inc. All rights reserved. 
 
 Defense Evasion 
 
 The adversary deployed numerous anti-forensic efforts including the timestomping of webshell files with the aim of frustrating response and remediation efforts. 
 
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 19 
 
@@ -354,11 +297,6 @@ search of credentials including /etc/shadow
 
 and .bash_history 
 
-## PANDA Explores Linux and Cloud-based Workloads Following Exploit of CVE-2022-29464 To defend against this attack 2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 20 © 2023 CrowdStrike, Inc. All rights reserved. 
-
-> © 2023 CrowdStrike, Inc. All rights reserved.
 
 20 
 
@@ -370,15 +308,11 @@ The following incident occurred due to lack of maintenance:
 
 In early 2023, CrowdStrike detected an interactive intrusion by an unknown adversary against a cloud-hosted Windows server. The observed execution occurred on the host under a Windows command shell after exploitation of a public-facing web service. Activity included attempted harvesting of cloud instance credentials and the use of Chisel to attempt protocol tunneling using an external SOCKS proxy. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 21 © 2023 CrowdStrike, Inc. All rights reserved. 
 
 Command and Control 
 
 The adversary executed a customer compiled version of the Chisel protocol tunneling tool to establish a reverse tunnel between the endpoint and adversary infrastructure. 
 
-© 2023 CrowdStrike, Inc. All rights reserved. 
 
 21 
 
@@ -410,19 +344,11 @@ Credential Access
 
 The adversary queried cloud instance metadata, showing interest in a particular IAM role. The use of PowerShell to query the API is seen less frequently than the use of curl. 
 
-## Unknown Adversary Gains Access to a Cloud-hosted Windows Server To defend against this attack 2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary © 2023 CrowdStrike, Inc. All rights reserved. 
 
 22 The Future of Cloud Threats 
 
 The threat to cloud-based data, assets and resources continues to grow as threat actors seek novel ways to bypass security measures, quietly breach cloud environments, move laterally, access sensitive data, refine proven techniques and test new ones. It’s expected organizations will continue to evolve their multi-cloud environments. While the multi-cloud approach offers greater scalability and flexibility, it also drives complexity and creates new security challenges for security teams. Security teams will need to contend with user access control, configuration errors, data governance, observability and the shared responsibility model to harden protection for their expanding multi-cloud environments. Identity protection must be a top priority. The adoption of more cloud-based applications and services will drive the number of identities an adversary can target and use to their advantage. It is likely threat actors will continue to seek opportunities to use valid identities to log in, move laterally and achieve their goals. The identity threat is pervasive, affecting all major cloud providers and many smaller ones across customers of all sizes and industries. CrowdStrike expects cloud-focused threat activity to continue — an assessment made with high confidence based on the continued increase in targeting and in organizations’ expansion into multi-cloud and hybrid cloud environments. In response to these evolving threats, CrowdStrike continues to provide industry-leading adversary tracking, threat intelligence collection and campaign analysis, and the cloud security tools organizations need to stay informed and protected against modern cloud threats. 23 © 2023 CrowdStrike, Inc. All rights reserved. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 
 
 # Top 5 Steps to Defend a Cloud Environment Understand how to protect your cloud environment, and receive customized insights to operationalize best practices for cloud security. Prioritize Cloud Identity Protection: 
 
@@ -444,20 +370,12 @@ Watch for Unusual Behavior in Real Time:
 
 Visibility into cloud workloads and container events is critical. Organizations should monitor for suspicious activity including newly created cloud instances and cloud accounts, newly added credentials or MFA factors, changed firewall rules, access to cloud resources by new or unexpected entities, and the disabling of MFA through configuration changes. Any of these behaviors may indicate an intruder in the cloud. 24 © 2023 CrowdStrike, Inc. All rights reserved. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 
 
 # CrowdStrike’s Unified Approach to Cloud Security 
 
 CrowdStrike Falcon® Cloud Security delivers unified agent and agentless cloud security capabilities for a superior, elegant experience that drives down the cost and effort of stopping cloud breaches across AWS, Azure, and GCP — including support for all major workloads, containers and serverless applications. Falcon Cloud Security consolidates fragmented, standalone tools across CWP, CSPM, and CIEM as part of a holistic cloud-native application protection platform (CNAPP) with built-in industry-leading threat hunting and services. CrowdStrike® Falcon OverWatch™ Cloud Threat Hunting unearths cloud threats, from unique cloud attack paths with complex trails of cloud IOAs and IOMs to well-concealed adversary activity in your critical cloud infrastructure — including AWS, Azure and Google Cloud Platform. CrowdStrike Falcon® Complete Cloud Security (MDR for Cloud Workloads) provides a fully managed cloud workload protection service, delivering 24/7 expert security management, threat hunting, monitoring and response for cloud workloads, backed by CrowdStrike’s industry-leading Breach Prevention Warranty. CrowdStrike Cloud Security Services help you fortify the security posture of your cloud platforms and respond with authority to cloud data breaches. 25 © 2023 CrowdStrike, Inc. All rights reserved. 
 
-2023 Cloud Risk Report 
-
-The Rise of the Cloud-Conscious Adversary 
 
 # About CrowdStrike 
 
 CrowdStrike (Nasdaq: CRWD), a global cybersecurity leader, has redefined modern security with the world’s most advanced cloud-native platform for protecting critical areas of enterprise risk — endpoints and cloud workloads, identity and data. Powered by the CrowdStrike Security Cloud and world-class AI, the CrowdStrike Falcon® platform leverages real-time indicators of attack, threat intelligence, evolving adversary tradecraft and enriched telemetry from across the enterprise to deliver hyper-accurate detections, automated protection and remediation, elite threat hunting and prioritized observability of vulnerabilities. Purpose-built in the cloud with a single lightweight-agent architecture, the Falcon platform delivers rapid and scalable deployment, superior protection and performance, reduced complexity and immediate time-to-value. 
-
-CrowdStrike. Protection that Powers You. Partner Email Address Partner Name Partner URL Partner Phone

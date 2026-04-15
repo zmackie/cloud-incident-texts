@@ -1,9 +1,11 @@
 ---
-title: m-trends-2025-en.pdf
+title: Mandiant M-Trends 2025 Report
 url: "https://services.google.com/fh/files/misc/m-trends-2025-en.pdf"
+author: Mandiant
+published: 2025
 source_type: pdf
 source_domain: services.google.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
 
 # Table of Contents Introduction  4By the Numbers  5
@@ -48,7 +50,6 @@ Conclusion  79
 
 MITRE ATT&CK  80 
 
-Bibliography  90 SPECIAL REPORT: MANDIANT M-TRENDS 2023 3EMBARGO 
 
 # Introduction Mandiant M-Trends 2025 Report 4
 
@@ -2018,5 +2019,3 @@ T1040: Network Sniffing 0.2% Mandiant M-Trends 2025 Report 94
 # Bibliography Mandiant M-Trends 2025 Report 95 
 
 33.  https://research.checkpoint.com/2024/iranian-malware-attacks-iraqi-government/ 34.  https://cloud.google.com/blog/topics/threat-intelligence/telegram-malware-iranian-espionage 35.  https://www.cybercom.mil/Media/News/Article/2897570/ iranian-intel-cyber-suite-of-malware-uses-open-source-tools/ 36.  https://www.trendmicro.com/en_us/research/24/h/threat-actors-target-middle-east-using-fake-tool.html 37.  https://www.gov.il/BlobFolder/reports/alert_1817/he/ALERT-CERT-IL-W--1817.pdf 38.  https://cloud.google.com/blog/topics/threat-intelligence/ suspected-iranian-unc1549-targets-israel-middle-east 39.  https://cloud.google.com/blog/topics/threat-intelligence/untangling-iran-apt42-operations 40.  https://blog.google/threat-analysis-group/iranian-backed-group-steps-up-phishing-campaigns-against-israel-us/ 41.  https://cloud.google.com/blog/topics/threat-intelligence/unc3944-targets-saas-applications 42.  https://cloud.google.com/learn/paas-vs-iaas-vs-saas?hl=en 43.  https://www.reuters.com/business/finance/goldman-sachs-plans-spin-out-its-digital-assets-platform-bloomberg-news-reports-2024-11-18/ 44.  https://www.jpmorgan.com/kinexys/digital-payments 45.  https://www.blackrock.com/us/financial-professionals/investments/products/bitcoin-investing 46.  https://cloud.google.com/blog/topics/threat-intelligence/3cx-software-supply-chain-compromise 47.  https://cloud.google.com/blog/topics/threat-intelligence/examining-web3-heists 48.  https://www.justice.gov/archives/opa/pr/911-s5-botnet-dismantled-and-its-administrator-arrested-coor-dinated-international-operation 49.  https://www.virustotal.com/gui/collection/campaign--a35afe10-cd7e-5c2c-b2d4-21cdaf3d9a75 50.  https://cloud.google.com/blog/topics/threat-intelligence/securing-cryptocurrency-organizations SPECIAL REPORT: MANDIANT M-TRENDS 2023 96 EMBARGO 
-
-For more information, visit cloud.google.com .

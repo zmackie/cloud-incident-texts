@@ -1,11 +1,75 @@
 ---
-title: Please Read
+title: "It's Getting Real & Hitting the Fan 2023 Edition: Real World SaaS Attacks"
 url: "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
-published: "Thu, 27 Apr 2023 14:50:54 GMT"
+author: Ofer Maor
+published: 2023-04-27
 source_type: pdf
 source_domain: static.rainfocus.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
+
+It ’s Getting Real & Hitting the Fan 
+
+2023  Edition 
+
+Real World SaaS Attacks 
+
+OFER MAOR 
+
+> CTO, Mitiga
+
+
+Speaker 
+
+
+@OferMaor 
+
+ofer@mitiga.io 
+
+Linkedin.com /in/ ofermaor 
+
+CTO & Co -Founder, Mitiga 
+
+Over  25  Years in Cybersecurity 
+
+Hacker at Heart 
+
+CloudSec &  AppSec  (Daytime) 
+
+Incident Response  (Nights & Weekends) 
+
+
+
+Introduction 
+
+
+Today ’s
+
+Talk:  Learn about SaaS breaches 
+
+through real -world stories 
+
+1
+
+Realize how the right 
+
+breach response can reduce 
+
+impact and prevent loss 
+
+2
+
+Understand what you can today 
+
+to become more resilient and 
+
+be ready for breaches 
+
+3
+
+SaaS Breaches are here! 
+
+Breaches are inevitable  World is moving to SaaS #RSAC 
 
 ## The Cost of Cloud (&SaaS) Breaches 
 

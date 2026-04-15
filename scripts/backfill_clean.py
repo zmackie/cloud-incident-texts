@@ -175,7 +175,8 @@ def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> tuple[list[str], set
 
 def clean_one_link(raw_md: Path, url: str, source_type: str,
                    use_llm: bool, dry_run: bool,
-                   redo_fallback: bool = False) -> dict:
+                   redo_fallback: bool = False,
+                   model: str = "claude-opus-4-6") -> dict:
     """Clean a single link_NN.md -> link_NN.clean.md."""
     clean_path = raw_md.with_name(raw_md.stem + ".clean.md")
     result = {
@@ -220,6 +221,7 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
     try:
         cleaned = clean_markdown(
             raw_text, url=url, source_type=source_type, use_llm=use_llm,
+            model=model,
         )
     except Exception as e:
         result["action"] = "error"
@@ -241,7 +243,8 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
 
 
 def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
-                      redo_fallback: bool = False) -> list[dict]:
+                      redo_fallback: bool = False,
+                      model: str = "claude-opus-4-6") -> list[dict]:
     """Migrate + clean every link in one incident directory."""
     meta = _load_metadata(slug_dir)
     if meta is None:
@@ -283,7 +286,7 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
         source_type = existing_status.get("source_type") or classify_source(url)
 
         r = clean_one_link(raw_md, url, source_type, use_llm, dry_run,
-                           redo_fallback=redo_fallback)
+                           redo_fallback=redo_fallback, model=model)
         results.append(r)
 
         if r["action"] == "cleaned" and not dry_run and existing_status:
@@ -340,7 +343,8 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
 
 def backfill_all(workers: int, use_llm: bool, dry_run: bool,
                  only: Optional[str] = None,
-                 redo_fallback: bool = False) -> None:
+                 redo_fallback: bool = False,
+                 model: str = "claude-opus-4-6") -> None:
     if not ARTICLES_DIR.exists():
         log.error("No articles directory at %s", ARTICLES_DIR)
         return
@@ -359,7 +363,8 @@ def backfill_all(workers: int, use_llm: bool, dry_run: bool,
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
-            pool.submit(backfill_incident, d, use_llm, dry_run, redo_fallback): d
+            pool.submit(backfill_incident, d, use_llm, dry_run,
+                        redo_fallback, model): d
             for d in slugs
         }
         for fut in as_completed(futures):
@@ -396,6 +401,10 @@ def main(argv: Optional[list[str]] = None) -> int:
                    help="Re-run clean files whose frontmatter cleanup_method "
                         "is not 'llm' (e.g. fallback_heuristic, raw). "
                         "LLM-cleaned files are still skipped.")
+    p.add_argument("--model", default="claude-opus-4-6",
+                   help="Anthropic model id (default: claude-opus-4-6). "
+                        "Useful with --redo-fallback to retry with a "
+                        "different model, e.g. claude-sonnet-4-6.")
     args = p.parse_args(argv)
 
     backfill_all(
@@ -404,6 +413,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         dry_run=args.dry_run,
         only=args.only,
         redo_fallback=args.redo_fallback,
+        model=args.model,
     )
     return 0
 

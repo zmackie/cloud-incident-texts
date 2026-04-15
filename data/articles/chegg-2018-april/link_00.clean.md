@@ -1,13 +1,12 @@
 ---
 title: Complaint
 url: "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+author: Federal Trade Commission
 published: "Mon, 31 Oct 2022 13:55:50 GMT"
 source_type: pdf
 source_domain: www.ftc.gov
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
-
-________________________________________________ ________________________________________________ 
 
 202-3151 
 
@@ -130,5 +129,3 @@ By the Commission.
 April J. Tabor Secretary 
 
 SEAL: 
-
-6

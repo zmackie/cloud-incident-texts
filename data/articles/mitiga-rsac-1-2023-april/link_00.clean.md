@@ -1,29 +1,83 @@
 ---
-title: Please Read
+title: "It's Getting Real & Hitting the Fan 2023 Edition: Real World SaaS Attacks"
 url: "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
-published: "Thu, 27 Apr 2023 14:50:54 GMT"
+author: Ofer Maor
+published: 2023-04-27
 source_type: pdf
 source_domain: static.rainfocus.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
+
+It ’s Getting Real & Hitting the Fan 
+
+2023  Edition 
+
+Real World SaaS Attacks 
+
+OFER MAOR 
+
+> CTO, Mitiga
+
+
+Speaker 
+
+
+@OferMaor 
+
+ofer@mitiga.io 
+
+Linkedin.com /in/ ofermaor 
+
+CTO & Co -Founder, Mitiga 
+
+Over  25  Years in Cybersecurity 
+
+Hacker at Heart 
+
+CloudSec &  AppSec  (Daytime) 
+
+Incident Response  (Nights & Weekends) 
+
+
+
+Introduction 
+
+
+Today ’s
+
+Talk:  Learn about SaaS breaches 
+
+through real -world stories 
+
+1
+
+Realize how the right 
+
+breach response can reduce 
+
+impact and prevent loss 
+
+2
+
+Understand what you can today 
+
+to become more resilient and 
+
+be ready for breaches 
+
+3
+
+SaaS Breaches are here! 
+
 
 ## The Cost of Cloud (&SaaS) Breaches 
 
-Source:  Cost of Data Breach Report  2022 , IBM #RSAC 
 
 Breach Cost Continues to Rise  – 4.35 M$ 
 
-7 
-
-> Source: Cost of Data Breach Report 2022 , IBM
-
-Average total cost of a data breach #RSAC 
 
 Breac hes  Moving to Cloud & SaaS 
 
-8 
-
-> Source: Cost of Data Breach Report 2022 , IBM
 
 What best 
 
@@ -37,35 +91,26 @@ Did the data
 
 breach occur in 
 
-the cloud? #RSAC 
 
 Cloud Breaches Cost More! 
 
-9
 
 Average cost of a cloud -based data breach based on cloud model  
 
-> Source: Cost of Data Breach Report 2022 , IBM #RSAC
 
 It ’s Not Your First (or Last) Rodeo …
 
-10 
-
-Source: Cost of Data Breach Report  2022 , IBM 
 
 Was this your 
 
 first data 
 
-breach? #RSAC 
 
 ## Identity Theft is King 
 
-MFA ( 2FA)  is  dead !#RSAC 
 
 Initial Attack Vector  – Identity >  33 %
 
-12 
 
 In  2022 , the most common initial attack 
 
@@ -83,25 +128,18 @@ The report saw the same order of the top
 
 four initial attack vectors.  
 
-> Source: Cost of Data Breach Report 2022 , IBM #RSAC
 
 The Death of MFA  – MFA Push Fatigue 
 
-> 13 13 #RSAC
 
 The Death of MFA  – Adversary in the Middle 
 
-> 14
-> Source: Microsoft #RSAC
 
 ## Phishing,  AiTM , BEC 
 
-Incident # 1#RSAC 
 
 BEC Leveraging AitM MFA Persisteny Campaign 
 
-> 16
-> Source: Tech Target #RSAC
 
 Suspicious Email 
 
@@ -113,11 +151,9 @@ Foobar  legal  The law firm representing  Foobar
 
 Buyer  The company conducting the transaction 
 
-Buyer legal  The law firm of the Buyer #RSAC 
 
 The BEC Scheme 
 
-> 18 #RSAC
 
 Incident Timeline 
 
@@ -155,7 +191,6 @@ Initial Access  • DocuSign  phishing  email
 
 • Browsing through  O365  – Outlook & Sharepoint 
 
-• Identifying correspondance on an upcoming transaction #RSAC 
 
 Phishing Email 
 
@@ -167,15 +202,12 @@ Phishing Email
 
 - Leveraging recommended whitelisting for 
 
-dse@docusign.net #RSAC 
 
 Succesfull AiTM Phishing 
 
-> 21 #RSAC
 
 Creating new Authenticator 
 
-> 22 #RSAC
 
 No MFA Challenge Needed! 
 
@@ -191,11 +223,9 @@ authenticator !
 
 No  MFA  check !
 
-Previously  satisfied #RSAC 
 
 ## Multi -SaaS Ransomware 
 
-Incident # 2#RSAC 
 
 Initial Notification 
 
@@ -203,7 +233,6 @@ Initial Notification
 
 Anonymous Tip: 
 
-You have been spear -phished! #RSAC 
 
 Initial investigation discovers two fake login registrations 
 
@@ -217,7 +246,6 @@ Initial Investigation (by Customer)
 
 > 26
 
-#RSAC 
 
 Limited Containment? 
 
@@ -233,7 +261,6 @@ Nope
 
 You didn ’t stop anything. 
 
-We ’ve been in here for  24  hours #RSAC 
 
 The Heat is On! 
 
@@ -247,7 +274,6 @@ of third parties such as your employees, clients and majority shareholders.
 
 we may need to contact your family members to make our demands clear. 
 
-inconvenience those present inside the exfiltrated data #RSAC 
 
 Major Incident Declared 
 
@@ -263,7 +289,6 @@ do  they have ?
 
 What is still 
 
-compromised ?#RSAC 
 
 Initial Access  – Phishing , MFA Fatigue x  2
 
@@ -275,11 +300,9 @@ Initial Access  – Phishing , MFA Fatigue x  2
 
 - Hiding sign -in emails (mailbox rule) 
 
-- Exfiltrating Data #RSAC 
 
 All Your SaaS are Belong to Us 
 
-> 31 #RSAC
 
 What Exactly was Compromised? 
 
@@ -295,13 +318,11 @@ What Exactly was Compromised?
 
 • Create a full timeline and data exfiltration map 
 
-> 32 #RSAC
 
 What Exactly was Compromised? 
 
 > 33
 
-Prove theft of  20 GB vs  585 GB  claimed by attacker #RSAC 
 
 Ransom (Extortion) Negotiations 
 
@@ -315,11 +336,9 @@ Ransom (Extortion) Negotiations
 
 - Negotiator 
 
-- Executive Support #RSAC 
 
 ## GitHub Source Theft 
 
-Incident # 3#RSAC 
 
 Incident Timeline 
 
@@ -341,7 +360,6 @@ Initial Comprommise  • Developer accidentally merges company git repo to perso
 
 • Key obtained (timing unknown) 
 
-• One of the AWS Keys used for initial reconnaissance #RSAC 
 
 Response  – Investigate/Hunt 
 
@@ -359,19 +377,15 @@ Response  – Investigate/Hunt
 
 • Contain  – Disable/Rotate Keys 
 
-> 37 #RSAC
 
 ## CI/CD SaaS Exposure 
 
-The Circle/CI Breach #RSAC 
 
 Circle CI Breach 
 
-> 39 #RSAC
 
 What is the Potential Damage? 
 
-> 40 #RSAC
 
 Investigating  CircleCI 
 
@@ -393,7 +407,6 @@ Persistence:
 
 - project.api_token.create 
 
-- user.create #RSAC 
 
 AWS Example 
 
@@ -427,21 +440,17 @@ boto 3 and  CURL
 
 2
 
-3#RSAC 
 
 ## Public Resource Sharing 
 
 ## for AWS Data Exfiltration  
 
-> Incident # 4(Cloud) #RSAC
 
 Discovered via Threat Hunting 
 
-> 44 #RSAC
 
 Investigation Uncovers Additional Attacks 
 
-> 45 #RSAC
 
 Investigation & Response 
 
@@ -477,11 +486,9 @@ Impact  – Minimal
 
 No substantial data 
 
-has been leaked #RSAC 
 
 ## Preparing for SaaS Incidents 
 
-(Cloud ones too …)#RSAC 
 
 So,  What Can We Do? 
 
@@ -511,7 +518,6 @@ Perform both proactive and
 
 reactive forensics investigation 
 
-of SaaS apps logs and incidents. #RSAC 
 
 Collect Forensics SaaS (& Cloud) Data 
 
@@ -519,7 +525,6 @@ Collect Forensics SaaS (& Cloud) Data
 
 Productivity Suites Identity Providers 
 
-SaaS Apps Cloud Service Providers #RSAC 
 
 Prepare an IR Team 
 
@@ -533,7 +538,6 @@ response (IR) team and IR plan testing
 
 Impact of XDR technologies on 
 
-average cost of a data breach #RSAC 
 
 Reduce Time to Recover 
 
@@ -545,7 +549,6 @@ Average cost of a data breach based on data breach lifecycle
 
 Average time to identify 
 
-and contain a data breach #RSAC 
 
 Cloud Sec Maturity  → Time to Recover 
 
@@ -555,7 +558,6 @@ Source: Cost of Data Breach Report  2022 , IBM
 
 State of security maturity in the cloud environment  Average time to identify and contain a data 
 
-breach by cloud security maturity level #RSAC 
 
 Apply What You Learned Today! 
 
@@ -612,19 +614,3 @@ apps investigation
 Perform threat hunting on IDP 
 
 and critical SaaS assets 
-
-2 3SESSION ID: 
-
-> #RSAC
-
-Thank You! 
-
-Q&A 
-
-AIR -T02 
-
-OFER MAOR 
-
-CTO, Mitiga 
-
-@OferMaor

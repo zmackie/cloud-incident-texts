@@ -1,11 +1,13 @@
 ---
-title: FTC Takes Action Against Drizly and its CEO James Cory Rellas for Sec…
+title: FTC Takes Action Against Drizly and its CEO James Cory Rellas for Security Failures that Exposed Data of 2.5 Million Consumers
 url: "https://archive.ph/p21Vk"
-published: "2022-10-24T23:40:01Z"
+published: 2022-10-24
 source_type: archive
 source_domain: archive.ph
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
+
+For Release
 
 # FTC Takes Action Against Drizly and its CEO James Cory Rellas for Security Failures that Exposed Data of 2.5 Million Consumers
 
@@ -13,17 +15,6 @@ cleanup_method: fallback_heuristic
 
 October 24, 2022
 
-[](https://d04wq71vm9wdc3.archive.ph/)
-
-Tags:
-
-*   [Consumer Protection](https://archive.ph/o/p21Vk/https://www.ftc.gov/consumer-protection)|
-*   [Bureau of Consumer Protection](https://archive.ph/o/p21Vk/https://www.ftc.gov/bureau-consumer-protection)|
-*   [Identity Theft](https://archive.ph/o/p21Vk/https://www.ftc.gov/identity-theft-0)|
-*   [Alcohol](https://archive.ph/o/p21Vk/https://www.ftc.gov/industry/alcohol)|
-*   [Privacy and Security](https://archive.ph/o/p21Vk/https://www.ftc.gov/business-guidance/privacy-security)|
-*   [Consumer Privacy](https://archive.ph/o/p21Vk/https://www.ftc.gov/business-guidance/privacy-security/consumer-privacy)|
-*   [Data Security](https://archive.ph/o/p21Vk/https://www.ftc.gov/business-guidance/privacy-security/data-security)
 
 The Federal Trade Commission is taking action against the online alcohol marketplace Drizly and its CEO James Cory Rellas over allegations that the company’s security failures led to a data breach exposing the personal information of about 2.5 million consumers. Drizly and Rellas were alerted to security problems two years prior to the breach yet failed to take steps to protect consumers’ data from hackers. The FTC’s proposed order requires the company to destroy unnecessary data, restricts the data that the company can collect and retain, and binds Rellas to specific data security requirements for his role in presiding over unlawful business practices.
 
@@ -128,110 +119,3 @@ Blog: [Data security forecast: Drizly with a 100% chance of far-reaching order p
 [Advice for Consumers](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/topics/identity-theft/advice-consumers)
 
 [Data Security](https://archive.ph/o/p21Vk/https://www.ftc.gov/datasecurity)
-
-[Return to top](https://archive.ph/p21Vk#top)
-
-_[](https://archive.ph/o/p21Vk/https://www.ftc.gov/ "Home")_
-
-Menu
-## Secondary Menu
-
-*   [Report Fraud](https://archive.ph/o/p21Vk/https://reportfraud.ftc.gov/)
-*   [Sign Up for Consumer Alerts](https://archive.ph/o/p21Vk/https://public.govdelivery.com/accounts/USFTCCONSUMER/subscriber/new?topic_id=USFTCCONSUMER_8)
-*   [Search the Legal Library](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library)
-
-## Main navigation
-
-*   [Enforcement](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement)
-    *   [Cases and Proceedings](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/cases-proceedings)
-    *   [Premerger Notification Program](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/premerger-notification-program)
-    *   [Merger Review](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/merger-review)
-    *   [Anticompetitive Practices](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/anticompetitive-practices)
-    *   [Rulemaking](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/rulemaking)
-    *   [Statutes](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/statutes)
-    *   [Competition and Consumer Protection Guidance Documents](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/competition-consumer-protection-guidance-documents)
-    *   [Warning Letters](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/warning-letters)
-    *   [Consumer Sentinel Network](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/consumer-sentinel-network)
-    *   [Criminal Liaison Unit](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/criminal-liaison-unit)
-    *   [Recent FTC Cases Resulting in Refunds](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/refunds)
-    *   [Notices of Penalty Offenses](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/penalty-offenses)
-    *   [Competition Matters Blog](https://archive.ph/o/p21Vk/https://www.ftc.gov/enforcement/competition-matters)
-
-*   [Policy](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy)
-    *   [Advocacy and Research](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy/advocacy-research)
-    *   [Advisory Opinions](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/advisory-opinions)
-    *   [Cooperation Agreements](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/cooperation-agreements)
-    *   [Federal Register Notices](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/federal-register-notices)
-    *   [Reports](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy/reports)
-    *   [Public Comments](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy/public-comments)
-    *   [Studies](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy/studies)
-    *   [Testimony](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/testimony)
-    *   [Policy Statements](https://archive.ph/o/p21Vk/https://www.ftc.gov/legal-library/browse/policy-statements)
-    *   [International](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy/international)
-
-*   Advice and Guidance 
-    *   [Consumer Advice](https://archive.ph/o/p21Vk/consumer.ftc.gov/)
-    *   [Military Consumer](https://archive.ph/o/p21Vk/https://militaryconsumer.gov/)
-    *   [Consumer.gov](https://archive.ph/o/p21Vk/https://consumer.gov/)
-    *   [Business Guidance](https://archive.ph/o/p21Vk/https://www.ftc.gov/business-guidance)
-    *   [Competition Guidance](https://archive.ph/o/p21Vk/https://www.ftc.gov/advice-guidance/competition-guidance)
-    *   [Bulk Publications](https://archive.ph/o/p21Vk/https://bulkorder.ftc.gov/)
-
-*   [News and Events](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events)
-    *   [News](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/news)
-    *   [Events](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/events)
-    *   [Features](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/features)
-    *   [Topics](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/topics)
-    *   [Data and Visualizations](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/data-visualizations)
-    *   [Stay Connected](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/stay-connected)
-
-*   [About the FTC](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc)
-    *   [Mission](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/mission)
-    *   [History](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/history)
-    *   [Commissioners and Staff](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/commissioners-staff)
-    *   [Bureaus and Offices](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/bureaus-offices)
-    *   [Budget and Strategy](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/budget-strategy)
-    *   [Office of Inspector General](https://archive.ph/o/p21Vk/https://www.ftc.gov/office-inspector-general "Custom link for the Office of Inspector General")
-    *   [Careers at the FTC](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/careers)
-    *   [Contact](https://archive.ph/o/p21Vk/https://www.ftc.gov/about-ftc/contact)
-
-## Footer
-
-*   [Privacy Policy](https://archive.ph/o/p21Vk/https://www.ftc.gov/site-information/privacy-policy)
-*   [Policy and Notices](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy-notices)
-*   [FOIA](https://archive.ph/o/p21Vk/https://www.ftc.gov/foia)
-*   [No FEAR Act](https://archive.ph/o/p21Vk/https://www.ftc.gov/policy-notices/no-fear-act)
-*   [Office of Inspector General](https://archive.ph/o/p21Vk/https://www.ftc.gov/office-inspector-general)
-*   [USA.gov](https://archive.ph/o/p21Vk/https://www.usa.gov/)
-
-[](https://archive.ph/o/p21Vk/https://www.ftc.gov/now-leaving?external_url=https://www.facebook.com/federaltradecommission&back_url=https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
-
-[](https://archive.ph/o/p21Vk/https://www.ftc.gov/now-leaving?external_url=https://twitter.com/FTC&back_url=https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
-
-[](https://archive.ph/o/p21Vk/https://www.ftc.gov/now-leaving?external_url=https://www.linkedin.com/company/163780/&back_url=https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
-
-[](https://archive.ph/o/p21Vk/https://www.ftc.gov/now-leaving?external_url=https://www.youtube.com/ftcvideos&back_url=https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
-
-[](https://archive.ph/o/p21Vk/https://www.ftc.gov/news-events/stay-connected%23RSS)
-
-[0%](https://archive.ph/p21Vk#0%)
-[](https://archive.ph/p21Vk#5%)
-[10%](https://archive.ph/p21Vk#10%)
-[](https://archive.ph/p21Vk#15%)
-[20%](https://archive.ph/p21Vk#20%)
-[](https://archive.ph/p21Vk#25%)
-[30%](https://archive.ph/p21Vk#30%)
-[](https://archive.ph/p21Vk#35%)
-[40%](https://archive.ph/p21Vk#40%)
-[](https://archive.ph/p21Vk#45%)
-[50%](https://archive.ph/p21Vk#50%)
-[](https://archive.ph/p21Vk#55%)
-[60%](https://archive.ph/p21Vk#60%)
-[](https://archive.ph/p21Vk#65%)
-[70%](https://archive.ph/p21Vk#70%)
-[](https://archive.ph/p21Vk#75%)
-[80%](https://archive.ph/p21Vk#80%)
-[](https://archive.ph/p21Vk#85%)
-[90%](https://archive.ph/p21Vk#90%)
-[](https://archive.ph/p21Vk#95%)
-[100%](https://archive.ph/p21Vk#100%)

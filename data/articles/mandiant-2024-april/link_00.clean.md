@@ -1,10 +1,11 @@
 ---
-title: "SEC303 - Cloud compromises: Lessons learned from Mandiant investigations in 2023"
+title: "Cloud compromises: Lessons learned from Mandiant investigations in 2023"
 url: "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
-published: "Thu, 11 Apr 2024 19:49:10 GMT"
+author: Will Silverstone, Omar ElAhdan
+published: 2024
 source_type: pdf
 source_domain: assets.swoogo.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
 
 # Cloud compromises: 
@@ -588,31 +589,3 @@ Restrict access to resources from managed and compliant devices only 037 Google 
 Attack surface reduction requires a multi-layered approach across the layers of an organization’s managed identities, resources, networks, and endpoints Thank you 
 
 038 Proprietary 040 Google Cloud Next ‘24 Proprietary 
-
-# Continue your learning journey! 
-
-Sessions 
-
-SEC205 - Cloud security threat briefing with Mandiant 
-
-SEC131 - Address retail security challenges with AI 
-
-Innovators Hive Training 
-
-IHWS201 - Investigating a Compromised GKE Service Account: Hands-on Incident Response in Google Cloud 
-
-Demo in Showcase 
-
-SCSEC-101 - Threat intelligence and Mandiant consulting Google Cloud Next ‘24 Proprietary 
-
-Tap into special offers 
-
-designed to help you 
-
-implement what you learned at Google Cloud Next. 
-
-Scan the code to receive personalized guidance from one of our experts. 
-
-Or visit g.co/next/24offers 
-
-# Ready to build what’s next?

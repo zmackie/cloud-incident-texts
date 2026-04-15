@@ -48,7 +48,7 @@ log = logging.getLogger(__name__)
 
 # Largest input we'll send to Claude in one shot. Above this we fall back
 # to the heuristic cleaner (a handful of huge PDFs hit this).
-_MAX_LLM_INPUT_CHARS = 180_000
+_MAX_LLM_INPUT_CHARS = 800_000
 
 # Heuristic: sections whose heading marks the start of "related/trailer" junk
 # — we drop everything from that heading onward.
@@ -111,7 +111,7 @@ class Cleaned:
                 lines.append(f'{k}: "{s}"' if needs_quote else f"{k}: {s}")
         lines.append("---")
         lines.append("")
-        lines.append(self.body_md.strip())
+        lines.append(_trim_blank_boundary_lines(self.body_md))
         lines.append("")
         return "\n".join(lines)
 
@@ -119,6 +119,21 @@ class Cleaned:
 # ---------------------------------------------------------------------------
 # Core primitives: line-range drops and subset verification
 # ---------------------------------------------------------------------------
+
+def _trim_blank_boundary_lines(s: str) -> str:
+    """
+    Drop leading/trailing lines that are blank (empty or whitespace-only)
+    WITHOUT altering any line's internal whitespace. Preserving internal
+    whitespace is required for the subset check — str.strip() on the full
+    joined string would mangle indented first/last content lines.
+    """
+    lines = s.split("\n")
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    while lines and not lines[-1].strip():
+        lines.pop()
+    return "\n".join(lines)
+
 
 def apply_drops(body: str, drops: list[DropRange]) -> str:
     """
@@ -256,7 +271,7 @@ def _heuristic_drop_ranges(body: str, title: str = "") -> list[DropRange]:
 def heuristic_clean(body: str, title: str = "") -> str:
     """Public heuristic cleaner — computes drops and applies them."""
     drops = _heuristic_drop_ranges(body, title=title)
-    return apply_drops(body, drops).strip()
+    return _trim_blank_boundary_lines(apply_drops(body, drops))
 
 
 # ---------------------------------------------------------------------------
@@ -312,6 +327,51 @@ def _strip_code_fences(s: str) -> str:
         s = re.sub(r"^```(?:json)?\s*", "", s)
         s = re.sub(r"\s*```\s*$", "", s)
     return s.strip()
+
+
+def extract_json_object(text: str) -> Optional[dict]:
+    """
+    Find and parse the first top-level JSON object in `text`, tolerating:
+      - leading/trailing whitespace
+      - surrounding ```json ... ``` code fences
+      - trailing commentary after the closing brace (common LLM failure
+        mode: emit valid JSON, then add "Wait, let me reconsider...")
+    Returns the parsed dict, or None if no parseable object is found.
+    """
+    if not text:
+        return None
+    body = _strip_code_fences(text)
+    start = body.find("{")
+    if start < 0:
+        return None
+    # Scan for the matching closing brace, respecting string literals and
+    # escape sequences. We're only looking for the balanced top-level object.
+    depth = 0
+    in_str = False
+    escape = False
+    for i in range(start, len(body)):
+        c = body[i]
+        if in_str:
+            if escape:
+                escape = False
+            elif c == "\\":
+                escape = True
+            elif c == '"':
+                in_str = False
+            continue
+        if c == '"':
+            in_str = True
+        elif c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                try:
+                    obj = json.loads(body[start:i + 1])
+                except json.JSONDecodeError:
+                    return None
+                return obj if isinstance(obj, dict) else None
+    return None
 
 
 def _number_lines(body: str) -> str:
@@ -373,14 +433,13 @@ def llm_clean(
         log.warning("Unexpected Claude response shape")
         return None
 
-    try:
-        data = json.loads(_strip_code_fences(text))
-    except json.JSONDecodeError as e:
-        log.warning("Claude returned non-JSON: %s (first 200 chars: %r)",
-                    e, text[:200])
+    data = extract_json_object(text)
+    if data is None:
+        log.warning("Claude returned unparseable JSON (first 200 chars: %r)",
+                    text[:200])
         return None
 
-    if not isinstance(data, dict) or "drop_ranges" not in data:
+    if "drop_ranges" not in data:
         log.warning("Claude JSON missing drop_ranges")
         return None
 
@@ -411,6 +470,7 @@ def clean_markdown(
     url: str = "",
     source_type: str = "",
     use_llm: bool = True,
+    model: str = "claude-opus-4-6",
 ) -> Cleaned:
     """
     Clean a raw extracted markdown string. Returns a Cleaned dataclass;
@@ -440,17 +500,20 @@ def clean_markdown(
             url=url,
             source_type=source_type,
             hint_title=jina["title"],
+            model=model,
         )
 
     applied_llm = False
     if llm_result is not None:
-        candidate = apply_drops(body_for_cleaning, llm_result["drop_ranges"]).strip()
-        # Safety: subset check should be trivially true (we only deleted
-        # lines) but verify — and bail out if drops collapsed the article.
-        if (
-            verify_body_is_subset(candidate, body_for_cleaning)
-            and len(candidate) >= max(200, len(body_for_cleaning) // 50)
-        ):
+        candidate = _trim_blank_boundary_lines(
+            apply_drops(body_for_cleaning, llm_result["drop_ranges"])
+        )
+        # Subset check should be trivially true (we only deleted lines) but
+        # verify; separately guard against drops that collapsed the article.
+        subset_ok = verify_body_is_subset(candidate, body_for_cleaning)
+        min_len = max(200, len(body_for_cleaning) // 50)
+        collapse_ok = len(candidate) >= min_len
+        if subset_ok and collapse_ok:
             if llm_result["title"]:
                 cleaned.title = llm_result["title"]
             cleaned.author = llm_result["author"]
@@ -460,15 +523,20 @@ def clean_markdown(
             cleaned.drop_ranges = llm_result["drop_ranges"]
             cleaned.cleanup_method = "llm"
             applied_llm = True
+        elif not subset_ok:
+            log.warning("LLM output failed subset check — falling back")
         else:
-            log.warning("LLM drop_ranges failed verification — falling back")
+            log.warning(
+                "LLM dropped too aggressively (%d chars remaining, min %d) "
+                "— falling back", len(candidate), min_len,
+            )
 
     if not applied_llm:
         drops = _heuristic_drop_ranges(body_for_cleaning, title=cleaned.title)
-        body = apply_drops(body_for_cleaning, drops).strip()
+        body = _trim_blank_boundary_lines(apply_drops(body_for_cleaning, drops))
         if not verify_body_is_subset(body, body_for_cleaning):
             # Should never happen — heuristic only deletes lines.
-            body = body_for_cleaning.strip()
+            body = _trim_blank_boundary_lines(body_for_cleaning)
             drops = []
             cleaned.cleanup_method = "raw"
         else:
@@ -495,6 +563,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     p.add_argument("--source-type", default="", help="article|pdf|youtube|archive|other")
     p.add_argument("--no-llm", action="store_true",
                    help="Skip Claude cleanup; use heuristic only")
+    p.add_argument("--model", default="claude-opus-4-6",
+                   help="Anthropic model id (default: claude-opus-4-6)")
     p.add_argument("-o", "--output", default="-",
                    help="Output path ('-' for stdout, default)")
     args = p.parse_args(argv)
@@ -505,6 +575,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         url=args.url,
         source_type=args.source_type,
         use_llm=not args.no_llm,
+        model=args.model,
     )
     out = cleaned.to_markdown()
     if args.output == "-":

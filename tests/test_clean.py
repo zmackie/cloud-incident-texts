@@ -19,6 +19,7 @@ from clean import (  # noqa: E402
     Cleaned,
     apply_drops,
     clean_markdown,
+    extract_json_object,
     heuristic_clean,
     parse_jina_header,
     verify_body_is_subset,
@@ -33,6 +34,39 @@ FIXTURE = ROOT / "data" / "articles" / "aws-2023-august" / "link_00.md"
 @pytest.fixture
 def raw_text() -> str:
     return FIXTURE.read_text(encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# extract_json_object: tolerates trailing commentary / code fences
+# ---------------------------------------------------------------------------
+
+def test_extract_json_plain():
+    assert extract_json_object('{"a": 1}') == {"a": 1}
+
+
+def test_extract_json_with_code_fence():
+    assert extract_json_object('```json\n{"a": 1}\n```') == {"a": 1}
+
+
+def test_extract_json_with_trailing_commentary():
+    """The failure mode we saw on open-exchange-rates-2020-march."""
+    raw = (
+        '```json\n'
+        '{\n  "title": "x",\n  "drop_ranges": [[1, 10]]\n}\n'
+        '```\n\n'
+        'Wait, let me reconsider. The page is boilerplate...'
+    )
+    obj = extract_json_object(raw)
+    assert obj == {"title": "x", "drop_ranges": [[1, 10]]}
+
+
+def test_extract_json_with_nested_braces():
+    raw = '{"a": {"b": 1}, "c": [{"d": 2}]}'
+    assert extract_json_object(raw) == {"a": {"b": 1}, "c": [{"d": 2}]}
+
+
+def test_extract_json_returns_none_on_garbage():
+    assert extract_json_object("not json at all") is None
 
 
 # ---------------------------------------------------------------------------
@@ -74,6 +108,26 @@ def test_verify_subset_ignores_blank_lines():
     raw = "a\nb"
     clean = "\na\n\nb\n"
     assert verify_body_is_subset(clean, raw) is True
+
+
+def test_clean_preserves_indented_first_line(raw_text: str):
+    """
+    Regression: apply_drops(...).strip() used to mangle the first content
+    line if it had leading whitespace (e.g. indented code block, list
+    continuation). That broke the subset check.
+    """
+    # Build a minimal raw body where the first non-blank line is indented.
+    body = "    indented first line\nnormal line\n"
+    # Simulate a drop that leaves the full body intact.
+    from clean import apply_drops as _apply_drops  # noqa: E402
+    from clean import verify_body_is_subset as _verify  # noqa: E402
+    out = _apply_drops(body, [])
+    # Our cleaner strips *blank* boundary lines but not *within* a line.
+    # Exercise the cleaner end-to-end by constructing a synthetic raw.
+    synthetic = "Title: x\nURL Source: y\nPublished Time: z\nMarkdown Content:\n\n    indented first line\nnormal line\n"
+    result = clean_markdown(synthetic, use_llm=False)
+    assert _verify(result.body_md, body)
+    assert "    indented first line" in result.body_md
 
 
 # ---------------------------------------------------------------------------

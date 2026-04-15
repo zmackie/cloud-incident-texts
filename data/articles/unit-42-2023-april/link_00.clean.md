@@ -1,10 +1,11 @@
 ---
-title: unit42-cloud-threat-report-volume7.pdf
+title: Cloud Threat Report, Volume 7
 url: "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-published: "Tue, 14 Apr 2026 19:42:52 GMT"
+author: Jay Chen, Shaul Ben Hai, Sharon Ben Zeev, Mike Brewer, Daniel Haim Breger, Artur Oleyarsh, Nathaniel Quist, Aviv Sasson, Ariel Zelivansky
+published: 2023
 source_type: pdf
 source_domain: www.paloaltonetworks.com
-cleanup_method: fallback_heuristic
+cleanup_method: llm
 ---
 
 # Table of 
@@ -87,7 +88,6 @@ Appendix  32
 
 Cloud Threat Actor TTPs  32 
 
-About  34Cloud Threat Report, Volume 7  | 3
 
 After two decades of rapid cloud adoption by 
 
@@ -178,7 +178,6 @@ Palo Alto Networks
 > 1. Cloud Computing Market , MarketsandMarkets, March 6, 2023,
 > https://www.marketsandmarkets.com/Market-Reports/cloud-computing-market-234.html#tab_default_2 .
 
-Cloud Threat Report, Volume 7 |  4
 
 To provide security leaders and practitioners with a 
 
@@ -302,7 +301,6 @@ vertically in every major cloud breach.
 
 # Executive 
 
-# Summary Cloud Threat Report, Volume 7 |  5
 
 MFA is not enforced for cloud users . At least three-
 
@@ -386,7 +384,6 @@ a single vulnerability in the source code can be
 
 replicated to multiple workloads, posing risks to the 
 
-entire cloud infrastructure. Cloud Threat Report, Volume 7 |  6
 
 # Cloud Breach Incidents 
 
@@ -459,7 +456,6 @@ victim's accounts that are authenticated
 through the phone number. From CTR Vol. 6,  99%  of the cloud  
 
 > identities are overly permissive.
-> Cloud Threat Report, Volume 7 | 7
 
 TTPs 
 
@@ -620,7 +616,6 @@ was  $650,000 .2
 
 buckets that don’t enable access logging.   
 
-> Cloud Threat Report, Volume 7 | 8Cloud Threat Report, Volume 7 | 9
 
 ## Attack Scenario 2: From Misconfigured Firewall to 
 
@@ -706,7 +701,6 @@ with IMDSv1.
 
 35%  of cloud accounts have cross-account 
 
-resource access through IAM. Cloud Threat Report, Volume 7 |  10 
 
 • Lateral movement and privilege escalation  
 
@@ -794,7 +788,6 @@ actor from exploiting the SSRF vulnerability to gain access tokens.
 > 11% of hosts exposed in public clouds have
 > high or critical vulnerabilities .
 
-Cloud Threat Report, Volume 7 |  11 
 
 Threat Actor  Operation Updates  Unit 42 ATOM 
 
@@ -910,7 +903,6 @@ directed and sustained access to their
 
 cloud platform resources, services, or its 
 
-embedded metadata.” Cloud Threat Report, Volume 7 |  12 
 
 This section provides an overview of the most common security issues observed across the cloud 
 
@@ -958,7 +950,6 @@ compute resources such as containers and VM instances  Simply deleting or blocki
 
 with leaked credentials is insufficient; security teams should identify and remediate the root 
 
-causes to prevent the same problem from being created again Cloud Threat Report, Volume 7 |  13 
 
 # Weak Authentication 
 
@@ -1016,7 +1007,6 @@ Cloud Audit Logs , for all cloud environments, as well as resource logging for e
 
 production environments  All logs should be consolidated in a centralized and protected location 
 
-where security analysts can query data easily Cloud Threat Report, Volume 7 |  14 
 
 # No Automated Backup 
 
@@ -1066,7 +1056,6 @@ and manage their key materials in the cloud-native key management services to en
 
 highest data sovereignty  Rotate encryption periodically to shorten the lifetime of each key and 
 
-reduce the impact in case of a credential leak incident Cloud Threat Report, Volume 7 |  15 
 
 # Inefficient Alert Handling 
 
@@ -1100,7 +1089,6 @@ of organizations resolve their security alerts within four days.
 
 0% 10% 20% 30% 40% 0-4 4-8 8-12 12-16 16-20 20-24 24-28 28-32 32-36 36-40 40-44 44-48 64-68 72-76 76-80 Percentage of Organizations 
 
-Figure 1:  Time, in days, organizations take to resolve security alerts Cloud Threat Report, Volume 7 |  16 
 
 Figure 2:  Number of unique security rules that contribute to the percentage of alerts organizations receive 
 
@@ -1120,7 +1108,6 @@ their remediation strategies  Issues can also be proactively prevented using org
 
 (e  g , AWS  Service Control Policy , Azure Policy , GCP  Organization Policy ) or reactively resolved 
 
-using automated remediation Cloud Threat Report, Volume 7 |  17 
 
 # Exposed Sensitive Data 
 
@@ -1180,7 +1167,6 @@ internet  Organizations should enforce guardrails to prevent compute instances f
 
 exposed to the public internet using services such as  AWS Firewall Manager , Azure Firewall 
 
-Manager Policy , and  GCP Organization Policy Cloud Threat Report, Volume 7 |  18 
 
 # Unpatched Vulnerabilities 
 
@@ -1206,7 +1192,6 @@ with the services behind the ports because most services have conventional ports
 
 on. For example, SSH services usually run on port 22 and RDP services on port 3389. Note ports 80 and 
 
-443 are excluded from our analysis as web applications are internet-facing by design. Cloud Threat Report, Volume 7 |  19 
 
 Vulnerability management has always been challenging, but with the popularity of OSS, the scale of 
 
@@ -1238,7 +1223,6 @@ Figure 4:  Percentage of vulnerabilities categorized by their CVE year
 > every stage of the CI/CD pipeline and security policies should be implemented to block code
 > or artifacts with critical vulnerabilities from being deployed
 
-Cloud Threat Report, Volume 7 |  20 
 
 Open-Source Software (OSS) has been one of the driving forces behind the cloud revolution, 
 
@@ -1286,7 +1270,6 @@ the vulnerabilities.
 
 # of Open-Source 
 
-# Software in the Cloud Cloud Threat Report, Volume 7 |  21 
 
 010 20 30 40 DoS Bypass Dir Traversal RCE Overflow Informational Priv Escalation SQL Injection 
 
@@ -1294,7 +1277,6 @@ Figure 5:  Number of vulnerabilities in CNCF projects categorized by vulnerabili
 
 Figure 6:  Number of vulnerabilities in CNCF projects categorized by language 
 
-050 100 150 200 Golang C++ Python Rust TypeScript CCloud Threat Report, Volume 7 |  22 
 
 # Vulnerability Trends in Web Applications 
 
@@ -1356,7 +1338,6 @@ Improper Privilege Management
 
 # 4.2% 
 
-Figure 7:  Percentage of vulnerabilities categorized by vulnerability type Cloud Threat Report, Volume 7 |  23 
 
 Figure 8 shows the increasing trends of these four vulnerability types in the past 10 years (note that 
 
@@ -1400,7 +1381,6 @@ available exploits incorporated into botnets and malware accounted for the stead
 
 attacks. Even a year after its first disclosure, we still see an increasing trend of exploitation attempts. Note 
 
-that the number of successful exploitations is unknown to us due to the limitation of the data sources. Cloud Threat Report, Volume 7 |  24 
 
 Figure 9:  Monthly change of Log4Shell exploitation attempts from January 2022 to December 2022 
 
@@ -1408,7 +1388,6 @@ Figure 10:  Monthly change of Spring4Shell exploitation attempts from May 2022 t
 
 May Jul Sep Nov 75% 50% 25% 0% -25% -50% 
 
--75% -50% -25% 0% 25% 50% 75% Jan Mar May Jul Sep Nov Cloud Threat Report, Volume 7 |  25 
 
 # Malicious Packages in OSS 
 
@@ -1479,7 +1458,6 @@ discovered less than a month after the  original research  was published, 4 with
 single bad actor, all of which were quickly removed.   
 
 > 4. Adam Bannister, “Open source software repositories play ‘whack-a-mole’ as ‘dependency confusion’ copycats exceed 5000,” The Daily Swig, May 5, 2021,
-> https://portswigger.net/daily-swig/open-source-software-repositories-play-whack-a-mole-as-dependency-confusion-copycats-exceed-5-000 .Cloud Threat Report, Volume 7 | 26
 
 ## 3. Account Takeover 
 
@@ -1567,7 +1545,6 @@ and that non-root packages typically introduce most of the vulnerabilities. 1-50
 
 Figure 11:  Percentage of repositories categorized by the dependency count  
 
-> Cloud Threat Report, Volume 7 | 27
 
 Figure 12 compares root packages and non-root packages. The left chart shows the percentages of 
 
@@ -1593,7 +1570,6 @@ Figure 11 shows the percentage of repositories categorized by the dependency cou
 
 represents a range of dependency counts. It is interesting to see that 31% of the repositories contain 
 
-more than 400 dependent packages. Cloud Threat Report, Volume 7 |  28     
 
 > 0100 200 300 400 500 12345Vulnerability Count
 
@@ -1659,7 +1635,6 @@ tend to have more vulnerabilities.
 
 76.6% 
 
-Figure 12:  Comparison between root and non-root packages Cloud Threat Report, Volume 7 |  29 
 
 # Community and Government Responses 
 
@@ -1729,7 +1704,6 @@ such urgency to software security issues. The success of these initiatives relie
 
 of governments, private sectors, and millions of developers. In the years to come, we look forward to 
 
-more OSS regulation and support. Cloud Threat Report, Volume 7 |  30 
 
 This  Unit 42 Cloud Threat Report, Volume 7  is a comprehensive study of the cloud security landscape based 
 
@@ -1788,7 +1762,6 @@ approach to identify and eliminate threats in real time before they can compromi
 > 5. State of Cloud-Native Security Report 2023 , Palo Alto Networks, March 7, 2023.
 > https://www.paloaltonetworks.com/resources/research/state-of-cloud-native-security-2023 .
 > 6. Neil MacDonald, Charlie Winckless, and Dale Koeppen, Market Guide for Cloud-Native Protection Platforms , Gartner, March 14, 2023.
-> https://www.paloaltonetworks.com/resources/research/gartner-market-guide-cnapp .Cloud Threat Report, Volume 7 | 31
 
 # Methodology 
 
@@ -1834,7 +1807,6 @@ Aviv Sasson, Ariel Zelivansky
 
 # Editors 
 
-Brian Barr, Emily Rodenhuis, Laura Novak, Samantha Stallings, Lysa Myers, Erica Naone Cloud Threat Report, Volume 7 |  32 
 
 # Appendix 
 
@@ -2054,7 +2026,6 @@ T1552  004
 
 Credentials: 
 
-Private Keys Cloud Threat Report, Volume 7 |  33 
 
 Table 3: WatchDog TTPs ( Unit 42 ATOM )
 
@@ -2322,24 +2293,6 @@ T1552  007
 
 Credentials: 
 
-Container API © 2023 Palo Alto Networks, Inc. Palo Alto Networks and the Palo Alto  
-
-> Networks logo are registered trademarks of Palo Alto Networks, Inc.
-> A list of our trademarks can be found at www.paloaltonetworks.com/
-> company/trademarks.html . All other marks mentioned herein may be
-> trademarks of their respective companies.
-
-3000 Tannery Way 
-
-Santa Clara, CA 95054 
-
-Main +1  408  753  4000 
-
-Sales +1  866  320  4788 
-
-Support +1  866  898  9087 
-
-www  paloaltonetworks  com 
 
 # About 
 

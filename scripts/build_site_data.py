@@ -263,12 +263,13 @@ def main():
             ATTACK_DATA_PATH,
         )
 
-    # Load all analyses
+    # Load all analyses — treat a missing directory the same as an empty one
+    # so initial/site-only deployments don't fail before Astro runs.
     if not analysis_dir.exists():
-        log.error("Analysis directory not found: %s", analysis_dir)
-        sys.exit(1)
-
-    analyses = load_analyses(analysis_dir)
+        log.warning("Analysis directory not found: %s – building empty site", analysis_dir)
+        analyses = []
+    else:
+        analyses = load_analyses(analysis_dir)
     if not analyses:
         log.warning("No analyses found. Run analyze.py first.")
         # Still write empty files so the site loads without errors

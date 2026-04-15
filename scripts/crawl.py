@@ -86,14 +86,14 @@ def crawl_incident(incident: dict, use_vision: bool = False,
         r = extract_url(url, use_vision=use_vision)
         source_type = r.get("source_type") or classify_source(url)
 
-        raw_file = d / f"link_{i:02d}.raw.md"
-        clean_file = d / f"link_{i:02d}.md"
+        raw_file = d / f"link_{i:02d}.md"
+        clean_file = d / f"link_{i:02d}.clean.md"
 
         entry = {
             "url": url,
             "link_text": link.get("text", ""),
-            "file": None,
-            "raw_file": None,
+            "file": None,         # raw
+            "clean_file": None,   # cleaned sibling (diffable vs file)
             "method": r["method"],
             "source_type": source_type,
             "error": r["error"],
@@ -106,7 +106,7 @@ def crawl_incident(incident: dict, use_vision: bool = False,
 
         if r["text"]:
             raw_file.write_text(r["text"], encoding="utf-8")
-            entry["raw_file"] = raw_file.name
+            entry["file"] = raw_file.name
 
             if clean:
                 try:
@@ -115,20 +115,15 @@ def crawl_incident(incident: dict, use_vision: bool = False,
                         use_llm=True,
                     )
                     clean_file.write_text(cleaned.to_markdown(), encoding="utf-8")
-                    entry["file"] = clean_file.name
+                    entry["clean_file"] = clean_file.name
                     entry["cleanup_method"] = cleaned.cleanup_method
                     entry["title"] = cleaned.title
                     entry["author"] = cleaned.author
                     entry["published"] = cleaned.published
                 except Exception as e:
                     log.warning("cleanup failed for %s: %s", url, e)
-                    # Fall back to raw as the primary file.
-                    clean_file.write_text(r["text"], encoding="utf-8")
-                    entry["file"] = clean_file.name
                     entry["cleanup_method"] = "error"
             else:
-                clean_file.write_text(r["text"], encoding="utf-8")
-                entry["file"] = clean_file.name
                 entry["cleanup_method"] = "skipped"
 
         results.append(entry)

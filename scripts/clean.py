@@ -9,12 +9,22 @@ Clean a raw extracted markdown file (as produced by extract.py / Jina AI)
 down to "just the meat" — the article body plus a small YAML frontmatter
 with title, url, author, published, source_type.
 
-Two strategies, in order:
-1. Claude LLM cleanup – one call to claude-opus-4-6 returning strict JSON
-   (title, author, published, body_md). Handles arbitrary site layouts.
-2. Heuristic fallback – if Claude is unavailable or returns junk, strip
-   obvious boilerplate with regex: leading cookie / nav blocks before the
-   article H1, trailing "Related posts" / "Newsletter" / share widgets.
+Diffability guarantee
+---------------------
+Cleaning is *subtractive only*: we never let the LLM rewrite the body.
+Both the LLM and the heuristic strategies produce a list of line ranges
+to drop from the raw body; the cleaned body is assembled by deleting
+those ranges. We then verify that every non-blank line in the cleaned
+body appears verbatim as a line in the raw body. If verification fails
+we fall back to the heuristic (or, finally, to the raw body unchanged).
+
+Strategies, in order:
+1. Claude LLM — one call returning strict JSON with title/author/published
+   metadata plus `drop_ranges` (inclusive 1-indexed line ranges of the
+   numbered raw body). Handles arbitrary site layouts.
+2. Heuristic fallback — compute drop_ranges from regex boilerplate
+   detection (cookie banners before the article H1, "Related posts" /
+   newsletter / share widgets after).
 
 CLI:
     python scripts/clean.py <file.md> [--url URL] [--source-type TYPE]
@@ -28,7 +38,7 @@ import logging
 import os
 import re
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
@@ -59,6 +69,9 @@ _TRAILING_JUNK_HEADING_RE = re.compile(
 )
 
 
+DropRange = tuple[int, int]  # inclusive, 1-indexed
+
+
 @dataclass
 class Cleaned:
     title: str = ""
@@ -68,7 +81,10 @@ class Cleaned:
     source_type: str = ""
     source_domain: str = ""
     body_md: str = ""
-    cleanup_method: str = ""  # "llm", "fallback_heuristic", or "raw"
+    # Line ranges (1-indexed, inclusive) dropped from the post-Jina-header
+    # body when producing body_md. Recorded for debugging/auditing.
+    drop_ranges: list[DropRange] = field(default_factory=list)
+    cleanup_method: str = ""  # "llm", "fallback_heuristic", "already_clean", "raw"
 
     def to_markdown(self) -> str:
         """Render as a markdown file with YAML-ish frontmatter."""
@@ -84,8 +100,6 @@ class Cleaned:
         lines = ["---"]
         for k, v in fm_fields:
             if v:
-                # Basic YAML escaping: quote anything containing ':' or starting
-                # with reserved chars; escape embedded double quotes.
                 s = str(v).replace("\\", "\\\\").replace('"', '\\"')
                 needs_quote = any(c in s for c in ':#"\n') or s.strip() != s
                 lines.append(f'{k}: "{s}"' if needs_quote else f"{k}: {s}")
@@ -94,6 +108,45 @@ class Cleaned:
         lines.append(self.body_md.strip())
         lines.append("")
         return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Core primitives: line-range drops and subset verification
+# ---------------------------------------------------------------------------
+
+def apply_drops(body: str, drops: list[DropRange]) -> str:
+    """
+    Delete the given 1-indexed inclusive line ranges from `body`. Ranges
+    may overlap and may be out of order; we normalize them. Preserves
+    trailing-newline shape of the remaining lines.
+    """
+    if not drops:
+        return body
+    lines = body.split("\n")
+    n = len(lines)
+    kill = [False] * (n + 1)  # 1-indexed
+    for start, end in drops:
+        s = max(1, start)
+        e = min(n, end)
+        for i in range(s, e + 1):
+            kill[i] = True
+    kept = [lines[i - 1] for i in range(1, n + 1) if not kill[i]]
+    return "\n".join(kept)
+
+
+def verify_body_is_subset(clean_body: str, raw_body: str) -> bool:
+    """
+    True iff every non-blank line in `clean_body` appears as a full line
+    in `raw_body`. This is the diffability invariant: cleaning deletes
+    lines but never rewrites them.
+    """
+    raw_lines = set(raw_body.split("\n"))
+    for line in clean_body.split("\n"):
+        if not line.strip():
+            continue
+        if line not in raw_lines:
+            return False
+    return True
 
 
 # ---------------------------------------------------------------------------
@@ -133,24 +186,17 @@ def has_frontmatter(text: str) -> bool:
 # Heuristic fallback cleaner
 # ---------------------------------------------------------------------------
 
-def heuristic_clean(body: str, title: str = "") -> str:
+def _heuristic_drop_ranges(body: str, title: str = "") -> list[DropRange]:
     """
-    Best-effort boilerplate stripper. Runs only when the LLM pass is
-    unavailable or failed. Drops:
-      - everything before the first H1 whose text contains the article
-        title (or, lacking that, the first H1/H2 that isn't just "menu"
-        / "cookie" / "navigation").
-      - everything from the first trailing-junk heading onward.
+    Compute 1-indexed inclusive line ranges of boilerplate to drop.
+    Drops a prefix range (everything before the real article heading)
+    and a suffix range (from the first trailing-junk heading onward).
     """
     if not body:
-        return body
+        return []
 
     lines = body.splitlines()
 
-    # Find the best substantive heading to start from. If the article title
-    # appears as an H1 more than once (common: site nav crumb + real
-    # article heading), prefer the LAST occurrence — everything before it
-    # is very likely boilerplate.
     title_needle = re.sub(r"\W+", "", title).lower() if title else ""
     title_matches: list[int] = []
     first_substantive: Optional[int] = None
@@ -177,56 +223,68 @@ def heuristic_clean(body: str, title: str = "") -> str:
     else:
         start_idx = 0
 
-    # Find first trailing-junk heading
     end_idx = len(lines)
     for i in range(start_idx + 1, len(lines)):
         if _TRAILING_JUNK_HEADING_RE.match(lines[i] or ""):
             end_idx = i
             break
 
-    return "\n".join(lines[start_idx:end_idx]).strip()
+    ranges: list[DropRange] = []
+    if start_idx > 0:
+        ranges.append((1, start_idx))  # drop lines 1..start_idx (before article)
+    if end_idx < len(lines):
+        ranges.append((end_idx + 1, len(lines)))  # drop from junk heading on
+    return ranges
+
+
+def heuristic_clean(body: str, title: str = "") -> str:
+    """Public heuristic cleaner — computes drops and applies them."""
+    drops = _heuristic_drop_ranges(body, title=title)
+    return apply_drops(body, drops).strip()
 
 
 # ---------------------------------------------------------------------------
-# Claude LLM cleaner
+# Claude LLM cleaner — returns drop_ranges, not a rewritten body
 # ---------------------------------------------------------------------------
 
 _LLM_SYSTEM = (
     "You clean scraped web articles and PDFs into usable markdown for a "
     "security-incident research dataset. You return STRICT JSON only — no "
-    "prose, no code fences."
+    "prose, no code fences. You NEVER rewrite or paraphrase content; you "
+    "only identify line ranges of boilerplate to delete."
 )
 
 _LLM_USER_TEMPLATE = """\
-Below is a raw scrape of a web page, PDF, or video transcript. It may
-contain cookie banners, nav menus, social share widgets, newsletter
+Below is a raw scrape of a web page, PDF, or video transcript with each
+line prefixed by its 1-indexed line number (format: "NNNN: <line>").
+It may contain cookie banners, nav menus, social share widgets, newsletter
 prompts, 'related articles' footers, repeated page headers/footers (from
-PDFs), and other boilerplate.
+PDFs), and other boilerplate surrounding the real article body.
 
 Return a single JSON object with EXACTLY these keys:
-  "title":     string — the article / document title (no site name suffix
-               like " | AWS Security Blog"). Empty string if unknown.
-  "author":    string — author name(s), comma-separated if multiple. Empty
-               string if none stated.
-  "published": string — publication date in ISO 8601 (YYYY-MM-DD) if
-               derivable, else the original string, else empty.
-  "body_md":   string — ONLY the article / document body as markdown.
-               Preserve headings, lists, code blocks, tables, blockquotes.
-               Remove: cookie/consent banners, nav menus, breadcrumbs,
-               social share buttons, 'filed under' / tag widgets,
-               'related posts' / 'more from' / newsletter / comments
-               sections, site footers, repeated PDF page headers and page
-               numbers. Keep the substantive content intact — do not
-               summarize, paraphrase, or truncate.
+  "title":       string — article / document title (no site-name suffix
+                 like " | AWS Security Blog"). Empty if unknown.
+  "author":      string — author name(s), comma-separated if multiple.
+                 Empty if none stated.
+  "published":   string — publication date in ISO 8601 (YYYY-MM-DD) if
+                 derivable, else the original string, else empty.
+  "drop_ranges": array of [start, end] pairs — inclusive 1-indexed line
+                 ranges to DELETE. Ranges should cover: cookie/consent
+                 banners, nav menus, breadcrumbs, social share buttons,
+                 'filed under' / tag widgets, 'related posts' / 'more
+                 from' / newsletter / comments sections, site footers,
+                 repeated PDF page headers and bare page numbers.
+                 DO NOT list ranges covering substantive article content.
+                 You MUST NOT rewrite any line — you can only drop lines.
 
-Context (use but do not echo into body_md):
+Context (use but do not echo):
   URL:          {url}
   Source type:  {source_type}
   Known title:  {hint_title}
 
-Raw input:
+Numbered raw input:
 <<<
-{raw}
+{numbered}
 >>>
 
 Return JSON only."""
@@ -240,15 +298,21 @@ def _strip_code_fences(s: str) -> str:
     return s.strip()
 
 
+def _number_lines(body: str) -> str:
+    lines = body.split("\n")
+    width = max(4, len(str(len(lines))))
+    return "\n".join(f"{i+1:0{width}d}: {line}" for i, line in enumerate(lines))
+
+
 def llm_clean(
-    raw: str,
+    raw_body: str,
     url: str = "",
     source_type: str = "",
     hint_title: str = "",
     model: str = "claude-opus-4-6",
 ) -> Optional[dict]:
     """
-    Ask Claude to return {title, author, published, body_md}. Returns None
+    Ask Claude for {title, author, published, drop_ranges}. Returns None
     if the API is unavailable or the response can't be parsed.
     """
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -256,9 +320,9 @@ def llm_clean(
         log.warning("ANTHROPIC_API_KEY not set – skipping LLM cleanup")
         return None
 
-    if len(raw) > _MAX_LLM_INPUT_CHARS:
+    if len(raw_body) > _MAX_LLM_INPUT_CHARS:
         log.info("Input %d chars exceeds LLM budget %d; using heuristic",
-                 len(raw), _MAX_LLM_INPUT_CHARS)
+                 len(raw_body), _MAX_LLM_INPUT_CHARS)
         return None
 
     try:
@@ -272,13 +336,13 @@ def llm_clean(
         url=url or "(unknown)",
         source_type=source_type or "(unknown)",
         hint_title=hint_title or "(unknown)",
-        raw=raw,
+        numbered=_number_lines(raw_body),
     )
 
     try:
         resp = client.messages.create(
             model=model,
-            max_tokens=16000,
+            max_tokens=8000,
             temperature=0,
             system=_LLM_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
@@ -300,22 +364,25 @@ def llm_clean(
                     e, text[:200])
         return None
 
-    if not isinstance(data, dict) or "body_md" not in data:
-        log.warning("Claude JSON missing body_md")
+    if not isinstance(data, dict) or "drop_ranges" not in data:
+        log.warning("Claude JSON missing drop_ranges")
         return None
 
-    # Guard against the LLM silently collapsing the article.
-    if len(data.get("body_md", "")) < max(200, len(raw) // 50):
-        log.warning("Claude body_md suspiciously short (%d chars for %d raw); "
-                    "falling back to heuristic",
-                    len(data.get("body_md", "")), len(raw))
-        return None
+    raw_ranges = data.get("drop_ranges") or []
+    drops: list[DropRange] = []
+    for r in raw_ranges:
+        try:
+            s, e = int(r[0]), int(r[1])
+            if s <= e:
+                drops.append((s, e))
+        except (ValueError, TypeError, IndexError):
+            continue
 
     return {
         "title": str(data.get("title") or "").strip(),
         "author": str(data.get("author") or "").strip(),
         "published": str(data.get("published") or "").strip(),
-        "body_md": str(data.get("body_md") or "").strip(),
+        "drop_ranges": drops,
     }
 
 
@@ -334,9 +401,7 @@ def clean_markdown(
     call .to_markdown() to render the final file.
     """
     if has_frontmatter(raw):
-        # Already cleaned — don't re-run.
-        out = Cleaned(cleanup_method="already_clean", body_md=raw.strip())
-        return out
+        return Cleaned(cleanup_method="already_clean", body_md=raw.strip())
 
     jina = parse_jina_header(raw)
     url = url or jina["url"]
@@ -361,17 +426,39 @@ def clean_markdown(
             hint_title=jina["title"],
         )
 
+    applied_llm = False
     if llm_result is not None:
-        if llm_result["title"]:
-            cleaned.title = llm_result["title"]
-        cleaned.author = llm_result["author"]
-        if llm_result["published"]:
-            cleaned.published = llm_result["published"]
-        cleaned.body_md = llm_result["body_md"]
-        cleaned.cleanup_method = "llm"
-    else:
-        cleaned.body_md = heuristic_clean(body_for_cleaning, title=cleaned.title)
-        cleaned.cleanup_method = "fallback_heuristic"
+        candidate = apply_drops(body_for_cleaning, llm_result["drop_ranges"]).strip()
+        # Safety: subset check should be trivially true (we only deleted
+        # lines) but verify — and bail out if drops collapsed the article.
+        if (
+            verify_body_is_subset(candidate, body_for_cleaning)
+            and len(candidate) >= max(200, len(body_for_cleaning) // 50)
+        ):
+            if llm_result["title"]:
+                cleaned.title = llm_result["title"]
+            cleaned.author = llm_result["author"]
+            if llm_result["published"]:
+                cleaned.published = llm_result["published"]
+            cleaned.body_md = candidate
+            cleaned.drop_ranges = llm_result["drop_ranges"]
+            cleaned.cleanup_method = "llm"
+            applied_llm = True
+        else:
+            log.warning("LLM drop_ranges failed verification — falling back")
+
+    if not applied_llm:
+        drops = _heuristic_drop_ranges(body_for_cleaning, title=cleaned.title)
+        body = apply_drops(body_for_cleaning, drops).strip()
+        if not verify_body_is_subset(body, body_for_cleaning):
+            # Should never happen — heuristic only deletes lines.
+            body = body_for_cleaning.strip()
+            drops = []
+            cleaned.cleanup_method = "raw"
+        else:
+            cleaned.cleanup_method = "fallback_heuristic"
+        cleaned.body_md = body
+        cleaned.drop_ranges = drops
 
     return cleaned
 
@@ -408,8 +495,9 @@ def main(argv: Optional[list[str]] = None) -> int:
         sys.stdout.write(out)
     else:
         Path(args.output).write_text(out, encoding="utf-8")
-    log.info("Cleaned via %s (%d chars body)",
-             cleaned.cleanup_method, len(cleaned.body_md))
+    log.info("Cleaned via %s (%d chars body, dropped %d range(s))",
+             cleaned.cleanup_method, len(cleaned.body_md),
+             len(cleaned.drop_ranges))
     return 0
 
 

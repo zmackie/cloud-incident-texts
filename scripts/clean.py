@@ -288,7 +288,23 @@ def _heuristic_drop_ranges(body: str, title: str = "") -> list[DropRange]:
             title_matches.append(i)
 
     if title_matches:
-        start_idx = title_matches[-1]
+        # Pick the title heading whose following segment (up to the next
+        # title heading or EOF) holds the most substantive content. Two
+        # real-world shapes both appear:
+        #   - site breadcrumb at the top + real H1 later, with cookie
+        #     banners between (AWS blog)        → best segment is last.
+        #   - real H1 at the top + duplicate "up next" titles at the
+        #     bottom (YouTube)                  → best segment is first.
+        # Choosing by segment size subsumes both. Tie-break on the
+        # earliest match so deterministic for truly equal segments.
+        boundaries = title_matches + [len(lines)]
+        best_i, best_score = title_matches[0], -1
+        for k, i in enumerate(title_matches):
+            segment = lines[i + 1:boundaries[k + 1]]
+            score = sum(len(line) for line in segment if line.strip())
+            if score > best_score:
+                best_score, best_i = score, i
+        start_idx = best_i
     elif first_substantive is not None:
         start_idx = first_substantive
     else:

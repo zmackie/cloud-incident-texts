@@ -44,6 +44,7 @@ from bs4 import BeautifulSoup
 from sources import (  # noqa: F401
     YT_HOSTS as _YT_HOSTS,
     ARCHIVE_HOSTS as _ARCHIVE_HOSTS,
+    _unwrap_archive,
     classify_source,
 )
 
@@ -304,7 +305,12 @@ def ocr_with_claude(content: bytes, mime: str, prompt: str = "") -> str:
 
 
 def _youtube_video_id(url: str) -> Optional[str]:
-    """Return the 11-char video id for a YouTube URL, or None if not YouTube."""
+    """Return the 11-char video id for a YouTube URL, or None if not YouTube.
+
+    Archive-wrapped URLs (e.g. web.archive.org/.../youtube.com/watch?v=...)
+    are unwrapped so the inner URL can match the YouTube host set.
+    """
+    url = _unwrap_archive(url)
     try:
         u = urlparse(url)
     except Exception:

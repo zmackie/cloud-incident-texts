@@ -189,6 +189,31 @@ def test_clean_markdown_sets_drop_ranges(raw_text: str):
 
 
 # ---------------------------------------------------------------------------
+# Regression: repeated title headings (common on YouTube pages, where the
+# title reappears in comments/related-videos sections) must not cause the
+# heuristic to start at the LAST match and strip the real article body.
+# Concrete case: yotam-meitar-wiz-2024-june.
+# ---------------------------------------------------------------------------
+
+def test_heuristic_anchors_at_first_not_last_title_match():
+    body = (
+        "# The Real Article Title\n"
+        "\n"
+        "Opening paragraph of the actual article body.\n"
+        "Second paragraph with substantive content.\n"
+        "\n"
+        "## Related videos\n"
+        "\n"
+        "# The Real Article Title\n"
+        "Up-next tile line 1.\n"
+        "# The Real Article Title\n"
+        "Up-next tile line 2.\n"
+    )
+    cleaned = heuristic_clean(body, title="The Real Article Title")
+    assert "Opening paragraph of the actual article body." in cleaned
+
+
+# ---------------------------------------------------------------------------
 # Regression: heading titles wrapped in markdown links should not cause the
 # heuristic to repeatedly "match" title_needle against URL slug text and
 # land start_idx at a late section.

@@ -173,11 +173,46 @@ def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> tuple[list[str], set
     return actions, migrated
 
 
+def _reextract_source(raw_md: Path, url: str, source_type: str,
+                      dry_run: bool) -> tuple[bool, str, str]:
+    """Re-run extract_url() and overwrite raw_md with fresh content.
+
+    Returns (ok, method, error). Lazy-imports extract so backfill's default
+    path does not require requests/trafilatura/bs4.
+    """
+    try:
+        from extract import extract_url  # type: ignore
+    except ImportError as e:
+        return False, "", f"extract_import_failed: {e}"
+
+    try:
+        r = extract_url(url)
+    except Exception as e:
+        return False, "", f"extract_failed: {e}"
+
+    if not r.get("text"):
+        return False, r.get("method", ""), r.get("error", "") or "empty_text"
+
+    if dry_run:
+        return True, r.get("method", ""), ""
+
+    raw_md.write_text(r["text"], encoding="utf-8")
+    return True, r.get("method", ""), ""
+
+
 def clean_one_link(raw_md: Path, url: str, source_type: str,
                    use_llm: bool, dry_run: bool,
                    redo_fallback: bool = False,
-                   model: str = "claude-opus-4-6") -> dict:
-    """Clean a single link_NN.md -> link_NN.clean.md."""
+                   model: str = "claude-opus-4-6",
+                   re_extract: bool = False) -> dict:
+    """Clean a single link_NN.md -> link_NN.clean.md.
+
+    With re_extract=True, first re-runs the source extractor (extract_url)
+    and overwrites link_NN.md with fresh content before cleaning. This is
+    how you upgrade an incident whose raw was captured via the wrong
+    extractor (e.g. Jina footer-scrape of a YouTube page that should have
+    gone through the transcript extractor).
+    """
     clean_path = raw_md.with_name(raw_md.stem + ".clean.md")
     result = {
         "file": raw_md.name,
@@ -189,7 +224,21 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
         "author": "",
         "published": "",
         "error": "",
+        "extract_method": "",
     }
+
+    reextracted = False
+    if re_extract and url:
+        ok, method, err = _reextract_source(raw_md, url, source_type, dry_run)
+        result["extract_method"] = method
+        if not ok:
+            result["action"] = "error"
+            result["error"] = f"re_extract_failed: {err}"
+            return result
+        reextracted = True
+        # Force a re-clean even if clean_path exists — the raw changed.
+        if clean_path.exists() and not dry_run:
+            clean_path.unlink()
 
     try:
         raw_text = raw_md.read_text(encoding="utf-8")
@@ -208,7 +257,7 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
         result["action"] = "skip_primary_is_cleaned"
         return result
 
-    if clean_path.exists():
+    if clean_path.exists() and not reextracted:
         existing_method = _existing_cleanup_method(clean_path)
         if redo_fallback and existing_method and existing_method != "llm":
             # Previous run produced a non-LLM clean; caller wants a retry.
@@ -244,7 +293,8 @@ def clean_one_link(raw_md: Path, url: str, source_type: str,
 
 def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
                       redo_fallback: bool = False,
-                      model: str = "claude-opus-4-6") -> list[dict]:
+                      model: str = "claude-opus-4-6",
+                      re_extract: bool = False) -> list[dict]:
     """Migrate + clean every link in one incident directory."""
     meta = _load_metadata(slug_dir)
     if meta is None:
@@ -286,18 +336,27 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
         source_type = existing_status.get("source_type") or classify_source(url)
 
         r = clean_one_link(raw_md, url, source_type, use_llm, dry_run,
-                           redo_fallback=redo_fallback, model=model)
+                           redo_fallback=redo_fallback, model=model,
+                           re_extract=re_extract)
         results.append(r)
 
         if r["action"] == "cleaned" and not dry_run and existing_status:
             existing_status["file"] = raw_md.name
             existing_status["clean_file"] = r["clean_file"]
             existing_status.pop("raw_file", None)
-            existing_status["source_type"] = source_type
             existing_status["cleanup_method"] = r["cleanup_method"]
             existing_status["title"] = r["title"]
             existing_status["author"] = r["author"]
             existing_status["published"] = r["published"]
+            if r.get("extract_method"):
+                # Re-extract replaced raw_md; refresh the crawl-side fields.
+                existing_status["method"] = r["extract_method"]
+                existing_status["chars"] = raw_md.stat().st_size
+                # Re-classify from the (possibly unwrapped) URL so an
+                # archive-wrapped YouTube becomes source_type=youtube.
+                existing_status["source_type"] = classify_source(url)
+            else:
+                existing_status["source_type"] = source_type
             metadata_dirty = True
         elif (
             r["action"] == "skip_already_clean"
@@ -344,7 +403,8 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool,
 def backfill_all(workers: int, use_llm: bool, dry_run: bool,
                  only: Optional[str] = None,
                  redo_fallback: bool = False,
-                 model: str = "claude-opus-4-6") -> None:
+                 model: str = "claude-opus-4-6",
+                 re_extract: bool = False) -> None:
     if not ARTICLES_DIR.exists():
         log.error("No articles directory at %s", ARTICLES_DIR)
         return
@@ -364,7 +424,7 @@ def backfill_all(workers: int, use_llm: bool, dry_run: bool,
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
             pool.submit(backfill_incident, d, use_llm, dry_run,
-                        redo_fallback, model): d
+                        redo_fallback, model, re_extract): d
             for d in slugs
         }
         for fut in as_completed(futures):
@@ -405,6 +465,15 @@ def main(argv: Optional[list[str]] = None) -> int:
                    help="Anthropic model id (default: claude-opus-4-6). "
                         "Useful with --redo-fallback to retry with a "
                         "different model, e.g. claude-sonnet-4-6.")
+    p.add_argument("--re-extract", action="store_true",
+                   help="Re-run the source extractor (extract_url) and "
+                        "overwrite link_NN.md with fresh content before "
+                        "cleaning. Use this to upgrade raws captured with "
+                        "the wrong extractor — e.g. a YouTube URL that "
+                        "was initially Jina-scraped and should have gone "
+                        "through the transcript path. Requires the full "
+                        "extract.py dependency set (requests, trafilatura, "
+                        "bs4, youtube-transcript-api).")
     args = p.parse_args(argv)
 
     backfill_all(
@@ -414,6 +483,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         only=args.only,
         redo_fallback=args.redo_fallback,
         model=args.model,
+        re_extract=args.re_extract,
     )
     return 0
 

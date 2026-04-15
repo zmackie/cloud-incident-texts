@@ -24,7 +24,10 @@ from clean import (  # noqa: E402
     verify_body_is_subset,
 )
 
-FIXTURE = ROOT / "data" / "articles" / "aws-2023-august" / "link_00.raw.md"
+# Raw Jina output in the new scheme lives at link_NN.md (cleaned output is
+# link_NN.clean.md). The aws-2023-august/link_00 fixture was chosen because
+# it exercises a full cookie-banner preamble + real article body.
+FIXTURE = ROOT / "data" / "articles" / "aws-2023-august" / "link_00.md"
 
 
 @pytest.fixture

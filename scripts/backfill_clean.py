@@ -73,14 +73,19 @@ def _save_metadata(slug_dir: Path, meta: dict) -> None:
     )
 
 
-def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> list[str]:
+def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> tuple[list[str], set[str]]:
     """
     If we find the legacy pair (link_NN.md with frontmatter + link_NN.raw.md
     without frontmatter), swap them to the new scheme:
         link_NN.md (cleaned)     -> link_NN.clean.md
         link_NN.raw.md (raw)     -> link_NN.md
+
+    Returns (action log, set of link stems that were actually migrated).
+    Callers need the stem set to fix up metadata entries whose legacy
+    ``raw_file`` / ``file`` fields still point at the old scheme.
     """
     actions: list[str] = []
+    migrated: set[str] = set()
     for raw_legacy in sorted(slug_dir.glob("link_*.raw.md")):
         stem = raw_legacy.name[: -len(".raw.md")]  # link_NN
         current = slug_dir / f"{stem}.md"
@@ -91,6 +96,7 @@ def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> list[str]:
             actions.append(f"{stem}: promote raw→primary")
             if not dry_run:
                 raw_legacy.rename(current)
+            migrated.add(stem)
             continue
 
         current_text = current.read_text(encoding="utf-8", errors="replace")
@@ -110,11 +116,12 @@ def migrate_legacy_naming(slug_dir: Path, dry_run: bool) -> list[str]:
                 # Move current (cleaned) out of the way first.
                 current.rename(new_clean)
                 raw_legacy.rename(current)
+            migrated.add(stem)
         else:
             # Not legacy — could be new-scheme that happens to have a .raw.md
             # for some reason. Leave alone.
             actions.append(f"{stem}: .raw.md present but not legacy shape — skip")
-    return actions
+    return actions, migrated
 
 
 def clean_one_link(raw_md: Path, url: str, source_type: str,
@@ -186,7 +193,7 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
             "error": "missing_metadata",
         }]
 
-    migration_actions = migrate_legacy_naming(slug_dir, dry_run=dry_run)
+    migration_actions, migrated_stems = migrate_legacy_naming(slug_dir, dry_run=dry_run)
     for a in migration_actions:
         log.info("  %s migrate: %s", slug_dir.name, a)
 
@@ -229,11 +236,27 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
             existing_status["title"] = r["title"]
             existing_status["author"] = r["author"]
             existing_status["published"] = r["published"]
+        elif (
+            not dry_run
+            and existing_status
+            and raw_md.stem in migrated_stems
+        ):
+            # File was migrated from legacy layout (swap only, no re-clean)
+            # so clean_one_link returned skip_already_clean. The metadata
+            # entry still references the legacy scheme (stale `raw_file`,
+            # missing `clean_file`); fix it up so the on-disk layout and
+            # metadata stay in sync.
+            existing_status["file"] = raw_md.name
+            existing_status["clean_file"] = r["clean_file"]
+            existing_status.pop("raw_file", None)
+            existing_status.setdefault("source_type", source_type)
 
         if r["action"] == "cleaned":
             time.sleep(1.0)  # polite delay — each clean call may hit Anthropic
 
-    if not dry_run and any(r["action"] == "cleaned" for r in results):
+    any_migrated = not dry_run and bool(migrated_stems)
+    any_cleaned = any(r["action"] == "cleaned" for r in results)
+    if not dry_run and (any_cleaned or any_migrated):
         _save_metadata(slug_dir, meta)
 
     return results

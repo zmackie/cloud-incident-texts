@@ -2,7 +2,7 @@ Title: Cloud-Native Application Protection Platform (CNAPP)
 
 URL Source: https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts
 
-Published Time: Tue, 14 Apr 2026 18:16:28 GMT
+Published Time: Tue, 14 Apr 2026 18:53:03 GMT
 
 Markdown Content:
 # Cloud-Native Application Protection Platform (CNAPP)

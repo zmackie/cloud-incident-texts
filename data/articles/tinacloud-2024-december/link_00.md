@@ -5,7 +5,7 @@ URL Source: https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-br
 Markdown Content:
 # TinaCloud: Public Disclosure of Security Breach | TinaCMS Blog
 
-[Loving Tina? us on GitHub 0.0k](https://github.com/tinacms/tinacms)
+[Loving Tina? us on GitHub 13.3k](https://github.com/tinacms/tinacms)
 
 We use cookies to improve your experience. By continuing, you accept our [cookie policy](https://tina.io/privacy-notice).
 

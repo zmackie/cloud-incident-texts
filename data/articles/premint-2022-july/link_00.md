@@ -59,65 +59,65 @@ Scan to download
 
 ![Image 9](blob:http://localhost/e712d26930e375361318480395bb08b5)
 
-![Image 10](https://public.rootdata.com/images/b6/1666341517173.jpg)BTC$74,163.31+1.19%
+![Image 10](https://public.rootdata.com/images/b6/1666341517173.jpg)BTC$73,897.67-0.90%
 
-![Image 11](https://public.rootdata.com/images/b6/1703249591096.jpg)ETH$2,311.73+2.37%
+![Image 11](https://public.rootdata.com/images/b6/1703249591096.jpg)ETH$2,317.86-2.44%
 
-![Image 12](https://public.rootdata.com/images/b6/1667991810349.jpg)BNB$613.79+1.10%
+![Image 12](https://public.rootdata.com/images/b6/1667991810349.jpg)BNB$614.66-0.08%
 
-![Image 13](https://public.rootdata.com/images/b15/1666341931142.jpg)XRP$1.36+0.38%
+![Image 13](https://public.rootdata.com/images/b15/1666341931142.jpg)XRP$1.36-1.16%
 
-![Image 14](https://public.rootdata.com/images/b15/1666364340995.jpg)SOL$84.07-0.09%
+![Image 14](https://public.rootdata.com/images/b15/1666364340995.jpg)SOL$83.01-3.46%
 
-![Image 15](https://public.rootdata.com/images/b6/1668593152266.jpg)TRX$0.3234+1.16%
+![Image 15](https://public.rootdata.com/images/b6/1668593152266.jpg)TRX$0.3236+0.62%
 
-![Image 16](https://public.rootdata.com/images/b15/1666342910836.jpg)DOGE$0.0927-0.20%
+![Image 16](https://public.rootdata.com/images/b15/1666342910836.jpg)DOGE$0.0929-0.29%
 
-![Image 17](https://public.rootdata.com/images/b15/1666345671320.jpg)ADA$0.2402-0.14%
+![Image 17](https://public.rootdata.com/images/b15/1666345671320.jpg)ADA$0.2388-1.97%
 
-![Image 18](https://public.rootdata.com/images/b6/1688464258839.jpg)BCH$434.52+1.65%
+![Image 18](https://public.rootdata.com/images/b6/1688464258839.jpg)BCH$432.02-0.93%
 
-![Image 19](https://public.rootdata.com/images/b16/1666513899328.jpg)LINK$8.98-0.10%
+![Image 19](https://public.rootdata.com/images/b16/1666513899328.jpg)LINK$9.02-1.83%
 
-![Image 20](https://public.rootdata.com/images/b12/1687927316246.jpg)HYPE$43.35-0.79%
+![Image 20](https://public.rootdata.com/images/b12/1687927316246.jpg)HYPE$43.50-2.82%
 
-![Image 21](https://public.rootdata.com/images/b12/1747711205885.png)AAVE$97.96+1.89%
+![Image 21](https://public.rootdata.com/images/b12/1747711205885.png)AAVE$100.58+0.31%
 
-![Image 22](https://public.rootdata.com/images/b6/1744523743365.jpg)SUI$0.9304-0.12%
+![Image 22](https://public.rootdata.com/images/b6/1744523743365.jpg)SUI$0.9323-1.36%
 
-![Image 23](https://public.rootdata.com/images/b15/1666344010515.jpg)XLM$0.1544+1.25%
+![Image 23](https://public.rootdata.com/images/b15/1666344010515.jpg)XLM$0.1552+0.41%
 
-![Image 24](https://public.rootdata.com/images/b6/1759897757189.jpg)ZEC$348.17-3.61%
+![Image 24](https://public.rootdata.com/images/b6/1759897757189.jpg)ZEC$352.79-3.58%
 
-![Image 25](https://public.rootdata.com/images/b6/1666341517173.jpg)BTC$74,163.31+1.19%
+![Image 25](https://public.rootdata.com/images/b6/1666341517173.jpg)BTC$73,897.67-0.90%
 
-![Image 26](https://public.rootdata.com/images/b6/1703249591096.jpg)ETH$2,311.73+2.37%
+![Image 26](https://public.rootdata.com/images/b6/1703249591096.jpg)ETH$2,317.86-2.44%
 
-![Image 27](https://public.rootdata.com/images/b6/1667991810349.jpg)BNB$613.79+1.10%
+![Image 27](https://public.rootdata.com/images/b6/1667991810349.jpg)BNB$614.66-0.08%
 
-![Image 28](https://public.rootdata.com/images/b15/1666341931142.jpg)XRP$1.36+0.38%
+![Image 28](https://public.rootdata.com/images/b15/1666341931142.jpg)XRP$1.36-1.16%
 
-![Image 29](https://public.rootdata.com/images/b15/1666364340995.jpg)SOL$84.07-0.09%
+![Image 29](https://public.rootdata.com/images/b15/1666364340995.jpg)SOL$83.01-3.46%
 
-![Image 30](https://public.rootdata.com/images/b6/1668593152266.jpg)TRX$0.3234+1.16%
+![Image 30](https://public.rootdata.com/images/b6/1668593152266.jpg)TRX$0.3236+0.62%
 
-![Image 31](https://public.rootdata.com/images/b15/1666342910836.jpg)DOGE$0.0927-0.20%
+![Image 31](https://public.rootdata.com/images/b15/1666342910836.jpg)DOGE$0.0929-0.29%
 
-![Image 32](https://public.rootdata.com/images/b15/1666345671320.jpg)ADA$0.2402-0.14%
+![Image 32](https://public.rootdata.com/images/b15/1666345671320.jpg)ADA$0.2388-1.97%
 
-![Image 33](https://public.rootdata.com/images/b6/1688464258839.jpg)BCH$434.52+1.65%
+![Image 33](https://public.rootdata.com/images/b6/1688464258839.jpg)BCH$432.02-0.93%
 
-![Image 34](https://public.rootdata.com/images/b16/1666513899328.jpg)LINK$8.98-0.10%
+![Image 34](https://public.rootdata.com/images/b16/1666513899328.jpg)LINK$9.02-1.83%
 
-![Image 35](https://public.rootdata.com/images/b12/1687927316246.jpg)HYPE$43.35-0.79%
+![Image 35](https://public.rootdata.com/images/b12/1687927316246.jpg)HYPE$43.50-2.82%
 
-![Image 36](https://public.rootdata.com/images/b12/1747711205885.png)AAVE$97.96+1.89%
+![Image 36](https://public.rootdata.com/images/b12/1747711205885.png)AAVE$100.58+0.31%
 
-![Image 37](https://public.rootdata.com/images/b6/1744523743365.jpg)SUI$0.9304-0.12%
+![Image 37](https://public.rootdata.com/images/b6/1744523743365.jpg)SUI$0.9323-1.36%
 
-![Image 38](https://public.rootdata.com/images/b15/1666344010515.jpg)XLM$0.1544+1.25%
+![Image 38](https://public.rootdata.com/images/b15/1666344010515.jpg)XLM$0.1552+0.41%
 
-![Image 39](https://public.rootdata.com/images/b6/1759897757189.jpg)ZEC$348.17-3.61%
+![Image 39](https://public.rootdata.com/images/b6/1759897757189.jpg)ZEC$352.79-3.58%
 
 ![Image 40](blob:http://localhost/e712d26930e375361318480395bb08b5)
 
@@ -234,13 +234,15 @@ ChainCatcher reminds readers to view blockchain rationally, enhance risk awarene
 
 [All](https://www.chaincatcher.com/en/article)
 
-[Uniswap is trapped in an innovation dilemma 04-11 ![Image 53: Uniswap is trapped in an innovation dilemma](https://www.chaincatcher.com/upload/image/20260411/1775880683759-845644.webp)](https://www.chaincatcher.com/en/article/2257953)[The flow of stablecoins and the spillover effects in the foreign exchange market 04-11 ![Image 54: The flow of stablecoins and the spillover effects in the foreign exchange market](https://www.chaincatcher.com/upload/image/20260411/1775874796882-613085.webp)](https://www.chaincatcher.com/en/article/2257939)[1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars 04-13 ![Image 55: 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/upload/image/20260413/1776074499151-873124.webp)](https://www.chaincatcher.com/en/article/2258271)
+[The era of "mass coin distribution" on public chains comes to an end 04-13 ![Image 53: The era of "mass coin distribution" on public chains comes to an end](https://www.chaincatcher.com/upload/image/20260413/1776062939233-143292.webp)](https://www.chaincatcher.com/en/article/2258231)[YZi Labs invests tens of millions of dollars, CZ serves as an advisor, Genius still lacks followers 1 天前 ![Image 54: YZi Labs invests tens of millions of dollars, CZ serves as an advisor, Genius still lacks followers](https://www.chaincatcher.com/upload/image/20260414/1776160929076-398430.webp)](https://www.chaincatcher.com/en/article/2258509)[1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars 04-13 ![Image 55: 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/upload/image/20260413/1776074499151-873124.webp)](https://www.chaincatcher.com/en/article/2258271)
 
 TOC
 
  Related reading 
 
-[![Image 56: 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/upload/image/20260413/1776074499151-873124.webp) 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/en/article/2258271)
+[![Image 56: YZi Labs invests tens of millions of dollars, CZ serves as an advisor, Genius still lacks followers](https://www.chaincatcher.com/upload/image/20260414/1776160929076-398430.webp) YZi Labs invests tens of millions of dollars, CZ serves as an advisor, Genius still lacks followers](https://www.chaincatcher.com/en/article/2258509)
+
+[![Image 57: 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/upload/image/20260413/1776074499151-873124.webp) 1 billion DOTs were minted out of thin air, but the hacker only made 230,000 dollars](https://www.chaincatcher.com/en/article/2258271)
 
 Copyright © 2023 
 
@@ -258,14 +260,14 @@ Apply column
 
 [Qiong ICP No. 2021009392](https://beian.miit.gov.cn/?spm=a2c4g.11186623.0.0.26b45bb6J585QD#/Integrated/index)
 
-[![Image 57](https://www.chaincatcher.com/_nuxt/img/ft_01.c13adba.png)](https://twitter.com/ChainCatcher_)[![Image 58](https://www.chaincatcher.com/_nuxt/img/ft_02.912bb86.png)](https://t.me/chaincatcher)[![Image 59](blob:http://localhost/e9f5d95f1e093b2aaa439861a899e7b5)](https://www.youtube.com/@ChainCatcher168)[![Image 60](https://www.chaincatcher.com/_nuxt/img/ft_04.5c66e6f.png)](https://space.bilibili.com/3546929271147281?spm_id_from=333.337.0.0)[![Image 61](https://www.chaincatcher.com/_nuxt/img/ft_05.74af318.png)](https://xhslink.com/m/9VwOExzMHHP)
+[![Image 58](https://www.chaincatcher.com/_nuxt/img/ft_01.c13adba.png)](https://twitter.com/ChainCatcher_)[![Image 59](https://www.chaincatcher.com/_nuxt/img/ft_02.912bb86.png)](https://t.me/chaincatcher)[![Image 60](blob:http://localhost/e9f5d95f1e093b2aaa439861a899e7b5)](https://www.youtube.com/@ChainCatcher168)[![Image 61](https://www.chaincatcher.com/_nuxt/img/ft_04.5c66e6f.png)](https://space.bilibili.com/3546929271147281?spm_id_from=333.337.0.0)[![Image 62](https://www.chaincatcher.com/_nuxt/img/ft_05.74af318.png)](https://xhslink.com/m/9VwOExzMHHP)
 
 [Qiong ICP No. 2021009392](https://beian.miit.gov.cn/?spm=a2c4g.11186623.0.0.26b45bb6J585QD#/Integrated/index)
 
-![Image 62: app_icon](https://www.chaincatcher.com/_nuxt/img/app_icon.3a3b261.png)
+![Image 63: app_icon](https://www.chaincatcher.com/_nuxt/img/app_icon.3a3b261.png)
 
 ChainCatcher Building the Web3 world with innovations.
 
  Launch App 
 
-![Image 63: topping](https://www.chaincatcher.com/_nuxt/img/topping.a7564a0.png)
+![Image 64: topping](https://www.chaincatcher.com/_nuxt/img/topping.a7564a0.png)

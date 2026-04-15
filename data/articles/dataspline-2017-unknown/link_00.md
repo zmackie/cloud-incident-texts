@@ -18,7 +18,7 @@ By clicking Continue to join or sign in, you agree to LinkedIn’s [User Agreeme
 *   [Jobs](https://www.linkedin.com/jobs/search?trk=public_post_guest_nav_menu_jobs)
 *   [Games](https://www.linkedin.com/games?trk=public_post_guest_nav_menu_games)
 
-[Join now](https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&trk=public_post_nav-header-join)[Sign in](https://www.linkedin.com/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&fromSignIn=true&trk=public_post_nav-header-signin)[![Image 1](https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712)](https://www.linkedin.com/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&fromSignIn=true&trk=public_post_nav-header-signin)
+[Sign in](https://www.linkedin.com/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&fromSignIn=true&trk=public_post_nav-header-signin)[Join now](https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&trk=public_post_nav-header-join)[![Image 1](https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712)](https://www.linkedin.com/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fposts%2Fumarsikander_detection-response-for-modern-linux-workloads-activity-7219713829528563712-nODc&fromSignIn=true&trk=public_post_nav-header-signin)
 
 # Umar Sikander’s Post
 
@@ -84,7 +84,7 @@ To view or add a comment, [sign in](https://www.linkedin.com/signup/cold-join?se
 
 *   [21 Posts](https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fin%2Fumarsikander%2Frecent-activity%2F&trk=public_post_follow-posts)
 
-[View Profile](https://ca.linkedin.com/in/umarsikander?trk=public_post_follow-view-profile)[Connect](https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Ffeed%2Fupdate%2Furn%3Ali%3Aactivity%3A7219713829528563712&trk=public_post_follow)
+[View Profile](https://ca.linkedin.com/in/umarsikander?trk=public_post_follow-view-profile)[Follow](https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Ffeed%2Fupdate%2Furn%3Ali%3Aactivity%3A7219713829528563712&trk=public_post_follow)
 
 ## Explore content categories
 

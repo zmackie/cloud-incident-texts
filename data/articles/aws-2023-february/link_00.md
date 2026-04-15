@@ -264,8 +264,6 @@ Kyle is a Sr. Security Solution Architect, specializing in threat detection, inc
 *   [Twitch](https://www.twitch.tv/aws)
 *   [Email Updates](https://pages.awscloud.com/communication-preferences?sc_ichannel=ha&sc_icampaign=acq_awsblogsb&sc_icontent=security-social)
 
-# CCBA-Footer
-
 [Create an AWS account](https://signin.aws.amazon.com/signup?request_type=register)
 
 ## Learn
@@ -315,13 +313,12 @@ English
 
 Back to top
 
-Amazon is an equal opportunity employer and does not discriminate on the basis of protected veteran status, disability or other legally protected status.
+Amazon is an Equal Opportunity Employer: Minority / Women / Disability / Veteran / Gender Identity / Sexual Orientation / Age.
 
 [](https://twitter.com/awscloud)[](https://www.facebook.com/amazonwebservices)[](https://www.linkedin.com/company/amazon-web-services/)[](https://www.instagram.com/amazonwebservices/)[](https://www.twitch.tv/aws)[](https://www.youtube.com/user/AmazonWebServices/Cloud/)[](https://aws.amazon.com/podcasts/?nc1=f_cc)[](https://pages.awscloud.com/communication-preferences?trk=homepage)
 
 *   [Privacy](https://aws.amazon.com/privacy/?nc1=f_pr)
 *   [Site terms](https://aws.amazon.com/terms/?nc1=f_pr)
-*   [Your Privacy Choices](https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/#)
 *   [Cookie Preferences](https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/#)
 
 © 2026, Amazon Web Services, Inc. or its affiliates. All rights reserved.

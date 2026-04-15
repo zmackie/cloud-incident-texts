@@ -203,7 +203,7 @@ Protocols
 
 STAKING
 
-[![Image 183](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/689a0c88bba4875a2ee046f3_Bitcoin%20logo%201.svg) Bitcoin ![Image 184](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/bitcoin-staking)
+[![Image 183](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/689a0c88bba4875a2ee046f3_Bitcoin%20logo%201.svg) Bitcoin ![Image 184](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/protocols/bitcoin)
 
 [![Image 185](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/67693fa4f2abd948e4a6f11e_Ethereum%20menu%20icon.svg) Ethereum ![Image 186](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/protocols/ethereum)
 
@@ -399,7 +399,7 @@ Protocols
 
 STAKING
 
-[![Image 402](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/689a0c88bba4875a2ee046f3_Bitcoin%20logo%201.svg) Bitcoin ![Image 403](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/bitcoin-staking)
+[![Image 402](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/689a0c88bba4875a2ee046f3_Bitcoin%20logo%201.svg) Bitcoin ![Image 403](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/protocols/bitcoin)
 
 [![Image 404](https://cdn.prod.website-files.com/625db3caa8abd67c1b5f0d0a/67693fa4f2abd948e4a6f11e_Ethereum%20menu%20icon.svg) Ethereum ![Image 405](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/669e0cfde962be55ac762c16_menu-arrow.svg) Coming soon](https://www.kiln.fi/protocols/ethereum)
 
@@ -695,8 +695,6 @@ Kiln is the leading staking and digital asset rewards management platform, enabl
 
 ## Subscribe to our Newsletter
 
-Email* 
-
 ![Image 524](https://cdn.prod.website-files.com/625db3caa8abd6c22d5f0ce3/6672a33d411fe821d4b95e94_Group%201171274572.svg)
 
 Products
@@ -777,7 +775,7 @@ Protocols
 
 [Babylon](https://www.kiln.fi/protocols/babylon)
 
-[Bitcoin](https://www.kiln.fi/bitcoin-staking)
+[Bitcoin](https://www.kiln.fi/protocols/bitcoin)
 
 [Canton](https://www.kiln.fi/protocols/canton)
 
@@ -894,32 +892,6 @@ Kiln is SOC 2 certified, as audited by [Insight Assurance](https://insightassura
 _* Please note that rewards rates for staking are pre-determined and regulated by the rules of the relevant open-source blockchain protocol code. While the rewards rate is fixed, rewards are only guaranteed to validators that properly batch transactions into new blocks according to the protocol's rules and, in some cases, for verifying the work of other validators on the network. It is important to note that there are risks associated with staking, including the possibility of slashing penalties which may result in the loss of a portion of the staked assets. However, at Kiln, we offer slashing coverage to help mitigate the impact of this risk. It is important to thoroughly understand the risks and rewards associated with staking before participating in any staking activities._
 
 ×
-
-# Register your interest with us
-
-First name* 
-
-Last name* 
-
-Email* 
-
-Job title* 
-
-Where does your company operate primarily?* 
-
-Company type* 
-
-Company URL* 
-
-utm_source 
-
-utm_medium 
-
-utm_campaign 
-
-utm_content 
-
-By submitting this form you agree that Kiln may contact you with updates and information about our products. Use the unsubscribe link in those emails to opt-out at any time. For more info on how we might use your data, see the [Privacy Policy](https://www.kiln.fi/legal#Privacy-Policy).
 
 ×
 

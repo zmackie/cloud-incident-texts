@@ -25,7 +25,7 @@ en
 
 ###### Subscribe for weekly updates
 
-- [x] I agree with [Terms of Service](https://cystack.net/terms-of-service)and[Privacy Policy](https://cystack.net/privacy) of CyStack 
+- [x] I agree with[Terms of Service](https://cystack.net/terms-of-service)and[Privacy Policy](https://cystack.net/privacy) of CyStack 
 
 Subscribe to Newsletter
 
@@ -217,11 +217,11 @@ Follow us on
 
 [* Support](https://cystack.net/)
 
-![Image 31: ISO](https://cystack.net/v4/images/layout/footer/ISOMobile.svg)ISMS ISO [27001:2022](https://www.iafcertsearch.org/certification/qTm2LqNtmRfkC6RIQvFvSJ0i) and Quality Management Standard ISO [9001:2015](https://www.iafcertsearch.org/certification/Jpfz2Xe3847JELEKCSzp7DGt) Compliance
+![Image 31: ISO](https://cystack.net/v4/images/layout/footer/ISOMobile.svg)ISMS ISO[27001:2022](https://www.iafcertsearch.org/certification/qTm2LqNtmRfkC6RIQvFvSJ0i)and Quality Management Standard ISO[9001:2015](https://www.iafcertsearch.org/certification/Jpfz2Xe3847JELEKCSzp7DGt)Compliance
 
 © 2026 CyStack
 
-![Image 32: ISO](https://cystack.net/v4/images/layout/footer/ISO.svg)ISMS ISO [27001:2022](https://www.iafcertsearch.org/certification/qTm2LqNtmRfkC6RIQvFvSJ0i) and Quality Management Standard ISO [9001:2015](https://www.iafcertsearch.org/certification/Jpfz2Xe3847JELEKCSzp7DGt) Compliance
+![Image 32: ISO](https://cystack.net/v4/images/layout/footer/ISO.svg)ISMS ISO[27001:2022](https://www.iafcertsearch.org/certification/qTm2LqNtmRfkC6RIQvFvSJ0i)and Quality Management Standard ISO[9001:2015](https://www.iafcertsearch.org/certification/Jpfz2Xe3847JELEKCSzp7DGt)Compliance
 
 © 2026 CyStack
 [* Terms of Use](https://cystack.net/terms-of-service)[* Security](https://cystack.net/security)[* Privacy](https://cystack.net/privacy)

@@ -179,8 +179,8 @@ Tags:
     *   [Google Cloud](https://unit42.paloaltonetworks.com/tag/google-cloud/)
     *   [IAM](https://unit42.paloaltonetworks.com/tag/iam/)
 
-*   [![Image 21: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/?pdf=download&lg=en&_wpnonce=8dfc6c694c "Click here to download")
-*   [![Image 22: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/?pdf=print&lg=en&_wpnonce=8dfc6c694c "Click here to print")
+*   [![Image 21: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/?pdf=download&lg=en&_wpnonce=57e8089dbf "Click here to download")
+*   [![Image 22: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/?pdf=print&lg=en&_wpnonce=57e8089dbf "Click here to print")
 
 [Share![Image 23: Down arrow](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/down-arrow.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/# "Click here to share")
 *   [![Image 24: Link Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-share-link.svg)](https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/# "Copy link")

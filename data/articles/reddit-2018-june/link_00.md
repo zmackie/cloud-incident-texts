@@ -77,6 +77,8 @@ And, as in all things, a strong unique password and [enabling 2FA](https://www.r
 New to Reddit? 
 Create your account and connect with a world of communities.
 
+Continue with Google Continue with Google. Opens in new tab
+
  Continue with Email 
 
  Continue With Phone Number 
@@ -87,13 +89,13 @@ By continuing, you agree to our[User Agreement](https://www.redditinc.com/polici
 
  Related Answers 
 
-[Summary of Reddit's security incident](https://www.reddit.com/answers/2616009c-f6e3-4482-a43a-acecbccbfd52/?q=Summary+of+Reddit%27s+security+incident&source=PDP)
+[Summary of Reddit's security incident](https://www.reddit.com/answers/e7c2fabb-1383-4b2a-99e3-65547d399133/?q=Summary+of+Reddit%27s+security+incident&source=PDP)
 
-[Understanding data breaches and user safety](https://www.reddit.com/answers/381b5bde-7c6e-4162-9349-19cbf3387b0c/?q=Understanding+data+breaches+and+user+safety&source=PDP)
+[Understanding data breaches and user safety](https://www.reddit.com/answers/2e39fd1c-347e-410b-8159-1043b2ca666e/?q=Understanding+data+breaches+and+user+safety&source=PDP)
 
-[Best practices after a security breach](https://www.reddit.com/answers/d27eef04-9f92-4357-a4d5-31d9ceb65b86/?q=Best+practices+after+a+security+breach&source=PDP)
+[Best practices after a security breach](https://www.reddit.com/answers/65a7579b-a4b0-43d3-8070-7e8b2ec8f55f/?q=Best+practices+after+a+security+breach&source=PDP)
 
-[How to check if your email was compromised](https://www.reddit.com/answers/e73512c1-174a-4b05-a77b-eac565334c75/?q=How+to+check+if+your+email+was+compromised&source=PDP)
+[How to check if your email was compromised](https://www.reddit.com/answers/57276b31-844a-438e-95e3-4f35abce793f/?q=How+to+check+if+your+email+was+compromised&source=PDP)
 
 0 0
 
@@ -106,5 +108,38 @@ By continuing, you agree to our[User Agreement](https://www.redditinc.com/polici
 [Reddit Rules](https://www.redditinc.com/policies/content-policy)[Privacy Policy](https://www.reddit.com/policies/privacy-policy)[User Agreement](https://www.redditinc.com/policies/user-agreement)[Your Privacy Choices](https://support.reddithelp.com/hc/articles/43980704794004)[Accessibility](https://support.reddithelp.com/hc/sections/38303584022676-Accessibility)[Reddit, Inc. © 2026. All rights reserved.](https://redditinc.com/)
 
 Expand Navigation Collapse Navigation
+
+*   &nbsp; 
+*   &nbsp; 
+*   &nbsp; 
+
+* * *
+
+* * *
+
+*   RESOURCES 
+
+*   [About Reddit](https://www.redditinc.com/)
+*   [Advertise](https://ads.reddit.com/register?utm_source=web3x_consumer&utm_name=left_nav_cta)
+*   [Developer Platform](https://developers.reddit.com/?utm_source=reddit&utm_medium=left_nav_resources)
+*   [Reddit Pro BETA](https://www.reddit.com/reddit-pro?utm_source=reddit&utm_medium=left_nav_resources)
+*   [Help](https://support.reddithelp.com/hc?utm_source=reddit&utm_medium=footer&utm_campaign=evergreen)
+*   [Blog](https://redditblog.com/)
+*   [Careers](https://www.redditinc.com/careers)
+*   [Press](https://www.redditinc.com/press)
+
+* * *
+
+*   [Best of Reddit](https://www.reddit.com/posts/2026/global/)
+
+* * *
+
+*   [Reddit Rules](https://www.redditinc.com/policies/content-policy)
+*   [Privacy Policy](https://www.reddit.com/policies/privacy-policy)
+*   [User Agreement](https://www.redditinc.com/policies/user-agreement)
+*   [Your Privacy Choices](https://support.reddithelp.com/hc/articles/43980704794004)
+*   [Accessibility](https://support.reddithelp.com/hc/sections/38303584022676-Accessibility)
+
+[Reddit, Inc. © 2026. All rights reserved.](https://redditinc.com/)
 
 ![Image 2](https://id.rlcdn.com/472486.gif)

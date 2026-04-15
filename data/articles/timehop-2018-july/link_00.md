@@ -327,6 +327,20 @@ San Francisco, CA|October 13-15, 2026
 
 © 2026 TechCrunch Media LLC.
 
-![Image 6](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=1669641&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=320&rand=0.9953703138127125)
+![Image 6](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=1669641&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=0&rand=0.017575436321578874)
 
 Some areas of this page may shift around if you resize the browser window. Be sure to check heading and document order.
+
+![Image 7](https://dt.adsafeprotected.com/dt?adspot_id=saqdig_728x90_)
+
+Do Not Sell or Share My Personal Information
+
+![Image 8: Opt out of the sale or sharing of personal information](https://lh3.googleusercontent.com/IMEohADQGV4rcD4GVSCa8AGELftSBzGQZh475GedJEeCUyL0U3WWaybctrO-uB0HN9k3X4i5-fkJs9nZBh3Mz6flS52sL-IOME6DySPeIseyhjtQcOs=h60)
+
+# Opt out of the sale or sharing of personal information
+
+We won't sell or share your personal information to inform the ads you see. You may still see interest-based ads if your information is sold or shared by other companies or was sold or shared previously.
+
+Dismiss
+
+Opt out

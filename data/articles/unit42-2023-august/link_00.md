@@ -179,8 +179,8 @@ Tags:
     *   [SugarCRM](https://unit42.paloaltonetworks.com/tag/sugarcrm/)
     *   [Zero-day](https://unit42.paloaltonetworks.com/tag/zero-day/)
 
-*   [![Image 22: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/?pdf=download&lg=en&_wpnonce=8dfc6c694c "Click here to download")
-*   [![Image 23: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/?pdf=print&lg=en&_wpnonce=8dfc6c694c "Click here to print")
+*   [![Image 22: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/?pdf=download&lg=en&_wpnonce=57e8089dbf "Click here to download")
+*   [![Image 23: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/?pdf=print&lg=en&_wpnonce=57e8089dbf "Click here to print")
 
 [Share![Image 24: Down arrow](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/down-arrow.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/# "Click here to share")
 *   [![Image 25: Link Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-share-link.svg)](https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/# "Copy link")

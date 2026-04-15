@@ -2,6 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #   "anthropic>=0.25.0",
+#   "playwright>=1.52.0",
 # ]
 # ///
 """
@@ -27,7 +28,7 @@ DEFAULT_MODEL = "claude-sonnet-4-6"
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
 ANALYSIS_DIR = DATA_DIR / "analysis"
-SITE_DATA_DIR = DATA_DIR / "site_data"
+SITE_DATA_DIR = ROOT / "site" / "public" / "data"
 SCRIPT_DIR = Path(__file__).parent
 RUNS_DIR = DATA_DIR / "pipeline_runs"
 
@@ -178,7 +179,7 @@ def main() -> None:
     parser.add_argument(
         "--skip-site-build",
         action="store_true",
-        help="Skip building data/site_data for preview",
+        help="Skip building site/public/data for preview",
     )
     parser.add_argument(
         "--playwright",

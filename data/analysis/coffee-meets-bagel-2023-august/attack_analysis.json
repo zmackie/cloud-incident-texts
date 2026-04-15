@@ -1,0 +1,109 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "Impact: Data deletion, 7-day service outage",
+          "validated": true
+        },
+        {
+          "technique_id": "T1489",
+          "technique_name": "Service Stop",
+          "inferred": true,
+          "evidence_quote": "7-day service outage",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker gained initial access to Coffee Meets Bagel infrastructure via an unknown vector. Root cause was not publicly disclosed.",
+      "evidence_quote": "Root Cause: Unknown",
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.theregister.com/2023/08/15/coffee_meets_bagel_hack/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deleted data, resulting in a 7-day service outage for the Coffee Meets Bagel dating platform.",
+      "evidence_quote": "Impact: Data deletion, 7-day service outage",
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.theregister.com/2023/08/15/coffee_meets_bagel_hack/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [],
+  "impact_type": "Data Deletion / Service Disruption",
+  "confidence_score": 0.2,
+  "initial_access_vector": "Unknown \u2014 root cause not publicly disclosed",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker gained initial access to Coffee Meets Bagel infrastructure via an unknown vector. Root cause was not publicly disclosed.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "Root Cause: Unknown",
+        "evidence_sources": [
+          "https://www.theregister.com/2023/08/15/coffee_meets_bagel_hack/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker deleted data, resulting in a 7-day service outage for the Coffee Meets Bagel dating platform.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Impact: Data deletion, 7-day service outage",
+        "evidence_sources": [
+          "https://www.theregister.com/2023/08/15/coffee_meets_bagel_hack/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1485",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://www.theregister.com/2023/08/15/coffee_meets_bagel_hack/"
+        ],
+        "evidence_quotes": [
+          "Root Cause: Unknown",
+          "Impact: Data deletion, 7-day service outage"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "coffee-meets-bagel-2023-august",
+  "analyzed_at": "2026-04-15T20:47:16.052223+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 6340
+}

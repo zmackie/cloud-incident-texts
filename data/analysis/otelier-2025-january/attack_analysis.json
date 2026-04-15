@@ -1,0 +1,350 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login. These credentials were stolen through information-stealing malware",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The threat actor says they attempted to extort Marriott, thinking the S3 buckets belonged to them, and left ransom notes requesting payment in cryptocurrency not to leak the data.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1566",
+      "technique_name": "Phishing / Infostealer Infection",
+      "description": "An Otelier employee's device was compromised by information-stealing malware, harvesting the employee's credentials for corporate systems including Atlassian (Jira/Confluence/Bitbucket).",
+      "evidence_quote": "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "The threat actors used the stolen employee credentials to authenticate to Otelier's Atlassian server (Jira/Confluence/Bitbucket), gaining legitimate access to internal systems.",
+      "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "The attackers scraped Atlassian tickets and other repository data, discovering additional credentials (AWS S3 keys/secrets) embedded within the content.",
+      "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "S3 bucket credentials were found embedded in the scraped Atlassian ticket/repository data, enabling direct access to Otelier's AWS S3 environment.",
+      "evidence_quote": "which contained further credentials to the company's S3 buckets.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Using the harvested S3 credentials, the threat actors accessed Otelier's Amazon S3 buckets and downloaded approximately 7.8TB of data including hotel guest PII, reservations, nightly reports, and accounting data from July through October 2024.",
+      "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft (Extortion)",
+      "description": "The threat actors attempted to extort Marriott by leaving ransom notes in the S3 buckets demanding cryptocurrency payment to prevent data leakage, mistakenly believing the buckets belonged to Marriott.",
+      "evidence_quote": "The threat actor says they attempted to extort Marriott, thinking the S3 buckets belonged to them, and left ransom notes requesting payment in cryptocurrency not to leak the data.",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "AWS"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.9,
+  "initial_access_vector": "Infostealer malware compromised an Otelier employee's device, stealing credentials to the company's Atlassian server (Jira/Confluence/Bitbucket)",
+  "persistence_mechanism": "Threat actors maintained persistent access to S3 buckets from July 2024 through October 2024 using harvested S3 credentials; access was terminated after Otelier rotated credentials in September/October.",
+  "privilege_escalation": "Credentials embedded in Atlassian tickets/data provided direct AWS S3 access keys, enabling lateral movement from the Atlassian environment to cloud storage without needing additional exploitation.",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1566",
+        "technique_name": "Phishing",
+        "description": "An Otelier employee's device was compromised by information-stealing malware, harvesting the employee's credentials for corporate systems including Atlassian (Jira/Confluence/Bitbucket).",
+        "tactic_id": "TA0001",
+        "evidence_quote": "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "The threat actors used the stolen employee credentials to authenticate to Otelier's Atlassian server (Jira/Confluence/Bitbucket), gaining legitimate access to internal systems.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "The attackers scraped Atlassian tickets and other repository data, discovering additional credentials (AWS S3 keys/secrets) embedded within the content.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "S3 bucket credentials were found embedded in the scraped Atlassian ticket/repository data, enabling direct access to Otelier's AWS S3 environment.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "which contained further credentials to the company's S3 buckets.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Using the harvested S3 credentials, the threat actors accessed Otelier's Amazon S3 buckets and downloaded approximately 7.8TB of data including hotel guest PII, reservations, nightly reports, and accounting data from July through October 2024.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "The threat actors attempted to extort Marriott by leaving ransom notes in the S3 buckets demanding cryptocurrency payment to prevent data leakage, mistakenly believing the buckets belonged to Marriott.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "The threat actor says they attempted to extort Marriott, thinking the S3 buckets belonged to them, and left ransom notes requesting payment in cryptocurrency not to leak the data.",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1566",
+        "target": "T1078",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Phishing",
+        "target_technique_name": "Valid Accounts",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "evidence_quotes": [
+          "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
+          "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login."
+        ]
+      },
+      {
+        "source": "T1078",
+        "target": "T1213",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "evidence_quotes": [
+          "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login.",
+          "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets."
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1552.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "evidence_quotes": [
+          "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
+          "which contained further credentials to the company's S3 buckets."
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1530",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "evidence_quotes": [
+          "which contained further credentials to the company's S3 buckets.",
+          "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1657",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Financial Theft",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
+        ],
+        "evidence_quotes": [
+          "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier.",
+          "The threat actor says they attempted to extort Marriott, thinking the S3 buckets belonged to them, and left ransom notes requesting payment in cryptocurrency not to leak the data."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "otelier-2025-january",
+  "analyzed_at": "2026-04-15T21:03:03.157623+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 29443
+}

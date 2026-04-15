@@ -1,0 +1,200 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "Root Cause: Stolen or compromised credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Escalation Vectors: Create new console user",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "Escalation Vectors: Create new console user",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "Impact: LLMJacking",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used stolen or compromised cloud credentials to gain initial access to the victim's cloud environment.",
+      "evidence_quote": "Root Cause: Stolen or compromised credentials",
+      "evidence_sources": [
+        "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created a new console user account to establish persistence and maintain access to the cloud environment.",
+      "evidence_quote": "Escalation Vectors: Create new console user",
+      "evidence_sources": [
+        "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Attacker abused cloud infrastructure to invoke large language model (LLM) AI services, a technique known as LLMJacking, consuming expensive AI compute resources at the victim's expense.",
+      "evidence_quote": "Impact: LLMJacking",
+      "evidence_sources": [
+        "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+      ],
+      "aws_services_involved": [
+        "Amazon Bedrock",
+        "AWS SageMaker"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon Bedrock",
+    "AWS SageMaker"
+  ],
+  "impact_type": "LLMJacking (AI Resource Hijacking)",
+  "initial_access_vector": "Stolen or compromised cloud credentials used to authenticate to the cloud control plane",
+  "persistence_mechanism": "Creation of a new cloud console IAM user account to maintain independent access",
+  "privilege_escalation": "New console user created with elevated permissions to access AI/LLM services",
+  "data_exfiltrated": false,
+  "confidence_score": 0.4,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker used stolen or compromised cloud credentials to gain initial access to the victim's cloud environment.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Root Cause: Stolen or compromised credentials",
+        "evidence_sources": [
+          "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker created a new console user account to establish persistence and maintain access to the cloud environment.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Escalation Vectors: Create new console user",
+        "evidence_sources": [
+          "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Attacker abused cloud infrastructure to invoke large language model (LLM) AI services, a technique known as LLMJacking, consuming expensive AI compute resources at the victim's expense.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Impact: LLMJacking",
+        "evidence_sources": [
+          "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+        ],
+        "aws_services_involved": [
+          "Amazon Bedrock",
+          "AWS SageMaker"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1136.003",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+        ],
+        "evidence_quotes": [
+          "Root Cause: Stolen or compromised credentials",
+          "Escalation Vectors: Create new console user"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1496",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+        ],
+        "evidence_quotes": [
+          "Escalation Vectors: Create new console user",
+          "Impact: LLMJacking"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "lacework-2024-june",
+  "analyzed_at": "2026-04-15T20:58:31.976625+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 77241
+}

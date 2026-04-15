@@ -1,0 +1,199 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": true,
+          "evidence_quote": "Root Cause: Unknown",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "potential theft of 1.5M patient records",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "potential theft of 1.5M patient records",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "deleted databases and system configuration files",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker gained initial access to the Eye Care Leaders myCare Integrity platform, a cloud-based electronic health record (EHR) system. The precise method is unknown but compromise of an internet-facing system is the most probable vector.",
+      "evidence_quote": "Root Cause: Unknown",
+      "evidence_sources": [],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed and collected protected health information (PHI) belonging to approximately 1.5 million patients stored within the cloud-hosted EHR platform.",
+      "evidence_quote": "potential theft of 1.5M patient records",
+      "evidence_sources": [],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Patient records were potentially exfiltrated from the cloud environment to an attacker-controlled destination.",
+      "evidence_quote": "potential theft of 1.5M patient records",
+      "evidence_sources": [],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deleted databases and system configuration files from the myCare Integrity platform, causing service disruption and potential permanent data loss for affected healthcare organizations.",
+      "evidence_quote": "deleted databases and system configuration files",
+      "evidence_sources": [],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [],
+  "impact_type": "Data Destruction and Data Exfiltration",
+  "confidence_score": 0.35,
+  "initial_access_vector": "Unknown \u2014 attacker compromised the Eye Care Leaders myCare Integrity cloud-based EHR platform; specific exploitation method not disclosed",
+  "data_exfiltrated": true,
+  "persistence_mechanism": "Unknown \u2014 not described in available incident metadata",
+  "privilege_escalation": "Unknown \u2014 not described in available incident metadata",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker gained initial access to the Eye Care Leaders myCare Integrity platform, a cloud-based electronic health record (EHR) system. The precise method is unknown but compromise of an internet-facing system is the most probable vector.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "Root Cause: Unknown",
+        "evidence_sources": [],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed and collected protected health information (PHI) belonging to approximately 1.5 million patients stored within the cloud-hosted EHR platform.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "potential theft of 1.5M patient records",
+        "evidence_sources": [],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Patient records were potentially exfiltrated from the cloud environment to an attacker-controlled destination.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "potential theft of 1.5M patient records",
+        "evidence_sources": [],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker deleted databases and system configuration files from the myCare Integrity platform, causing service disruption and potential permanent data loss for affected healthcare organizations.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "deleted databases and system configuration files",
+        "evidence_sources": [],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1530",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [],
+        "evidence_quotes": [
+          "Root Cause: Unknown",
+          "potential theft of 1.5M patient records"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [],
+        "evidence_quotes": [
+          "potential theft of 1.5M patient records",
+          "potential theft of 1.5M patient records"
+        ]
+      },
+      {
+        "source": "T1537",
+        "target": "T1485",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Data Destruction",
+        "sources": [],
+        "evidence_quotes": [
+          "potential theft of 1.5M patient records",
+          "deleted databases and system configuration files"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "eye-care-leaders-2021-december",
+  "analyzed_at": "2026-04-15T20:54:28.131549+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 226
+}

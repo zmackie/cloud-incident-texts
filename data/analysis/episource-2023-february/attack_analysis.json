@@ -1,0 +1,306 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": true,
+          "evidence_quote": "unauthorized access to its computer systems between January 27, 2025, and February 6, 2025",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1083",
+          "technique_name": "File and Directory Discovery",
+          "inferred": true,
+          "evidence_quote": "The review of the compromised files confirmed that they contained a range of data",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "unauthorized access to its computer systems between January 27, 2025, and February 6, 2025",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "it has confirmed that there was data exfiltration",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact",
+          "inferred": true,
+          "evidence_quote": "this appears to be a ransomware attack",
+          "validated": true
+        },
+        {
+          "technique_id": "T1489",
+          "technique_name": "Service Stop",
+          "inferred": true,
+          "evidence_quote": "All computer systems were powered down to prevent further unauthorized access",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker gained unauthorized access to Episource's AWS/computer environment on or around January 27, 2025. The specific initial access vector was not disclosed, but an external intrusion into a cloud-hosted healthcare system is implied.",
+      "evidence_quote": "unauthorized access to its computer systems between January 27, 2025, and February 6, 2025",
+      "evidence_sources": [
+        "https://www.hipaajournal.com/episource-data-breach/"
+      ],
+      "aws_services_involved": [
+        "AWS (general cloud environment)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "description": "Attacker traversed the compromised environment to locate sensitive healthcare and personal data files across Episource's systems during the ~10-day dwell period.",
+      "evidence_quote": "The review of the compromised files confirmed that they contained a range of data, which varied from individual to individual",
+      "evidence_sources": [
+        "https://www.hipaajournal.com/episource-data-breach/"
+      ],
+      "aws_services_involved": [
+        "AWS (general cloud storage/compute)"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed and staged healthcare records, PHI, and personal information stored in Episource's cloud environment, affecting data belonging to 5.4 million individuals.",
+      "evidence_quote": "Health information: diagnosis information, treatment information, prescriptions, test results, medical images, medical record numbers",
+      "evidence_sources": [
+        "https://www.hipaajournal.com/episource-data-breach/"
+      ],
+      "aws_services_involved": [
+        "AWS S3",
+        "AWS (general cloud storage)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Attacker exfiltrated the collected healthcare records and personal data from Episource's environment prior to deploying ransomware, consistent with a double-extortion ransomware pattern.",
+      "evidence_quote": "it has confirmed that there was data exfiltration",
+      "evidence_sources": [
+        "https://www.hipaajournal.com/episource-data-breach/"
+      ],
+      "aws_services_involved": [
+        "AWS (general cloud environment)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "description": "Attacker deployed ransomware against Episource's systems, encrypting data and prompting the organization to power down all computer systems to contain the attack.",
+      "evidence_quote": "this appears to be a ransomware attack. The group responsible is currently unknown",
+      "evidence_sources": [
+        "https://www.hipaajournal.com/episource-data-breach/"
+      ],
+      "aws_services_involved": [
+        "AWS (general cloud compute/storage)"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS (general cloud environment)",
+    "AWS S3",
+    "AWS EC2 (inferred)"
+  ],
+  "impact_type": "Ransomware",
+  "confidence_score": 0.45,
+  "initial_access_vector": "Unauthorized access to Episource's AWS/cloud environment; specific vector (e.g., phishing, credential compromise, exploit) not disclosed in available sources",
+  "data_exfiltrated": true,
+  "persistence_mechanism": "Not disclosed; attacker maintained access for approximately 10 days (January 27 \u2013 February 6, 2025)",
+  "privilege_escalation": "Not disclosed in available sources",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker gained unauthorized access to Episource's AWS/computer environment on or around January 27, 2025. The specific initial access vector was not disclosed, but an external intrusion into a cloud-hosted healthcare system is implied.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "unauthorized access to its computer systems between January 27, 2025, and February 6, 2025",
+        "evidence_sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "aws_services_involved": [
+          "AWS (general cloud environment)"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "description": "Attacker traversed the compromised environment to locate sensitive healthcare and personal data files across Episource's systems during the ~10-day dwell period.",
+        "tactic_id": "",
+        "evidence_quote": "The review of the compromised files confirmed that they contained a range of data, which varied from individual to individual",
+        "evidence_sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "aws_services_involved": [
+          "AWS (general cloud storage/compute)"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed and staged healthcare records, PHI, and personal information stored in Episource's cloud environment, affecting data belonging to 5.4 million individuals.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Health information: diagnosis information, treatment information, prescriptions, test results, medical images, medical record numbers",
+        "evidence_sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "aws_services_involved": [
+          "AWS S3",
+          "AWS (general cloud storage)"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Attacker exfiltrated the collected healthcare records and personal data from Episource's environment prior to deploying ransomware, consistent with a double-extortion ransomware pattern.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "it has confirmed that there was data exfiltration",
+        "evidence_sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "aws_services_involved": [
+          "AWS (general cloud environment)"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1486",
+        "technique_name": "Data Encrypted for Impact",
+        "description": "Attacker deployed ransomware against Episource's systems, encrypting data and prompting the organization to power down all computer systems to contain the attack.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "this appears to be a ransomware attack. The group responsible is currently unknown",
+        "evidence_sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "aws_services_involved": [
+          "AWS (general cloud compute/storage)"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1083",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "File and Directory Discovery",
+        "sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "evidence_quotes": [
+          "unauthorized access to its computer systems between January 27, 2025, and February 6, 2025",
+          "The review of the compromised files confirmed that they contained a range of data, which varied from individual to individual"
+        ]
+      },
+      {
+        "source": "T1083",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "File and Directory Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "evidence_quotes": [
+          "The review of the compromised files confirmed that they contained a range of data, which varied from individual to individual",
+          "Health information: diagnosis information, treatment information, prescriptions, test results, medical images, medical record numbers"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "evidence_quotes": [
+          "Health information: diagnosis information, treatment information, prescriptions, test results, medical images, medical record numbers",
+          "it has confirmed that there was data exfiltration"
+        ]
+      },
+      {
+        "source": "T1537",
+        "target": "T1486",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Data Encrypted for Impact",
+        "sources": [
+          "https://www.hipaajournal.com/episource-data-breach/"
+        ],
+        "evidence_quotes": [
+          "it has confirmed that there was data exfiltration",
+          "this appears to be a ransomware attack. The group responsible is currently unknown"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "episource-2023-february",
+  "analyzed_at": "2026-04-15T20:53:02.852856+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 35748
+}

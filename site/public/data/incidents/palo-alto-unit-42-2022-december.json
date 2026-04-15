@@ -1,0 +1,534 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": true,
+          "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations or poor cloud security posture management",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "the attacker started an enumeration on different services in different regions. This technique is much noisier as the attacker is trying to learn the architecture of the targeted account",
+          "validated": true
+        },
+        {
+          "technique_id": "T1069.003",
+          "technique_name": "Permission Groups Discovery: Cloud Groups",
+          "inferred": false,
+          "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... SES Enumeration...",
+          "validated": true
+        },
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal",
+          "inferred": false,
+          "evidence_quote": "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "the threat actor was able to steal the Lambda's credentials, allowing the attacker to impersonate it... The attacker was using the stolen credentials to impersonate and execute API calls on behalf of the Lambda function",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "Storage Enumeration: ListBuckets, GetBucketCors, GetBucketInventoryConfiguration... GetBucketPolicy, GetBucketTagging",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker achieved code execution within the Lambda function context through an application vulnerability (exact exploit unspecified; Log4Shell-style or similar RCE implied).",
+      "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations",
+      "aws_services_involved": [
+        "AWS Lambda"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "Attacker exfiltrated the Lambda function's temporary IAM credentials from its environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN) and exported them to the attacker-controlled machine.",
+      "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+      "aws_services_involved": [
+        "AWS Lambda",
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Using the stolen credentials from an external IP (50.82.94.112), the attacker called GetCallerIdentity to identify the stolen identity, account ID, and credential type \u2014 equivalent to 'whoami'.",
+      "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
+      "aws_services_involved": [
+        "AWS STS"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1069.003",
+      "technique_name": "Permission Groups Discovery: Cloud Groups",
+      "description": "Attacker attempted IAM enumeration via ListAttachedRolePolicies and ListRolePolicies to understand privilege scope; both calls were denied.",
+      "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker performed broad enumeration across S3, EC2, VPC networking, CloudWatch/CloudTrail logging, EBS backup, and SES services across multiple regions to map the target account's architecture and find accessible resources.",
+      "evidence_quote": "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration...",
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon EC2",
+        "Amazon VPC",
+        "Amazon CloudWatch",
+        "AWS CloudTrail",
+        "Amazon EBS",
+        "Amazon SES"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker attempted to create a new IAM user (CreateUser) to establish a persistent backdoor; the call failed due to insufficient permissions.",
+      "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Attacker successfully enumerated SES (GetAccount, ListIdentities) and then abused it to register a sending identity and enable outbound email for a phishing campaign (VerifyEmailIdentity, UpdateAccountSendingEnabled).",
+      "evidence_quote": "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
+      "aws_services_involved": [
+        "Amazon SES"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1070",
+      "technique_name": "Indicator Removal",
+      "description": "Attacker deleted the SES sending identity (DeleteIdentity) to cover tracks and reduce evidence of the phishing infrastructure within the victim's account.",
+      "evidence_quote": "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command.",
+      "aws_services_involved": [
+        "Amazon SES"
+      ],
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS Lambda",
+    "AWS IAM",
+    "AWS STS",
+    "Amazon S3",
+    "Amazon EC2",
+    "Amazon VPC",
+    "Amazon CloudWatch",
+    "AWS CloudTrail",
+    "Amazon EBS",
+    "Amazon SES"
+  ],
+  "impact_type": "Phishing / SES Abuse",
+  "confidence_score": 0.92,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Code execution achieved within an AWS Lambda function context, enabling exfiltration of the function's IAM temporary credentials from environment variables (exact exploit vector not specified; application vulnerability or misconfiguration implied)",
+  "persistence_mechanism": "Attempted to create a new IAM user (CreateUser) for persistent backdoor access; call failed due to lack of permissions",
+  "privilege_escalation": "No successful privilege escalation observed; IAM enumeration (ListAttachedRolePolicies, ListRolePolicies) and CreateUser were all denied due to insufficient permissions on the Lambda's role",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker achieved code execution within the Lambda function context through an application vulnerability (exact exploit unspecified; Log4Shell-style or similar RCE implied).",
+        "tactic_id": "TA0001",
+        "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "Attacker exfiltrated the Lambda function's temporary IAM credentials from its environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN) and exported them to the attacker-controlled machine.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Using the stolen credentials from an external IP (50.82.94.112), the attacker called GetCallerIdentity to identify the stolen identity, account ID, and credential type \u2014 equivalent to 'whoami'.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS STS"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1069.003",
+        "technique_name": "Cloud Groups",
+        "description": "Attacker attempted IAM enumeration via ListAttachedRolePolicies and ListRolePolicies to understand privilege scope; both calls were denied.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker performed broad enumeration across S3, EC2, VPC networking, CloudWatch/CloudTrail logging, EBS backup, and SES services across multiple regions to map the target account's architecture and find accessible resources.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration...",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon EC2",
+          "Amazon VPC",
+          "Amazon CloudWatch",
+          "AWS CloudTrail",
+          "Amazon EBS",
+          "Amazon SES"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker attempted to create a new IAM user (CreateUser) to establish a persistent backdoor; the call failed due to insufficient permissions.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Attacker successfully enumerated SES (GetAccount, ListIdentities) and then abused it to register a sending identity and enable outbound email for a phishing campaign (VerifyEmailIdentity, UpdateAccountSendingEnabled).",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1070",
+        "technique_name": "Indicator Removal",
+        "description": "Attacker deleted the SES sending identity (DeleteIdentity) to cover tracks and reduce evidence of the phishing infrastructure within the victim's account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command.",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1552.005",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations",
+          "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN)."
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1087.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+          "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with."
+        ]
+      },
+      {
+        "source": "T1087.004",
+        "target": "T1069.003",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Groups",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
+          "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies"
+        ]
+      },
+      {
+        "source": "T1069.003",
+        "target": "T1526",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Groups",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
+          "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration..."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1136.003",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration...",
+          "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command."
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1496",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+          "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled."
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1070",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Indicator Removal",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
+        ],
+        "evidence_quotes": [
+          "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
+          "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "palo-alto-unit-42-2022-december",
+  "analyzed_at": "2026-04-15T21:03:15.016162+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 76881
+}

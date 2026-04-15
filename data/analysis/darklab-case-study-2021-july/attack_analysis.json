@@ -1,0 +1,749 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files (GCP/FTP via BitBucket config)",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "they used a compromised hard-coded credential found in one of the configuration files in their BitBucket repository, also suspected to be compromised.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "the threat actor created multiple IAM user accounts",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "subtechnique_id": "T1136.003",
+          "inferred": false,
+          "evidence_quote": "the threat actor created multiple IAM user accounts",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts (re-entry via unreset root key)",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "AWS potential IAM enumeration Activities",
+          "validated": true
+        },
+        {
+          "technique_id": "T1595.001",
+          "technique_name": "Active Scanning: Scanning IP Blocks",
+          "subtechnique_id": "T1595.001",
+          "inferred": false,
+          "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+          "validated": false
+        },
+        {
+          "technique_id": "T1596.005",
+          "technique_name": "Search Open Technical Databases: Scan Databases",
+          "subtechnique_id": "T1596.005",
+          "inferred": false,
+          "evidence_quote": "the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1210",
+          "technique_name": "Exploitation of Remote Services",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+          "validated": false
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts (GCP access via FTP creds)",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "From AWS, the threat actor managed to access a FTP server within a parallel Google Cloud Platform (GCP) environment.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "subtechnique_id": "T1578.002",
+          "inferred": false,
+          "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+          "validated": true
+        },
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "subtechnique_id": "T1562.008",
+          "inferred": true,
+          "evidence_quote": "Logs availability has been an issue due to the lack of CloudTrail log retention",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Exploit Public-Facing Application observed during Initial Access: The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+      "evidence_quote": "The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Create Account: Cloud Account observed during Persistence: the threat actor created multiple IAM user accounts",
+      "evidence_quote": "the threat actor created multiple IAM user accounts",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts (re-entry via unreset root key)",
+      "description": "Valid Accounts: Cloud Accounts (re-entry via unreset root key) observed during Persistence: while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+      "evidence_quote": "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Modify Cloud Compute Infrastructure: Create Cloud Instance observed during Defense Evasion: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+      "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1562.008",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+      "description": "Impair Defenses: Disable or Modify Cloud Logs observed during Defense Evasion: Logs availability has been an issue due to the lack of CloudTrail log retention",
+      "evidence_quote": "Logs availability has been an issue due to the lack of CloudTrail log retention",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+      "evidence_quote": "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Cloud Infrastructure Discovery observed during Discovery: After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+      "evidence_quote": "After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Cloud Service Discovery observed during Discovery: AWS potential IAM enumeration Activities",
+      "evidence_quote": "AWS potential IAM enumeration Activities",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1595.001",
+      "technique_name": "Active Scanning: Scanning IP Blocks",
+      "description": "Active Scanning: Scanning IP Blocks observed during Discovery: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+      "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1596.005",
+      "technique_name": "Search Open Technical Databases: Scan Databases",
+      "description": "Search Open Technical Databases: Scan Databases observed during Discovery: the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+      "evidence_quote": "the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 11,
+      "technique_id": "T1210",
+      "technique_name": "Exploitation of Remote Services",
+      "description": "Exploitation of Remote Services observed during Lateral Movement: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+      "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 12,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Collection: accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+      "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Transfer Data to Cloud Account observed during Exfiltration: accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+      "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Data Destruction observed during Impact: threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies",
+      "evidence_quote": "threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies",
+      "evidence_sources": [
+        "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.65,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Exploit Public-Facing Application observed during Initial Access: The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Create Account: Cloud Account observed during Persistence: the threat actor created multiple IAM user accounts",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the threat actor created multiple IAM user accounts",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts (re-entry via unreset root key) observed during Persistence: while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+        "tactic_id": "TA0005",
+        "evidence_quote": "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Modify Cloud Compute Infrastructure: Create Cloud Instance observed during Defense Evasion: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+        "tactic_id": "TA0005",
+        "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1562.008",
+        "technique_name": "Disable or Modify Cloud Logs",
+        "description": "Impair Defenses: Disable or Modify Cloud Logs observed during Defense Evasion: Logs availability has been an issue due to the lack of CloudTrail log retention",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Logs availability has been an issue due to the lack of CloudTrail log retention",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Cloud Infrastructure Discovery observed during Discovery: After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+        "tactic_id": "TA0007",
+        "evidence_quote": "After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Cloud Service Discovery observed during Discovery: AWS potential IAM enumeration Activities",
+        "tactic_id": "TA0007",
+        "evidence_quote": "AWS potential IAM enumeration Activities",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1595.001",
+        "technique_name": "Active Scanning: Scanning IP Blocks",
+        "description": "Active Scanning: Scanning IP Blocks observed during Discovery: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+        "tactic_id": "",
+        "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1596.005",
+        "technique_name": "Search Open Technical Databases: Scan Databases",
+        "description": "Search Open Technical Databases: Scan Databases observed during Discovery: the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+        "tactic_id": "",
+        "evidence_quote": "the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1210",
+        "technique_name": "Exploitation of Remote Services",
+        "description": "Exploitation of Remote Services observed during Lateral Movement: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+        "tactic_id": "",
+        "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Collection: accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+        "tactic_id": "TA0009",
+        "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Transfer Data to Cloud Account observed during Exfiltration: accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+        "tactic_id": "TA0010",
+        "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Data Destruction observed during Impact: threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies",
+        "tactic_id": "TA0040",
+        "evidence_quote": "threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies",
+        "evidence_sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1136.003",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
+          "the threat actor created multiple IAM user accounts"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "the threat actor created multiple IAM user accounts",
+          "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1578.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Create Cloud Instance",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim"
+        ]
+      },
+      {
+        "source": "T1578.002",
+        "target": "T1562.008",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Disable or Modify Cloud Logs",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+          "Logs availability has been an issue due to the lack of CloudTrail log retention"
+        ]
+      },
+      {
+        "source": "T1562.008",
+        "target": "T1552.001",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Disable or Modify Cloud Logs",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "Logs availability has been an issue due to the lack of CloudTrail log retention",
+          "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key."
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1580",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
+          "After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1526",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "After thorough environment and users' enumeration, the attacker was able to obtain the password for another G-Suite user account",
+          "AWS potential IAM enumeration Activities"
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1595.001",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Active Scanning: Scanning IP Blocks",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "AWS potential IAM enumeration Activities",
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses"
+        ]
+      },
+      {
+        "source": "T1595.001",
+        "target": "T1596.005",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Active Scanning: Scanning IP Blocks",
+        "target_technique_name": "Search Open Technical Databases: Scan Databases",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+          "the attacker likely used Shodan to identify other vulnerable Jenkins instances online"
+        ]
+      },
+      {
+        "source": "T1596.005",
+        "target": "T1210",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Search Open Technical Databases: Scan Databases",
+        "target_technique_name": "Exploitation of Remote Services",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses"
+        ]
+      },
+      {
+        "source": "T1210",
+        "target": "T1530",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Exploitation of Remote Services",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
+          "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+          "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser"
+        ]
+      },
+      {
+        "source": "T1537",
+        "target": "T1485",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
+        ],
+        "evidence_quotes": [
+          "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
+          "threat actors attempted to cover their tracks by deleting the company's entire production environment, all hosted on AWS, and the backup copies"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "darklab-case-study-2021-july",
+  "analyzed_at": "2026-04-15T21:39:08.922961+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 12040
+}

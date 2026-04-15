@@ -1,0 +1,730 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
+          "validated": true
+        },
+        {
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The AWS CLI stores credentials in an unencrypted file at ~/.aws/credentials... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.004",
+          "inferred": false,
+          "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "subtechnique_id": "T1098.004",
+          "inferred": false,
+          "evidence_quote": "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
+          "validated": true
+        },
+        {
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "validated": true
+        },
+        {
+          "technique_id": "T1543",
+          "technique_name": "Create or Modify System Process",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal",
+          "subtechnique_id": "T1070.002",
+          "inferred": false,
+          "evidence_quote": "A log cleaning tool",
+          "validated": true
+        },
+        {
+          "technique_id": "T1562",
+          "technique_name": "Impair Defenses",
+          "subtechnique_id": "T1562.001",
+          "inferred": false,
+          "evidence_quote": "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools",
+          "validated": true
+        },
+        {
+          "technique_id": "T1014",
+          "technique_name": "Rootkit",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Diamorphine Rootkit",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1071",
+          "technique_name": "Application Layer Protocol",
+          "subtechnique_id": "T1071.001",
+          "inferred": false,
+          "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server",
+          "validated": false
+        },
+        {
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Tsunami IRC Backdoor",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "subtechnique_id": "T1021.004",
+          "inferred": false,
+          "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
+          "validated": true
+        },
+        {
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The worm deploys the XMRig mining tool to mine monero crypto-currency and generate cash for the attackers",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "TeamTNT uses masscan to scan the internet for misconfigured/exposed Docker API endpoints on target systems.",
+      "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "The worm exploits misconfigured, unauthenticated Docker APIs (and Kubernetes platforms) to gain initial access, spinning up new containers.",
+      "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [
+        "Amazon ECS",
+        "Amazon EKS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1610",
+      "technique_name": "Deploy Container",
+      "description": "After exploiting the Docker API, the worm deploys a new container on the compromised host to install and execute the malware payload.",
+      "evidence_quote": "spin up docker images and install itself",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1562.001",
+      "technique_name": "Impair Defenses: Disable or Modify Tools",
+      "description": "The worm kills cloud security monitoring agents (e.g., Alibaba Cloud Security tools) and mining competitor services to ensure exclusive access.",
+      "evidence_quote": "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "The worm reads AWS credentials and config files stored in plaintext on the compromised host at ~/.aws/credentials and ~/.aws/config.",
+      "evidence_quote": "echo 'found: /root/.aws/credentials' ... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [
+        "AWS CLI",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1552.004",
+      "technique_name": "Unsecured Credentials: Private Keys",
+      "description": "The worm also harvests SSH private keys and public keys from the compromised host to facilitate lateral movement.",
+      "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 7,
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "description": "Stolen AWS credentials and SSH keys are exfiltrated via curl over HTTP to the attacker-controlled server sayhi.bplaced[.]net.",
+      "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 8,
+      "technique_id": "T1098.004",
+      "technique_name": "Account Manipulation: SSH Authorized Keys",
+      "description": "The worm adds entries to /root/.ssh/authorized_keys to establish persistent SSH backdoor access.",
+      "evidence_quote": "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1014",
+      "technique_name": "Rootkit",
+      "description": "The Diamorphine kernel rootkit is deployed to hide malicious processes and files from defenders on the compromised host.",
+      "evidence_quote": "Diamorphine Rootkit",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1219",
+      "technique_name": "Remote Access Software",
+      "description": "The Tsunami IRC backdoor is installed to provide persistent C2 communication channel back to the attacker.",
+      "evidence_quote": "Tsunami IRC Backdoor",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 11,
+      "technique_id": "T1070.002",
+      "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+      "description": "A log cleaning tool is deployed to remove forensic evidence of the intrusion from the compromised host.",
+      "evidence_quote": "A log cleaning tool",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 12,
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "punk.py SSH post-exploitation tool is used to move laterally across other reachable systems using harvested SSH credentials.",
+      "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 13,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "XMRig is deployed to mine Monero cryptocurrency, consuming hijacked compute resources across 119+ compromised systems.",
+      "evidence_quote": "The worm deploys the XMRig mining tool to mine monero crypto-currency and generate cash for the attackers",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2",
+        "Amazon EKS"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS CLI",
+    "AWS IAM",
+    "Amazon EC2",
+    "Amazon ECS",
+    "Amazon EKS"
+  ],
+  "impact_type": "Cryptojacking",
+  "confidence_score": 0.85,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1046",
+        "technique_name": "Network Service Discovery",
+        "description": "TeamTNT uses masscan to scan the internet for misconfigured/exposed Docker API endpoints on target systems.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "The worm exploits misconfigured, unauthenticated Docker APIs (and Kubernetes platforms) to gain initial access, spinning up new containers.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": [
+          "Amazon ECS",
+          "Amazon EKS"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1610",
+        "technique_name": "Deploy Container",
+        "description": "After exploiting the Docker API, the worm deploys a new container on the compromised host to install and execute the malware payload.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "spin up docker images and install itself",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1562.001",
+        "technique_name": "Disable or Modify Tools",
+        "description": "The worm kills cloud security monitoring agents (e.g., Alibaba Cloud Security tools) and mining competitor services to ensure exclusive access.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "The worm reads AWS credentials and config files stored in plaintext on the compromised host at ~/.aws/credentials and ~/.aws/config.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "echo 'found: /root/.aws/credentials' ... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": [
+          "AWS CLI",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1552.004",
+        "technique_name": "Unsecured Credentials: Private Keys",
+        "description": "The worm also harvests SSH private keys and public keys from the compromised host to facilitate lateral movement.",
+        "tactic_id": "",
+        "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "Stolen AWS credentials and SSH keys are exfiltrated via curl over HTTP to the attacker-controlled server sayhi.bplaced[.]net.",
+        "tactic_id": "",
+        "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1098.004",
+        "technique_name": "SSH Authorized Keys",
+        "description": "The worm adds entries to /root/.ssh/authorized_keys to establish persistent SSH backdoor access.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1014",
+        "technique_name": "Rootkit",
+        "description": "The Diamorphine kernel rootkit is deployed to hide malicious processes and files from defenders on the compromised host.",
+        "tactic_id": "",
+        "evidence_quote": "Diamorphine Rootkit",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1219",
+        "technique_name": "Remote Access Software",
+        "description": "The Tsunami IRC backdoor is installed to provide persistent C2 communication channel back to the attacker.",
+        "tactic_id": "",
+        "evidence_quote": "Tsunami IRC Backdoor",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1070.002",
+        "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "description": "A log cleaning tool is deployed to remove forensic evidence of the intrusion from the compromised host.",
+        "tactic_id": "",
+        "evidence_quote": "A log cleaning tool",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "punk.py SSH post-exploitation tool is used to move laterally across other reachable systems using harvested SSH credentials.",
+        "tactic_id": "",
+        "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "XMRig is deployed to mine Monero cryptocurrency, consuming hijacked compute resources across 119+ compromised systems.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "The worm deploys the XMRig mining tool to mine monero crypto-currency and generate cash for the attackers",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2",
+          "Amazon EKS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1046",
+        "target": "T1190",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Network Service Discovery",
+        "target_technique_name": "Exploit Public-Facing Application",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "The worm also includes code to scan for open Docker API's using masscan",
+          "scan for open Docker API's using masscan, then spin up docker images and install itself"
+        ]
+      },
+      {
+        "source": "T1190",
+        "target": "T1610",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Deploy Container",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "spin up docker images and install itself"
+        ]
+      },
+      {
+        "source": "T1610",
+        "target": "T1562.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Deploy Container",
+        "target_technique_name": "Disable or Modify Tools",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "spin up docker images and install itself",
+          "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools"
+        ]
+      },
+      {
+        "source": "T1562.001",
+        "target": "T1552.001",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Disable or Modify Tools",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools",
+          "echo 'found: /root/.aws/credentials' ... on execution it uploads the default AWS .credentials and .config files to the attackers server"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1552.004",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Unsecured Credentials: Private Keys",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "echo 'found: /root/.aws/credentials' ... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+          "userfile=@/root/.ssh/id_ed25519.pub"
+        ]
+      },
+      {
+        "source": "T1552.004",
+        "target": "T1041",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Unsecured Credentials: Private Keys",
+        "target_technique_name": "Exfiltration Over C2 Channel",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "userfile=@/root/.ssh/id_ed25519.pub",
+          "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'"
+        ]
+      },
+      {
+        "source": "T1041",
+        "target": "T1098.004",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Exfiltration Over C2 Channel",
+        "target_technique_name": "SSH Authorized Keys",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
+          "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null"
+        ]
+      },
+      {
+        "source": "T1098.004",
+        "target": "T1014",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "SSH Authorized Keys",
+        "target_technique_name": "Rootkit",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
+          "Diamorphine Rootkit"
+        ]
+      },
+      {
+        "source": "T1014",
+        "target": "T1219",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Rootkit",
+        "target_technique_name": "Remote Access Software",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "Diamorphine Rootkit",
+          "Tsunami IRC Backdoor"
+        ]
+      },
+      {
+        "source": "T1219",
+        "target": "T1070.002",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Remote Access Software",
+        "target_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "Tsunami IRC Backdoor",
+          "A log cleaning tool"
+        ]
+      },
+      {
+        "source": "T1070.002",
+        "target": "T1021.004",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "A log cleaning tool",
+          "punk.py \u2013 A SSH post-exploitation tool"
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1496",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Remote Services: SSH",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
+        ],
+        "evidence_quotes": [
+          "punk.py \u2013 A SSH post-exploitation tool",
+          "The worm deploys the XMRig mining tool to mine monero crypto-currency and generate cash for the attackers"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "teamtnt-worm-2020-april",
+  "analyzed_at": "2026-04-15T21:10:36.809298+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 6654
+}

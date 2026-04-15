@@ -1,0 +1,1461 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+          "validated": true
+        },
+        {
+          "technique_id": "T1566",
+          "technique_name": "Phishing / Social Engineering",
+          "inferred": false,
+          "evidence_quote": "the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1621",
+          "technique_name": "Multi-Factor Authentication Request Generation (MFA Fatigue)",
+          "inferred": false,
+          "evidence_quote": "the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+          "validated": true
+        },
+        {
+          "technique_id": "T1556.006",
+          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+          "inferred": false,
+          "evidence_quote": "Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores",
+          "inferred": false,
+          "evidence_quote": "the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1003",
+          "technique_name": "OS Credential Dumping",
+          "inferred": false,
+          "evidence_quote": "gosecretsdump_win_v0.3.1.exe (credential access)",
+          "validated": false
+        },
+        {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "inferred": false,
+          "evidence_quote": "checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1083",
+          "technique_name": "File and Directory Discovery",
+          "inferred": false,
+          "evidence_quote": "several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+          "validated": false
+        },
+        {
+          "technique_id": "T1087.002",
+          "technique_name": "Account Discovery: Domain Account",
+          "inferred": false,
+          "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+          "validated": false
+        },
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Configuring Azure API access... Enumerating Azure AD Permission",
+          "validated": true
+        },
+        {
+          "technique_id": "T1069.003",
+          "technique_name": "Permission Groups Discovery: Cloud Groups",
+          "inferred": false,
+          "evidence_quote": "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.007",
+          "technique_name": "Remote Services: Cloud Services",
+          "inferred": false,
+          "evidence_quote": "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+          "validated": true
+        },
+        {
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol",
+          "inferred": false,
+          "evidence_quote": "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+          "validated": false
+        },
+        {
+          "technique_id": "T1550.004",
+          "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+          "inferred": true,
+          "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+          "validated": true
+        },
+        {
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
+          "inferred": false,
+          "evidence_quote": "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1556.007",
+          "technique_name": "Modify Authentication Process: Hybrid Identity",
+          "inferred": false,
+          "evidence_quote": "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+          "validated": true
+        },
+        {
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services",
+          "inferred": false,
+          "evidence_quote": "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+          "validated": true
+        },
+        {
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software",
+          "inferred": false,
+          "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "IT infrastructure architect authenticating and passing MFA from the same malicious IP address (99.25.84[.]9). The IT infrastructure architect also served as the organization's virtualization engineer and had a highly privileged account.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1068",
+          "technique_name": "Exploitation for Privilege Escalation",
+          "inferred": false,
+          "evidence_quote": "sysadminanywhere.exe (privilege escalation)",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools",
+          "inferred": false,
+          "evidence_quote": "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+          "validated": true
+        },
+        {
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal",
+          "inferred": false,
+          "evidence_quote": "Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+          "validated": true
+        },
+        {
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
+          "inferred": true,
+          "evidence_quote": "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+          "validated": true
+        },
+        {
+          "technique_id": "T1090.003",
+          "technique_name": "Proxy: Multi-hop Proxy",
+          "inferred": false,
+          "evidence_quote": "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1572",
+          "technique_name": "Protocol Tunneling",
+          "inferred": false,
+          "evidence_quote": "use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1102",
+          "technique_name": "Web Service",
+          "inferred": false,
+          "evidence_quote": "a URL request to retrieve Ngrok keys from paste.ee",
+          "validated": false
+        },
+        {
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software",
+          "inferred": false,
+          "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol",
+          "inferred": false,
+          "evidence_quote": "Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery",
+          "inferred": false,
+          "evidence_quote": "suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+          "validated": true
+        },
+        {
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact",
+          "inferred": false,
+          "evidence_quote": "the attackers successfully accomplished their objectives of data exfiltration and widespread encryption",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Valid Accounts: Cloud Accounts observed during Initial Access: the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+      "evidence_quote": "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1566",
+      "technique_name": "Phishing / Social Engineering",
+      "description": "Phishing / Social Engineering observed during Initial Access: the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+      "evidence_quote": "the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1556.007",
+      "technique_name": "Modify Authentication Process: Hybrid Identity",
+      "description": "Modify Authentication Process: Hybrid Identity observed during Persistence: the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+      "evidence_quote": "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1133",
+      "technique_name": "External Remote Services",
+      "description": "External Remote Services observed during Persistence: To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+      "evidence_quote": "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1219",
+      "technique_name": "Remote Access Software",
+      "description": "Remote Access Software observed during Persistence: PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+      "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 6,
+      "technique_id": "T1068",
+      "technique_name": "Exploitation for Privilege Escalation",
+      "description": "Exploitation for Privilege Escalation observed during Privilege Escalation: sysadminanywhere.exe (privilege escalation)",
+      "evidence_quote": "sysadminanywhere.exe (privilege escalation)",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1562.001",
+      "technique_name": "Impair Defenses: Disable or Modify Tools",
+      "description": "Impair Defenses: Disable or Modify Tools observed during Defense Evasion: WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+      "evidence_quote": "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1070",
+      "technique_name": "Indicator Removal",
+      "description": "Indicator Removal observed during Defense Evasion: Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+      "evidence_quote": "Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1036",
+      "technique_name": "Masquerading",
+      "description": "Masquerading observed during Defense Evasion: the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+      "evidence_quote": "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1090.003",
+      "technique_name": "Proxy: Multi-hop Proxy",
+      "description": "Proxy: Multi-hop Proxy observed during Defense Evasion: the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+      "evidence_quote": "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 11,
+      "technique_id": "T1621",
+      "technique_name": "Multi-Factor Authentication Request Generation (MFA Fatigue)",
+      "description": "Multi-Factor Authentication Request Generation (MFA Fatigue) observed during Credential Access: the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+      "evidence_quote": "the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1556.006",
+      "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+      "description": "Modify Authentication Process: Multi-Factor Authentication observed during Credential Access: Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+      "evidence_quote": "Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "description": "Credentials from Password Stores observed during Credential Access: the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+      "evidence_quote": "the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1003",
+      "technique_name": "OS Credential Dumping",
+      "description": "OS Credential Dumping observed during Credential Access: gosecretsdump_win_v0.3.1.exe (credential access)",
+      "evidence_quote": "gosecretsdump_win_v0.3.1.exe (credential access)",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 15,
+      "technique_id": "T1528",
+      "technique_name": "Steal Application Access Token",
+      "description": "Steal Application Access Token observed during Credential Access: checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+      "evidence_quote": "checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "description": "File and Directory Discovery observed during Discovery: several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+      "evidence_quote": "several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 17,
+      "technique_id": "T1087.002",
+      "technique_name": "Account Discovery: Domain Account",
+      "description": "Account Discovery: Domain Account observed during Discovery: Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+      "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 18,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Account Discovery: Cloud Account observed during Discovery: Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+      "evidence_quote": "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 19,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Cloud Service Discovery observed during Discovery: Configuring Azure API access... Enumerating Azure AD Permission",
+      "evidence_quote": "Configuring Azure API access... Enumerating Azure AD Permission",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 20,
+      "technique_id": "T1069.003",
+      "technique_name": "Permission Groups Discovery: Cloud Groups",
+      "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+      "evidence_quote": "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 21,
+      "technique_id": "T1021.007",
+      "technique_name": "Remote Services: Cloud Services",
+      "description": "Remote Services: Cloud Services observed during Lateral Movement: Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+      "evidence_quote": "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 22,
+      "technique_id": "T1021.001",
+      "technique_name": "Remote Services: Remote Desktop Protocol",
+      "description": "Remote Services: Remote Desktop Protocol observed during Lateral Movement: We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+      "evidence_quote": "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 23,
+      "technique_id": "T1550.004",
+      "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+      "description": "Use Alternate Authentication Material: Web Session Cookie observed during Lateral Movement: Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+      "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 24,
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "Remote Services: SSH observed during Lateral Movement: The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+      "evidence_quote": "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 25,
+      "technique_id": "T1572",
+      "technique_name": "Protocol Tunneling",
+      "description": "Protocol Tunneling observed during Command and Control: use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+      "evidence_quote": "use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 26,
+      "technique_id": "T1102",
+      "technique_name": "Web Service",
+      "description": "Web Service observed during Command and Control: a URL request to retrieve Ngrok keys from paste.ee",
+      "evidence_quote": "a URL request to retrieve Ngrok keys from paste.ee",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 27,
+      "technique_id": "T1048",
+      "technique_name": "Exfiltration Over Alternative Protocol",
+      "description": "Exfiltration Over Alternative Protocol observed during Exfiltration: Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+      "evidence_quote": "Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 28,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Exfiltration: The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+      "evidence_quote": "The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 29,
+      "technique_id": "T1490",
+      "technique_name": "Inhibit System Recovery",
+      "description": "Inhibit System Recovery observed during Impact: suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+      "evidence_quote": "suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 30,
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "description": "Data Encrypted for Impact observed during Impact: the attackers successfully accomplished their objectives of data exfiltration and widespread encryption",
+      "evidence_quote": "the attackers successfully accomplished their objectives of data exfiltration and widespread encryption",
+      "evidence_sources": [
+        "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.65,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts observed during Initial Access: the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1566",
+        "technique_name": "Phishing",
+        "description": "Phishing / Social Engineering observed during Initial Access: the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+        "tactic_id": "TA0001",
+        "evidence_quote": "the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1556.007",
+        "technique_name": "Hybrid Identity",
+        "description": "Modify Authentication Process: Hybrid Identity observed during Persistence: the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+        "tactic_id": "TA0006",
+        "evidence_quote": "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1133",
+        "technique_name": "External Remote Services",
+        "description": "External Remote Services observed during Persistence: To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+        "tactic_id": "TA0003",
+        "evidence_quote": "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1219",
+        "technique_name": "Remote Access Software",
+        "description": "Remote Access Software observed during Persistence: PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+        "tactic_id": "",
+        "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1068",
+        "technique_name": "Exploitation for Privilege Escalation",
+        "description": "Exploitation for Privilege Escalation observed during Privilege Escalation: sysadminanywhere.exe (privilege escalation)",
+        "tactic_id": "TA0004",
+        "evidence_quote": "sysadminanywhere.exe (privilege escalation)",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1562.001",
+        "technique_name": "Disable or Modify Tools",
+        "description": "Impair Defenses: Disable or Modify Tools observed during Defense Evasion: WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+        "tactic_id": "TA0005",
+        "evidence_quote": "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1070",
+        "technique_name": "Indicator Removal",
+        "description": "Indicator Removal observed during Defense Evasion: Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1036",
+        "technique_name": "Masquerading",
+        "description": "Masquerading observed during Defense Evasion: the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1090.003",
+        "technique_name": "Proxy: Multi-hop Proxy",
+        "description": "Proxy: Multi-hop Proxy observed during Defense Evasion: the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+        "tactic_id": "",
+        "evidence_quote": "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1621",
+        "technique_name": "Multi-Factor Authentication Request Generation",
+        "description": "Multi-Factor Authentication Request Generation (MFA Fatigue) observed during Credential Access: the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+        "tactic_id": "TA0006",
+        "evidence_quote": "the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1556.006",
+        "technique_name": "Multi-Factor Authentication",
+        "description": "Modify Authentication Process: Multi-Factor Authentication observed during Credential Access: Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1555",
+        "technique_name": "Credentials from Password Stores",
+        "description": "Credentials from Password Stores observed during Credential Access: the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1003",
+        "technique_name": "OS Credential Dumping",
+        "description": "OS Credential Dumping observed during Credential Access: gosecretsdump_win_v0.3.1.exe (credential access)",
+        "tactic_id": "",
+        "evidence_quote": "gosecretsdump_win_v0.3.1.exe (credential access)",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1528",
+        "technique_name": "Steal Application Access Token",
+        "description": "Steal Application Access Token observed during Credential Access: checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+        "tactic_id": "TA0006",
+        "evidence_quote": "checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 16,
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "description": "File and Directory Discovery observed during Discovery: several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+        "tactic_id": "",
+        "evidence_quote": "several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 17,
+        "technique_id": "T1087.002",
+        "technique_name": "Account Discovery: Domain Account",
+        "description": "Account Discovery: Domain Account observed during Discovery: Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+        "tactic_id": "",
+        "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 18,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Account Discovery: Cloud Account observed during Discovery: Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 19,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Cloud Service Discovery observed during Discovery: Configuring Azure API access... Enumerating Azure AD Permission",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Configuring Azure API access... Enumerating Azure AD Permission",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 20,
+        "technique_id": "T1069.003",
+        "technique_name": "Cloud Groups",
+        "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 21,
+        "technique_id": "T1021.007",
+        "technique_name": "Cloud Services",
+        "description": "Remote Services: Cloud Services observed during Lateral Movement: Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+        "tactic_id": "TA0008",
+        "evidence_quote": "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 22,
+        "technique_id": "T1021.001",
+        "technique_name": "Remote Services: Remote Desktop Protocol",
+        "description": "Remote Services: Remote Desktop Protocol observed during Lateral Movement: We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+        "tactic_id": "",
+        "evidence_quote": "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 23,
+        "technique_id": "T1550.004",
+        "technique_name": "Web Session Cookie",
+        "description": "Use Alternate Authentication Material: Web Session Cookie observed during Lateral Movement: Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 24,
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "Remote Services: SSH observed during Lateral Movement: The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+        "tactic_id": "",
+        "evidence_quote": "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 25,
+        "technique_id": "T1572",
+        "technique_name": "Protocol Tunneling",
+        "description": "Protocol Tunneling observed during Command and Control: use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+        "tactic_id": "",
+        "evidence_quote": "use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 26,
+        "technique_id": "T1102",
+        "technique_name": "Web Service",
+        "description": "Web Service observed during Command and Control: a URL request to retrieve Ngrok keys from paste.ee",
+        "tactic_id": "",
+        "evidence_quote": "a URL request to retrieve Ngrok keys from paste.ee",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 27,
+        "technique_id": "T1048",
+        "technique_name": "Exfiltration Over Alternative Protocol",
+        "description": "Exfiltration Over Alternative Protocol observed during Exfiltration: Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 28,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Exfiltration: The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 29,
+        "technique_id": "T1490",
+        "technique_name": "Inhibit System Recovery",
+        "description": "Inhibit System Recovery observed during Impact: suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+        "tactic_id": "TA0040",
+        "evidence_quote": "suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 30,
+        "technique_id": "T1486",
+        "technique_name": "Data Encrypted for Impact",
+        "description": "Data Encrypted for Impact observed during Impact: the attackers successfully accomplished their objectives of data exfiltration and widespread encryption",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the attackers successfully accomplished their objectives of data exfiltration and widespread encryption",
+        "evidence_sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1566",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Phishing",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
+          "the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers"
+        ]
+      },
+      {
+        "source": "T1566",
+        "target": "T1556.007",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Phishing",
+        "target_technique_name": "Hybrid Identity",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the intrusion was attributed to a social-engineering attack, in which the user's credentials were reset by the attackers",
+          "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user"
+        ]
+      },
+      {
+        "source": "T1556.007",
+        "target": "T1133",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Hybrid Identity",
+        "target_technique_name": "External Remote Services",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
+          "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee"
+        ]
+      },
+      {
+        "source": "T1133",
+        "target": "T1219",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "External Remote Services",
+        "target_technique_name": "Remote Access Software",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
+          "PDQConnectAgent, ScreenConnect, fleet.io, rsocx"
+        ]
+      },
+      {
+        "source": "T1219",
+        "target": "T1068",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Remote Access Software",
+        "target_technique_name": "Exploitation for Privilege Escalation",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
+          "sysadminanywhere.exe (privilege escalation)"
+        ]
+      },
+      {
+        "source": "T1068",
+        "target": "T1562.001",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Exploitation for Privilege Escalation",
+        "target_technique_name": "Disable or Modify Tools",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "sysadminanywhere.exe (privilege escalation)",
+          "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)"
+        ]
+      },
+      {
+        "source": "T1562.001",
+        "target": "T1070",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Disable or Modify Tools",
+        "target_technique_name": "Indicator Removal",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
+          "Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)"
+        ]
+      },
+      {
+        "source": "T1070",
+        "target": "T1036",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Indicator Removal",
+        "target_technique_name": "Masquerading",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Forensia.exe (defense evasion)... BleachBit.exe (defense evasion)",
+          "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions"
+        ]
+      },
+      {
+        "source": "T1036",
+        "target": "T1090.003",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Masquerading",
+        "target_technique_name": "Proxy: Multi-hop Proxy",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
+          "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules"
+        ]
+      },
+      {
+        "source": "T1090.003",
+        "target": "T1621",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Proxy: Multi-hop Proxy",
+        "target_technique_name": "Multi-Factor Authentication Request Generation",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
+          "the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication"
+        ]
+      },
+      {
+        "source": "T1621",
+        "target": "T1556.006",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Multi-Factor Authentication Request Generation",
+        "target_technique_name": "Multi-Factor Authentication",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the group conducted an [MFA fatigue attack], attempting four MFA challenges within two minutes. The last challenge resulted in successful authentication",
+          "Once Scattered Spider gained access to the account, the group enrolled a new MFA device."
+        ]
+      },
+      {
+        "source": "T1556.006",
+        "target": "T1555",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Multi-Factor Authentication",
+        "target_technique_name": "Credentials from Password Stores",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
+          "the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault."
+        ]
+      },
+      {
+        "source": "T1555",
+        "target": "T1003",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Credentials from Password Stores",
+        "target_technique_name": "OS Credential Dumping",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "the threat actor had attempted to access the company's LastPass page... We are moderately confident that Scattered Spider managed to gain access to the customer's LastPass Vault.",
+          "gosecretsdump_win_v0.3.1.exe (credential access)"
+        ]
+      },
+      {
+        "source": "T1003",
+        "target": "T1528",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "OS Credential Dumping",
+        "target_technique_name": "Steal Application Access Token",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "gosecretsdump_win_v0.3.1.exe (credential access)",
+          "checking out CyberArk credentials for the VMWareVCenterSharedCreds folder"
+        ]
+      },
+      {
+        "source": "T1528",
+        "target": "T1083",
+        "source_step": 15,
+        "target_step": 16,
+        "source_technique_name": "Steal Application Access Token",
+        "target_technique_name": "File and Directory Discovery",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "checking out CyberArk credentials for the VMWareVCenterSharedCreds folder",
+          "several file-access events indicated file and directory discovery in the organization's SharePoint platform"
+        ]
+      },
+      {
+        "source": "T1083",
+        "target": "T1087.002",
+        "source_step": 16,
+        "target_step": 17,
+        "source_technique_name": "File and Directory Discovery",
+        "target_technique_name": "Account Discovery: Domain Account",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "several file-access events indicated file and directory discovery in the organization's SharePoint platform",
+          "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it"
+        ]
+      },
+      {
+        "source": "T1087.002",
+        "target": "T1087.004",
+        "source_step": 17,
+        "target_step": 18,
+        "source_technique_name": "Account Discovery: Domain Account",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
+          "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries"
+        ]
+      },
+      {
+        "source": "T1087.004",
+        "target": "T1526",
+        "source_step": 18,
+        "target_step": 19,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+          "Configuring Azure API access... Enumerating Azure AD Permission"
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1069.003",
+        "source_step": 19,
+        "target_step": 20,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Groups",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Configuring Azure API access... Enumerating Azure AD Permission",
+          "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries"
+        ]
+      },
+      {
+        "source": "T1069.003",
+        "target": "T1021.007",
+        "source_step": 20,
+        "target_step": 21,
+        "source_technique_name": "Cloud Groups",
+        "target_technique_name": "Cloud Services",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
+          "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials"
+        ]
+      },
+      {
+        "source": "T1021.007",
+        "target": "T1021.001",
+        "source_step": 21,
+        "target_step": 22,
+        "source_technique_name": "Cloud Services",
+        "target_technique_name": "Remote Services: Remote Desktop Protocol",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
+          "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts"
+        ]
+      },
+      {
+        "source": "T1021.001",
+        "target": "T1550.004",
+        "source_step": 22,
+        "target_step": 23,
+        "source_technique_name": "Remote Services: Remote Desktop Protocol",
+        "target_technique_name": "Web Session Cookie",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
+          "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com"
+        ]
+      },
+      {
+        "source": "T1550.004",
+        "target": "T1021.004",
+        "source_step": 23,
+        "target_step": 24,
+        "source_technique_name": "Web Session Cookie",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
+          "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100."
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1572",
+        "source_step": 24,
+        "target_step": 25,
+        "source_technique_name": "Remote Services: SSH",
+        "target_technique_name": "Protocol Tunneling",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
+          "use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted."
+        ]
+      },
+      {
+        "source": "T1572",
+        "target": "T1102",
+        "source_step": 25,
+        "target_step": 26,
+        "source_technique_name": "Protocol Tunneling",
+        "target_technique_name": "Web Service",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee. Sandboxing the webpage, while it was still up, showed Ngrok authentication tokens being hosted.",
+          "a URL request to retrieve Ngrok keys from paste.ee"
+        ]
+      },
+      {
+        "source": "T1102",
+        "target": "T1048",
+        "source_step": 26,
+        "target_step": 27,
+        "source_technique_name": "Web Service",
+        "target_technique_name": "Exfiltration Over Alternative Protocol",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "a URL request to retrieve Ngrok keys from paste.ee",
+          "Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address."
+        ]
+      },
+      {
+        "source": "T1048",
+        "target": "T1530",
+        "source_step": 27,
+        "target_step": 28,
+        "source_technique_name": "Exfiltration Over Alternative Protocol",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "Exfiltration was observed via the IP address 144.76.136[.]153... The exfiltration domain transfer.sh is associated with this IP address.",
+          "The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1490",
+        "source_step": 28,
+        "target_step": 29,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Inhibit System Recovery",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "The compromised user within the VDI accessed a file located in the organization's AWS S3 bucket, specifically at: customer.s3.us-east-1.amazonaws.com/lastpass_export%20cleaned.xlsx",
+          "suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots"
+        ]
+      },
+      {
+        "source": "T1490",
+        "target": "T1486",
+        "source_step": 29,
+        "target_step": 30,
+        "source_technique_name": "Inhibit System Recovery",
+        "target_technique_name": "Data Encrypted for Impact",
+        "sources": [
+          "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
+        ],
+        "evidence_quotes": [
+          "suspicious commands being pushed to vCenter servers that included reverting hosts to their latest snapshot and deleting all snapshots",
+          "the attackers successfully accomplished their objectives of data exfiltration and widespread encryption"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "reliaquest-2023-nov",
+  "analyzed_at": "2026-04-15T21:28:24.285700+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 44946
+}

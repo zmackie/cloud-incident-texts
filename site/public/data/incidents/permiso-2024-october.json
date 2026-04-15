@@ -1,0 +1,436 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": false,
+          "evidence_quote": "the initial access almost always being an exposed access key on GitHub",
+          "validated": false
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Attacks against GenAI Infrastructure like AWS Bedrock have increased substantially over the last six (6) months. Particularly with exposed access keys.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "Attackers will just try to run an InvokeModel and see if it is successful... GetFoundationModelAvailability: This is an API... Attackers are using this API programmatically",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_id": "T1583.006",
+          "technique_name": "Acquire Infrastructure: Web Services",
+          "inferred": true,
+          "evidence_quote": "Almost all of the 75k prompts we were able to capture with invocation logging sourced from a single IP Address 194.48.248.108 (ASN: AlexHost) geo located in Moldova.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "Attackers will create a use case form if one doesn't already exist, and if one does exist they will instead reuse the existing form when requesting access to a model.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "Attackers are hijacking victim GenAI infrastructure to power their own LLM applications... pass all the cost and compute to victim organizations that they've hijacked.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "inferred": false,
+          "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
+          "inferred": true,
+          "evidence_quote": "AKIA* with Mozilla UA: A long lived access key with a user-agent that includes Mozilla rarely occurs legitimately.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "GetModelInvocationLoggingConfiguration",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.004",
+      "technique_name": "Unsecured Credentials: Private Keys",
+      "description": "Attacker discovers long-lived AWS IAM access keys (AKIA*) exposed publicly on GitHub, providing initial foothold into victim AWS account.",
+      "evidence_quote": "the initial access almost always being an exposed access key on GitHub... 2024-06-25: Permiso team placed an exposed access key and secret in a file on GitHub to simulate exactly what occurred at previous clients",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker uses the stolen long-lived AWS access key credentials to authenticate to the victim's AWS environment within minutes of exposure.",
+      "evidence_quote": "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services.",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker enumerates available Bedrock foundational models and checks invocation logging configuration to understand the environment and avoid detection.",
+      "evidence_quote": "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "AWS Bedrock"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker checks model availability using GetFoundationModelAvailability API and attempts InvokeModel calls to probe which Bedrock foundational models are accessible.",
+      "evidence_quote": "GetFoundationModelAvailability: This is an API that is not included in the aws-cli (SDK) or in the API reference guide... Attackers are using this API programmatically (not via the web console) with manually formatted requests.",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "AWS Bedrock"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1562.008",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+      "description": "Attacker (via oai-reverse-proxy tooling) checks whether Bedrock invocation logging is enabled; if so, the tool is designed to abort model invocation to avoid prompt-level forensic logging.",
+      "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "AWS Bedrock",
+        "CloudTrail"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation",
+      "description": "Attacker creates or reuses an existing model access use case form (PutUseCaseForModelAccess / GetUseCaseForModelAccess) and submits entitlement requests (CreateFoundationModelAgreement, PutFoundationModelEntitlement) to unlock additional Bedrock foundational models under the victim account.",
+      "evidence_quote": "Attackers will create a use case form if one doesn't already exist... PutUseCaseForModelAccess... CreateFoundationModelAgreement... PutFoundationModelEntitlement",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "AWS Bedrock",
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Attacker invokes Bedrock foundational models (primarily Anthropic Claude Sonnet) at massive scale \u2014 over 75,000 successful invocations in two days \u2014 to power a commercial AI sexual roleplaying chatbot service, shifting all compute costs to the victim organization.",
+      "evidence_quote": "Over the course of two (2) days we saw over 75,000 successful model invocations, almost all of a sexual nature... pass all the cost and compute to victim organizations that they've hijacked.",
+      "evidence_sources": [
+        "https://permiso.io/blog/exploiting-hosted-models"
+      ],
+      "aws_services_involved": [
+        "AWS Bedrock"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "AWS Bedrock",
+    "CloudTrail",
+    "Amazon SES",
+    "Amazon EC2"
+  ],
+  "impact_type": "LLMJacking (AI Resource Hijacking)",
+  "confidence_score": 0.95,
+  "data_exfiltrated": false,
+  "initial_access_vector": "Long-lived AWS IAM access keys (AKIA*) exposed publicly on GitHub, discovered and exploited by attackers within minutes of publication.",
+  "persistence_mechanism": "Attacker reused or created Bedrock model access use case forms (PutUseCaseForModelAccess, CreateFoundationModelAgreement, PutFoundationModelEntitlement) to maintain and expand access to Bedrock foundational models under the victim account.",
+  "privilege_escalation": "No explicit privilege escalation observed; attacker operated under the permissions already granted to the stolen IAM access key (administrator-level in observed cases).",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.004",
+        "technique_name": "Unsecured Credentials: Private Keys",
+        "description": "Attacker discovers long-lived AWS IAM access keys (AKIA*) exposed publicly on GitHub, providing initial foothold into victim AWS account.",
+        "tactic_id": "",
+        "evidence_quote": "the initial access almost always being an exposed access key on GitHub... 2024-06-25: Permiso team placed an exposed access key and secret in a file on GitHub to simulate exactly what occurred at previous clients",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker uses the stolen long-lived AWS access key credentials to authenticate to the victim's AWS environment within minutes of exposure.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services.",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker enumerates available Bedrock foundational models and checks invocation logging configuration to understand the environment and avoid detection.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "AWS Bedrock"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker checks model availability using GetFoundationModelAvailability API and attempts InvokeModel calls to probe which Bedrock foundational models are accessible.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "GetFoundationModelAvailability: This is an API that is not included in the aws-cli (SDK) or in the API reference guide... Attackers are using this API programmatically (not via the web console) with manually formatted requests.",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "AWS Bedrock"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1562.008",
+        "technique_name": "Disable or Modify Cloud Logs",
+        "description": "Attacker (via oai-reverse-proxy tooling) checks whether Bedrock invocation logging is enabled; if so, the tool is designed to abort model invocation to avoid prompt-level forensic logging.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "AWS Bedrock",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1098",
+        "technique_name": "Account Manipulation",
+        "description": "Attacker creates or reuses an existing model access use case form (PutUseCaseForModelAccess / GetUseCaseForModelAccess) and submits entitlement requests (CreateFoundationModelAgreement, PutFoundationModelEntitlement) to unlock additional Bedrock foundational models under the victim account.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Attackers will create a use case form if one doesn't already exist... PutUseCaseForModelAccess... CreateFoundationModelAgreement... PutFoundationModelEntitlement",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "AWS Bedrock",
+          "IAM"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Attacker invokes Bedrock foundational models (primarily Anthropic Claude Sonnet) at massive scale \u2014 over 75,000 successful invocations in two days \u2014 to power a commercial AI sexual roleplaying chatbot service, shifting all compute costs to the victim organization.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Over the course of two (2) days we saw over 75,000 successful model invocations, almost all of a sexual nature... pass all the cost and compute to victim organizations that they've hijacked.",
+        "evidence_sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "aws_services_involved": [
+          "AWS Bedrock"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.004",
+        "target": "T1078.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Unsecured Credentials: Private Keys",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "the initial access almost always being an exposed access key on GitHub... 2024-06-25: Permiso team placed an exposed access key and secret in a file on GitHub to simulate exactly what occurred at previous clients",
+          "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1526",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services.",
+          "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)"
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1580",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)",
+          "GetFoundationModelAvailability: This is an API that is not included in the aws-cli (SDK) or in the API reference guide... Attackers are using this API programmatically (not via the web console) with manually formatted requests."
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1562.008",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Disable or Modify Cloud Logs",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "GetFoundationModelAvailability: This is an API that is not included in the aws-cli (SDK) or in the API reference guide... Attackers are using this API programmatically (not via the web console) with manually formatted requests.",
+          "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models."
+        ]
+      },
+      {
+        "source": "T1562.008",
+        "target": "T1098",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Disable or Modify Cloud Logs",
+        "target_technique_name": "Account Manipulation",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
+          "Attackers will create a use case form if one doesn't already exist... PutUseCaseForModelAccess... CreateFoundationModelAgreement... PutFoundationModelEntitlement"
+        ]
+      },
+      {
+        "source": "T1098",
+        "target": "T1496",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Account Manipulation",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://permiso.io/blog/exploiting-hosted-models"
+        ],
+        "evidence_quotes": [
+          "Attackers will create a use case form if one doesn't already exist... PutUseCaseForModelAccess... CreateFoundationModelAgreement... PutFoundationModelEntitlement",
+          "Over the course of two (2) days we saw over 75,000 successful model invocations, almost all of a sexual nature... pass all the cost and compute to victim organizations that they've hijacked."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "permiso-2024-october",
+  "analyzed_at": "2026-04-15T21:04:23.821884+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 46822
+}

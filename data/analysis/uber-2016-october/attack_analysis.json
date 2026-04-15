@@ -1,0 +1,472 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1589.001",
+          "technique_name": "Gather Victim Identity Information: Credentials",
+          "inferred": false,
+          "evidence_quote": "They had a script developed through a freelancer on Upwork, which would ingest emails and passwords and attempt to log into GitHub... 'over ten million' entries.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "A credential was stored in a GitHub repository... The 2016 incident involved a credential that had existed without rotation since 2013.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": false,
+          "evidence_quote": "The testimony sounds like they would use simple GitHub searches to surface these credentials... They succeeded in finding several AWS credentials.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "The adversaries may have had about 13 good log-ins for Uber. They accessed these GitHub accounts intending to find AWS credentials.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "From here, the adversary discovered hourly encrypted backups. They were unable to view these backups. They did not have the key required to decrypt them... there was an 'interesting' object.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "One of the adversaries proceeded to download on 2014\u201305\u201312. This was a database containing 50 million records.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "Production regularly used client-side encryption to encrypt backups... an engineer created backups while decommissioning a service, writing them without encryption into the same bucket.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1593.003",
+          "technique_name": "Search Open Websites/Domains: Code Repositories",
+          "inferred": false,
+          "evidence_quote": "The testimony sounds like they would use simple GitHub searches to surface these credentials.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1589.001",
+          "technique_name": "Gather Victim Identity Information: Credentials",
+          "inferred": false,
+          "evidence_quote": "They describe this database as having 'over ten million' entries... 'Over a hundred thousand' successful log-ins were output by the adversary's script.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": false,
+          "evidence_quote": "The response team suggested a bounty of $10K to the adversary, which was rejected by the adversary with a counter of something in the six figures... Uber instructed HackerOne to release the payment shortly after, on 2016\u201312\u201308.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1589.001",
+      "technique_name": "Gather Victim Identity Information: Credentials",
+      "description": "Attackers acquired a large database of over 10 million username/password pairs sourced from other breaches, trades, and public leaks, used to fuel a credential stuffing campaign.",
+      "evidence_quote": "They describe this database as having 'over ten million' entries.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1110.004",
+      "technique_name": "Brute Force: Credential Stuffing",
+      "description": "Attackers ran a custom Upwork-developed script that ingested the credential database and attempted to authenticate against GitHub, yielding over 100,000 successful logins, approximately 13 of which were associated with Uber GitHub organizations.",
+      "evidence_quote": "They had a script developed through a freelancer on Upwork, which would ingest emails and passwords and attempt to log into GitHub... 'Over a hundred thousand' successful log-ins were output by the adversary's script.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using valid, compromised GitHub credentials for approximately 13 Uber-affiliated accounts, attackers authenticated to GitHub and gained access to Uber's private repositories.",
+      "evidence_quote": "The adversaries may have had about 13 good log-ins for Uber. They accessed these GitHub accounts intending to find AWS credentials.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attackers searched private GitHub repositories for hardcoded AWS IAM credentials. They located a long-lived credential (codenamed 'genghis') dating to 2013 that had never been rotated, embedded in source code.",
+      "evidence_quote": "The testimony sounds like they would use simple GitHub searches to surface these credentials... The 2016 incident involved a credential that had existed without rotation since 2013.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Using the stolen AWS IAM credentials loaded into 'S3 Browser', attackers enumerated available S3 buckets, discovering the 'cold-storage' bucket containing hourly database backups.",
+      "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Attackers enumerated objects within the cold-storage S3 bucket. Most backups were encrypted and inaccessible, but a third-party collaborator identified a specific unencrypted plaintext backup object created manually outside the normal automated pipeline.",
+      "evidence_quote": "After a day or so, the third person indicated to the adversaries that there was an 'interesting' object... These database objects were created outside the regular automated backup... an engineer created backups while decommissioning a service, writing them without encryption.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The attacker downloaded the unencrypted plaintext database backup from the S3 cold-storage bucket. This object contained approximately 50 million user records and driver information including ~600,000 driver's license numbers.",
+      "evidence_quote": "One of the adversaries proceeded to download on 2014\u201305\u201312. This was a database containing 50 million records.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+        "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "After exfiltrating data, the attackers contacted Uber via ProtonMail claiming to have found a 'major vulnerability' and dump of data, demanding payment in the high six figures in an extortion scheme. Uber ultimately paid $100,000 through HackerOne.",
+      "evidence_quote": "'I have found a major vulnerability in Uber. I was able to dump Uber database and many other things.'... The adversary rejected Uber's $10K counter with a demand in the six figures... Uber instructed HackerOne to release the payment shortly after, on 2016\u201312\u201308.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+        "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "AWS IAM",
+    "AWS CloudTrail"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.95,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Credential stuffing attack using a database of 10M+ leaked credentials against GitHub; ~13 valid Uber employee GitHub logins obtained, granting access to private repositories containing hardcoded AWS IAM keys.",
+  "persistence_mechanism": "None identified \u2014 attackers used a static, never-rotated AWS IAM credential ('genghis', created 2013) that remained valid throughout the attack window due to absence of credential rotation policies.",
+  "privilege_escalation": "No explicit privilege escalation described; the stolen AWS IAM credential ('genghis') had sufficient permissions by default to access the S3 cold-storage bucket and exfiltrate data remotely without further escalation.",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1589.001",
+        "technique_name": "Gather Victim Identity Information: Credentials",
+        "description": "Attackers acquired a large database of over 10 million username/password pairs sourced from other breaches, trades, and public leaks, used to fuel a credential stuffing campaign.",
+        "tactic_id": "",
+        "evidence_quote": "They describe this database as having 'over ten million' entries.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1110.004",
+        "technique_name": "Credential Stuffing",
+        "description": "Attackers ran a custom Upwork-developed script that ingested the credential database and attempted to authenticate against GitHub, yielding over 100,000 successful logins, approximately 13 of which were associated with Uber GitHub organizations.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "They had a script developed through a freelancer on Upwork, which would ingest emails and passwords and attempt to log into GitHub... 'Over a hundred thousand' successful log-ins were output by the adversary's script.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using valid, compromised GitHub credentials for approximately 13 Uber-affiliated accounts, attackers authenticated to GitHub and gained access to Uber's private repositories.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The adversaries may have had about 13 good log-ins for Uber. They accessed these GitHub accounts intending to find AWS credentials.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attackers searched private GitHub repositories for hardcoded AWS IAM credentials. They located a long-lived credential (codenamed 'genghis') dating to 2013 that had never been rotated, embedded in source code.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "The testimony sounds like they would use simple GitHub searches to surface these credentials... The 2016 incident involved a credential that had existed without rotation since 2013.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Using the stolen AWS IAM credentials loaded into 'S3 Browser', attackers enumerated available S3 buckets, discovering the 'cold-storage' bucket containing hourly database backups.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Attackers enumerated objects within the cold-storage S3 bucket. Most backups were encrypted and inaccessible, but a third-party collaborator identified a specific unencrypted plaintext backup object created manually outside the normal automated pipeline.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "After a day or so, the third person indicated to the adversaries that there was an 'interesting' object... These database objects were created outside the regular automated backup... an engineer created backups while decommissioning a service, writing them without encryption.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The attacker downloaded the unencrypted plaintext database backup from the S3 cold-storage bucket. This object contained approximately 50 million user records and driver information including ~600,000 driver's license numbers.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "One of the adversaries proceeded to download on 2014\u201305\u201312. This was a database containing 50 million records.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+          "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "After exfiltrating data, the attackers contacted Uber via ProtonMail claiming to have found a 'major vulnerability' and dump of data, demanding payment in the high six figures in an extortion scheme. Uber ultimately paid $100,000 through HackerOne.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "'I have found a major vulnerability in Uber. I was able to dump Uber database and many other things.'... The adversary rejected Uber's $10K counter with a demand in the six figures... Uber instructed HackerOne to release the payment shortly after, on 2016\u201312\u201308.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+          "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1589.001",
+        "target": "T1110.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Gather Victim Identity Information: Credentials",
+        "target_technique_name": "Credential Stuffing",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "They describe this database as having 'over ten million' entries.",
+          "They had a script developed through a freelancer on Upwork, which would ingest emails and passwords and attempt to log into GitHub... 'Over a hundred thousand' successful log-ins were output by the adversary's script."
+        ]
+      },
+      {
+        "source": "T1110.004",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Credential Stuffing",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "They had a script developed through a freelancer on Upwork, which would ingest emails and passwords and attempt to log into GitHub... 'Over a hundred thousand' successful log-ins were output by the adversary's script.",
+          "The adversaries may have had about 13 good log-ins for Uber. They accessed these GitHub accounts intending to find AWS credentials."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1552.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "The adversaries may have had about 13 good log-ins for Uber. They accessed these GitHub accounts intending to find AWS credentials.",
+          "The testimony sounds like they would use simple GitHub searches to surface these credentials... The 2016 incident involved a credential that had existed without rotation since 2013."
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1526",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "The testimony sounds like they would use simple GitHub searches to surface these credentials... The 2016 incident involved a credential that had existed without rotation since 2013.",
+          "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1619",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+          "After a day or so, the third person indicated to the adversaries that there was an 'interesting' object... These database objects were created outside the regular automated backup... an engineer created backups while decommissioning a service, writing them without encryption."
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+          "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+        ],
+        "evidence_quotes": [
+          "After a day or so, the third person indicated to the adversaries that there was an 'interesting' object... These database objects were created outside the regular automated backup... an engineer created backups while decommissioning a service, writing them without encryption.",
+          "One of the adversaries proceeded to download on 2014\u201305\u201312. This was a database containing 50 million records."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1657",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Financial Theft",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+          "https://web.archive.org/web/20210824171652/https://www.bloomberg.com/news/articles/2017-11-21/uber-concealed-cyberattack-that-exposed-57-million-people-s-data"
+        ],
+        "evidence_quotes": [
+          "One of the adversaries proceeded to download on 2014\u201305\u201312. This was a database containing 50 million records.",
+          "'I have found a major vulnerability in Uber. I was able to dump Uber database and many other things.'... The adversary rejected Uber's $10K counter with a demand in the six figures... Uber instructed HackerOne to release the payment shortly after, on 2016\u201312\u201308."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "uber-2016-october",
+  "analyzed_at": "2026-04-15T21:12:38.866802+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 87686
+}

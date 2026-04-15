@@ -11,10 +11,10 @@ Reads from:
     data/mitre_attack_cloud.json
 
 Writes to:
-    data/site_data/technique_frequency.json
-    data/site_data/attack_graph.json
-    data/site_data/incidents_index.json
-    data/site_data/incidents/<slug>.json
+    site/public/data/technique_frequency.json
+    site/public/data/attack_graph.json
+    site/public/data/incidents_index.json
+    site/public/data/incidents/<slug>.json
 
 Usage:
     python scripts/build_site_data.py [--analysis-dir PATH] [--output-dir PATH]
@@ -35,7 +35,7 @@ log = logging.getLogger(__name__)
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 ANALYSIS_DIR = DATA_DIR / "analysis"
-SITE_DATA_DIR = DATA_DIR / "site_data"
+SITE_DATA_DIR = Path(__file__).parent.parent / "site" / "public" / "data"
 ATTACK_DATA_PATH = DATA_DIR / "mitre_attack_cloud.json"
 
 
@@ -248,7 +248,7 @@ def main():
     parser.add_argument(
         "--output-dir",
         default=str(SITE_DATA_DIR),
-        help=f"Output site_data directory (default: {SITE_DATA_DIR})",
+        help=f"Output public data directory (default: {SITE_DATA_DIR})",
     )
     parser.add_argument(
         "--slug",

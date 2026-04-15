@@ -1,0 +1,273 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1195.001",
+          "technique_name": "Compromise Software Supply Chain: Compromise Software Dependencies and Development Tools",
+          "inferred": false,
+          "evidence_quote": "Investigation revealed an active Monero cryptominer running in one of the organization's EC2 servers... Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1608.001",
+          "technique_name": "Stage Capabilities: Upload Malware",
+          "inferred": false,
+          "evidence_quote": "It seems the adversaries who published this AMI designed it to bill AWS customers for compute while extracting cryptocurrency.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "This way, whoever ran this AMI ... is paying for the compute, but the mined cryptocurrency goes to the attacker.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1525",
+          "technique_name": "Implant Internal Image",
+          "inferred": false,
+          "evidence_quote": "Someone gave the community a free resource that mines for cryptocurrency in the background... Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1525",
+          "technique_name": "Implant Internal Image",
+          "inferred": false,
+          "evidence_quote": "Unlike the Marketplace AMIs, community AMIs are not verified by Amazon.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
+          "inferred": true,
+          "evidence_quote": "Someone gave the community a free resource that mines for cryptocurrency in the background.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "it was using way more compute resources than it was supposed to use... the mined cryptocurrency goes to the attacker.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1608.001",
+      "technique_name": "Stage Capabilities: Upload Malware",
+      "description": "Attacker created a Windows Server 2008 Community AMI and embedded a Monero cryptominer within it before publishing it publicly on AWS.",
+      "evidence_quote": "It seems the adversaries who published this AMI designed it to bill AWS customers for compute while extracting cryptocurrency.",
+      "aws_services_involved": [
+        "EC2",
+        "AMI"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+      ],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1195.001",
+      "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+      "description": "Victim organization (a financial institution) launched EC2 instances using the trojanized Community AMI, inheriting the embedded malware as part of their infrastructure.",
+      "evidence_quote": "Experts were doing an incident investigation for a financial institution when they needed to look at some Windows 2008 Server machines.",
+      "aws_services_involved": [
+        "EC2",
+        "AMI"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1525",
+      "technique_name": "Implant Internal Image",
+      "description": "The malicious AMI persisted across every new EC2 instance launch derived from it, ensuring the cryptominer was active from instance boot without further attacker interaction, for an estimated five years.",
+      "evidence_quote": "Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning.",
+      "aws_services_involved": [
+        "EC2",
+        "AMI"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "The embedded Monero cryptominer ran on victim-funded EC2 compute resources, consuming excess CPU/compute while directing mined cryptocurrency to the attacker's wallet.",
+      "evidence_quote": "it was using way more compute resources than it was supposed to use... the mined cryptocurrency goes to the attacker.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "EC2",
+    "AMI (Community AMI)"
+  ],
+  "impact_type": "Cryptomining",
+  "confidence_score": 0.85,
+  "initial_access_vector": "Victim launched an EC2 instance from a trojanized Community AMI (Windows Server 2008) that had a Monero cryptominer pre-embedded by the attacker at publish time.",
+  "persistence_mechanism": "Malware was baked directly into the Community AMI image (T1525 - Implant Internal Image), ensuring it executed on every instance launched from the AMI without requiring ongoing attacker access.",
+  "data_exfiltrated": false,
+  "privilege_escalation": null,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1608.001",
+        "technique_name": "Stage Capabilities: Upload Malware",
+        "description": "Attacker created a Windows Server 2008 Community AMI and embedded a Monero cryptominer within it before publishing it publicly on AWS.",
+        "tactic_id": "",
+        "evidence_quote": "It seems the adversaries who published this AMI designed it to bill AWS customers for compute while extracting cryptocurrency.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "AMI"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1195.001",
+        "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "description": "Victim organization (a financial institution) launched EC2 instances using the trojanized Community AMI, inheriting the embedded malware as part of their infrastructure.",
+        "tactic_id": "",
+        "evidence_quote": "Experts were doing an incident investigation for a financial institution when they needed to look at some Windows 2008 Server machines.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "AMI"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1525",
+        "technique_name": "Implant Internal Image",
+        "description": "The malicious AMI persisted across every new EC2 instance launch derived from it, ensuring the cryptominer was active from instance boot without further attacker interaction, for an estimated five years.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "AMI"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "The embedded Monero cryptominer ran on victim-funded EC2 compute resources, consuming excess CPU/compute while directing mined cryptocurrency to the attacker's wallet.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "it was using way more compute resources than it was supposed to use... the mined cryptocurrency goes to the attacker.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1608.001",
+        "target": "T1195.001",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Stage Capabilities: Upload Malware",
+        "target_technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "evidence_quotes": [
+          "It seems the adversaries who published this AMI designed it to bill AWS customers for compute while extracting cryptocurrency.",
+          "Experts were doing an incident investigation for a financial institution when they needed to look at some Windows 2008 Server machines."
+        ]
+      },
+      {
+        "source": "T1195.001",
+        "target": "T1525",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "target_technique_name": "Implant Internal Image",
+        "sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "evidence_quotes": [
+          "Experts were doing an incident investigation for a financial institution when they needed to look at some Windows 2008 Server machines.",
+          "Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning."
+        ]
+      },
+      {
+        "source": "T1525",
+        "target": "T1496",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Implant Internal Image",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+        ],
+        "evidence_quotes": [
+          "Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning.",
+          "it was using way more compute resources than it was supposed to use... the mined cryptocurrency goes to the attacker."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "cryptomining-ami-2020-august",
+  "analyzed_at": "2026-04-15T20:48:21.307565+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 5597
+}

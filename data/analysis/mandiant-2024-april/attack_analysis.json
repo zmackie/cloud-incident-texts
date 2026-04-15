@@ -1,0 +1,508 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1566.001",
+          "technique_name": "Phishing: Spearphishing Attachment",
+          "inferred": false,
+          "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop. Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+          "validated": false
+        },
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1204.002",
+          "technique_name": "User Execution: Malicious File",
+          "inferred": false,
+          "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1539",
+          "technique_name": "Steal Web Session Cookie",
+          "inferred": false,
+          "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": true,
+          "evidence_quote": "stole credentials and cookies stored on Google drive",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "2. Delete all S3 Buckets 3. Then, created a 'Ransomware' S3 Bucket",
+          "validated": true
+        },
+        {
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact",
+          "inferred": true,
+          "evidence_quote": "created a 'Ransomware' S3 Bucket",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1566.001",
+      "technique_name": "Phishing: Spearphishing Attachment",
+      "description": "AWS Administrator (a former employee) received a spearphishing email disguised as a job offer from a recruiter and downloaded the malicious attachment on their personal laptop.",
+      "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop",
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1204.002",
+      "technique_name": "User Execution: Malicious File",
+      "description": "The administrator opened the malicious job offer document on their personal laptop, which executed malware that stole credentials and browser cookies stored locally and synced to Google Drive.",
+      "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1539",
+      "technique_name": "Steal Web Session Cookie",
+      "description": "The malware harvested browser session cookies and credentials from the personal laptop that were synced to Google Drive, including a previously created AWS Administrator access key CSV stored in the drive.",
+      "evidence_quote": "stole credentials and cookies stored on Google drive. 4 months [after] Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+      "aws_services_involved": [
+        "Google Drive"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "The attacker accessed the compromised Google Drive and retrieved the AWS Administrator access key CSV file that the administrator had previously downloaded and stored there \u2014 providing long-lived privileged programmatic AWS credentials.",
+      "evidence_quote": "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+      "aws_services_involved": [
+        "AWS IAM",
+        "Google Drive"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using the stolen AWS Administrator access key (long-lived credential), the attacker authenticated directly to the AWS production account without any additional authentication challenge.",
+      "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "The attacker executed ListBuckets API calls across the production AWS account to enumerate all S3 buckets and their contents, making approximately 2000 API requests total.",
+      "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API",
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS API"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The attacker downloaded all S3 buckets and their corresponding file objects via the AWS API, exfiltrating the organization's data.",
+      "evidence_quote": "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects",
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS API"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "After exfiltration, the attacker deleted all S3 buckets across the production AWS account, destroying the organization's cloud data.",
+      "evidence_quote": "2. Delete all S3 Buckets",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "description": "The attacker created a new S3 bucket named 'Ransomware' as a ransomware extortion signal, simulating a ransomware attack to pressure the victim into paying for data recovery.",
+      "evidence_quote": "3. Then, created a 'Ransomware' S3 Bucket",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "evidence_sources": [
+        "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "AWS IAM",
+    "AWS API",
+    "Google Drive"
+  ],
+  "impact_type": "Data Exfiltration and Pseudo-Ransomware (S3 Bucket Deletion + Ransom Note Bucket)",
+  "confidence_score": 0.9,
+  "initial_access_vector": "Spearphishing email disguised as a job offer caused a former AWS Administrator to execute malware on their personal laptop, which stole credentials and cookies synced to a personal Google Drive \u2014 including a pre-existing AWS Administrator access key CSV stored there.",
+  "persistence_mechanism": "None observed. The attacker leveraged a long-lived AWS Administrator access key (static credential) that had been created and stored in a personal Google Drive, providing persistent programmatic access without needing further foothold.",
+  "privilege_escalation": "No escalation required. The stolen access key was already assigned the AWS Administrator role at the time of creation, granting the attacker immediate full administrative privileges upon use.",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1566.001",
+        "technique_name": "Phishing: Spearphishing Attachment",
+        "description": "AWS Administrator (a former employee) received a spearphishing email disguised as a job offer from a recruiter and downloaded the malicious attachment on their personal laptop.",
+        "tactic_id": "",
+        "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1204.002",
+        "technique_name": "User Execution: Malicious File",
+        "description": "The administrator opened the malicious job offer document on their personal laptop, which executed malware that stole credentials and browser cookies stored locally and synced to Google Drive.",
+        "tactic_id": "",
+        "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1539",
+        "technique_name": "Steal Web Session Cookie",
+        "description": "The malware harvested browser session cookies and credentials from the personal laptop that were synced to Google Drive, including a previously created AWS Administrator access key CSV stored in the drive.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "stole credentials and cookies stored on Google drive. 4 months [after] Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "Google Drive"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "The attacker accessed the compromised Google Drive and retrieved the AWS Administrator access key CSV file that the administrator had previously downloaded and stored there \u2014 providing long-lived privileged programmatic AWS credentials.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "Google Drive"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using the stolen AWS Administrator access key (long-lived credential), the attacker authenticated directly to the AWS production account without any additional authentication challenge.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "The attacker executed ListBuckets API calls across the production AWS account to enumerate all S3 buckets and their contents, making approximately 2000 API requests total.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS API"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The attacker downloaded all S3 buckets and their corresponding file objects via the AWS API, exfiltrating the organization's data.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS API"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "After exfiltration, the attacker deleted all S3 buckets across the production AWS account, destroying the organization's cloud data.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "2. Delete all S3 Buckets",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1486",
+        "technique_name": "Data Encrypted for Impact",
+        "description": "The attacker created a new S3 bucket named 'Ransomware' as a ransomware extortion signal, simulating a ransomware attack to pressure the victim into paying for data recovery.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "3. Then, created a 'Ransomware' S3 Bucket",
+        "evidence_sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1566.001",
+        "target": "T1204.002",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Phishing: Spearphishing Attachment",
+        "target_technique_name": "User Execution: Malicious File",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop",
+          "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive"
+        ]
+      },
+      {
+        "source": "T1204.002",
+        "target": "T1539",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "User Execution: Malicious File",
+        "target_technique_name": "Steal Web Session Cookie",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+          "stole credentials and cookies stored on Google drive. 4 months [after] Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive"
+        ]
+      },
+      {
+        "source": "T1539",
+        "target": "T1552.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Steal Web Session Cookie",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "stole credentials and cookies stored on Google drive. 4 months [after] Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+          "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
+          "Attacker logs into AWS and executes ListBuckets commands across production AWS account"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1619",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+          "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API",
+          "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1485",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects",
+          "2. Delete all S3 Buckets"
+        ]
+      },
+      {
+        "source": "T1485",
+        "target": "T1486",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Data Destruction",
+        "target_technique_name": "Data Encrypted for Impact",
+        "sources": [
+          "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
+        ],
+        "evidence_quotes": [
+          "2. Delete all S3 Buckets",
+          "3. Then, created a 'Ransomware' S3 Bucket"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "mandiant-2024-april",
+  "analyzed_at": "2026-04-15T21:00:20.108639+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 15532
+}

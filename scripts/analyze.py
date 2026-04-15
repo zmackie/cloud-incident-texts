@@ -47,6 +47,22 @@ ATTACK_DATA_PATH = DATA_DIR / "mitre_attack_cloud.json"
 DEFAULT_MODEL = "claude-sonnet-4-6"
 MAX_CONTEXT_CHARS = 150_000
 MIN_CHARS_FOR_FULL_CONFIDENCE = 500
+TACTIC_EXECUTION_ORDER = [
+    "TA0043",  # Reconnaissance
+    "TA0042",  # Resource Development
+    "TA0001",  # Initial Access
+    "TA0002",  # Execution
+    "TA0003",  # Persistence
+    "TA0004",  # Privilege Escalation
+    "TA0005",  # Defense Evasion
+    "TA0006",  # Credential Access
+    "TA0007",  # Discovery
+    "TA0008",  # Lateral Movement
+    "TA0009",  # Collection
+    "TA0011",  # Command and Control
+    "TA0010",  # Exfiltration
+    "TA0040",  # Impact
+]
 
 # ── ATT&CK extraction tool definition ────────────────────────────────────────
 
@@ -378,6 +394,97 @@ def _sanitize_chain_steps(steps: list) -> list[dict]:
     return sorted(normalized_steps, key=lambda s: int(s.get("step", 0)))
 
 
+def _load_incident_source_urls(incident_dir: Path) -> list[str]:
+    meta_path = incident_dir / "metadata.json"
+    if not meta_path.exists():
+        return []
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    urls = []
+    for link in meta.get("links", []):
+        url = str(link.get("url", "")).strip()
+        if url:
+            urls.append(url)
+    return urls
+
+
+def _build_fallback_attack_chain(
+    analysis: dict,
+    attack_data: dict,
+    source_urls: list[str],
+) -> list[dict]:
+    """Recover a comparable chain when the model emits tactics without steps."""
+    tactics_used = analysis.get("tactics_used", [])
+    if not isinstance(tactics_used, list):
+        return []
+
+    tactic_rank = {tid: idx for idx, tid in enumerate(TACTIC_EXECUTION_ORDER)}
+    technique_lookup = attack_data.get("techniques", {})
+    flattened: list[tuple[int, int, dict, dict]] = []
+
+    for tactic_idx, tactic in enumerate(tactics_used):
+        if not isinstance(tactic, dict):
+            continue
+        tactic_id = str(tactic.get("tactic_id", "")).strip().upper()
+        tactic_name = str(tactic.get("tactic_name", "")).strip()
+        techniques = tactic.get("techniques", [])
+        if not isinstance(techniques, list):
+            continue
+
+        for tech_idx, tech in enumerate(techniques):
+            if not isinstance(tech, dict):
+                continue
+            tid = _normalize_technique_id(str(tech.get("technique_id", "")))
+            if not tid:
+                continue
+            flattened.append((
+                tactic_rank.get(tactic_id, len(TACTIC_EXECUTION_ORDER) + tactic_idx),
+                tech_idx,
+                {
+                    "tactic_id": tactic_id,
+                    "tactic_name": tactic_name,
+                },
+                tech,
+            ))
+
+    flattened.sort(key=lambda item: (item[0], item[1]))
+
+    chain: list[dict] = []
+    seen: set[str] = set()
+    for _, _, tactic_meta, tech in flattened:
+        tid = _normalize_technique_id(str(tech.get("technique_id", "")))
+        if not tid or tid in seen:
+            continue
+        seen.add(tid)
+
+        technique_name = str(
+            tech.get("technique_name")
+            or technique_lookup.get(tid, {}).get("name")
+            or tid
+        )
+        evidence_quote = tech.get("evidence_quote")
+        description = str(tech.get("description") or "").strip()
+        if not description:
+            if isinstance(evidence_quote, str) and evidence_quote.strip():
+                description = (
+                    f"{technique_name} observed during {tactic_meta['tactic_name'] or tactic_meta['tactic_id']}: "
+                    f"{evidence_quote.strip()}"
+                )
+            else:
+                description = f"{technique_name} observed during {tactic_meta['tactic_name'] or tactic_meta['tactic_id']}."
+
+        chain.append({
+            "step": len(chain) + 1,
+            "technique_id": tid,
+            "technique_name": technique_name,
+            "description": description,
+            "evidence_quote": evidence_quote if isinstance(evidence_quote, str) else None,
+            "evidence_sources": list(source_urls),
+            "aws_services_involved": [],
+        })
+
+    return chain
+
+
 def _validate_techniques(analysis: dict, known_ids: set[str]) -> dict:
     """Mark unknown technique IDs as validated=False."""
     for tactic in analysis.get("tactics_used", []):
@@ -396,6 +503,75 @@ def _validate_techniques(analysis: dict, known_ids: set[str]) -> dict:
     analysis["attack_chain"] = attack_chain
 
     return analysis
+
+
+def _normalize_analysis(
+    analysis: dict,
+    attack_data: dict,
+    incident_dir: Path,
+    total_chars: int,
+) -> dict:
+    source_urls = _load_incident_source_urls(incident_dir)
+    known_ids = set(attack_data.get("techniques", {}).keys())
+
+    analysis = _validate_techniques(analysis, known_ids)
+    if not analysis.get("attack_chain"):
+        analysis["attack_chain"] = _build_fallback_attack_chain(analysis, attack_data, source_urls)
+        analysis = _validate_techniques(analysis, known_ids)
+
+    for step in analysis.get("attack_chain", []):
+        if not step.get("evidence_sources"):
+            step["evidence_sources"] = list(source_urls)
+
+    raw_confidence = analysis.get("confidence_score")
+    if not isinstance(raw_confidence, (int, float)):
+        raw_confidence = 0.65 if analysis.get("attack_chain") else 0.25
+    if analysis.get("attack_chain") and raw_confidence <= 0:
+        raw_confidence = 0.35 if total_chars >= MIN_CHARS_FOR_FULL_CONFIDENCE else 0.2
+
+    analysis["confidence_score"] = max(0.0, min(float(raw_confidence), 1.0))
+    return analysis
+
+
+def _request_attack_analysis(
+    client: anthropic.Anthropic,
+    model: str,
+    context: str,
+    best_effort: bool = False,
+) -> dict:
+    system = (
+        "You are a cloud security analyst specializing in MITRE ATT&CK for Cloud. "
+        "Analyze the provided incident text and extract a precise ATT&CK mapping. "
+        "Be conservative: only assert techniques with evidence in the text. "
+        "Mark techniques as inferred=true if strongly implied but not explicitly described. "
+        "Always order attack_chain chronologically as the attack actually unfolded. "
+        "Use real ATT&CK technique IDs (e.g. T1190, T1552.005)."
+    )
+    user_message = context
+    if best_effort:
+        system += (
+            " Your first priority is to avoid returning an empty analysis when the incident "
+            "contains any attacker workflow. If the source is incomplete, produce the most "
+            "defensible best-effort chain you can, set inferred=true where needed, and keep "
+            "confidence_score low rather than leaving attack_chain empty."
+        )
+        user_message = (
+            context
+            + "\n\nThe previous extraction attempt returned no tactics and no attack chain. "
+              "Retry with a best-effort but still defensible ATT&CK mapping."
+        )
+
+    response = client.messages.create(
+        model=model,
+        max_tokens=4096,
+        system=system,
+        tools=[ATTACK_ANALYSIS_TOOL],
+        tool_choice={"type": "tool", "name": "extract_attack_analysis"},
+        messages=[{"role": "user", "content": user_message}],
+    )
+
+    tool_block = next(b for b in response.content if b.type == "tool_use")
+    return tool_block.input
 
 
 def _build_attack_chain_graph(analysis: dict, attack_data: dict) -> dict:
@@ -493,30 +669,13 @@ def analyze_incident(
 
     try:
         # ── Step 1: ATT&CK extraction ─────────────────────────────────────
-        response = client.messages.create(
-            model=model,
-            max_tokens=4096,
-            system=(
-                "You are a cloud security analyst specializing in MITRE ATT&CK for Cloud. "
-                "Analyze the provided incident text and extract a precise ATT&CK mapping. "
-                "Be conservative: only assert techniques with evidence in the text. "
-                "Mark techniques as inferred=true if strongly implied but not explicitly described. "
-                "Always order attack_chain chronologically as the attack actually unfolded. "
-                "Use real ATT&CK technique IDs (e.g. T1190, T1552.005)."
-            ),
-            tools=[ATTACK_ANALYSIS_TOOL],
-            tool_choice={"type": "tool", "name": "extract_attack_analysis"},
-            messages=[{"role": "user", "content": context}],
-        )
-
-        tool_block = next(
-            b for b in response.content if b.type == "tool_use"
-        )
-        analysis: dict = tool_block.input
+        analysis: dict = _request_attack_analysis(client, model, context)
+        if not analysis.get("tactics_used") and not analysis.get("attack_chain"):
+            log.info("[%s] empty primary extraction, retrying with best-effort prompt", slug)
+            analysis = _request_attack_analysis(client, model, context, best_effort=True)
 
         # Validate technique IDs against known cloud techniques
-        known_ids = set(attack_data.get("techniques", {}).keys())
-        analysis = _validate_techniques(analysis, known_ids)
+        analysis = _normalize_analysis(analysis, attack_data, incident_dir, total_chars)
         analysis["attack_chain_graph"] = _build_attack_chain_graph(analysis, attack_data)
         analysis["framework"] = {
             "name": "mitre-attack",

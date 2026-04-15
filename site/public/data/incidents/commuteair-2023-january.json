@@ -1,0 +1,373 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1596.005",
+          "technique_name": "Search Open Technical Databases: Scan Databases",
+          "inferred": false,
+          "evidence_quote": "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": false,
+          "evidence_quote": "an exposed jenkins server belonging to CommuteAir... we do have access to build workspaces",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "a file called application-prod.properties... hardcoded credentials and s3 bucket names... i have ended up finding AWS credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
+          "validated": true
+        },
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables",
+          "validated": true
+        },
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "the data is available for access (upon request) via DDoSecrets",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1596.005",
+      "technique_name": "Search Open Technical Databases: Scan Databases",
+      "description": "Attacker used ZoomEye (and Shodan) to search for publicly exposed Jenkins servers, identifying a CommuteAir Jenkins instance based on aviation-specific keywords like 'ACARS' and 'crew' in results.",
+      "evidence_quote": "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers that may contain some interesting goods",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+        "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker accessed the unauthenticated/misconfigured publicly exposed Jenkins server belonging to CommuteAir. The server allowed access to build workspaces for approximately 70 build jobs without requiring admin credentials.",
+      "evidence_quote": "while we don't have anonymous admin access... we do have access to build workspaces. this means we get to see the repositories that were built for each one of the ~70 build jobs",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker browsed build workspace files and found hardcoded credentials in configuration files (e.g., application-prod.properties), including SFTP credentials for a Navtech/Navblue server, Navblue API credentials, and eventually AWS credentials with access to S3 buckets and other AWS infrastructure.",
+      "evidence_quote": "a file called application-prod.properties... two minutes after finding said file im staring at filezilla connected to a navtech sftp server... hardcoded credentials there would allow me access to navblue apis... i have ended up finding AWS credentials",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+        "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon DynamoDB"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Using the exfiltrated AWS credentials and the AWS CLI, the attacker enumerated CommuteAir's entire AWS infrastructure, discovering numerous S3 buckets, dozens of DynamoDB tables, and various servers.",
+      "evidence_quote": "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli. numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon DynamoDB",
+        "AWS CLI"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Attacker examined the 'noflycomparison' and 'noflycomparisonv2' Jenkins build repository test data and discovered three committed CSV files: employee_information.csv, NOFLY.CSV, and SELECTEE.CSV \u2014 the last two constituting a copy of the 2019 TSA No Fly List with over 1.56 million entries.",
+      "evidence_quote": "for the first time actually take a peek at the test data in the repository. and there it is. three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed multiple AWS S3 buckets and DynamoDB tables, collecting PII for ~900 CommuteAir employees (full names, addresses, phone numbers, passport numbers, pilot license numbers), flight plans, trip sheets, booking image attachments, and airplane maintenance data.",
+      "evidence_quote": "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables. at this point i had found pretty much all PII imaginable for each of their crew members",
+      "evidence_sources": [
+        "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+        "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon DynamoDB"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "Amazon DynamoDB",
+    "AWS CLI"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.95,
+  "initial_access_vector": "Publicly exposed Jenkins CI/CD server discovered via ZoomEye/Shodan, accessible without admin authentication, exposing build workspaces for ~70 jobs",
+  "persistence_mechanism": "None identified \u2014 attacker accessed systems directly via hardcoded credentials and AWS CLI; no persistence implants described",
+  "privilege_escalation": "Lateral movement from Jenkins build workspace access to AWS infrastructure via hardcoded AWS credentials found in application configuration files (application-prod.properties)",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1596.005",
+        "technique_name": "Search Open Technical Databases: Scan Databases",
+        "description": "Attacker used ZoomEye (and Shodan) to search for publicly exposed Jenkins servers, identifying a CommuteAir Jenkins instance based on aviation-specific keywords like 'ACARS' and 'crew' in results.",
+        "tactic_id": "",
+        "evidence_quote": "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers that may contain some interesting goods",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker accessed the unauthenticated/misconfigured publicly exposed Jenkins server belonging to CommuteAir. The server allowed access to build workspaces for approximately 70 build jobs without requiring admin credentials.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "while we don't have anonymous admin access... we do have access to build workspaces. this means we get to see the repositories that were built for each one of the ~70 build jobs",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker browsed build workspace files and found hardcoded credentials in configuration files (e.g., application-prod.properties), including SFTP credentials for a Navtech/Navblue server, Navblue API credentials, and eventually AWS credentials with access to S3 buckets and other AWS infrastructure.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "a file called application-prod.properties... two minutes after finding said file im staring at filezilla connected to a navtech sftp server... hardcoded credentials there would allow me access to navblue apis... i have ended up finding AWS credentials",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon DynamoDB"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Using the exfiltrated AWS credentials and the AWS CLI, the attacker enumerated CommuteAir's entire AWS infrastructure, discovering numerous S3 buckets, dozens of DynamoDB tables, and various servers.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli. numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon DynamoDB",
+          "AWS CLI"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Attacker examined the 'noflycomparison' and 'noflycomparisonv2' Jenkins build repository test data and discovered three committed CSV files: employee_information.csv, NOFLY.CSV, and SELECTEE.CSV \u2014 the last two constituting a copy of the 2019 TSA No Fly List with over 1.56 million entries.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "for the first time actually take a peek at the test data in the repository. and there it is. three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed multiple AWS S3 buckets and DynamoDB tables, collecting PII for ~900 CommuteAir employees (full names, addresses, phone numbers, passport numbers, pilot license numbers), flight plans, trip sheets, booking image attachments, and airplane maintenance data.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables. at this point i had found pretty much all PII imaginable for each of their crew members",
+        "evidence_sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon DynamoDB"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1596.005",
+        "target": "T1190",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Search Open Technical Databases: Scan Databases",
+        "target_technique_name": "Exploit Public-Facing Application",
+        "sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "evidence_quotes": [
+          "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers that may contain some interesting goods",
+          "while we don't have anonymous admin access... we do have access to build workspaces. this means we get to see the repositories that were built for each one of the ~70 build jobs"
+        ]
+      },
+      {
+        "source": "T1190",
+        "target": "T1552.001",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "evidence_quotes": [
+          "while we don't have anonymous admin access... we do have access to build workspaces. this means we get to see the repositories that were built for each one of the ~70 build jobs",
+          "a file called application-prod.properties... two minutes after finding said file im staring at filezilla connected to a navtech sftp server... hardcoded credentials there would allow me access to navblue apis... i have ended up finding AWS credentials"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1580",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "evidence_quotes": [
+          "a file called application-prod.properties... two minutes after finding said file im staring at filezilla connected to a navtech sftp server... hardcoded credentials there would allow me access to navblue apis... i have ended up finding AWS credentials",
+          "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli. numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1213",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
+        ],
+        "evidence_quotes": [
+          "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli. numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
+          "for the first time actually take a peek at the test data in the repository. and there it is. three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1530",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://maia.crimew.gay/posts/how-to-hack-an-airline/",
+          "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
+        ],
+        "evidence_quotes": [
+          "for the first time actually take a peek at the test data in the repository. and there it is. three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
+          "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables. at this point i had found pretty much all PII imaginable for each of their crew members"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "commuteair-2023-january",
+  "analyzed_at": "2026-04-15T20:48:07.452186+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 35559
+}

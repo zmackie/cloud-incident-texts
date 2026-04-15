@@ -1,0 +1,402 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1195.001",
+          "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+          "inferred": false,
+          "evidence_quote": "GitHub repository compromise (UNC6395)",
+          "subtechnique_id": "T1195.001",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": true,
+          "evidence_quote": "GitHub repository compromise (UNC6395)",
+          "subtechnique_id": "T1552.001",
+          "validated": true
+        },
+        {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "inferred": false,
+          "evidence_quote": "OAuth tokens stolen",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": true,
+          "evidence_quote": "OAuth tokens stolen",
+          "subtechnique_id": "T1550.001",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "OAuth tokens stolen; AWS environment accessed",
+          "subtechnique_id": "T1550.001",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "AWS environment accessed",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": true,
+          "evidence_quote": "700+ Salesforce instances compromised",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "700+ Salesforce instances compromised",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1195.001",
+      "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+      "description": "UNC6395 compromised a GitHub repository associated with Salesloft/Drift, establishing a foothold within the software supply chain.",
+      "evidence_quote": "GitHub repository compromise (UNC6395)",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attackers harvested credentials and secrets (including OAuth tokens) from the compromised GitHub repository, which likely contained hardcoded or committed secrets.",
+      "evidence_quote": "GitHub repository compromise (UNC6395); OAuth tokens stolen",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1528",
+      "technique_name": "Steal Application Access Token",
+      "description": "OAuth tokens were stolen, enabling the attacker to impersonate legitimate application integrations without requiring user credentials.",
+      "evidence_quote": "OAuth tokens stolen",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "Using the stolen OAuth tokens, UNC6395 authenticated to Salesloft/Drift's AWS environment and Salesforce integrations without needing valid passwords, enabling lateral movement across cloud services.",
+      "evidence_quote": "AWS environment accessed; OAuth tokens stolen; Escalation Vectors: AWS environment accessed, OAuth tokens stolen",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS (general)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "With authenticated access to the AWS environment, attackers accessed cloud-hosted data stores, potentially collecting sensitive data used by Salesloft/Drift integrations.",
+      "evidence_quote": "AWS environment accessed",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS (general)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Attackers leveraged compromised access to collect data from 700+ Salesforce instances connected to Salesloft/Drift, extracting CRM data at scale.",
+      "evidence_quote": "700+ Salesforce instances compromised",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Data from the compromised Salesforce instances was exfiltrated, with 700+ customer environments ultimately impacted by the breach.",
+      "evidence_quote": "700+ Salesforce instances compromised",
+      "evidence_sources": [
+        "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon S3",
+    "AWS (general)"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.5,
+  "initial_access_vector": "Compromise of a GitHub repository (software supply chain) by threat actor UNC6395, enabling theft of OAuth tokens and secrets used to access downstream cloud and SaaS environments.",
+  "persistence_mechanism": "Stolen OAuth tokens provided persistent, credential-independent access to AWS and Salesforce environments without requiring re-exploitation of the initial GitHub vector.",
+  "privilege_escalation": "OAuth tokens stolen from the compromised GitHub repository were used to authenticate as privileged application identities within AWS and Salesforce, effectively granting elevated access through application trust relationships.",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1195.001",
+        "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "description": "UNC6395 compromised a GitHub repository associated with Salesloft/Drift, establishing a foothold within the software supply chain.",
+        "tactic_id": "",
+        "evidence_quote": "GitHub repository compromise (UNC6395)",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attackers harvested credentials and secrets (including OAuth tokens) from the compromised GitHub repository, which likely contained hardcoded or committed secrets.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "GitHub repository compromise (UNC6395); OAuth tokens stolen",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1528",
+        "technique_name": "Steal Application Access Token",
+        "description": "OAuth tokens were stolen, enabling the attacker to impersonate legitimate application integrations without requiring user credentials.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "OAuth tokens stolen",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "Using the stolen OAuth tokens, UNC6395 authenticated to Salesloft/Drift's AWS environment and Salesforce integrations without needing valid passwords, enabling lateral movement across cloud services.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "AWS environment accessed; OAuth tokens stolen; Escalation Vectors: AWS environment accessed, OAuth tokens stolen",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS (general)"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "With authenticated access to the AWS environment, attackers accessed cloud-hosted data stores, potentially collecting sensitive data used by Salesloft/Drift integrations.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "AWS environment accessed",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS (general)"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Attackers leveraged compromised access to collect data from 700+ Salesforce instances connected to Salesloft/Drift, extracting CRM data at scale.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "700+ Salesforce instances compromised",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Data from the compromised Salesforce instances was exfiltrated, with 700+ customer environments ultimately impacted by the breach.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "700+ Salesforce instances compromised",
+        "evidence_sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1195.001",
+        "target": "T1552.001",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "GitHub repository compromise (UNC6395)",
+          "GitHub repository compromise (UNC6395); OAuth tokens stolen"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1528",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Steal Application Access Token",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "GitHub repository compromise (UNC6395); OAuth tokens stolen",
+          "OAuth tokens stolen"
+        ]
+      },
+      {
+        "source": "T1528",
+        "target": "T1550.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Steal Application Access Token",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "OAuth tokens stolen",
+          "AWS environment accessed; OAuth tokens stolen; Escalation Vectors: AWS environment accessed, OAuth tokens stolen"
+        ]
+      },
+      {
+        "source": "T1550.001",
+        "target": "T1530",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Application Access Token",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "AWS environment accessed; OAuth tokens stolen; Escalation Vectors: AWS environment accessed, OAuth tokens stolen",
+          "AWS environment accessed"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1213",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "AWS environment accessed",
+          "700+ Salesforce instances compromised"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1567",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
+        ],
+        "evidence_quotes": [
+          "700+ Salesforce instances compromised",
+          "700+ Salesforce instances compromised"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "salesloft-drift-2025-august",
+  "analyzed_at": "2026-04-15T21:07:09.017211+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 5763
+}

@@ -1,0 +1,197 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "a Drizly employee posted company cloud computing account login information on the software development and hosting platform GitHub",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": true,
+          "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "A Drizly employee accidentally committed AWS cloud computing account login credentials to a public GitHub repository, exposing them to any external observer.",
+      "evidence_quote": "a Drizly employee posted company cloud computing account login information on the software development and hosting platform GitHub",
+      "evidence_sources": [
+        "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+      ],
+      "aws_services_involved": [
+        "AWS (cloud computing account)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attackers discovered the publicly exposed AWS credentials on GitHub and used them to authenticate into Drizly's cloud environment as a legitimate account.",
+      "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+      "evidence_sources": [
+        "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+      ],
+      "aws_services_involved": [
+        "AWS (cloud computing account)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Once inside Drizly's AWS environment using the stolen credentials, the attackers used Drizly's cloud servers to mine cryptocurrency (cryptojacking).",
+      "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+      "evidence_sources": [
+        "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+      ],
+      "aws_services_involved": [
+        "AWS EC2 (inferred)"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon Web Services (AWS)",
+    "GitHub (third-party platform used for code hosting)"
+  ],
+  "impact_type": "Cryptomining",
+  "confidence_score": 0.75,
+  "initial_access_vector": "AWS cloud account credentials were committed by a Drizly employee to a public GitHub repository, allowing attackers to obtain valid cloud credentials without any exploitation of a vulnerability.",
+  "persistence_mechanism": "Attackers used the valid, stolen AWS cloud account credentials to maintain access until Drizly rotated the compromised credentials.",
+  "privilege_escalation": "No privilege escalation described; attackers leveraged credentials that already provided sufficient access to cloud compute resources.",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "A Drizly employee accidentally committed AWS cloud computing account login credentials to a public GitHub repository, exposing them to any external observer.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "a Drizly employee posted company cloud computing account login information on the software development and hosting platform GitHub",
+        "evidence_sources": [
+          "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+        ],
+        "aws_services_involved": [
+          "AWS (cloud computing account)"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attackers discovered the publicly exposed AWS credentials on GitHub and used them to authenticate into Drizly's cloud environment as a legitimate account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+        "evidence_sources": [
+          "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+        ],
+        "aws_services_involved": [
+          "AWS (cloud computing account)"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Once inside Drizly's AWS environment using the stolen credentials, the attackers used Drizly's cloud servers to mine cryptocurrency (cryptojacking).",
+        "tactic_id": "TA0040",
+        "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+        "evidence_sources": [
+          "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+        ],
+        "aws_services_involved": [
+          "AWS EC2 (inferred)"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+        ],
+        "evidence_quotes": [
+          "a Drizly employee posted company cloud computing account login information on the software development and hosting platform GitHub",
+          "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1496",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million"
+        ],
+        "evidence_quotes": [
+          "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+          "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "drizly-2018",
+  "analyzed_at": "2026-04-15T20:52:05.407642+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 40543
+}

@@ -1,0 +1,506 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.002",
+          "technique_name": "Valid Accounts: Domain Accounts",
+          "inferred": false,
+          "evidence_quote": "Brody signs into First Republic VPN using MFA.",
+          "subtechnique_id": "T1078.002",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070.002",
+          "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+          "inferred": false,
+          "evidence_quote": "Overwrote system logs",
+          "subtechnique_id": "T1070.002",
+          "validated": false
+        },
+        {
+          "technique_id": "T1078.003",
+          "technique_name": "Valid Accounts: Local Accounts",
+          "inferred": false,
+          "evidence_quote": "used a Linux administrator account to impersonate another employee",
+          "subtechnique_id": "T1078.003",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.003",
+          "technique_name": "Valid Accounts: Local Accounts",
+          "inferred": false,
+          "evidence_quote": "used a Linux administrator account to impersonate another employee",
+          "subtechnique_id": "T1078.003",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": true,
+          "evidence_quote": "From 3 pm, when his termination meeting began, to 10:30 am, the next morning, First Republic neglected to disable Brody's VPN access.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1489",
+          "technique_name": "Service Stop",
+          "inferred": false,
+          "evidence_quote": "used a script to 'terminate almost all instances in Amazon Web Services'",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "Deleted code repositories",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal",
+          "inferred": false,
+          "evidence_quote": "locked users out of an Amazon service called EMR",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact",
+          "inferred": true,
+          "evidence_quote": "broke the Ansible Tower",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
+          "inferred": true,
+          "evidence_quote": "Logged into a Linux jump box",
+          "subtechnique_id": "T1021.004",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1025",
+          "technique_name": "Data from Removable Media",
+          "inferred": true,
+          "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
+          "subtechnique_id": null,
+          "validated": false
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1025",
+      "technique_name": "Data from Removable Media",
+      "description": "Nine days before termination, Brody connected two USB sticks to his company-issued PC, likely staging data or tools for later use.",
+      "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.002",
+      "technique_name": "Valid Accounts: Domain Accounts",
+      "description": "After being terminated at 3pm, Brody used his still-active corporate VPN credentials and MFA to re-authenticate that evening from his retained company Macbook.",
+      "evidence_quote": "Brody signs into First Republic VPN using MFA.",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "Once on the VPN, Brody connected to a Linux jump box to gain an internal network foothold.",
+      "evidence_quote": "Logged into a Linux jump box",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 4,
+      "technique_id": "T1070.002",
+      "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+      "description": "Brody overwrote system logs on the Linux jump box to cover his tracks.",
+      "evidence_quote": "Overwrote system logs",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 5,
+      "technique_id": "T1078.003",
+      "technique_name": "Valid Accounts: Local Accounts",
+      "description": "Brody used a Linux administrator account to impersonate another employee, gaining elevated access under a different identity.",
+      "evidence_quote": "used a Linux administrator account to impersonate another employee",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1489",
+      "technique_name": "Service Stop",
+      "description": "From the enterprise GitHub server, Brody executed a script that terminated nearly all AWS EC2 instances, causing a major service interruption.",
+      "evidence_quote": "used a script to 'terminate almost all instances in Amazon Web Services'",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [
+        "AWS EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Brody deleted code repositories hosted on the enterprise GitHub server.",
+      "evidence_quote": "Deleted code repositories",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1489",
+      "technique_name": "Service Stop",
+      "description": "Brody 'broke the Ansible Tower,' disabling the configuration management and automation platform used by the bank.",
+      "evidence_quote": "broke the Ansible Tower",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1531",
+      "technique_name": "Account Access Removal",
+      "description": "Brody locked legitimate users out of the AWS EMR service, disrupting data processing operations.",
+      "evidence_quote": "locked users out of an Amazon service called EMR",
+      "evidence_sources": [
+        "https://www.breaches.cloud/incidents/first-republic/"
+      ],
+      "aws_services_involved": [
+        "AWS EMR"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS EC2",
+    "AWS EMR",
+    "GitHub (Enterprise)"
+  ],
+  "impact_type": "System Interruption / Destructive Attack",
+  "confidence_score": 0.85,
+  "initial_access_vector": "Fired employee retained company Macbook and re-authenticated to corporate VPN using still-active credentials and MFA after termination due to incomplete offboarding",
+  "persistence_mechanism": "VPN credentials and MFA were not revoked for approximately 19.5 hours after employee termination, allowing sustained access",
+  "privilege_escalation": "Used a Linux administrator account to impersonate another employee on the jump box",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1025",
+        "technique_name": "Data from Removable Media",
+        "description": "Nine days before termination, Brody connected two USB sticks to his company-issued PC, likely staging data or tools for later use.",
+        "tactic_id": "",
+        "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.002",
+        "technique_name": "Valid Accounts: Domain Accounts",
+        "description": "After being terminated at 3pm, Brody used his still-active corporate VPN credentials and MFA to re-authenticate that evening from his retained company Macbook.",
+        "tactic_id": "",
+        "evidence_quote": "Brody signs into First Republic VPN using MFA.",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "Once on the VPN, Brody connected to a Linux jump box to gain an internal network foothold.",
+        "tactic_id": "",
+        "evidence_quote": "Logged into a Linux jump box",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1070.002",
+        "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "description": "Brody overwrote system logs on the Linux jump box to cover his tracks.",
+        "tactic_id": "",
+        "evidence_quote": "Overwrote system logs",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1078.003",
+        "technique_name": "Local Accounts",
+        "description": "Brody used a Linux administrator account to impersonate another employee, gaining elevated access under a different identity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "used a Linux administrator account to impersonate another employee",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1489",
+        "technique_name": "Service Stop",
+        "description": "From the enterprise GitHub server, Brody executed a script that terminated nearly all AWS EC2 instances, causing a major service interruption.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "used a script to 'terminate almost all instances in Amazon Web Services'",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": [
+          "AWS EC2"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Brody deleted code repositories hosted on the enterprise GitHub server.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Deleted code repositories",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1489",
+        "technique_name": "Service Stop",
+        "description": "Brody 'broke the Ansible Tower,' disabling the configuration management and automation platform used by the bank.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "broke the Ansible Tower",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1531",
+        "technique_name": "Account Access Removal",
+        "description": "Brody locked legitimate users out of the AWS EMR service, disrupting data processing operations.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "locked users out of an Amazon service called EMR",
+        "evidence_sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "aws_services_involved": [
+          "AWS EMR"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1025",
+        "target": "T1078.002",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Data from Removable Media",
+        "target_technique_name": "Valid Accounts: Domain Accounts",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "Brody plugs in two USB Sticks to his company-issued PC",
+          "Brody signs into First Republic VPN using MFA."
+        ]
+      },
+      {
+        "source": "T1078.002",
+        "target": "T1021.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Valid Accounts: Domain Accounts",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "Brody signs into First Republic VPN using MFA.",
+          "Logged into a Linux jump box"
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1070.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Remote Services: SSH",
+        "target_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "Logged into a Linux jump box",
+          "Overwrote system logs"
+        ]
+      },
+      {
+        "source": "T1070.002",
+        "target": "T1078.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "target_technique_name": "Local Accounts",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "Overwrote system logs",
+          "used a Linux administrator account to impersonate another employee"
+        ]
+      },
+      {
+        "source": "T1078.003",
+        "target": "T1489",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Local Accounts",
+        "target_technique_name": "Service Stop",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "used a Linux administrator account to impersonate another employee",
+          "used a script to 'terminate almost all instances in Amazon Web Services'"
+        ]
+      },
+      {
+        "source": "T1489",
+        "target": "T1485",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Service Stop",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "used a script to 'terminate almost all instances in Amazon Web Services'",
+          "Deleted code repositories"
+        ]
+      },
+      {
+        "source": "T1485",
+        "target": "T1489",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data Destruction",
+        "target_technique_name": "Service Stop",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "Deleted code repositories",
+          "broke the Ansible Tower"
+        ]
+      },
+      {
+        "source": "T1489",
+        "target": "T1531",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Service Stop",
+        "target_technique_name": "Account Access Removal",
+        "sources": [
+          "https://www.breaches.cloud/incidents/first-republic/"
+        ],
+        "evidence_quotes": [
+          "broke the Ansible Tower",
+          "locked users out of an Amazon service called EMR"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "first-republic-bank-2020-march",
+  "analyzed_at": "2026-04-15T20:55:01.171175+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 11232
+}

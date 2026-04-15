@@ -1,0 +1,201 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "an unauthorized third party obtained credentials to its Amazon Web Services-hosted cloud storage servers",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "subtechnique_id": "T1552.005",
+          "inferred": true,
+          "evidence_quote": "LogicGate did not say how the AWS credentials were compromised.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "credentials 'appear to have been used by an unauthorized third party to decrypt particular files stored in AWS S3 buckets in the LogicGate Risk Cloud backup environment'",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "Kunkel would not say, when asked, if the attacker also exfiltrated the decrypted customer data from its servers.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "Attacker obtained valid AWS credentials belonging to LogicGate, granting unauthorized access to the AWS environment hosting Risk Cloud backup storage.",
+      "evidence_quote": "an unauthorized third party obtained credentials to its Amazon Web Services-hosted cloud storage servers",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Using the compromised credentials, the attacker accessed AWS S3 buckets in the Risk Cloud backup environment and decrypted stored customer backup files.",
+      "evidence_quote": "credentials 'appear to have been used by an unauthorized third party to decrypt particular files stored in AWS S3 buckets in the LogicGate Risk Cloud backup environment'",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Attacker likely exfiltrated the decrypted customer backup data from S3, though LogicGate's CEO declined to confirm exfiltration occurred.",
+      "evidence_quote": "Kunkel would not say, when asked, if the attacker also exfiltrated the decrypted customer data from its servers.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "S3",
+    "IAM"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.65,
+  "initial_access_vector": "Compromised AWS credentials used by an unauthorized third party to access LogicGate's S3-hosted Risk Cloud backup environment",
+  "persistence_mechanism": null,
+  "privilege_escalation": null,
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Attacker obtained valid AWS credentials belonging to LogicGate, granting unauthorized access to the AWS environment hosting Risk Cloud backup storage.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "an unauthorized third party obtained credentials to its Amazon Web Services-hosted cloud storage servers",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Using the compromised credentials, the attacker accessed AWS S3 buckets in the Risk Cloud backup environment and decrypted stored customer backup files.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "credentials 'appear to have been used by an unauthorized third party to decrypt particular files stored in AWS S3 buckets in the LogicGate Risk Cloud backup environment'",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Attacker likely exfiltrated the decrypted customer backup data from S3, though LogicGate's CEO declined to confirm exfiltration occurred.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "Kunkel would not say, when asked, if the attacker also exfiltrated the decrypted customer data from its servers.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078",
+        "target": "T1530",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+        ],
+        "evidence_quotes": [
+          "an unauthorized third party obtained credentials to its Amazon Web Services-hosted cloud storage servers",
+          "credentials 'appear to have been used by an unauthorized third party to decrypt particular files stored in AWS S3 buckets in the LogicGate Risk Cloud backup environment'"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20210519233848/https://techcrunch.com/2021/04/13/logicgate-risk-cloud-data-breach/"
+        ],
+        "evidence_quotes": [
+          "credentials 'appear to have been used by an unauthorized third party to decrypt particular files stored in AWS S3 buckets in the LogicGate Risk Cloud backup environment'",
+          "Kunkel would not say, when asked, if the attacker also exfiltrated the decrypted customer data from its servers."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "logicgate-2021-april",
+  "analyzed_at": "2026-04-15T20:59:20.007105+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 2882
+}

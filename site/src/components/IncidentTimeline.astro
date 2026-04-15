@@ -159,7 +159,7 @@ const TACTIC_COLORS: Record<string, string> = {
   "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
 };
 
-const DATA_BASE = `${import.meta.env.BASE_URL}data`;
+const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
 
 function esc(s: unknown): string {
   return String(s ?? "")
@@ -210,6 +210,10 @@ function renderTimeline(incident: any, metaData: any) {
       return "";
     })();
     const sources = step.evidence_sources || [];
+    const sourceLinks = sources.slice(0, 3).map((s: string) => {
+      const label = s.replace(/^https?:\/\//, "");
+      return `<a class="step-source-link" href="${esc(s)}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
+    }).join("");
 
     const stepEl = document.createElement("div");
     stepEl.className = "chain-step";
@@ -232,9 +236,7 @@ function renderTimeline(incident: any, metaData: any) {
         ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${esc(s)}</span>`).join("")}</div>`
         : ""}
       ${evidenceQuote ? `<div class="step-evidence">“${esc(evidenceQuote)}”</div>` : ""}
-      ${sources.length
-        ? `<div class="step-sources">${sources.slice(0, 3).map((s: string) => `<a class="step-source-link" href="${esc(s)}" target="_blank" rel="noreferrer">${esc(s.replace(/^https?:\\/\\//, ""))}</a>`).join("")}</div>`
-        : ""}
+      ${sourceLinks ? `<div class="step-sources">${sourceLinks}</div>` : ""}
     `;
 
     // Tooltip with evidence quote

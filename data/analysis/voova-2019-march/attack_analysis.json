@@ -1,0 +1,141 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Root Cause: Stolen credentials by former employee",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "Stolen credentials by former employee",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "Impact: Deleted 23 servers",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "A former (sacked) IT employee used stolen/retained AWS credentials to authenticate into the victim organization's AWS environment after termination.",
+      "evidence_quote": "Root Cause: Stolen credentials by former employee",
+      "evidence_sources": [
+        "https://nakedsecurity.sophos.com/2019/03/22/sacked-it-guy-annihilates-23-of-his-ex-employers-aws-servers/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "After gaining access using the stolen credentials, the former employee deleted 23 AWS servers, destroying the organization's infrastructure.",
+      "evidence_quote": "Impact: Deleted 23 servers",
+      "evidence_sources": [
+        "https://nakedsecurity.sophos.com/2019/03/22/sacked-it-guy-annihilates-23-of-his-ex-employers-aws-servers/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon EC2"
+  ],
+  "impact_type": "Data Destruction",
+  "confidence_score": 0.5,
+  "initial_access_vector": "Former employee retained or stole valid AWS credentials after being terminated (sacked), then used those credentials to log into the organization's AWS environment.",
+  "persistence_mechanism": "No explicit persistence mechanism described; attacker leveraged pre-existing valid cloud account credentials.",
+  "privilege_escalation": "No privilege escalation described; the former IT employee already had sufficient permissions via their existing (or stolen) account to delete servers.",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "A former (sacked) IT employee used stolen/retained AWS credentials to authenticate into the victim organization's AWS environment after termination.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Root Cause: Stolen credentials by former employee",
+        "evidence_sources": [
+          "https://nakedsecurity.sophos.com/2019/03/22/sacked-it-guy-annihilates-23-of-his-ex-employers-aws-servers/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "After gaining access using the stolen credentials, the former employee deleted 23 AWS servers, destroying the organization's infrastructure.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Impact: Deleted 23 servers",
+        "evidence_sources": [
+          "https://nakedsecurity.sophos.com/2019/03/22/sacked-it-guy-annihilates-23-of-his-ex-employers-aws-servers/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1485",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://nakedsecurity.sophos.com/2019/03/22/sacked-it-guy-annihilates-23-of-his-ex-employers-aws-servers/"
+        ],
+        "evidence_quotes": [
+          "Root Cause: Stolen credentials by former employee",
+          "Impact: Deleted 23 servers"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "voova-2019-march",
+  "analyzed_at": "2026-04-15T21:14:15.191484+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 23699
+}

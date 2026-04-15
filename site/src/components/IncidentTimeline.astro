@@ -112,6 +112,40 @@
     height: 3px;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
+
+  .step-evidence {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border-left: 2px solid var(--border);
+    padding-left: 0.4rem;
+    line-height: 1.35;
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .step-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.45rem;
+  }
+
+  .step-source-link {
+    font-size: 0.62rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .step-source-link:hover {
+    background: var(--bg-tertiary);
+  }
 </style>
 
 <script>
@@ -156,7 +190,6 @@ function renderTimeline(incident: any, metaData: any) {
 
   const techniques = metaData.techniques || {};
   const tactics = metaData.tactics || {};
-
   const tip = document.getElementById("timeline-tooltip")!;
 
   const wrap = document.createElement("div");
@@ -166,6 +199,17 @@ function renderTimeline(incident: any, metaData: any) {
     const techInfo = techniques[step.technique_id] || {};
     const tacticId = (techInfo.tactic_ids || [])[0] || "";
     const color = TACTIC_COLORS[tacticId] || "#555";
+    const evidenceQuote = step.evidence_quote || (() => {
+      for (const tactic of (incident.tactics_used || [])) {
+        for (const tech of (tactic.techniques || [])) {
+          if (tech.technique_id === step.technique_id && tech.evidence_quote) {
+            return tech.evidence_quote;
+          }
+        }
+      }
+      return "";
+    })();
+    const sources = step.evidence_sources || [];
 
     const stepEl = document.createElement("div");
     stepEl.className = "chain-step";
@@ -187,26 +231,25 @@ function renderTimeline(incident: any, metaData: any) {
       ${(step.aws_services_involved || []).length
         ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${esc(s)}</span>`).join("")}</div>`
         : ""}
+      ${evidenceQuote ? `<div class="step-evidence">“${esc(evidenceQuote)}”</div>` : ""}
+      ${sources.length
+        ? `<div class="step-sources">${sources.slice(0, 3).map((s: string) => `<a class="step-source-link" href="${esc(s)}" target="_blank" rel="noreferrer">${esc(s.replace(/^https?:\\/\\//, ""))}</a>`).join("")}</div>`
+        : ""}
     `;
 
     // Tooltip with evidence quote
     const tacticName = tactics[tacticId]?.name || "";
     inner.addEventListener("mousemove", (e: MouseEvent) => {
-      // Find matching technique in tactics_used for evidence quote
-      let evidenceQuote = "";
-      for (const tactic of (incident.tactics_used || [])) {
-        for (const tech of (tactic.techniques || [])) {
-          if (tech.technique_id === step.technique_id && tech.evidence_quote) {
-            evidenceQuote = tech.evidence_quote;
-          }
-        }
-      }
+      const sourceList = sources.length
+        ? `<div style="margin-top:8px">${sources.slice(0, 3).map((s: string) => `<a href="${esc(s)}" target="_blank" rel="noreferrer" style="color:var(--blue)">source</a>`).join(" · ")}</div>`
+        : "";
       tip.innerHTML = `
         <span class="tid">${esc(step.technique_id)}</span>
         <strong>${esc(step.technique_name)}</strong>
         ${tacticName ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">${esc(tacticName)}</div>` : ""}
         ${step.description ? `<div style="margin-top:6px;font-size:0.78rem">${esc(step.description)}</div>` : ""}
         ${evidenceQuote ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted);font-style:italic;border-left:2px solid var(--border);padding-left:6px">&ldquo;${esc(evidenceQuote)}&rdquo;</div>` : ""}
+        ${sourceList}
       `;
       tip.classList.add("visible");
       tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 300) + "px";

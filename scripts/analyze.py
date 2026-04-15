@@ -24,6 +24,7 @@ Usage:
 import argparse
 import json
 import logging
+import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -126,6 +127,18 @@ ATTACK_ANALYSIS_TOOL = {
                         "description": {
                             "type": "string",
                             "description": "Concise description of what the attacker did at this step",
+                        },
+                        "evidence_quote": {
+                            "type": ["string", "null"],
+                            "description": (
+                                "Short verbatim or near-verbatim quote from the source text "
+                                "that supports this chain step."
+                            ),
+                        },
+                        "evidence_sources": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "description": "Source URLs that directly support this step.",
                         },
                         "aws_services_involved": {
                             "type": "array",
@@ -288,7 +301,11 @@ def _build_context(incident_dir: Path) -> tuple[str, int]:
         # Include links list for context
         links = meta.get("links", [])
         if links:
-            parts.append(f"\nSource URLs: {', '.join(l.get('url','') for l in links[:5])}")
+            parts.append("\nSource URLs:")
+            for i, link in enumerate(links[:10], 1):
+                url = (link.get("url") or "").strip()
+                if url:
+                    parts.append(f"{i}. {url}")
         parts.append("\n")
 
     # All crawled markdown files
@@ -321,16 +338,129 @@ def _build_context(incident_dir: Path) -> tuple[str, int]:
 
 # ── Validation ────────────────────────────────────────────────────────────────
 
+def _normalize_technique_id(value: str) -> str:
+    return (value or "").strip().upper().replace(" ", "")
+
+
+def _sanitize_chain_steps(steps: list) -> list[dict]:
+    normalized_steps: list[dict] = []
+
+    for idx, raw_step in enumerate(steps):
+        if not isinstance(raw_step, dict):
+            continue
+
+        step = dict(raw_step)
+        step["technique_id"] = _normalize_technique_id(str(step.get("technique_id", "")))
+        if not step["technique_id"]:
+            continue
+
+        raw_step_no = step.get("step")
+        if not isinstance(raw_step_no, int) or raw_step_no <= 0:
+            step["step"] = idx + 1
+
+        # Ensure evidence fields are simple strings/lists for downstream renderers.
+        quote = step.get("evidence_quote")
+        if quote is not None and not isinstance(quote, str):
+            step["evidence_quote"] = str(quote)
+        elif quote is None:
+            step["evidence_quote"] = None
+
+        sources = step.get("evidence_sources")
+        if sources is None:
+            step["evidence_sources"] = []
+        else:
+            if not isinstance(sources, list):
+                sources = [str(sources)]
+            step["evidence_sources"] = [str(s).strip() for s in sources if str(s).strip()]
+
+        normalized_steps.append(step)
+
+    return sorted(normalized_steps, key=lambda s: int(s.get("step", 0)))
+
+
 def _validate_techniques(analysis: dict, known_ids: set[str]) -> dict:
     """Mark unknown technique IDs as validated=False."""
     for tactic in analysis.get("tactics_used", []):
+        if not isinstance(tactic, dict):
+            continue
         for tech in tactic.get("techniques", []):
-            tech["validated"] = tech["technique_id"] in known_ids
+            if not isinstance(tech, dict):
+                continue
+            tech_id = _normalize_technique_id(str(tech.get("technique_id", "")))
+            tech["technique_id"] = tech_id
+            tech["validated"] = bool(tech_id and tech_id in known_ids)
 
-    for step in analysis.get("attack_chain", []):
+    attack_chain = _sanitize_chain_steps(analysis.get("attack_chain", []))
+    for step in attack_chain:
         step["validated"] = step["technique_id"] in known_ids
+    analysis["attack_chain"] = attack_chain
 
     return analysis
+
+
+def _build_attack_chain_graph(analysis: dict, attack_data: dict) -> dict:
+    """Build a per-incident chain graph with evidence references."""
+    chain = _sanitize_chain_steps(analysis.get("attack_chain", []))
+    technique_lookup = attack_data.get("techniques", {})
+
+    nodes: list[dict] = []
+    edges: list[dict] = []
+
+    for step in chain:
+        tid = step.get("technique_id", "")
+        if not tid:
+            continue
+        technique_info = technique_lookup.get(tid, {})
+        tactic_ids = technique_info.get("tactic_ids", [])
+        tactic_id = tactic_ids[0] if tactic_ids else ""
+        nodes.append({
+            "step": step.get("step"),
+            "technique_id": tid,
+            "technique_name": technique_info.get("name", step.get("technique_name", tid)),
+            "description": step.get("description", ""),
+            "tactic_id": tactic_id,
+            "evidence_quote": step.get("evidence_quote"),
+            "evidence_sources": step.get("evidence_sources", []),
+            "aws_services_involved": step.get("aws_services_involved", []),
+        })
+
+    for i in range(len(nodes) - 1):
+        src = nodes[i]
+        tgt = nodes[i + 1]
+        if not src["technique_id"] or not tgt["technique_id"] or src["technique_id"] == tgt["technique_id"]:
+            continue
+        edges.append({
+            "source": src["technique_id"],
+            "target": tgt["technique_id"],
+            "source_step": src["step"],
+            "target_step": tgt["step"],
+            "source_technique_name": src["technique_name"],
+            "target_technique_name": tgt["technique_name"],
+            "sources": sorted(
+                set((src.get("evidence_sources") or []) + (tgt.get("evidence_sources") or []))
+            ),
+            "evidence_quotes": [
+                q for q in [
+                    src.get("evidence_quote"),
+                    tgt.get("evidence_quote"),
+                ]
+                if isinstance(q, str) and q.strip()
+            ],
+        })
+
+    return {"nodes": nodes, "edges": edges}
+
+
+def _ensure_attack_data() -> None:
+    """Fetch MITRE data lazily when needed."""
+    if ATTACK_DATA_PATH.exists():
+        return
+    fetch_script = Path(__file__).parent / "fetch_attack_data.py"
+    log.warning("MITRE ATT&CK data not found; attempting one-time refresh %s", ATTACK_DATA_PATH)
+    subprocess.run(
+        [sys.executable, str(fetch_script), "--force"],
+        check=True,
+    )
 
 
 # ── Per-incident analysis ─────────────────────────────────────────────────────
@@ -387,6 +517,11 @@ def analyze_incident(
         # Validate technique IDs against known cloud techniques
         known_ids = set(attack_data.get("techniques", {}).keys())
         analysis = _validate_techniques(analysis, known_ids)
+        analysis["attack_chain_graph"] = _build_attack_chain_graph(analysis, attack_data)
+        analysis["framework"] = {
+            "name": "mitre-attack",
+            "version": attack_data.get("attack_version", "unknown"),
+        }
 
         # Cap confidence for very sparse incidents
         raw_confidence = analysis.get("confidence_score", 0.5)
@@ -485,16 +620,32 @@ def main():
         default=DEFAULT_MODEL,
         help=f"Claude model to use (default: {DEFAULT_MODEL})",
     )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug logs",
+    )
+    parser.add_argument(
+        "--ensure-attack-data",
+        action="store_true",
+        help="Fetch ATT&CK data automatically if not already present",
+    )
     args = parser.parse_args()
+
+    if args.debug:
+        log.setLevel(logging.DEBUG)
 
     # Load MITRE ATT&CK data for validation
     if not ATTACK_DATA_PATH.exists():
-        log.error(
-            "MITRE ATT&CK data not found at %s. "
-            "Run scripts/fetch_attack_data.py first.",
-            ATTACK_DATA_PATH,
-        )
-        sys.exit(1)
+        if args.ensure_attack_data:
+            _ensure_attack_data()
+        else:
+            log.error(
+                "MITRE ATT&CK data not found at %s. "
+                "Run scripts/fetch_attack_data.py first (or pass --ensure-attack-data).",
+                ATTACK_DATA_PATH,
+            )
+            sys.exit(1)
 
     attack_data = json.loads(ATTACK_DATA_PATH.read_text(encoding="utf-8"))
     log.info(

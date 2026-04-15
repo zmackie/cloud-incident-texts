@@ -120,6 +120,7 @@ def build_attack_graph(analyses: list[dict], technique_freq: dict) -> dict:
     """
     edge_counts: Counter = Counter()
     edge_incidents: dict[tuple, list] = defaultdict(list)
+    edge_evidence: dict[tuple, list] = defaultdict(list)
 
     for analysis in analyses:
         slug = analysis.get("incident_slug", "unknown")
@@ -133,6 +134,12 @@ def build_attack_graph(analyses: list[dict], technique_freq: dict) -> dict:
                 edge = (src, tgt)
                 edge_counts[edge] += 1
                 edge_incidents[edge].append(slug)
+                for quote in (
+                    sorted_chain[i].get("evidence_quote"),
+                    sorted_chain[i + 1].get("evidence_quote"),
+                ):
+                    if isinstance(quote, str) and quote.strip():
+                        edge_evidence[edge].append(quote.strip())
 
     # Nodes: all techniques that appear in at least one chain
     node_ids = set(technique_freq.keys())
@@ -159,6 +166,7 @@ def build_attack_graph(analyses: list[dict], technique_freq: dict) -> dict:
             "target": tgt,
             "count": count,
             "incidents": sorted(set(edge_incidents[(src, tgt)])),
+            "evidence_quotes": sorted(set(edge_evidence[(src, tgt)]))[:2],
         })
 
     return {"nodes": nodes, "edges": edges}
@@ -242,6 +250,10 @@ def main():
         default=str(SITE_DATA_DIR),
         help=f"Output site_data directory (default: {SITE_DATA_DIR})",
     )
+    parser.add_argument(
+        "--slug",
+        help="Only include this specific incident slug (useful for iterative review)",
+    )
     args = parser.parse_args()
 
     analysis_dir = Path(args.analysis_dir)
@@ -270,6 +282,10 @@ def main():
         analyses = []
     else:
         analyses = load_analyses(analysis_dir)
+    if args.slug:
+        analyses = [a for a in analyses if a.get("incident_slug") == args.slug]
+        log.info("Filtered analyses to slug=%s => %d", args.slug, len(analyses))
+
     if not analyses:
         log.warning("No analyses found. Run analyze.py first.")
         # Still write empty files so the site loads without errors

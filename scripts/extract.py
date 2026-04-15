@@ -101,6 +101,17 @@ def _fetch_raw(url: str, timeout: int = 20) -> Optional[requests.Response]:
         return None
 
 
+def _head_content_type(url: str, timeout: int = 10) -> str:
+    """Cheap HEAD request just to read Content-Type. Returns "" on failure."""
+    try:
+        resp = _SESSION.head(url, timeout=timeout, allow_redirects=True)
+        if resp.status_code < 400:
+            return resp.headers.get("content-type", "") or ""
+    except Exception as e:
+        log.debug("HEAD failed for %s: %s", url, e)
+    return ""
+
+
 def _is_pdf(resp: requests.Response) -> bool:
     ct = resp.headers.get("content-type", "").lower()
     return "pdf" in ct or resp.url.lower().endswith(".pdf")
@@ -261,7 +272,14 @@ def extract_youtube(url: str) -> str:
         return ""
 
     try:
-        transcripts = YouTubeTranscriptApi.list_transcripts(vid)
+        # youtube-transcript-api >=1.0 removed the static `list_transcripts`
+        # classmethod in favor of the instance method `.list()` on
+        # `YouTubeTranscriptApi()`.  Support both so the extractor keeps
+        # working across the version ranges allowed by pyproject.toml.
+        try:
+            transcripts = YouTubeTranscriptApi().list(vid)
+        except AttributeError:
+            transcripts = YouTubeTranscriptApi.list_transcripts(vid)
         # Prefer manually-created English, then any manual, then auto English,
         # then any auto-generated.
         for finder in (
@@ -368,6 +386,15 @@ def extract_url(url: str, use_vision: bool = True) -> dict:
             result["method"] = "youtube_transcript"
             return result
         # fall through to Jina for at least the video description
+
+    # URL-only heuristics miss PDFs served from signed / query endpoints
+    # (no ".pdf" suffix).  Do a cheap HEAD probe to pick up the real
+    # Content-Type before Jina swallows it.  Skip for YouTube/archive
+    # since those are already correctly classified from the host.
+    if result["source_type"] in ("article", "other"):
+        ct = _head_content_type(url)
+        if ct:
+            result["source_type"] = classify_source(url, content_type=ct)
 
     # 1 ── Jina AI reader (handles HTML + PDFs + JS pages)
     text = extract_with_jina(url)

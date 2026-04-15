@@ -148,12 +148,17 @@ def _probe_source_type(url: str, timeout: int = 10) -> tuple[str, bytes]:
             headers={"Range": "bytes=0-2047"},
             stream=True,
         )
-        if resp.status_code < 400:
-            ct = resp.headers.get("content-type", "") or ""
-            try:
-                snippet = next(resp.iter_content(chunk_size=2048), b"") or b""
-            except Exception:
-                snippet = b""
+        try:
+            if resp.status_code < 400:
+                ct = resp.headers.get("content-type", "") or ""
+                try:
+                    snippet = next(resp.iter_content(chunk_size=2048), b"") or b""
+                except Exception:
+                    snippet = b""
+        finally:
+            # Always release the socket — on 4xx/5xx we previously left
+            # the streamed response open, which leaks connections and can
+            # exhaust the session pool across a large crawl.
             resp.close()
     except Exception as e:
         log.debug("Range GET probe failed for %s: %s", url, e)

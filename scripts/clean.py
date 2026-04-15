@@ -198,9 +198,49 @@ def parse_jina_header(raw: str) -> dict:
     return out
 
 
+_FRONTMATTER_KV_RE = re.compile(
+    r"^[A-Za-z_][A-Za-z0-9_]*\s*:"  # key followed by colon
+)
+
+
 def has_frontmatter(text: str) -> bool:
-    """True if the file already starts with a --- YAML frontmatter block."""
-    return text.lstrip().startswith("---\n") or text.lstrip().startswith("---\r\n")
+    """True iff the file opens with a *real* YAML-ish frontmatter block.
+
+    The block must have:
+      * an opening ``---`` line (ignoring leading whitespace),
+      * at least one ``key: value`` metadata line,
+      * a closing ``---`` line,
+    all within the first ~100 lines so we don't scan huge bodies.
+
+    The previous implementation accepted any text whose first non-blank
+    line was ``---``, which mis-classified raw markdown inputs that
+    legitimately start with a thematic break and sent them down the
+    ``already_clean`` fast path, skipping cleanup + metadata extraction.
+    """
+    stripped = text.lstrip()
+    if not (stripped.startswith("---\n") or stripped.startswith("---\r\n")):
+        return False
+    lines = stripped.splitlines()
+    if not lines:
+        return False
+    # Scan from the line after the opening `---` for a closing `---`,
+    # verifying we saw at least one valid key: value line in between.
+    saw_kv = False
+    # Cap the scan so a gigantic raw body doesn't become pathological.
+    for line in lines[1 : min(len(lines), 200)]:
+        stripped_line = line.strip()
+        if stripped_line == "---":
+            return saw_kv
+        # Blank lines inside the block are permitted.
+        if not stripped_line:
+            continue
+        if _FRONTMATTER_KV_RE.match(stripped_line):
+            saw_kv = True
+            continue
+        # Any non-blank, non-key line before a closing `---` disqualifies
+        # this as a frontmatter block (e.g. a thematic-break paragraph).
+        return False
+    return False
 
 
 # ---------------------------------------------------------------------------

@@ -20,6 +20,7 @@ from clean import (  # noqa: E402
     apply_drops,
     clean_markdown,
     extract_json_object,
+    has_frontmatter,
     heuristic_clean,
     parse_jina_header,
     verify_body_is_subset,
@@ -232,3 +233,67 @@ def test_clean_markdown_already_clean_is_idempotent():
     # Round-trip: rendering then re-cleaning yields the same output.
     result2 = clean_markdown(rendered, use_llm=False)
     assert result2.to_markdown() == rendered
+
+
+# ---------------------------------------------------------------------------
+# has_frontmatter: must require a real frontmatter block, not just a leading
+# `---` line (which could be a markdown thematic break).
+# ---------------------------------------------------------------------------
+
+def test_has_frontmatter_true_for_real_block():
+    text = (
+        "---\n"
+        'title: "X"\n'
+        "url: https://example.com\n"
+        "---\n"
+        "\n"
+        "body\n"
+    )
+    assert has_frontmatter(text) is True
+
+
+def test_has_frontmatter_false_for_thematic_break():
+    """A raw markdown doc that merely starts with a `---` thematic break
+    must NOT be treated as already-cleaned."""
+    text = (
+        "---\n"
+        "\n"
+        "This is a real article that uses a horizontal rule as a divider.\n"
+        "No YAML metadata follows.\n"
+    )
+    assert has_frontmatter(text) is False
+
+
+def test_has_frontmatter_false_for_opener_without_close():
+    text = (
+        "---\n"
+        'title: "Never closed"\n'
+        "real body after key-looking line with no terminating ---\n"
+    )
+    assert has_frontmatter(text) is False
+
+
+def test_has_frontmatter_false_for_empty_block():
+    # Open + close but no metadata lines → not a frontmatter.
+    text = "---\n---\nbody\n"
+    assert has_frontmatter(text) is False
+
+
+def test_clean_markdown_skips_already_clean_fastpath_for_thematic_break():
+    """Regression: a raw doc starting with `---` used to hit the
+    `already_clean` fast path and skip heuristic cleanup entirely."""
+    raw = (
+        "Title: Story Title\n"
+        "\n"
+        "URL Source: https://example.com/post\n"
+        "\n"
+        "Markdown Content:\n"
+        "---\n"
+        "\n"
+        "Actual article body line 1.\n"
+        "Actual article body line 2.\n"
+    )
+    result = clean_markdown(raw, use_llm=False)
+    assert result.cleanup_method != "already_clean"
+    # Title should come from the Jina header, not be empty.
+    assert result.title == "Story Title"

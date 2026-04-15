@@ -122,3 +122,24 @@ def test_probe_returns_empty_when_both_fail():
          mock.patch.object(extract._SESSION, "get",
                            side_effect=Exception("nope")):
         assert extract._probe_source_type("https://example.com/x") == ("", b"")
+
+
+def test_probe_closes_response_on_4xx():
+    """Regression: on 4xx/5xx the streamed response used to leak — only
+    the <400 branch closed it. Now both paths must call .close()."""
+    rejected = _fake_response(403, "")
+    with mock.patch.object(extract._SESSION, "head",
+                           return_value=_fake_response(405, "")), \
+         mock.patch.object(extract._SESSION, "get", return_value=rejected):
+        ct, snippet = extract._probe_source_type("https://example.com/x")
+        assert (ct, snippet) == ("", b"")
+    rejected.close.assert_called_once()
+
+
+def test_probe_closes_response_on_success():
+    ok = _fake_response(206, "application/pdf", b"%PDF-..")
+    with mock.patch.object(extract._SESSION, "head",
+                           return_value=_fake_response(405, "")), \
+         mock.patch.object(extract._SESSION, "get", return_value=ok):
+        extract._probe_source_type("https://example.com/x")
+    ok.close.assert_called_once()

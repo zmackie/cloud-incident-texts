@@ -55,6 +55,41 @@ ARTICLES_DIR = DATA_DIR / "articles"
 
 _RAW_FILE_RE = re.compile(r"^link_(\d+)\.md$")
 
+# Simple YAML-ish frontmatter reader that matches what Cleaned.to_markdown
+# emits: `key: value` or `key: "quoted value"`, one per line, terminated
+# by a `---` line. Good enough for the small, known schema we produce;
+# deliberately doesn't pull in PyYAML.
+_FRONTMATTER_LINE_RE = re.compile(
+    r'^([A-Za-z_][A-Za-z0-9_]*):\s*(?:"((?:[^"\\]|\\.)*)"|(.*?))\s*$'
+)
+
+
+def _read_clean_frontmatter(path: Path) -> dict:
+    """Parse title/author/published/etc. out of a .clean.md file's frontmatter.
+
+    Returns an empty dict if the file is missing or lacks frontmatter.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except Exception:
+        return {}
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return {}
+    out: dict[str, str] = {}
+    for line in lines[1:]:
+        if line.strip() == "---":
+            break
+        m = _FRONTMATTER_LINE_RE.match(line)
+        if not m:
+            continue
+        key = m.group(1)
+        val = m.group(2) if m.group(2) is not None else (m.group(3) or "")
+        # Undo the escaping Cleaned.to_markdown applies to quoted values.
+        val = val.replace('\\"', '"').replace("\\\\", "\\")
+        out[key] = val
+    return out
+
 
 def _load_metadata(slug_dir: Path) -> Optional[dict]:
     meta_path = slug_dir / "metadata.json"
@@ -214,6 +249,7 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
             status_by_file.setdefault(raw_legacy, entry)
 
     results = []
+    metadata_dirty = not dry_run and bool(migrated_stems)
     for raw_md in sorted(slug_dir.glob("link_*.md")):
         if raw_md.name.endswith(".clean.md") or raw_md.name.endswith(".raw.md"):
             continue
@@ -236,27 +272,44 @@ def backfill_incident(slug_dir: Path, use_llm: bool, dry_run: bool) -> list[dict
             existing_status["title"] = r["title"]
             existing_status["author"] = r["author"]
             existing_status["published"] = r["published"]
+            metadata_dirty = True
         elif (
-            not dry_run
+            r["action"] == "skip_already_clean"
+            and not dry_run
             and existing_status
-            and raw_md.stem in migrated_stems
         ):
-            # File was migrated from legacy layout (swap only, no re-clean)
-            # so clean_one_link returned skip_already_clean. The metadata
-            # entry still references the legacy scheme (stale `raw_file`,
-            # missing `clean_file`); fix it up so the on-disk layout and
-            # metadata stay in sync.
-            existing_status["file"] = raw_md.name
-            existing_status["clean_file"] = r["clean_file"]
-            existing_status.pop("raw_file", None)
-            existing_status.setdefault("source_type", source_type)
+            # Clean file already exists on disk but metadata may be stale:
+            #   - legacy migration (raw_file pointer, no clean_file)
+            #   - crash recovery: clean file written but process died
+            #     before _save_metadata in a prior run
+            # Repair structural fields unconditionally and backfill
+            # title/author/published/cleanup_method from the clean file's
+            # frontmatter when the entry is missing them.
+            clean_path = raw_md.with_name(raw_md.stem + ".clean.md")
+            fm = _read_clean_frontmatter(clean_path)
+            if (
+                existing_status.get("file") != raw_md.name
+                or existing_status.get("clean_file") != clean_path.name
+                or "raw_file" in existing_status
+            ):
+                existing_status["file"] = raw_md.name
+                existing_status["clean_file"] = clean_path.name
+                existing_status.pop("raw_file", None)
+                metadata_dirty = True
+            if source_type and not existing_status.get("source_type"):
+                existing_status["source_type"] = source_type
+                metadata_dirty = True
+            for key in ("title", "author", "published", "cleanup_method",
+                        "source_type"):
+                val = fm.get(key)
+                if val and not existing_status.get(key):
+                    existing_status[key] = val
+                    metadata_dirty = True
 
         if r["action"] == "cleaned":
             time.sleep(1.0)  # polite delay — each clean call may hit Anthropic
 
-    any_migrated = not dry_run and bool(migrated_stems)
-    any_cleaned = any(r["action"] == "cleaned" for r in results)
-    if not dry_run and (any_cleaned or any_migrated):
+    if not dry_run and metadata_dirty:
         _save_metadata(slug_dir, meta)
 
     return results

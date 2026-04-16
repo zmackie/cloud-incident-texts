@@ -24,6 +24,7 @@ Usage:
 import argparse
 import json
 import logging
+import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -155,6 +156,35 @@ ATTACK_ANALYSIS_TOOL = {
                             "type": "array",
                             "items": {"type": "string"},
                             "description": "Source URLs that directly support this step.",
+                        },
+                        "evidence_chunks": {
+                            "type": "array",
+                            "description": "Optional source-chunk references that ground this step in crawled text.",
+                            "items": {
+                                "type": "object",
+                                "required": ["chunk_id", "source_file"],
+                                "properties": {
+                                    "chunk_id": {"type": "string", "description": "Stable chunk identifier, e.g. link_00.md#c003"},
+                                    "source_file": {"type": "string", "description": "Crawled markdown file name, e.g. link_00.md"},
+                                    "char_start": {"type": ["integer", "null"]},
+                                    "char_end": {"type": ["integer", "null"]},
+                                    "quote": {"type": ["string", "null"]},
+                                },
+                            },
+                        },
+                        "event_time": {
+                            "type": ["string", "null"],
+                            "description": "ISO timestamp for this step if directly supported by source text.",
+                        },
+                        "event_time_precision": {
+                            "type": ["string", "null"],
+                            "description": "Precision for event_time (exact, day, month, year, relative, unknown).",
+                        },
+                        "ordering_confidence": {
+                            "type": ["number", "null"],
+                            "minimum": 0,
+                            "maximum": 1,
+                            "description": "Confidence in this step's relative ordering.",
                         },
                         "aws_services_involved": {
                             "type": "array",
@@ -297,7 +327,32 @@ SCENARIO_TEMPLATE_TOOL = {
 
 # ── Context assembly ──────────────────────────────────────────────────────────
 
-def _build_context(incident_dir: Path) -> tuple[str, int]:
+def _chunk_markdown_text(source_file: str, text: str) -> list[dict]:
+    """Chunk markdown text into paragraph blocks with deterministic IDs."""
+    chunks: list[dict] = []
+    cursor = 0
+    paragraph_index = 0
+    for block in re.split(r"\n\s*\n", text):
+        content = block.strip()
+        if len(content) < 60:
+            continue
+        start = text.find(content, cursor)
+        if start < 0:
+            start = cursor
+        end = start + len(content)
+        cursor = end
+        paragraph_index += 1
+        chunks.append({
+            "chunk_id": f"{source_file}#c{paragraph_index:03d}",
+            "source_file": source_file,
+            "char_start": start,
+            "char_end": end,
+            "text": content,
+        })
+    return chunks
+
+
+def _build_context(incident_dir: Path) -> tuple[str, int, list[dict]]:
     """
     Assemble the analysis context from metadata + crawled markdown files.
 
@@ -324,12 +379,16 @@ def _build_context(incident_dir: Path) -> tuple[str, int]:
                     parts.append(f"{i}. {url}")
         parts.append("\n")
 
+    source_chunks: list[dict] = []
+
     # All crawled markdown files
     md_files = sorted(incident_dir.glob("link_*.md"))
     for md_file in md_files:
         text = md_file.read_text(encoding="utf-8").strip()
         if not text:
             continue
+        chunks = _chunk_markdown_text(md_file.name, text)
+        source_chunks.extend(chunks)
         parts.append(f"\n---\n## Source: {md_file.name}\n\n{text}\n")
 
     context = "\n".join(parts)
@@ -349,7 +408,7 @@ def _build_context(incident_dir: Path) -> tuple[str, int]:
                 total_chars, len(context), incident_dir.name,
             )
 
-    return context, total_chars
+    return context, total_chars, source_chunks
 
 
 # ── Validation ────────────────────────────────────────────────────────────────
@@ -388,6 +447,35 @@ def _sanitize_chain_steps(steps: list) -> list[dict]:
             if not isinstance(sources, list):
                 sources = [str(sources)]
             step["evidence_sources"] = [str(s).strip() for s in sources if str(s).strip()]
+
+        # Normalize optional chunk references.
+        chunks = step.get("evidence_chunks")
+        normalized_chunks: list[dict] = []
+        if isinstance(chunks, list):
+            for raw_chunk in chunks:
+                if not isinstance(raw_chunk, dict):
+                    continue
+                chunk_id = str(raw_chunk.get("chunk_id", "")).strip()
+                source_file = str(raw_chunk.get("source_file", "")).strip()
+                if not chunk_id or not source_file:
+                    continue
+                normalized_chunks.append({
+                    "chunk_id": chunk_id,
+                    "source_file": source_file,
+                    "char_start": raw_chunk.get("char_start") if isinstance(raw_chunk.get("char_start"), int) else None,
+                    "char_end": raw_chunk.get("char_end") if isinstance(raw_chunk.get("char_end"), int) else None,
+                    "quote": str(raw_chunk.get("quote")).strip() if raw_chunk.get("quote") else None,
+                })
+        step["evidence_chunks"] = normalized_chunks
+
+        # Normalize timeline metadata.
+        step["event_time"] = str(step.get("event_time")).strip() if step.get("event_time") else None
+        step["event_time_precision"] = str(step.get("event_time_precision")).strip() if step.get("event_time_precision") else None
+        ordering_conf = step.get("ordering_confidence")
+        if isinstance(ordering_conf, (int, float)):
+            step["ordering_confidence"] = max(0.0, min(float(ordering_conf), 1.0))
+        else:
+            step["ordering_confidence"] = None
 
         normalized_steps.append(step)
 
@@ -510,6 +598,7 @@ def _normalize_analysis(
     attack_data: dict,
     incident_dir: Path,
     total_chars: int,
+    source_chunks: list[dict],
 ) -> dict:
     source_urls = _load_incident_source_urls(incident_dir)
     known_ids = set(attack_data.get("techniques", {}).keys())
@@ -522,6 +611,28 @@ def _normalize_analysis(
     for step in analysis.get("attack_chain", []):
         if not step.get("evidence_sources"):
             step["evidence_sources"] = list(source_urls)
+        if not step.get("evidence_chunks"):
+            quote = str(step.get("evidence_quote") or "").strip().lower()
+            if quote:
+                matches = []
+                for chunk in source_chunks:
+                    if quote and quote in chunk["text"].lower():
+                        matches.append({
+                            "chunk_id": chunk["chunk_id"],
+                            "source_file": chunk["source_file"],
+                            "char_start": chunk["char_start"],
+                            "char_end": chunk["char_end"],
+                            "quote": step.get("evidence_quote"),
+                        })
+                    if len(matches) >= 3:
+                        break
+                step["evidence_chunks"] = matches
+            else:
+                step["evidence_chunks"] = []
+        if step.get("ordering_confidence") is None:
+            step["ordering_confidence"] = 0.75 if step.get("validated") else 0.45
+        if not step.get("event_time_precision"):
+            step["event_time_precision"] = "unknown"
 
     raw_confidence = analysis.get("confidence_score")
     if not isinstance(raw_confidence, (int, float)):
@@ -658,7 +769,7 @@ def analyze_incident(
         log.info("[%s] already analyzed, skipping", slug)
         return {"slug": slug, "status": "skipped"}
 
-    context, total_chars = _build_context(incident_dir)
+    context, total_chars, source_chunks = _build_context(incident_dir)
 
     if total_chars < 50:
         log.warning("[%s] insufficient text (%d chars), skipping", slug, total_chars)
@@ -675,7 +786,13 @@ def analyze_incident(
             analysis = _request_attack_analysis(client, model, context, best_effort=True)
 
         # Validate technique IDs against known cloud techniques
-        analysis = _normalize_analysis(analysis, attack_data, incident_dir, total_chars)
+        analysis = _normalize_analysis(
+            analysis,
+            attack_data,
+            incident_dir,
+            total_chars,
+            source_chunks,
+        )
         analysis["attack_chain_graph"] = _build_attack_chain_graph(analysis, attack_data)
         analysis["framework"] = {
             "name": "mitre-attack",

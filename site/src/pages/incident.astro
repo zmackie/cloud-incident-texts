@@ -175,14 +175,15 @@ async function init() {
     const techniques = metaData.techniques || {};
 
     // Update page title
-    document.title = `${incident.incident_slug} · Cloud Incident ATT&CK`;
+    document.title = `${incident.incident_name || incident.incident_slug} · Cloud Incident ATT&CK`;
 
     // Render header
     const confPct = Math.round((incident.confidence_score || 0) * 100);
     headerEl.outerHTML = `
       <div>
-        <div class="incident-title">${esc(incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
+        <div class="incident-title">${esc(incident.incident_name || incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem">
+          ${incident.incident_date ? `<span class="badge blue">${esc(incident.incident_date)}</span>` : ""}
           ${incident.impact_type ? `<span class="badge accent">${esc(incident.impact_type)}</span>` : ""}
           <div class="confidence">
             <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
@@ -235,6 +236,8 @@ async function init() {
     // Incident meta card
     const metaList = document.getElementById("meta-list")!;
     const metaFields = [
+      ["Incident date", incident.incident_date],
+      ["Root cause", incident.incident_root_cause],
       ["Initial Access", incident.initial_access_vector],
       ["Privilege Escalation", incident.privilege_escalation],
       ["Persistence", incident.persistence_mechanism],

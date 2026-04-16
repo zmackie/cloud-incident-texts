@@ -37,6 +37,7 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 ANALYSIS_DIR = DATA_DIR / "analysis"
 SITE_DATA_DIR = Path(__file__).parent.parent / "site" / "public" / "data"
 ATTACK_DATA_PATH = DATA_DIR / "mitre_attack_cloud.json"
+ARTICLES_DIR = DATA_DIR / "articles"
 
 
 def load_analyses(analysis_dir: Path) -> list[dict]:
@@ -172,11 +173,22 @@ def build_attack_graph(analyses: list[dict], technique_freq: dict) -> dict:
     return {"nodes": nodes, "edges": edges}
 
 
+def _load_article_metadata(slug: str) -> dict:
+    path = ARTICLES_DIR / slug / "metadata.json"
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
 def build_incidents_index(analyses: list[dict]) -> list[dict]:
     """Lightweight per-incident index for list/browse views."""
     index = []
     for analysis in sorted(analyses, key=lambda a: a.get("incident_slug", "")):
         slug = analysis.get("incident_slug", "unknown")
+        meta = _load_article_metadata(slug)
 
         technique_ids = list(dict.fromkeys(  # unique, preserving order
             s["technique_id"]
@@ -186,15 +198,48 @@ def build_incidents_index(analyses: list[dict]) -> list[dict]:
 
         index.append({
             "slug": slug,
-            "name": slug.replace("-", " ").title(),  # fallback display name
+            "name": meta.get("name") or slug.replace("-", " ").title(),  # fallback display name
             "technique_ids": technique_ids,
             "aws_services": analysis.get("aws_services", []),
             "impact_type": analysis.get("impact_type", ""),
+            "initial_access_vector": analysis.get("initial_access_vector", ""),
+            "event_date": meta.get("date", ""),
             "data_exfiltrated": analysis.get("data_exfiltrated", False),
             "confidence_score": analysis.get("confidence_score", 0),
             "analyzed_at": analysis.get("analyzed_at", ""),
         })
     return index
+
+
+def build_catalog(incidents_index: list[dict]) -> dict:
+    """Grouped catalog views for navigation."""
+    by_impact: dict[str, list[dict]] = defaultdict(list)
+    by_initial_access: dict[str, list[dict]] = defaultdict(list)
+    by_year: dict[str, list[dict]] = defaultdict(list)
+
+    for inc in incidents_index:
+        by_impact[inc.get("impact_type") or "Unknown"].append(inc)
+        by_initial_access[inc.get("initial_access_vector") or "Unknown"].append(inc)
+        date_value = str(inc.get("event_date", "")).strip()
+        year = date_value[:4] if len(date_value) >= 4 and date_value[:4].isdigit() else "Unknown"
+        by_year[year].append(inc)
+
+    def _sort_groups(groups: dict[str, list[dict]]) -> list[dict]:
+        ordered = sorted(groups.items(), key=lambda item: (-len(item[1]), item[0]))
+        return [
+            {
+                "group": key,
+                "count": len(items),
+                "incidents": sorted(items, key=lambda x: x.get("name", "")),
+            }
+            for key, items in ordered
+        ]
+
+    return {
+        "by_impact": _sort_groups(by_impact),
+        "by_initial_access": _sort_groups(by_initial_access),
+        "by_year": _sort_groups(by_year),
+    }
 
 
 def write_per_incident_files(analyses: list[dict], out_dir: Path):
@@ -204,8 +249,13 @@ def write_per_incident_files(analyses: list[dict], out_dir: Path):
 
     for analysis in analyses:
         slug = analysis.get("incident_slug", "unknown")
+        meta = _load_article_metadata(slug)
+        enriched = dict(analysis)
+        enriched["incident_name"] = meta.get("name") or slug.replace("-", " ").title()
+        enriched["incident_date"] = meta.get("date")
+        enriched["incident_root_cause"] = meta.get("root_cause")
         out_path = incidents_dir / f"{slug}.json"
-        out_path.write_text(json.dumps(analysis, indent=2), encoding="utf-8")
+        out_path.write_text(json.dumps(enriched, indent=2), encoding="utf-8")
 
     log.info("Wrote %d per-incident JSON files", len(analyses))
 
@@ -300,6 +350,7 @@ def main():
 
     log.info("Building incidents index...")
     incidents_index = build_incidents_index(analyses)
+    catalog = build_catalog(incidents_index)
 
     log.info("Building stats...")
     stats = build_stats(analyses, technique_freq)
@@ -328,6 +379,7 @@ def main():
         "technique_frequency.json": technique_freq,
         "attack_graph.json": attack_graph,
         "incidents_index.json": incidents_index,
+        "catalog.json": catalog,
         "stats.json": stats,
         "attack_meta.json": attack_meta,
     }

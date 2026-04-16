@@ -23,6 +23,12 @@ import Base from "../layouts/Base.astro";
       <select id="filter-service">
         <option value="">All services</option>
       </select>
+      <select id="group-by">
+        <option value="none">No grouping</option>
+        <option value="impact">Group by impact</option>
+        <option value="initial_access">Group by initial access</option>
+        <option value="year">Group by year</option>
+      </select>
       <span id="result-count" class="result-count"></span>
     </div>
 
@@ -68,6 +74,15 @@ import Base from "../layouts/Base.astro";
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1rem;
+  }
+
+  .group-block { margin-bottom: 1.5rem; }
+  .group-title {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
   }
 
   .incident-card {
@@ -147,13 +162,15 @@ function esc(s: unknown): string {
 }
 
 let allIncidents: any[] = [];
+let catalog: any = {};
 
 async function loadIncidents() {
-  const [index, stats] = await Promise.all([
+  const [index, stats, catalogData] = await Promise.all([
     fetch(`${DATA_BASE}/incidents_index.json`).then(r => r.ok ? r.json() : []),
     fetch(`${DATA_BASE}/stats.json`).then(r => r.ok ? r.json() : {}),
+    fetch(`${DATA_BASE}/catalog.json`).then(r => r.ok ? r.json() : {}),
   ]);
-  return { index, stats };
+  return { index, stats, catalogData };
 }
 
 function renderCard(inc: any): HTMLElement {
@@ -190,8 +207,35 @@ function renderGrid(incidents: any[]) {
     return;
   }
 
-  for (const inc of incidents) {
-    grid.appendChild(renderCard(inc));
+  const mode = (document.getElementById("group-by") as HTMLSelectElement).value;
+  const grouped = new Map<string, any[]>();
+
+  if (mode === "none") {
+    grouped.set("All incidents", incidents);
+  } else {
+    for (const inc of incidents) {
+      const key = mode === "impact"
+        ? (inc.impact_type || "Unknown")
+        : mode === "initial_access"
+          ? (inc.initial_access_vector || "Unknown")
+          : (() => {
+            const d = String(inc.event_date || "");
+            return (d.length >= 4 && /^\d{4}/.test(d)) ? d.slice(0, 4) : "Unknown";
+          })();
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+  }
+
+  for (const [groupName, members] of grouped.entries()) {
+    const block = document.createElement("div");
+    block.className = "group-block";
+    block.innerHTML = `<div class="group-title">${esc(groupName)} · ${members.length}</div>`;
+    const cards = document.createElement("div");
+    cards.className = "incidents-grid";
+    for (const inc of members) cards.appendChild(renderCard(inc));
+    block.appendChild(cards);
+    grid.appendChild(block);
   }
 
   const countEl = document.getElementById("result-count")!;
@@ -227,7 +271,7 @@ function applyFilters() {
 
 async function init() {
   try {
-    const { index, stats } = await loadIncidents();
+    const { index, stats, catalogData } = await loadIncidents();
 
     if (!index || index.length === 0) {
       document.getElementById("incidents-grid")!.innerHTML =
@@ -236,6 +280,7 @@ async function init() {
     }
 
     allIncidents = index;
+    catalog = catalogData || {};
 
     // Populate filter dropdowns
     const impactTypes = [...new Set(index.map((i: any) => i.impact_type).filter(Boolean))].sort();
@@ -267,6 +312,7 @@ async function init() {
     searchEl.addEventListener("input", applyFilters);
     impactSel.addEventListener("change", applyFilters);
     serviceSel.addEventListener("change", applyFilters);
+    (document.getElementById("group-by") as HTMLSelectElement).addEventListener("change", applyFilters);
 
     applyFilters();
   } catch (err) {

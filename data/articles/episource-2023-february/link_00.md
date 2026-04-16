@@ -564,4 +564,4 @@ Find Out With Our Free HIPAA Compliance Checklist
 
 [Get Free Checklist](https://www.hipaajournal.com/episource-data-breach/#)
 
-![Image 49](https://bat.bing.com/action/0?ti=343071845&tm=gtm002&Ver=2&mid=5d54c3b1-e4a5-4f58-ace6-5ced5fabb117&bo=1&sid=4506fa60383b11f194f745e91bee6630&vid=45072a70383b11f1a610cd14d6e599c9&vids=1&msclkid=N&pi=918639831&lg=en-US&sw=800&sh=600&sc=24&tl=Episource%20Cyberattack%20Attack%20Affects%20More%20Than%205.4%20Million%20Individuals&p=https%3A%2F%2Fwww.hipaajournal.com%2Fepisource-data-breach%2F&r=&lt=1894&evt=pageLoad&sv=2&cdb=AQAQ&rn=225224)
+![Image 49](https://bat.bing.com/action/0?ti=343071845&tm=gtm002&Ver=2&mid=74df94ca-6c5b-40f7-a048-8cf68f8ac8d2&bo=1&sid=4d84c900389911f1bcf887c360623bf4&vid=4d84db20389911f19151fbc47d96c717&vids=1&msclkid=N&pi=918639831&lg=en-US&sw=800&sh=600&sc=24&tl=Episource%20Cyberattack%20Attack%20Affects%20More%20Than%205.4%20Million%20Individuals&p=https%3A%2F%2Fwww.hipaajournal.com%2Fepisource-data-breach%2F&r=&lt=1028&evt=pageLoad&sv=2&cdb=AQAQ&rn=178629)

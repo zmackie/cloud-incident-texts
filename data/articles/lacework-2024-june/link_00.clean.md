@@ -1,0 +1,488 @@
+---
+title: Cloud-Native Application Protection Platform (CNAPP)
+url: "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"
+published: "Tue, 14 Apr 2026 18:16:28 GMT"
+source_type: article
+source_domain: www.lacework.com
+cleanup_method: fallback_heuristic
+---
+
+# Cloud-Native Application Protection Platform
+
+FortiCNAPP provides unmatched visibility and context to simplify securing everything from code to cloud
+
+[Interactive Product Tour](https://guidedtours.fortinet.com/psl/nl10b09uq)[Get a Live Product Demo](https://www.lacework.com/products/forticnapp#schedule-demo)
+
+[![Image 24: Fortinet logo](https://www.lacework.com/content/dam/fortinet/images/ngfw/fortinet-logo-navigation.svg)](https://www.lacework.com/)
+
+[Overview](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[Solutions](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[Case Studies & Awards](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[Cloud Service Providers](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[Resources](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[SCHEDULE DEMO](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[![Image 25: Fortinet logo](https://www.lacework.com/content/dam/fortinet/images/ngfw/fortinet-logo-navigation.svg)](https://www.lacework.com/)Overview SCHEDULE DEMO
+
+ Overview
+
+ Solutions
+
+ Case Studies & Awards
+
+ Cloud Service Providers
+
+ Resources
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Introducing FortiCNAPP
+
+FortiCNAPP helps quickly manage risk, rapidly detect and respond to active threats, boost developer productivity and increase security effectiveness.
+
+[Watch Now](https://www.youtube.com/watch?v=GdJNlNKN5lo)
+
+[Watch Now](https://www.youtube.com/watch?v=GdJNlNKN5lo)
+
+[![Image 26: video introducing lacework forticnapp v2](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/videos/video-introducing-lacework-forticnapp-v2.png)](https://www.youtube.com/watch?v=GdJNlNKN5lo)
+
+## Simplify and Strengthen Cloud Security
+
+FortiCNAPP unifies fragmented tools into a single platform to simplify and strengthen cloud security. It empowers teams to maximize their impact on security with minimal time and effort by automatically connecting risk insights with runtime threat data, ensuring they prioritize and address the most critical security risks and active threats.
+
+![Image 27: The FortiCNAPP platform consists of a comprehensive platform combining Lacework's CSPM, KSPM, CIEM, CWPP, policy as code enforcement, application security, infrastructure as code security, and cloud detection and response together with Fortinet's FortiSOAR and FortiGuard capabilities.](https://www.lacework.com/content/dam/fortinet/images/diagrams/diagram-forticnapp.svg)
+
+[](https://guidedtours.fortinet.com/psl/nl10b09uq)
+
+### Rapidly Detect and Mitigate Zero-Day Threats
+
+Continuously monitor workloads and detect unusual behavior without the need to write and maintain rules. Automatically discover early signs of compromised credential, ransomware, and cryptojacking attacks before their patterns are defined. Achieve faster identification of issues, quicker response times, and greater security efficacy with patented machine learning and integrations with the Fortinet Security Fabric and leading workflow tools.
+
+[See it now: How to detect threats](https://guidedtours.fortinet.com/psl/nl10b09uq)
+
+[](https://guidedtours.fortinet.com/psl/q16t0176)
+
+### Prioritize What Matters Most
+
+Quickly visualize complex relationships between entities, risks, and threats to gain deeper insight into potential attack paths. Understand the risk of lateral movement and privilege escalation by attackers. Instantly assess the exploitability and impact of critical vulnerabilities and misconfigurations. Boost operational efficiency and maximize the impact on security by effectively prioritizing the issues that matter most.
+
+[See it now: How to prioritize risks](https://guidedtours.fortinet.com/psl/q16t0176)
+
+[![Image 28: FortiCNAPP GUI showing entitlements management dashboard.](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/products/cnapp-entitlements-management.jpg)](https://guidedtours.fortinet.com/psl/6lh20zpv)
+
+### Understand Which Cloud Identities Pose the Greatest Risk
+
+Gain comprehensive and continuous visibility into all users, resources, groups, and roles across multiple cloud service providers. Automatically determine each identity’s net-effective permissions and identify those with excessive privileges. Quickly prioritize the most at-risk identities with personalized risk scores based on multiple factors. Streamline permission right-sizing and accelerate least-privilege access with automated remediation guidance.
+
+[See it now: How CIEM works](https://guidedtours.fortinet.com/psl/6lh20zpv)
+
+[![Image 29: FortiCNAPP GUI showing entitlements management dashboard. Users are assigned risk scores and categories](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/products/cnapp-cloud-compliance.png)](https://guidedtours.fortinet.com/psl/lx10kn0)
+
+### Simplify and Accelerate Cloud Compliance
+
+Automatically map cloud assets, configurations, and activity to compliance frameworks including PCI DSS, HIPAA, SOC 2, and ISO 27001. FortiCNAPP continuously assesses posture across AWS, Azure, and GCP, identifies misconfigurations, and prioritizes remediation efforts to reduce audit fatigue. With real-time policy checks, detailed reporting, and integration with the Fortinet Security Fabric, you can streamline audits, minimize risk, and confidently prove compliance at any scale.
+
+[See it now: How to achieve continuous compliance](https://guidedtours.fortinet.com/psl/lx10kn0)
+
+## Features and Benefits
+
+With FortiCNAPP, cloud and security operations teams benefit from reduced complexity, greater visibility, and enhanced security effectiveness – all through a single unified, AI-driven platform.
+
+![Image 30](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-visual-threat-prevention-blue.svg)
+
+**Gain unmatched visibility**
+
+Achieve proactive, stronger, and more efficient security by understanding how everything is interconnected from code to cloud​
+
+![Image 31](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-multicloud-security-blue.svg)
+
+**Unify cloud security**
+
+Simplify and strengthen security with a unified platform that reduces detection, investigation, and response times
+
+![Image 32](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-zero-day-protection-blue.svg)
+
+**Detect Zero-Day Threats**
+
+Quickly discover active threats like compromised credentials, ransomware, and cryptojacking before their attack patterns are defined
+
+![Image 33](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-detect-blue.svg)
+
+**Enhance anomaly detection**
+
+Detect unusual behavior and reduce alert noise without the need to write or maintain endless, complex rule sets
+
+![Image 34](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-global-coverage-scalability-blue.svg)
+
+**Prioritize risk**
+
+Maximize security outcomes with minimal time and effort by gaining insights into the exploitability and impact of each risk and threat
+
+![Image 35](https://www.lacework.com/content/dam/fortinet/images/icons/benefits/icon-compliance-blue.svg)
+
+**Stay compliant**
+
+Ease and streamline continuous cloud compliance and keep pace with changing regulatory requirements and industry best practices
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Cloud-Native Application Protection
+
+**[Cloud Infrastructure Entitlement Management (CIEM)](https://www.lacework.com/products/forticnapp/ciem)**
+
+Gain continuous visibility of cloud identities, reduce their risk, and achieve least privilege access
+
+**[Cloud Security Posture Management (CSPM)](https://www.lacework.com/products/forticnapp/cspm "CSPM")**
+
+Gain visibility of all cloud resources, reduce their misconfiguration risk, and achieve continuous compliance
+
+**[Kubernetes (K8s) Security](https://www.lacework.com/products/forticnapp/kubernetes)**
+
+Reduce the risk of misconfigured Kubernetes services and continuously monitor Kubernetes environments for abnormal and risky behavior
+
+**[Static Application Security Testing (SAST)](https://www.lacework.com/products/forticnapp/sast)**
+
+Shift security left by finding and fixing code weaknesses, such as the OWASP Top 10, in first-party code
+
+**[Software Composition Analysis (SCA)](https://www.lacework.com/products/forticnapp/sca-sbom)**
+
+Shift security left by finding and fixing known vulnerabilities and licensing risks in third-party and open-source libraries
+
+**[Software Bill of Materials (SBOM)](https://www.lacework.com/products/forticnapp/sca-sbom)**
+
+Gain full and continuous visibility and control of your software supply chain
+
+**[Infrastructure as Code (IaC) Security](https://www.lacework.com/solutions/cloud-security/infrastructure-as-code)**
+
+Shift security left by finding and fixing cloud misconfigurations within Infrastructure-as-Code before they are exploitable by attackers
+
+**[Code Security](https://www.lacework.com/solutions/cloud-security/code-security)**
+
+Shift security left by finding and fixing open-source vulnerabilities, first-party code weakness, and misconfigured Infrastructure-as-Code
+
+**[Cloud Detection and Response (CDR)](https://www.lacework.com/products/forticnapp/threat-detection)**
+
+Quickly detect and respond to unusual behavior and active threats like compromised credentials, ransomware and cryptojacking
+
+**[Vulnerability Assessment](https://www.lacework.com/solutions/cloud-security/vulnerability-management)**
+
+Reduce up to 90% of vulnerability noise by seeing risk within the context of your environment
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Case Studies & Awards
+
+[![Image 36: Grupo Clariens](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/case-studies/logos/cs-logo-clariens.png)](https://www.lacework.com/customers/grupo-clariens)
+
+[Grupo Clariens](https://www.lacework.com/customers/grupo-clariens)
+
+Education Group Reduces Cloud Threat Response Time by 81% with Fortinet Cloud Security Solutions 
+
+[![Image 37: Careem](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/case-studies/logos/cs-logo-careem.png)](https://www.lacework.com/customers/careem)
+
+[Careem](https://www.lacework.com/customers/careem)
+
+Industry-Leading Delivery App, Careem, Boosts DevSecOps Efficiency with Fortinet Cloud Security 
+
+[![Image 38: Monolithic Power Systems (MPSP)](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/case-studies/logos/cs-logo-mps.png)](https://www.lacework.com/customers/monolithic-power-systems)
+
+[Monolithic Power Systems (MPSP)](https://www.lacework.com/customers/monolithic-power-systems)
+
+Monolithic Power Systems Gains Cloud Visibility and Proactive Security with FortiCNAPP 
+
+[![Image 39: Coveo](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/case-studies/logos/cs-logo-coveo.png)](https://www.lacework.com/customers/coveo)
+
+[Coveo](https://www.lacework.com/customers/coveo)
+
+How Coveo Gained Cloud Visibility and Reduced Risk with FortiCNAPP 
+
+[![Image 40: SC Awards - Trust Award Winner 2025](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/products/sc-awards-winner-2025-trust-600.png)](https://www.scworld.com/news/sc-award-winners-2025-fortinet-best-cloud-workload-protection-solution)
+
+### 2025 SC Award – Best Cloud Workload Protection Solution
+
+FortiCNAPP has earned the 2025 SC Award for Best Cloud Workload Protection Solution, a prestigious honor recognizing excellence in securing cloud-native workloads. This award offers third-party validation that Lacework FortiCNAPP is an effective, top-tier CNAPP.
+
+[Read the Article](https://www.scworld.com/news/sc-award-winners-2025-fortinet-best-cloud-workload-protection-solution)
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Cloud Service Providers
+
+![Image 41: aws logo sm](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/icons/platform/aws-logo-sm.png)
+
+[Amazon Web Services (AWS)](https://www.lacework.com/products/public-cloud-security/aws)
+
+Build confidently in the AWS cloud with continuous automated security that relies on fewer rules.
+
+![Image 42: logo azure](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/icons/platform/logo-azure.png)
+
+[Microsoft Azure](https://www.lacework.com/products/public-cloud-security/azure)
+
+Gain nonstop protection and control checks with comprehensive, continuous, and end-to-end Azure security.
+
+![Image 43: icon google cloud](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/icons/platform/icon-google-cloud.png)
+
+[Google Cloud](https://www.lacework.com/products/public-cloud-security/gcp)
+
+Streamline continuous compliance, manage vulnerabilities, and detect threats in Google Cloud with more automation.
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Resources
+
+ Resource Type  
+
+eBooks 
+
+eBooks
+
+Data Sheets
+
+Overview
+
+Solution Briefs
+
+[![Image 44: The CISO Guide to Cloud-Native Application Protection](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/ebook/eb-ciso-guide-cnapp.pdf.thumb.319.319.png) The CISO Guide to Cloud-Native Application Protection » Fortinet’s Lacework FortiCNAPP is built natively for the cloud from Lacework technology and integrated into the Fortinet Security Fabric. Learn more about strategies for protecting multi-cloud environments in a hybrid world.](https://www.lacework.com/resources/reports/cnapp-ciso-guide)[![Image 45: CNAPP For Dummies](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/general/cover-cnapp-dummies.jpg) CNAPP For Dummies » CNAPP solves key cloud security challenges with an integrated and automated approach that combines multiple capabilities in a single platform.](https://global.fortinet.com/lp-en-ap-CNAPP-dummies?lsci=701Hr000002MOZzIAO)[![Image 46: 4 Keys to Cloud Security for Financial Services](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/ebook/eb-4-keys-cloud-security-financial-services.pdf.thumb.319.319.png) 4 Keys to Cloud Security for Financial Services » This ebook offers practical advice for financial organizations looking to securely embrace the cloud while maintaining customer trust and the availability of business processes and services.](https://www.lacework.com/content/dam/fortinet/assets/ebook/eb-4-keys-cloud-security-financial-services.pdf)[![Image 47: The CISO Playbook for Cloud Security](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/ebook/eb-ciso-cloud-security.pdf.thumb.319.319.png) The CISO Playbook for Cloud Security » This playbook offers five “big rocks’’ that will help CISOs build a leadership role that endures through everchanging job descriptions.](https://www.lacework.com/content/dam/fortinet/assets/ebook/eb-ciso-cloud-security.pdf)[![Image 48: Fortinet and AWS: Understanding Your Cloud and How to Secure It](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/ebook/eb-lacework-aws-security-ebook.pdf.thumb.319.319.png) Fortinet and AWS: Understanding Your Cloud and How to Secure It » Read on to discover how Fortinet and AWS strategically support your security efforts, freeing up your team to work the way they want and be more productive and innovative on AWS.](https://www.lacework.com/content/dam/fortinet/assets/ebook/eb-lacework-aws-security-ebook.pdf)
+
+[![Image 49: FortiCNAPP Data Sheet](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/data-sheets/forticnapp.pdf.thumb.319.319.png) FortiCNAPP Data Sheet » Lacework FortiCNAPP Datasheet](https://www.lacework.com/content/dam/fortinet/assets/data-sheets/forticnapp.pdf)[![Image 50: FortiCNAPP Ordering Guide](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/data-sheets/og-forticnapp.pdf.thumb.319.319.png) FortiCNAPP Ordering Guide » FortiCNAPP Ordering Guide](https://www.lacework.com/content/dam/fortinet/assets/data-sheets/og-forticnapp.pdf)
+
+[![Image 51: Data-Driven Cloud Security with Lacework FortiCNAPP](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/flyer/flyer-forticnapp-data-driven-cloud-security-overview.pdf.thumb.319.319.png) Data-Driven Cloud Security with Lacework FortiCNAPP » Fortinet offers a unified cloud-native application protection platform (CNAPP) that meets all your security needs with simplicity, efficiency, and speed.](https://www.lacework.com/content/dam/fortinet/assets/flyer/flyer-forticnapp-data-driven-cloud-security-overview.pdf)
+
+[![Image 52: Deployment Success Lacework FortiCNAPP - 5 Days](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp-5-days-consulting-services.pdf.thumb.319.319.png) Deployment Success Lacework FortiCNAPP - 5 Days » Fortinet Cloud Security consulting services can get you set up for success with FortiCNAPP within this five-day quickstart engagement.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp-5-days-consulting-services.pdf)[![Image 53: Deployment Success Lacework FortiCNAPP - 3 Days](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp-3-days-consulting-services.pdf.thumb.319.319.png) Deployment Success Lacework FortiCNAPP - 3 Days » Fortinet Cloud Security consulting services can get you up and running with FortiCNAPP within this three-day quickstart engagement.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp-3-days-consulting-services.pdf)[![Image 54: Lacework FortiCNAPP: A Single Platform for Visibility into Hybrid Environments](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp.pdf.thumb.319.319.png) Lacework FortiCNAPP: A Single Platform for Visibility into Hybrid Environments » By unifying protection across diverse environments, Lacework FortCNAPP ensures simple, consistent risk management and workload monitoring, unifies security teams, and offers seamless visibility wherever data resides.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-lacework-forticnapp.pdf)[![Image 55: React Quickly to Real Cloud Security Threats with Lacework FortiCNAPP](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-lacework-find-threats-faster.pdf.thumb.319.319.png) React Quickly to Real Cloud Security Threats with Lacework FortiCNAPP » Fortinet’s cloud-native solution, Lacework FortiCNAPP, uses automation to analyze data from all across your environment and take the pain out of threat detection.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-lacework-find-threats-faster.pdf)[![Image 56: Efficient Cloud Security Risk Management](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-lacework-cloud-security.pdf.thumb.319.319.png) Efficient Cloud Security Risk Management » The Lacework FortiCNAPP platform provides a consolidated, actionable source of cloud security truth so that security, operations, and developer teams can ensure they’re fixing risks that matter.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-lacework-cloud-security.pdf)[![Image 57: 4 Keys to Simpler SecOps Across Clouds](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/assets/solution-guides/sb-fortinet-lacework-esg-cdr.pdf.thumb.319.319.png) 4 Keys to Simpler SecOps Across Clouds » Research supports four key reasons why Lacework can better support SecOps teams and move the needle in a positive direction.](https://www.lacework.com/content/dam/fortinet/assets/solution-guides/sb-fortinet-lacework-esg-cdr.pdf)
+
+[View All](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+## Schedule a FortiCNAPP Demo
+
+Cloud security is fundamentally a data problem. If your current rules-driven cloud security solution can’t scale, then discover how you can automate security and compliance across AWS, Azure, Google Cloud, and private clouds with FortiCNAPP.
+
+**Watch our demo and see how we can help you:**
+
+*   Investigate threats 80% faster
+*   Consolidate your security tools
+*   Eliminate false positives by 95%
+*   Reduce critical security alerts to about 1.4 per day
+
+![Image 58: FortiCNAPP GUI showing entitlements management dashboard.](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/products/cnapp-entitlements-management.jpg)
+
+Not you? [Click here.](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+ *
+
+First Name 
+
+ *
+
+Last Name 
+
+ *
+
+Company 
+
+ *
+
+Job Title 
+
+ *
+
+Business Email Address 
+
+Country/Region 
+
+ *
+
+Country/Region
+
+- [x]  I consent to receive promotional communications (which may include phone, email, and social) from Fortinet. I understand I may proactively [opt out](https://go.fortinet.com/gus) of communications with Fortinet at anytime.  
+
+address1 
+
+## Quick Links
+
+[![Image 59: links image 1 139x100](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer-banners/links-image-1-139x100.png) ### Free Product Demo](https://www.lacework.com/demo-center)
+
+[![Image 60: resource center icon 139X159](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer-banners/resource-center-icon-139X159.png) ### Resource Center](https://www.lacework.com/resources)
+
+[![Image 61: links image 2 139x121](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer-banners/links-image-2-139x121.png) ### Free Trials](https://www.lacework.com/support/product-downloads?tab=trials)
+
+[![Image 62: contact sales icon 139x85](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer-banners/contact-sales-icon-139x85.png) ### Contact Sales](https://www.lacework.com/corporate/about-us/contact-us#contact-sales)
+
+Products
+
+### Enterprise
+
+*   [Secure Networking](https://www.lacework.com/solutions/network-security)
+*   [User and Device Security](https://www.lacework.com/solutions/enterprise-midsize-business/user-device-security)
+*   [Security Operations](https://www.lacework.com/solutions/security-operations)
+*   [Application Security](https://www.lacework.com/solutions/enterprise-midsize-business/cloud-security)
+*   [FortiGuard Labs Threat Intelligence](https://www.lacework.com/fortiguard/labs)
+
+### Small Mid-Sized Businesses
+
+*   [Overview](https://www.lacework.com/solutions/small-business)
+
+### Service Providers
+
+*   [MSSP](https://www.lacework.com/solutions/service-provider/communications-service-provider/mssp)
+*   [Mobile Providers](https://www.lacework.com/solutions/mobile-carrier/cybersecurity-for-mobile-networks-and-ecosystems)
+
+Partners
+
+*   [Overview](https://www.lacework.com/partners/technology-alliances/alliances-ecosystem)
+*   [Alliances Ecosystem](https://www.lacework.com/partners/partnerships/alliance-partners)
+*   [Find a Partner](https://partnerportal.fortinet.com/directory/)
+*   [Become a Partner](https://www.lacework.com/partners/partner-program/become-a-fortinet-partner)
+*   [Partner Login](https://www.lacework.com/partners/partner-program/partner-login)
+
+Trust Center
+
+*   [Trusted Products](https://www.lacework.com/trust?tab=trusted%20products)
+*   [Trusted Company](https://www.lacework.com/trust?tab=trusted%20company)
+*   [Trusted Process](https://www.lacework.com/trust?tab=trusted%20process)
+*   [Trusted Partners](https://www.lacework.com/trust?tab=trusted%20partners)
+*   [Product Certifications](https://www.lacework.com/corporate/about-us/product-certifications)
+
+More
+
+*   [About Us](https://www.lacework.com/corporate/about-us/about-us)
+*   [Training](https://www.lacework.com/nse-training)
+*   [Resources](https://www.lacework.com/resources)
+*   [Ransomware Hub](https://www.lacework.com/resources/hubs/ransomware)
+*   [Support](https://www.lacework.com/support)
+*   [Downloads](https://www.lacework.com/support/product-downloads)
+*   [CyberGlossary](https://www.lacework.com/resources/cyberglossary)
+*   [Careers](https://www.lacework.com/corporate/careers)
+*   [Early Talent Program](https://www.lacework.com/corporate/careers/early-talent-program)
+*   [Investor Relations](https://investor.fortinet.com/)
+*   [Social Responsibility](https://www.lacework.com/corporate/about-us/corporate-social-responsibility)
+*   [Sitemap](https://www.lacework.com/sitemap)
+
+Enter Email Address ![Image 63: Submit](https://www.lacework.com/content/dam/fortinet/images/icons/submit-arrow.svg)
+
+Subscription Successful!
+
+Request Failed. Please try again later!
+
+- [x]  
+I want to receive news and product emails. Read our[privacy policy](https://www.lacework.com/corporate/about-us/privacy).
+
+address1 
+
+Connect With Us
+
+*   [Blogs](https://www.fortinet.com/blog)
+*   [Fortinet Community](https://community.fortinet.com/)
+*   [Email Preference Center](https://global.fortinet.com/PreferenceCenter)
+*   [Contact Us](https://www.lacework.com/corporate/about-us/contact-us)
+
+*   [![Image 64: LinkedIn](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/linkedin_icon_footer.svg)](https://www.linkedin.com/company/fortinet)
+*   [![Image 65: Twitter](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/twitter_icon_footer.svg)](https://www.x.com/Fortinet)
+*   [![Image 66: Youtube](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/youtube_icon_footer.svg)](https://www.youtube.com/channel/UCJHo4AuVomwMRzgkA5DQEOA?sub_confirmation=1)
+*   [![Image 67: Instagram](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/instagram_icon_footer.svg)](https://www.instagram.com/fortinet/)
+*   [![Image 68: Facebook](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/facebook_icon_footer.svg)](https://www.facebook.com/fortinet)
+*   [![Image 69: RSS](https://www.lacework.com/content/dam/fortinet/images/icons/social-media/rss_icon_footer.svg)](https://www.fortinet.com/rss-feeds)
+
+Products
+
+[Enterprise](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+*   [Secure Networking](https://www.lacework.com/solutions/network-security)
+*   [User and Device Security](https://www.lacework.com/solutions/enterprise-midsize-business/user-device-security)
+*   [Security Operations](https://www.lacework.com/solutions/security-operations)
+*   [Application Security](https://www.lacework.com/solutions/enterprise-midsize-business/cloud-security)
+*   [FortiGuard Labs Threat Intelligence](https://www.lacework.com/fortiguard/labs)
+
+[Small Mid-Sized Businesses](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+*   [Overview](https://www.lacework.com/solutions/small-business)
+
+[Service Providers](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+*   [MSSP](https://www.lacework.com/solutions/service-provider/communications-service-provider/mssp)
+*   [Mobile Providers](https://www.lacework.com/solutions/mobile-carrier/cybersecurity-for-mobile-networks-and-ecosystems)
+
+Partners
+
+*   [Overview](https://www.lacework.com/partners/technology-alliances/alliances-ecosystem)
+*   [Alliances Ecosystem](https://www.lacework.com/partners/partnerships/alliance-partners)
+*   [Find a Partner](https://partnerportal.fortinet.com/directory/)
+*   [Become a Partner](https://www.lacework.com/partners/partner-program/become-a-fortinet-partner)
+*   [Partner Login](https://www.lacework.com/partners/partner-program/partner-login)
+
+Trust Center
+
+*   [Trusted Products](https://www.lacework.com/trust?tab=trusted%20products)
+*   [Trusted Company](https://www.lacework.com/trust?tab=trusted%20company)
+*   [Trusted Process](https://www.lacework.com/trust?tab=trusted%20process)
+*   [Trusted Partners](https://www.lacework.com/trust?tab=trusted%20partners)
+*   [Product Certifications](https://www.lacework.com/corporate/about-us/product-certifications)
+
+More
+
+*   [About Us](https://www.lacework.com/corporate/about-us/about-us)
+*   [Training](https://www.lacework.com/nse-training)
+*   [Resources](https://www.lacework.com/resources)
+*   [Ransomware Hub](https://www.lacework.com/resources/hubs/ransomware)
+*   [Support](https://www.lacework.com/support)
+*   [Downloads](https://www.lacework.com/support/product-downloads)
+*   [CyberGlossary](https://www.lacework.com/resources/cyberglossary)
+*   [Careers](https://www.lacework.com/corporate/careers)
+*   [Early Talent Program](https://www.lacework.com/corporate/careers/early-talent-program)
+*   [Investor Relations](https://investor.fortinet.com/)
+*   [Social Responsibility](https://www.lacework.com/corporate/about-us/corporate-social-responsibility)
+*   [Sitemap](https://www.lacework.com/sitemap)
+
+Enter Email Address ![Image 70: Submit](https://www.lacework.com/content/dam/fortinet/images/icons/submit-arrow.svg)
+
+Subscription Successful!
+
+Request Failed. Please try again later!
+
+- [x]  
+I want to receive news and product emails. Read our[privacy policy](https://www.lacework.com/corporate/about-us/privacy).
+
+address1 
+
+Connect With Us
+
+*   [Blogs](https://www.fortinet.com/blog)
+*   [Fortinet Community](https://community.fortinet.com/)
+*   [Email Preference Center](https://global.fortinet.com/PreferenceCenter)
+*   [Contact Us](https://www.lacework.com/corporate/about-us/contact-us)
+
+[![Image 71: Fortinet](https://www.lacework.com/content/dam/fortinet/images/general/fortinet-footer-logo.svg)](https://www.fortinet.com/)
+
+[![Image 72: Romain Attanasio](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/roman-attanasio-partnership-logo.jpg)](https://www.lacework.com/romain-attanasio)
+
+[![Image 73: Fortinet Juventus Partnership](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/logo-ftnt-juventus.png)](https://www.lacework.com/corporate/about-us/newsroom/press-releases/2024/juventus-football-club-annouces-fortinet-as-its-official-cybersecurity-partner)
+
+[![Image 74: Fortinet Cup - PGA Americas](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/logo-ftnt-pga-americas.png)](https://www.lacework.com/fortinet-cup-americas)
+
+[![Image 75: Fortinet European Tour Partnership](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/logo-ftnt-european-tour.png)](https://www.lacework.com/dp-world-tour)
+
+[![Image 76: Fortinet and FC Barcelona partnership](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/logo-ftnt-barcelona.png)](https://www.lacework.com/corporate/about-us/newsroom/press-releases/2024/fc-barcelona-selects-fortinet-as-official-cybersecurity-partner-for-future-spotify-camp-nou)
+
+[![Image 77: LPGA Fortinet Founders Cup 2026](https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/footer/logo-ftnt-founders-cup.png)](https://www.lacework.com/lpga-fortinet-founders-cup)
+
+Copyright © 2026 Fortinet, Inc. All Rights Reserved.
+
+*   [Terms of Service](https://www.lacework.com/corporate/about-us/legal)
+*   [Privacy Policy](https://www.lacework.com/corporate/about-us/privacy)
+*   [Notice for California Residents](https://www.lacework.com/corporate/about-us/privacy#npr-ca)
+*   [Do Not Sell Or Share My Personal Information](https://www.lacework.com/corporate/about-us/privacy/individual-rights)
+*   [GDPR](https://www.lacework.com/corporate/about-us/gdpr)
+*   [Canadian Accessibility](https://www.lacework.com/corporate/about-us/canadian-accessibility)
+*   [Cookie Settings](https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts#)
+
+[Request a quote](https://www.lacework.com/corporate/about-us/request-a-quote)[Contact Us](https://www.lacework.com/corporate/about-us/contact-us)[Free Demo](https://www.lacework.com/demo-center)
+
+Also of Interest:
+
+*   [Fortinet CVE Analysis](https://www.fortinet.com/blog/psirt-blogs)
+*   [What Is CNAPP? Cloud-Native Application...](https://www.fortinet.com/resources/cyberglossary/cnapp)
+*   [Revolutionizing Cloud Security with a Unified Approach](https://www.fortinet.com/blog/business-and-technology/revolutionizing-cloud-security-with-a-unified-approach)
+*   [How CNAPP Secures Cloud-Native Workloads—From...](https://www.fortinet.com/blog/business-and-technology/cnapp-secures-cloud-native-workloads-from-code-to-runtime)

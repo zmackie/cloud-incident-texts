@@ -180,8 +180,8 @@ Tags:
     *   [Exposed credentials](https://unit42.paloaltonetworks.com/tag/exposed-credentials/)
     *   [GitHub](https://unit42.paloaltonetworks.com/tag/github/)
 
-*   [![Image 20: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/?pdf=download&lg=en&_wpnonce=8dfc6c694c "Click here to download")
-*   [![Image 21: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/?pdf=print&lg=en&_wpnonce=8dfc6c694c "Click here to print")
+*   [![Image 20: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/?pdf=download&lg=en&_wpnonce=57e8089dbf "Click here to download")
+*   [![Image 21: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/?pdf=print&lg=en&_wpnonce=57e8089dbf "Click here to print")
 
 [Share![Image 22: Down arrow](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/down-arrow.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/# "Click here to share")
 *   [![Image 23: Link Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-share-link.svg)](https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/# "Copy link")

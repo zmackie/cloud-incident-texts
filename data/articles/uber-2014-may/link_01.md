@@ -32,22 +32,15 @@ Sign up
 [## Starting Up Security](https://medium.com/starting-up-security?source=post_page---publication_nav-6d3dc9a071e0-a137162f7fc9---------------------------------------)
 
 ·
-Follow publication
 
 [![Image 2: Starting Up Security](https://miro.medium.com/v2/resize:fill:38:38/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---post_publication_sidebar-6d3dc9a071e0-a137162f7fc9---------------------------------------)
 Guides for the growing security team
-
-Follow publication
-
-Top highlight
 
 # A blameless post-mortem of USA v. Joseph Sullivan
 
 [![Image 3: Ryan McGeehan](https://miro.medium.com/v2/resize:fill:32:32/0*3kOsPC2HwId9NCAA.jpg)](https://magoo.medium.com/@magoo?source=post_page---byline--a137162f7fc9---------------------------------------)
 
 [Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---byline--a137162f7fc9---------------------------------------)
-
-Follow
 
 32 min read
 
@@ -57,7 +50,7 @@ Dec 8, 2022
 
 [](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fstarting-up-security%2Fa137162f7fc9&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&user=Ryan+McGeehan&userId=cf87128497cb&source=---header_actions--a137162f7fc9---------------------clap_footer------------------)
 
-15
+--
 
 1
 
@@ -537,11 +530,11 @@ If you remove personal guilt from analysis, you’ll notice organizational causa
 
 [](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fstarting-up-security%2Fa137162f7fc9&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&user=Ryan+McGeehan&userId=cf87128497cb&source=---footer_actions--a137162f7fc9---------------------clap_footer------------------)
 
-15
+--
 
 [](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fstarting-up-security%2Fa137162f7fc9&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&user=Ryan+McGeehan&userId=cf87128497cb&source=---footer_actions--a137162f7fc9---------------------clap_footer------------------)
 
-15
+--
 
 1
 
@@ -551,8 +544,6 @@ If you remove personal guilt from analysis, you’ll notice organizational causa
 
 [![Image 6: Starting Up Security](https://miro.medium.com/v2/resize:fill:64:64/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---post_publication_info--a137162f7fc9---------------------------------------)
 
-Follow
-
 [## Published in Starting Up Security](https://medium.com/starting-up-security?source=post_page---post_publication_info--a137162f7fc9---------------------------------------)
 
 [1.4K followers](https://magoo.medium.com/starting-up-security/followers?source=post_page---post_publication_info--a137162f7fc9---------------------------------------)
@@ -561,13 +552,9 @@ Follow
 
 Guides for the growing security team
 
-Follow
-
 [![Image 7: Ryan McGeehan](https://miro.medium.com/v2/resize:fill:48:48/0*3kOsPC2HwId9NCAA.jpg)](https://magoo.medium.com/@magoo?source=post_page---post_author_info--a137162f7fc9---------------------------------------)
 
 [![Image 8: Ryan McGeehan](https://miro.medium.com/v2/resize:fill:64:64/0*3kOsPC2HwId9NCAA.jpg)](https://magoo.medium.com/@magoo?source=post_page---post_author_info--a137162f7fc9---------------------------------------)
-
-Follow
 
 [## Written by Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---post_author_info--a137162f7fc9---------------------------------------)
 
@@ -576,8 +563,6 @@ Follow
 ·[186 following](https://magoo.medium.com/@magoo/following?source=post_page---post_author_info--a137162f7fc9---------------------------------------)
 
 Writing about risk, security, and startups at [scrty.io](http://scrty.io/)
-
-Follow
 
 ## Responses (1)
 
@@ -593,253 +578,7 @@ Cancel
 
 Respond
 
-[![Image 10: Mike](https://miro.medium.com/v2/resize:fill:32:32/0*kuPkb9ADnZP8N3Oa)](https://magoo.medium.com/@mike_67257?source=post_page---post_responses--a137162f7fc9----0-----------------------------------)
-
-[Mike](https://magoo.medium.com/@mike_67257?source=post_page---post_responses--a137162f7fc9----0-----------------------------------)
-
-[Dec 9, 2022](https://magoo.medium.com/@mike_67257/great-article-made-me-triple-check-my-s3-encryption-policies-cdbe2a5b09f6?source=post_page---post_responses--a137162f7fc9----0-----------------------------------)
-
-Great article! Made me triple check my S3 encryption policies :-)
-
-Would you say this sets a new legal precedent for "Bug Bounty Gambit"?
-
-I mean, in this instance it clearly worked... bringing bad actors into the light who were eventually prosecuted.
-
-Or…more
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fp%2Fcdbe2a5b09f6&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40mike_67257%2Fgreat-article-made-me-triple-check-my-s3-encryption-policies-cdbe2a5b09f6&user=Mike&userId=22d329a395d0&source=---post_responses--cdbe2a5b09f6----0-----------------respond_sidebar------------------)
-
-Reply
-
-## More from Ryan McGeehan and Starting Up Security
-
-![Image 11: The “Working from China” Problem](https://miro.medium.com/v2/resize:fit:679/format:webp/1*vqnN227dATqo540RYJ_X0A.png)
-
-[![Image 12: Starting Up Security](https://miro.medium.com/v2/resize:fill:20:20/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----0---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-In
-
-[Starting Up Security](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----0---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-by
-
-[Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---author_recirc--a137162f7fc9----0---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[## The “Working from China” Problem ### When employees want to work remotely from “risky” places](https://magoo.medium.com/starting-up-security/the-working-from-china-problem-18045ca8060a?source=post_page---author_recirc--a137162f7fc9----0---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-Jul 17, 2025
-
-[](https://magoo.medium.com/starting-up-security/the-working-from-china-problem-18045ca8060a?source=post_page---author_recirc--a137162f7fc9----0---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---author_recirc--a137162f7fc9----0-----------------explicit_signal----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F18045ca8060a&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fthe-working-from-china-problem-18045ca8060a&source=---author_recirc--a137162f7fc9----0-----------------bookmark_preview----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-![Image 13: Lessons Learned in Detection Engineering](https://miro.medium.com/v2/resize:fit:679/format:webp/1*9nqQGo-J_cy9nVvdJTcGew.png)
-
-[![Image 14: Starting Up Security](https://miro.medium.com/v2/resize:fill:20:20/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----1---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-In
-
-[Starting Up Security](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----1---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-by
-
-[Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---author_recirc--a137162f7fc9----1---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[## Lessons Learned in Detection Engineering ### What I’ve learned from “good” intrusion detection programs.](https://magoo.medium.com/starting-up-security/lessons-learned-in-detection-engineering-304aec709856?source=post_page---author_recirc--a137162f7fc9----1---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-Mar 27, 2017
-
-[267 4](https://magoo.medium.com/starting-up-security/lessons-learned-in-detection-engineering-304aec709856?source=post_page---author_recirc--a137162f7fc9----1---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---author_recirc--a137162f7fc9----1-----------------explicit_signal----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F304aec709856&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Flessons-learned-in-detection-engineering-304aec709856&source=---author_recirc--a137162f7fc9----1-----------------bookmark_preview----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-![Image 15: An Information Security Policy for the Startup](https://miro.medium.com/v2/resize:fit:679/format:webp/1*VMcmnJ9NSMtPNWJPZJsbBg.jpeg)
-
-[![Image 16: Starting Up Security](https://miro.medium.com/v2/resize:fill:20:20/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----2---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-In
-
-[Starting Up Security](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----2---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-by
-
-[Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---author_recirc--a137162f7fc9----2---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[## An Information Security Policy for the Startup](https://magoo.medium.com/starting-up-security/starting-up-security-policy-104261d5438a?source=post_page---author_recirc--a137162f7fc9----2---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-Sep 14, 2015
-
-[329 4](https://magoo.medium.com/starting-up-security/starting-up-security-policy-104261d5438a?source=post_page---author_recirc--a137162f7fc9----2---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---author_recirc--a137162f7fc9----2-----------------explicit_signal----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F104261d5438a&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fstarting-up-security-policy-104261d5438a&source=---author_recirc--a137162f7fc9----2-----------------bookmark_preview----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-![Image 17: Prioritizing Detection Engineering](https://miro.medium.com/v2/resize:fit:679/format:webp/c8790a6ac4cec21263a79305da5e27032b2811c3bb5ebcbf60bd0ade41026a5c)
-
-[![Image 18: Starting Up Security](https://miro.medium.com/v2/resize:fill:20:20/1*klgju44lCEY1DZWakB1WNw.jpeg)](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----3---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-In
-
-[Starting Up Security](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9----3---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-by
-
-[Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---author_recirc--a137162f7fc9----3---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[## Prioritizing Detection Engineering ### Detection Engineering is a concept that has emerged in the detection space. It acknowledges the complexity of a detection stack and the…](https://magoo.medium.com/starting-up-security/prioritizing-detection-engineering-b60b46d55051?source=post_page---author_recirc--a137162f7fc9----3---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-Sep 10, 2024
-
-[177 1](https://magoo.medium.com/starting-up-security/prioritizing-detection-engineering-b60b46d55051?source=post_page---author_recirc--a137162f7fc9----3---------------------1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---author_recirc--a137162f7fc9----3-----------------explicit_signal----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fb60b46d55051&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fprioritizing-detection-engineering-b60b46d55051&source=---author_recirc--a137162f7fc9----3-----------------bookmark_preview----1d30f567_6cce_43bd_a0bf_c3c2cee1dfbf--------------)
-
-[See all from Ryan McGeehan](https://magoo.medium.com/@magoo?source=post_page---author_recirc--a137162f7fc9---------------------------------------)
-
-[See all from Starting Up Security](https://medium.com/starting-up-security?source=post_page---author_recirc--a137162f7fc9---------------------------------------)
-
-## Recommended from Medium
-
-![Image 19: If You Understand These 5 AI Terms, You’re Ahead of 90% of People](https://miro.medium.com/v2/resize:fit:679/format:webp/1*qbVrf-wO9PYtthAj6E4RYQ.png)
-
-[![Image 20: Towards AI](https://miro.medium.com/v2/resize:fill:20:20/1*JyIThO-cLjlChQLb6kSlVQ.png)](https://medium.com/towards-artificial-intelligence?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[Towards AI](https://medium.com/towards-artificial-intelligence?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[Shreyas Naphad](https://magoo.medium.com/@shreyasnaphad?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## If You Understand These 5 AI Terms, You’re Ahead of 90% of People ### Master the core ideas behind AI without getting lost](https://magoo.medium.com/towards-artificial-intelligence/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Mar 29
-
-[10K 199](https://magoo.medium.com/towards-artificial-intelligence/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----0-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fc7622d353319&operation=register&redirect=https%3A%2F%2Fpub.towardsai.net%2Fif-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319&source=---read_next_recirc--a137162f7fc9----0-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-![Image 21: 6 brain images](https://miro.medium.com/v2/resize:fit:679/format:webp/1*Q-mzQNzJSVYkVGgsmHVjfw.png)
-
-[![Image 22: Write A Catalyst](https://miro.medium.com/v2/resize:fill:20:20/1*KCHN5TM3Ga2PqZHA4hNbaw.png)](https://medium.com/write-a-catalyst?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[Write A Catalyst](https://medium.com/write-a-catalyst?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[Dr. Patricia Schmidt](https://magoo.medium.com/@creatorschmidt?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## As a Neuroscientist, I Quit These 5 Morning Habits That Destroy Your Brain ### Most people do #1 within 10 minutes of waking (and it sabotages your entire day)](https://magoo.medium.com/write-a-catalyst/as-a-neuroscientist-i-quit-these-5-morning-habits-that-destroy-your-brain-3efe1f410226?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Jan 14
-
-[46K 946](https://magoo.medium.com/write-a-catalyst/as-a-neuroscientist-i-quit-these-5-morning-habits-that-destroy-your-brain-3efe1f410226?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----1-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F3efe1f410226&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fwrite-a-catalyst%2Fas-a-neuroscientist-i-quit-these-5-morning-habits-that-destroy-your-brain-3efe1f410226&source=---read_next_recirc--a137162f7fc9----1-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-![Image 23: A futuristic 3D visualization of two massive data centers — one blue for Microsoft and one purple/green for OpenAI — separated by a glowing orange tectonic crack and severed fiber optic cables.](https://miro.medium.com/v2/resize:fit:679/format:webp/1*rRInK1ARZKPmpBnF4fxLKw.png)
-
-[![Image 24: ILLUMINATION](https://miro.medium.com/v2/resize:fill:20:20/1*AZxiin1Cvws3J0TwNUP2sQ.png)](https://medium.com/illumination?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[ILLUMINATION](https://medium.com/illumination?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[Somya Golchha](https://magoo.medium.com/@jainsomya2510?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## The Microsoft-OpenAI Divorce Is Official: Inside the $250 Billion Betrayal ### GPT-5 is already being retired, and Satya Nadella just made his move. The “partnership” of the century is entering its terminal phase.](https://magoo.medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Feb 18
-
-[4.1K 101](https://magoo.medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--a137162f7fc9----0---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----0-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F822073eba64e&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fillumination%2Fthe-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e&source=---read_next_recirc--a137162f7fc9----0-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-![Image 25: AI Killed My Writing Career. Long Live AI.](https://miro.medium.com/v2/resize:fit:679/format:webp/1*4p7_dZHVits2ljdUslbtOA.png)
-
-[![Image 26: The Writing Cooperative](https://miro.medium.com/v2/resize:fill:20:20/1*m_Iau4XU5s26Hlhb1jTIvw.png)](https://medium.com/writing-cooperative?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[The Writing Cooperative](https://medium.com/writing-cooperative?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[R. Paulo Delgado](https://magoo.medium.com/@RPauloDelgado?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## AI Killed My Writing Career. Long Live AI. ### I’m officially done with freelance writing, and I’m so relieved.](https://magoo.medium.com/writing-cooperative/ai-killed-my-writing-career-long-live-ai-ecd264cd4d9f?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Jan 24
-
-[11.3K 333](https://magoo.medium.com/writing-cooperative/ai-killed-my-writing-career-long-live-ai-ecd264cd4d9f?source=post_page---read_next_recirc--a137162f7fc9----1---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----1-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fecd264cd4d9f&operation=register&redirect=https%3A%2F%2Fwritingcooperative.com%2Fai-killed-my-writing-career-long-live-ai-ecd264cd4d9f&source=---read_next_recirc--a137162f7fc9----1-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-![Image 27: Careers Are Collapsing. Jobs Are Dying. The Smartest People Are Doing This Right Now](https://miro.medium.com/v2/resize:fit:679/format:webp/1*uhZYG6NPRFvdr_GCHsNL-Q.jpeg)
-
-[![Image 28: Personal Growth](https://miro.medium.com/v2/resize:fill:20:20/1*vT9qT49CpcgqXBZAh-X3cA.jpeg)](https://medium.com/personal-growth?source=post_page---read_next_recirc--a137162f7fc9----2---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[Personal Growth](https://medium.com/personal-growth?source=post_page---read_next_recirc--a137162f7fc9----2---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[Thomas Oppong](https://magoo.medium.com/@thomas-oppong?source=post_page---read_next_recirc--a137162f7fc9----2---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## Careers Are Collapsing. Jobs Are Dying. The Smartest People Are Doing This Right Now ### “Earn with your mind, not your time.” — Naval](https://magoo.medium.com/personal-growth/careers-are-collapsing-jobs-are-dying-the-smartest-people-are-doing-this-right-now-becc742dfee2?source=post_page---read_next_recirc--a137162f7fc9----2---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Feb 23
-
-[11.7K 339](https://magoo.medium.com/personal-growth/careers-are-collapsing-jobs-are-dying-the-smartest-people-are-doing-this-right-now-becc742dfee2?source=post_page---read_next_recirc--a137162f7fc9----2---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----2-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fbecc742dfee2&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fpersonal-growth%2Fcareers-are-collapsing-jobs-are-dying-the-smartest-people-are-doing-this-right-now-becc742dfee2&source=---read_next_recirc--a137162f7fc9----2-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-![Image 29: Palantir CEO Says Only Two Types Will Survive AI (And Elite Degrees Aren’t One of Them)!](https://miro.medium.com/v2/resize:fit:679/format:webp/0*l4NiCXObZ9VFewv8)
-
-[![Image 30: Predict](https://miro.medium.com/v2/resize:fill:20:20/1*EetZyjDw-19wRRBzc6fSMA.png)](https://medium.com/predict?source=post_page---read_next_recirc--a137162f7fc9----3---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-In
-
-[Predict](https://medium.com/predict?source=post_page---read_next_recirc--a137162f7fc9----3---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-by
-
-[Tasmia Sharmin](https://magoo.medium.com/@tasmiasharmin7?source=post_page---read_next_recirc--a137162f7fc9----3---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[## Palantir CEO Says Only Two Types Will Survive AI (And Elite Degrees Aren’t One of Them)! ### Alex Karp told Gen Z there are “basically two ways to know you have a future.” Vocational training or neurodivergence. Philosophy degrees…](https://magoo.medium.com/predict/palantir-ceo-says-only-two-types-will-survive-ai-and-elite-degrees-arent-one-of-them-341c222044e0?source=post_page---read_next_recirc--a137162f7fc9----3---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-Mar 27
-
-[3.6K 281](https://magoo.medium.com/predict/palantir-ceo-says-only-two-types-will-survive-ai-and-elite-degrees-arent-one-of-them-341c222044e0?source=post_page---read_next_recirc--a137162f7fc9----3---------------------f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2Fstarting-up-security%2Fa-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9&source=---read_next_recirc--a137162f7fc9----3-----------------explicit_signal----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[](https://magoo.medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F341c222044e0&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fpredict%2Fpalantir-ceo-says-only-two-types-will-survive-ai-and-elite-degrees-arent-one-of-them-341c222044e0&source=---read_next_recirc--a137162f7fc9----3-----------------bookmark_preview----f0b4455c_1bdc_4a0e_b077_3e704e0f1899--------------)
-
-[See more recommendations](https://magoo.medium.com/?source=post_page---read_next_recirc--a137162f7fc9---------------------------------------)
+See all responses
 
 [Help](https://help.medium.com/hc/en-us?source=post_page-----a137162f7fc9---------------------------------------)
 

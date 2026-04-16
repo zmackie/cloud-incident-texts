@@ -178,8 +178,8 @@ Tags:
     *   [S3](https://unit42.paloaltonetworks.com/tag/s3/)
     *   [ShinyHunters](https://unit42.paloaltonetworks.com/tag/shinyhunters/)
 
-*   [![Image 24: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/?pdf=download&lg=en&_wpnonce=8dfc6c694c "Click here to download")
-*   [![Image 25: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/?pdf=print&lg=en&_wpnonce=8dfc6c694c "Click here to print")
+*   [![Image 24: Download Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-download.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/?pdf=download&lg=en&_wpnonce=57e8089dbf "Click here to download")
+*   [![Image 25: Print Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-print.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/?pdf=print&lg=en&_wpnonce=57e8089dbf "Click here to print")
 
 [Share![Image 26: Down arrow](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/down-arrow.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/# "Click here to share")
 *   [![Image 27: Link Icon](https://unit42.paloaltonetworks.com/wp-content/themes/unit42-v6/dist/images/icons/icon-share-link.svg)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/# "Copy link")
@@ -497,22 +497,6 @@ Back to top
 [Threat Research Center](https://unit42.paloaltonetworks.com/ "Threat Research")[Next: Autoencoder Is All You Need: Profiling and Detecting Malicious DNS Traffic](https://unit42.paloaltonetworks.com/profiling-detecting-malicious-dns-traffic/ "Autoencoder Is All You Need: Profiling and Detecting Malicious DNS Traffic")
 
 ### Table of Contents
-
-*   [Executive Summary](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-1-title)
-*   [Bling Libra Background: The Threat Actors Behind ShinyHunters](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-2-title)
-*   [Introduction to MITRE ATT&CK® Framework](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-3-title)
-*   [Initial Access (TA0001)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-4-title)
-*   [Discovery (TA0007)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-5-title)
-*   [Data Access and Impact (TA0010 and TA0040)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-6-title)
-*   [Execution (TA0002)](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-7-title)
-*   [Extortion](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-8-title)
-*   [S3 Browser and WinSCP Analysis](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-9-title)
-    *   [S3 Browser](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section9SubHeading1)
-    *   [WinSCP](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section9SubHeading2)
-
-*   [Conclusion](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-10-title)
-*   [IoCs](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-11-title)
-*   [Additional Resources](https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/#section-12-title)
 
 ### Related Articles
 

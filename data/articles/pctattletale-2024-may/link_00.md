@@ -269,6 +269,14 @@ StrictlyVC kicks off the year in SF. Get in the room for unfiltered fireside cha
 
 © 2026 TechCrunch Media LLC.
 
-![Image 7](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=2784501&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=568&rand=0.08219332855472017)
+![Image 7](https://pixel.wp.com/g.gif?v=ext&blog=136296444&post=2784501&tz=-7&srv=techcrunch.com&hp=vip&j=1%3A15.5-beta&host=techcrunch.com&ref=&fcp=0&rand=0.4180892946586324)
 
 Some areas of this page may shift around if you resize the browser window. Be sure to check heading and document order.
+
+advertisement
+
+advertisement
+
+advertisement
+
+![Image 8](https://dt.adsafeprotected.com/dt?ab=1&zoneid=6061321_advertisement_)

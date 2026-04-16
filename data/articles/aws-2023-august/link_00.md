@@ -85,24 +85,16 @@ Dismiss
 *   English 
 *   [Contact us](https://aws.amazon.com/contact-us/?nc2=h_ut_cu) 
 *   [AWS Marketplace](https://aws.amazon.com/marketplace/?nc2=h_utmp) 
-*   Support 
-*   My account 
+*   Support  
+*   My account  
 
 *   [](https://aws.amazon.com/?nc2=h_home)
-*   [re:Invent](https://reinvent.awsevents.com/?nc2=h_l1_f&trk=c775b40b-0f43-4b55-9eb1-a0ef0787360c)
-*   Discover AWS 
-*   Products 
-*   Solutions 
-*   Pricing 
-*   Resources 
 
 *   Search
 
     Filter: All                
 *   [Sign in to console](https://console.aws.amazon.com/console/home/?nc2=h_si&src=header-signin)
 *   [Create account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_su&src=header_signup)
-
-Feedback
 
 AWS Blogs
 

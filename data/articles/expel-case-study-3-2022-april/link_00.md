@@ -206,26 +206,6 @@ Primary Menu
 
 ×
 
-*
-
-Business Email 
-
-*
-
-Country 
-
-By submitting this form, you consent to receive communications from Expel, including updates, offers, and more related to Expel products and services. You may unsubscribe at any time. Please see our[Privacy Notice](https://expel.com/notices/)for more details.
-
-*
-
-WallE: 
-
-- [x] 
-
-Sign me up
-
-This site is protected by reCAPTCHA.
-
 By Britton Manahan, [David Blanton](https://expel.com/blog/author/david-blanton/), [Kyle Pellett](https://expel.com/blog/author/kyle-pellett/), [Brian Bahtiarian](https://expel.com/blog/author/brian-bahtiarian/)
 
 April 5, 2022 • 6 minute read
@@ -504,7 +484,3 @@ Also of Interest
 [Privacy](https://expel.com/notices/) | [Compliance](https://expel.com/security-compliance/) | [Terms](https://expel.com/terms-of-use/) | [EMEA Reseller Customer Terms](https://expel.com/terms-of-use/reseller-customers-emea/) | [North America Reseller Customer Terms](https://expel.com/terms-of-use/reseller-customers-north-america/) | [System Status](https://status.expel.io/) | Cookie settings
 
 © 2026 Expel, Inc. All Rights Reserved
-
-![Image 36](https://t.co/i/adsct?bci=3&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=2&event_id=c84aac2d-c1dc-47f4-8c52-a26e6745eda0&events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=322ef342-0442-431c-b142-3118e7abf051&pt=Incident%20report%3A%20From%20CLI%20to%20console%2C%20chasing%20an%20attacker%20in%20AWS%20%7C%20Expel&tw_document_href=https%3A%2F%2Fexpel.com%2Fblog%2Fincident-report-from-cli-to-console-chasing-an-attacker-in-aws%2F&tw_iframe_status=0&tw_order_quantity=0&tw_pid_src=1&tw_sale_amount=0&twpid=tw.1776196371029.505124769508636702&txn_id=o49af&type=javascript&version=2.3.52)![Image 37](https://analytics.twitter.com/i/adsct?bci=3&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=2&event_id=c84aac2d-c1dc-47f4-8c52-a26e6745eda0&events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&integration=advertiser&p_id=Twitter&p_user_id=0&pl_id=322ef342-0442-431c-b142-3118e7abf051&pt=Incident%20report%3A%20From%20CLI%20to%20console%2C%20chasing%20an%20attacker%20in%20AWS%20%7C%20Expel&tw_document_href=https%3A%2F%2Fexpel.com%2Fblog%2Fincident-report-from-cli-to-console-chasing-an-attacker-in-aws%2F&tw_iframe_status=0&tw_order_quantity=0&tw_pid_src=1&tw_sale_amount=0&twpid=tw.1776196371029.505124769508636702&txn_id=o49af&type=javascript&version=2.3.52)
-
-This site is protected by reCAPTCHA.

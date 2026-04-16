@@ -1,347 +1,51 @@
-Title: Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
+Title: YouTube transcript (f066e7WndTQ)
 
 URL Source: https://www.youtube.com/watch?v=f066e7WndTQ
 
 Markdown Content:
-# Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar - YouTube
-
- Back [![Image 1](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/ "YouTube Home")
-
-Skip navigation
-
- Search 
-
- Search with your voice 
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[Sign in](https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252Fwatch%253Fv%253Df066e7WndTQ&hl=en&ec=65620)
-
-[![Image 2](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/ "YouTube Home")
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-Tap to unmute
-
-2x
-
-[![Image 3](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-## Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
-
-fwd:cloudsec 880 views 1 year ago
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-Search
-
-Copy link
-
-Info
-
-Shopping
-
-![Image 4](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-[![Image 5](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-If playback doesn't begin shortly, try restarting your device.
-
-•
-
-You're signed out
-
-Videos you watch may be added to the TV's watch history and influence TV recommendations. To avoid this, cancel and sign in to YouTube on your computer.
-
-Cancel Confirm
-
-Video unavailable
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-Share
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ "Share link")- [x] Include playlist 
-
-An error occurred while retrieving sharing information. Please try again later.
-
-![Image 6](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-0:00
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)[](https://www.youtube.com/watch?v=9OY6LtamqRQ "Next (SHIFT+n)")
-
-0:00 / 46:31
-
-Live
-
-•Watch full video
-
-•
-
-•
-
-[23:33 LUCR-3: Cloud Clepto & SaaS-y Scattered Spider Shenanigans - Ian Ahl fwd:cloudsec 896 views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=dFktwwpjR90)[20:45 Open-Sourcing AWS Pentest Methodology - Lizzie Moratti fwd:cloudsec 1.7K views • 1 year ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=q51Fe_B6qY4)[30:42 The Ransomware Defense Strategies That Worked - Yotam Meitar & Azeem Aleem, Sygnia | CRESTCon UK CREST Videos 270 views • 3 years ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=3F8_3NSG-Qo)[26:28 Nicholas Carlini - Black-hat LLMs | [un]prompted 2026 unprompted 261K views • 2 weeks ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=1sd26pWhfmg)[23:56 Permission Impossible: Hidden Dangers of Azure RBAC and API Vulnerabilities fwd:cloudsec 322 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=u-fJ6EbfrYc)[27:11 A Candid Perspective on the Cloud Threat Landscape: What’s Real, What’s Not, and What Should Change fwd:cloudsec 128 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=8c3unhWyFGA)[27:31 Cybersecurity Architecture: Networks IBM Technology 495K views • 2 years ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=sesacY7Xz3c)[39:51 DEF CON 33 - Recording PCAPs from Stingrays With a $20 Hotspot - Cooper Quintin, oopsbagel DEFCONConference 42K views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=meC2JqNAbCA)[23:07 Sweet Deception: Mastering AWS Honey Tokens to Detect and Outsmart Attackers fwd:cloudsec 350 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=R75ZTBnUwXk)[49:26 Claude Mythos, Project Glasswing and AI cybersecurity risks IBM Technology 17K views • 4 days ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=Yae74guiqq8)[25:48 Ransomware protection with immutable AWS Backup - it's complicated fwd:cloudsec 312 views • 6 months ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=9OY6LtamqRQ)[1:00:11 Pepe Escobar: China Just HUMILIATED Trump’s Blockade Plan - Iran Takes FULL Control of Hormuz Dialogue Works 78K views • Streamed 3 hours ago Live Playlist ()Mix (50+)](https://www.youtube.com/watch?v=46I3oA-N6bM)
-
-# Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
-
-[![Image 7](https://yt3.ggpht.com/ytc/AIdro_kdiPU4Hr5grSryt7fQN2TvHFVlqKt5C8na97061G2oFg=s48-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@fwdcloudsec)
-
-[fwd:cloudsec](https://www.youtube.com/@fwdcloudsec)
-
- fwd:cloudsec 
-
-4.91K subscribers
-
-Subscribe
-
-Subscribed
-
-21
-
-Share
-
-Save
-
-Download
-
- Download 
-
-880 views 1 year ago
-
- 880 views • Jun 21, 2024 
-
-Speaker: Yotam Meitar Yotam has spent the last ten years managing and responding to some of the most sophisticated global cyber operations. …...more 
-
-...more 
-
-How this was made
-
-Auto-dubbed
-
-Audio tracks for some languages were automatically generated. [Learn more](https://support.google.com/youtube/answer/15569972?hl=en)
-
-Transcript
-
-Follow along using the transcript.
-
-Show transcript
-
-[![Image 8](https://www.youtube.com/watch?v=f066e7WndTQ) ### fwd:cloudsec 4.91K subscribers](https://www.youtube.com/@fwdcloudsec)
-
-[Videos](https://www.youtube.com/channel/UCjfghTrOeq5Qu0WdKjxBpBA/videos)[About](https://www.youtube.com/channel/UCjfghTrOeq5Qu0WdKjxBpBA/about)
-
-Show less 
-
-[](https://www.youtube.com/watch?v=f066e7WndTQ)
-# Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
-
-880 views 880 views
-
-Jun 21, 2024
-
-21
-
-Share
-
-Save
-
-Download
-
- Download 
-
-![Image 9](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-## Comments
-
-[Top Show featured comments](https://www.youtube.com/watch?v=f066e7WndTQ)[Newest Show recent comments, including potential spam](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-![Image 10](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-## In this video
-
-Transcript
-
-![Image 11](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-## Description
-
-Responding to Sophisticated Ransom Attacks in the Cloud: A Real-World Case Study - Yotam Meitar
-
-21 Likes
-
-880 Views
-
-2024 Jun 21
-
-Speaker: Yotam Meitar Yotam has spent the last ten years managing and responding to some of the most sophisticated global cyber operations. He’s worked with technical teams and executives to defeat attacks and leverage cyber as a competitive advantage across incident response, purple teaming, posture enhancements, and executive wargames. In his current role, Yotam focuses on developing cloud-specific incident response methodology and collaborating with practitioners on developing robust cloud security frameworks. Yotam’s previous positions include Director of Incident Response at Sygnia and command positions in the IDF. Abstract: Ransom attacks in the cloud are on the rise. Unlike traditional ransomware operations in which attackers fully compromise an on-prem environment before encrypting critical systems, most cloud ransom attack attacks follow a more straightforward playbook: compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data. The speed and sophistication of these attacks are creating new challenges defenders must adapt to in order to survive. In this session we’ll share the details of a real-world incident response to a sophisticated cloud ransom attack, in which paying the ransom only started the clock on the real battle. Validating the scope of stolen information under looming legal deadlines through unique data forensics, uncovering expert impersonation of a unique identity provider, and revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access, were all instrumental to the success of this incident response. In addition to the thrilling minute-by-minute technical story, we’ll share key takeaways and intelligence for performing cloud incident response against these rising attacks in a rapidly evolving threat landscape. [https://fwdcloudsec.org/](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbkVlTXItX3NHbnhhXzBzay1hY1NveVR0cHNfZ3xBQ3Jtc0tuZWFta3lNenM0X3ZSMGFGYVVNWnNVM1ZBSmduTXBSczZCX0ZKb2Z1dFh6U2RiZF92RTdJMEdfanBkNV8wemtxbTZ0WS1fV0VwaFNESWpoYVFtblpMWks0a2txdGFGcTZab2s0RkRGNnJ5QjUtXzBYNA&q=https%3A%2F%2Ffwdcloudsec.org%2F&v=f066e7WndTQ)…...more 
-
-...more Show less 
-
-How this was made
-
-Auto-dubbed
-
-Audio tracks for some languages were automatically generated. [Learn more](https://support.google.com/youtube/answer/15569972?hl=en)
-
-Transcript
-
-Follow along using the transcript.
-
-Show transcript
-
-[![Image 12](https://www.youtube.com/watch?v=f066e7WndTQ) ### fwd:cloudsec 4.91K subscribers](https://www.youtube.com/@fwdcloudsec)
-
-[Videos](https://www.youtube.com/channel/UCjfghTrOeq5Qu0WdKjxBpBA/videos)[About](https://www.youtube.com/channel/UCjfghTrOeq5Qu0WdKjxBpBA/about)
-
-![Image 13](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-## Transcript
-
-NaN / NaN
-
-[![Image 14](https://i.ytimg.com/vi/dFktwwpjR90/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLBgBbPqloQ3x4RpBjhRPmSZABk36A) 23:33](https://www.youtube.com/watch?v=dFktwwpjR90)
-
-![Image 15](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [LUCR-3: Cloud Clepto & SaaS-y Scattered Spider Shenanigans - Ian Ahl](https://www.youtube.com/watch?v=dFktwwpjR90)
-
-fwd:cloudsec
-
-896 views • 1 year ago
-
-[![Image 16](https://i.ytimg.com/vi/q51Fe_B6qY4/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYNCBlKF0wDw==&rs=AOn4CLCNhZffNHm7s62V_ZQn9JBSW0TLOw) 20:45](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
-
-![Image 17](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Open-Sourcing AWS Pentest Methodology - Lizzie Moratti](https://www.youtube.com/watch?v=q51Fe_B6qY4&pp=ugUEEgJlbg%3D%3D)
-
-fwd:cloudsec
-
-1.7K views • 1 year ago
-
-[![Image 18](https://i.ytimg.com/vi/3F8_3NSG-Qo/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLB8D90DhGMNG2E-z61xvIgUPUb6aA) 30:42](https://www.youtube.com/watch?v=3F8_3NSG-Qo)
-
-![Image 19](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [The Ransomware Defense Strategies That Worked - Yotam Meitar & Azeem Aleem, Sygnia | CRESTCon UK](https://www.youtube.com/watch?v=3F8_3NSG-Qo)
-
-CREST Videos
-
-270 views • 3 years ago
-
-[![Image 20](https://i.ytimg.com/vi/1sd26pWhfmg/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYciBmKDYwDw==&rs=AOn4CLBt7WXxX8nkpd5tR-g5lISUM690rQ) 26:28](https://www.youtube.com/watch?v=1sd26pWhfmg)
-
-![Image 21](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Nicholas Carlini - Black-hat LLMs | [un]prompted 2026](https://www.youtube.com/watch?v=1sd26pWhfmg)
-
-unprompted
-
-261K views • 2 weeks ago
-
-[![Image 22](https://i.ytimg.com/vi/u-fJ6EbfrYc/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBhKGUwDw==&rs=AOn4CLCuHPQfyPI0iWZgvNeLBZL-GX61tw) 23:56](https://www.youtube.com/watch?v=u-fJ6EbfrYc&pp=ugUEEgJlbg%3D%3D)
-
-![Image 23](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Permission Impossible: Hidden Dangers of Azure RBAC and API Vulnerabilities](https://www.youtube.com/watch?v=u-fJ6EbfrYc&pp=ugUEEgJlbg%3D%3D)
-
-fwd:cloudsec
-
-322 views • 6 months ago
-
-[![Image 24](https://i.ytimg.com/vi/8c3unhWyFGA/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVCBgKGUwDw==&rs=AOn4CLAzpJoqgW8VriOnjIbkBGeNxWOB-A) 27:11](https://www.youtube.com/watch?v=8c3unhWyFGA)
-
-![Image 25](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [A Candid Perspective on the Cloud Threat Landscape: What’s Real, What’s Not, and What Should Change](https://www.youtube.com/watch?v=8c3unhWyFGA)
-
-fwd:cloudsec
-
-128 views • 6 months ago
-
-[![Image 26](https://i.ytimg.com/vi/sesacY7Xz3c/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLD1XlAdea4pMVZHeyAastXNvrtOQw) 27:31](https://www.youtube.com/watch?v=sesacY7Xz3c)
-
-![Image 27](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Cybersecurity Architecture: Networks](https://www.youtube.com/watch?v=sesacY7Xz3c)
-
-IBM Technology
-
-495K views • 2 years ago
-
-[![Image 28](https://i.ytimg.com/vi/meC2JqNAbCA/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYfyATKFUwDw==&rs=AOn4CLDw0_p4f-dWEuroju4lwphhIeyw-A) 39:51](https://www.youtube.com/watch?v=meC2JqNAbCA&pp=ugUEEgJlbg%3D%3D)
-
-![Image 29](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [DEF CON 33 - Recording PCAPs from Stingrays With a $20 Hotspot - Cooper Quintin, oopsbagel](https://www.youtube.com/watch?v=meC2JqNAbCA&pp=ugUEEgJlbg%3D%3D)
-
-DEFCONConference
-
-42K views • 6 months ago
-
-[![Image 30](https://i.ytimg.com/vi/R75ZTBnUwXk/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYWCBhKGUwDw==&rs=AOn4CLDvZjoHOFSc5lDcHQIJ5hM5icAHpg) 23:07](https://www.youtube.com/watch?v=R75ZTBnUwXk)
-
-![Image 31](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Sweet Deception: Mastering AWS Honey Tokens to Detect and Outsmart Attackers](https://www.youtube.com/watch?v=R75ZTBnUwXk)
-
-fwd:cloudsec
-
-350 views • 6 months ago
-
-[![Image 32](https://i.ytimg.com/vi/Yae74guiqq8/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLCyi8T5fb2T6LxncmOENPqP7yuuAg) 49:26](https://www.youtube.com/watch?v=Yae74guiqq8)
-
-![Image 33](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Claude Mythos, Project Glasswing and AI cybersecurity risks](https://www.youtube.com/watch?v=Yae74guiqq8)
-
-IBM Technology
-
-17K views • 4 days ago
-
-New
-
-[![Image 34](https://i.ytimg.com/vi/9OY6LtamqRQ/hqdefault.jpg?sqp=-oaymwFACKgBEF5IWvKriqkDMwgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAHwAQH4Af4JgALQBYoCDAgAEAEYVSBgKGUwDw==&rs=AOn4CLBne8GQ8MofuYCa0QNLjpCw-EzujA) 25:48](https://www.youtube.com/watch?v=9OY6LtamqRQ&pp=0gcJCdMKAYcqIYzv)
-
-![Image 35](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Ransomware protection with immutable AWS Backup - it's complicated](https://www.youtube.com/watch?v=9OY6LtamqRQ&pp=0gcJCdMKAYcqIYzv)
-
-fwd:cloudsec
-
-312 views • 6 months ago
-
-[![Image 36](https://i.ytimg.com/vi/46I3oA-N6bM/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLBXj9vNbpLjsrH2JUhmgCayLDcYdw) 1:00:11](https://www.youtube.com/watch?v=46I3oA-N6bM)
-
-![Image 37](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [Pepe Escobar: China Just HUMILIATED Trump’s Blockade Plan - Iran Takes FULL Control of Hormuz](https://www.youtube.com/watch?v=46I3oA-N6bM)
-
-Dialogue Works
-
-78K views • Streamed 3 hours ago
-
-New
-
-[![Image 38](https://www.youtube.com/watch?v=f066e7WndTQ) 55:00](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
-
-![Image 39](https://www.youtube.com/watch?v=f066e7WndTQ)
-
-### [The World's Most Important Machine](https://www.youtube.com/watch?v=MiUHjLxm3V0&pp=ugUEEgJlbg%3D%3D)
-
-Veritasium
-
-26M views • 3 months ago
-
-[[](https://www.youtube.com/watch?v=f066e7WndTQ)](https://www.youtube.com/watch?v=f066e7WndTQ)
+[00:00] good morning everyone welcome back to Ballroom 2 uh I hope you all slept well and are kind of on top of things thank you for coming this early uh our next talk is from Yan MAA um he's doing a talk on uh responding to sophisticated ransomware attacks in the cloud a real world case study uh I'd like to thank our sponsor wh secure wh secure Consulting is at the Forefront of safeguarding organizations globally recognized for our commitment to Excellence and research Le approach we are the trusted partner for companies where cyber security is not just a priority but absolutely business critical if you do have questions we'll have five minutes at the end of the session uh please welcome your time let's make sure wonderful sounds good and my clicker is this great so morning everybody I appreciate being 
+[01:01] here first thing 9:00 a.m. second day I know it's not easy um I'm going to jump in uh quickly introduce myself and then the session and and we'll get to the good stuff so my name's yotam uh I've been doing different cyber positions both in the military and mainly in in response for the last 10 years um as you can tell from my beautiful design uh I'm recently a part of whz uh I was working for Gem security and we recently joined uh The Whiz family um I'm going to jump into the good stuff to the actual instant response story that I'm going to share in a second I just want to mention a couple things first so number one is even though everything I'm sharing here is uh a true story and instant response events that I responded to and and everything the way it unfolded um to protect client confidentiality I have modified and sort of combined a few of the details everything's real everything happened in these incidents but just if you want to ask questions about what did this specific client do at that specific time then I'm not going to answer that 
+[02:02] if it's too revealing uh so that's number one number two is as a bit of an introduction uh usually when I do these kinds of uh IR talks attack story talks I refer a lot to uh the attackers perspective and what they did and how they started their attack but this is different this is going to be different we're going to start off right at the end of the attack and there's a reason for that uh the reason is that specifically when talking about Ransom attacks in the cloud uh we're seeing an interesting uh and kind of an alarming Trend so for for a while there it seemed like Cloud environments were not immune but let's say more secure from standard ransomware attacks because of the way that they're built right ransomware the the classic oldfashioned actual heavy malare that goes and encrypts is just less fit for purpose uh for the cloud and we're still seeing very little of that in Cloud environments of actual malware ransomware being used however what we are seeing is a major rise in Ransom attacks not ransomware attacks just Ransom attacks where attackers come 
+[03:03] in they don't try to encrypt things that happens sometimes but more rarely instead what they do is they're in the environment they take a lot of data and they only use that part of the extortion to demand a ransom Based on data and that's why the attack that I'm going to describe today um starts here so we're essentially starting at the end of the attack uh this what we're seeing here is uh a real Ransom note sent to our victim in this case the victim is a large tech company I'm not going to say a lot more than that about the the victim but they have very large Cloud environments mostly in AWS they have hundreds of AWS accounts used by Mo mostly developers and devops guys in like over 50 countries very large environment managed across a lot of places and what we're seeing here is a pretty standard simple Ransom note that was sent to a bunch of people both lowlevel and Executives within the company essentially claiming I marked up the two key Parts here in in red but essentially claiming we have all 
+[04:04] your data whatever that means and uh we will release it in 48 hours that's your deadline they want payment and there's a link uh for you know the the dark website where you can communicate with these attackers now the the blacked out parts are just things that could identify uh the client or the timing but we have the relevant Parts in front of us now when this happened to the company they got this Ransom note they also got uh a pretty hefty pile of data as proof of life so the attackers right away just sent a lot of examples of stolen data they claimed this is just a dump of everything because they don't care that the client knows they want them to know right they want the extortion to be effective and it was huge it was a few hundreds of gigabytes of Json just sent over from the attacker and the company started sifting through these they weren't fully sure what was taken from where in the environment but when they started looking through this they saw that this indeed contained most of their client databases including a lot of customer pii so the the company's most sensitive data it's not credit cards numbers here not PCI but 
+[05:05] still a lot of sensitive stuff for this company and a decision was made pretty quickly that regardless of anything else that they're going to do they need to pay they they're not willing to support the the pain of uh this data being leaked and the initial asking price was high but again Bitcoin keeps fluctuating so I can't tell you exactly how much it was at the time but it was high but it was negotiated down and um the company paid the company paid the ransom and that's our starting point for this story which is not the way it usually goes but that's where the relevant interesting incident response part actually starts now before I even get to the investigatory parts and figuring out how the attack happens the company when when we started getting involved had an initial challenge which was more annoying um but also more urgent and many of you may encounter this uh if you're dealing with live incidents or incident response and that's current legal issues and Regulatory issues which haunt uh the industry now there's a few 
+[06:07] there's a lot of different things which may apply also different J jurisdictions but just to give you a taste here in the US of a couple of the things that are relevant first of all we have the SEC right so the Securities and Exchange Commission they're not a cyber agency but they are getting more and more into the Cyber games they put out major cyber rules last year they had some rules before that this is just an example from the recent Rule and we're not going to read the whole thing it's pretty boring but uh notice a couple things that they say here they're saying that when materiality determination meaning when you determine that an incident is material whatever that means very very hard to determine uh when you determine that then without unreasonable delay after discovering an incident you have to report the incident to the SEC within four business days now the problem here is that that reporting let's say in this case for this company obviously they had a massive data leak they paid her anom they know that this is a material incident let's assume that's not even in question even though you could argue for such a big company whether such a small 
+[07:08] Ransom payment considering their revenue is material but assuming that it is there's still a lot of question of what do you actually report you need to know a lot about the incident and about what's going on and get a get a handle on it before you can release it to the public and there are other concerns this is just one example this one happens to be from Connecticut but I just wanted to show you because each state and each jurisdiction has their own messy little rules but Connecticut also tells any company that may have experienced a data breach you also have to notify your customers and you have to notify the Connecticut attorney general and you have to do these things also within different time frames and under different limitations now this becomes a big problem because this company here different deadlines let's say 4 days here 60 days here there's a bunch of other deadlines from other jurisdictions they operate globally they have a lot of jurisdictions they have to work under and this company doesn't know exactly the scope of the leak and worse they don't know exactly who or how many of their customers were impacted and that's a huge huge difference because from the 
+[08:09] company's perspective paying the ransom hurts but that's one thing however if they had to Now notify every single one of their customers that they lost their data and if they had to do that in many different jurisdictions according to many different rules that hurts the company a lot more it hurts their reputation it hurts their ability to retain these customers and they have very short time frames to figure this out now if they don't figure it out in time what often happens every company has their own strategy but what often happens is the companies air on the side of caution here together with their lawyers and they just over report in a way they say okay we know that this data set was compromised so let's assume everybody in that data set as a customer had their data stolen and they report to all of them and that could really hurt the company especially if not everything was taken so the very first challenge that we had here in doing inant response wasn't really uh a forensic investigation it was was figuring out exactly what data was and was not taken now the attackers especially once the ransom was paid were very accommodating they said yeah we sent you all the data so it depends if you believe them or not 
+[09:09] but there was also no indication that they hadn't more than that the logging in the environment was pretty limited it was not too well configured but it appeared that almost everything the attackers had taken had come from S3 buckets S3 logging was not enabled unfortunately but it came from S3 buckets and not other places and that meant that we we thought we could try to just compare stuff in the S3 bucket so what we got from the attackers and figure out whether we have a match and then we'll know what was taken now when we tried to do that we started hitting an interesting complication which is something we don't usually think of when we're doing forensic s in a response in this case this is just an example so the company had most of this sensitive customer data in mongod DBS in their AWS environment and these mongod DBS had backups uh in S3 these backups were bson files for those of you who it's it's it's the way that you can export uh some similar to Json from from and but the attackers sent us Json files and if we just try to compare the attacker's Json files to files which we thought 
+[10:11] would be matching bson files from the company's environment we didn't get matches so this is just an example right but we're getting different file hashes and we could start to analyze every single record in the attackers file one by one but that would take way longer than the deadlines that we now have because of the legal requirements and plus that's something that going to be more of a lawyer job anyway than than something that we can help with so the lawyers came to us executive management came to us what do we do about this how do we get out of this Jam quickly or else we're just going to have to pretty much over report everything and that's going to hurt us a lot so what we started doing here is we figured okay we're not allowed to do anything to the attackers file CU that's what they sent and if we want to have some legal cover and saying this is what the attacker sent and here's the matching data on our side so we know what was taken we can't touch the attacker file so all we can do is try to mess with the company's files the backups to try to change them up a little bit until we get something that matches the attacker files so to do this it's kind of a weird thing that we don't usually try to do in 
+[11:13] in investigations and in forensics we started going step by step and analyzing the differences so first was easy right we wanted to convert uh these bson files into Json files to see if maybe that's the whole difference maybe the attacker just had a different sort of export mechanism we don't know what the attacker did behind the scenes to get to this data but that wasn't enough was the first step but that was very simple didn't solve the problem we didn't get the same file hashes so now what we had to do and this it it sounds very silly but what we had to do is actually try to analyze bit by bit character by character the differences between attacker files and our files so we started by looking for files that look similar you know in size and we were hoping would match because the names weren't the same and then we started analyzing literally going character by character looking for the differences and we started finding very small differences which honestly to this day I'm not sure how they happened or what the attacker did it was kind of annoying to find them but the more we dug into it the more of these we found and I'm going to give you just a few examples we found a lot more than this but one example is just encoding nonsense so we found in many cases you know our file would have 
+[12:15] the company's file would have something like an amp perent but the attacker would have the unic code encoding for an ENT why I have no idea I don't know what the attacker did to the data I don't know we did to the data that's just the way it was even though the attacker probably originally took and exported the same files but we said okay so let's run a script over all the company's backup files and change this into this try to solve the problem we looked for more and more of these issues for example time stamps you know so sometimes it was uh Unix time stamps in one area or textual time stamps in another area sometimes it was reversed honestly I don't understand exactly why this happened but this was a very slow painstaking uh effort to try and figure out every difference the last one that I want to point out here just because it was the silliest one is this nonsense if you notice that the way the numbers represented here the E is capitalized versus not capitalized again don't know why what exactly happened on the attacker side here but these differences are things that we found and by doing this sort of slow very manual forensic effort on a few files to map out these differences once we had each difference mapped up of course we just automated 
+[13:16] running this correction on all the backup files on the client side until finally we're all very happy this took a couple days to get to the final result but we were able to get to I don't expect you to read the entire file hash but we got the same file hash so so we were able to get the company's backup files to modify them in a way where they matched exactly everything that we got from the attacker now this enabled the company to say yes we didn't have perfect logging right we don't know exactly everything that the attacker did but we paid the attacker gave us everything that they claim they have and we have no reason to think that anything else was compromised and if there's no reasonable presumption like that then they don't have to report it like that and we have matching files on our side once we have the matching files the company could say exactly okay these are customers from these jurisdictions and not these in this case this led to reporting requirements in about 10 different jurisdictions instead of over a 100 so it was really a huge difference from the company and this wasn't even a standard part of the investigation it was just this little messy thing which 
+[14:18] took some work and did a lot of good in the incident response effort so putting this behind us just this little data Adventure we can finally get into the good stuff and the actual investig figuring out what happened in the attack so I'm going to walk you uh through this from our perspective as investigators but I first want to quickly explain how access is managed to pretty much all resources in this company's AWS environment so like I mentioned huge AWS environments hundreds of accounts many many countries but impressively if you look at all of these AWS accounts this entire environment only had five I am uh users that's it in the entire environment the reason for this is that the company used they had their own identity provider their own proprietary one which they built and managed themselves and almost every single access performed by anyone or any machine and the company had to go through this identity provider now to understand the attack we need just a quick very high level overview of this identity provider architecture at a very high level when an employee or a machine 
+[15:20] but when somebody that deserves and wants access to this company's AWS environment wants to get in there what they do is they contact they browse this identity provider they have an API they have a GUI they do it either way they browse the identity provider the identity provider does have one of those five IM users that identity provider can use its own access key to access AWS and once it does that it connects it goes to Secrets manager to get this key every every time in AWS connects to the cloud environment and then using STS it creates a token right so a temporary session token which then gets assigned to the user based on the role the Privileges everything that they should have for this specific session based on determinations made by the identity provider itself so just at a high level this is how access is managed now the reason this is interesting of course is because we did have some logs not perfect logging but we did have some logs and we wanted to figure out where the attacker could have come from so we didn't have full S3 logging to know which files were taken when but we did see some activity around S3 which was 
+[16:21] suspicious or not suspicious good users bad users we wanted to figure this out and when we started looking more into it what we found is this so some of the stuff here is redacted of course because it has to do with the company but at a high level when looking at cloud trail logs for activities which we deem to be suspicious which we deem to be part of the attack what we saw is that when the attacker performed these malicious activities they came from SDS sessions just like legitimate sessions performed uh within within the environment and they had very importantly the same session name convention that we would see for the identity provider so very quickly when this identity provider like I said it was proprietary so nobody else uses it but when this identity provider would create sessions for valid users it would always you know within this uh string that you get in cloud trail of logs it would always create a session name this attribute in AWS which followed the same convention it just contained the name of the user at the 
+[17:23] name of the identity provider that's just the way that it worked that's just how they did it you you know you could put what you want in a session name they could have put banana in there but this is the way they chose to do it and when we looked at the malicious activities they looked the same way they all looked like they're coming from SDS following this convention so the initial thought the Instinct was I guess this means that the attacker also somehow came through the identity provider because it looks like it's authenticated the same way it looks everything looks right now that would be very concerning because the identity provider also has multiactor authentication and it has original IP restrictions and it has a lot of other things to secure the company and it would be difficult not impossible of course they can hijack a session of somebody who's authenticated but it would be difficult to do however before we just went forward with this assumption that the attackers must have gotten through the identity provider we figured let's take a look at another log Source here just because we could and we looked so sorry this is just at a high level to understand the 
+[18:24] attack itself so we know that the attackers were able to get to these mongod DB backups from S3 we know that this was presumably done through the identity provider but what we figured we should do here is look at the identity provider itself it didn't have amazing logging they were all textual and local on the actual machine but they existed and when we looked at those this is the wonderful result that we got nothing so we were looking at the identity provider logs I'm glad you're laughing it was it was very strange for us uh to begin with because we looked at the identity provider logs which we didn't know were that good to begin with but we saw that we couldn't find the corresponding authentications to the ones that we were seeing in cloud trail so we were seeing logging that shows something like an attacker coming in through the identity provider but no actual access to the identity provider and after doing some testing ourselves we figured okay these logs look reliable we can't get around them in any way so this means they didn't actually come through the identity provider now if they didn't come through the identity provider but 
+[19:25] they did manage to make it look just like this there's really only one way for the attackers to do this and that is if they got the key that's used the access key used by the identity provider to create these sessions so if you remember before when I ran through the architecture the identity provider does have an access key associated with one of these five unique IM users and if an attacker has that access key sure they could do the same right they could generate SDS tokens they can make it look just like a session that came through the identity provider but only thanks to the fact that we could compare these two log ources were we able to say for sure they are doing this sort of Faking but they are not actually coming through the identity provider and that's a major understanding for us because when we looked into it and we looked everywhere trust me we saw that the only place that that key was stored was in that Secrets manager value a single Secrets manager value uh which is theoretically only used by the identity provider itself right the identity provider is supposed to be accessing it when it needs to create these sessions 
+[20:26] legitimately but nobody else should ever be accessing this value so going further back in our investigation we now think okay this Secrets manager uh value must have been access must have been compromised somehow let's look at the secret compromise itself and when we start looking at the logs again I apologize a lot of this is is redacted but the interesting parts are here so we're seeing different axises uh that occurred to this specific value to this specific uh secret and secrets manager and we're seeing that there's one which is different one which stands out and what what essentially is happening here is that every single axis that we've seen in the history and of the logging that we had it didn't go back forever but we did have enough um every single access was always performed from the same IP address exactly in the same way it was the identity provider itself doing what it should be except for one time just this one time suddenly the same key the key that's used by the identity provider and was presumably used by the attacker for the entire attack that same key was accessed by 
+[21:28] some ec2 instance role from some ec2 IP address that's strange that shouldn't happen that's different from what we've been seeing happen until this point and that made us this think naturally okay so this ec2 must be somehow involved and the ec2 rle which allowed this access and we saw it was configured to allow this access that's how the attacker was able to do it must be compromised as well so if we're going back in our our chain of understanding the attack these mongod DB backups were taken from S3 because the attacker was able to bypass the identity provider because they were able to access Secrets manager because they were able to compromise this ec2 role great so how did they get this ec2 IM roll that's the next question the next obvious thing we want to figure out and when we go to figure that out luckily we did have um pretty much not constant but let's say pretty good uh taking of Amis of Amazon machine images from a lot of ec2s into the environment including the one associated with the role we had here so we had different Amis we could compare from different 
+[22:29] time time frames so that we can try to figure out what happened on that machine when bad things started happening because we have some presumed time frames for for this attack now and when we started looking at the machine itself it was actually pretty straightforward right away we started seeing some things that are strange so this is a bash history from the machine itself what we can see on it is some activities we're not going to get through everything there's some use of AWS API but what we can see is the specific um secret that was targeted in this case again the the secret name is redacted but that was accessed through an AWS command line through a CLI on the machine so that machine had an IM Ro associated with it which allowed access to that secret right that's mistake number one but once we understand that we can actually go to the machine and through very simple forensics in this case just best history we can find evidence that this was actually used to access the uh the secret so we now know for sure that this 
+[23:30] specific ec2 was used and the question that obviously comes first to our minds is what is this ec2 why how was it compromise what's going on what is this machine and unfortunately what we were quickly able to see is that this machine was actually a kubernetes pod um it was running within a larger cluster that was used in this environment for a lot of different production applications again like I mentioned huge AWS environment but this kubernetes pod was just running on an ec2 and unfortunately that's where this whole thing appeared to have started so that made us thing okay so how why like how how could the attacker get to a pod why are they getting to a pod how are they operating within this environment and that of course leads to further investigating what's going on in this cluster in this kubernetes cluster now this is where things get a little bit more complicated because you know it's it's kubernetes there's not a lot of things that are persistent necessarily there's a lot of ephemeral 
+[24:30] uh things there that we could miss plus because the environment was so huge people were spinning up and taking down applications there all the time all the time that's just how the company operated so this made it more difficult we couldn't find the right logging in different places to figure out what happened there but what we were able to see was that not long before the attacker gained this initial access to this ec2 to the kubernetes Pod what we saw is that a specific application was deployed to the kubernetes a specific application within kubernetes not an ec2 application and this application which was deployed actually had a very well-known exploitable vulnerability in it it was actually deployed knowing this so in retrospect I can tell you when it was deployed it was not deployed meaning to go into production it was deployed the person who deployed it thought they were doing it and only limiting it to internal access because they wanted to do some testing on that application they didn't think it was internet not accessible however again just a mistake 
+[25:31] or bad luck uh the person who deployed it deployed it later on somebody used the same Security Group which was controlling access to this uh application in order to control access to something else and they enabled access from the internet so two completely separate incidents some some guy was using an application they thought was completely blocked off from the internet again I wouldn't do it in production but they thought they weren't doing anything wrong another guy again thought they were doing nothing wrong they were using a Security Group which they knew and had been modifying for a few years now once in a while to do different things in the applications they allowed access from the internet so once that happened we had a vulnerable application within this kubernetes cluster which was accessible from the internet and very quickly it was scanned presumably this is just a screenshot um from from gem where we can see what happened here we can see an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning it's not like somebody knew about this but once they had scanned the vulnerable application 
+[26:33] they were able to run code on the ec2 which was hosting the kubernetes Pod so now we understand pretty much the full flow of the attack here right we have our attackers were scanning randomly probably they got lucky with this application and the misconfigured uh Security Group which enabled them access to kubernetes to the ec2 which had an IM roll configured to allow access to Secrets manager that Secrets manager access allowed them to Bypass or fake access to the identity provider which allowed access to S3 and finally to extract the mongodb backups now before I move on to some some takeaways from this stuff and some more interesting uh facts there's something that I want to mention about this whole attack Stream So from the moment the attackers got their first access there this uh access to kubernetes through the scan until the moment that they had sent the ransom note it was just a couple days it was very fast and the fact that it was so fast is unfortunately very common when these 
+[27:34] attacks happen in the cloud so the cloud is I always say it's not more or less inherently secure but there are advantages and disadvantages for both attackers and Defenders and speed is just a common thing because these environments all pretty much look the same and we're all pretty much using the same three vendors for all our Cloud environments and because attackers know this too they can automate and they can move a lot more quickly they would in standard attacks especially ransomware attacks in on-prem environments where they first have to do some Recon figure out where the critical assets are but here you know S3 containing data shocking uh the fact that there's uh Secrets manager values which allow access to things again very shocking right so the the the attackers that know these facts leverage them to move very quickly and that's how even a small or short-lived mistake like the one we had here with the security group and the application being misconfigured can pretty quickly lead to something dramatic for the company and here it did so that's why I think that this is um an 
+[28:35] interesting story from uh from the cloud IR perspective because it highlights how quickly things can escalate this way and even through pretty small mistakes and configurations along the way as long as they're there uh the risk is there as well so with that I want to move to three key points uh that that I want to leave you with that I take away from from this specific story and from from many other Cloud inent response engagements as well and then I I'll leave a couple minutes for for questions so first of all uh highspeed leak investigations are something that we're not used to and when I when I'm talking about leak investigations I'm not just talking about you know immediate response stuff it's not just about being able to kick out an attacker that's active in their environment that's always important that always has to happen fast and that's something that we have been doing in on Prem environments as well for many years but now given both the legal and atory issues that I mentioned in the beginning and how quickly attackers are moving in the cloud and also how easily they can exfiltrate different kinds of data this 
+[29:37] is becoming really a must and preparing for this need whether you're working for an organization that you're securing or whether you're a consultant doing this for many other organizations doesn't just mean that you need to be willing to work a lot of hours and to be fast it means that in preparing in advance we need to do a much better job of mapping out which data we have where in the cloud because for example this company didn't have a good grasp on that and that was a problem but also mapping out what we would do and actually testing and drilling what we would do if we have to answer these kinds of questions like the ones that I shared here in the beginning of what data exactly was taken how much who's impacted and collaborate on that not just with the technical teams but with legal teams and anybody else who may be involved because for example knowing which regions or which buckets or whatever it is for for your organization contain whose data and the likelihood of that being impacted and whether you have the right logging to figure that out is a must especially given these shrinking deadlines and more and more involvement from regulators and 
+[30:37] other people in in putting pressure on companies to do this so this is really becoming an inherent part of instent response especially in the cloud because of speed and scalability it makes it much harder to map this out and it becomes really really important that's number one number two has to do um with logging specifically when it comes to data so I mentioned you know the leak investigations and of course that's important but too many times way too many times uh when we get into an incident when we start investigating we see that even companies that have invested and have pretty good logging in different areas of their environment are failing specifically on the data side so here it was S3 logging which I mentioned but at a wider scale almost every organization eventually figures out oh we don't have you know RDS audit logging or in this case there was also mongodb there was no logging on access to that database or other pieces of data which again because of the way that these Cloud environments are operating are becoming the only critical asset so yes there are ransomware attacks which try to actually encrypt and do stuff like 
+[31:38] that that's disruptive in the cloud that's the minority the vast majority are only going for the data and understanding this that operating in a cloud environment even for companies for whom data may not have been the top priority maybe it was always downtime maybe it was just availability we don't have that much sensitive data it's not our thing I've I've heard people say that still this can cause a lot of Heartache um when when these attacks happen and ensuring that there's proper logging for access to all these things is critical there's also a question of figuring out um what kind of data you have in different places there's one case uh that that I had a very different kind of incident this was actually an on Prem ransomware incident but the company was very confident because they said listen we have immutable backups in Azure for everything we care about so even if we get this encryption uh for our on-prem environment we'll be fine and that was true they had this great immutable backup but what they didn't realize is that immutable backup was client side encrypted they had their own keys and they had four different keys to different parts of the backup one of the keys the key itself was only stored in 
+[32:40] one place it was also stored in the cloud and what attackers did is they encrypted the file to contain the key itself so great they have backup the backup is perfect right but the company can't access about a quarter of it that's a big problem in that case we're able to to do something clever you know attackers and ransomware attacks they give you proof of life you can upload a few files so they decrypt them just to show they can we gave them the key file they gave it back uh so so that was wonderful uh the company didn't have to Fan they got out of it but think about what would have happened if they didn't because they didn't know about this specific piece of data it's a key it's not even sensitive data or not pii at least but because they weren't properly tracking where it is and access to it attackers were able to get away with something like that which destroyed their entire recovery plan luckily we're able to get away with it here but not necessarily in every other case and that really highlights importance of mapping the data and the logging of access to it now the last point I want to make here has to do with centralizing forensics and logging across the cloud so unfortunately in a lot of cloud environments even people who have the 
+[33:41] right logs enabled or know how to do Cloud forensics very well they often miss things and they miss the quicker attacks because they can't connect dots from different places quickly enough so if uh relying on a single log Source like cloud trail is effective and it is effective for a lot of things it's never going to be fully effective in an environment that's very interconnected now being able to have things like databas audit logging and stuff like cloud trail and stuff VPC flow logs and stuff like specific application loggings we're talking about kubernetes here but it could be anything having all these things centralized in a single place is really critical not only to being able to perform a good investigation because sure when you're performing inv ination it's easier where you have everything in one place and you can correlate so I mentioned before that a lot of the breaks that we got in this investigation came due to the fact that we were able to correlate the cloud tray Logs with the IDP logs that were just stored locally on the server so during an investigation we got lucky these logs 
+[34:43] were locally on the server we could use them of course it would have been much easier if these were initially centralized to one place and then these correlations could not only be made during an investigation but live so the kind of information that we're looking for here could also serve for Effective detection and a lot of the more uh sophisticated attacks that we're seeing are being detected by exactly stuff like this you know they know that they can model all these Cloud environments are the same the attackers know how to model getting away with certain things within cloud trail logs or VPC flow logs or specific applications logs but when you know your own organization and you have heuristic analyses which look for anomalies across all these things together then your environment is unique and that's where you get a much bigger Advantage when compared to attackers because you have the home field advantage they don't and they lose that huge Advantage they get from everything being the same when you have tailored alerting based on centralization of logging from many different places which allow this kind of tailored unique detection so that's the last point I 
+[35:43] want to leave you with here uh we got a couple minutes left for some questions or comments if anybody has anything yes [Applause] thank you hey uh great talk I was curious like have you noticed any patterns across like organizations of different sizes of the reason for why data logging for example is it like cost cutting but still meeting Regulatory Compliance or is it like a lack of change management processes with like the security groups like do you find that there are noticeable patterns depending on what industry the companies might be a part of or like the size of the organization yeah I think uh industry more than size in my experience um I think because I've seen very small organizations doing very well and very large ones doing very badly and vice versa um but uh industry of course I mean there's there's industries that are just either a lot more regulated or just 
+[36:45] a lot more attentive to this stuff so there's obviously going to be a difference between Banks and financial institutions or retail or people who think that they don't have any sensitive data like a lot of times in manufacturing and stuff like that they figure yeah we just need up time we don't care about that stuff so that that causes really big differences I think another point to remember here is that it's cost could be uh a reasonable discussion when it comes to these things but many times uh companies that are missing this stuff it's it's not because they had the discussion and made a very uh thoughtful decision okay we just can't afford this kind of logging it's because they didn't even try to begin with that that's more more often the case in my experience that you know either because they assumed the cost was prohibitive though it might not be or because just nobody took the time to do this because it was just wasn't prioritized I think that's a lot more common for the companies that get hit the worst at least from what I seen as a response so that's why taking a proactive approach and modeling and drilling these things and then seeing what you're missing is is really key 
+[37:49] here great story thanks and I have two questions first uh you might have mentioned but how did the tech break off from the kuber part to the ec2 node and the second question is uh it seems the ec2 node that got compromised already have very high very high privilege that can access secret manager did attacker use that role to access try to access the three bucket and probably the third question sorry how did the attacker you mentioned there are five roles in that that the organization use how did the attacker figure out that this is the uh the road that can access the crown and Duo of the organization thank you yeah so I I think I remember everything I'll start with the last one because I think that it's it's the most interesting one I don't want to give too many details because some of you may recognize some of this like from the media and stuff because this attack was published but actually because there were so few IM users here 
+[38:49] not just rolls users only five users and the attacker stole the key used by a specific user um what the attacker was able to do through good intelligence work on this company is figure out that this user is the one which basically has all the Privileges because it's the only one that grants access to any other users um the the ec2 itself you were asking about how it was able to the ec2 didn't have access to the S3 buckets but the ec2 RO the role that was attached to this ec2 and therefore everything running on it including the kubernetes Pod that did have uh permissions to access Secrets manager and that access to Secrets manager allowed getting that key and that key allowed creating the the fake SCS which allowed access to everything so the it's it's a string of very specific not too small but not too big uh mistakes or misconfigurations which eventually led to a very quick attack and a very successful one hey thank you for the talk um thoughts on ofac for ransomware payments uh we don't have that long but 
+[39:52] I think generally it's interesting I have seen companies U rarely but I have seen companies that have made the decision not to pay because of this because of fear from ofac limiting uh payment to you know specific entities um ofac is like the treasury body that manages sanctions so like if there's a sanctioned entity like a lot of the Russian ransomware groups um then you're not allowed to pay as as a US company you're just not allowed to um the thing is attackers are smart and you know they they give you a reason to have enough doubt so that you can pay in most cases so you know they they always use a brand new wallet and they don't necessarily identify themselves in the same names and ofac doesn't just say you're not allowed to pay Ransom period they say you're not allowed to pay these groups or these suspected countries and the attackers are smart enough to you know play in that little wiggle room you know you go to the lawyers you give them the wallet address they check they say yeah it's brand new okay doesn't specifically impact ofac do whatever you want so that's the majority of cases but not all of them the first takeaway you had um 
+[40:54] moving quickly to triage and assess the damage have you noticed in your experience differences in the capabilities to do that between large and small organizations or maybe organizations that are Cloud native versus you know hybrid organizations where maybe that you know muscle memory isn't there and how have you seen companies that do it well implement it so first of all yeah there's the differences are huge I think there's a lot of variance in this um I think again size is not necessarily the best indicator because I've small and great um it also really depends on the industry so a small company that's a cloud native startup may be really good at this cuz they know what they're doing um versus a larger company that's been around for 100 years and they they just started their Cloud journey and they don't really know what they're doing there um so I think it's more a question of like the attention that this gets and whether you have people who know what they're doing specifically here I think that one thing you mentioned which which is a common mistake especially for 
+[41:55] larger organizations when they're transitioning to the cloud they basically say yeah we know how to do security we have you know 100 200 500 people security team we can just basically copy paste what we've been doing on Prem to the cloud and again I'm not saying the cloud is more or less inherently secure but it's different and unless you have people who know what they're doing in the cloud and who know how to operate both investigations but also just creating detections and managing Security in the cloud it's very hard to do so I think a lot of the cases where the impact is dramatic despite having a large security team and people who to operate this stuff is exactly that it's people who haven't really shifted their mindset to the cloud and definitely I mean that's a whole different talk but hybrid environments are much more challenging for many reasons that's just one of them um if I can add to uh your answer on the first question regarding logging based on my experience what I've seen also uh in inent response is typically organizations are they deploy systems they deploy platforms and they don't 
+[42:56] have an after thought about logging or uh incident response on those systems so that's one of the reasons also we see high rotation of logs uh instead of having retention of those logs um the question that I have for you based on the speed at which the actor moved through the infrastructure um do you say that it's an actor that has high sophistication or a low sophistication actor with a good knowledge of AWS would have been able to move this fast so that's an interesting question I think that it's not I mean we don't know enough about them here to to from this story at least to to come to any sweeping conclusions I think none of the actions that were taken here are especially sophisticated maybe except for uh the way that they imitated uh the identity provider in logging because once they got the key for the identity provider they could have just used it you know in a much more uh violent way they could have just gone in and and done stuff but instead they mimic the same way the identity provider worked they created an SDS session with the 
+[43:57] same convention for a session name and that indicates to me that these guys really cared about not being caught within the moment they knew what they were doing um so that's maybe a higher level of sophistication the rest of it I mean scanning and then using anald like 80% of this you could just automate so I don't think that necessarily indicates sophistication as much as it indicates really just Cloud native attackers who know what they're targeting and they know what they're doing so uh first of all thanks for the presentation uh I have a question in your experience have you had to deal with a threat actor that used uh other uh an AWS service like KMS as an encryption method to stuff like S3 bucket there there is a research for for that so have you had the chance to to catch a threat actor using that I have I have seen that but to be honest I started with this too it's at least in my experience very rare so far just 
+[44:59] because the cloud environments inherently they're just easier to recover from this stuff so in many cases there's going to be backups there may be some immutable backups um so the the encryption itself is usually less of a priority than just taking data and asking for a ransom I have seen it yes uh both with KMS or by the way just making copies of the data and then trying to just delete it and delete all the backups not not even necessarily to encrypt but in in my view this kind of attack the only data focused and and Ransom demand is probably more prevalent and is going to remain more prevalent 
+[46:10] yeah so I I don't know exactly what they did on their side of course in this case I have no reason to think that they encrypted the data cuz they downloaded it and then they kept it and they shared it un encrypted so I see no reason for them to encrypt it but they definitely did something to it cuz changes happened yeah thank you so much for the question and the round of applause for you Tam thank you [Applause]

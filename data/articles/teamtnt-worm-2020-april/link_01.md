@@ -1,12 +1,15 @@
-Title: Error
+Title: Access Denied
 
 URL Source: https://cybersecurity.att.com/blogs/labs-research/teamtnt-with-new-campaign-aka-chimaera
 
-Warning: Target URL returned error 503: Service Unavailable
+Warning: Target URL returned error 403: Forbidden
 
 Markdown Content:
-# Error
- An error occurred while processing your request.
-Reference #30.a76533b8.1776196368.173487c5
+# Access Denied
 
-https://errors.edgesuite.net/30.a76533b8.1776196368.173487c5
+# Access Denied
+
+ You don't have permission to access "http://cybersecurity.att.com/blogs/labs-research/teamtnt-with-new-campaign-aka-chimaera" on this server.
+Reference #18.c9163e17.1776236951.22e58a9
+
+https://errors.edgesuite.net/18.c9163e17.1776236951.22e58a9

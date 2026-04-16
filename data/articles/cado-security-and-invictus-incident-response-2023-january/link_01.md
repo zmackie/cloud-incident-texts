@@ -343,79 +343,79 @@ Respond
 
 ![Image 27: Email Forwarding Rules in Microsoft 365](https://miro.medium.com/v2/resize:fit:679/format:webp/1*Aa8QGNL_tSJ5LHax2BY2dg.png)
 
-[![Image 28: Invictus Incident Response](https://miro.medium.com/v2/resize:fill:20:20/1*F9s4GC6fkzA4zjWCkKYgbw.png)](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----0---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[![Image 28: Invictus Incident Response](https://miro.medium.com/v2/resize:fill:20:20/1*F9s4GC6fkzA4zjWCkKYgbw.png)](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----0---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[Invictus Incident Response](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----0---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[Invictus Incident Response](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----0---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[## Email Forwarding Rules in Microsoft 365 ### The ultimate guide to analysing and understanding email forwarding rules in the Unified Audit Log (UAL)](https://invictus-ir.medium.com/email-forwarding-rules-in-microsoft-365-295fcb63d4fb?source=post_page---author_recirc--dae857806aa7----0---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[## Email Forwarding Rules in Microsoft 365 ### The ultimate guide to analysing and understanding email forwarding rules in the Unified Audit Log (UAL)](https://invictus-ir.medium.com/email-forwarding-rules-in-microsoft-365-295fcb63d4fb?source=post_page---author_recirc--dae857806aa7----0---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 Feb 20, 2023
 
-[1](https://invictus-ir.medium.com/email-forwarding-rules-in-microsoft-365-295fcb63d4fb?source=post_page---author_recirc--dae857806aa7----0---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[16 1](https://invictus-ir.medium.com/email-forwarding-rules-in-microsoft-365-295fcb63d4fb?source=post_page---author_recirc--dae857806aa7----0---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----0-----------------explicit_signal----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----0-----------------explicit_signal----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F295fcb63d4fb&operation=register&redirect=https%3A%2F%2Finvictus-ir.medium.com%2Femail-forwarding-rules-in-microsoft-365-295fcb63d4fb&source=---author_recirc--dae857806aa7----0-----------------bookmark_preview----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F295fcb63d4fb&operation=register&redirect=https%3A%2F%2Finvictus-ir.medium.com%2Femail-forwarding-rules-in-microsoft-365-295fcb63d4fb&source=---author_recirc--dae857806aa7----0-----------------bookmark_preview----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 ![Image 29: I Used HashMaps Every Day for 4 Years. Then Google Asked Me One Question and I Had Nothing.](https://miro.medium.com/v2/resize:fit:679/format:webp/1*_Jx2wtXeXTQGMJyhmaeb5w.png)
 
-[![Image 30: AWS Tip](https://miro.medium.com/v2/resize:fill:20:20/1*LXqMmX8rKuWEc3D_apZ1rQ.jpeg)](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----1---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[![Image 30: AWS Tip](https://miro.medium.com/v2/resize:fill:20:20/1*LXqMmX8rKuWEc3D_apZ1rQ.jpeg)](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----1---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 In
 
-[AWS Tip](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----1---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[AWS Tip](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----1---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 by
 
-[The Speedcraft Lab](https://medium.com/@speedcraft21?source=post_page---author_recirc--dae857806aa7----1---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[The Speedcraft Lab](https://medium.com/@speedcraft21?source=post_page---author_recirc--dae857806aa7----1---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[## I Used HashMaps Every Day for 4 Years. Then Google Asked Me One Question and I Had Nothing. ### Four years of daily use and I never once looked inside it. Here’s what the silence on that call taught me about the difference between…](https://awstip.com/i-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba?source=post_page---author_recirc--dae857806aa7----1---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[## I Used HashMaps Every Day for 4 Years. Then Google Asked Me One Question and I Had Nothing. ### Four years of daily use and I never once looked inside it. Here’s what the silence on that call taught me about the difference between…](https://awstip.com/i-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba?source=post_page---author_recirc--dae857806aa7----1---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 Mar 16
 
-[16](https://awstip.com/i-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba?source=post_page---author_recirc--dae857806aa7----1---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[403 16](https://awstip.com/i-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba?source=post_page---author_recirc--dae857806aa7----1---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----1-----------------explicit_signal----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----1-----------------explicit_signal----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fcda4e050d1ba&operation=register&redirect=https%3A%2F%2Fawstip.com%2Fi-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba&source=---author_recirc--dae857806aa7----1-----------------bookmark_preview----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fcda4e050d1ba&operation=register&redirect=https%3A%2F%2Fawstip.com%2Fi-used-hashmaps-every-day-for-4-years-then-google-asked-me-one-question-and-i-had-nothing-cda4e050d1ba&source=---author_recirc--dae857806aa7----1-----------------bookmark_preview----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 ![Image 31: Amazon Data Engineer Interview Question — Data Engineer III](https://miro.medium.com/v2/resize:fit:679/format:webp/1*V3SPk2OZJYiiPPnBidZf2A.jpeg)
 
-[![Image 32: AWS Tip](https://miro.medium.com/v2/resize:fill:20:20/1*LXqMmX8rKuWEc3D_apZ1rQ.jpeg)](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----2---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[![Image 32: AWS Tip](https://miro.medium.com/v2/resize:fill:20:20/1*LXqMmX8rKuWEc3D_apZ1rQ.jpeg)](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----2---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 In
 
-[AWS Tip](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----2---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[AWS Tip](https://awstip.com/?source=post_page---author_recirc--dae857806aa7----2---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 by
 
-[Mohit Daxini](https://medium.com/@mohitdaxini75?source=post_page---author_recirc--dae857806aa7----2---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[Mohit Daxini](https://medium.com/@mohitdaxini75?source=post_page---author_recirc--dae857806aa7----2---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[## Amazon Data Engineer Interview Question — Data Engineer III ### Modern data-driven applications often allow users to filter data dynamically. Whether it’s an e-commerce dashboard, analytics platform, or…](https://awstip.com/amazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc?source=post_page---author_recirc--dae857806aa7----2---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[## Amazon Data Engineer Interview Question — Data Engineer III ### Modern data-driven applications often allow users to filter data dynamically. Whether it’s an e-commerce dashboard, analytics platform, or…](https://awstip.com/amazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc?source=post_page---author_recirc--dae857806aa7----2---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 Mar 18
 
-[](https://awstip.com/amazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc?source=post_page---author_recirc--dae857806aa7----2---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[150](https://awstip.com/amazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc?source=post_page---author_recirc--dae857806aa7----2---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----2-----------------explicit_signal----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----2-----------------explicit_signal----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fa6b8201ab6dc&operation=register&redirect=https%3A%2F%2Fawstip.com%2Famazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc&source=---author_recirc--dae857806aa7----2-----------------bookmark_preview----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fa6b8201ab6dc&operation=register&redirect=https%3A%2F%2Fawstip.com%2Famazon-data-engineer-interview-question-data-engineer-iii-a6b8201ab6dc&source=---author_recirc--dae857806aa7----2-----------------bookmark_preview----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 ![Image 33: Automated Forensic analysis of Google Workspace](https://miro.medium.com/v2/resize:fit:679/format:webp/0d702cbfe9920e00e94464660874e97b36b08e18a7844ad35d0d5cd2de2ef897)
 
-[![Image 34: Invictus Incident Response](https://miro.medium.com/v2/resize:fill:20:20/1*F9s4GC6fkzA4zjWCkKYgbw.png)](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----3---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[![Image 34: Invictus Incident Response](https://miro.medium.com/v2/resize:fill:20:20/1*F9s4GC6fkzA4zjWCkKYgbw.png)](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----3---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[Invictus Incident Response](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----3---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[Invictus Incident Response](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7----3---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[## Automated Forensic analysis of Google Workspace ### Follow us | LinkedIn | Twitter |GitHub](https://invictus-ir.medium.com/automated-forensic-analysis-of-google-workspace-859ed50c5c92?source=post_page---author_recirc--dae857806aa7----3---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[## Automated Forensic analysis of Google Workspace ### Follow us | LinkedIn | Twitter |GitHub](https://invictus-ir.medium.com/automated-forensic-analysis-of-google-workspace-859ed50c5c92?source=post_page---author_recirc--dae857806aa7----3---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 Aug 16, 2022
 
-[](https://invictus-ir.medium.com/automated-forensic-analysis-of-google-workspace-859ed50c5c92?source=post_page---author_recirc--dae857806aa7----3---------------------57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[2](https://invictus-ir.medium.com/automated-forensic-analysis-of-google-workspace-859ed50c5c92?source=post_page---author_recirc--dae857806aa7----3---------------------bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----3-----------------explicit_signal----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---author_recirc--dae857806aa7----3-----------------explicit_signal----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F859ed50c5c92&operation=register&redirect=https%3A%2F%2Finvictus-ir.medium.com%2Fautomated-forensic-analysis-of-google-workspace-859ed50c5c92&source=---author_recirc--dae857806aa7----3-----------------bookmark_preview----57ca0114_725f_4a8d_9f0d_20ae314faa43--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F859ed50c5c92&operation=register&redirect=https%3A%2F%2Finvictus-ir.medium.com%2Fautomated-forensic-analysis-of-google-workspace-859ed50c5c92&source=---author_recirc--dae857806aa7----3-----------------bookmark_preview----bee02cef_321a_4ed3_a272_98911ceab984--------------)
 
 [See all from Invictus Incident Response](https://invictus-ir.medium.com/?source=post_page---author_recirc--dae857806aa7---------------------------------------)
 
@@ -425,129 +425,129 @@ Aug 16, 2022
 
 ![Image 35: A futuristic 3D visualization of two massive data centers — one blue for Microsoft and one purple/green for OpenAI — separated by a glowing orange tectonic crack and severed fiber optic cables.](https://miro.medium.com/v2/resize:fit:679/format:webp/1*rRInK1ARZKPmpBnF4fxLKw.png)
 
-[![Image 36: ILLUMINATION](https://miro.medium.com/v2/resize:fill:20:20/1*AZxiin1Cvws3J0TwNUP2sQ.png)](https://medium.com/illumination?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 36: ILLUMINATION](https://miro.medium.com/v2/resize:fill:20:20/1*AZxiin1Cvws3J0TwNUP2sQ.png)](https://medium.com/illumination?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 In
 
-[ILLUMINATION](https://medium.com/illumination?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[ILLUMINATION](https://medium.com/illumination?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 by
 
-[Somya Golchha](https://medium.com/@jainsomya2510?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Somya Golchha](https://medium.com/@jainsomya2510?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## The Microsoft-OpenAI Divorce Is Official: Inside the $250 Billion Betrayal ### GPT-5 is already being retired, and Satya Nadella just made his move. The “partnership” of the century is entering its terminal phase.](https://medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## The Microsoft-OpenAI Divorce Is Official: Inside the $250 Billion Betrayal ### GPT-5 is already being retired, and Satya Nadella just made his move. The “partnership” of the century is entering its terminal phase.](https://medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Feb 18
 
-[101](https://medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[4.1K 102](https://medium.com/illumination/the-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----0-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----0-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F822073eba64e&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fillumination%2Fthe-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e&source=---read_next_recirc--dae857806aa7----0-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F822073eba64e&operation=register&redirect=https%3A%2F%2Fmedium.com%2Fillumination%2Fthe-microsoft-openai-divorce-is-official-inside-the-250-billion-betrayal-822073eba64e&source=---read_next_recirc--dae857806aa7----0-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 ![Image 37: Hacking Microsoft IIS: From Recon to Advanced Fuzzing](https://miro.medium.com/v2/resize:fit:679/format:webp/1*YpG66o4sP1IYfsZCgVgv7Q.jpeg)
 
-[![Image 38: InfoSec Write-ups](https://miro.medium.com/v2/resize:fill:20:20/1*SWJxYWGZzgmBP1D0Qg_3zQ.png)](https://infosecwriteups.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 38: InfoSec Write-ups](https://miro.medium.com/v2/resize:fill:20:20/1*SWJxYWGZzgmBP1D0Qg_3zQ.png)](https://infosecwriteups.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 In
 
-[InfoSec Write-ups](https://infosecwriteups.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[InfoSec Write-ups](https://infosecwriteups.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 by
 
-[𝙇𝙤𝙨𝙩𝙨𝙚𝙘](https://lostsec.medium.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[𝙇𝙤𝙨𝙩𝙨𝙚𝙘](https://lostsec.medium.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## Hacking Microsoft IIS: From Recon to Advanced Fuzzing ### A hands-on guide covering IIS recon, shortname testing and advanced fuzzing used in real bug bounty hunting.](https://infosecwriteups.com/hacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## Hacking Microsoft IIS: From Recon to Advanced Fuzzing ### A hands-on guide covering IIS recon, shortname testing and advanced fuzzing used in real bug bounty hunting.](https://infosecwriteups.com/hacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Feb 21
 
-[8](https://infosecwriteups.com/hacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[590 8](https://infosecwriteups.com/hacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----1-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----1-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F013989524fe2&operation=register&redirect=https%3A%2F%2Finfosecwriteups.com%2Fhacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2&source=---read_next_recirc--dae857806aa7----1-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F013989524fe2&operation=register&redirect=https%3A%2F%2Finfosecwriteups.com%2Fhacking-microsoft-iis-from-recon-to-advanced-fuzzing-013989524fe2&source=---read_next_recirc--dae857806aa7----1-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 ![Image 39: Don’t Become a DevOps Engineer in 2026!](https://miro.medium.com/v2/resize:fit:679/format:webp/1*jbajxX_SZsz_WdtxVW1Xtw.png)
 
-[![Image 40: Dhanush N](https://miro.medium.com/v2/resize:fill:20:20/1*g-aoUi88UKMpAxezY9NcmQ.png)](https://dhanushnehru.medium.com/?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 40: Dhanush N](https://miro.medium.com/v2/resize:fill:20:20/1*g-aoUi88UKMpAxezY9NcmQ.png)](https://dhanushnehru.medium.com/?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[Dhanush N](https://dhanushnehru.medium.com/?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Dhanush N](https://dhanushnehru.medium.com/?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## Don’t Become a DevOps Engineer in 2026! ### Stop writing YAML. Stop babysitting pipelines. The game has fundamentally changed.](https://dhanushnehru.medium.com/dont-become-a-devops-engineer-in-2026-f2e94541e700?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## Don’t Become a DevOps Engineer in 2026! ### Stop writing YAML. Stop babysitting pipelines. The game has fundamentally changed.](https://dhanushnehru.medium.com/dont-become-a-devops-engineer-in-2026-f2e94541e700?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Mar 2
 
-[18](https://dhanushnehru.medium.com/dont-become-a-devops-engineer-in-2026-f2e94541e700?source=post_page---read_next_recirc--dae857806aa7----0---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[486 18](https://dhanushnehru.medium.com/dont-become-a-devops-engineer-in-2026-f2e94541e700?source=post_page---read_next_recirc--dae857806aa7----0---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----0-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----0-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Ff2e94541e700&operation=register&redirect=https%3A%2F%2Fdhanushnehru.medium.com%2Fdont-become-a-devops-engineer-in-2026-f2e94541e700&source=---read_next_recirc--dae857806aa7----0-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Ff2e94541e700&operation=register&redirect=https%3A%2F%2Fdhanushnehru.medium.com%2Fdont-become-a-devops-engineer-in-2026-f2e94541e700&source=---read_next_recirc--dae857806aa7----0-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 ![Image 41: The Bug Bounty Automation Stack That Can Generate $10K+ (Open Source Tools Only)](https://miro.medium.com/v2/resize:fit:679/format:webp/1*LDxbtzfpSDt7WwGGCjRdhw.png)
 
-[![Image 42: System Weakness](https://miro.medium.com/v2/resize:fill:20:20/1*gncXIKhx5QOIX0K9MGcVkg.jpeg)](https://systemweakness.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 42: System Weakness](https://miro.medium.com/v2/resize:fill:20:20/1*gncXIKhx5QOIX0K9MGcVkg.jpeg)](https://systemweakness.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 In
 
-[System Weakness](https://systemweakness.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[System Weakness](https://systemweakness.com/?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 by
 
-[BugHunter’s Journal](https://medium.com/@bughuntersjournal?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[BugHunter’s Journal](https://medium.com/@bughuntersjournal?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## The Bug Bounty Automation Stack That Can Generate $10K+ (Open Source Tools Only) ### Automation doesn’t find bugs. Automated workflows combined with manual validation do. While beginners waste time running Nuclei on random…](https://systemweakness.com/the-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## The Bug Bounty Automation Stack That Can Generate $10K+ (Open Source Tools Only) ### Automation doesn’t find bugs. Automated workflows combined with manual validation do. While beginners waste time running Nuclei on random…](https://systemweakness.com/the-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Dec 17, 2025
 
-[5](https://systemweakness.com/the-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7?source=post_page---read_next_recirc--dae857806aa7----1---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[476 5](https://systemweakness.com/the-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7?source=post_page---read_next_recirc--dae857806aa7----1---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----1-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----1-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F93ed3e8b3ee7&operation=register&redirect=https%3A%2F%2Fsystemweakness.com%2Fthe-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7&source=---read_next_recirc--dae857806aa7----1-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F93ed3e8b3ee7&operation=register&redirect=https%3A%2F%2Fsystemweakness.com%2Fthe-bug-bounty-automation-stack-that-can-generate-10k-open-source-tools-only-93ed3e8b3ee7&source=---read_next_recirc--dae857806aa7----1-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 ![Image 43: If You Understand These 5 AI Terms, You’re Ahead of 90% of People](https://miro.medium.com/v2/resize:fit:679/format:webp/1*qbVrf-wO9PYtthAj6E4RYQ.png)
 
-[![Image 44: Towards AI](https://miro.medium.com/v2/resize:fill:20:20/1*JyIThO-cLjlChQLb6kSlVQ.png)](https://pub.towardsai.net/?source=post_page---read_next_recirc--dae857806aa7----2---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 44: Towards AI](https://miro.medium.com/v2/resize:fill:20:20/1*JyIThO-cLjlChQLb6kSlVQ.png)](https://pub.towardsai.net/?source=post_page---read_next_recirc--dae857806aa7----2---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 In
 
-[Towards AI](https://pub.towardsai.net/?source=post_page---read_next_recirc--dae857806aa7----2---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Towards AI](https://pub.towardsai.net/?source=post_page---read_next_recirc--dae857806aa7----2---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 by
 
-[Shreyas Naphad](https://medium.com/@shreyasnaphad?source=post_page---read_next_recirc--dae857806aa7----2---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Shreyas Naphad](https://medium.com/@shreyasnaphad?source=post_page---read_next_recirc--dae857806aa7----2---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## If You Understand These 5 AI Terms, You’re Ahead of 90% of People ### Master the core ideas behind AI without getting lost](https://pub.towardsai.net/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--dae857806aa7----2---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## If You Understand These 5 AI Terms, You’re Ahead of 90% of People ### Master the core ideas behind AI without getting lost](https://pub.towardsai.net/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--dae857806aa7----2---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Mar 29
 
-[199](https://pub.towardsai.net/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--dae857806aa7----2---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[10.2K 202](https://pub.towardsai.net/if-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319?source=post_page---read_next_recirc--dae857806aa7----2---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----2-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----2-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fc7622d353319&operation=register&redirect=https%3A%2F%2Fpub.towardsai.net%2Fif-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319&source=---read_next_recirc--dae857806aa7----2-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fc7622d353319&operation=register&redirect=https%3A%2F%2Fpub.towardsai.net%2Fif-you-understand-these-5-ai-terms-youre-ahead-of-90-of-people-c7622d353319&source=---read_next_recirc--dae857806aa7----2-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 ![Image 45: I Stopped Using ChatGPT for 30 Days. What Happened to My Brain Was Terrifying.](https://miro.medium.com/v2/resize:fit:679/format:webp/1*z4UOJs0b33M4UJXq5MXkww.png)
 
-[![Image 46: Level Up Coding](https://miro.medium.com/v2/resize:fill:20:20/1*5D9oYBd58pyjMkV_5-zXXQ.jpeg)](https://levelup.gitconnected.com/?source=post_page---read_next_recirc--dae857806aa7----3---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[![Image 46: Level Up Coding](https://miro.medium.com/v2/resize:fill:20:20/1*5D9oYBd58pyjMkV_5-zXXQ.jpeg)](https://levelup.gitconnected.com/?source=post_page---read_next_recirc--dae857806aa7----3---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 In
 
-[Level Up Coding](https://levelup.gitconnected.com/?source=post_page---read_next_recirc--dae857806aa7----3---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Level Up Coding](https://levelup.gitconnected.com/?source=post_page---read_next_recirc--dae857806aa7----3---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 by
 
-[Kusireddy](https://medium.com/@kusireddy?source=post_page---read_next_recirc--dae857806aa7----3---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[Kusireddy](https://medium.com/@kusireddy?source=post_page---read_next_recirc--dae857806aa7----3---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[## I Stopped Using ChatGPT for 30 Days. What Happened to My Brain Was Terrifying. ### 91% of you will abandon 2026 resolutions by January 10th. Here’s how to be in the 9% who actually win.](https://levelup.gitconnected.com/i-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0?source=post_page---read_next_recirc--dae857806aa7----3---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[## I Stopped Using ChatGPT for 30 Days. What Happened to My Brain Was Terrifying. ### 91% of you will abandon 2026 resolutions by January 10th. Here’s how to be in the 9% who actually win.](https://levelup.gitconnected.com/i-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0?source=post_page---read_next_recirc--dae857806aa7----3---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 Dec 28, 2025
 
-[492](https://levelup.gitconnected.com/i-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0?source=post_page---read_next_recirc--dae857806aa7----3---------------------917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[12.9K 475](https://levelup.gitconnected.com/i-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0?source=post_page---read_next_recirc--dae857806aa7----3---------------------91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----3-----------------explicit_signal----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?operation=register&redirect=https%3A%2F%2Fawstip.com%2Fresponding-to-an-attack-in-aws-dae857806aa7&source=---read_next_recirc--dae857806aa7----3-----------------explicit_signal----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
-[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F70d2a62246c0&operation=register&redirect=https%3A%2F%2Flevelup.gitconnected.com%2Fi-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0&source=---read_next_recirc--dae857806aa7----3-----------------bookmark_preview----917b0bf3_8806_486e_b8e3_772e68f0902b--------------)
+[](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F70d2a62246c0&operation=register&redirect=https%3A%2F%2Flevelup.gitconnected.com%2Fi-stopped-using-chatgpt-for-30-days-what-happened-to-my-brain-was-terrifying-70d2a62246c0&source=---read_next_recirc--dae857806aa7----3-----------------bookmark_preview----91f4ea42_8663_4084_b8f3_0ecf7fc807ca--------------)
 
 [See more recommendations](https://medium.com/?source=post_page---read_next_recirc--dae857806aa7---------------------------------------)
 

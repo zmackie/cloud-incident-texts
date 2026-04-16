@@ -370,7 +370,7 @@ For Release
 
 October 24, 2022
 
-[![Image 8: Facebook](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/5296499_fb_facebook_facebook%20logo_icon.png)](https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)[![Image 9: Twitter](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/x-twitter-black-logo.png)](https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)[![Image 10: LinkedIn](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/317750_linkedin_icon.png)](https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
+[![Image 8: Facebook](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/5296499_fb_facebook_facebook%20logo_icon.png)](https://www.ftc.gov/#facebook)[![Image 9: Twitter](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/x-twitter-black-logo.png)](https://www.ftc.gov/#twitter)[![Image 10: LinkedIn](https://www.ftc.gov/themes/custom/ftc_uswds/img/social-icons/317750_linkedin_icon.png)](https://www.ftc.gov/#linkedin)
 
 [](https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million)
 
@@ -578,3 +578,11 @@ Menu
 [](https://www.youtube.com/ftcvideos)
 
 [](https://www.ftc.gov/news-events/stay-connected/ftc-rss-feeds)
+
+✓
+
+Thanks for sharing!
+
+[AddToAny](https://www.addtoany.com/ "Share Buttons")
+
+[More…](https://www.ftc.gov/news-events/news/press-releases/2022/10/ftc-takes-action-against-drizly-its-ceo-james-cory-rellas-security-failures-exposed-data-25-million#addtoany "Show all")

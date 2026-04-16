@@ -14,9 +14,9 @@ Markdown Content:
 [archive.today webpage capture](https://archive.today/)Saved from no other snapshots from this url 10 Sep 2022 01:37:04 UTC
 All snapshots**from host**[support.token.im](https://archive.ph/support.token.im)
 [Webpage](https://archive.ph/bRjXi)[Screenshot](https://archive.ph/bRjXi/image)
-[![Image 2](blob:https://d5hp90gdh7k0zi.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/bRjXi/share)[![Image 3](blob:https://d5hp90gdh7k0zi.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/bRjXi.zip)[![Image 4](blob:https://d5hp90gdh7k0zi.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/bRjXi/abuse)[![Image 5](blob:https://d5hp90gdh7k0zi.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
+[![Image 2](blob:https://d25g0vlc708blw.archive.ph/0095f2913a45ffc2ba2762a56693c174)share](https://archive.ph/bRjXi/share)[![Image 3](blob:https://d25g0vlc708blw.archive.ph/c920c8751caf1ccb063b9881e33e394a)download .zip](https://archive.ph/download/bRjXi.zip)[![Image 4](blob:https://d25g0vlc708blw.archive.ph/34817325a0d7d1f06fd7ff31004902df)report bug or abuse](https://archive.ph/bRjXi/abuse)[![Image 5](blob:https://d25g0vlc708blw.archive.ph/0d198433ea69bbd3ce4e0e2b0d36beb3)Buy me a coffee](https://buymeacoffee.com/glizzykingdreko)
 
-[![Image 6: close](blob:https://d5hp90gdh7k0zi.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/bRjXi)
+[![Image 6: close](blob:https://d25g0vlc708blw.archive.ph/68ba013c93c8e68f51ccd3f3cb926e2b)](https://archive.ph/bRjXi)
 
 Reddit
 
@@ -38,7 +38,7 @@ html code
 
 wiki code
 
-[![Image 7: Logo](https://d5hp90gdh7k0zi.archive.ph/bRjXi/dd0b0631a75936bfb90a2b1aa61b380738fc9e4c.png)](https://archive.ph/o/bRjXi/https://support.token.im/hc/en-us "Home")
+[![Image 7: Logo](https://d25g0vlc708blw.archive.ph/bRjXi/dd0b0631a75936bfb90a2b1aa61b380738fc9e4c.png)](https://archive.ph/o/bRjXi/https://support.token.im/hc/en-us "Home")
 
 *   [Download imToken](https://archive.ph/o/bRjXi/https://token.im/download)
 
@@ -64,7 +64,7 @@ wiki code
 [See more](https://archive.ph/o/bRjXi/https://support.token.im/hc/en-us/sections/360000691893-Notice)
 # Disclosure of Security Incidents on imToken
 
-👤![Image 8: Avatar](https://d5hp90gdh7k0zi.archive.ph/bRjXi/a7e095e99ff712004fdcfa38090a315a61c5eebc.png)
+👤![Image 8: Avatar](https://d25g0vlc708blw.archive.ph/bRjXi/a7e095e99ff712004fdcfa38090a315a61c5eebc.png)
 
  Consenlabs 
 *   2 months ago·
@@ -148,7 +148,7 @@ Was this article helpful?
 
 [imToken - Ethereum Wallet, Bitcoin Wallet - Help Center](https://archive.ph/o/bRjXi/https://support.token.im/hc/en-us "Home")
 
-[English (US) ](https://d5hp90gdh7k0zi.archive.ph/)[简体中文](https://archive.ph/o/bRjXi/https://support.token.im/hc/change_language/zh-cn?return_to=/hc/zh-cn/articles/360005681954-imToken-%25E5%25AE%2589%25E5%2585%25A8%25E4%25BA%258B%25E4%25BB%25B6%25E6%258A%25AB%25E9%259C%25B2)[繁體中文](https://archive.ph/o/bRjXi/https://support.token.im/hc/change_language/zh-tw?return_to=/hc/zh-tw/articles/360005681954-imToken-%25E5%25AE%2589%25E5%2585%25A8%25E4%25BA%258B%25E4%25BB%25B6%25E6%258A%25AB%25E9%259C%25B2)
+[English (US) ](https://d25g0vlc708blw.archive.ph/)[简体中文](https://archive.ph/o/bRjXi/https://support.token.im/hc/change_language/zh-cn?return_to=/hc/zh-cn/articles/360005681954-imToken-%25E5%25AE%2589%25E5%2585%25A8%25E4%25BA%258B%25E4%25BB%25B6%25E6%258A%25AB%25E9%259C%25B2)[繁體中文](https://archive.ph/o/bRjXi/https://support.token.im/hc/change_language/zh-tw?return_to=/hc/zh-tw/articles/360005681954-imToken-%25E5%25AE%2589%25E5%2585%25A8%25E4%25BA%258B%25E4%25BB%25B6%25E6%258A%25AB%25E9%259C%25B2)
 
 Help
 

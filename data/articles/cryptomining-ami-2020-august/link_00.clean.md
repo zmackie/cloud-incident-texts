@@ -1,0 +1,26 @@
+---
+title: Cryptominer Found Embedded in AWS Community AMI
+url: "https://web.archive.org/web/20210625192906/https://www.darkreading.com/cloud/cryptominer-found-embedded-in-aws-community-ami/d/d-id/1338713/"
+author: Kelly Sheridan
+source_type: archive
+source_domain: web.archive.org
+cleanup_method: llm
+---
+
+Cryptominer Found Embedded in AWS Community AMI
+Researchers advise Amazon Web Services users running Community Amazon Machine Images to verify them for potentially malicious code.Security researchers urge AWS customers running Elastic Cloud Compute (EC2) instances based on community Amazon Machine Images (AMIs) to check for potentially malicious embedded code, following their discovery of a cryptominer lurking inside a Community AMI.
+An AMI is a template with a software configuration – an operating system, application server, and applications – needed to launch a virtual machine. From an AMI, users launch an instance, or a copy of the AMI running as a virtual server in the cloud. Users can launch multiple instances from one AMI when they need multiple instances with the same configuration, or they can use different AMIs to launch instances when different configurations are needed.
+AMIs vary depending on users' needs, and there are different ways to get them through Amazon. One is the AWS Marketplace, where users can buy AMIs or pay per use for them. These AMIs are verified by Amazon and can only be published by preapproved users. Amazon EC2 integrates with Marketplace so developers can charge other EC2 users for AMI usage.
+Amazon EC2 lets users create community AMIs by making them public so they're shared with other AWS accounts. Someone who creates a community AMI can allow all AWS accounts to launch the AMI, or only allow a few specific accounts. Those who launch a community AMI don't pay for the AMI itself but for the compute and storage resources used on that machine.
+"If I want a Windows Server, I can get a new, clean Amazon EC2 instance, install Windows Server on it, get everything done myself, or I can go and get an AMI that does all this for me, and all I need to do is pay and get the machine up and running," says Ofer Maor, cofounder and CTO at incident response-as-a-service firm Mitiga, where experts discovered this problem.
+Users may choose a community AMI as a cost-conscious solution; however, Maor says the more likely scenario is they find the exact thing they're looking for in a community AMI. It's important they balance cost savings and convenience with risks posed by potentially malicious binaries. Unlike the Marketplace AMIs, community AMIs are not verified by Amazon.
+This is the crux of an advisory from Mitiga, which works with businesses running hybrid or full cloud environments. Experts were doing an incident investigation for a financial institution when they needed to look at some Windows 2008 Server machines.
+"We came across this machine, we did some tests on it, and while we're working on it we realized something's fishy," Maor explains. "It was slow ... when we started looking, we noticed it was using way more compute resources than it was supposed to use."
+(Image: Mitiga)
+Investigation revealed an active Monero cryptominer running in one of the organization's EC2 servers. It's a "pretty cool attack," he says. Someone gave the community a free resource that mines for cryptocurrency in the background. The main issue today in mining for cryptocurrency is the amount of resources used.
+"This way, whoever ran this AMI ... is paying for the compute, but the mined cryptocurrency goes to the attacker," Maor explains. A larger company may never pay attention to this extra compute because its Amazon account could cost hundreds of thousands of dollars already.
+Mitiga estimates this AMI has been around for five years and the cryptominer was running in it from the beginning. It seems the adversaries who published this AMI designed it to bill AWS customers for compute while extracting cryptocurrency.
+While the team hasn't explored the thousands of AMIs available, they believe this problem could likely exist in others. "I've been doing security for 25 years, and experience shows whenever there's something that can be done, it's being done," Maor says. And this isn't a difficult attack to pull off – an intruder would only need an understanding of how the cloud works.
+The potential for attack is far more troubling than cryptomining, researchers note in a writeup of their findings. For example, it's possible someone could install a backdoor enabling them to connect to a Windows machine and move throughout the target environment. Alternatively, that person could plant ransomware with a delayed trigger.
+"There is no real verification or control of what goes into community AMIs," Maor says.
+Given the ease of making malicious AMIs available for public use, Mitiga is publishing an advisory to warn community AMI users of this potential threat. It advises verifying instances for malicious code or terminating them altogether to seek AMIs from trusted sources instead. Maor notes Marketplace is the safer way to go, as those who can put AMIs on the Marketplace must be verified by Amazon and go through a partnership program.

@@ -253,6 +253,12 @@ In response to this activity we contacted the hosting provider to take down the 
 
 Get the latest insights from the cloud security community and Security Labs posts, delivered to your inbox monthly. No spam.
 
+Email* 
+
+By submitting this form, you agree to the[Privacy Policy](https://www.datadoghq.com/legal/privacy/)and[Cookie Policy](https://www.datadoghq.com/legal/cookies/)
+
+SUBMIT
+
 ### Thank you for subscribing!
 
 ## Related Content

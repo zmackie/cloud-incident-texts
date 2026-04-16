@@ -7,15 +7,31 @@ Published Time: 2018-02-20T17:06:46.844-05:00
 Markdown Content:
 # Hackers Hijacked Tesla's Cloud to Mine Cryptocurrency | WIRED
 
-Manage your consent preferences
+Privacy Center
 
-If you are a resident of Colorado, Connecticut, Virginia, Utah, Oregon, Texas, Montana, Delaware, Iowa, Nebraska, New Hampshire, and New Jersey, Tennessee, Minnesota, Maryland, Indiana, Kentucky, or Rhode Island you have the right to opt-out of Targeted Advertising, including our “sale” and/or “sharing” of your Personal Information (“Opt-Out”). We and our third-party business partners use Personal Information in accordance with our [Privacy Policy](https://www.condenast.com/privacy-policy) to serve advertising believed to be of interest to you (“Targeted Advertising”). If you are a California resident, you also have the right to limit the use and disclosure of your Sensitive Personal information in particular circumstances. Please note that you may need to Opt-Out on each website, mobile app, browser, and device you use, and if you clear your browser cookies, you may need to repeat this process. However, if you have created an account to log in across several of our websites and/or mobile apps, we will make reasonable efforts to apply your Opt-Out request to each of those websites and apps. ◦ To Opt-Out of Targeted Advertising on this site: Move the “Allow Targeted Advertising" toggle below to the left and press “Confirm My Choices”
+Currently, only residents from GDPR countries and certain US states can opt out of Tracking Technologies through our Consent Management Platform. Additional options regarding these technologies may be available on your device, browser, or through industry options like AdChoices. Please see our Privacy Policy for more information.
+
+Social Media
+
+- [x] On
+
+These cookies are set by a range of social media services that we have added to the site to enable you to share our content with your friends and networks. They are capable of tracking your browser across other sites and building up a profile of your interests. This may impact the content and messages you see on other websites you visit. If you do not allow these cookies you may not be able to use or see these sharing tools.
+
+* * *
 
 Essential
 
 - [x] On
 
-These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work. These cookies do not store any personally identifiable information.
+This website uses essential cookies and services to enable core website features and provide a seamless user experience. These cookies and services are used to facilitate features such as navigation, remember user preferences, and ensure the security of the website.
+
+* * *
+
+Targeted
+
+- [x] On
+
+These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.
 
 * * *
 
@@ -27,14 +43,6 @@ These cookies allow us to count visits and traffic sources so we can measure and
 
 * * *
 
-Audience Measurement
-
-- [x] On
-
-We use audience measurement cookies in order to carry out aggregated traffic measurement and generate performance statistics essential for the proper functioning of the site and the provision of its content (for example to measure performance, to detect navigation problems, to optimization technical performance or ergonomics, to estimate server power needed and to analyse content performance). The use of these cookies is strictly limited to measuring the site's audience. These cookies do not allow the tracking of navigation on other websites and the data collected is not combined or shared with third parties. You can refuse the use of this cookie by switching off the slider to the right.
-
-* * *
-
 Functional
 
 - [x] On
@@ -43,21 +51,17 @@ This website uses functional cookies and services to remember your preferences a
 
 * * *
 
-Social Media
-
-- [x] Off
-
-These cookies are set by a range of social media services that we have added to the site to enable you to share our content with your friends and networks. They are capable of tracking your browser across other sites and building up a profile of your interests. This may impact the content and messages you see on other websites you visit. If you do not allow these cookies you may not be able to use or see these sharing tools.
-
-* * *
-
-Allow Sale/Targeted Advertising?
+Audience Measurement
 
 - [x] On
 
-We may transfer or share your personal information to third parties for the purposes of targeted advertising. You can learn more about what information is used for this purpose in our privacy notice.
+We use audience measurement cookies in order to carry out aggregated traffic measurement and generate performance statistics essential for the proper functioning of the site and the provision of its content (for example to measure performance, to detect navigation problems, to optimization technical performance or ergonomics, to estimate server power needed and to analyse content performance). The use of these cookies is strictly limited to measuring the site's audience. These cookies do not allow the tracking of navigation on other websites and the data collected is not combined or shared with third parties. You can refuse the use of this cookie by switching off the slider to the right.
 
-Confirm My Choices Reject All Accept All
+OK
+
+English Deutsch Español Français Italiano 日本語 繁體中文
+
+en
 
 [Privacy Policy](https://www.condenast.com/privacy-policy)
 
@@ -175,10 +179,10 @@ RedLock's Kumar notes that the Tesla attackers were running their own mining ser
 
 Most Popular
 
-*   [![Image 2: Meta Is Warned That Facial Recognition Glasses Will Arm Sexual Predators](https://media.wired.com/photos/69dd120fd5415cb89341a838/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/meta-ray-ban-oakley-smart-glasses-no-face-recognition-civil-society/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2) Security   [Meta Is Warned That Facial Recognition Glasses Will Arm Sexual Predators](https://www.wired.com/story/meta-ray-ban-oakley-smart-glasses-no-face-recognition-civil-society/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2)By Dell Cameron      
-*   [![Image 3: The Internet's Most Powerful Archiving Tool Is in Peril](https://media.wired.com/photos/69d9793c27ad448072aa787f/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/the-internets-most-powerful-archiving-tool-is-in-mortal-peril/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2) Business   [The Internet's Most Powerful Archiving Tool Is in Peril](https://www.wired.com/story/the-internets-most-powerful-archiving-tool-is-in-mortal-peril/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2)By Kate Knibbs      
-*   [![Image 4: Staunch Trump Supporters Are Now Asking if He’s the Antichrist](https://media.wired.com/photos/69d83e91a6b1cf7dff37c069/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/staunch-trump-supporters-are-now-asking-if-hes-the-antichrist/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2) Politics   [Staunch Trump Supporters Are Now Asking if He’s the Antichrist](https://www.wired.com/story/staunch-trump-supporters-are-now-asking-if-hes-the-antichrist/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2)By Makena Kelly      
-*   [![Image 5: A Lot of Shops Won't Fix Electric Bikes. Here's Why](https://media.wired.com/photos/69d931c00318a0f74a550c2d/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/why-is-it-so-hard-to-fix-an-electric-bike/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2) Gear   [A Lot of Shops Won't Fix Electric Bikes. Here's Why](https://www.wired.com/story/why-is-it-so-hard-to-fix-an-electric-bike/#intcid=_wired-right-rail_a6459f41-bb9d-43f9-ac29-953d7ece8880_popular4-2)By Stephanie Pearson      
+*   [![Image 2: Meta Is Warned That Facial Recognition Glasses Will Arm Sexual Predators](https://media.wired.com/photos/69dd120fd5415cb89341a838/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/meta-ray-ban-oakley-smart-glasses-no-face-recognition-civil-society/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2) Artificial Intelligence   [Meta Is Warned That Facial Recognition Glasses Will Arm Sexual Predators](https://www.wired.com/story/meta-ray-ban-oakley-smart-glasses-no-face-recognition-civil-society/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2)By Dell Cameron      
+*   [![Image 3: The Internet's Most Powerful Archiving Tool Is in Peril](https://media.wired.com/photos/69d9793c27ad448072aa787f/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/the-internets-most-powerful-archiving-tool-is-in-mortal-peril/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2) Artificial Intelligence   [The Internet's Most Powerful Archiving Tool Is in Peril](https://www.wired.com/story/the-internets-most-powerful-archiving-tool-is-in-mortal-peril/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2)By Kate Knibbs      
+*   [![Image 4: Staunch Trump Supporters Are Now Asking if He’s the Antichrist](https://media.wired.com/photos/69d83e91a6b1cf7dff37c069/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/staunch-trump-supporters-are-now-asking-if-hes-the-antichrist/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2) Politics   [Staunch Trump Supporters Are Now Asking if He’s the Antichrist](https://www.wired.com/story/staunch-trump-supporters-are-now-asking-if-hes-the-antichrist/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2)By Makena Kelly      
+*   [![Image 5: A Lot of Shops Won't Fix Electric Bikes. Here's Why](https://media.wired.com/photos/69d931c00318a0f74a550c2d/1:1/w_120%2Ch_120%2Cc_limit/undefined)](https://www.wired.com/story/why-is-it-so-hard-to-fix-an-electric-bike/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2) Gear   [A Lot of Shops Won't Fix Electric Bikes. Here's Why](https://www.wired.com/story/why-is-it-so-hard-to-fix-an-electric-bike/#intcid=_wired-right-rail_ea2284f3-29ad-43a3-af8e-d223f2481eaf_popular4-2)By Stephanie Pearson      
 *         
 
 RedLock says the attackers obtained free proxying services and the SSL certificate from the internet infrastructure firm Cloudflare, which offers these free services to make web security and privacy tools accessible to anyone, but grapples with the ways they can be abused by bad actors.
@@ -203,99 +207,99 @@ Topics[Tesla](https://www.wired.com/tag/tesla/)[cryptocurrency](https://www.wire
 
 Read More
 
-[![Image 7: Top Surfshark Promo Codes for April 2026](https://media.wired.com/photos/69bc909af05d6225e8611af5/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/surfshark-coupon/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[![Image 7: Google Now Lets You Change Your Gmail Address. Here’s How](https://media.wired.com/photos/69bc909af05d6225e8611af5/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/how-to-change-your-gmail-address/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-[Top Surfshark Promo Codes for April 2026](https://www.wired.com/story/surfshark-coupon/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-Save up to 87% with a Surfshark coupon code, 3 months of VPN free today, and more from WIRED.
-
-Scott Gilbertson
-
-[![Image 8: The US Military’s GPS Software Is an $8 Billion Mess](https://media.wired.com/photos/69b86b74be9e27104c501c7c/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/the-us-militarys-gps-software-is-an-8-billion-mess/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[The US Military’s GPS Software Is an $8 Billion Mess](https://www.wired.com/story/the-us-militarys-gps-software-is-an-8-billion-mess/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-The GPS Next-Generation Operational Control System was due for completion in 2016. Ten years later, the software for controlling the military’s GPS satellites still doesn’t work.
-
-Stephen Clark, Ars Technica
-
-[![Image 9: Iran-Linked Hackers Are Sabotaging US Energy and Water Infrastructure](https://media.wired.com/photos/69c6b14c2e33b7e4cae4cc2b/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/iran-linked-hackers-are-sabotaging-us-energy-and-water-infrastructure/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[Iran-Linked Hackers Are Sabotaging US Energy and Water Infrastructure](https://www.wired.com/story/iran-linked-hackers-are-sabotaging-us-energy-and-water-infrastructure/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-As Trump threatens Iranian infrastructure, the US government warns that Iran has carried out its own digital attacks against US critical infrastructure.
-
-Andy Greenberg
-
-[![Image 10: Anthropic’s Mythos Will Force a Cybersecurity Reckoning—Just Not the One You Think](https://media.wired.com/photos/69d03b9326dd2d3a7ba902f2/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[Anthropic’s Mythos Will Force a Cybersecurity Reckoning—Just Not the One You Think](https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-The new AI model is being heralded—and feared—as a hacker’s superweapon. Experts say its arrival is a wake-up call for developers who have long made security an afterthought.
-
-Lily Hay Newman
-
-[![Image 11: Iranian Hackers Breached Kash Patel’s Email—but Not the FBI’s](https://media.wired.com/photos/69cd6ca0af7e6758a42bc66b/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/iranian-hackers-breached-the-fbi-directors-personal-email-but-not-the-fbi/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[Iranian Hackers Breached Kash Patel’s Email—but Not the FBI’s](https://www.wired.com/story/iranian-hackers-breached-the-fbi-directors-personal-email-but-not-the-fbi/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-Plus: Apple makes big claims about the effectiveness of its Lockdown Mode anti-spyware feature, Russia moves to implement homegrown encryption for 5G, and more.
-
-Andrew Couts
-
-[![Image 12: Hackers Are Posting the Claude Code Leak With Bonus Malware](https://media.wired.com/photos/69c6c4fb24f02ff7dc20961d/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/security-news-this-week-hackers-are-posting-the-claude-code-leak-with-bonus-malware/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[Hackers Are Posting the Claude Code Leak With Bonus Malware](https://www.wired.com/story/security-news-this-week-hackers-are-posting-the-claude-code-leak-with-bonus-malware/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-Plus: The FBI says a recent hack of its wiretap tools poses a national security risk, attackers stole Cisco source code as part of an ongoing supply chain hacking spree, and more.
-
-Andrew Couts
-
-[![Image 13: Google Now Lets You Change Your Gmail Address. Here’s How](https://media.wired.com/photos/69d81392ce1f65d162ddb2f0/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/how-to-change-your-gmail-address/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[Google Now Lets You Change Your Gmail Address. Here’s How](https://www.wired.com/story/how-to-change-your-gmail-address/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[Google Now Lets You Change Your Gmail Address. Here’s How](https://www.wired.com/story/how-to-change-your-gmail-address/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
 You’ve probably had the same Gmail address for years. Now, it’s easy to make a name change without worrying about the transition.
 
 Reece Rogers
 
-[![Image 14: Tech Companies Are Trying to Neuter Colorado’s Landmark Right-to-Repair Law](https://media.wired.com/photos/69d55a00ee39d7f1d370552d/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/tech-companies-are-trying-to-neuter-colorados-landmark-right-to-repair-law/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[![Image 8: Tech Companies Are Trying to Neuter Colorado’s Landmark Right-to-Repair Law](https://media.wired.com/photos/69b86b74be9e27104c501c7c/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/tech-companies-are-trying-to-neuter-colorados-landmark-right-to-repair-law/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-[Tech Companies Are Trying to Neuter Colorado’s Landmark Right-to-Repair Law](https://www.wired.com/story/tech-companies-are-trying-to-neuter-colorados-landmark-right-to-repair-law/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[Tech Companies Are Trying to Neuter Colorado’s Landmark Right-to-Repair Law](https://www.wired.com/story/tech-companies-are-trying-to-neuter-colorados-landmark-right-to-repair-law/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
 A bill in Colorado is a glimpse into the future of how corporations are working to limit the freedom people have to make their own fixes and upgrades.
 
 Boone Ashworth
 
-[![Image 15: Using a VPN May Subject You to NSA Spying](https://media.wired.com/photos/69c5e00d3d62f10d14ab0ce6/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/using-a-vpn-may-subject-you-to-nsa-spying/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[![Image 9: I Tested the MacBook Neo and the MacBook Air. Here's Which One You Should Buy](https://media.wired.com/photos/69c6b14c2e33b7e4cae4cc2b/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/macbook-neo-vs-macbook-air/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-[Using a VPN May Subject You to NSA Spying](https://www.wired.com/story/using-a-vpn-may-subject-you-to-nsa-spying/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-US lawmakers are pressing Tulsi Gabbard to reveal whether using a VPN can strip Americans of their constitutional protections against warrantless surveillance.
-
-Dell Cameron
-
-[![Image 16: I Tested the MacBook Neo and the MacBook Air. Here's Which One You Should Buy](https://media.wired.com/photos/69d4e951d8b67218cd4b81ad/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/macbook-neo-vs-macbook-air/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
-
-[I Tested the MacBook Neo and the MacBook Air. Here's Which One You Should Buy](https://www.wired.com/story/macbook-neo-vs-macbook-air/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[I Tested the MacBook Neo and the MacBook Air. Here's Which One You Should Buy](https://www.wired.com/story/macbook-neo-vs-macbook-air/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
 After conducting long-term testing on both the MacBook Neo and MacBook Air, I have a good idea who should buy which laptop.
 
 Luke Larsen
 
-[![Image 17: This App Makes Even the Sketchiest PDF or Word Doc Safe to Open](https://media.wired.com/photos/69c4791716bb3ee95a674db0/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/dangerzone-app-for-safe-pdfs-word-docs/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[![Image 10: How to Back Up Your Life With Hard Drives, Cloud-Based Services, and More](https://media.wired.com/photos/69d03b9326dd2d3a7ba902f2/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/how-to-back-up-your-digital-life/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-[This App Makes Even the Sketchiest PDF or Word Doc Safe to Open](https://www.wired.com/story/dangerzone-app-for-safe-pdfs-word-docs/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[How to Back Up Your Life With Hard Drives, Cloud-Based Services, and More](https://www.wired.com/story/how-to-back-up-your-digital-life/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+Backups are boring, but they’ll save your bacon. Here’s how to make sure your data lives on, even when your PC doesn’t.
+
+Scott Gilbertson
+
+[![Image 11: CBP Facility Codes Sure Seem to Have Leaked Via Online Flashcards](https://media.wired.com/photos/69cd6ca0af7e6758a42bc66b/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/cbp-facility-codes-sure-seem-to-have-leaked-via-online-flashcards/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[CBP Facility Codes Sure Seem to Have Leaked Via Online Flashcards](https://www.wired.com/story/cbp-facility-codes-sure-seem-to-have-leaked-via-online-flashcards/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+The Quizlet flashcards, which WIRED found through basic Google searches, seem to include sensitive information about gate security at Customs and Border Protection locations.
+
+Sammy Sussman
+
+[![Image 12: Who Needs Tow Trucks? Portable Jump Starters Will Get You Home Without One](https://media.wired.com/photos/69c6c4fb24f02ff7dc20961d/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/best-portable-jump-starters/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[Who Needs Tow Trucks? Portable Jump Starters Will Get You Home Without One](https://www.wired.com/story/best-portable-jump-starters/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+The new crop of portable jump starters means you'll never be stuck waiting on a tow. Here are the devices we'd trust.
+
+Matthew Korfhage
+
+[![Image 13: You Can Soon Buy a $4,370 Humanoid Robot on AliExpress](https://media.wired.com/photos/69d81392ce1f65d162ddb2f0/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/unitree-r1-humanoid-robot-for-sale-on-aliexpress/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[You Can Soon Buy a $4,370 Humanoid Robot on AliExpress](https://www.wired.com/story/unitree-r1-humanoid-robot-for-sale-on-aliexpress/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+Unitree is bringing its R1 to international markets. It arrives with some aerobatic capabilities and an entry-level price, but the question of what you'd actually do with it remains open.
+
+Marco Trabucchi
+
+[![Image 14: Politicians Are Spending More Money on Security as They Increasingly Become Targets](https://media.wired.com/photos/69d55a00ee39d7f1d370552d/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/political-campaign-security-spending/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[Politicians Are Spending More Money on Security as They Increasingly Become Targets](https://www.wired.com/story/political-campaign-security-spending/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+Political candidates are purchasing more home alarms, bulletproof vests, and other protections amid rising fears of political violence.
+
+Maddy Varner
+
+[![Image 15: Your Vape Wants to Know How Old You Are](https://media.wired.com/photos/69c5e00d3d62f10d14ab0ce6/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/your-vape-wants-to-know-how-old-you-are/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[Your Vape Wants to Know How Old You Are](https://www.wired.com/story/your-vape-wants-to-know-how-old-you-are/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+Companies hope that biometric age-verification tech in cartridges could put flavored vapes back in business. But it's unlikely to solve the real problems.
+
+Boone Ashworth
+
+[![Image 16: The Dumbest Hack of the Year Exposed a Very Real Problem](https://media.wired.com/photos/69d4e951d8b67218cd4b81ad/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/crosswalk-city-hack-cybersecurity-lessons/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[The Dumbest Hack of the Year Exposed a Very Real Problem](https://www.wired.com/story/crosswalk-city-hack-cybersecurity-lessons/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+Last April, a hacker hijacked crosswalk announcements to mimic Mark Zuckerberg and Elon Musk. Records obtained by WIRED reveal how unprepared local authorities were.
+
+Paresh Dave
+
+[![Image 17: This App Makes Even the Sketchiest PDF or Word Doc Safe to Open](https://media.wired.com/photos/69c4791716bb3ee95a674db0/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/dangerzone-app-for-safe-pdfs-word-docs/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
+
+[This App Makes Even the Sketchiest PDF or Word Doc Safe to Open](https://www.wired.com/story/dangerzone-app-for-safe-pdfs-word-docs/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
 When somebody sends you a document as an attachment, don't just open it. Use the free tool Dangerzone to scrub it clean of any malevolent code. Here's how it works.
 
 Justin Pot
 
-[![Image 18: Anthropic Teams Up With Its Rivals to Keep AI From Hacking Everything](https://media.wired.com/photos/69b889e1574a3bb21dfe778a/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/anthropic-mythos-preview-project-glasswing/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[![Image 18: Anthropic’s Mythos Will Force a Cybersecurity Reckoning—Just Not the One You Think](https://media.wired.com/photos/69b889e1574a3bb21dfe778a/16:9/w_640%2Cc_limit/undefined)](https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-[Anthropic Teams Up With Its Rivals to Keep AI From Hacking Everything](https://www.wired.com/story/anthropic-mythos-preview-project-glasswing/#intcid=_wired-article-bottom-recirc-bkt-a_32043dbf-b3c5-4edf-aab0-18c980cd473e_closr)
+[Anthropic’s Mythos Will Force a Cybersecurity Reckoning—Just Not the One You Think](https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/#intcid=_wired-article-bottom-recirc-bkt-a_f49925c9-5856-417f-8f26-47e8a66997de_closr)
 
-The AI lab's Project Glasswing will bring together Apple, Google, and more than 45 other organizations. They'll use the new Claude Mythos Preview model to test advancing AI cybersecurity capabilities.
+The new AI model is being heralded—and feared—as a hacker’s superweapon. Experts say its arrival is a wake-up call for developers who have long made security an afterthought.
 
 Lily Hay Newman
 
@@ -353,6 +357,10 @@ United States
 *   [](https://instagram.com/wired/)
 *   [](https://www.tiktok.com/@wired?lang=en)
 
-Your Privacy Choices
+Privacy Information
 
-![Image 22](https://t.co/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=caac6a21-f7c9-4901-85bc-7fd3f48a7658&integration=gtm&p_id=Twitter&p_user_id=0&pl_id=06adcc52-c1be-4e04-886e-272a282de39d&pt=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&tw_document_href=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776195434627.88903319362720612&txn_id=ogyql&type=javascript&version=2.3.51)![Image 23](https://analytics.twitter.com/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=caac6a21-f7c9-4901-85bc-7fd3f48a7658&integration=gtm&p_id=Twitter&p_user_id=0&pl_id=06adcc52-c1be-4e04-886e-272a282de39d&pt=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&tw_document_href=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776195434627.88903319362720612&txn_id=ogyql&type=javascript&version=2.3.51)![Image 24: dot image pixel](https://sp.analytics.yahoo.com/sp.pl?a=10000&d=Tue%2C%2014%20Apr%202026%2019%3A37%3A14%20GMT&n=0&b=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&.yp=10200402&f=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&enc=UTF-8&gpp=DBABLA~BVQqAAAAAABY.QA&gpp_sid=7&yv=1.16.6&ec=PageView&et=PageView&tagmgr=gtm)
+![Image 22](https://t.co/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=0e577465-6bac-4249-951b-38c473c8b951&integration=gtm&p_id=Twitter&p_user_id=0&pl_id=378e8738-216b-4553-9e39-081b32670e46&pt=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&tw_document_href=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776235657493.816031158388352197&txn_id=ogyql&type=javascript&version=2.3.52)![Image 23](https://analytics.twitter.com/1/i/adsct?bci=4&dv=UTC%26en-US%26Google%20Inc.%26Linux%20x86_64%26255%26800%26600%268%2624%26800%26600%260%26na&eci=3&event=%7B%7D&event_id=0e577465-6bac-4249-951b-38c473c8b951&integration=gtm&p_id=Twitter&p_user_id=0&pl_id=378e8738-216b-4553-9e39-081b32670e46&pt=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&tw_document_href=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&tw_iframe_status=0&tw_pid_src=1&twpid=tw.1776235657493.816031158388352197&txn_id=ogyql&type=javascript&version=2.3.52)
+
+![Image 24](https://bat.bing.com/action/0?ti=4015762&tm=gtm002&Ver=2&mid=982af004-55a6-4214-804e-a6d359646e85&bo=1&sid=fe385170389611f19b84c1fe351a8024&vid=fe386590389611f1a0ecdb39a15f85bf&vids=1&msclkid=N&pi=918639831&lg=en-US&sw=800&sh=600&sc=24&tl=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&kw=tesla,cryptocurrency,hacking,cloud,databases&p=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&r=&lt=1810&evt=pageLoad&sv=2&cdb=AQAS&rn=923372)
+
+![Image 25: dot image pixel](https://sp.analytics.yahoo.com/sp.pl?a=10000&d=Wed%2C%2015%20Apr%202026%2006%3A47%3A37%20GMT&n=0&b=Hackers%20Hijacked%20Tesla%27s%20Cloud%20to%20Mine%20Cryptocurrency%20%7C%20WIRED&.yp=10200402&f=https%3A%2F%2Fwww.wired.com%2Fstory%2Fcryptojacking-tesla-amazon-cloud%2F&enc=UTF-8&yv=1.16.6&ec=PageView&et=PageView&tagmgr=gtm)

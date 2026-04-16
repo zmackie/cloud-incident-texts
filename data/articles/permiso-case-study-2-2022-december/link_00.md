@@ -195,8 +195,6 @@ Credits: Wilma Miranda
 
 Subscribe to Cloud Chronicles for the latest in cloud security!
 
-Email* 
-
 #### Summary
 
 Attacks during the holidays are more reliable than Santa eating cookies. On December 28, 2022, Permiso Security’s p0 Labs team identified a credential harvesting campaign targeting cloud infrastructure. The majority of the victim system were running public facing Juptyer Notebooks. While this campaign is ongoing, at the time of writing this blog, there are about 50 compromised systems. The initial infection for the compromised systems is not currently known, though we do suspect it is likely related to exploitation of vulnerable web applications.

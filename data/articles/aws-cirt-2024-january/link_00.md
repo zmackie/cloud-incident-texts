@@ -119,22 +119,6 @@ Dismiss
 *   [Log into Console](https://console.aws.amazon.com/console/home)
 *   [Download the Mobile App](https://aws.amazon.com/console/mobile/)
 
-[Close](https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/ "Close")
-*   [My Profile](https://aws.amazon.com/profile/?nc2=h_m_mc)
-*   [Sign out of AWS Builder ID](https://auth.aws.amazon.com/sign-out/?nc2=h_m_mc)
-*   [AWS Management Console](https://console.aws.amazon.com/?nc2=h_m_mc)
-*   [Account Settings](https://console.aws.amazon.com/billing/home#/account?nc2=h_m_ma)
-*   [Billing & Cost Management](https://console.aws.amazon.com/billing/home?nc2=h_m_bc)
-*   [Security Credentials](https://console.aws.amazon.com/iam/home?nc2=h_m_sc#security_credential)
-*   [AWS Personal Health Dashboard](https://phd.aws.amazon.com/?nc2=h_m_sc)
-
-[Close](https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/ "Close")
-*   [Support Center](https://console.aws.amazon.com/support/home/?nc2=h_ql_cu)
-*   [Expert Help](https://iq.aws.amazon.com/?utm=mkt.nav)
-*   [Knowledge Center](https://repost.aws/knowledge-center/?nc2=h_m_ma)
-*   [AWS Support Overview](https://aws.amazon.com/premiumsupport/?nc2=h_m_bc)
-*   [AWS re:Post](https://repost.aws/)
-
 # 404
 
 # Sorry, the page you tried cannot be found.
@@ -221,3 +205,19 @@ Dismiss
 *   [Cookie Preferences](https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/#)
 *   |
 *   © 2025, Amazon Web Services, Inc. or its affiliates. All rights reserved.
+
+[Close](https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/ "Close")
+*   [My Profile](https://aws.amazon.com/profile/?nc2=h_m_mc)
+*   [Sign out of AWS Builder ID](https://auth.aws.amazon.com/sign-out/?nc2=h_m_mc)
+*   [AWS Management Console](https://console.aws.amazon.com/?nc2=h_m_mc)
+*   [Account Settings](https://console.aws.amazon.com/billing/home#/account?nc2=h_m_ma)
+*   [Billing & Cost Management](https://console.aws.amazon.com/billing/home?nc2=h_m_bc)
+*   [Security Credentials](https://console.aws.amazon.com/iam/home?nc2=h_m_sc#security_credential)
+*   [AWS Personal Health Dashboard](https://phd.aws.amazon.com/?nc2=h_m_sc)
+
+[Close](https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/ "Close")
+*   [Support Center](https://console.aws.amazon.com/support/home/?nc2=h_ql_cu)
+*   [Expert Help](https://iq.aws.amazon.com/?utm=mkt.nav)
+*   [Knowledge Center](https://repost.aws/knowledge-center/?nc2=h_m_ma)
+*   [AWS Support Overview](https://aws.amazon.com/premiumsupport/?nc2=h_m_bc)
+*   [AWS re:Post](https://repost.aws/)

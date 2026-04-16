@@ -296,32 +296,14 @@ James, a dedicated cybersecurity specialist, proudly serves on ReliaQuest's este
 
 [![Image 10: Facebook](https://www.reliaquest.com/images/facebook.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Facebook")[![Image 11: Twitter](https://www.reliaquest.com/images/twitter.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Twitter")[![Image 12: LinkedIn](https://www.reliaquest.com/images/linkedin.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "LinkedIn")[![Image 13: Copy Link](https://www.reliaquest.com/images/link.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Copy Link")
 
-### Table of contents
-
-1.   [Scattered Spider Overview](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/#scattered-spider-overview)
-2.   [Attack Path](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/#attack-path)
-3.   [Forecast](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/#forecast)
-4.   [Recommendations and Best Practices](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/#recommendations-and-best-practices)
-
-![Image 14](https://resources.reliaquest.com/image/upload/c_thumb,w_120,h_120,f_webp,q_auto/v1741740286/james-xiang-headshot_gfxymn.jpg)
-
-**James Xiang**
-Threat Hunter
-
-James, a dedicated cybersecurity specialist, proudly serves on ReliaQuest's esteemed Threat Hunting and Intrusion Response team. Fusing his deep-rooted cybersecurity expertise with a unique background in economics, he sharpens his data analysis capabilities to closely examine minor details, skillfully uncovering and mitigating adversary TTPs. Recognizing the importance of efficiency, James humbly contributes to automating laborious, recurring tasks, which leads to enhanced productivity for the entire threat hunting team. Away from his professional pursuits, James can be found flicking a disc with precision in Ultimate Frisbee, engaging in friendly poker games with Vegas locals, and sampling the finest cuisine as an enthusiastic foodie.
-
-[Explore Blogs](https://www.reliaquest.com/author/jxiang/)
-
-[![Image 15: Facebook](https://www.reliaquest.com/images/facebook.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Facebook")[![Image 16: Twitter](https://www.reliaquest.com/images/twitter.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Twitter")[![Image 17: LinkedIn](https://www.reliaquest.com/images/linkedin.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "LinkedIn")[![Image 18: Copy Link](https://www.reliaquest.com/images/link.svg)](https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/ "Copy Link")
-
 **Resources**
 ## Related Blogs
 
-[![Image 19](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1753129376/072125-Scale-Up-Risk-Up-blog-header-512x354_2x_g640is.png) **Emerging Threats | Threat Intelligence** ### What’s Trending: Top Cyber Attacker Techniques, December 2025–February 2026 Learn more](https://www.reliaquest.com/blog/threat-spotlight-whats-trending-top-cyber-attacker-techniques-december-2025-february-2026/)
+[![Image 14](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1753129376/072125-Scale-Up-Risk-Up-blog-header-512x354_2x_g640is.png) **Emerging Threats | Threat Intelligence** ### What’s Trending: Top Cyber Attacker Techniques, December 2025–February 2026 Learn more](https://www.reliaquest.com/blog/threat-spotlight-whats-trending-top-cyber-attacker-techniques-december-2025-february-2026/)
 
-[![Image 20: Akira Ransomware's SonicWall Image 1](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1763998357/AkiraSonicWalBlog_kiiubi.jpg) **Emerging Threats | Threat Intelligence** ### DeepLoad Malware Pairs ClickFix Delivery with AI-Generated Evasion Learn more](https://www.reliaquest.com/blog/threat-spotlight-deepload-malware-pairs-clickfix-delivery-with-ai-generated-evasion/)
+[![Image 15: Akira Ransomware's SonicWall Image 1](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1763998357/AkiraSonicWalBlog_kiiubi.jpg) **Emerging Threats | Threat Intelligence** ### DeepLoad Malware Pairs ClickFix Delivery with AI-Generated Evasion Learn more](https://www.reliaquest.com/blog/threat-spotlight-deepload-malware-pairs-clickfix-delivery-with-ai-generated-evasion/)
 
-[![Image 21](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1771945581/Thumbnail_-_ATR_Blog_-_Web_1_1_njgerm.png) **Threat Intelligence | Emerging Threats** ### Speed Wins When Identity Fails: 2026 Annual Threat Report Learn more](https://www.reliaquest.com/blog/2026-annual-cyber-threat-report/)
+[![Image 16](https://resources.reliaquest.com/image/upload/c_thumb,w_752,h_368,f_webp,q_auto/v1771945581/Thumbnail_-_ATR_Blog_-_Web_1_1_njgerm.png) **Threat Intelligence | Emerging Threats** ### Speed Wins When Identity Fails: 2026 Annual Threat Report Learn more](https://www.reliaquest.com/blog/2026-annual-cyber-threat-report/)
 
 ## See **GreyMatter** in Action
 
@@ -329,9 +311,9 @@ Get a live demo of our security operations platform, GreyMatter, and learn how y
 
 [Request A Demo](https://www.reliaquest.com/request-a-demo/)
 
-![Image 22: cta-img1](https://resources.reliaquest.com/image/upload/c_limit,w_1000,h_1000,f_webp,q_auto/v1731692981/wordpress/cta-img1.png)
+![Image 17: cta-img1](https://resources.reliaquest.com/image/upload/c_limit,w_1000,h_1000,f_webp,q_auto/v1731692981/wordpress/cta-img1.png)
 
-[![Image 23: ReliaQuest](https://images.ctfassets.net/kbx03rs3xyue/2T8jLZjbojgarAKQEifa8U/39034f5e95fc2085137845549ecb9c50/logo.svg)](https://www.reliaquest.com/)
+[![Image 18: ReliaQuest](https://images.ctfassets.net/kbx03rs3xyue/2T8jLZjbojgarAKQEifa8U/39034f5e95fc2085137845549ecb9c50/logo.svg)](https://www.reliaquest.com/)
 
 ### Contact ReliaQuest
 
@@ -399,4 +381,6 @@ Tampa, FL 33602
 *   [ReliaQuest Platform and Support Agreement](https://www.reliaquest.com/greymatter-psa)
 *   © 2026 ReliaQuest, LLC All Rights Reserved
 
-![Image 24:  ](https://api.fraud0.com/api/v2/pixel?cid=0a1c67b1-14fb-420d-beae-e2eaa8d6db59&cb=0.3168929351264004.1776196422357)
+![Image 19:  ](https://api.fraud0.com/api/v2/pixel?cid=0a1c67b1-14fb-420d-beae-e2eaa8d6db59&cb=0.9026971876760317.1776237478869)
+
+![Image 20](https://bat.bing.com/action/0?ti=134470029&tm=gtm002&Ver=2&mid=c7837079-bbe8-4832-9902-d04852242b8a&bo=1&sid=3b4a3430389b11f1bd38e59ec6fe1e90&vid=3b4a7b90389b11f18b8eafcd150bb7b1&vids=1&msclkid=N&pi=918639831&lg=en-US&sw=800&sh=600&sc=24&tl=Scattered%20Spider%20Attack%20Analysis&kw=blog,%20cyber%20attacks,%20Cyber%20Threats,%20Platform,%20Security%20Operations,%20Threat%20Intelligence,%20Threat%20Research&p=https%3A%2F%2Freliaquest.com%2Fblog%2Fscattered-spider-attack-analysis-account-compromise%2F&r=&evt=pageLoad&sv=2&cdb=AQAS&rn=894086)

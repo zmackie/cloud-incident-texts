@@ -1,0 +1,356 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1596.003",
+          "technique_name": "Search Open Websites/Domains: Code Repositories",
+          "inferred": false,
+          "evidence_quote": "Google dorks revealed Natures basket's 'gnbdevcdn' open bucket",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Server backend code -> Hardcoded AWS keys in configuration file",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Gathered credentials were enumerated for permissions. First user account 'gnbrobosoft' found with limited access.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "An audit user account was set-up and access to the console was verified.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1596.003",
+      "technique_name": "Search Open Websites/Domains: Code Repositories",
+      "description": "Attacker used Google dorks to discover the publicly exposed 'gnbdevcdn' S3 bucket belonging to Nature's Basket.",
+      "evidence_quote": "Google dorks revealed Natures basket's 'gnbdevcdn' open bucket",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed the world-readable S3 bucket and browsed its contents, locating server backend configuration files containing hardcoded AWS access keys.",
+      "evidence_quote": "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker extracted hardcoded AWS access keys embedded in server-side configuration files retrieved from the open S3 bucket.",
+      "evidence_quote": "Server backend code -> Hardcoded AWS keys in configuration file -> GotRoot!",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "S3",
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker used the first set of gathered credentials (IAM user 'gnbrobosoft') to enumerate account permissions and discover accessible cloud services.",
+      "evidence_quote": "Gathered credentials were enumerated for permissions. First user account 'gnbrobosoft' found with limited access.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker leveraged a second set of hardcoded credentials which turned out to belong to the AWS root account, achieving full account takeover.",
+      "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Using root account access, an 'audit' IAM user account was created and console access was verified, demonstrating persistent access to the environment.",
+      "evidence_quote": "An audit user account was set-up and access to the console was verified.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "S3",
+    "IAM",
+    "EC2",
+    "RDS"
+  ],
+  "impact_type": "Account Takeover",
+  "confidence_score": 0.95,
+  "initial_access_vector": "World-readable public S3 bucket ('gnbdevcdn') containing server backend source code with hardcoded AWS root access keys in configuration files, discovered via Google dorking",
+  "persistence_mechanism": "Created a new IAM 'audit' user account with console access using the compromised root credentials",
+  "privilege_escalation": "Hardcoded root account access keys found directly in configuration files within the public S3 bucket, bypassing any need for privilege escalation steps \u2014 direct root access from the start",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1596.003",
+        "technique_name": "Search Open Websites/Domains: Code Repositories",
+        "description": "Attacker used Google dorks to discover the publicly exposed 'gnbdevcdn' S3 bucket belonging to Nature's Basket.",
+        "tactic_id": "",
+        "evidence_quote": "Google dorks revealed Natures basket's 'gnbdevcdn' open bucket",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed the world-readable S3 bucket and browsed its contents, locating server backend configuration files containing hardcoded AWS access keys.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker extracted hardcoded AWS access keys embedded in server-side configuration files retrieved from the open S3 bucket.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Server backend code -> Hardcoded AWS keys in configuration file -> GotRoot!",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "S3",
+          "IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker used the first set of gathered credentials (IAM user 'gnbrobosoft') to enumerate account permissions and discover accessible cloud services.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Gathered credentials were enumerated for permissions. First user account 'gnbrobosoft' found with limited access.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker leveraged a second set of hardcoded credentials which turned out to belong to the AWS root account, achieving full account takeover.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Using root account access, an 'audit' IAM user account was created and console access was verified, demonstrating persistent access to the environment.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "An audit user account was set-up and access to the console was verified.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1596.003",
+        "target": "T1530",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Search Open Websites/Domains: Code Repositories",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "evidence_quotes": [
+          "Google dorks revealed Natures basket's 'gnbdevcdn' open bucket",
+          "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1552.001",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "evidence_quotes": [
+          "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
+          "Server backend code -> Hardcoded AWS keys in configuration file -> GotRoot!"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1526",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "evidence_quotes": [
+          "Server backend code -> Hardcoded AWS keys in configuration file -> GotRoot!",
+          "Gathered credentials were enumerated for permissions. First user account 'gnbrobosoft' found with limited access."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1078.004",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "evidence_quotes": [
+          "Gathered credentials were enumerated for permissions. First user account 'gnbrobosoft' found with limited access.",
+          "Second gathered credentials found with root user access: GotRoot!!"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1136.003",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
+        ],
+        "evidence_quotes": [
+          "Second gathered credentials found with root user access: GotRoot!!",
+          "An audit user account was set-up and access to the console was verified."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "natures-basket-responsible-disclosure-2020-july",
+  "analyzed_at": "2026-04-15T21:01:47.864472+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 2401
+}

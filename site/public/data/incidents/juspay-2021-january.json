@@ -1,0 +1,220 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Threat actors used an old, unrecycled Amazon Web Services (AWS) access key to gain unauthorized access to the server",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "subtechnique_id": "T1552.005",
+          "inferred": true,
+          "evidence_quote": "Threat actors used an old, unrecycled Amazon Web Services (AWS) access key",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "unauthorized activity in one of the data stores",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Juspay discovered the breach during the early morning-hours of Aug. 18, alerted by unauthorized activity in one of the data stores",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1565",
+          "technique_name": "Data Manipulation",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "threat actors breached about 35 million records with masked card data and card fingerprint",
+          "validated": false
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attackers obtained and leveraged an old, unrecycled AWS access key to authenticate to Juspay's AWS environment, bypassing normal access controls.",
+      "evidence_quote": "Threat actors used an old, unrecycled Amazon Web Services (AWS) access key to gain unauthorized access to the server",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Using the compromised AWS access key, attackers discovered and identified the data store(s) containing customer payment records, card data, email IDs, and phone numbers.",
+      "evidence_quote": "unauthorized activity in one of the data stores",
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS RDS"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers accessed and exfiltrated approximately 35 million records of masked card data, card fingerprints, as well as plain-text email addresses and phone numbers from the compromised data store.",
+      "evidence_quote": "threat actors breached about 35 million records with 'masked card data and card fingerprint'... Juspay did acknowledge the compromise of some data records containing non-anonymized, plain-text email and phone numbers",
+      "aws_services_involved": [
+        "Amazon S3",
+        "AWS RDS"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon S3",
+    "AWS RDS"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Compromised old, unrecycled AWS IAM access key used to authenticate directly to the AWS environment",
+  "persistence_mechanism": "None identified; attack appears to have been a one-time smash-and-grab using the stale access key before detection",
+  "privilege_escalation": "Not described; the stale AWS access key appears to have had sufficient permissions to directly access the target data stores",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attackers obtained and leveraged an old, unrecycled AWS access key to authenticate to Juspay's AWS environment, bypassing normal access controls.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Threat actors used an old, unrecycled Amazon Web Services (AWS) access key to gain unauthorized access to the server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Using the compromised AWS access key, attackers discovered and identified the data store(s) containing customer payment records, card data, email IDs, and phone numbers.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "unauthorized activity in one of the data stores",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS RDS"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attackers accessed and exfiltrated approximately 35 million records of masked card data, card fingerprints, as well as plain-text email addresses and phone numbers from the compromised data store.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "threat actors breached about 35 million records with 'masked card data and card fingerprint'... Juspay did acknowledge the compromise of some data records containing non-anonymized, plain-text email and phone numbers",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "AWS RDS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1619",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+        ],
+        "evidence_quotes": [
+          "Threat actors used an old, unrecycled Amazon Web Services (AWS) access key to gain unauthorized access to the server",
+          "unauthorized activity in one of the data stores"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20210127001214/https://threatpost.com/data-from-august-breach-of-amazon-partner-juspay-dumped-online/162740/"
+        ],
+        "evidence_quotes": [
+          "unauthorized activity in one of the data stores",
+          "threat actors breached about 35 million records with 'masked card data and card fingerprint'... Juspay did acknowledge the compromise of some data records containing non-anonymized, plain-text email and phone numbers"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "juspay-2021-january",
+  "analyzed_at": "2026-04-15T20:56:33.696742+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 4454
+}

@@ -1,0 +1,75 @@
+name: Build & Deploy Site
+
+on:
+  # ── Triggered by the crawl-and-analyze workflow after new data lands ──────
+  repository_dispatch:
+    types: [analysis-updated]
+
+  # ── Triggered by pushes to main that touch site code or scripts ───────────
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'scripts/build_site_data.py'
+      - '.github/workflows/deploy-site.yml'
+
+  # ── Manual trigger ────────────────────────────────────────────────────────
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write   # required by actions/deploy-pages OIDC auth
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # always deploy from main, where committed data lives
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install Python dependencies
+        run: uv sync
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        working-directory: site
+        run: npm install
+
+      # ── Generate aggregated site data ─────────────────────────────────────
+      # Reads data/analysis/*/attack_analysis.json and data/mitre_attack_cloud.json,
+      # writes all JSON files directly into site/public/data/ so Astro bundles
+      # them as static assets in the build output.
+      - name: Build site data
+        run: |
+          mkdir -p site/public/data/incidents
+          uv run python scripts/build_site_data.py \
+            --output-dir site/public/data
+
+      # ── Build Astro static site ───────────────────────────────────────────
+      - name: Build Astro site
+        working-directory: site
+        run: npm run build
+
+      # ── Upload build output as Pages artifact ─────────────────────────────
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+      # ── Deploy to GitHub Pages ────────────────────────────────────────────
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

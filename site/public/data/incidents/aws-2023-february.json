@@ -1,0 +1,448 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "an application with a software flaw that is hosted on an Amazon EC2 instance with an attached IAM instance profile... an unauthorized user might be able to use AWS STS session keys from the IAM instance profile for your EC2 instance",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "The most common event that leads to a ransomware event that targets data in Amazon S3, as observed by the AWS Customer Incident Response Team (CIRT), is unintended disclosure of Identity and Access Management (IAM) access keys.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "an unauthorized user might be able to use AWS STS session keys from the IAM instance profile for your EC2 instance to ransom objects in S3 buckets",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": true,
+          "evidence_quote": "unintended disclosure of static IAM access keys",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted",
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "you might see an increase in API actions such as s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "you can use the sum of the BytesDownloaded metric to gain insight into abnormal transfer spikes",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "bad actors who have a copy of the data demand a second ransom\u2014promising not to retain the data in order to sell or publicly release it",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "often the objects stored in S3 buckets are deleted, without the bad actor making copies. This is more like a data destruction event than a ransomware event where objects are encrypted.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact",
+          "inferred": true,
+          "evidence_quote": "several methods actors use to restrict or disable authorized access to resources including a) encryption or deletion",
+          "validated": true
+        },
+        {
+          "technique_id": "T1491",
+          "technique_name": "Defacement",
+          "inferred": false,
+          "evidence_quote": "a ransom demand is made for the safe return of these digital assets",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker obtains static IAM access keys via unintended disclosure (e.g., committed to public repositories, exposed in application code, or leaked through misconfiguration).",
+      "evidence_quote": "The most common event that leads to a ransomware event that targets data in Amazon S3, as observed by the AWS Customer Incident Response Team (CIRT), is unintended disclosure of Identity and Access Management (IAM) access keys.",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "In an alternative initial access vector, attacker exploits an application vulnerability on an EC2 instance to query IMDSv1 and steal STS session credentials from the attached IAM instance profile.",
+      "evidence_quote": "an application with a software flaw that is hosted on an Amazon EC2 instance with an attached IAM instance profile and associated permissions, and the instance is using Instance Metadata Service Version 1 (IMDSv1)... an unauthorized user might be able to use AWS STS session keys from the IAM instance profile",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2",
+        "AWS STS",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker authenticates to the AWS environment using the stolen IAM access keys or STS session tokens, gaining the permissions of the compromised IAM principal.",
+      "evidence_quote": "After a bad actor has obtained credentials, they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted.",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS STS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker iterates through AWS API actions to enumerate what services and permissions are accessible via the compromised IAM principal, generating elevated API call volumes and error rates.",
+      "evidence_quote": "they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted. Bad actors can do this in multiple ways, which can generate different levels of activity. This activity might alert your security teams because of an increase in API calls that result in errors.",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS CloudTrail"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Attacker enumerates S3 buckets and their configurations using S3 API calls including s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl.",
+      "evidence_quote": "you might see an increase in API actions such as s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl.",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker downloads S3 objects from targeted buckets prior to destruction, evidenced by abnormal BytesDownloaded spikes, enabling a double-extortion demand.",
+      "evidence_quote": "you can use the sum of the BytesDownloaded metric to gain insight into abnormal transfer spikes... bad actors who have a copy of the data demand a second ransom",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon CloudWatch"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deletes S3 objects from targeted buckets without making copies, effectively destroying the victim's data to enable a ransom demand for 'safe return' of assets.",
+      "evidence_quote": "often the objects stored in S3 buckets are deleted, without the bad actor making copies. This is more like a data destruction event than a ransomware event where objects are encrypted.",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "AWS IAM",
+    "Amazon EC2",
+    "AWS STS",
+    "AWS CloudTrail",
+    "Amazon CloudWatch",
+    "Amazon GuardDuty",
+    "Amazon Athena",
+    "AWS Backup",
+    "AWS KMS"
+  ],
+  "impact_type": "Ransomware",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Unintended disclosure of static IAM access keys (most common), or exploitation of an application vulnerability on an EC2 instance to steal STS credentials via IMDSv1 (SSRF/IMDS abuse)",
+  "data_exfiltrated": true,
+  "persistence_mechanism": "Not explicitly described; attacker may create persistent access via IAM modifications (implied by recommendation to review CloudTrail for 'potential persistent access that might have been created by the bad actor')",
+  "privilege_escalation": "Not described; attacker operates within the permissions already granted to the compromised IAM principal",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker obtains static IAM access keys via unintended disclosure (e.g., committed to public repositories, exposed in application code, or leaked through misconfiguration).",
+        "tactic_id": "TA0006",
+        "evidence_quote": "The most common event that leads to a ransomware event that targets data in Amazon S3, as observed by the AWS Customer Incident Response Team (CIRT), is unintended disclosure of Identity and Access Management (IAM) access keys.",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "In an alternative initial access vector, attacker exploits an application vulnerability on an EC2 instance to query IMDSv1 and steal STS session credentials from the attached IAM instance profile.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "an application with a software flaw that is hosted on an Amazon EC2 instance with an attached IAM instance profile and associated permissions, and the instance is using Instance Metadata Service Version 1 (IMDSv1)... an unauthorized user might be able to use AWS STS session keys from the IAM instance profile",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2",
+          "AWS STS",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker authenticates to the AWS environment using the stolen IAM access keys or STS session tokens, gaining the permissions of the compromised IAM principal.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "After a bad actor has obtained credentials, they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted.",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS STS"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker iterates through AWS API actions to enumerate what services and permissions are accessible via the compromised IAM principal, generating elevated API call volumes and error rates.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted. Bad actors can do this in multiple ways, which can generate different levels of activity. This activity might alert your security teams because of an increase in API calls that result in errors.",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS CloudTrail"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Attacker enumerates S3 buckets and their configurations using S3 API calls including s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "you might see an increase in API actions such as s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl.",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker downloads S3 objects from targeted buckets prior to destruction, evidenced by abnormal BytesDownloaded spikes, enabling a double-extortion demand.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "you can use the sum of the BytesDownloaded metric to gain insight into abnormal transfer spikes... bad actors who have a copy of the data demand a second ransom",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon CloudWatch"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker deletes S3 objects from targeted buckets without making copies, effectively destroying the victim's data to enable a ransom demand for 'safe return' of assets.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "often the objects stored in S3 buckets are deleted, without the bad actor making copies. This is more like a data destruction event than a ransomware event where objects are encrypted.",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.001",
+        "target": "T1552.005",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "The most common event that leads to a ransomware event that targets data in Amazon S3, as observed by the AWS Customer Incident Response Team (CIRT), is unintended disclosure of Identity and Access Management (IAM) access keys.",
+          "an application with a software flaw that is hosted on an Amazon EC2 instance with an attached IAM instance profile and associated permissions, and the instance is using Instance Metadata Service Version 1 (IMDSv1)... an unauthorized user might be able to use AWS STS session keys from the IAM instance profile"
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "an application with a software flaw that is hosted on an Amazon EC2 instance with an attached IAM instance profile and associated permissions, and the instance is using Instance Metadata Service Version 1 (IMDSv1)... an unauthorized user might be able to use AWS STS session keys from the IAM instance profile",
+          "After a bad actor has obtained credentials, they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1526",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "After a bad actor has obtained credentials, they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted.",
+          "they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted. Bad actors can do this in multiple ways, which can generate different levels of activity. This activity might alert your security teams because of an increase in API calls that result in errors."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1619",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "they use AWS API actions that they iterate through to discover the type of access that the exposed IAM principal has been granted. Bad actors can do this in multiple ways, which can generate different levels of activity. This activity might alert your security teams because of an increase in API calls that result in errors.",
+          "you might see an increase in API actions such as s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl."
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "you might see an increase in API actions such as s3:ListBuckets, s3:GetBucketLocation, s3:GetBucketPolicy, and s3:GetBucketAcl.",
+          "you can use the sum of the BytesDownloaded metric to gain insight into abnormal transfer spikes... bad actors who have a copy of the data demand a second ransom"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1485",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/anatomy-of-a-ransomware-event-targeting-data-in-amazon-s3/"
+        ],
+        "evidence_quotes": [
+          "you can use the sum of the BytesDownloaded metric to gain insight into abnormal transfer spikes... bad actors who have a copy of the data demand a second ransom",
+          "often the objects stored in S3 buckets are deleted, without the bad actor making copies. This is more like a data destruction event than a ransomware event where objects are encrypted."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "aws-2023-february",
+  "analyzed_at": "2026-04-15T20:41:49.626042+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 30051
+}

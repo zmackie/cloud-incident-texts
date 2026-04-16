@@ -1,0 +1,323 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "we let our friend use our AWS SES service for his old (outdated) Drupal site hosted on another resource, which didn't have an opportunity to update and afterward got hacked through SES using a compromised API key with maximum privileges.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "Somewhere there in the depths of hacked Drupal, there was an API key. After finding this key, the attackers' script launched the creation of EC2 instances of the top configuration.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "got hacked through SES using a compromised API key with maximum privileges",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
+          "evidence_quote": "a compromised API key with maximum privileges",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1651",
+          "technique_name": "Cloud Administration Command",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the attackers' script launched the creation of EC2 instances of the top configuration and the cryptocurrency mining began",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the attackers' script launched the creation of EC2 instances of the top configuration and the cryptocurrency mining began",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attackers exploited an outdated, unpatched Drupal site (a public-facing web application) that was using AWS SES credentials. The Drupal installation had not been updated and was vulnerable to compromise.",
+      "evidence_quote": "we let our friend use our AWS SES service for his old (outdated) Drupal site hosted on another resource, which didn't have an opportunity to update and afterward got hacked",
+      "evidence_sources": [
+        "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+      ],
+      "aws_services_involved": [
+        "SES"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "After compromising the Drupal application, attackers discovered a hardcoded AWS API key with maximum (full) privileges stored within the application's files or configuration.",
+      "evidence_quote": "Somewhere there in the depths of hacked Drupal, there was an API key.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using the stolen AWS API key with maximum privileges, attackers authenticated to the AWS account as a valid cloud account/IAM principal, gaining full access to the environment.",
+      "evidence_quote": "a compromised API key with maximum privileges",
+      "evidence_sources": [
+        "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1651",
+      "technique_name": "Cloud Administration Command",
+      "description": "An automated attacker script used the stolen high-privilege API key to issue cloud administration commands, programmatically spinning up dozens of EC2 instances of the maximum (top) configuration.",
+      "evidence_quote": "the attackers' script launched the creation of EC2 instances of the top configuration",
+      "evidence_sources": [
+        "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "The newly launched high-performance EC2 instances were used to conduct large-scale cryptocurrency mining, consuming AWS compute resources at the victim's expense.",
+      "evidence_quote": "the creation of EC2 instances of the top configuration and the cryptocurrency mining began",
+      "evidence_sources": [
+        "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "EC2",
+    "SES",
+    "IAM",
+    "RDS",
+    "S3",
+    "SQS",
+    "EFS",
+    "VPC",
+    "API Gateway",
+    "WAF"
+  ],
+  "impact_type": "Cryptomining",
+  "confidence_score": 0.85,
+  "initial_access_vector": "Outdated/unpatched Drupal CMS (public-facing web application) exploited to access the application, where a hardcoded AWS API key with maximum privileges was stored and subsequently stolen.",
+  "persistence_mechanism": "Continued use of the compromised high-privilege AWS API key to maintain access and issue commands against the AWS account.",
+  "privilege_escalation": "No escalation required \u2014 the stolen API key already had maximum privileges (effectively root-level IAM access).",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attackers exploited an outdated, unpatched Drupal site (a public-facing web application) that was using AWS SES credentials. The Drupal installation had not been updated and was vulnerable to compromise.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "we let our friend use our AWS SES service for his old (outdated) Drupal site hosted on another resource, which didn't have an opportunity to update and afterward got hacked",
+        "evidence_sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "aws_services_involved": [
+          "SES"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "After compromising the Drupal application, attackers discovered a hardcoded AWS API key with maximum (full) privileges stored within the application's files or configuration.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Somewhere there in the depths of hacked Drupal, there was an API key.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using the stolen AWS API key with maximum privileges, attackers authenticated to the AWS account as a valid cloud account/IAM principal, gaining full access to the environment.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "a compromised API key with maximum privileges",
+        "evidence_sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1651",
+        "technique_name": "Cloud Administration Command",
+        "description": "An automated attacker script used the stolen high-privilege API key to issue cloud administration commands, programmatically spinning up dozens of EC2 instances of the maximum (top) configuration.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "the attackers' script launched the creation of EC2 instances of the top configuration",
+        "evidence_sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "The newly launched high-performance EC2 instances were used to conduct large-scale cryptocurrency mining, consuming AWS compute resources at the victim's expense.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the creation of EC2 instances of the top configuration and the cryptocurrency mining began",
+        "evidence_sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1552.001",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "evidence_quotes": [
+          "we let our friend use our AWS SES service for his old (outdated) Drupal site hosted on another resource, which didn't have an opportunity to update and afterward got hacked",
+          "Somewhere there in the depths of hacked Drupal, there was an API key."
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "evidence_quotes": [
+          "Somewhere there in the depths of hacked Drupal, there was an API key.",
+          "a compromised API key with maximum privileges"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1651",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Administration Command",
+        "sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "evidence_quotes": [
+          "a compromised API key with maximum privileges",
+          "the attackers' script launched the creation of EC2 instances of the top configuration"
+        ]
+      },
+      {
+        "source": "T1651",
+        "target": "T1496",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Administration Command",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://web.archive.org/web/20221205145546/https://topdigital.agency/clear-and-uncommon-story-about-overcoming-issues-with-aws/"
+        ],
+        "evidence_quotes": [
+          "the attackers' script launched the creation of EC2 instances of the top configuration",
+          "the creation of EC2 instances of the top configuration and the cryptocurrency mining began"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "uran-company-2021-july",
+  "analyzed_at": "2026-04-15T21:14:16.160655+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 4746
+}

@@ -1,0 +1,328 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1199",
+          "technique_name": "Trusted Relationship",
+          "inferred": false,
+          "evidence_quote": "This access token was issued to a third party contractor during the testing of the website 2050.earth",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.005",
+          "inferred": true,
+          "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1114",
+          "technique_name": "Email Collection",
+          "inferred": true,
+          "evidence_quote": "lure users to fake websites collecting credentials for Microsoft online services",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
+          "subtechnique_id": "T1566.002",
+          "inferred": false,
+          "evidence_quote": "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_id": "T1583",
+          "technique_name": "Acquire Infrastructure",
+          "subtechnique_id": "T1583.006",
+          "inferred": false,
+          "evidence_quote": "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
+          "validated": false
+        },
+        {
+          "technique_id": "T1608",
+          "technique_name": "Stage Capabilities",
+          "subtechnique_id": "T1608.004",
+          "inferred": false,
+          "evidence_quote": "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
+          "inferred": false,
+          "evidence_quote": "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.005",
+      "technique_name": "Cloud Instance Metadata API / Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "Attackers obtained a legitimate Amazon SES API token that had been issued to a third-party contractor working on Kaspersky's 2050.earth website. The exact theft mechanism is unspecified, but the token was exposed/stolen from the contractor.",
+      "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+      ],
+      "aws_services_involved": [
+        "Amazon SES"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1608.004",
+      "technique_name": "Stage Capabilities: Drive-by Target",
+      "description": "Attackers deployed two phishing kits (Iamtheboss and MIRCBOOT) to set up credential-harvesting landing pages impersonating Microsoft Office 365 login pages.",
+      "evidence_quote": "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+      ],
+      "aws_services_involved": [
+        "Amazon SES",
+        "AWS (hosting)"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1036",
+      "technique_name": "Masquerading",
+      "description": "Attackers leveraged the stolen SES token and Kaspersky's official email domain (noreply@sm.kaspersky.com) to send phishing emails from trusted AWS infrastructure, bypassing Secure Email Gateway protections.",
+      "evidence_quote": "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+      ],
+      "aws_services_involved": [
+        "Amazon SES",
+        "AWS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1566.002",
+      "technique_name": "Phishing: Spearphishing Link",
+      "description": "Phishing emails disguised as 'Fax notifications' were sent to Office 365 users, containing links redirecting victims to fake Microsoft credential-harvesting pages.",
+      "evidence_quote": "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+      ],
+      "aws_services_involved": [
+        "Amazon SES"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1056.003",
+      "technique_name": "Input Capture: Web Portal Capture",
+      "description": "Victims who clicked the phishing link were directed to fake Microsoft Office 365 / OWA login pages designed to harvest their credentials.",
+      "evidence_quote": "lure users to fake websites collecting credentials for Microsoft online services",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    }
+  ],
+  "aws_services": [
+    "Amazon SES (Simple Email Service)",
+    "AWS (general hosting infrastructure for 2050.earth)"
+  ],
+  "impact_type": "Phishing / Credential Harvesting",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Stolen Amazon SES API token obtained from a third-party contractor who had been issued the token for testing Kaspersky's 2050.earth website",
+  "persistence_mechanism": "None identified \u2014 the SES token served as persistent sending capability until revoked by Kaspersky upon discovery",
+  "privilege_escalation": "Not applicable \u2014 attackers abused an existing legitimate token; no escalation observed",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "Attackers obtained a legitimate Amazon SES API token that had been issued to a third-party contractor working on Kaspersky's 2050.earth website. The exact theft mechanism is unspecified, but the token was exposed/stolen from the contractor.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1608.004",
+        "technique_name": "Stage Capabilities: Drive-by Target",
+        "description": "Attackers deployed two phishing kits (Iamtheboss and MIRCBOOT) to set up credential-harvesting landing pages impersonating Microsoft Office 365 login pages.",
+        "tactic_id": "",
+        "evidence_quote": "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES",
+          "AWS (hosting)"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1036",
+        "technique_name": "Masquerading",
+        "description": "Attackers leveraged the stolen SES token and Kaspersky's official email domain (noreply@sm.kaspersky.com) to send phishing emails from trusted AWS infrastructure, bypassing Secure Email Gateway protections.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES",
+          "AWS"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1566.002",
+        "technique_name": "Spearphishing Link",
+        "description": "Phishing emails disguised as 'Fax notifications' were sent to Office 365 users, containing links redirecting victims to fake Microsoft credential-harvesting pages.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1056.003",
+        "technique_name": "Input Capture: Web Portal Capture",
+        "description": "Victims who clicked the phishing link were directed to fake Microsoft Office 365 / OWA login pages designed to harvest their credentials.",
+        "tactic_id": "",
+        "evidence_quote": "lure users to fake websites collecting credentials for Microsoft online services",
+        "evidence_sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.005",
+        "target": "T1608.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Stage Capabilities: Drive-by Target",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "evidence_quotes": [
+          "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
+          "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT"
+        ]
+      },
+      {
+        "source": "T1608.004",
+        "target": "T1036",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Stage Capabilities: Drive-by Target",
+        "target_technique_name": "Masquerading",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "evidence_quotes": [
+          "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
+          "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections"
+        ]
+      },
+      {
+        "source": "T1036",
+        "target": "T1566.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Masquerading",
+        "target_technique_name": "Spearphishing Link",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "evidence_quotes": [
+          "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
+          "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services"
+        ]
+      },
+      {
+        "source": "T1566.002",
+        "target": "T1056.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Spearphishing Link",
+        "target_technique_name": "Input Capture: Web Portal Capture",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
+        ],
+        "evidence_quotes": [
+          "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services",
+          "lure users to fake websites collecting credentials for Microsoft online services"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "kaspersky-2021-november",
+  "analyzed_at": "2026-04-15T20:56:59.402694+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 27267
+}

@@ -1,0 +1,648 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "attacker activity originating from a leaked long-term AWS access key (`AKIA*`)",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "SES enumeration through API calls such as GetAccount, ListIdentities, and GetSendQuota",
+          "validated": true
+        },
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "We observed the attacker enumerating the SSO instance to look at SSO configurations, users, groups, and applications.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "The attacker sometimes attempted to create a login profile on the IAM user to facilitate using the AWS console.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098.003",
+          "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "inferred": false,
+          "evidence_quote": "they created a group called `secure` and a user called `Secret`, which the attacker added to their group, and assigned a new permission set to that group.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1525",
+          "technique_name": "Implant Internal Image",
+          "inferred": true,
+          "evidence_quote": "the attacker created a Lambda function named `buckets555`... this Lambda function ran code with the capability to create IAM users dynamically, on demand.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1556.006",
+          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+          "inferred": false,
+          "evidence_quote": "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "inferred": false,
+          "evidence_quote": "the attacker authenticated to the AWS Console and navigated to the Services tab under the AWS Organizations service and began to disable the integration of six AWS services... DisableAWSServiceAccess... access-analyzer.amazonaws.com (IAM Access Analyzer)",
+          "validated": true
+        },
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "Generating temporary STS credentials from long-lived access keys, which allows an attacker to authenticate to the AWS console even from long-lived credentials.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1556.006",
+          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+          "inferred": false,
+          "evidence_quote": "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": true,
+          "evidence_quote": "Identify the deletion of a high number of Lambda functions.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used a leaked long-term AWS IAM access key (AKIA*) belonging to a user in an AWS organization management account to gain initial access.",
+      "evidence_quote": "attacker activity originating from a leaked long-term AWS access key (`AKIA*`). Within a 150-minute period, we detected five distinct IP addresses attempting to leverage this access key",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker enumerated AWS SES configuration via GetAccount, ListIdentities, and GetSendQuota API calls to assess the environment's email sending capabilities.",
+      "evidence_quote": "SES enumeration through API calls such as GetAccount, ListIdentities, and GetSendQuota.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "Amazon SES"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "Attacker used GetFederationToken to generate temporary STS credentials from the long-lived access key, enabling AWS console access.",
+      "evidence_quote": "Generating temporary STS credentials from long-lived access keys, which allows an attacker to authenticate to the AWS console even from long-lived credentials.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS STS",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created multiple IAM users (adminslabs, buckets488, s3s684, git-lab965, git-lab555) and granted them administrative permissions via AttachUserPolicy or AttachGroupPolicy, and created login profiles for console access.",
+      "evidence_quote": "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy. The attacker sometimes attempted to create a login profile on the IAM user to facilitate using the AWS console.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Attacker attempted to create EC2 security group named 'Administratorsz' (JavaGhost TTP) and created IAM login profiles to grant console access to newly created users.",
+      "evidence_quote": "Attempt to create an EC2 security group called `Administratorsz` with the description `We Are There But Not Visible`, which has been attributed to the JavaGhost group.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "Amazon EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1525",
+      "technique_name": "Implant Internal Image",
+      "description": "Attacker deployed a Lambda function named 'buckets555' with malicious code capable of dynamically creating IAM users on demand, then wired it to an HTTP API Gateway to create a persistent 'backdoor-as-a-service' mechanism survivable after credential revocation.",
+      "evidence_quote": "the attacker created a Lambda function named `buckets555`... this Lambda function ran code with the capability to create IAM users dynamically, on demand. This effectively creates a 'persistence-as-a-service' mechanism: The attacker, even after the compromised credentials are revoked, is able to perform external HTTP requests to the API Gateway and dynamically create further malicious IAM users.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS Lambda",
+        "Amazon API Gateway",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Attacker enumerated the AWS Identity Center (SSO) instance, inspecting SSO configurations, users, groups, and applications.",
+      "evidence_quote": "We observed the attacker enumerating the SSO instance to look at SSO configurations, users, groups, and applications.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM Identity Center"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1562.008",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+      "description": "Attacker used DisableAWSServiceAccess to disable trusted access for six AWS organization-level services, including IAM Access Analyzer, AWS Systems Manager, and CloudFormation StackSets, likely to weaken security controls for future operations.",
+      "evidence_quote": "the attacker authenticated to the AWS Console and navigated to the Services tab under the AWS Organizations service and began to disable the integration of six AWS services... DisableAWSServiceAccess... access-analyzer.amazonaws.com (IAM Access Analyzer)",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS Organizations",
+        "IAM Access Analyzer",
+        "AWS Systems Manager",
+        "AWS CloudFormation"
+      ],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created a new IAM Identity Center group named 'secure' and user named 'Secret', added the user to the group, and assigned a new permission set to the group to establish SSO-based persistence.",
+      "evidence_quote": "they created a group called `secure` and a user called `Secret`, which the attacker added to their group, and assigned a new permission set to that group.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM Identity Center"
+      ],
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1556.006",
+      "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+      "description": "Attacker modified the SSO MFA configuration to permit sign-in without MFA, and extended the Amazon Q Developer session duration to 90 days to facilitate long-term access.",
+      "evidence_quote": "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA. They then extended the session duration for Amazon Q Developer to 90 days.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM Identity Center",
+        "Amazon Q Developer"
+      ],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker successfully signed in to the AWS console using the newly created SSO user 'Secret' via a password-only flow (no MFA), confirming successful SSO persistence.",
+      "evidence_quote": "we observed a successful sign-in event associated with a password-only sign-in flow for the newly created user `Secret`.",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM Identity Center"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "AWS STS",
+    "Amazon SES",
+    "Amazon EC2",
+    "AWS Lambda",
+    "Amazon API Gateway",
+    "AWS IAM Identity Center",
+    "AWS Organizations",
+    "IAM Access Analyzer",
+    "AWS Systems Manager",
+    "AWS CloudFormation",
+    "Amazon Q Developer"
+  ],
+  "impact_type": "Account Takeover / Persistence",
+  "confidence_score": 0.95,
+  "initial_access_vector": "Leaked long-term AWS IAM access key (AKIA* prefix) associated with an IAM user in an AWS organization management account",
+  "persistence_mechanism": "Multiple persistence mechanisms: (1) New admin IAM users with login profiles; (2) Lambda function + API Gateway 'backdoor-as-a-service' enabling dynamic IAM user creation post-credential revocation; (3) New AWS Identity Center user 'Secret' with SSO permission set and MFA disabled; (4) Amazon Q Developer session extended to 90 days",
+  "privilege_escalation": "Attacker leveraged the management account's highly privileged leaked key to directly attach AdministratorAccess managed policy to newly created IAM users and groups, and assigned permission sets via AWS Identity Center",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker used a leaked long-term AWS IAM access key (AKIA*) belonging to a user in an AWS organization management account to gain initial access.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "attacker activity originating from a leaked long-term AWS access key (`AKIA*`). Within a 150-minute period, we detected five distinct IP addresses attempting to leverage this access key",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker enumerated AWS SES configuration via GetAccount, ListIdentities, and GetSendQuota API calls to assess the environment's email sending capabilities.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "SES enumeration through API calls such as GetAccount, ListIdentities, and GetSendQuota.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "Amazon SES"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "Attacker used GetFederationToken to generate temporary STS credentials from the long-lived access key, enabling AWS console access.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Generating temporary STS credentials from long-lived access keys, which allows an attacker to authenticate to the AWS console even from long-lived credentials.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS STS",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker created multiple IAM users (adminslabs, buckets488, s3s684, git-lab965, git-lab555) and granted them administrative permissions via AttachUserPolicy or AttachGroupPolicy, and created login profiles for console access.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy. The attacker sometimes attempted to create a login profile on the IAM user to facilitate using the AWS console.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Attacker attempted to create EC2 security group named 'Administratorsz' (JavaGhost TTP) and created IAM login profiles to grant console access to newly created users.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Attempt to create an EC2 security group called `Administratorsz` with the description `We Are There But Not Visible`, which has been attributed to the JavaGhost group.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1525",
+        "technique_name": "Implant Internal Image",
+        "description": "Attacker deployed a Lambda function named 'buckets555' with malicious code capable of dynamically creating IAM users on demand, then wired it to an HTTP API Gateway to create a persistent 'backdoor-as-a-service' mechanism survivable after credential revocation.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attacker created a Lambda function named `buckets555`... this Lambda function ran code with the capability to create IAM users dynamically, on demand. This effectively creates a 'persistence-as-a-service' mechanism: The attacker, even after the compromised credentials are revoked, is able to perform external HTTP requests to the API Gateway and dynamically create further malicious IAM users.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda",
+          "Amazon API Gateway",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Attacker enumerated the AWS Identity Center (SSO) instance, inspecting SSO configurations, users, groups, and applications.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "We observed the attacker enumerating the SSO instance to look at SSO configurations, users, groups, and applications.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM Identity Center"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1562.008",
+        "technique_name": "Disable or Modify Cloud Logs",
+        "description": "Attacker used DisableAWSServiceAccess to disable trusted access for six AWS organization-level services, including IAM Access Analyzer, AWS Systems Manager, and CloudFormation StackSets, likely to weaken security controls for future operations.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker authenticated to the AWS Console and navigated to the Services tab under the AWS Organizations service and began to disable the integration of six AWS services... DisableAWSServiceAccess... access-analyzer.amazonaws.com (IAM Access Analyzer)",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS Organizations",
+          "IAM Access Analyzer",
+          "AWS Systems Manager",
+          "AWS CloudFormation"
+        ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker created a new IAM Identity Center group named 'secure' and user named 'Secret', added the user to the group, and assigned a new permission set to the group to establish SSO-based persistence.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "they created a group called `secure` and a user called `Secret`, which the attacker added to their group, and assigned a new permission set to that group.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM Identity Center"
+        ]
+      },
+      {
+        "step": 10,
+        "technique_id": "T1556.006",
+        "technique_name": "Multi-Factor Authentication",
+        "description": "Attacker modified the SSO MFA configuration to permit sign-in without MFA, and extended the Amazon Q Developer session duration to 90 days to facilitate long-term access.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA. They then extended the session duration for Amazon Q Developer to 90 days.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM Identity Center",
+          "Amazon Q Developer"
+        ]
+      },
+      {
+        "step": 11,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker successfully signed in to the AWS console using the newly created SSO user 'Secret' via a password-only flow (no MFA), confirming successful SSO persistence.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "we observed a successful sign-in event associated with a password-only sign-in flow for the newly created user `Secret`.",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM Identity Center"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1526",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "attacker activity originating from a leaked long-term AWS access key (`AKIA*`). Within a 150-minute period, we detected five distinct IP addresses attempting to leverage this access key",
+          "SES enumeration through API calls such as GetAccount, ListIdentities, and GetSendQuota."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1550.001",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "SES enumeration through API calls such as GetAccount, ListIdentities, and GetSendQuota.",
+          "Generating temporary STS credentials from long-lived access keys, which allows an attacker to authenticate to the AWS console even from long-lived credentials."
+        ]
+      },
+      {
+        "source": "T1550.001",
+        "target": "T1136.003",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Application Access Token",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "Generating temporary STS credentials from long-lived access keys, which allows an attacker to authenticate to the AWS console even from long-lived credentials.",
+          "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy. The attacker sometimes attempted to create a login profile on the IAM user to facilitate using the AWS console."
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1098.001",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "Creation of several IAM users, subsequently granted administrative permissions either directly through AttachUserPolicy or indirectly through AttachGroupPolicy. The attacker sometimes attempted to create a login profile on the IAM user to facilitate using the AWS console.",
+          "Attempt to create an EC2 security group called `Administratorsz` with the description `We Are There But Not Visible`, which has been attributed to the JavaGhost group."
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1525",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Implant Internal Image",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "Attempt to create an EC2 security group called `Administratorsz` with the description `We Are There But Not Visible`, which has been attributed to the JavaGhost group.",
+          "the attacker created a Lambda function named `buckets555`... this Lambda function ran code with the capability to create IAM users dynamically, on demand. This effectively creates a 'persistence-as-a-service' mechanism: The attacker, even after the compromised credentials are revoked, is able to perform external HTTP requests to the API Gateway and dynamically create further malicious IAM users."
+        ]
+      },
+      {
+        "source": "T1525",
+        "target": "T1087.004",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Implant Internal Image",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "the attacker created a Lambda function named `buckets555`... this Lambda function ran code with the capability to create IAM users dynamically, on demand. This effectively creates a 'persistence-as-a-service' mechanism: The attacker, even after the compromised credentials are revoked, is able to perform external HTTP requests to the API Gateway and dynamically create further malicious IAM users.",
+          "We observed the attacker enumerating the SSO instance to look at SSO configurations, users, groups, and applications."
+        ]
+      },
+      {
+        "source": "T1087.004",
+        "target": "T1562.008",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Disable or Modify Cloud Logs",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "We observed the attacker enumerating the SSO instance to look at SSO configurations, users, groups, and applications.",
+          "the attacker authenticated to the AWS Console and navigated to the Services tab under the AWS Organizations service and began to disable the integration of six AWS services... DisableAWSServiceAccess... access-analyzer.amazonaws.com (IAM Access Analyzer)"
+        ]
+      },
+      {
+        "source": "T1562.008",
+        "target": "T1136.003",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Disable or Modify Cloud Logs",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "the attacker authenticated to the AWS Console and navigated to the Services tab under the AWS Organizations service and began to disable the integration of six AWS services... DisableAWSServiceAccess... access-analyzer.amazonaws.com (IAM Access Analyzer)",
+          "they created a group called `secure` and a user called `Secret`, which the attacker added to their group, and assigned a new permission set to that group."
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1556.006",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Multi-Factor Authentication",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "they created a group called `secure` and a user called `Secret`, which the attacker added to their group, and assigned a new permission set to that group.",
+          "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA. They then extended the session duration for Amazon Q Developer to 90 days."
+        ]
+      },
+      {
+        "source": "T1556.006",
+        "target": "T1078.004",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Multi-Factor Authentication",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-the-attacker-doth-persist-too-much/"
+        ],
+        "evidence_quotes": [
+          "they modified the MFA configuration of the SSO instance to allow themselves to sign in without MFA. They then extended the session duration for Amazon Q Developer to 90 days.",
+          "we observed a successful sign-in event associated with a password-only sign-in flow for the newly created user `Secret`."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "datadog-2025-march",
+  "analyzed_at": "2026-04-15T21:22:03.215103+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 23705
+}

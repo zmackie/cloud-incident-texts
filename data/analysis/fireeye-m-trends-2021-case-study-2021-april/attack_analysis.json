@@ -1,0 +1,269 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Use of SSH key by former employee",
+          "subtechnique_id": "T1078.004",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Creates users and EC2 instances",
+          "subtechnique_id": "T1136.003",
+          "validated": true
+        },
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "Creates users and EC2 instances",
+          "subtechnique_id": "T1578.002",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "Creates users and EC2 instances",
+          "subtechnique_id": "T1078.004",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "inferred": true,
+          "evidence_quote": "Creates users and EC2 instances",
+          "subtechnique_id": "T1578.002",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "Deleted RDS backups",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "A former employee leveraged a previously provisioned SSH key to regain unauthorized access to the AWS environment. The credential was never revoked upon offboarding, allowing re-entry.",
+      "evidence_quote": "Use of SSH key by former employee",
+      "evidence_sources": [
+        "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+      ],
+      "aws_services_involved": [
+        "IAM",
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Once inside, the attacker created new IAM user accounts to establish durable persistence and potentially cover their tracks by operating from newly provisioned identities.",
+      "evidence_quote": "Creates users and EC2 instances",
+      "evidence_sources": [
+        "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "The attacker spun up new EC2 instances, likely to stage further operations, evade detection, or operate from controlled infrastructure within the victim's account.",
+      "evidence_quote": "Creates users and EC2 instances",
+      "evidence_sources": [
+        "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+      ],
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "The attacker deleted RDS database backups, destroying recovery points and potentially rendering the organization unable to restore its databases \u2014 the primary impact of this incident.",
+      "evidence_quote": "Deleted RDS backups",
+      "evidence_sources": [
+        "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+      ],
+      "aws_services_involved": [
+        "RDS"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "EC2",
+    "RDS"
+  ],
+  "impact_type": "Data Destruction",
+  "confidence_score": 0.4,
+  "initial_access_vector": "Former employee reused a previously provisioned, never-revoked SSH key to gain unauthorized access to the AWS environment.",
+  "persistence_mechanism": "Creation of new IAM user accounts and EC2 instances within the victim AWS account.",
+  "privilege_escalation": "Implied through creation of new IAM users, likely with elevated permissions, using the initial compromised credential.",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "A former employee leveraged a previously provisioned SSH key to regain unauthorized access to the AWS environment. The credential was never revoked upon offboarding, allowing re-entry.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Use of SSH key by former employee",
+        "evidence_sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "EC2"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Once inside, the attacker created new IAM user accounts to establish durable persistence and potentially cover their tracks by operating from newly provisioned identities.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Creates users and EC2 instances",
+        "evidence_sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "The attacker spun up new EC2 instances, likely to stage further operations, evade detection, or operate from controlled infrastructure within the victim's account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Creates users and EC2 instances",
+        "evidence_sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "The attacker deleted RDS database backups, destroying recovery points and potentially rendering the organization unable to restore its databases \u2014 the primary impact of this incident.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Deleted RDS backups",
+        "evidence_sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "aws_services_involved": [
+          "RDS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1136.003",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "evidence_quotes": [
+          "Use of SSH key by former employee",
+          "Creates users and EC2 instances"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1578.002",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Create Cloud Instance",
+        "sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "evidence_quotes": [
+          "Creates users and EC2 instances",
+          "Creates users and EC2 instances"
+        ]
+      },
+      {
+        "source": "T1578.002",
+        "target": "T1485",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://www.arrow.com/ecs-media/16352/fireeye-rpt-mtrends-2021.pdf"
+        ],
+        "evidence_quotes": [
+          "Creates users and EC2 instances",
+          "Deleted RDS backups"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "fireeye-m-trends-2021-case-study-2021-april",
+  "analyzed_at": "2026-04-15T20:54:35.834262+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 303
+}

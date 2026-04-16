@@ -1,0 +1,263 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1586.002",
+          "technique_name": "Compromise Accounts: Email Accounts",
+          "inferred": false,
+          "evidence_quote": "email account exposed imToken to our first ever security breach. The emergency response team is currently investigating the root cause of the hack on email account",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "the hackers reset passwords through emails and obtained the Amazon AWS web account for our 2.0 Beta server",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1566.002",
+          "technique_name": "Phishing: Spearphishing Link",
+          "inferred": true,
+          "evidence_quote": "the worst scenario would be that, after obtaining such data, the hacker may send 'Phishing emails' to users",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1586.002",
+      "technique_name": "Compromise Accounts: Email Accounts",
+      "description": "Attacker compromised imToken's corporate email account, which was the root cause of the entire breach. The exact method of compromise (phishing, credential stuffing, etc.) was still under investigation at time of disclosure.",
+      "evidence_quote": "email account exposed imToken to our first ever security breach. The emergency response team is currently investigating the root cause of the hack on email account",
+      "evidence_sources": [
+        "https://archive.ph/bRjXi"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using access to the compromised email account, the attacker triggered an AWS account password reset flow, successfully resetting the AWS root/console login password and taking over the AWS account at 02:11 am June 9, 2018 (UTC+8).",
+      "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted",
+      "evidence_sources": [
+        "https://archive.ph/bRjXi"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "Amazon EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "With full AWS account access, the attacker accessed data stored on the 2.0 Beta servers, collecting device IDs, wallet addresses, and subscribed email addresses belonging to ~36,000 devices and ~10,000 users.",
+      "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails",
+      "evidence_sources": [
+        "https://archive.ph/bRjXi"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2",
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1566.002",
+      "technique_name": "Phishing: Spearphishing Link",
+      "description": "The attacker was anticipated to use exfiltrated email addresses to launch follow-on phishing campaigns targeting imToken Beta users, attempting to steal wallet private keys. imToken proactively warned users about this anticipated vector.",
+      "evidence_quote": "the worst scenario would be that, after obtaining such data, the hacker may send 'Phishing emails' to users",
+      "evidence_sources": [
+        "https://archive.ph/bRjXi"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon EC2",
+    "Amazon S3"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.75,
+  "initial_access_vector": "Corporate email account compromise, used to trigger an AWS account password reset via the email-based recovery mechanism",
+  "persistence_mechanism": "Full AWS console account takeover via reset credentials (attacker held access for approximately 8 hours before discovery)",
+  "privilege_escalation": "AWS account password reset via compromised email account, granting full cloud console access equivalent to root/administrator",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1586.002",
+        "technique_name": "Compromise Accounts: Email Accounts",
+        "description": "Attacker compromised imToken's corporate email account, which was the root cause of the entire breach. The exact method of compromise (phishing, credential stuffing, etc.) was still under investigation at time of disclosure.",
+        "tactic_id": "",
+        "evidence_quote": "email account exposed imToken to our first ever security breach. The emergency response team is currently investigating the root cause of the hack on email account",
+        "evidence_sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using access to the compromised email account, the attacker triggered an AWS account password reset flow, successfully resetting the AWS root/console login password and taking over the AWS account at 02:11 am June 9, 2018 (UTC+8).",
+        "tactic_id": "TA0005",
+        "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted",
+        "evidence_sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "With full AWS account access, the attacker accessed data stored on the 2.0 Beta servers, collecting device IDs, wallet addresses, and subscribed email addresses belonging to ~36,000 devices and ~10,000 users.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails",
+        "evidence_sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2",
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1566.002",
+        "technique_name": "Spearphishing Link",
+        "description": "The attacker was anticipated to use exfiltrated email addresses to launch follow-on phishing campaigns targeting imToken Beta users, attempting to steal wallet private keys. imToken proactively warned users about this anticipated vector.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "the worst scenario would be that, after obtaining such data, the hacker may send 'Phishing emails' to users",
+        "evidence_sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1586.002",
+        "target": "T1078.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Compromise Accounts: Email Accounts",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "evidence_quotes": [
+          "email account exposed imToken to our first ever security breach. The emergency response team is currently investigating the root cause of the hack on email account",
+          "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "evidence_quotes": [
+          "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted",
+          "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1566.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Spearphishing Link",
+        "sources": [
+          "https://archive.ph/bRjXi"
+        ],
+        "evidence_quotes": [
+          "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails",
+          "the worst scenario would be that, after obtaining such data, the hacker may send 'Phishing emails' to users"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "imtoken-2018-june",
+  "analyzed_at": "2026-04-15T20:55:47.624369+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 13937
+}

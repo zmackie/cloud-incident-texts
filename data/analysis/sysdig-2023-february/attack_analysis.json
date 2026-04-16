@@ -1,0 +1,680 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": false,
+          "evidence_quote": "The attacker found and exploited an internet-exposed service deployed in a Kubernetes cluster.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "inferred": false,
+          "evidence_quote": "we observed a bash script running simultaneously on the container to enumerate and extract additional information in the environment, such as credentials.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "the attacker exploited a containerized workload and then leveraged it to perform privilege escalation into an AWS account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable Cloud Logs",
+          "inferred": false,
+          "evidence_quote": "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "In order to find credentials, the attacker directly accessed IMDS... Retrieving AWS temporary security credentials bound to the EC2 instance role from IMDS v1 is a very well-known practice.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.007",
+          "technique_name": "Unsecured Credentials: Container API",
+          "inferred": false,
+          "evidence_quote": "The attacker took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "the attacker was able to retrieve and read more than 1 TB of information... The attacker was able to list the bucket available and retrieve all of the data.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1613",
+          "technique_name": "Container and Resource Discovery",
+          "inferred": false,
+          "evidence_quote": "Once the attacker gained access to the pod, the malware was able to perform two initial actions during execution",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "During these scraping operations, the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "The attacker used the credentials found in the previous step to move laterally. They directly contacted the AWS API, further enumerated the account.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "The first action we recorded was the downloading and launching of a miner in order to steal some memory cycles... the attacker launched the script miner.sh in order to run an XMRig executable.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker exploited an internet-exposed vulnerable service running in a self-managed Kubernetes cluster hosted in AWS to gain initial foothold in a container/pod.",
+      "evidence_quote": "The attacker found and exploited an internet-exposed service deployed in a Kubernetes cluster.",
+      "aws_services_involved": [
+        "Amazon EKS / self-managed Kubernetes",
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Immediately upon container compromise, the attacker deployed XMRig cryptominer (miner.sh + config_background.json) to monetize access or serve as a distraction from the primary espionage objective.",
+      "evidence_quote": "the attacker launched the script miner.sh in order to run an XMRig executable, along with the miner configuration file config_background.json.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "Simultaneously with the cryptominer deployment, a bash script queried IMDSv1 on the worker EC2 node to harvest the temporary IAM role credentials (AccessKeyId, SecretAccessKey, and session token) bound to the Kubernetes worker instance.",
+      "evidence_quote": "In order to find credentials, the attacker directly accessed IMDS... the attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys.",
+      "aws_services_involved": [
+        "EC2 Instance Metadata Service (IMDS)"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Using the stolen cluster-role credentials, the attacker attempted to create new IAM users, groups, and bind new access keys to existing IAM users to establish persistence. All attempts were denied due to insufficient permissions.",
+      "evidence_quote": "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Fortunately, all of these executions were denied because of a lack of permissions.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Using the cluster EC2 role's excessive read permissions, the attacker enumerated AWS resources across the account including Lambda functions, S3 buckets, and other services via direct AWS API calls.",
+      "evidence_quote": "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account... the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets.",
+      "aws_services_involved": [
+        "AWS Lambda",
+        "Amazon S3",
+        "AWS IAM",
+        "CloudTrail"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1552.007",
+      "technique_name": "Unsecured Credentials: Container API",
+      "description": "The attacker enumerated Lambda function configurations and extracted IAM user credentials stored as plaintext Lambda environment variables.",
+      "evidence_quote": "They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account.",
+      "aws_services_involved": [
+        "AWS Lambda"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The attacker listed and accessed S3 buckets, reading over 1 TB of data including customer scripts, troubleshooting tools, and logging files.",
+      "evidence_quote": "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files.",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "The attacker downloaded and exfiltrated Lambda function source code containing proprietary software and execution keys using curl/wget commands. Evidence shows the attacker also executed the stolen software.",
+      "evidence_quote": "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software.",
+      "aws_services_involved": [
+        "AWS Lambda"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "The attacker discovered and extracted a Terraform state file (terraform.tfstate) from an S3 bucket using tools like TruffleHog and Pacu, finding plaintext IAM access key and secret key for a second connected AWS account.",
+      "evidence_quote": "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket.",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1562.008",
+      "technique_name": "Impair Defenses: Disable Cloud Logs",
+      "description": "Using credentials of a compromised IAM user with excessive permissions, the attacker disabled CloudTrail logging in the compromised account to impair detection and destroy evidence of further activity.",
+      "evidence_quote": "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps.",
+      "aws_services_involved": [
+        "AWS CloudTrail"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "The attacker used the newly acquired IAM credentials from the Terraform state file to pivot laterally into a second, connected AWS account and begin a fresh enumeration cycle from that account.",
+      "evidence_quote": "With the new credentials acquired, the attacker restarted their enumeration and information-gathering process... CloudTrail recorded suspicious activities in the connected AWS account.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS CloudTrail"
+      ],
+      "evidence_sources": [
+        "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon EKS / Self-managed Kubernetes on EC2",
+    "Amazon EC2",
+    "EC2 Instance Metadata Service (IMDSv1)",
+    "AWS Lambda",
+    "Amazon S3",
+    "AWS IAM",
+    "AWS CloudTrail"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.95,
+  "initial_access_vector": "Exploitation of a vulnerable internet-exposed service running in a self-managed Kubernetes cluster on AWS (T1190)",
+  "persistence_mechanism": "Attempted to create new IAM users, groups, and bind new access keys to existing users (T1098.001); blocked by insufficient permissions. Effectively persisted via stolen long-lived IAM user credentials found in Lambda env vars and Terraform state files.",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker exploited an internet-exposed vulnerable service running in a self-managed Kubernetes cluster hosted in AWS to gain initial foothold in a container/pod.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "The attacker found and exploited an internet-exposed service deployed in a Kubernetes cluster.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "Amazon EKS / self-managed Kubernetes",
+          "EC2"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Immediately upon container compromise, the attacker deployed XMRig cryptominer (miner.sh + config_background.json) to monetize access or serve as a distraction from the primary espionage objective.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the attacker launched the script miner.sh in order to run an XMRig executable, along with the miner configuration file config_background.json.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "Simultaneously with the cryptominer deployment, a bash script queried IMDSv1 on the worker EC2 node to harvest the temporary IAM role credentials (AccessKeyId, SecretAccessKey, and session token) bound to the Kubernetes worker instance.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "In order to find credentials, the attacker directly accessed IMDS... the attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "EC2 Instance Metadata Service (IMDS)"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Using the stolen cluster-role credentials, the attacker attempted to create new IAM users, groups, and bind new access keys to existing IAM users to establish persistence. All attempts were denied due to insufficient permissions.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Fortunately, all of these executions were denied because of a lack of permissions.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Using the cluster EC2 role's excessive read permissions, the attacker enumerated AWS resources across the account including Lambda functions, S3 buckets, and other services via direct AWS API calls.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account... the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda",
+          "Amazon S3",
+          "AWS IAM",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1552.007",
+        "technique_name": "Container API",
+        "description": "The attacker enumerated Lambda function configurations and extracted IAM user credentials stored as plaintext Lambda environment variables.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The attacker listed and accessed S3 buckets, reading over 1 TB of data including customer scripts, troubleshooting tools, and logging files.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "The attacker downloaded and exfiltrated Lambda function source code containing proprietary software and execution keys using curl/wget commands. Evidence shows the attacker also executed the stolen software.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS Lambda"
+        ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "The attacker discovered and extracted a Terraform state file (terraform.tfstate) from an S3 bucket using tools like TruffleHog and Pacu, finding plaintext IAM access key and secret key for a second connected AWS account.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 10,
+        "technique_id": "T1562.008",
+        "technique_name": "Disable or Modify Cloud Logs",
+        "description": "Using credentials of a compromised IAM user with excessive permissions, the attacker disabled CloudTrail logging in the compromised account to impair detection and destroy evidence of further activity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS CloudTrail"
+        ]
+      },
+      {
+        "step": 11,
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "The attacker used the newly acquired IAM credentials from the Terraform state file to pivot laterally into a second, connected AWS account and begin a fresh enumeration cycle from that account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "With the new credentials acquired, the attacker restarted their enumeration and information-gathering process... CloudTrail recorded suspicious activities in the connected AWS account.",
+        "evidence_sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS CloudTrail"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1496",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "The attacker found and exploited an internet-exposed service deployed in a Kubernetes cluster.",
+          "the attacker launched the script miner.sh in order to run an XMRig executable, along with the miner configuration file config_background.json."
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1552.005",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "the attacker launched the script miner.sh in order to run an XMRig executable, along with the miner configuration file config_background.json.",
+          "In order to find credentials, the attacker directly accessed IMDS... the attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys."
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1098.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "In order to find credentials, the attacker directly accessed IMDS... the attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys.",
+          "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Fortunately, all of these executions were denied because of a lack of permissions."
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1580",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Fortunately, all of these executions were denied because of a lack of permissions.",
+          "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account... the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets."
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1552.007",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Container API",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account... the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets.",
+          "They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account."
+        ]
+      },
+      {
+        "source": "T1552.007",
+        "target": "T1530",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Container API",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account.",
+          "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files.",
+          "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software."
+        ]
+      },
+      {
+        "source": "T1537",
+        "target": "T1552.001",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software.",
+          "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket."
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1562.008",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Disable or Modify Cloud Logs",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket.",
+          "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps."
+        ]
+      },
+      {
+        "source": "T1562.008",
+        "target": "T1550.001",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Disable or Modify Cloud Logs",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
+        ],
+        "evidence_quotes": [
+          "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps.",
+          "With the new credentials acquired, the attacker restarted their enumeration and information-gathering process... CloudTrail recorded suspicious activities in the connected AWS account."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "sysdig-2023-february",
+  "analyzed_at": "2026-04-15T21:09:30.381454+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 83684
+}

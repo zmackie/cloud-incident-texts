@@ -1,0 +1,304 @@
+---
+// Per-incident attack chain timeline / swimlane
+---
+<div id="timeline-container">
+  <div class="loading" id="timeline-loading">Loading incident…</div>
+</div>
+<div class="tooltip" id="timeline-tooltip"></div>
+
+<style>
+  #timeline-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .chain-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding: 1.5rem 0;
+    min-width: max-content;
+  }
+
+  .chain-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .chain-step-inner {
+    width: 160px;
+    border-radius: var(--radius-lg);
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .chain-step-inner:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .step-tid {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .step-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .step-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 0.5rem;
+  }
+
+  .service-tag {
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    padding: 1px 5px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+  }
+
+  /* Connector arrow between steps */
+  .chain-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    padding-top: 2.5rem;
+    color: var(--border);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  /* Tactic color bar at top of card */
+  .step-tactic-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .step-evidence {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border-left: 2px solid var(--border);
+    padding-left: 0.4rem;
+    line-height: 1.35;
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .step-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.45rem;
+  }
+
+  .step-source-link {
+    font-size: 0.62rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .step-source-link:hover {
+    background: var(--bg-tertiary);
+  }
+</style>
+
+<script>
+import * as d3 from "d3";
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
+};
+
+const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function safeUrl(url: string): string {
+  try {
+    const p = new URL(url).protocol;
+    return (p === "https:" || p === "http:") ? url : "#";
+  } catch { return "#"; }
+}
+
+async function loadIncident(slug: string) {
+  const [incident, metaData] = await Promise.all([
+    fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
+      if (!r.ok) throw new Error(`Incident not found: ${slug}`);
+      return r.json();
+    }),
+    fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+  ]);
+  return { incident, metaData };
+}
+
+function renderTimeline(incident: any, metaData: any) {
+  const container = document.getElementById("timeline-container")!;
+  container.innerHTML = "";
+
+  const chain: any[] = incident.attack_chain || [];
+  if (chain.length === 0) {
+    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">No attack chain data available.</div>`;
+    return;
+  }
+
+  const techniques = metaData.techniques || {};
+  const tactics = metaData.tactics || {};
+  const tip = document.getElementById("timeline-tooltip")!;
+
+  const wrap = document.createElement("div");
+  wrap.className = "chain-wrap";
+
+  chain.sort((a, b) => a.step - b.step).forEach((step, i) => {
+    const techInfo = techniques[step.technique_id] || {};
+    const tacticId = (techInfo.tactic_ids || [])[0] || "";
+    const color = TACTIC_COLORS[tacticId] || "#555";
+    const evidenceQuote = step.evidence_quote || (() => {
+      for (const tactic of (incident.tactics_used || [])) {
+        for (const tech of (tactic.techniques || [])) {
+          if (tech.technique_id === step.technique_id && tech.evidence_quote) {
+            return tech.evidence_quote;
+          }
+        }
+      }
+      return "";
+    })();
+    const sources = step.evidence_sources || [];
+    const sourceLinks = sources.slice(0, 3).map((s: string) => {
+      const label = s.replace(/^https?:\/\//, "");
+      return `<a class="step-source-link" href="${safeUrl(s)}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
+    }).join("");
+
+    const stepEl = document.createElement("div");
+    stepEl.className = "chain-step";
+
+    const inner = document.createElement("div");
+    inner.className = "chain-step-inner";
+
+    // Tactic color bar
+    const bar = document.createElement("div");
+    bar.className = "step-tactic-bar";
+    bar.style.background = color;
+    inner.appendChild(bar);
+
+    inner.innerHTML += `
+      <div class="step-num">Step ${step.step}</div>
+      <div class="step-tid" style="color:${esc(color)}">${esc(step.technique_id)}</div>
+      <div class="step-name">${esc(step.technique_name || techInfo.name || step.technique_id)}</div>
+      <div class="step-desc">${esc(step.description || "")}</div>
+      ${(step.aws_services_involved || []).length
+        ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${esc(s)}</span>`).join("")}</div>`
+        : ""}
+      ${evidenceQuote ? `<div class="step-evidence">“${esc(evidenceQuote)}”</div>` : ""}
+      ${sourceLinks ? `<div class="step-sources">${sourceLinks}</div>` : ""}
+    `;
+
+    // Tooltip with evidence quote
+    const tacticName = tactics[tacticId]?.name || "";
+    inner.addEventListener("mousemove", (e: MouseEvent) => {
+      const sourceList = sources.length
+        ? `<div style="margin-top:8px">${sources.slice(0, 3).map((s: string) => `<a href="${safeUrl(s)}" target="_blank" rel="noreferrer" style="color:var(--blue)">source</a>`).join(" · ")}</div>`
+        : "";
+      tip.innerHTML = `
+        <span class="tid">${esc(step.technique_id)}</span>
+        <strong>${esc(step.technique_name)}</strong>
+        ${tacticName ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">${esc(tacticName)}</div>` : ""}
+        ${step.description ? `<div style="margin-top:6px;font-size:0.78rem">${esc(step.description)}</div>` : ""}
+        ${evidenceQuote ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted);font-style:italic;border-left:2px solid var(--border);padding-left:6px">&ldquo;${esc(evidenceQuote)}&rdquo;</div>` : ""}
+        ${sourceList}
+      `;
+      tip.classList.add("visible");
+      tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 300) + "px";
+      tip.style.top = (e.clientY - 10) + "px";
+    });
+    inner.addEventListener("mouseleave", () => tip.classList.remove("visible"));
+
+    stepEl.appendChild(inner);
+    wrap.appendChild(stepEl);
+
+    // Arrow connector
+    if (i < chain.length - 1) {
+      const arrow = document.createElement("div");
+      arrow.className = "chain-arrow";
+      arrow.innerHTML = "→";
+      wrap.appendChild(arrow);
+    }
+  });
+
+  container.appendChild(wrap);
+}
+
+async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+  if (!slug) {
+    document.getElementById("timeline-container")!.innerHTML =
+      `<div class="loading" style="color:var(--text-muted)">No incident specified.</div>`;
+    return;
+  }
+
+  try {
+    const { incident, metaData } = await loadIncident(slug);
+    renderTimeline(incident, metaData);
+  } catch (err) {
+    document.getElementById("timeline-container")!.innerHTML =
+      `<div class="loading" style="color:var(--text-muted)">Incident not found or not yet analyzed.</div>`;
+    console.error(err);
+  }
+}
+
+init();
+</script>

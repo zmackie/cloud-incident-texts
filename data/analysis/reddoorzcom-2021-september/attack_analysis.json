@@ -1,0 +1,254 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Access Key leaked via APK",
+          "subtechnique_id": "T1552.001",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Access Key leaked via APK",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "Customer database stolen",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "Customer database stolen",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "An AWS Access Key was hardcoded or embedded inside a compiled Android APK file and exposed publicly (e.g., via an app store download). An attacker discovered and extracted the credential from the APK.",
+      "evidence_quote": "Access Key leaked via APK",
+      "evidence_sources": [
+        "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using the leaked AWS Access Key, the attacker authenticated to the AWS environment as a legitimate cloud identity, gaining programmatic access to cloud resources.",
+      "evidence_quote": "Access Key leaked via APK",
+      "evidence_sources": [
+        "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+      ],
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The attacker leveraged the compromised access key to access and collect the customer database from cloud storage (e.g., S3 or RDS), resulting in the theft of customer data.",
+      "evidence_quote": "Customer database stolen",
+      "evidence_sources": [
+        "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+      ],
+      "aws_services_involved": [
+        "S3",
+        "RDS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "The stolen customer database was exfiltrated out of the victim's cloud environment to an attacker-controlled destination.",
+      "evidence_quote": "Customer database stolen",
+      "evidence_sources": [
+        "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "STS",
+    "S3",
+    "RDS"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.5,
+  "initial_access_vector": "AWS Access Key hardcoded/embedded in a publicly distributed Android APK, discovered and extracted by the attacker",
+  "data_exfiltrated": true,
+  "persistence_mechanism": null,
+  "privilege_escalation": null,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "An AWS Access Key was hardcoded or embedded inside a compiled Android APK file and exposed publicly (e.g., via an app store download). An attacker discovered and extracted the credential from the APK.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Access Key leaked via APK",
+        "evidence_sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using the leaked AWS Access Key, the attacker authenticated to the AWS environment as a legitimate cloud identity, gaining programmatic access to cloud resources.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Access Key leaked via APK",
+        "evidence_sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "STS"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The attacker leveraged the compromised access key to access and collect the customer database from cloud storage (e.g., S3 or RDS), resulting in the theft of customer data.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Customer database stolen",
+        "evidence_sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "aws_services_involved": [
+          "S3",
+          "RDS"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "The stolen customer database was exfiltrated out of the victim's cloud environment to an attacker-controlled destination.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "Customer database stolen",
+        "evidence_sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "evidence_quotes": [
+          "Access Key leaked via APK",
+          "Access Key leaked via APK"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "evidence_quotes": [
+          "Access Key leaked via APK",
+          "Customer database stolen"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20211130202805/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Commeasure-Pte-Ltd---15092021.pdf?la=en"
+        ],
+        "evidence_quotes": [
+          "Customer database stolen",
+          "Customer database stolen"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "reddoorzcom-2021-september",
+  "analyzed_at": "2026-04-15T21:06:25.373570+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 820
+}

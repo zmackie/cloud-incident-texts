@@ -1,0 +1,157 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "We have identified the potentially exposed credentials and have added extra security measures to further protect our systems.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "Immediately upon detection we locked down the exposed infrastructure and rotated every potentially exposed credential for our infrastructure out of an abundance of caution.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "The attacker obtained or otherwise compromised a credential associated with Sumo Logic's AWS account, enabling them to authenticate as a legitimate cloud identity.",
+      "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
+      "evidence_sources": [
+        "https://www.sumologic.com/solutions/security/response-center"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Using the compromised credential, the attacker accessed the Sumo Logic AWS environment. Sumo Logic's response implies the attacker had visibility into cloud infrastructure, prompting a full lockdown and rotation of all potentially exposed credentials.",
+      "evidence_quote": "Immediately upon detection we locked down the exposed infrastructure and rotated every potentially exposed credential for our infrastructure out of an abundance of caution.",
+      "evidence_sources": [
+        "https://www.sumologic.com/solutions/security/response-center"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "Amazon S3"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon S3",
+    "Amazon EC2"
+  ],
+  "impact_type": "Account Takeover",
+  "confidence_score": 0.5,
+  "initial_access_vector": "Compromised credential used to access a Sumo Logic AWS account, discovered on November 3, 2023.",
+  "persistence_mechanism": "Attacker leveraged the compromised cloud account credential to maintain access to the AWS environment until detected and locked down.",
+  "privilege_escalation": "Not described in the source text.",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "The attacker obtained or otherwise compromised a credential associated with Sumo Logic's AWS account, enabling them to authenticate as a legitimate cloud identity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
+        "evidence_sources": [
+          "https://www.sumologic.com/solutions/security/response-center"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Using the compromised credential, the attacker accessed the Sumo Logic AWS environment. Sumo Logic's response implies the attacker had visibility into cloud infrastructure, prompting a full lockdown and rotation of all potentially exposed credentials.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Immediately upon detection we locked down the exposed infrastructure and rotated every potentially exposed credential for our infrastructure out of an abundance of caution.",
+        "evidence_sources": [
+          "https://www.sumologic.com/solutions/security/response-center"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "Amazon S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1580",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://www.sumologic.com/solutions/security/response-center"
+        ],
+        "evidence_quotes": [
+          "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
+          "Immediately upon detection we locked down the exposed infrastructure and rotated every potentially exposed credential for our infrastructure out of an abundance of caution."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "sumo-logic-2023-november",
+  "analyzed_at": "2026-04-15T21:08:21.364752+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 50498
+}

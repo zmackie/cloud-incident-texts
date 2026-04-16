@@ -1,0 +1,813 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+          "subtechnique_id": "T1078.004",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "created a new administrator IAM user with a console profile",
+          "subtechnique_id": "T1136.003",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "the attacker created two additional administrator IAM users, along with a login profile and an access key",
+          "subtechnique_id": "T1098.001",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098.003",
+          "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "inferred": false,
+          "evidence_quote": "iam:AttachUserPolicy \u2014 AdministratorAccess",
+          "subtechnique_id": "T1098.003",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1098.004",
+          "technique_name": "Account Manipulation: SSH Authorized Keys",
+          "inferred": false,
+          "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+          "subtechnique_id": "T1098.004",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1535",
+          "technique_name": "Unused/Unsupported Cloud Regions",
+          "inferred": false,
+          "evidence_quote": "the attacker attempted to run EC2 instances in an unused region, us-west-1",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1562.007",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+          "inferred": false,
+          "evidence_quote": "ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+          "subtechnique_id": "T1562.007",
+          "validated": true
+        },
+        {
+          "technique_id": "T1090",
+          "technique_name": "Proxy: Residential Proxy",
+          "inferred": false,
+          "evidence_quote": "Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+          "subtechnique_id": null,
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "iam:ListUsers \u2014 'How many people are using this account?'",
+          "subtechnique_id": "T1087.004",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+          "subtechnique_id": null,
+          "validated": true
+        },
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
+          "inferred": false,
+          "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+          "subtechnique_id": "T1021.004",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "inferred": false,
+          "evidence_quote": "Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Valid Accounts: Cloud Accounts observed during Initial Access: targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+      "evidence_quote": "targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1610",
+      "technique_name": "Deploy Container",
+      "description": "Deploy Container observed during Execution: Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+      "evidence_quote": "Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Create Account: Cloud Account observed during Persistence: created a new administrator IAM user with a console profile",
+      "evidence_quote": "created a new administrator IAM user with a console profile",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: the attacker created two additional administrator IAM users, along with a login profile and an access key",
+      "evidence_quote": "the attacker created two additional administrator IAM users, along with a login profile and an access key",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: iam:AttachUserPolicy \u2014 AdministratorAccess",
+      "evidence_quote": "iam:AttachUserPolicy \u2014 AdministratorAccess",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1098.004",
+      "technique_name": "Account Manipulation: SSH Authorized Keys",
+      "description": "Account Manipulation: SSH Authorized Keys observed during Privilege Escalation: the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+      "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1535",
+      "technique_name": "Unused/Unsupported Cloud Regions",
+      "description": "Unused/Unsupported Cloud Regions observed during Defense Evasion: the attacker attempted to run EC2 instances in an unused region, us-west-1",
+      "evidence_quote": "the attacker attempted to run EC2 instances in an unused region, us-west-1",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1562.007",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+      "description": "Impair Defenses: Disable or Modify Cloud Firewall observed during Defense Evasion: ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+      "evidence_quote": "ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1090",
+      "technique_name": "Proxy: Residential Proxy",
+      "description": "Proxy: Residential Proxy observed during Defense Evasion: Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+      "evidence_quote": "Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Account Discovery: Cloud Account observed during Discovery: iam:ListUsers \u2014 'How many people are using this account?'",
+      "evidence_quote": "iam:ListUsers \u2014 'How many people are using this account?'",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Cloud Service Discovery observed during Discovery: they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+      "evidence_quote": "they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Cloud Storage Object Discovery observed during Discovery: the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+      "evidence_quote": "the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Cloud Infrastructure Discovery observed during Discovery: ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+      "evidence_quote": "ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "Remote Services: SSH observed during Lateral Movement: the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+      "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 15,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Collection: downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+      "evidence_quote": "downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Resource Hijacking observed during Impact: The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency",
+      "evidence_quote": "The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency",
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.65,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts observed during Initial Access: targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+        "tactic_id": "TA0005",
+        "evidence_quote": "targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1610",
+        "technique_name": "Deploy Container",
+        "description": "Deploy Container observed during Execution: Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Create Account: Cloud Account observed during Persistence: created a new administrator IAM user with a console profile",
+        "tactic_id": "TA0003",
+        "evidence_quote": "created a new administrator IAM user with a console profile",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: the attacker created two additional administrator IAM users, along with a login profile and an access key",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attacker created two additional administrator IAM users, along with a login profile and an access key",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: iam:AttachUserPolicy \u2014 AdministratorAccess",
+        "tactic_id": "TA0003",
+        "evidence_quote": "iam:AttachUserPolicy \u2014 AdministratorAccess",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1098.004",
+        "technique_name": "SSH Authorized Keys",
+        "description": "Account Manipulation: SSH Authorized Keys observed during Privilege Escalation: the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1535",
+        "technique_name": "Unused/Unsupported Cloud Regions",
+        "description": "Unused/Unsupported Cloud Regions observed during Defense Evasion: the attacker attempted to run EC2 instances in an unused region, us-west-1",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker attempted to run EC2 instances in an unused region, us-west-1",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1562.007",
+        "technique_name": "Disable or Modify Cloud Firewall",
+        "description": "Impair Defenses: Disable or Modify Cloud Firewall observed during Defense Evasion: ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+        "tactic_id": "TA0005",
+        "evidence_quote": "ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1090",
+        "technique_name": "Proxy: Residential Proxy",
+        "description": "Proxy: Residential Proxy observed during Defense Evasion: Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+        "tactic_id": "",
+        "evidence_quote": "Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Account Discovery: Cloud Account observed during Discovery: iam:ListUsers \u2014 'How many people are using this account?'",
+        "tactic_id": "TA0007",
+        "evidence_quote": "iam:ListUsers \u2014 'How many people are using this account?'",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Cloud Service Discovery observed during Discovery: they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+        "tactic_id": "TA0007",
+        "evidence_quote": "they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Cloud Storage Object Discovery observed during Discovery: the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+        "tactic_id": "TA0007",
+        "evidence_quote": "the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Cloud Infrastructure Discovery observed during Discovery: ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+        "tactic_id": "TA0007",
+        "evidence_quote": "ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "Remote Services: SSH observed during Lateral Movement: the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+        "tactic_id": "",
+        "evidence_quote": "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Collection: downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+        "tactic_id": "TA0009",
+        "evidence_quote": "downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 16,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Resource Hijacking observed during Impact: The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency",
+        "tactic_id": "TA0040",
+        "evidence_quote": "The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency",
+        "evidence_sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1610",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Deploy Container",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "targeting AWS accounts and most of the time caused by a leaked IAM user access key",
+          "Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks"
+        ]
+      },
+      {
+        "source": "T1610",
+        "target": "T1136.003",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Deploy Container",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "Created multiple ECS Fargate clusters \u2026 Ran malicious containers in these clusters, by creating ECS task definitions \u2026 Scaled each task definition using an ECS service, to ensure that each task definition runs 25 tasks",
+          "created a new administrator IAM user with a console profile"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1098.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "created a new administrator IAM user with a console profile",
+          "the attacker created two additional administrator IAM users, along with a login profile and an access key"
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1098.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Additional Cloud Roles",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "the attacker created two additional administrator IAM users, along with a login profile and an access key",
+          "iam:AttachUserPolicy \u2014 AdministratorAccess"
+        ]
+      },
+      {
+        "source": "T1098.003",
+        "target": "T1098.004",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Additional Cloud Roles",
+        "target_technique_name": "SSH Authorized Keys",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "iam:AttachUserPolicy \u2014 AdministratorAccess",
+          "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey"
+        ]
+      },
+      {
+        "source": "T1098.004",
+        "target": "T1535",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "SSH Authorized Keys",
+        "target_technique_name": "Unused/Unsupported Cloud Regions",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+          "the attacker attempted to run EC2 instances in an unused region, us-west-1"
+        ]
+      },
+      {
+        "source": "T1535",
+        "target": "T1562.007",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Unused/Unsupported Cloud Regions",
+        "target_technique_name": "Disable or Modify Cloud Firewall",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "the attacker attempted to run EC2 instances in an unused region, us-west-1",
+          "ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22"
+        ]
+      },
+      {
+        "source": "T1562.007",
+        "target": "T1090",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Disable or Modify Cloud Firewall",
+        "target_technique_name": "Proxy: Residential Proxy",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "ec2:AuthorizeSecurityGroupIngress \u2014 Open security group to 0.0.0.0/0 on port 22",
+          "Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses"
+        ]
+      },
+      {
+        "source": "T1090",
+        "target": "T1087.004",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Proxy: Residential Proxy",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "Most of the IP addresses observed had a history of residential proxy activity, most likely to evade traditional deny-list IP threat intelligence defenses",
+          "iam:ListUsers \u2014 'How many people are using this account?'"
+        ]
+      },
+      {
+        "source": "T1087.004",
+        "target": "T1526",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "iam:ListUsers \u2014 'How many people are using this account?'",
+          "they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources"
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1619",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "they used the console to enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers. They also leveraged the AWS Resource Explorer to list resources",
+          "the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1580",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "the attacker manually clicked on several S3 buckets to view objects inside them, browsed their directory tree \u2026 generating ListObjects / HeadObject / GetObject events",
+          "ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1021.004",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "ses:GetSendQuota \u2026 ses:ListIdentities \u2026 enumerate a number of elements such as EC2 instances running in the account, volumes, security groups, and load balancers",
+          "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey"
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1530",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Remote Services: SSH",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "the attacker attempted to access several EC2 instances through EC2 Instance Connect \u2026 SendSSHPublicKey",
+          "downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1496",
+        "source_step": 15,
+        "target_step": 16,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-ecs-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "downloaded files, generating ListObjects / HeadObject / GetObject events \u2026 kms:Decrypt \u2014 Triggered by AWS automatically because the file was KMS-encrypted",
+          "The Docker images \u2026 contain an entrypoint, /run.sh, that downloads XMRig and starts mining cryptocurrency"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "datadog-1-2024-january",
+  "analyzed_at": "2026-04-15T21:40:38.203754+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 31142
+}

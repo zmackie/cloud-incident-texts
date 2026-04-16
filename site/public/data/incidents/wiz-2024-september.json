@@ -1,0 +1,660 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "attackers initiated a wide social media phishing campaign targeting company employees... Clever social engineering was used to convince these employees to download and execute malicious payloads concealed in a variety of technical programs and data files.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1204.002",
+          "technique_name": "User Execution: Malicious File",
+          "subtechnique_id": "T1204.002",
+          "inferred": false,
+          "evidence_quote": "a cloud dev-ops engineer executed the malicious payload on their personal home computer",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1505",
+          "technique_name": "Server Software Component",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "installing reverse shells on EC2 instances in multiple VPCs",
+          "validated": false
+        },
+        {
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "attackers had re-emerged in the environment... Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1539",
+          "technique_name": "Steal Web Session Cookie",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "subtechnique_id": "T1552.005",
+          "inferred": true,
+          "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol",
+          "subtechnique_id": "T1021.001",
+          "inferred": false,
+          "evidence_quote": "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1021.007",
+          "technique_name": "Remote Services: Cloud Services",
+          "subtechnique_id": "T1021.007",
+          "inferred": false,
+          "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070.002",
+          "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+          "subtechnique_id": "T1070.002",
+          "inferred": false,
+          "evidence_quote": "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands",
+          "validated": false
+        },
+        {
+          "technique_id": "T1562.007",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "subtechnique_id": "T1562.007",
+          "inferred": false,
+          "evidence_quote": "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1566",
+      "technique_name": "Phishing",
+      "description": "Attackers launched a wide social media phishing campaign targeting IT and security department employees, using social engineering to convince them to download and execute malicious payloads hidden in technical programs and data files.",
+      "evidence_quote": "attackers initiated a wide social media phishing campaign targeting company employees... Clever social engineering was used to convince these employees to download and execute malicious payloads concealed in a variety of technical programs and data files.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1204.002",
+      "technique_name": "User Execution: Malicious File",
+      "description": "A cloud DevOps engineer executed the malicious infostealer payload on their personal, unmanaged home computer, which lacked EDR protection, giving attackers full control of the device.",
+      "evidence_quote": "a cloud dev-ops engineer executed the malicious payload on their personal home computer which contained no sensitive company information... the unmanaged home device lacked the EDR installed on corporate devices which may have prevented execution of the malicious payload.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1539",
+      "technique_name": "Steal Web Session Cookie",
+      "description": "With full control of the compromised employee laptop, attackers extracted valid Citrix (VDP) session cookies to hijack an active privileged session into the corporate network.",
+      "evidence_quote": "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1021.001",
+      "technique_name": "Remote Services: Remote Desktop Protocol",
+      "description": "Using the hijacked Citrix session, attackers gained RDP access to a jump server that was used to manage the company's production AWS environment.",
+      "evidence_quote": "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 5,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "From the compromised on-premises jump server, attackers extracted highly privileged AWS access keys, enabling direct access to the production cloud environment.",
+      "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attackers rapidly performed automated cloud reconnaissance using pre-existing scripts and techniques to identify S3 buckets, RDS databases, EC2 instances, and VPCs across the production environment.",
+      "evidence_quote": "The speed at which this phase of the attack was executed leaves little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon RDS",
+        "Amazon EC2",
+        "Amazon VPC"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers began collecting and exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data.",
+      "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon RDS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1505",
+      "technique_name": "Server Software Component",
+      "description": "In parallel with exfiltration, attackers installed reverse shells on EC2 instances across multiple VPCs to establish persistent footholds within the cloud environment.",
+      "evidence_quote": "installing reverse shells on EC2 instances in multiple VPCs",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2",
+        "Amazon VPC"
+      ],
+      "validated": false
+    },
+    {
+      "step": 9,
+      "technique_id": "T1070.002",
+      "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+      "description": "Attackers deleted local OS logs from compromised EC2 instances to prevent forensic analysis of logins and executed commands.",
+      "evidence_quote": "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1562.007",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+      "description": "Attackers modified S3 and RDS audit policies to suppress audit logging and prevent the organization from determining which data was being accessed.",
+      "evidence_quote": "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon RDS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1133",
+      "technique_name": "External Remote Services",
+      "description": "After defenders revoked AWS credentials, attackers fell back to the compromised on-premises jump server \u2014 and then to the compromised employee laptop \u2014 to re-establish access, cycling through three persistent footholds for over 17 months.",
+      "evidence_quote": "Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server... all they had to do was simply go back to the compromised employee laptop, wait for a new session on the jump server, and they were back in.",
+      "evidence_sources": [
+        "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "Amazon RDS",
+    "Amazon EC2",
+    "Amazon VPC",
+    "AWS IAM"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.9,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Social media phishing campaign targeting IT/security employees; malicious payload executed on an unmanaged personal home computer lacking EDR",
+  "persistence_mechanism": "Three-layer hybrid persistence: (1) reverse shells on EC2 instances, (2) compromised on-premises jump server with RDP, (3) compromised employee laptop with Citrix session cookie theft \u2014 enabling repeated re-entry over 17+ months",
+  "privilege_escalation": "Citrix (VDP) session cookie theft used to hijack a valid privileged corporate session; subsequent extraction of highly privileged AWS access keys from the on-premises jump server",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1566",
+        "technique_name": "Phishing",
+        "description": "Attackers launched a wide social media phishing campaign targeting IT and security department employees, using social engineering to convince them to download and execute malicious payloads hidden in technical programs and data files.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "attackers initiated a wide social media phishing campaign targeting company employees... Clever social engineering was used to convince these employees to download and execute malicious payloads concealed in a variety of technical programs and data files.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1204.002",
+        "technique_name": "User Execution: Malicious File",
+        "description": "A cloud DevOps engineer executed the malicious infostealer payload on their personal, unmanaged home computer, which lacked EDR protection, giving attackers full control of the device.",
+        "tactic_id": "",
+        "evidence_quote": "a cloud dev-ops engineer executed the malicious payload on their personal home computer which contained no sensitive company information... the unmanaged home device lacked the EDR installed on corporate devices which may have prevented execution of the malicious payload.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1539",
+        "technique_name": "Steal Web Session Cookie",
+        "description": "With full control of the compromised employee laptop, attackers extracted valid Citrix (VDP) session cookies to hijack an active privileged session into the corporate network.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1021.001",
+        "technique_name": "Remote Services: Remote Desktop Protocol",
+        "description": "Using the hijacked Citrix session, attackers gained RDP access to a jump server that was used to manage the company's production AWS environment.",
+        "tactic_id": "",
+        "evidence_quote": "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "From the compromised on-premises jump server, attackers extracted highly privileged AWS access keys, enabling direct access to the production cloud environment.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attackers rapidly performed automated cloud reconnaissance using pre-existing scripts and techniques to identify S3 buckets, RDS databases, EC2 instances, and VPCs across the production environment.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The speed at which this phase of the attack was executed leaves little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon RDS",
+          "Amazon EC2",
+          "Amazon VPC"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attackers began collecting and exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon RDS"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1505",
+        "technique_name": "Server Software Component",
+        "description": "In parallel with exfiltration, attackers installed reverse shells on EC2 instances across multiple VPCs to establish persistent footholds within the cloud environment.",
+        "tactic_id": "",
+        "evidence_quote": "installing reverse shells on EC2 instances in multiple VPCs",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2",
+          "Amazon VPC"
+        ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1070.002",
+        "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "description": "Attackers deleted local OS logs from compromised EC2 instances to prevent forensic analysis of logins and executed commands.",
+        "tactic_id": "",
+        "evidence_quote": "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "Amazon EC2"
+        ]
+      },
+      {
+        "step": 10,
+        "technique_id": "T1562.007",
+        "technique_name": "Disable or Modify Cloud Firewall",
+        "description": "Attackers modified S3 and RDS audit policies to suppress audit logging and prevent the organization from determining which data was being accessed.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon RDS"
+        ]
+      },
+      {
+        "step": 11,
+        "technique_id": "T1133",
+        "technique_name": "External Remote Services",
+        "description": "After defenders revoked AWS credentials, attackers fell back to the compromised on-premises jump server \u2014 and then to the compromised employee laptop \u2014 to re-establish access, cycling through three persistent footholds for over 17 months.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server... all they had to do was simply go back to the compromised employee laptop, wait for a new session on the jump server, and they were back in.",
+        "evidence_sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1566",
+        "target": "T1204.002",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Phishing",
+        "target_technique_name": "User Execution: Malicious File",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "attackers initiated a wide social media phishing campaign targeting company employees... Clever social engineering was used to convince these employees to download and execute malicious payloads concealed in a variety of technical programs and data files.",
+          "a cloud dev-ops engineer executed the malicious payload on their personal home computer which contained no sensitive company information... the unmanaged home device lacked the EDR installed on corporate devices which may have prevented execution of the malicious payload."
+        ]
+      },
+      {
+        "source": "T1204.002",
+        "target": "T1539",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "User Execution: Malicious File",
+        "target_technique_name": "Steal Web Session Cookie",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "a cloud dev-ops engineer executed the malicious payload on their personal home computer which contained no sensitive company information... the unmanaged home device lacked the EDR installed on corporate devices which may have prevented execution of the malicious payload.",
+          "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network."
+        ]
+      },
+      {
+        "source": "T1539",
+        "target": "T1021.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Steal Web Session Cookie",
+        "target_technique_name": "Remote Services: Remote Desktop Protocol",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network.",
+          "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment."
+        ]
+      },
+      {
+        "source": "T1021.001",
+        "target": "T1552.005",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Remote Services: Remote Desktop Protocol",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment.",
+          "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack."
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1580",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
+          "The speed at which this phase of the attack was executed leaves little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques."
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1530",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "The speed at which this phase of the attack was executed leaves little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques.",
+          "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1505",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Server Software Component",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
+          "installing reverse shells on EC2 instances in multiple VPCs"
+        ]
+      },
+      {
+        "source": "T1505",
+        "target": "T1070.002",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Server Software Component",
+        "target_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "installing reverse shells on EC2 instances in multiple VPCs",
+          "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands"
+        ]
+      },
+      {
+        "source": "T1070.002",
+        "target": "T1562.007",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+        "target_technique_name": "Disable or Modify Cloud Firewall",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands",
+          "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed"
+        ]
+      },
+      {
+        "source": "T1562.007",
+        "target": "T1133",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Disable or Modify Cloud Firewall",
+        "target_technique_name": "External Remote Services",
+        "sources": [
+          "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
+        ],
+        "evidence_quotes": [
+          "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed",
+          "Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server... all they had to do was simply go back to the compromised employee laptop, wait for a new session on the jump server, and they were back in."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "wiz-2024-september",
+  "analyzed_at": "2026-04-15T21:34:08.394370+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 14514
+}

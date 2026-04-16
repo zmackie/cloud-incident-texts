@@ -1,0 +1,954 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1589.001",
+          "technique_name": "Gather Victim Identity Information: Credentials",
+          "inferred": false,
+          "evidence_quote": "a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1595.002",
+          "technique_name": "Active Scanning: Vulnerability Scanning",
+          "inferred": false,
+          "evidence_quote": "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+          "validated": true
+        },
+        {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "inferred": false,
+          "evidence_quote": "One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1505.003",
+          "technique_name": "Server Software Component: Web Shell",
+          "inferred": true,
+          "evidence_quote": "Sliver was installed using the ScriptRunner for Jira plugin.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1546",
+          "technique_name": "Event Triggered Execution",
+          "inferred": true,
+          "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1072",
+          "technique_name": "Software Deployment Tools",
+          "inferred": false,
+          "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software",
+          "inferred": false,
+          "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1213.001",
+          "technique_name": "Data from Information Repositories: Confluence",
+          "inferred": false,
+          "evidence_quote": "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+          "validated": true
+        },
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+          "validated": true
+        },
+        {
+          "technique_id": "T1518",
+          "technique_name": "Software Discovery",
+          "inferred": false,
+          "evidence_quote": "it appears they were looking for information about the architecture, security, and management of our global network",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "inferred": false,
+          "evidence_quote": "With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1213.003",
+          "technique_name": "Data from Information Repositories: Code Repositories",
+          "inferred": false,
+          "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+          "validated": true
+        },
+        {
+          "technique_id": "T1560",
+          "technique_name": "Archive Collected Data",
+          "inferred": false,
+          "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... Since the Smartsheet service account had administrative access to Atlassian Jira",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1589.001",
+      "technique_name": "Gather Victim Identity Information: Credentials",
+      "description": "Gather Victim Identity Information: Credentials observed during Reconnaissance: a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+      "evidence_quote": "a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1595.002",
+      "technique_name": "Active Scanning: Vulnerability Scanning",
+      "description": "Active Scanning: Vulnerability Scanning observed during Reconnaissance: Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+      "evidence_quote": "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Valid Accounts: Cloud Accounts observed during Initial Access: They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+      "evidence_quote": "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1072",
+      "technique_name": "Software Deployment Tools",
+      "description": "Software Deployment Tools observed during Execution: the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+      "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Create Account: Cloud Account observed during Persistence: The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+      "evidence_quote": "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1505.003",
+      "technique_name": "Server Software Component: Web Shell",
+      "description": "Server Software Component: Web Shell observed during Persistence: Sliver was installed using the ScriptRunner for Jira plugin.",
+      "evidence_quote": "Sliver was installed using the ScriptRunner for Jira plugin.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 7,
+      "technique_id": "T1546",
+      "technique_name": "Event Triggered Execution",
+      "description": "Event Triggered Execution observed during Persistence: the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+      "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation",
+      "description": "Account Manipulation observed during Privilege Escalation: 15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+      "evidence_quote": "15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+      "evidence_quote": "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1528",
+      "technique_name": "Steal Application Access Token",
+      "description": "Steal Application Access Token observed during Credential Access: One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+      "evidence_quote": "One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1213.001",
+      "technique_name": "Data from Information Repositories: Confluence",
+      "description": "Data from Information Repositories: Confluence observed during Discovery: The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+      "evidence_quote": "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Data from Information Repositories observed during Discovery: They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+      "evidence_quote": "They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1518",
+      "technique_name": "Software Discovery",
+      "description": "Software Discovery observed during Discovery: it appears they were looking for information about the architecture, security, and management of our global network",
+      "evidence_quote": "it appears they were looking for information about the architecture, security, and management of our global network",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "description": "Remote Services observed during Lateral Movement: With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+      "evidence_quote": "With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 15,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "Use Alternate Authentication Material: Application Access Token observed during Lateral Movement: gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+      "evidence_quote": "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Data from Information Repositories: Code Repositories observed during Collection: the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+      "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 17,
+      "technique_id": "T1560",
+      "technique_name": "Archive Collected Data",
+      "description": "Archive Collected Data observed during Collection: the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+      "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 18,
+      "technique_id": "T1219",
+      "technique_name": "Remote Access Software",
+      "description": "Remote Access Software observed during Command and Control: the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+      "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": false
+    },
+    {
+      "step": 19,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Exfiltration Over Web Service observed during Exfiltration: even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
+      "evidence_quote": "even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
+      "evidence_sources": [
+        "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.65,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1589.001",
+        "technique_name": "Gather Victim Identity Information: Credentials",
+        "description": "Gather Victim Identity Information: Credentials observed during Reconnaissance: a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+        "tactic_id": "",
+        "evidence_quote": "a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1595.002",
+        "technique_name": "Active Scanning: Vulnerability Scanning",
+        "description": "Active Scanning: Vulnerability Scanning observed during Reconnaissance: Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+        "tactic_id": "",
+        "evidence_quote": "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts observed during Initial Access: They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1072",
+        "technique_name": "Software Deployment Tools",
+        "description": "Software Deployment Tools observed during Execution: the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Create Account: Cloud Account observed during Persistence: The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1505.003",
+        "technique_name": "Server Software Component: Web Shell",
+        "description": "Server Software Component: Web Shell observed during Persistence: Sliver was installed using the ScriptRunner for Jira plugin.",
+        "tactic_id": "",
+        "evidence_quote": "Sliver was installed using the ScriptRunner for Jira plugin.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1546",
+        "technique_name": "Event Triggered Execution",
+        "description": "Event Triggered Execution observed during Persistence: the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+        "tactic_id": "TA0004",
+        "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1098",
+        "technique_name": "Account Manipulation",
+        "description": "Account Manipulation observed during Privilege Escalation: 15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+        "tactic_id": "TA0006",
+        "evidence_quote": "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1528",
+        "technique_name": "Steal Application Access Token",
+        "description": "Steal Application Access Token observed during Credential Access: One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1213.001",
+        "technique_name": "Confluence",
+        "description": "Data from Information Repositories: Confluence observed during Discovery: The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Data from Information Repositories observed during Discovery: They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+        "tactic_id": "TA0009",
+        "evidence_quote": "They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1518",
+        "technique_name": "Software Discovery",
+        "description": "Software Discovery observed during Discovery: it appears they were looking for information about the architecture, security, and management of our global network",
+        "tactic_id": "TA0007",
+        "evidence_quote": "it appears they were looking for information about the architecture, security, and management of our global network",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "description": "Remote Services observed during Lateral Movement: With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+        "tactic_id": "TA0008",
+        "evidence_quote": "With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "Use Alternate Authentication Material: Application Access Token observed during Lateral Movement: gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+        "tactic_id": "TA0005",
+        "evidence_quote": "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 16,
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Data from Information Repositories: Code Repositories observed during Collection: the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 17,
+        "technique_id": "T1560",
+        "technique_name": "Archive Collected Data",
+        "description": "Archive Collected Data observed during Collection: the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+        "tactic_id": "",
+        "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 18,
+        "technique_id": "T1219",
+        "technique_name": "Remote Access Software",
+        "description": "Remote Access Software observed during Command and Control: the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+        "tactic_id": "",
+        "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 19,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Exfiltration Over Web Service observed during Exfiltration: even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1589.001",
+        "target": "T1595.002",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Gather Victim Identity Information: Credentials",
+        "target_technique_name": "Active Scanning: Vulnerability Scanning",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
+          "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible."
+        ]
+      },
+      {
+        "source": "T1595.002",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Active Scanning: Vulnerability Scanning",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
+          "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1072",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Software Deployment Tools",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
+          "the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin."
+        ]
+      },
+      {
+        "source": "T1072",
+        "target": "T1136.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Software Deployment Tools",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "the threat actor was able to install the Sliver Adversary Emulation Framework... Sliver was installed using the ScriptRunner for Jira plugin.",
+          "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed."
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1505.003",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Server Software Component: Web Shell",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
+          "Sliver was installed using the ScriptRunner for Jira plugin."
+        ]
+      },
+      {
+        "source": "T1505.003",
+        "target": "T1546",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Server Software Component: Web Shell",
+        "target_technique_name": "Event Triggered Execution",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "Sliver was installed using the ScriptRunner for Jira plugin.",
+          "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin"
+        ]
+      },
+      {
+        "source": "T1546",
+        "target": "T1098",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Event Triggered Execution",
+        "target_technique_name": "Account Manipulation",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
+          "15:58 - The threat actor adds the Smartsheet service account to an administrator group."
+        ]
+      },
+      {
+        "source": "T1098",
+        "target": "T1552.001",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Account Manipulation",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
+          "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1528",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Steal Application Access Token",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
+          "One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated."
+        ]
+      },
+      {
+        "source": "T1528",
+        "target": "T1213.001",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Steal Application Access Token",
+        "target_technique_name": "Confluence",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "One was a Moveworks service token that granted remote access into our Atlassian system... These credentials were meant to all be rotated.",
+          "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages"
+        ]
+      },
+      {
+        "source": "T1213.001",
+        "target": "T1213",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Confluence",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
+          "They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1518",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Software Discovery",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "They accessed 36 Jira tickets (out of a total of 2,059,357 tickets) and 202 wiki pages... The threat actor accessed Jira tickets about vulnerability management, secret rotation, MFA bypass, network access",
+          "it appears they were looking for information about the architecture, security, and management of our global network"
+        ]
+      },
+      {
+        "source": "T1518",
+        "target": "T1021",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Software Discovery",
+        "target_technique_name": "Remote Services",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "it appears they were looking for information about the architecture, security, and management of our global network",
+          "With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL."
+        ]
+      },
+      {
+        "source": "T1021",
+        "target": "T1550.001",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Remote Services",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "With this access the Threat Actor attempted to gain access to a non-production console server in our S\u00e3o Paulo, Brazil data center due to a non-enforced ACL.",
+          "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system"
+        ]
+      },
+      {
+        "source": "T1550.001",
+        "target": "T1213.003",
+        "source_step": 15,
+        "target_step": 16,
+        "source_technique_name": "Application Access Token",
+        "target_technique_name": "Code Repositories",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
+          "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server"
+        ]
+      },
+      {
+        "source": "T1213.003",
+        "target": "T1560",
+        "source_step": 16,
+        "target_step": 17,
+        "source_technique_name": "Code Repositories",
+        "target_technique_name": "Archive Collected Data",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+          "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server"
+        ]
+      },
+      {
+        "source": "T1560",
+        "target": "T1219",
+        "source_step": 17,
+        "target_step": 18,
+        "source_technique_name": "Archive Collected Data",
+        "target_technique_name": "Remote Access Software",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
+          "the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed."
+        ]
+      },
+      {
+        "source": "T1219",
+        "target": "T1567",
+        "source_step": 18,
+        "target_step": 19,
+        "source_technique_name": "Remote Access Software",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
+        ],
+        "evidence_quotes": [
+          "the threat actor was able to install the Sliver Adversary Emulation Framework, which is a widely used tool and framework that red teams and attackers use to enable 'C2' (command and control), connectivity gaining persistent and stealthy access to a computer on which it is installed.",
+          "even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "cloudflare-2023-november",
+  "analyzed_at": "2026-04-15T21:17:39.840524+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 18268
+}

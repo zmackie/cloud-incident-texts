@@ -1,0 +1,329 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "a zero-day vulnerability of a third-party application was used to gain access to an online asset in a BeyondTrust AWS account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "subtechnique_id": "T1552.005",
+          "inferred": true,
+          "evidence_quote": "Access to that asset then allowed the threat actor to obtain an infrastructure API key",
+          "validated": true
+        },
+        {
+          "technique_id": "T1110",
+          "technique_name": "Brute Force",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "a BeyondTrust infrastructure API key for Remote Support SaaS had been compromised and used to enable access to certain Remote Support SaaS instances by resetting local application passwords",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "that API key could then be leveraged against a separate AWS account which operated Remote Support infrastructure",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1650",
+          "technique_name": "Acquire Access",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "Access to that asset then allowed the threat actor to obtain an infrastructure API key that could then be leveraged against a separate AWS account",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "subtechnique_id": "T1098.001",
+          "inferred": false,
+          "evidence_quote": "used to enable access to certain Remote Support SaaS instances by resetting local application passwords",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "security incident that involved 17 Remote Support SaaS customers",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Threat actor exploited a zero-day vulnerability (CVE-2024-12356) in a third-party application hosted in BeyondTrust's AWS environment to gain an initial foothold on an internet-facing asset.",
+      "evidence_quote": "a zero-day vulnerability of a third-party application was used to gain access to an online asset in a BeyondTrust AWS account",
+      "evidence_sources": [
+        "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+      ],
+      "aws_services_involved": [
+        "AWS (general account asset)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "From the compromised online asset, the threat actor obtained a BeyondTrust infrastructure API key, likely stored or accessible within the compromised AWS environment.",
+      "evidence_quote": "Access to that asset then allowed the threat actor to obtain an infrastructure API key",
+      "evidence_sources": [
+        "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS EC2 (metadata or environment)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "The stolen infrastructure API key was used to authenticate into a separate AWS account that operated BeyondTrust Remote Support SaaS infrastructure, effectively pivoting cross-account.",
+      "evidence_quote": "that API key could then be leveraged against a separate AWS account which operated Remote Support infrastructure",
+      "evidence_sources": [
+        "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS (Remote Support SaaS account)"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Using the compromised API key, the threat actor reset local application passwords on targeted Remote Support SaaS customer instances to gain persistent access.",
+      "evidence_quote": "a BeyondTrust infrastructure API key for Remote Support SaaS had been compromised and used to enable access to certain Remote Support SaaS instances by resetting local application passwords",
+      "evidence_sources": [
+        "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+      ],
+      "aws_services_involved": [
+        "BeyondTrust Remote Support SaaS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "With reset local application passwords, the threat actor accessed 17 customer Remote Support SaaS instances using the newly established credentials.",
+      "evidence_quote": "security incident that involved 17 Remote Support SaaS customers",
+      "evidence_sources": [
+        "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+      ],
+      "aws_services_involved": [
+        "BeyondTrust Remote Support SaaS"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS (BeyondTrust primary account)",
+    "AWS (BeyondTrust Remote Support SaaS account)",
+    "AWS IAM",
+    "BeyondTrust Remote Support SaaS"
+  ],
+  "impact_type": "Account Takeover / Customer Instance Compromise",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Zero-day vulnerability (CVE-2024-12356) in a third-party application hosted in a BeyondTrust AWS account, exploited to gain access to an internet-facing asset",
+  "persistence_mechanism": "Local application passwords reset via compromised infrastructure API key, allowing persistent authenticated access to 17 customer Remote Support SaaS instances",
+  "privilege_escalation": "Compromised infrastructure API key used to pivot from initial AWS account into a separate AWS account operating Remote Support SaaS infrastructure (cross-account privilege escalation via stolen API key)",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Threat actor exploited a zero-day vulnerability (CVE-2024-12356) in a third-party application hosted in BeyondTrust's AWS environment to gain an initial foothold on an internet-facing asset.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "a zero-day vulnerability of a third-party application was used to gain access to an online asset in a BeyondTrust AWS account",
+        "evidence_sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "aws_services_involved": [
+          "AWS (general account asset)"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "From the compromised online asset, the threat actor obtained a BeyondTrust infrastructure API key, likely stored or accessible within the compromised AWS environment.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Access to that asset then allowed the threat actor to obtain an infrastructure API key",
+        "evidence_sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS EC2 (metadata or environment)"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "The stolen infrastructure API key was used to authenticate into a separate AWS account that operated BeyondTrust Remote Support SaaS infrastructure, effectively pivoting cross-account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "that API key could then be leveraged against a separate AWS account which operated Remote Support infrastructure",
+        "evidence_sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS (Remote Support SaaS account)"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Using the compromised API key, the threat actor reset local application passwords on targeted Remote Support SaaS customer instances to gain persistent access.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "a BeyondTrust infrastructure API key for Remote Support SaaS had been compromised and used to enable access to certain Remote Support SaaS instances by resetting local application passwords",
+        "evidence_sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "aws_services_involved": [
+          "BeyondTrust Remote Support SaaS"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "With reset local application passwords, the threat actor accessed 17 customer Remote Support SaaS instances using the newly established credentials.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "security incident that involved 17 Remote Support SaaS customers",
+        "evidence_sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "aws_services_involved": [
+          "BeyondTrust Remote Support SaaS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1552.005",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "evidence_quotes": [
+          "a zero-day vulnerability of a third-party application was used to gain access to an online asset in a BeyondTrust AWS account",
+          "Access to that asset then allowed the threat actor to obtain an infrastructure API key"
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "evidence_quotes": [
+          "Access to that asset then allowed the threat actor to obtain an infrastructure API key",
+          "that API key could then be leveraged against a separate AWS account which operated Remote Support infrastructure"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1098.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "evidence_quotes": [
+          "that API key could then be leveraged against a separate AWS account which operated Remote Support infrastructure",
+          "a BeyondTrust infrastructure API key for Remote Support SaaS had been compromised and used to enable access to certain Remote Support SaaS instances by resetting local application passwords"
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1078",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Valid Accounts",
+        "sources": [
+          "https://www.beyondtrust.com/remote-support-saas-service-security-investigation"
+        ],
+        "evidence_quotes": [
+          "a BeyondTrust infrastructure API key for Remote Support SaaS had been compromised and used to enable access to certain Remote Support SaaS instances by resetting local application passwords",
+          "security incident that involved 17 Remote Support SaaS customers"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "beyondtrust-2024-december",
+  "analyzed_at": "2026-04-15T20:44:33.999839+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 32115
+}

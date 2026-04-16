@@ -1,0 +1,262 @@
+---
+import Base from "../layouts/Base.astro";
+import IncidentTimeline from "../components/IncidentTimeline.astro";
+---
+<Base title="Incident Detail">
+  <div class="page">
+    <div id="incident-header">
+      <div style="margin-bottom:0.75rem">
+        <a href={`${import.meta.env.BASE_URL}/incidents`} style="color:var(--text-muted);font-size:0.85rem">← All incidents</a>
+      </div>
+      <div class="loading" id="header-loading">Loading…</div>
+    </div>
+
+    <div id="incident-body" style="display:none">
+      <div class="section-title">Attack Chain</div>
+      <IncidentTimeline />
+
+      <div class="two-col" style="margin-top:2rem">
+        <div class="card" id="tactics-card">
+          <div class="card-title">Tactics & Techniques</div>
+          <div id="tactics-list"></div>
+        </div>
+
+        <div class="card" id="meta-card">
+          <div class="card-title">Incident Details</div>
+          <div id="meta-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .incident-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tactic-group {
+    margin-bottom: 1rem;
+  }
+
+  .tactic-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .tech-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+    font-size: 0.82rem;
+  }
+
+  .tech-row:last-child { border-bottom: none; }
+
+  .tech-row .tid {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 80px;
+  }
+
+  .tech-row .inferred-tag {
+    font-size: 0.68rem;
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    border-radius: 3px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+    font-size: 0.82rem;
+  }
+
+  .meta-row:last-child { border-bottom: none; }
+
+  .meta-row .meta-key {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .evidence-quote {
+    font-style: italic;
+    color: var(--text-muted);
+    border-left: 2px solid var(--border);
+    padding-left: 0.5rem;
+    margin-top: 2px;
+    font-size: 0.75rem;
+  }
+</style>
+
+<script>
+const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
+};
+
+async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  const headerEl = document.getElementById("header-loading")!;
+
+  if (!slug) {
+    headerEl.textContent = "No incident specified.";
+    return;
+  }
+
+  try {
+    const [incident, metaData] = await Promise.all([
+      fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
+        if (!r.ok) throw new Error("not found");
+        return r.json();
+      }),
+      fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+    ]);
+
+    const tactics = metaData.tactics || {};
+    const techniques = metaData.techniques || {};
+
+    // Update page title
+    document.title = `${incident.incident_slug} · Cloud Incident ATT&CK`;
+
+    // Render header
+    const confPct = Math.round((incident.confidence_score || 0) * 100);
+    headerEl.outerHTML = `
+      <div>
+        <div class="incident-title">${esc(incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem">
+          ${incident.impact_type ? `<span class="badge accent">${esc(incident.impact_type)}</span>` : ""}
+          <div class="confidence">
+            <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
+            <span>${confPct}% confidence</span>
+          </div>
+          ${(incident.aws_services || []).map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}
+        </div>
+      </div>
+    `;
+
+    // Show body
+    document.getElementById("incident-body")!.style.display = "block";
+
+    // Tactics & Techniques card
+    const tacticsList = document.getElementById("tactics-list")!;
+    for (const tactic of (incident.tactics_used || [])) {
+      const tacticMeta = tactics[tactic.tactic_id] || {};
+      const color = TACTIC_COLORS[tactic.tactic_id] || "#555";
+
+      const group = document.createElement("div");
+      group.className = "tactic-group";
+      group.innerHTML = `<div class="tactic-name" style="color:${esc(color)}">${esc(tactic.tactic_name || tacticMeta.name || tactic.tactic_id)}</div>`;
+
+      for (const tech of (tactic.techniques || [])) {
+        const techMeta = techniques[tech.technique_id] || {};
+        const row = document.createElement("div");
+        row.className = "tech-row";
+        row.innerHTML = `
+          <span class="tid">${esc(tech.technique_id)}</span>
+          <span>${esc(tech.technique_name || techMeta.name || "")}</span>
+          ${tech.inferred ? `<span class="inferred-tag">inferred</span>` : ""}
+          ${!tech.validated ? `<span class="inferred-tag" style="color:var(--text-muted);border-color:var(--text-muted)">unvalidated</span>` : ""}
+        `;
+        if (tech.evidence_quote) {
+          const quoteEl = document.createElement("div");
+          quoteEl.className = "evidence-quote";
+          quoteEl.textContent = `"${tech.evidence_quote}"`;
+          row.appendChild(quoteEl);
+        }
+        group.appendChild(row);
+      }
+
+      tacticsList.appendChild(group);
+    }
+
+    if (!incident.tactics_used?.length) {
+      tacticsList.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem">No tactics mapped.</div>`;
+    }
+
+    // Incident meta card
+    const metaList = document.getElementById("meta-list")!;
+    const metaFields = [
+      ["Initial Access", incident.initial_access_vector],
+      ["Privilege Escalation", incident.privilege_escalation],
+      ["Persistence", incident.persistence_mechanism],
+      ["Data Exfiltrated", incident.data_exfiltrated !== undefined ? (incident.data_exfiltrated ? "Yes" : "No") : null],
+      ["Model", incident.model],
+      ["Analyzed", incident.analyzed_at ? new Date(incident.analyzed_at).toLocaleDateString() : null],
+      ["Source chars", incident.source_chars ? incident.source_chars.toLocaleString() : null],
+    ];
+
+    for (const [key, val] of metaFields) {
+      if (!val) continue;
+      const row = document.createElement("div");
+      row.className = "meta-row";
+      row.innerHTML = `<span class="meta-key">${key}</span><span>${esc(val)}</span>`;
+      metaList.appendChild(row);
+    }
+
+  } catch (err) {
+    document.getElementById("header-loading")!.textContent = "Incident not found.";
+    console.error(err);
+  }
+}
+
+init();
+</script>

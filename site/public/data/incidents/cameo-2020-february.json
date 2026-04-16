@@ -1,0 +1,314 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure... Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "The researcher said they used the credentials to access the servers 'to verify what was accessible.'",
+          "validated": true
+        },
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "the credentials granted access to Amazon S3 buckets used to store data",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "I got some of the backed up user database... The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1565.001",
+          "technique_name": "Stored Data Manipulation",
+          "inferred": true,
+          "evidence_quote": "it not clear if the keys allowed read and write access for that entire period",
+          "validated": false
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Researcher obtained/decompiled the Cameo Android mobile app package and discovered hardcoded AWS credentials (API keys) embedded within the app binary. The same key was present in a version from June 2018, suggesting a ~2-year exposure window.",
+      "evidence_quote": "Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both, indicating that the credentials for Cameo's servers could have been exposed for around two years.",
+      "evidence_sources": [
+        "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using the hardcoded credentials extracted from the app, the researcher authenticated to Cameo's AWS backend infrastructure, gaining access as a valid cloud identity.",
+      "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets used to store data.",
+      "evidence_sources": [
+        "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+      ],
+      "aws_services_involved": [
+        "AWS IAM",
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "After gaining access, the researcher explored the accessible S3 buckets to discover what data was stored, including backed-up user database files.",
+      "evidence_quote": "The researcher said they used the credentials to access the servers 'to verify what was accessible.'",
+      "evidence_sources": [
+        "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The researcher accessed and retrieved a backup of Cameo's user database from the S3 bucket, obtaining user email addresses, hashed and salted passwords, phone numbers, messages, and private video content.",
+      "evidence_quote": "I got some of the backed up user database... The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
+      "evidence_sources": [
+        "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "description": "Separately, the researcher identified a design flaw in Cameo's review system that allowed reconstruction of URLs to ostensibly private videos, enabling enumeration and retrieval of private video content without authentication.",
+      "evidence_quote": "due to a design flaw in the review system, it is possible to retrieve information to reconstruct the URL that goes to the video page itself, meaning the clips can be viewed even if the customer set them to private.",
+      "evidence_sources": [
+        "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+      ],
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "validated": false
+    }
+  ],
+  "aws_services": [
+    "Amazon S3",
+    "AWS IAM"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.85,
+  "initial_access_vector": "Hardcoded AWS credentials found embedded within the Cameo Android mobile app package (APK), exposed for approximately two years across multiple app versions",
+  "data_exfiltrated": true,
+  "persistence_mechanism": "None identified \u2014 the hardcoded credentials themselves provided persistent access as long as they remained valid and embedded in distributed app packages",
+  "privilege_escalation": "Not applicable \u2014 the hardcoded credentials directly granted access to backend S3 infrastructure without requiring escalation",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Researcher obtained/decompiled the Cameo Android mobile app package and discovered hardcoded AWS credentials (API keys) embedded within the app binary. The same key was present in a version from June 2018, suggesting a ~2-year exposure window.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both, indicating that the credentials for Cameo's servers could have been exposed for around two years.",
+        "evidence_sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using the hardcoded credentials extracted from the app, the researcher authenticated to Cameo's AWS backend infrastructure, gaining access as a valid cloud identity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets used to store data.",
+        "evidence_sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "After gaining access, the researcher explored the accessible S3 buckets to discover what data was stored, including backed-up user database files.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The researcher said they used the credentials to access the servers 'to verify what was accessible.'",
+        "evidence_sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The researcher accessed and retrieved a backup of Cameo's user database from the S3 bucket, obtaining user email addresses, hashed and salted passwords, phone numbers, messages, and private video content.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "I got some of the backed up user database... The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
+        "evidence_sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "description": "Separately, the researcher identified a design flaw in Cameo's review system that allowed reconstruction of URLs to ostensibly private videos, enabling enumeration and retrieval of private video content without authentication.",
+        "tactic_id": "",
+        "evidence_quote": "due to a design flaw in the review system, it is possible to retrieve information to reconstruct the URL that goes to the video page itself, meaning the clips can be viewed even if the customer set them to private.",
+        "evidence_sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "evidence_quotes": [
+          "Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both, indicating that the credentials for Cameo's servers could have been exposed for around two years.",
+          "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets used to store data."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1619",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "evidence_quotes": [
+          "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets used to store data.",
+          "The researcher said they used the credentials to access the servers 'to verify what was accessible.'"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "evidence_quotes": [
+          "The researcher said they used the credentials to access the servers 'to verify what was accessible.'",
+          "I got some of the backed up user database... The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1083",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "File and Directory Discovery",
+        "sources": [
+          "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
+        ],
+        "evidence_quotes": [
+          "I got some of the backed up user database... The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
+          "due to a design flaw in the review system, it is possible to retrieve information to reconstruct the URL that goes to the video page itself, meaning the clips can be viewed even if the customer set them to private."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "cameo-2020-february",
+  "analyzed_at": "2026-04-15T20:45:32.937463+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 25707
+}

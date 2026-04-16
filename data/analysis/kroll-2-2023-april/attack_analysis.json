@@ -1,0 +1,495 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "the threat actors compromised the client's own internal network, laterally moving into the cloud and recovering the keys from both ends of the encryption",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "inferred": true,
+          "evidence_quote": "the threat actors compromised the client's own internal network, laterally moving into the cloud",
+          "validated": true
+        },
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "recovering the keys from both ends of the encryption",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "recovering the keys from both ends of the encryption",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "inferred": false,
+          "evidence_quote": "recovering the keys from both ends of the encryption",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "They persisted in the environment for a number of years, observing, gathering and exfiltrating over time",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": true,
+          "evidence_quote": "identified footholds, compromised accounts and back doors",
+          "validated": true
+        },
+        {
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services (Backdoors)",
+          "inferred": true,
+          "evidence_quote": "identified footholds, compromised accounts and back doors",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": true,
+          "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "observing, gathering and exfiltrating over time",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+          "validated": true
+        },
+        {
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol",
+          "inferred": true,
+          "evidence_quote": "exfiltrating information from the global enterprise",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application / Internal Network Compromise",
+      "description": "Threat actors gained an initial foothold by compromising the client's internal (on-premises) network. The specific initial access vector is not detailed in the source but is described as a sophisticated intrusion lifecycle.",
+      "evidence_quote": "the threat actors compromised the client's own internal network",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552",
+      "technique_name": "Unsecured Credentials",
+      "description": "Attackers recovered cryptographic keys and cloud credentials from both on-premises and cloud systems, enabling access to the AWS environment.",
+      "evidence_quote": "recovering the keys from both ends of the encryption",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1021",
+      "technique_name": "Remote Services (Lateral Movement to Cloud)",
+      "description": "Using harvested credentials and keys, threat actors laterally moved from the compromised internal network into the AWS cloud environment.",
+      "evidence_quote": "laterally moving into the cloud",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "IAM",
+        "EC2"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attackers used compromised cloud accounts and established backdoors to maintain persistent access to the AWS environment over multiple years.",
+      "evidence_quote": "They persisted in the environment for a number of years, observing, gathering and exfiltrating over time",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation / Backdoors",
+      "description": "The threat actors created or maintained footholds, compromised accounts, and backdoors to facilitate re-entry and sustained access across the global enterprise.",
+      "evidence_quote": "identified footholds, compromised accounts and back doors",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Over time, attackers quietly traversed the environment, observing infrastructure and identifying data of interest before exfiltration.",
+      "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "EC2",
+        "S3",
+        "CloudTrail"
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers collected data from the cloud environment, gathering information over an extended period.",
+      "evidence_quote": "observing, gathering and exfiltrating over time",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1048",
+      "technique_name": "Exfiltration Over Alternative Protocol",
+      "description": "Sensitive data was exfiltrated from the global enterprise over an extended period. The method caused identifiable cost spikes in AWS billing.",
+      "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+      "evidence_sources": [
+        "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+      ],
+      "aws_services_involved": [
+        "S3",
+        "EC2"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "EC2",
+    "S3",
+    "CloudTrail",
+    "VPC",
+    "CloudWatch",
+    "GuardDuty"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.55,
+  "initial_access_vector": "Internal on-premises network compromised; threat actors then laterally moved into the AWS cloud environment using harvested credentials and encryption keys",
+  "persistence_mechanism": "Compromised cloud accounts, backdoors, and footholds maintained for multiple years across the global enterprise",
+  "privilege_escalation": "Credential theft (key recovery from both ends of encryption) used to access cloud resources; over-permissioned accounts likely leveraged (inferred from pattern described across cases)",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Threat actors gained an initial foothold by compromising the client's internal (on-premises) network. The specific initial access vector is not detailed in the source but is described as a sophisticated intrusion lifecycle.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "the threat actors compromised the client's own internal network",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552",
+        "technique_name": "Unsecured Credentials",
+        "description": "Attackers recovered cryptographic keys and cloud credentials from both on-premises and cloud systems, enabling access to the AWS environment.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "recovering the keys from both ends of the encryption",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "description": "Using harvested credentials and keys, threat actors laterally moved from the compromised internal network into the AWS cloud environment.",
+        "tactic_id": "TA0008",
+        "evidence_quote": "laterally moving into the cloud",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attackers used compromised cloud accounts and established backdoors to maintain persistent access to the AWS environment over multiple years.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "They persisted in the environment for a number of years, observing, gathering and exfiltrating over time",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1098",
+        "technique_name": "Account Manipulation",
+        "description": "The threat actors created or maintained footholds, compromised accounts, and backdoors to facilitate re-entry and sustained access across the global enterprise.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "identified footholds, compromised accounts and back doors",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Over time, attackers quietly traversed the environment, observing infrastructure and identifying data of interest before exfiltration.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "S3",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attackers collected data from the cloud environment, gathering information over an extended period.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "observing, gathering and exfiltrating over time",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1048",
+        "technique_name": "Exfiltration Over Alternative Protocol",
+        "description": "Sensitive data was exfiltrated from the global enterprise over an extended period. The method caused identifiable cost spikes in AWS billing.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "quietly entering, traversing and exfiltrating information from the global enterprise",
+        "evidence_sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "aws_services_involved": [
+          "S3",
+          "EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1552",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Unsecured Credentials",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "the threat actors compromised the client's own internal network",
+          "recovering the keys from both ends of the encryption"
+        ]
+      },
+      {
+        "source": "T1552",
+        "target": "T1021",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Unsecured Credentials",
+        "target_technique_name": "Remote Services",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "recovering the keys from both ends of the encryption",
+          "laterally moving into the cloud"
+        ]
+      },
+      {
+        "source": "T1021",
+        "target": "T1078.004",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Remote Services",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "laterally moving into the cloud",
+          "They persisted in the environment for a number of years, observing, gathering and exfiltrating over time"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1098",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Account Manipulation",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "They persisted in the environment for a number of years, observing, gathering and exfiltrating over time",
+          "identified footholds, compromised accounts and back doors"
+        ]
+      },
+      {
+        "source": "T1098",
+        "target": "T1526",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Account Manipulation",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "identified footholds, compromised accounts and back doors",
+          "quietly entering, traversing and exfiltrating information from the global enterprise"
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1530",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "quietly entering, traversing and exfiltrating information from the global enterprise",
+          "observing, gathering and exfiltrating over time"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1048",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Alternative Protocol",
+        "sources": [
+          "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
+        ],
+        "evidence_quotes": [
+          "observing, gathering and exfiltrating over time",
+          "quietly entering, traversing and exfiltrating information from the global enterprise"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "kroll-2-2023-april",
+  "analyzed_at": "2026-04-15T20:58:28.272802+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 20428
+}

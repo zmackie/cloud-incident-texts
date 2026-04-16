@@ -1,0 +1,307 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": false,
+          "evidence_quote": "an internal compute instance that we created was accessible from the outside world and it contained an AWS API key; this compute instance was compromised",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "an internal compute instance that we created was accessible from the outside world and it contained an AWS API key; this compute instance was compromised and the AWS API key was stolen",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "unauthorized use of an administrative API key in one of our production AWS accounts",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "the AWS API key was used to access the snapshot",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "the AWS API key was used to access the snapshot... the data exfiltration occurred in October 2018. The dataset was from a snapshot as of September 15, 2017",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "An internal AWS compute instance, publicly reachable from the internet, was compromised by an external threat actor. The instance had been created during the 2017 AWS/RDS evaluation and migration process and was never placed behind a VPN or restricted by security group rules.",
+      "evidence_quote": "an internal compute instance that we created was accessible from the outside world and it contained an AWS API key; this compute instance was compromised",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "After compromising the compute instance, the attacker stole an AWS administrative API key that was stored on or accessible from the instance. The key was not adequately protected or rotated.",
+      "evidence_quote": "this compute instance was compromised and the AWS API key was stolen",
+      "aws_services_involved": [
+        "EC2",
+        "IAM"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "The attacker used the stolen administrative AWS API key to authenticate to Imperva's production AWS account, gaining the privileges of an administrator without needing to exploit any additional vulnerability.",
+      "evidence_quote": "unauthorized use of an administrative API key in one of our production AWS accounts",
+      "aws_services_involved": [
+        "IAM",
+        "AWS Management Console"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Using the administrative API key, the attacker enumerated cloud resources and located the RDS database snapshot that had been created for testing during the 2017 migration.",
+      "evidence_quote": "we created a database snapshot for testing... the AWS API key was used to access the snapshot",
+      "aws_services_involved": [
+        "RDS",
+        "IAM"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "The attacker accessed the RDS database snapshot and exfiltrated its contents, including email addresses, hashed and salted passwords, API keys, and TLS/SSL certificates belonging to Cloud WAF customers.",
+      "evidence_quote": "the data exfiltration occurred in October 2018. The dataset was from a snapshot as of September 15, 2017... email addresses, hashed and salted passwords, API keys, and TLS keys",
+      "aws_services_involved": [
+        "RDS"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "EC2",
+    "RDS",
+    "IAM",
+    "CloudTrail",
+    "GuardDuty",
+    "S3",
+    "VPC"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.92,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Publicly accessible internal EC2 compute instance (no VPN/security group restriction) that contained an AWS administrative API key was compromised by an external attacker",
+  "persistence_mechanism": "None described; attacker used stolen long-lived administrative API key for continued access",
+  "privilege_escalation": "Stolen AWS administrative API key provided immediate administrative-level access to the production AWS account without requiring additional escalation",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "An internal AWS compute instance, publicly reachable from the internet, was compromised by an external threat actor. The instance had been created during the 2017 AWS/RDS evaluation and migration process and was never placed behind a VPN or restricted by security group rules.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "an internal compute instance that we created was accessible from the outside world and it contained an AWS API key; this compute instance was compromised",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "After compromising the compute instance, the attacker stole an AWS administrative API key that was stored on or accessible from the instance. The key was not adequately protected or rotated.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "this compute instance was compromised and the AWS API key was stolen",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "The attacker used the stolen administrative AWS API key to authenticate to Imperva's production AWS account, gaining the privileges of an administrator without needing to exploit any additional vulnerability.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "unauthorized use of an administrative API key in one of our production AWS accounts",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "AWS Management Console"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Using the administrative API key, the attacker enumerated cloud resources and located the RDS database snapshot that had been created for testing during the 2017 migration.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "we created a database snapshot for testing... the AWS API key was used to access the snapshot",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "aws_services_involved": [
+          "RDS",
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "The attacker accessed the RDS database snapshot and exfiltrated its contents, including email addresses, hashed and salted passwords, API keys, and TLS/SSL certificates belonging to Cloud WAF customers.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "the data exfiltration occurred in October 2018. The dataset was from a snapshot as of September 15, 2017... email addresses, hashed and salted passwords, API keys, and TLS keys",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "aws_services_involved": [
+          "RDS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1190",
+        "target": "T1552.005",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Instance Metadata API",
+        "sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "evidence_quotes": [
+          "an internal compute instance that we created was accessible from the outside world and it contained an AWS API key; this compute instance was compromised",
+          "this compute instance was compromised and the AWS API key was stolen"
+        ]
+      },
+      {
+        "source": "T1552.005",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "evidence_quotes": [
+          "this compute instance was compromised and the AWS API key was stolen",
+          "unauthorized use of an administrative API key in one of our production AWS accounts"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1580",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "evidence_quotes": [
+          "unauthorized use of an administrative API key in one of our production AWS accounts",
+          "we created a database snapshot for testing... the AWS API key was used to access the snapshot"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1537",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20210620143023/https://www.imperva.com/blog/ceoblog/"
+        ],
+        "evidence_quotes": [
+          "we created a database snapshot for testing... the AWS API key was used to access the snapshot",
+          "the data exfiltration occurred in October 2018. The dataset was from a snapshot as of September 15, 2017... email addresses, hashed and salted passwords, API keys, and TLS keys"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "imperva-2019-october",
+  "analyzed_at": "2026-04-15T20:55:45.774305+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 16815
+}

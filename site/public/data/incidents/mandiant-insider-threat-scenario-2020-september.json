@@ -1,0 +1,326 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Fired employee uses credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1136",
+          "technique_name": "Create Account",
+          "subtechnique_id": "T1136.003",
+          "inferred": false,
+          "evidence_quote": "create a new user",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "steal credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
+          "evidence_quote": "Access CI/CD server, create a new user, steal credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "Access CI/CD server",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "Deleted production databases",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "A recently fired employee leverages their existing (or retained) cloud credentials to authenticate and re-enter the environment, bypassing standard access revocation controls.",
+      "evidence_quote": "Fired employee uses credentials",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "description": "The attacker accesses the CI/CD server remotely, using retained or stolen credentials to pivot into the build/deployment infrastructure.",
+      "evidence_quote": "Access CI/CD server",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "aws_services_involved": [
+        "AWS CodePipeline",
+        "AWS CodeBuild"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "From the CI/CD server, the attacker creates a new cloud user account to establish a secondary, persistent foothold that survives potential revocation of the original account.",
+      "evidence_quote": "create a new user",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1552",
+      "technique_name": "Unsecured Credentials",
+      "description": "The attacker harvests additional credentials from the CI/CD environment (e.g., stored secrets, environment variables, or configuration files) to enable further lateral movement or privilege escalation.",
+      "evidence_quote": "steal credentials",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "aws_services_involved": [
+        "AWS Secrets Manager",
+        "AWS Systems Manager Parameter Store"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Using escalated privileges gained from stolen credentials, the attacker deletes the production databases, causing severe operational impact.",
+      "evidence_quote": "Deleted production databases",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "aws_services_involved": [
+        "Amazon RDS",
+        "Amazon DynamoDB"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "AWS CodePipeline",
+    "AWS CodeBuild",
+    "Amazon RDS",
+    "Amazon DynamoDB",
+    "AWS Secrets Manager",
+    "AWS Systems Manager Parameter Store"
+  ],
+  "impact_type": "Data Destruction",
+  "confidence_score": 0.4,
+  "initial_access_vector": "Fired employee reuses valid cloud credentials that were not properly revoked upon termination",
+  "persistence_mechanism": "Creation of a new cloud IAM user account from the compromised CI/CD server to maintain access independently of the original credentials",
+  "privilege_escalation": "Credentials stolen from the CI/CD server environment used to assume higher-privileged roles or access production resources",
+  "data_exfiltrated": false,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "A recently fired employee leverages their existing (or retained) cloud credentials to authenticate and re-enter the environment, bypassing standard access revocation controls.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Fired employee uses credentials",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "description": "The attacker accesses the CI/CD server remotely, using retained or stolen credentials to pivot into the build/deployment infrastructure.",
+        "tactic_id": "TA0008",
+        "evidence_quote": "Access CI/CD server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": [
+          "AWS CodePipeline",
+          "AWS CodeBuild"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "From the CI/CD server, the attacker creates a new cloud user account to establish a secondary, persistent foothold that survives potential revocation of the original account.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "create a new user",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1552",
+        "technique_name": "Unsecured Credentials",
+        "description": "The attacker harvests additional credentials from the CI/CD environment (e.g., stored secrets, environment variables, or configuration files) to enable further lateral movement or privilege escalation.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "steal credentials",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": [
+          "AWS Secrets Manager",
+          "AWS Systems Manager Parameter Store"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Using escalated privileges gained from stolen credentials, the attacker deletes the production databases, causing severe operational impact.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Deleted production databases",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": [
+          "Amazon RDS",
+          "Amazon DynamoDB"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1021",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Remote Services",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "Fired employee uses credentials",
+          "Access CI/CD server"
+        ]
+      },
+      {
+        "source": "T1021",
+        "target": "T1136.003",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Remote Services",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "Access CI/CD server",
+          "create a new user"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1552",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Unsecured Credentials",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "create a new user",
+          "steal credentials"
+        ]
+      },
+      {
+        "source": "T1552",
+        "target": "T1485",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Unsecured Credentials",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "steal credentials",
+          "Deleted production databases"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "mandiant-insider-threat-scenario-2020-september",
+  "analyzed_at": "2026-04-15T21:00:08.639031+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 555
+}

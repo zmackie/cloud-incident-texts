@@ -1,0 +1,348 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1195",
+          "technique_name": "Supply Chain Compromise",
+          "inferred": false,
+          "evidence_quote": "the breach appears to have started when the attackers somehow gained access to the company's Gitlab code repository",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": true,
+          "evidence_quote": "access tokens are essentially text files on your computer that allow you to stay logged in for extended periods of time \u2014 sometimes indefinitely. And depending on which service we're talking about, it may be possible for attackers to re-use those access tokens to authenticate as the victim",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1195",
+      "technique_name": "Supply Chain Compromise",
+      "description": "Attackers gained unauthorized access to Sisense's self-hosted GitLab code repository, serving as the initial foothold into Sisense's internal development infrastructure.",
+      "evidence_quote": "the breach appears to have started when the attackers somehow gained access to the company's Gitlab code repository",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Within the GitLab repository, attackers discovered hardcoded AWS credentials (tokens or access keys) that were checked into source code, granting access to Sisense's Amazon S3 environment.",
+      "evidence_quote": "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [
+        "AWS S3",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "Attackers used the stolen AWS credentials/tokens to authenticate to Amazon S3 as a legitimate account, bypassing normal access controls.",
+      "evidence_quote": "a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [
+        "AWS S3",
+        "AWS IAM"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Using the valid AWS credentials, attackers accessed and copied terabytes of Sisense customer data stored in S3 buckets, including access tokens, email account passwords, and SSL certificates.",
+      "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [
+        "AWS S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Attackers exfiltrated several terabytes of collected customer data from Sisense's S3 buckets to attacker-controlled infrastructure.",
+      "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [
+        "AWS S3"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "With millions of stolen customer access tokens in hand, attackers gained the capability to authenticate to downstream third-party services as Sisense customers without needing passwords, enabling further downstream compromise.",
+      "evidence_quote": "it may be possible for attackers to re-use those access tokens to authenticate as the victim without ever having to present valid credentials",
+      "evidence_sources": [
+        "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS S3",
+    "AWS IAM"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Attackers gained access to Sisense's self-hosted GitLab repository, where hardcoded AWS credentials were discovered in the source code.",
+  "data_exfiltrated": true,
+  "persistence_mechanism": "Stolen access tokens allowing long-lived, passwordless re-authentication to downstream customer services",
+  "privilege_escalation": "AWS S3 token/credential found in GitLab repository provided direct privileged access to cloud storage without requiring additional escalation steps",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1195",
+        "technique_name": "Supply Chain Compromise",
+        "description": "Attackers gained unauthorized access to Sisense's self-hosted GitLab code repository, serving as the initial foothold into Sisense's internal development infrastructure.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "the breach appears to have started when the attackers somehow gained access to the company's Gitlab code repository",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Within the GitLab repository, attackers discovered hardcoded AWS credentials (tokens or access keys) that were checked into source code, granting access to Sisense's Amazon S3 environment.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": [
+          "AWS S3",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Attackers used the stolen AWS credentials/tokens to authenticate to Amazon S3 as a legitimate account, bypassing normal access controls.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": [
+          "AWS S3",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Using the valid AWS credentials, attackers accessed and copied terabytes of Sisense customer data stored in S3 buckets, including access tokens, email account passwords, and SSL certificates.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": [
+          "AWS S3"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Attackers exfiltrated several terabytes of collected customer data from Sisense's S3 buckets to attacker-controlled infrastructure.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": [
+          "AWS S3"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "With millions of stolen customer access tokens in hand, attackers gained the capability to authenticate to downstream third-party services as Sisense customers without needing passwords, enabling further downstream compromise.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "it may be possible for attackers to re-use those access tokens to authenticate as the victim without ever having to present valid credentials",
+        "evidence_sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "aws_services_involved": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1195",
+        "target": "T1552.001",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Supply Chain Compromise",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "evidence_quotes": [
+          "the breach appears to have started when the attackers somehow gained access to the company's Gitlab code repository",
+          "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Valid Accounts",
+        "sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "evidence_quotes": [
+          "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+          "a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud"
+        ]
+      },
+      {
+        "source": "T1078",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "evidence_quotes": [
+          "a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+          "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1537",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "evidence_quotes": [
+          "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
+          "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data"
+        ]
+      },
+      {
+        "source": "T1537",
+        "target": "T1550.001",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
+        ],
+        "evidence_quotes": [
+          "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
+          "it may be possible for attackers to re-use those access tokens to authenticate as the victim without ever having to present valid credentials"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "sisense-2024-april",
+  "analyzed_at": "2026-04-15T21:08:08.699106+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 29570
+}

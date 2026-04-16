@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+import Heatmap from "../components/Heatmap.astro";
+---
+<Base title="MITRE ATT&CK Heatmap">
+  <div class="page">
+    <div class="page-header">
+      <h1 class="page-title">Cloud Incident ATT&CK</h1>
+      <p class="page-subtitle">
+        Real cloud security incidents mapped to the MITRE ATT&CK framework.
+        Frequency heatmap across all techniques observed in the wild.
+      </p>
+    </div>
+
+    <div id="stats-row" class="stats-row">
+      <div class="stat-chip">
+        <span class="value" id="stat-incidents">—</span>
+        <span class="label">Incidents</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value" id="stat-techniques">—</span>
+        <span class="label">Unique Techniques</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value" id="stat-services">—</span>
+        <span class="label">Cloud Services</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value" id="stat-steps">—</span>
+        <span class="label">Attack Steps</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>ATT&CK Technique Frequency</h2>
+      <p class="page-subtitle">Darker cells = more incidents used this technique. Click a cell to filter incidents.</p>
+    </div>
+
+    <Heatmap />
+  </div>
+</Base>
+
+<style>
+  .section-header {
+    margin: 2rem 0 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+</style>
+
+<script>
+async function loadStats() {
+  try {
+    const stats = await fetch(`${import.meta.env.BASE_URL}/data/stats.json`).then(r => r.ok ? r.json() : null);
+    if (!stats) return;
+    const set = (id: string, val: any) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String(val ?? "—");
+    };
+    set("stat-incidents", stats.total_incidents);
+    set("stat-techniques", stats.total_unique_techniques);
+    set("stat-services", stats.total_aws_services);
+    set("stat-steps", stats.total_chain_steps);
+  } catch {}
+}
+loadStats();
+</script>

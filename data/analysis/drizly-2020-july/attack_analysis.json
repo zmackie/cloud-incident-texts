@@ -1,0 +1,369 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "a hacker breached an employee account, got access to Drizly's corporate GitHub login information",
+          "validated": true
+        },
+        {
+          "technique_id": "T1586.003",
+          "technique_name": "Compromise Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "Inactive GitHub account compromised via reused password",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance",
+          "validated": true
+        },
+        {
+          "technique_id": "T1110.004",
+          "technique_name": "Brute Force: Credential Stuffing",
+          "inferred": true,
+          "evidence_quote": "Inactive GitHub account compromised via reused password",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": true,
+          "evidence_quote": "hacked into the company's database, and then stole customers' information",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "got access to Drizly's corporate GitHub login information, hacked into the company's database",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "hacked into the company's database, and then stole customers' information",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1110.004",
+      "technique_name": "Brute Force: Credential Stuffing",
+      "description": "Attacker compromised an inactive Drizly employee GitHub account by exploiting a reused password, likely sourced from a prior credential breach.",
+      "evidence_quote": "Inactive GitHub account compromised via reused password",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Using the compromised GitHub account, the attacker discovered AWS cloud computing login credentials (and/or corporate GitHub credentials) stored in plaintext within the GitHub repository \u2014 a practice Drizly had been warned about since a 2018 incident where an employee posted cloud account login info on GitHub.",
+      "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance and well-publicized security incidents involving GitHub",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [
+        "GitHub",
+        "AWS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "The attacker used the harvested AWS/corporate credentials to authenticate to Drizly's cloud environment hosted on Amazon Web Services.",
+      "evidence_quote": "a hacker breached an employee account, got access to Drizly's corporate GitHub login information, hacked into the company's database",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [
+        "AWS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "In the 2018 precursor incident (after an employee posted cloud login info on GitHub), hackers used Drizly's AWS servers to mine cryptocurrency before the company rotated its credentials.",
+      "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [
+        "AWS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "In the 2020 breach, after gaining access via valid cloud credentials, the attacker identified and located Drizly's customer database (RDS instance) within the AWS environment.",
+      "evidence_quote": "hacked into the company's database, and then stole customers' information",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [
+        "AWS",
+        "Amazon RDS"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The attacker exfiltrated the personal information of approximately 2.5 million consumers from Drizly's AWS-hosted database, including email addresses, postal addresses, phone numbers, device identifiers, and geolocation data.",
+      "evidence_quote": "hacked into the company's database, and then stole customers' information",
+      "evidence_sources": [
+        "https://archive.ph/p21Vk"
+      ],
+      "aws_services_involved": [
+        "AWS",
+        "Amazon RDS"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS",
+    "Amazon RDS",
+    "Amazon Web Services (general cloud)"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.82,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Inactive employee GitHub account compromised via reused/credential-stuffed password, which exposed AWS cloud credentials stored in the GitHub repository",
+  "persistence_mechanism": "Use of valid cloud account credentials obtained from GitHub repository; no additional persistence mechanism described in the source",
+  "privilege_escalation": "Not described in the source; attacker appears to have had sufficient access via the discovered credentials without requiring further escalation",
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1110.004",
+        "technique_name": "Credential Stuffing",
+        "description": "Attacker compromised an inactive Drizly employee GitHub account by exploiting a reused password, likely sourced from a prior credential breach.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Inactive GitHub account compromised via reused password",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Using the compromised GitHub account, the attacker discovered AWS cloud computing login credentials (and/or corporate GitHub credentials) stored in plaintext within the GitHub repository \u2014 a practice Drizly had been warned about since a 2018 incident where an employee posted cloud account login info on GitHub.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance and well-publicized security incidents involving GitHub",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": [
+          "GitHub",
+          "AWS"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "The attacker used the harvested AWS/corporate credentials to authenticate to Drizly's cloud environment hosted on Amazon Web Services.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "a hacker breached an employee account, got access to Drizly's corporate GitHub login information, hacked into the company's database",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": [
+          "AWS"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "In the 2018 precursor incident (after an employee posted cloud login info on GitHub), hackers used Drizly's AWS servers to mine cryptocurrency before the company rotated its credentials.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": [
+          "AWS"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "In the 2020 breach, after gaining access via valid cloud credentials, the attacker identified and located Drizly's customer database (RDS instance) within the AWS environment.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "hacked into the company's database, and then stole customers' information",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": [
+          "AWS",
+          "Amazon RDS"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The attacker exfiltrated the personal information of approximately 2.5 million consumers from Drizly's AWS-hosted database, including email addresses, postal addresses, phone numbers, device identifiers, and geolocation data.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "hacked into the company's database, and then stole customers' information",
+        "evidence_sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "aws_services_involved": [
+          "AWS",
+          "Amazon RDS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1110.004",
+        "target": "T1552.001",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Credential Stuffing",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "evidence_quotes": [
+          "Inactive GitHub account compromised via reused password",
+          "Drizly stored login credentials on GitHub contrary to the platform's own guidance and well-publicized security incidents involving GitHub"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "evidence_quotes": [
+          "Drizly stored login credentials on GitHub contrary to the platform's own guidance and well-publicized security incidents involving GitHub",
+          "a hacker breached an employee account, got access to Drizly's corporate GitHub login information, hacked into the company's database"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1496",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "evidence_quotes": [
+          "a hacker breached an employee account, got access to Drizly's corporate GitHub login information, hacked into the company's database",
+          "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account"
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1580",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "evidence_quotes": [
+          "hackers were able to use Drizly's servers to mine cryptocurrency until the company changed its login information for its cloud computing account",
+          "hacked into the company's database, and then stole customers' information"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1530",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://archive.ph/p21Vk"
+        ],
+        "evidence_quotes": [
+          "hacked into the company's database, and then stole customers' information",
+          "hacked into the company's database, and then stole customers' information"
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "drizly-2020-july",
+  "analyzed_at": "2026-04-15T20:52:21.594928+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 46949
+}

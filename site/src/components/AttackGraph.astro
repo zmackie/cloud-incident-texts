@@ -1,0 +1,324 @@
+---
+// D3 force-directed attack chain graph
+---
+<div id="graph-container">
+  <div class="loading" id="graph-loading">Loading attack graph…</div>
+</div>
+<div class="graph-controls">
+  <button id="graph-reset" title="Reset zoom">Reset</button>
+  <button id="graph-freeze" title="Freeze / unfreeze simulation">Freeze</button>
+  <span class="hint">Drag nodes · Scroll to zoom · Click to isolate</span>
+</div>
+<div class="tooltip" id="graph-tooltip"></div>
+
+<style>
+  #graph-container {
+    width: 100%;
+    height: 640px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  #graph-container svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .graph-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .graph-controls button {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: var(--radius);
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .graph-controls button:hover {
+    border-color: var(--blue);
+    color: var(--text);
+  }
+
+  .graph-controls .hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* Tactic legend */
+  .tactic-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tactic-swatch {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .tactic-swatch .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+import * as d3 from "d3";
+
+const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", // Reconnaissance
+  "TA0042": "#e07852", // Resource Development
+  "TA0001": "#e09e52", // Initial Access
+  "TA0002": "#c5a832", // Execution
+  "TA0003": "#8fb83e", // Persistence
+  "TA0004": "#4ab56e", // Privilege Escalation
+  "TA0005": "#3bb5a0", // Defense Evasion
+  "TA0006": "#3898c5", // Credential Access
+  "TA0007": "#4872c5", // Discovery
+  "TA0008": "#6456c5", // Lateral Movement
+  "TA0009": "#9048c5", // Collection
+  "TA0011": "#c548b5", // Command and Control
+  "TA0010": "#c5486e", // Exfiltration
+  "TA0040": "#c5485a", // Impact
+  "": "#555",
+};
+
+async function loadData() {
+  const [graphData, metaData] = await Promise.all([
+    fetch(`${DATA_BASE}/attack_graph.json`).then(r => r.ok ? r.json() : { nodes: [], edges: [] }),
+    fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+  ]);
+  return { graphData, metaData };
+}
+
+function renderGraph(graphData: any, metaData: any) {
+  const container = document.getElementById("graph-container")!;
+  container.innerHTML = "";
+
+  const nodes: any[] = (graphData.nodes || []).map((n: any) => ({ ...n }));
+  const edges: any[] = (graphData.edges || []).map((e: any) => ({ ...e }));
+
+  if (nodes.length === 0) {
+    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">
+      No data yet — run the analysis pipeline first.
+    </div>`;
+    return;
+  }
+
+  const tactics = metaData.tactics || {};
+
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`);
+
+  const g = svg.append("g");
+
+  // Zoom/pan
+  const zoom = d3.zoom<SVGSVGElement, unknown>()
+    .scaleExtent([0.1, 8])
+    .on("zoom", (event) => g.attr("transform", event.transform));
+
+  svg.call(zoom as any);
+
+  // Arrow markers
+  svg.append("defs").selectAll("marker")
+    .data(["arrow"])
+    .join("marker")
+    .attr("id", "arrow")
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 18)
+    .attr("refY", 0)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr("fill", "#444");
+
+  // Edge weight scale
+  const maxEdgeCount = Math.max(1, ...edges.map((e: any) => e.count));
+  const edgeWidth = d3.scaleLinear().domain([1, maxEdgeCount]).range([1, 5]);
+  const edgeOpacity = d3.scaleLinear().domain([1, maxEdgeCount]).range([0.2, 0.7]);
+
+  // Node size scale
+  const maxNodeCount = Math.max(1, ...nodes.map((n: any) => n.count));
+  const nodeRadius = d3.scaleSqrt().domain([0, maxNodeCount]).range([5, 22]);
+
+  // Links
+  const linkSel = g.append("g")
+    .selectAll("line")
+    .data(edges)
+    .join("line")
+    .attr("stroke", "#444")
+    .attr("stroke-width", (d: any) => edgeWidth(d.count))
+    .attr("stroke-opacity", (d: any) => edgeOpacity(d.count))
+    .attr("marker-end", "url(#arrow)");
+
+  // Nodes
+  const nodeSel = g.append("g")
+    .selectAll("g")
+    .data(nodes)
+    .join("g")
+    .attr("cursor", "pointer")
+    .call(
+      d3.drag<SVGGElement, any>()
+        .on("start", (event, d) => {
+          if (!event.active) sim.alphaTarget(0.3).restart();
+          d.fx = d.x; d.fy = d.y;
+        })
+        .on("drag", (event, d) => { d.fx = event.x; d.fy = event.y; })
+        .on("end", (event, d) => {
+          if (!event.active) sim.alphaTarget(0);
+          d.fx = null; d.fy = null;
+        }) as any
+    );
+
+  nodeSel.append("circle")
+    .attr("r", (d: any) => nodeRadius(d.count))
+    .attr("fill", (d: any) => TACTIC_COLORS[d.tactic_id] || "#555")
+    .attr("fill-opacity", 0.85)
+    .attr("stroke", (d: any) => TACTIC_COLORS[d.tactic_id] || "#555")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-opacity", 0.5);
+
+  nodeSel.append("text")
+    .attr("dy", "0.35em")
+    .attr("text-anchor", "middle")
+    .attr("font-size", "9px")
+    .attr("font-family", "var(--font-mono)")
+    .attr("fill", "#e6edf3")
+    .attr("pointer-events", "none")
+    .text((d: any) => d.id);
+
+  // Tooltip
+  const tip = document.getElementById("graph-tooltip")!;
+
+  nodeSel.on("mousemove", (event: MouseEvent, d: any) => {
+    tip.innerHTML = `
+      <span class="tid">${esc(d.id)}</span>
+      <strong>${esc(d.name)}</strong>
+      <div style="color:var(--text-muted);margin-top:4px">
+        <b style="color:var(--accent)">${d.count}</b> incident${d.count !== 1 ? "s" : ""}
+        &nbsp;·&nbsp; ${esc(d.tactic_name || "")}
+      </div>
+    `;
+    tip.classList.add("visible");
+    tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 300) + "px";
+    tip.style.top = (event.clientY - 10) + "px";
+  }).on("mouseleave", () => tip.classList.remove("visible"));
+
+  // Click to isolate 1-hop neighborhood
+  let isolated: string | null = null;
+  nodeSel.on("click", (_event: MouseEvent, d: any) => {
+    if (isolated === d.id) {
+      isolated = null;
+      nodeSel.attr("opacity", 1);
+      linkSel.attr("opacity", (e: any) => edgeOpacity(e.count));
+    } else {
+      isolated = d.id;
+      const neighbors = new Set<string>([d.id]);
+      edges.forEach((e: any) => {
+        if (e.source.id === d.id || e.source === d.id) neighbors.add(typeof e.target === "object" ? e.target.id : e.target);
+        if (e.target.id === d.id || e.target === d.id) neighbors.add(typeof e.source === "object" ? e.source.id : e.source);
+      });
+      nodeSel.attr("opacity", (n: any) => neighbors.has(n.id) ? 1 : 0.1);
+      linkSel.attr("opacity", (e: any) => {
+        const sid = typeof e.source === "object" ? e.source.id : e.source;
+        const tid = typeof e.target === "object" ? e.target.id : e.target;
+        return (neighbors.has(sid) && neighbors.has(tid)) ? edgeOpacity(e.count) : 0.05;
+      });
+    }
+  });
+
+  // Simulation
+  const sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(edges).id((d: any) => d.id).distance(80).strength(0.4))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius((d: any) => nodeRadius((d as any).count) + 4))
+    .on("tick", () => {
+      linkSel
+        .attr("x1", (d: any) => d.source.x)
+        .attr("y1", (d: any) => d.source.y)
+        .attr("x2", (d: any) => d.target.x)
+        .attr("y2", (d: any) => d.target.y);
+      nodeSel.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
+    });
+
+  // Controls
+  let frozen = false;
+  document.getElementById("graph-reset")!.addEventListener("click", () => {
+    svg.transition().duration(500).call(
+      zoom.transform as any,
+      d3.zoomIdentity
+    );
+  });
+
+  document.getElementById("graph-freeze")!.addEventListener("click", () => {
+    frozen = !frozen;
+    if (frozen) {
+      sim.stop();
+      (document.getElementById("graph-freeze") as HTMLButtonElement).textContent = "Unfreeze";
+    } else {
+      sim.restart();
+      (document.getElementById("graph-freeze") as HTMLButtonElement).textContent = "Freeze";
+    }
+  });
+
+  // Tactic legend
+  const legendContainer = document.querySelector(".tactic-legend");
+  if (legendContainer) {
+    const usedTactics = [...new Set(nodes.map((n: any) => n.tactic_id).filter(Boolean))];
+    for (const tid of usedTactics) {
+      const tactic = tactics[tid];
+      if (!tactic) continue;
+      const swatch = document.createElement("div");
+      swatch.className = "tactic-swatch";
+      swatch.innerHTML = `<span class="dot" style="background:${TACTIC_COLORS[tid] || '#555'}"></span>${tactic.name}`;
+      legendContainer.appendChild(swatch);
+    }
+  }
+}
+
+async function init() {
+  try {
+    const { graphData, metaData } = await loadData();
+    renderGraph(graphData, metaData);
+  } catch (err) {
+    document.getElementById("graph-container")!.innerHTML =
+      `<div class="loading" style="color:var(--text-muted)">Failed to load graph data.</div>`;
+    console.error(err);
+  }
+}
+
+init();
+</script>

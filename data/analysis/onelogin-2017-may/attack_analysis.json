@@ -1,0 +1,270 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1535",
+          "technique_name": "Unused/Unsupported Cloud Regions",
+          "inferred": true,
+          "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1651",
+          "technique_name": "Cloud Administration Command",
+          "inferred": false,
+          "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "The threat actor obtained a set of AWS access keys belonging to OneLogin, enabling authenticated API access to OneLogin's AWS environment.",
+      "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1651",
+      "technique_name": "Cloud Administration Command",
+      "description": "Using the stolen AWS keys, the actor called AWS APIs from an intermediate host (a third-party service provider) to interact with OneLogin's cloud infrastructure, launching EC2 instances.",
+      "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
+      "aws_services_involved": [
+        "EC2",
+        "AWS API"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "The attacker created several EC2 instances within OneLogin's infrastructure to conduct reconnaissance of the environment.",
+      "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "The threat actor accessed OneLogin database tables containing sensitive information about users, applications, and cryptographic keys. The actor may also have obtained the ability to decrypt encrypted data at rest.",
+      "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+      "aws_services_involved": [
+        "RDS"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "EC2",
+    "RDS",
+    "AWS API"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Stolen AWS IAM access keys used to authenticate to the AWS API from an intermediate host at a third-party US service provider",
+  "persistence_mechanism": null,
+  "privilege_escalation": null,
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "The threat actor obtained a set of AWS access keys belonging to OneLogin, enabling authenticated API access to OneLogin's AWS environment.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 2,
+        "technique_id": "T1651",
+        "technique_name": "Cloud Administration Command",
+        "description": "Using the stolen AWS keys, the actor called AWS APIs from an intermediate host (a third-party service provider) to interact with OneLogin's cloud infrastructure, launching EC2 instances.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "AWS API"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "The attacker created several EC2 instances within OneLogin's infrastructure to conduct reconnaissance of the environment.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "The threat actor accessed OneLogin database tables containing sensitive information about users, applications, and cryptographic keys. The actor may also have obtained the ability to decrypt encrypted data at rest.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "aws_services_involved": [
+          "RDS"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1078.004",
+        "target": "T1651",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Administration Command",
+        "sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "evidence_quotes": [
+          "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+          "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST."
+        ]
+      },
+      {
+        "source": "T1651",
+        "target": "T1580",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Administration Command",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "evidence_quotes": [
+          "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
+          "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance."
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "evidence_quotes": [
+          "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+          "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "onelogin-2017-may",
+  "analyzed_at": "2026-04-15T21:02:01.985178+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 4308
+}

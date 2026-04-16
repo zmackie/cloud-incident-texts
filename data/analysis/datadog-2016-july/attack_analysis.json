@@ -1,0 +1,386 @@
+{
+  "tactics_used": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": false,
+          "evidence_quote": "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems.",
+          "subtechnique_id": "T1552.004",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems.",
+          "subtechnique_id": "T1552.005",
+          "validated": true
+        },
+        {
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores",
+          "inferred": false,
+          "evidence_quote": "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
+          "inferred": false,
+          "evidence_quote": "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems. By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances.",
+          "subtechnique_id": "T1021.004",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances and a subset of our AWS S3 buckets.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": true,
+          "evidence_quote": "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "A user also has reported unsuccessful attempts to use AWS credentials shared with Datadog.",
+          "subtechnique_id": "T1078.004",
+          "validated": true
+        }
+      ]
+    }
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.004",
+      "technique_name": "Unsecured Credentials: Private Keys",
+      "description": "Attacker obtained a leaked AWS access key and SSH private key that were used by Datadog's automated CI/CD provisioning and release systems \u2014 the root cause of the compromise.",
+      "evidence_quote": "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems.",
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "Using the leaked SSH private key together with the AWS access key, the attacker gained unauthorized SSH access to three Datadog EC2 production instances starting 2016-07-07 at 19:44 UTC.",
+      "evidence_quote": "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker used the AWS access key to enumerate accessible AWS resources, discovering EC2 instances and S3 buckets containing sensitive data.",
+      "evidence_quote": "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances and a subset of our AWS S3 buckets.",
+      "aws_services_involved": [
+        "EC2",
+        "S3",
+        "IAM"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed a subset of S3 buckets containing Datadog user credentials, service metadata, and customer-shared third-party integration credentials (including AWS keys).",
+      "evidence_quote": "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "description": "Attacker accessed a production database storing Datadog user credentials (bcrypt-hashed passwords) and customer-shared credentials for third-party integrations.",
+      "evidence_quote": "We have detected unauthorized activity associated with a handful of production infrastructure servers, including a database that stores user credentials.",
+      "aws_services_involved": [
+        "EC2",
+        "RDS"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker attempted to use harvested customer AWS credentials (shared with Datadog for integrations) to pivot into customer AWS environments, but these attempts were unsuccessful.",
+      "evidence_quote": "A user also has reported unsuccessful attempts to use AWS credentials shared with Datadog.",
+      "aws_services_involved": [
+        "IAM",
+        "EC2"
+      ],
+      "evidence_sources": [
+        "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+      ],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "EC2",
+    "S3",
+    "IAM",
+    "RDS"
+  ],
+  "impact_type": "Data Exfiltration",
+  "confidence_score": 0.82,
+  "initial_access_vector": "Leaked AWS access key and SSH private key from Datadog's CI/CD automated provisioning and release systems",
+  "persistence_mechanism": null,
+  "privilege_escalation": "Attacker used the combined AWS access key + SSH private key to access production EC2 instances and S3 buckets with the elevated privileges already associated with those CI/CD service keys",
+  "data_exfiltrated": true,
+  "attack_chain_graph": {
+    "nodes": [
+      {
+        "step": 1,
+        "technique_id": "T1552.004",
+        "technique_name": "Unsecured Credentials: Private Keys",
+        "description": "Attacker obtained a leaked AWS access key and SSH private key that were used by Datadog's automated CI/CD provisioning and release systems \u2014 the root cause of the compromise.",
+        "tactic_id": "",
+        "evidence_quote": "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "Using the leaked SSH private key together with the AWS access key, the attacker gained unauthorized SSH access to three Datadog EC2 production instances starting 2016-07-07 at 19:44 UTC.",
+        "tactic_id": "",
+        "evidence_quote": "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker used the AWS access key to enumerate accessible AWS resources, discovering EC2 instances and S3 buckets containing sensitive data.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances and a subset of our AWS S3 buckets.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "S3",
+          "IAM"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed a subset of S3 buckets containing Datadog user credentials, service metadata, and customer-shared third-party integration credentials (including AWS keys).",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1555",
+        "technique_name": "Credentials from Password Stores",
+        "description": "Attacker accessed a production database storing Datadog user credentials (bcrypt-hashed passwords) and customer-shared credentials for third-party integrations.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "We have detected unauthorized activity associated with a handful of production infrastructure servers, including a database that stores user credentials.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "RDS"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker attempted to use harvested customer AWS credentials (shared with Datadog for integrations) to pivot into customer AWS environments, but these attempts were unsuccessful.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "A user also has reported unsuccessful attempts to use AWS credentials shared with Datadog.",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "EC2"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "T1552.004",
+        "target": "T1021.004",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Unsecured Credentials: Private Keys",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "evidence_quotes": [
+          "We traced the intrusion to the leak of an AWS access key and a SSH private key that were used by our automated provisioning and release systems.",
+          "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances."
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1526",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Remote Services: SSH",
+        "target_technique_name": "Cloud Service Discovery",
+        "sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "evidence_quotes": [
+          "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances.",
+          "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances and a subset of our AWS S3 buckets."
+        ]
+      },
+      {
+        "source": "T1526",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "evidence_quotes": [
+          "By using those particular keys together the attacker gained unauthorized access to three of our AWS EC2 instances and a subset of our AWS S3 buckets.",
+          "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1555",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Credentials from Password Stores",
+        "sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "evidence_quotes": [
+          "Those AWS resources included user credentials for the Datadog service, service metadata, and credentials shared with Datadog for third-party integrations.",
+          "We have detected unauthorized activity associated with a handful of production infrastructure servers, including a database that stores user credentials."
+        ]
+      },
+      {
+        "source": "T1555",
+        "target": "T1078.004",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Credentials from Password Stores",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://web.archive.org/web/20201128071102/https://www.datadoghq.com/blog/2016-07-08-security-notice/"
+        ],
+        "evidence_quotes": [
+          "We have detected unauthorized activity associated with a handful of production infrastructure servers, including a database that stores user credentials.",
+          "A user also has reported unsuccessful attempts to use AWS credentials shared with Datadog."
+        ]
+      }
+    ]
+  },
+  "framework": {
+    "name": "mitre-attack",
+    "version": "unknown"
+  },
+  "schema_version": "1.0",
+  "incident_slug": "datadog-2016-july",
+  "analyzed_at": "2026-04-15T20:50:18.941091+00:00",
+  "model": "claude-sonnet-4-6",
+  "source_chars": 5701
+}

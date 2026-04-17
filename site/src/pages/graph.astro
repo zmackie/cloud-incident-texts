@@ -3,20 +3,64 @@ import Base from "../layouts/Base.astro";
 import AttackGraph from "../components/AttackGraph.astro";
 ---
 <Base
-  title="Attack Chain Graph"
-  description="Force-directed graph of technique co-occurrence across all cloud incidents"
+  title="Tactic Flows"
+  description="How attackers move through the MITRE ATT&CK kill chain in real cloud incidents"
 >
   <div class="page">
-    <div class="page-header">
-      <h1 class="page-title">Attack Chain Graph</h1>
-      <p class="page-subtitle">
-        Technique co-occurrence across all incidents. Edge thickness = how often two
-        techniques appear consecutively in attack chains. Click a node to isolate its neighbors.
+    <header class="flow-hero">
+      <div class="hero-kicker">Field Notes · Kill Chain Dynamics</div>
+      <h1 class="flow-title">
+        How attackers<br/>
+        <em>move.</em>
+      </h1>
+      <p class="flow-lede">
+        Every ribbon below is a path observed in a real cloud incident — an attacker
+        crossing from one MITRE tactic to the next. The widest ribbons are the routes
+        most travelled.
       </p>
-    </div>
+    </header>
 
     <AttackGraph />
-
-    <div class="tactic-legend"></div>
   </div>
 </Base>
+
+<style>
+  .flow-hero {
+    padding: 2rem 0 2.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 62ch;
+  }
+
+  .hero-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .flow-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+
+  .flow-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--blue);
+  }
+
+  .flow-lede {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+</style>

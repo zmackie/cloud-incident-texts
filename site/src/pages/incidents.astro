@@ -23,8 +23,18 @@ import Base from "../layouts/Base.astro";
       <select id="filter-service">
         <option value="">All services</option>
       </select>
+      <div class="layout-control">
+        <label class="layout-label" for="group-by">Layout</label>
+        <select id="group-by">
+          <option value="none">Flat list</option>
+          <option value="year">By year</option>
+          <option value="impact">By impact category</option>
+          <option value="service">By primary service</option>
+        </select>
+      </div>
       <span id="result-count" class="result-count"></span>
     </div>
+    <div id="layout-status" class="layout-status"></div>
 
     <div id="incidents-grid" class="incidents-grid">
       <div class="loading">Loading incidents…</div>
@@ -32,65 +42,111 @@ import Base from "../layouts/Base.astro";
   </div>
 </Base>
 
-<style>
+<style is:global>
   .filters {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
   }
 
   .filters input,
   .filters select {
-    background: var(--bg-secondary);
+    background: var(--bg);
     border: 1px solid var(--border);
     color: var(--text);
     border-radius: var(--radius);
-    padding: 0.45rem 0.75rem;
-    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
     font-family: var(--font-body);
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
-  .filters input { min-width: 220px; }
+  .filters input { min-width: 240px; flex: 1; }
   .filters input:focus,
-  .filters select:focus { border-color: var(--blue); }
+  .filters select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px var(--blue-dim);
+  }
 
   .result-count {
     font-size: 0.8rem;
     color: var(--text-muted);
     margin-left: auto;
+    font-family: var(--font-mono);
+  }
+
+  .layout-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .layout-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .layout-status {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin: -0.5rem 0 1.25rem 0.25rem;
   }
 
   .incidents-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 0.875rem;
+  }
+
+  .group-block { margin-bottom: 2rem; grid-column: 1 / -1; }
+  .group-title {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
   }
 
   .incident-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1.25rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.1rem;
     text-decoration: none;
     color: inherit;
-    display: block;
-    transition: border-color 0.15s, transform 0.1s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
   }
 
   .incident-card:hover {
     border-color: var(--blue);
-    transform: translateY(-1px);
+    border-left-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     text-decoration: none;
   }
 
   .incident-name {
     font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.3;
     color: var(--text);
   }
 
@@ -99,24 +155,26 @@ import Base from "../layouts/Base.astro";
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 0.75rem;
   }
 
   .impact-badge {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     padding: 0.2em 0.6em;
     border-radius: 999px;
-    font-weight: 500;
-    background: var(--accent-dim);
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border: 1px solid;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .techniques-list {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 0.5rem;
   }
 
   .tech-badge {
@@ -127,13 +185,40 @@ import Base from "../layouts/Base.astro";
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
     color: var(--text-muted);
+    transition: color 0.15s;
+  }
+
+  .incident-card:hover .tech-badge {
+    color: var(--text);
   }
 
   .services-list {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 0.5rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .card-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .card-technique-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
   }
 </style>
 
@@ -156,26 +241,53 @@ async function loadIncidents() {
   return { index, stats };
 }
 
+function impactColor(impact: string): string {
+  const s = impact.toLowerCase();
+  if (s.includes("ransomware")) return "#bc8cff";
+  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
+  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
+  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
+  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
+  if (s.includes("account takeover")) return "#3bb5a0";
+  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
+  return "#ff6b35";
+}
+
 function renderCard(inc: any): HTMLElement {
   const card = document.createElement("a");
   card.href = `${import.meta.env.BASE_URL}/incident?slug=${encodeURIComponent(inc.slug)}`;
   card.className = "incident-card";
 
+  const impactLower = (inc.impact_type || "").toLowerCase();
+  const borderColor = impactColor(inc.impact_type || "");
+  card.style.borderLeftColor = borderColor;
+
   const confPct = Math.round((inc.confidence_score || 0) * 100);
-  const techniques = (inc.technique_ids || []).slice(0, 8);
-  const services = (inc.aws_services || []).slice(0, 5);
+  const techniques = (inc.technique_ids || []).slice(0, 6);
+  const services = (inc.aws_services || []).slice(0, 4);
+  const totalTechniques = (inc.technique_ids || []).length;
+
+  // Prefer event_date (from build_site_data.py); fall back to LAST year in slug
+  // so threat-group codes like UNC4899 don't get picked up before the real year.
+  let year = "";
+  if (inc.event_date && /^\d{4}/.test(String(inc.event_date))) {
+    year = String(inc.event_date).slice(0, 4);
+  } else {
+    const matches = Array.from(inc.slug.matchAll(/(19\d{2}|20\d{2})/g));
+    if (matches.length) year = matches[matches.length - 1][1];
+  }
 
   card.innerHTML = `
     <div class="incident-name">${esc(inc.name)}</div>
     <div class="incident-meta">
-      ${inc.impact_type ? `<span class="impact-badge">${esc(inc.impact_type)}</span>` : ""}
-      <div class="confidence">
-        <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
-        <span>${confPct}% confidence</span>
-      </div>
+      ${inc.impact_type ? `<span class="impact-badge" style="color:${borderColor};border-color:${borderColor}40;background:${borderColor}20">${esc(inc.impact_type)}</span>` : ""}
+      ${services.length ? services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("") : ""}
     </div>
-    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${inc.technique_ids.length > 8 ? `<span class="tech-badge">+${inc.technique_ids.length - 8}</span>` : ""}</div>` : ""}
-    ${services.length ? `<div class="services-list">${services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}</div>` : ""}
+    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${totalTechniques > 6 ? `<span class="tech-badge">+${totalTechniques - 6}</span>` : ""}</div>` : ""}
+    <div class="card-footer">
+      <span class="card-date">${esc(year)}</span>
+      <span class="card-technique-count">${totalTechniques} technique${totalTechniques !== 1 ? "s" : ""}</span>
+    </div>
   `;
 
   return card;
@@ -190,12 +302,96 @@ function renderGrid(incidents: any[]) {
     return;
   }
 
-  for (const inc of incidents) {
-    grid.appendChild(renderCard(inc));
+  const mode = (document.getElementById("group-by") as HTMLSelectElement).value;
+  const grouped = new Map<string, any[]>();
+
+  function impactCategory(impact: string): string {
+    const s = (impact || "").toLowerCase();
+    if (s.includes("ransomware")) return "Ransomware";
+    if (s.includes("cryptomining") || s.includes("cryptojacking")) return "Cryptomining";
+    if (s.includes("llmjacking") || s.includes("resource hijacking")) return "LLM / Resource Hijacking";
+    if (s.includes("exfiltration") || s.includes("data breach")) return "Data Exfiltration";
+    if (s.includes("destruction") || s.includes("disruption") || s.includes("denial")) return "Service / Data Destruction";
+    if (s.includes("credential")) return "Credential Theft";
+    if (s.includes("phishing") || s.includes("ses abuse") || s.includes("smishing") || s.includes("sms")) return "Phishing / SES Abuse";
+    if (s.includes("account takeover")) return "Account Takeover";
+    if (s.includes("financial") || s.includes("cryptocurrency")) return "Financial Theft";
+    if (s.includes("supply chain") || s.includes("magecart") || s.includes("nft")) return "Supply Chain";
+    return impact ? "Other" : "Unknown";
+  }
+
+  if (mode === "none") {
+    grouped.set(`All incidents`, incidents);
+  } else if (mode === "year") {
+    for (const inc of incidents) {
+      // Use event_date when present (build_site_data.py adds it when available),
+      // else last 19xx/20xx match in slug — slugs often embed a threat-group
+      // code (e.g. UNC4899) or an older year in the name, so trailing wins.
+      let key = "Undated";
+      if (inc.event_date && /^\d{4}/.test(String(inc.event_date))) {
+        key = String(inc.event_date).slice(0, 4);
+      } else {
+        const matches = Array.from(inc.slug.matchAll(/(19\d{2}|20\d{2})/g));
+        if (matches.length) key = matches[matches.length - 1][1];
+      }
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+    // Sort descending by year; non-numeric buckets (e.g. "Undated") go last.
+    const sorted = new Map([...grouped.entries()].sort((a, b) => {
+      const aNum = /^\d{4}$/.test(a[0]);
+      const bNum = /^\d{4}$/.test(b[0]);
+      if (aNum && !bNum) return -1;
+      if (!aNum && bNum) return 1;
+      if (!aNum && !bNum) return a[0].localeCompare(b[0]);
+      return b[0].localeCompare(a[0]);
+    }));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
+  } else if (mode === "impact") {
+    for (const inc of incidents) {
+      const key = impactCategory(inc.impact_type || "");
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+    // Sort descending by bucket size
+    const sorted = new Map([...grouped.entries()].sort((a, b) => b[1].length - a[1].length));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
+  } else if (mode === "service") {
+    for (const inc of incidents) {
+      const svc = (inc.aws_services || [])[0];
+      const key = svc ? svc.replace(/^(AWS |Amazon )/, "") : "No service tagged";
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+    const sorted = new Map([...grouped.entries()].sort((a, b) => b[1].length - a[1].length));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
+  }
+
+  for (const [groupName, members] of grouped.entries()) {
+    const block = document.createElement("div");
+    block.className = "group-block";
+    block.innerHTML = `<div class="group-title">${esc(groupName)} · ${members.length}</div>`;
+    const cards = document.createElement("div");
+    cards.className = "incidents-grid";
+    for (const inc of members) cards.appendChild(renderCard(inc));
+    block.appendChild(cards);
+    grid.appendChild(block);
   }
 
   const countEl = document.getElementById("result-count")!;
   countEl.textContent = `${incidents.length} incident${incidents.length !== 1 ? "s" : ""}`;
+
+  const statusEl = document.getElementById("layout-status")!;
+  if (mode === "none") {
+    // Flat list mode: the "All incidents · N" group header already communicates this.
+    statusEl.textContent = "";
+  } else {
+    const modeName = { year: "YEAR", impact: "IMPACT CATEGORY", service: "PRIMARY SERVICE" }[mode] || mode.toUpperCase();
+    statusEl.textContent = `GROUPED BY ${modeName} · ${grouped.size} BUCKET${grouped.size !== 1 ? "S" : ""} · ${incidents.length} INCIDENTS`;
+  }
 }
 
 function applyFilters() {
@@ -227,7 +423,7 @@ function applyFilters() {
 
 async function init() {
   try {
-    const { index, stats } = await loadIncidents();
+    const { index } = await loadIncidents();
 
     if (!index || index.length === 0) {
       document.getElementById("incidents-grid")!.innerHTML =
@@ -267,6 +463,7 @@ async function init() {
     searchEl.addEventListener("input", applyFilters);
     impactSel.addEventListener("change", applyFilters);
     serviceSel.addEventListener("change", applyFilters);
+    (document.getElementById("group-by") as HTMLSelectElement).addEventListener("change", applyFilters);
 
     applyFilters();
   } catch (err) {

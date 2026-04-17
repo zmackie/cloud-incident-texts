@@ -327,17 +327,26 @@ function render(freqData: Record<string, any>, metaData: Record<string, any>, st
   const tactics = metaData.tactics || {};
   const totalIncidents = stats.total_incidents || 1;
 
-  // Build enriched technique list with count
+  // Build enriched technique list with count.
+  // Each technique carries ALL of its tactic_ids so the kill-chain
+  // breakdown below can expand multi-tactic techniques (e.g. T1078.004
+  // is simultaneously Defense Evasion / Persistence / Privilege Escalation
+  // / Initial Access) into every applicable bucket instead of only the
+  // first tactic_id.
   const allTechniques = Object.entries(freqData)
     .map(([tid, v]: [string, any]) => {
       const meta = techniques[tid] || {};
-      const tacticId = (meta.tactic_ids || [])[0] || v.tactic_id || "";
+      const tacticIds: string[] = (meta.tactic_ids && meta.tactic_ids.length)
+        ? meta.tactic_ids
+        : (v.tactic_id ? [v.tactic_id] : []);
+      const primaryTactic = tacticIds[0] || "";
       return {
         id: tid,
         name: meta.name || v.technique_name || tid,
-        tacticId,
-        tacticName: (tactics[tacticId]?.name) || v.tactic_name || "",
-        color: TACTIC_COLORS[tacticId] || "#777",
+        tacticIds,
+        tacticId: primaryTactic,
+        tacticName: (tactics[primaryTactic]?.name) || v.tactic_name || "",
+        color: TACTIC_COLORS[primaryTactic] || "#777",
         count: v.count || 0,
         incidents: v.incidents || [],
       };
@@ -411,13 +420,18 @@ function render(freqData: Record<string, any>, metaData: Record<string, any>, st
 
   const chainGrid = chainSection.querySelector("#kill-chain")!;
 
-  // Group techniques by tactic
+  // Group techniques by tactic. Multi-tactic techniques appear in every
+  // applicable bucket so the kill-chain grid reflects real coverage
+  // rather than each technique's metadata-first tactic.
   const byTactic: Record<string, any[]> = {};
   for (const t of allTechniques) {
-    if (!t.tacticId) continue;
-    if (!byTactic[t.tacticId]) byTactic[t.tacticId] = [];
-    byTactic[t.tacticId].push(t);
+    for (const tid of t.tacticIds) {
+      if (!byTactic[tid]) byTactic[tid] = [];
+      byTactic[tid].push(t);
+    }
   }
+  // Each bucket is already frequency-sorted because allTechniques is sorted
+  // by count; pushing preserves order.
 
   for (const tid of TACTIC_ORDER) {
     const meta = tactics[tid];

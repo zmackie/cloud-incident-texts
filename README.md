@@ -1,0 +1,1 @@
+[![Build & Deploy Site](https://github.com/zmackie/cloud-incident-texts/actions/workflows/deploy-site.yml/badge.svg)](https://github.com/zmackie/cloud-incident-texts/actions/workflows/deploy-site.yml)

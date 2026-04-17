@@ -232,15 +232,13 @@ function esc(s: unknown): string {
 }
 
 let allIncidents: any[] = [];
-let catalog: any = {};
 
 async function loadIncidents() {
-  const [index, stats, catalogData] = await Promise.all([
+  const [index, stats] = await Promise.all([
     fetch(`${DATA_BASE}/incidents_index.json`).then(r => r.ok ? r.json() : []),
     fetch(`${DATA_BASE}/stats.json`).then(r => r.ok ? r.json() : {}),
-    fetch(`${DATA_BASE}/catalog.json`).then(r => r.ok ? r.json() : {}),
   ]);
-  return { index, stats, catalogData };
+  return { index, stats };
 }
 
 function impactColor(impact: string): string {
@@ -418,7 +416,7 @@ function applyFilters() {
 
 async function init() {
   try {
-    const { index, stats, catalogData } = await loadIncidents();
+    const { index } = await loadIncidents();
 
     if (!index || index.length === 0) {
       document.getElementById("incidents-grid")!.innerHTML =
@@ -427,7 +425,6 @@ async function init() {
     }
 
     allIncidents = index;
-    catalog = catalogData || {};
 
     // Populate filter dropdowns
     const impactTypes = [...new Set(index.map((i: any) => i.impact_type).filter(Boolean))].sort();

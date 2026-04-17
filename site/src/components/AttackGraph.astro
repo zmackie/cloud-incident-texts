@@ -11,6 +11,8 @@
     <span class="legend-dot" style="background:var(--accent)"></span>
     Each ribbon traces a tactic-to-tactic transition observed in the attack chain of a real incident.
     Ribbon width = number of incidents making that move. Hover to see details.
+    The Sankey layout requires a strict left-to-right order, so backward transitions
+    (where attackers revisit an earlier kill-chain stage) are shown in the "Revisits &amp; loops" list below rather than on the diagram.
   </div>
 </div>
 
@@ -20,10 +22,21 @@
     <h2>Where attackers go next</h2>
   </div>
   <p class="section-lead">
-    The ten most common tactic-to-tactic transitions in the corpus — what attackers
-    actually do after each kill-chain step.
+    The ten most common <em>forward</em> tactic transitions in the corpus —
+    what attackers do as they move through the kill chain.
   </p>
   <div id="top-flows-list"></div>
+
+  <div class="section-label" style="margin-top:2.75rem">
+    <span class="kicker">Chapter Four</span>
+    <h2>Revisits &amp; loops</h2>
+  </div>
+  <p class="section-lead">
+    Every chain that goes backward. These show where attackers circled back to
+    an earlier kill-chain stage — re-running discovery after privilege escalation,
+    planting persistence after exfiltration, etc.
+  </p>
+  <div id="back-flows-list"></div>
 </section>
 
 <div class="tooltip" id="flow-tooltip"></div>
@@ -190,12 +203,11 @@ const TACTIC_ORDER = [
 ];
 
 async function loadData() {
-  const [graphData, metaData, index] = await Promise.all([
+  const [graphData, metaData] = await Promise.all([
     fetch(`${DATA_BASE}/attack_graph.json`).then(r => r.ok ? r.json() : { nodes: [], edges: [] }),
     fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
-    fetch(`${DATA_BASE}/incidents_index.json`).then(r => r.ok ? r.json() : []),
   ]);
-  return { graphData, metaData, index };
+  return { graphData, metaData };
 }
 
 /**
@@ -439,15 +451,17 @@ function renderSankey(flowData: any, metaData: any) {
     });
 }
 
-function renderTopFlowsList(flowData: any) {
-  const listEl = document.getElementById("top-flows-list")!;
-  const { flows, tactics } = flowData;
-
-  const orderIdx: Record<string, number> = {};
-  TACTIC_ORDER.forEach((t, i) => (orderIdx[t] = i));
-  const forwardOnly = flows.filter((f: any) => (orderIdx[f.src] ?? 99) < (orderIdx[f.tgt] ?? 99));
-
-  const sorted = [...forwardOnly].sort((a: any, b: any) => b.incidents.size - a.incidents.size).slice(0, 10);
+function renderFlowList(containerId: string, flows: any[], tactics: any, arrow: string, limit = 10) {
+  const listEl = document.getElementById(containerId)!;
+  listEl.innerHTML = "";
+  if (!flows.length) {
+    const row = document.createElement("div");
+    row.className = "flow-row flow-empty";
+    row.innerHTML = `<div></div><div style="color:var(--text-muted);font-style:italic">None observed.</div><div></div>`;
+    listEl.appendChild(row);
+    return;
+  }
+  const sorted = [...flows].sort((a: any, b: any) => b.incidents.size - a.incidents.size).slice(0, limit);
   const maxInc = sorted.length ? sorted[0].incidents.size : 1;
 
   sorted.forEach((f: any, i: number) => {
@@ -464,7 +478,7 @@ function renderTopFlowsList(flowData: any) {
       <div class="flow-rank">${String(i + 1).padStart(2, "0")}</div>
       <div class="flow-pair">
         <span class="flow-tactic" style="color:${srcColor}">${esc(srcName)}</span>
-        <span class="flow-arrow">→</span>
+        <span class="flow-arrow">${arrow}</span>
         <span class="flow-tactic" style="color:${tgtColor}">${esc(tgtName)}</span>
       </div>
       <div class="flow-count">
@@ -474,6 +488,16 @@ function renderTopFlowsList(flowData: any) {
     `;
     listEl.appendChild(row);
   });
+}
+
+function renderTopFlowsList(flowData: any) {
+  const { flows, tactics } = flowData;
+  const orderIdx: Record<string, number> = {};
+  TACTIC_ORDER.forEach((t, i) => (orderIdx[t] = i));
+  const forward = flows.filter((f: any) => (orderIdx[f.src] ?? 99) < (orderIdx[f.tgt] ?? 99));
+  const backward = flows.filter((f: any) => (orderIdx[f.src] ?? 99) > (orderIdx[f.tgt] ?? 99));
+  renderFlowList("top-flows-list", forward, tactics, "→", 10);
+  renderFlowList("back-flows-list", backward, tactics, "↺", 10);
 }
 
 async function init() {

@@ -25,9 +25,9 @@ import Base from "../layouts/Base.astro";
       </select>
       <select id="group-by">
         <option value="none">No grouping</option>
-        <option value="impact">Group by impact</option>
-        <option value="initial_access">Group by initial access</option>
         <option value="year">Group by year</option>
+        <option value="impact">Group by impact category</option>
+        <option value="service">Group by primary service</option>
       </select>
       <span id="result-count" class="result-count"></span>
     </div>
@@ -243,8 +243,8 @@ function renderCard(inc: any): HTMLElement {
   const services = (inc.aws_services || []).slice(0, 4);
   const totalTechniques = (inc.technique_ids || []).length;
 
-  // Extract year from slug (format: "name-YYYY-month") or analyzed_at
-  const slugMatch = inc.slug.match(/(\d{4})/);
+  // Extract year from slug (format: "name-YYYY-month")
+  const slugMatch = inc.slug.match(/(19\d{2}|20\d{2})/);
   const year = slugMatch ? slugMatch[1] : "";
 
   card.innerHTML = `
@@ -275,21 +275,54 @@ function renderGrid(incidents: any[]) {
   const mode = (document.getElementById("group-by") as HTMLSelectElement).value;
   const grouped = new Map<string, any[]>();
 
+  function impactCategory(impact: string): string {
+    const s = (impact || "").toLowerCase();
+    if (s.includes("ransomware")) return "Ransomware";
+    if (s.includes("cryptomining") || s.includes("cryptojacking")) return "Cryptomining";
+    if (s.includes("llmjacking") || s.includes("resource hijacking")) return "LLM / Resource Hijacking";
+    if (s.includes("exfiltration") || s.includes("data breach")) return "Data Exfiltration";
+    if (s.includes("destruction") || s.includes("disruption") || s.includes("denial")) return "Service / Data Destruction";
+    if (s.includes("credential")) return "Credential Theft";
+    if (s.includes("phishing") || s.includes("ses abuse") || s.includes("smishing") || s.includes("sms")) return "Phishing / SES Abuse";
+    if (s.includes("account takeover")) return "Account Takeover";
+    if (s.includes("financial") || s.includes("cryptocurrency")) return "Financial Theft";
+    if (s.includes("supply chain") || s.includes("magecart") || s.includes("nft")) return "Supply Chain";
+    return impact ? "Other" : "Unknown";
+  }
+
   if (mode === "none") {
-    grouped.set("All incidents", incidents);
-  } else {
+    grouped.set(`All incidents`, incidents);
+  } else if (mode === "year") {
     for (const inc of incidents) {
-      const key = mode === "impact"
-        ? (inc.impact_type || "Unknown")
-        : mode === "initial_access"
-          ? (inc.initial_access_vector || "Unknown")
-          : (() => {
-            const d = String(inc.event_date || "");
-            return (d.length >= 4 && /^\d{4}/.test(d)) ? d.slice(0, 4) : "Unknown";
-          })();
+      const m = inc.slug.match(/(19\d{2}|20\d{2})/);
+      const key = m ? m[1] : "Undated";
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(inc);
     }
+    // Sort descending by year
+    const sorted = new Map([...grouped.entries()].sort((a, b) => b[0].localeCompare(a[0])));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
+  } else if (mode === "impact") {
+    for (const inc of incidents) {
+      const key = impactCategory(inc.impact_type || "");
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+    // Sort descending by bucket size
+    const sorted = new Map([...grouped.entries()].sort((a, b) => b[1].length - a[1].length));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
+  } else if (mode === "service") {
+    for (const inc of incidents) {
+      const svc = (inc.aws_services || [])[0];
+      const key = svc ? svc.replace(/^(AWS |Amazon )/, "") : "No service tagged";
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(inc);
+    }
+    const sorted = new Map([...grouped.entries()].sort((a, b) => b[1].length - a[1].length));
+    grouped.clear();
+    for (const [k, v] of sorted) grouped.set(k, v);
   }
 
   for (const [groupName, members] of grouped.entries()) {

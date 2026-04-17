@@ -2,53 +2,140 @@
 import Base from "../layouts/Base.astro";
 import Heatmap from "../components/Heatmap.astro";
 ---
-<Base title="MITRE ATT&CK Heatmap">
+<Base title="The Anatomy of Cloud Attacks">
   <div class="page">
-    <div class="page-header">
-      <h1 class="page-title">Cloud Incident ATT&CK</h1>
-      <p class="page-subtitle">
-        Real cloud security incidents mapped to the MITRE ATT&CK framework.
-        Frequency heatmap across all techniques observed in the wild.
-      </p>
-    </div>
-
-    <div id="stats-row" class="stats-row">
-      <div class="stat-chip">
-        <span class="value" id="stat-incidents">—</span>
-        <span class="label">Incidents</span>
+    <header class="editorial-hero">
+      <div class="hero-left">
+        <div class="hero-kicker">Field Notes · MITRE ATT&CK for Cloud</div>
+        <h1 class="hero-title">
+          The anatomy of a<br/>
+          <em>cloud compromise</em>
+        </h1>
+        <p class="hero-lede">
+          A catalog of real-world cloud security incidents, parsed, and mapped to the
+          MITRE ATT&CK framework. What follows is the shape of that attack surface — a
+          ranking of the techniques attackers actually use, and the kill-chain stages
+          they pass through to get there.
+        </p>
       </div>
-      <div class="stat-chip">
-        <span class="value" id="stat-techniques">—</span>
-        <span class="label">Unique Techniques</span>
-      </div>
-      <div class="stat-chip">
-        <span class="value" id="stat-services">—</span>
-        <span class="label">Cloud Services</span>
-      </div>
-      <div class="stat-chip">
-        <span class="value" id="stat-steps">—</span>
-        <span class="label">Attack Steps</span>
-      </div>
-    </div>
-
-    <div class="section-header">
-      <h2>ATT&CK Technique Frequency</h2>
-      <p class="page-subtitle">Darker cells = more incidents used this technique. Click a cell to filter incidents.</p>
-    </div>
+      <aside class="hero-right">
+        <div class="stat-block">
+          <div class="stat-value" id="stat-incidents">—</div>
+          <div class="stat-label">Incidents<br/>analyzed</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value" id="stat-techniques">—</div>
+          <div class="stat-label">Unique ATT&CK<br/>techniques</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value" id="stat-steps">—</div>
+          <div class="stat-label">Attack-chain<br/>steps logged</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value" id="stat-services">—</div>
+          <div class="stat-label">Cloud services<br/>implicated</div>
+        </div>
+      </aside>
+    </header>
 
     <Heatmap />
   </div>
 </Base>
 
 <style>
-  .section-header {
-    margin: 2rem 0 1rem;
+  .editorial-hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    align-items: start;
   }
 
-  .section-header h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+  @media (max-width: 900px) {
+    .editorial-hero {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .hero-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-lede {
+    max-width: 48ch;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .hero-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+    padding: 0.5rem 0;
+    position: relative;
+  }
+
+  .hero-right::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% calc(50% + 0.5px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px) calc(50% - 0.5px) 0 / calc(50% + 0.5px) 100%;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .stat-block {
+    padding: 0.5rem 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144;
+    font-weight: 500;
+    font-size: 2.75rem;
+    line-height: 1;
+    color: var(--text);
+    font-feature-settings: "tnum";
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
   }
 </style>
 

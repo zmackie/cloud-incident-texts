@@ -1,121 +1,294 @@
 ---
-// MITRE ATT&CK matrix heatmap component
-// Data loaded client-side from /data/
+// "Anatomy of Cloud Attacks" — editorial ranked-bar visualization
+// Replaces the dense MITRE matrix with a story-first layout
 ---
-<div id="heatmap-container">
-  <div class="loading" id="heatmap-loading">Loading ATT&CK matrix…</div>
+<div class="anatomy">
+  <div class="loading" id="anatomy-loading">Loading field data…</div>
 </div>
 
 <div class="tooltip" id="heatmap-tooltip"></div>
 
-<style>
-  #heatmap-container {
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 1rem;
+<style is:global>
+  .anatomy { display: flex; flex-direction: column; gap: 3rem; }
+
+  /* ── Top-N ranked list ────────────────────────────────── */
+  .top-techniques {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 1.5rem;
   }
 
-  .matrix-wrap {
-    display: flex;
-    gap: 6px;
-    min-width: max-content;
-    padding: 0.5rem 0;
+  .top-row {
+    display: contents;
   }
 
-  .tactic-col {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-width: 130px;
-  }
-
-  .tactic-header {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
+  .top-row .rank-num {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 300;
+    font-variation-settings: "opsz" 96;
     color: var(--text-muted);
-    padding: 4px 6px;
-    background: var(--bg-tertiary);
-    border-radius: 4px;
-    border-bottom: 2px solid var(--border);
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-align: right;
+    padding: 0.9rem 0 0;
+    font-feature-settings: "tnum";
+    line-height: 1;
+    min-width: 3.25rem;
   }
 
-  .tech-cell {
-    border-radius: 3px;
-    padding: 4px 6px;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    border: 1px solid transparent;
-    min-height: 30px;
+  .top-row .rank-num[data-top="1"] { color: var(--text); font-weight: 500; }
+
+  .top-row .rank-content {
+    padding: 0.75rem 0 1rem;
+    border-bottom: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1px;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: background 0.1s;
   }
 
-  .tech-cell:hover {
-    opacity: 1 !important;
-    border-color: rgba(255,255,255,0.3);
-    transform: scale(1.04);
-    z-index: 2;
-    position: relative;
+  .top-row:last-child .rank-content { border-bottom: none; }
+
+  .top-row .rank-content:hover {
+    background: linear-gradient(90deg, transparent, var(--bg-secondary) 30%, var(--bg-secondary) 70%, transparent);
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
-  .tech-cell.zero {
-    background: var(--bg-secondary) !important;
-    border-color: var(--border);
-    opacity: 0.5;
+  .top-row .rank-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
   }
 
-  .tech-cell .tech-id {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    opacity: 0.8;
-    line-height: 1;
-  }
-
-  .tech-cell .tech-name {
-    font-size: 0.7rem;
+  .top-row .tech-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
     font-weight: 500;
-    line-height: 1.2;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    font-variation-settings: "opsz" 36;
+    color: var(--text);
+    line-height: 1.15;
   }
 
-  .legend {
+  .top-row .tech-id {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .top-row .tech-tactic {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  .top-row .tech-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 1.25rem;
-    font-size: 0.8rem;
+    margin-top: 0.1rem;
+  }
+
+  .top-row .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+
+  .top-row .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .top-row .count {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    font-variation-settings: "opsz" 36;
+    color: var(--text);
+    font-feature-settings: "tnum";
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  .top-row .count-pct {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     color: var(--text-muted);
+    min-width: 2.8rem;
   }
 
-  .legend-gradient {
-    width: 120px;
-    height: 10px;
-    border-radius: 5px;
+  /* ── Kill-chain breakdown ──────────────────────────────── */
+  .kill-chain-section {
+    position: relative;
   }
 
-  .legend-labels {
+  .section-label {
     display: flex;
-    justify-content: space-between;
-    width: 120px;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label .kicker {
     font-family: var(--font-mono);
     font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .section-label h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 400;
+    font-variation-settings: "opsz" 48;
+    font-style: italic;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 60ch;
+    line-height: 1.55;
+    margin-bottom: 1.75rem;
+  }
+
+  .kill-chain {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .tactic-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--tactic-color, var(--accent));
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tactic-card .tactic-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tactic-card .tactic-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    font-variation-settings: "opsz" 24;
+    color: var(--tactic-color, var(--accent));
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .tactic-card .tactic-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .tactic-card .tactic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .tactic-card .mini-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 3px 0;
+    font-size: 0.78rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.1s;
+  }
+
+  .tactic-card .mini-row:hover {
+    background: var(--bg-tertiary);
+    padding-left: 4px;
+    padding-right: 4px;
+    margin: 0 -4px;
+  }
+
+  .tactic-card .mini-row .mini-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text);
+  }
+
+  .tactic-card .mini-row .mini-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-feature-settings: "tnum";
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .tactic-card .mini-row .mini-count::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: var(--mini-w, 0%);
+    height: 2px;
+    background: var(--tactic-color, var(--accent));
+    opacity: 0.6;
+    transform: translateY(-50%);
+    border-radius: 1px;
+  }
+
+  .tactic-card .tactic-empty {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 4px 0;
+  }
+
+  .tactic-card .tactic-more {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    cursor: pointer;
+  }
+
+  .tactic-card .tactic-more:hover {
+    color: var(--text);
   }
 </style>
 
 <script>
-import * as d3 from "d3";
-
 const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
 
 function esc(s: unknown): string {
@@ -124,189 +297,176 @@ function esc(s: unknown): string {
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#777",
+};
+
+const TACTIC_ORDER = [
+  "TA0043", "TA0042", "TA0001", "TA0002", "TA0003", "TA0004", "TA0005",
+  "TA0006", "TA0007", "TA0008", "TA0009", "TA0011", "TA0010", "TA0040",
+];
+
 async function loadData() {
-  const [freqData, metaData] = await Promise.all([
+  const [freqData, metaData, stats] = await Promise.all([
     fetch(`${DATA_BASE}/technique_frequency.json`).then(r => r.ok ? r.json() : {}),
     fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+    fetch(`${DATA_BASE}/stats.json`).then(r => r.ok ? r.json() : {}),
   ]);
-  return { freqData, metaData };
+  return { freqData, metaData, stats };
 }
 
-function buildHeatmap(freqData: Record<string, any>, metaData: Record<string, any>) {
-  const tactics: Record<string, any> = metaData.tactics || {};
-  const allTechniques: Record<string, any> = metaData.techniques || {};
-
-  // Order tactics by ATT&CK kill chain order
-  const TACTIC_ORDER = [
-    "TA0043", // Reconnaissance
-    "TA0042", // Resource Development
-    "TA0001", // Initial Access
-    "TA0002", // Execution
-    "TA0003", // Persistence
-    "TA0004", // Privilege Escalation
-    "TA0005", // Defense Evasion
-    "TA0006", // Credential Access
-    "TA0007", // Discovery
-    "TA0008", // Lateral Movement
-    "TA0009", // Collection
-    "TA0011", // Command and Control
-    "TA0010", // Exfiltration
-    "TA0040", // Impact
-  ];
-
-  const orderedTactics = TACTIC_ORDER
-    .filter(id => tactics[id])
-    .map(id => ({ id, ...tactics[id] }));
-
-  // Group techniques by tactic, parent techniques first
-  const techByTactic: Record<string, any[]> = {};
-  for (const [tid, tech] of Object.entries(allTechniques)) {
-    for (const tacticId of (tech.tactic_ids || [])) {
-      if (!techByTactic[tacticId]) techByTactic[tacticId] = [];
-      techByTactic[tacticId].push({ id: tid, ...tech });
-    }
-  }
-
-  // Sort each column: parents first, subtechniques after their parent
-  for (const tacticId in techByTactic) {
-    techByTactic[tacticId].sort((a, b) => {
-      const pa = a.is_subtechnique ? a.parent_id : a.id;
-      const pb = b.is_subtechnique ? b.parent_id : b.id;
-      if (pa !== pb) return pa.localeCompare(pb);
-      return a.id.localeCompare(b.id);
-    });
-  }
-
-  const maxCount = Math.max(1, ...Object.values(freqData).map((v: any) => v.count || 0));
-  const colorScale = d3.scaleSequentialLog(d3.interpolateOranges).domain([1, maxCount]);
-
-  // Build DOM
-  const container = document.getElementById("heatmap-container")!;
+function render(freqData: Record<string, any>, metaData: Record<string, any>, stats: Record<string, any>) {
+  const container = document.querySelector(".anatomy")! as HTMLElement;
   container.innerHTML = "";
 
-  const wrap = document.createElement("div");
-  wrap.className = "matrix-wrap";
+  const techniques = metaData.techniques || {};
+  const tactics = metaData.tactics || {};
+  const totalIncidents = stats.total_incidents || 1;
 
-  for (const tactic of orderedTactics) {
-    const col = document.createElement("div");
-    col.className = "tactic-col";
+  // Build enriched technique list with count
+  const allTechniques = Object.entries(freqData)
+    .map(([tid, v]: [string, any]) => {
+      const meta = techniques[tid] || {};
+      const tacticId = (meta.tactic_ids || [])[0] || v.tactic_id || "";
+      return {
+        id: tid,
+        name: meta.name || v.technique_name || tid,
+        tacticId,
+        tacticName: (tactics[tacticId]?.name) || v.tactic_name || "",
+        color: TACTIC_COLORS[tacticId] || "#777",
+        count: v.count || 0,
+        incidents: v.incidents || [],
+      };
+    })
+    .filter((t: any) => t.count > 0)
+    .sort((a: any, b: any) => b.count - a.count);
 
-    const header = document.createElement("div");
-    header.className = "tactic-header";
-    header.textContent = tactic.name;
-    header.title = tactic.name;
-    col.appendChild(header);
+  const maxCount = allTechniques.length ? allTechniques[0].count : 1;
 
-    const techniques = techByTactic[tactic.id] || [];
-    for (const tech of techniques) {
-      const freq = freqData[tech.id];
-      const count = freq?.count || 0;
+  // ── Section 1: Top 10 ranked ─────────────────────────────
+  const topSection = document.createElement("section");
+  topSection.className = "kill-chain-section";
+  topSection.innerHTML = `
+    <div class="section-label">
+      <span class="kicker">Chapter One</span>
+      <h2>The ten most-used techniques</h2>
+    </div>
+    <p class="section-lead">
+      Of ${allTechniques.length} MITRE ATT&CK techniques observed across ${totalIncidents} public cloud incidents,
+      these ten account for the bulk of attacker behavior. Bars are scaled to the most-observed technique.
+    </p>
+    <div class="top-techniques" id="top-techniques"></div>
+  `;
+  container.appendChild(topSection);
 
-      const cell = document.createElement("div");
-      cell.className = "tech-cell" + (count === 0 ? " zero" : "");
-
-      if (count > 0) {
-        const color = colorScale(count);
-        cell.style.background = color;
-        // Ensure text contrast
-        const rgb = d3.color(color) as d3.RGBColor | null;
-        const luminance = rgb ? (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255 : 0.5;
-        cell.style.color = luminance > 0.55 ? "#0d1117" : "#e6edf3";
-      }
-
-      const idEl = document.createElement("div");
-      idEl.className = "tech-id";
-      idEl.textContent = tech.id;
-      cell.appendChild(idEl);
-
-      const nameEl = document.createElement("div");
-      nameEl.className = "tech-name";
-      nameEl.textContent = tech.name;
-      cell.appendChild(nameEl);
-
-      // Tooltip
-      cell.addEventListener("mousemove", (e) => {
-        const tip = document.getElementById("heatmap-tooltip")!;
-        const incidents = freq?.incidents || [];
-        tip.innerHTML = `
-          <span class="tid">${esc(tech.id)}</span>
-          <strong>${esc(tech.name)}</strong>
-          <div style="color:var(--text-muted);margin-top:4px">
-            <b style="color:var(--accent)">${count}</b> incident${count !== 1 ? "s" : ""}
-            ${esc(tactic.name)}
+  const topList = topSection.querySelector("#top-techniques")!;
+  const top10 = allTechniques.slice(0, 10);
+  top10.forEach((t, i) => {
+    const pct = Math.round((t.count / totalIncidents) * 100);
+    const barWidth = Math.max(4, (t.count / maxCount) * 100);
+    const row = document.createElement("div");
+    row.className = "top-row";
+    row.innerHTML = `
+      <div class="rank-num" data-top="${i + 1}">${String(i + 1).padStart(2, "0")}</div>
+      <div class="rank-content" data-tid="${esc(t.id)}">
+        <div class="rank-head">
+          <span class="tech-name">${esc(t.name)}</span>
+          <span class="tech-id">${esc(t.id)}</span>
+          <span class="tech-tactic" style="color:${t.color}">${esc(t.tacticName)}</span>
+        </div>
+        <div class="tech-meta">
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${barWidth}%;background:${t.color}"></div>
           </div>
-          ${incidents.length ? `<div style="margin-top:6px;font-size:0.75rem;color:var(--text-muted)">${incidents.slice(0,5).map(esc).join("<br>")}</div>` : ""}
-        `;
-        tip.classList.add("visible");
-        const x = (e as MouseEvent).clientX + 12;
-        const y = (e as MouseEvent).clientY - 10;
-        tip.style.left = Math.min(x, window.innerWidth - 300) + "px";
-        tip.style.top = y + "px";
-      });
+          <span class="count">${t.count}</span>
+          <span class="count-pct">${pct}%</span>
+        </div>
+      </div>
+    `;
+    row.querySelector(".rank-content")!.addEventListener("click", () => {
+      window.location.href = `${import.meta.env.BASE_URL}/incidents?technique=${t.id}`;
+    });
+    topList.appendChild(row);
+  });
 
-      cell.addEventListener("mouseleave", () => {
-        document.getElementById("heatmap-tooltip")!.classList.remove("visible");
-      });
+  // ── Section 2: Kill chain breakdown ──────────────────────
+  const chainSection = document.createElement("section");
+  chainSection.className = "kill-chain-section";
+  chainSection.innerHTML = `
+    <div class="section-label">
+      <span class="kicker">Chapter Two</span>
+      <h2>The cloud kill chain</h2>
+    </div>
+    <p class="section-lead">
+      Techniques grouped by their position in MITRE's kill chain — from reconnaissance through impact.
+      Each card shows the top five techniques observed in that tactic.
+    </p>
+    <div class="kill-chain" id="kill-chain"></div>
+  `;
+  container.appendChild(chainSection);
 
-      if (count > 0) {
-        cell.style.cursor = "pointer";
-        cell.addEventListener("click", () => {
-          window.location.href = `${import.meta.env.BASE_URL}/incidents?technique=${tech.id}`;
-        });
-      }
+  const chainGrid = chainSection.querySelector("#kill-chain")!;
 
-      col.appendChild(cell);
-    }
-
-    wrap.appendChild(col);
+  // Group techniques by tactic
+  const byTactic: Record<string, any[]> = {};
+  for (const t of allTechniques) {
+    if (!t.tacticId) continue;
+    if (!byTactic[t.tacticId]) byTactic[t.tacticId] = [];
+    byTactic[t.tacticId].push(t);
   }
 
-  container.appendChild(wrap);
+  for (const tid of TACTIC_ORDER) {
+    const meta = tactics[tid];
+    if (!meta) continue;
+    const techs = byTactic[tid] || [];
+    const totalHits = techs.reduce((s, t) => s + t.count, 0);
+    const color = TACTIC_COLORS[tid];
+    const localMax = techs.length ? techs[0].count : 1;
 
-  // Legend
-  const legend = document.createElement("div");
-  legend.className = "legend";
+    const card = document.createElement("div");
+    card.className = "tactic-card";
+    card.style.setProperty("--tactic-color", color);
 
-  const canvas = document.createElement("canvas");
-  canvas.className = "legend-gradient";
-  canvas.width = 120;
-  canvas.height = 10;
-  const ctx = canvas.getContext("2d")!;
-  const grad = ctx.createLinearGradient(0, 0, 120, 0);
-  for (let i = 0; i <= 10; i++) {
-    grad.addColorStop(i / 10, colorScale(Math.max(1, Math.pow(maxCount, i / 10))));
+    const displayTop = techs.slice(0, 5);
+    const rows = displayTop.map(t => {
+      const width = Math.round((t.count / localMax) * 100);
+      return `
+        <a class="mini-row" href="${import.meta.env.BASE_URL}/incidents?technique=${t.id}" style="--mini-w:${width}%">
+          <span class="mini-name">${esc(t.name)}</span>
+          <span class="mini-count">${t.count}</span>
+        </a>
+      `;
+    }).join("");
+
+    const extra = techs.length > 5 ? `<div class="tactic-more">+ ${techs.length - 5} more</div>` : "";
+    const empty = !techs.length ? `<div class="tactic-empty">Not observed in corpus</div>` : "";
+
+    card.innerHTML = `
+      <div class="tactic-head">
+        <div class="tactic-name">${esc(meta.name)}</div>
+        <div class="tactic-count">${techs.length} tech · ${totalHits} hits</div>
+      </div>
+      <div class="tactic-list">${rows}${empty}</div>
+      ${extra}
+    `;
+    chainGrid.appendChild(card);
   }
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 120, 10);
-
-  const labels = document.createElement("div");
-  labels.className = "legend-labels";
-  labels.innerHTML = `<span>1</span><span>${maxCount}</span>`;
-
-  const legendLabel = document.createElement("span");
-  legendLabel.textContent = "Incident frequency";
-
-  legend.appendChild(legendLabel);
-  const gradWrap = document.createElement("div");
-  gradWrap.style.display = "flex";
-  gradWrap.style.flexDirection = "column";
-  gradWrap.style.gap = "2px";
-  gradWrap.appendChild(canvas);
-  gradWrap.appendChild(labels);
-  legend.appendChild(gradWrap);
-  container.appendChild(legend);
 }
 
 async function init() {
   try {
-    const { freqData, metaData } = await loadData();
-    buildHeatmap(freqData, metaData);
+    const { freqData, metaData, stats } = await loadData();
+    render(freqData, metaData, stats);
   } catch (err) {
-    const container = document.getElementById("heatmap-container")!;
+    const container = document.querySelector(".anatomy")! as HTMLElement;
     container.innerHTML = `<div class="loading" style="color:var(--text-muted)">
-      No data yet — run the analysis pipeline to populate the heatmap.
+      No data yet — run the analysis pipeline to populate the atlas.
     </div>`;
-    console.error("Heatmap error:", err);
+    console.error(err);
   }
 }
 

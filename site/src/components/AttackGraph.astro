@@ -1,20 +1,37 @@
 ---
-// D3 force-directed attack chain graph
+// "How attackers move" — Sankey flow diagram of tactic transitions
+// Replaces force-directed hairball with a readable kill-chain flow
 ---
-<div id="graph-container">
-  <div class="loading" id="graph-loading">Loading attack graph…</div>
+<div id="flow-container">
+  <div class="loading" id="flow-loading">Tracing flows…</div>
 </div>
-<div class="graph-controls">
-  <button id="graph-reset" title="Reset zoom">Reset</button>
-  <button id="graph-freeze" title="Freeze / unfreeze simulation">Freeze</button>
-  <span class="hint">Drag nodes · Scroll to zoom · Click to isolate</span>
-</div>
-<div class="tooltip" id="graph-tooltip"></div>
 
-<style>
-  #graph-container {
+<div class="flow-legend">
+  <div class="legend-note">
+    <span class="legend-dot" style="background:var(--accent)"></span>
+    Each ribbon traces a tactic-to-tactic transition observed in the attack chain of a real incident.
+    Ribbon width = number of incidents making that move. Hover to see details.
+  </div>
+</div>
+
+<section class="top-flows">
+  <div class="section-label">
+    <span class="kicker">Chapter Three</span>
+    <h2>Where attackers go next</h2>
+  </div>
+  <p class="section-lead">
+    The ten most common tactic-to-tactic transitions in the corpus — what attackers
+    actually do after each kill-chain step.
+  </p>
+  <div id="top-flows-list"></div>
+</section>
+
+<div class="tooltip" id="flow-tooltip"></div>
+
+<style is:global>
+  #flow-container {
     width: 100%;
-    height: 640px;
+    height: 720px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -22,66 +39,134 @@
     position: relative;
   }
 
-  #graph-container svg {
+  #flow-container svg {
     width: 100%;
     height: 100%;
+    display: block;
   }
 
-  .graph-controls {
+  .flow-legend {
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 0.75rem;
   }
 
-  .graph-controls button {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
+  .legend-note {
+    font-size: 0.85rem;
     color: var(--text-muted);
-    border-radius: var(--radius);
-    padding: 0.35rem 0.75rem;
-    font-size: 0.82rem;
+    line-height: 1.5;
+    max-width: 70ch;
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: 1px;
+  }
+
+  /* Sankey-specific styles (kept global so dynamically-injected SVG inherits) */
+  .sankey-node-rect {
     cursor: pointer;
-    font-family: var(--font-body);
-    transition: border-color 0.15s, color 0.15s;
+    transition: fill-opacity 0.15s, stroke-opacity 0.15s;
   }
 
-  .graph-controls button:hover {
-    border-color: var(--blue);
-    color: var(--text);
+  .sankey-node-label {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 24;
+    font-size: 0.88rem;
+    font-weight: 500;
+    fill: var(--text);
+    pointer-events: none;
   }
 
-  .graph-controls .hint {
-    font-size: 0.8rem;
+  .sankey-node-sub {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    fill: var(--text-muted);
+    pointer-events: none;
+    letter-spacing: 0.04em;
+  }
+
+  .sankey-link {
+    fill: none;
+    opacity: 0.35;
+    transition: opacity 0.15s;
+    cursor: pointer;
+  }
+
+  .sankey-link:hover { opacity: 0.85 !important; }
+
+  .sankey-dimmed .sankey-link:not(.sankey-link-active) { opacity: 0.08; }
+  .sankey-dimmed .sankey-node-rect:not(.sankey-node-active) { fill-opacity: 0.25; stroke-opacity: 0.25; }
+
+  /* Top flows list */
+  .top-flows {
+    margin-top: 3rem;
+  }
+
+  .top-flows .flow-row {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .top-flows .flow-row:last-child { border-bottom: none; }
+
+  .top-flows .flow-rank {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "opsz" 48;
+    font-size: 1.5rem;
     color: var(--text-muted);
+    font-feature-settings: "tnum";
+    text-align: right;
   }
 
-  /* Tactic legend */
-  .tactic-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  .tactic-swatch {
+  .top-flows .flow-pair {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    gap: 0.6rem;
+    flex-wrap: wrap;
   }
 
-  .tactic-swatch .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .top-flows .flow-tactic {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-variation-settings: "opsz" 24;
+    font-size: 1rem;
+  }
+
+  .top-flows .flow-arrow {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+
+  .top-flows .flow-count {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-width: 7rem;
+    text-align: right;
+  }
+
+  .top-flows .flow-count b {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.1rem;
   }
 </style>
 
 <script>
 import * as d3 from "d3";
+import { sankey, sankeyLinkHorizontal, sankeyLeft } from "d3-sankey";
 
 const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
 
@@ -92,230 +177,303 @@ function esc(s: unknown): string {
 }
 
 const TACTIC_COLORS: Record<string, string> = {
-  "TA0043": "#e05252", // Reconnaissance
-  "TA0042": "#e07852", // Resource Development
-  "TA0001": "#e09e52", // Initial Access
-  "TA0002": "#c5a832", // Execution
-  "TA0003": "#8fb83e", // Persistence
-  "TA0004": "#4ab56e", // Privilege Escalation
-  "TA0005": "#3bb5a0", // Defense Evasion
-  "TA0006": "#3898c5", // Credential Access
-  "TA0007": "#4872c5", // Discovery
-  "TA0008": "#6456c5", // Lateral Movement
-  "TA0009": "#9048c5", // Collection
-  "TA0011": "#c548b5", // Command and Control
-  "TA0010": "#c5486e", // Exfiltration
-  "TA0040": "#c5485a", // Impact
-  "": "#555",
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a",
 };
 
+const TACTIC_ORDER = [
+  "TA0043", "TA0042", "TA0001", "TA0002", "TA0003", "TA0004", "TA0005",
+  "TA0006", "TA0007", "TA0008", "TA0009", "TA0011", "TA0010", "TA0040",
+];
+
 async function loadData() {
-  const [graphData, metaData] = await Promise.all([
+  const [graphData, metaData, index] = await Promise.all([
     fetch(`${DATA_BASE}/attack_graph.json`).then(r => r.ok ? r.json() : { nodes: [], edges: [] }),
     fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+    fetch(`${DATA_BASE}/incidents_index.json`).then(r => r.ok ? r.json() : []),
   ]);
-  return { graphData, metaData };
+  return { graphData, metaData, index };
 }
 
-function renderGraph(graphData: any, metaData: any) {
-  const container = document.getElementById("graph-container")!;
-  container.innerHTML = "";
+/**
+ * Aggregate technique-level edges into tactic-level transitions,
+ * ignoring self-loops (technique → technique within same tactic).
+ */
+function buildTacticFlows(graphData: any, metaData: any) {
+  const techniques = metaData.techniques || {};
+  const tactics = metaData.tactics || {};
 
-  const nodes: any[] = (graphData.nodes || []).map((n: any) => ({ ...n }));
-  const edges: any[] = (graphData.edges || []).map((e: any) => ({ ...e }));
+  // (src_tactic, tgt_tactic) -> { count, incidents: Set }
+  const flowMap = new Map<string, { src: string; tgt: string; count: number; incidents: Set<string> }>();
+  const tacticUsage = new Map<string, { count: number; incidents: Set<string> }>();
 
-  if (nodes.length === 0) {
-    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">
-      No data yet — run the analysis pipeline first.
-    </div>`;
-    return;
+  for (const edge of (graphData.edges || [])) {
+    const srcT = (techniques[edge.source]?.tactic_ids || [])[0];
+    const tgtT = (techniques[edge.target]?.tactic_ids || [])[0];
+    if (!srcT || !tgtT || srcT === tgtT) continue;
+    const key = `${srcT}→${tgtT}`;
+    if (!flowMap.has(key)) flowMap.set(key, { src: srcT, tgt: tgtT, count: 0, incidents: new Set() });
+    const f = flowMap.get(key)!;
+    f.count += edge.count || 0;
+    for (const inc of (edge.incidents || [])) f.incidents.add(inc);
   }
 
-  const tactics = metaData.tactics || {};
+  // Count per-tactic usage from nodes
+  for (const node of (graphData.nodes || [])) {
+    const tid = (techniques[node.id]?.tactic_ids || [])[0];
+    if (!tid) continue;
+    if (!tacticUsage.has(tid)) tacticUsage.set(tid, { count: 0, incidents: new Set() });
+    const u = tacticUsage.get(tid)!;
+    u.count += node.count || 0;
+  }
+
+  return { flows: Array.from(flowMap.values()), tacticUsage, tactics };
+}
+
+function renderSankey(flowData: any, metaData: any) {
+  const container = document.getElementById("flow-container")!;
+  container.innerHTML = "";
+
+  const { flows, tacticUsage, tactics } = flowData;
+
+  if (flows.length === 0) {
+    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">No flow data available.</div>`;
+    return;
+  }
 
   const width = container.clientWidth;
   const height = container.clientHeight;
 
+  // Build sankey-compatible data.
+  // Duplicate tactic nodes are fine — Sankey handles DAG-only, so we split
+  // nodes into "waves" by kill-chain position to enforce left-to-right flow.
+  // Simpler approach: trust MITRE tactic order, filter out any back-edges
+  // (where target tactic comes earlier than source in TACTIC_ORDER).
+  const orderIdx: Record<string, number> = {};
+  TACTIC_ORDER.forEach((t, i) => (orderIdx[t] = i));
+  const forwardFlows = flows.filter((f: any) =>
+    (orderIdx[f.src] ?? 99) < (orderIdx[f.tgt] ?? 99)
+  );
+
+  // Nodes we need = all tactics referenced in forward flows
+  const usedTactics = new Set<string>();
+  for (const f of forwardFlows) { usedTactics.add(f.src); usedTactics.add(f.tgt); }
+
+  const nodeList = TACTIC_ORDER.filter(t => usedTactics.has(t)).map(t => {
+    const usage = tacticUsage.get(t) || { count: 0 };
+    return {
+      id: t,
+      name: tactics[t]?.name || t,
+      count: usage.count,
+      color: TACTIC_COLORS[t] || "#777",
+    };
+  });
+  const nodeIndex: Record<string, number> = {};
+  nodeList.forEach((n, i) => (nodeIndex[n.id] = i));
+
+  const sankeyData = {
+    nodes: nodeList.map(n => ({ ...n })),
+    links: forwardFlows.map((f: any) => ({
+      source: nodeIndex[f.src],
+      target: nodeIndex[f.tgt],
+      value: Math.max(1, f.count),
+      incidents: f.incidents,
+      srcId: f.src,
+      tgtId: f.tgt,
+    })),
+  };
+
+  const margin = { top: 24, right: 220, bottom: 24, left: 160 };
+
+  const sk = sankey<any, any>()
+    .nodeWidth(14)
+    .nodePadding(18)
+    .nodeAlign(sankeyLeft)
+    .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]]);
+
+  const { nodes, links } = sk(sankeyData as any);
+
   const svg = d3.select(container)
     .append("svg")
-    .attr("viewBox", `0 0 ${width} ${height}`);
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet");
 
-  const g = svg.append("g");
+  // Gradient defs — each link gets a left-color → right-color gradient
+  const defs = svg.append("defs");
+  (links as any[]).forEach((l: any, i: number) => {
+    const grad = defs.append("linearGradient")
+      .attr("id", `flow-grad-${i}`)
+      .attr("gradientUnits", "userSpaceOnUse")
+      .attr("x1", l.source.x1)
+      .attr("x2", l.target.x0);
+    grad.append("stop").attr("offset", "0%").attr("stop-color", l.source.color);
+    grad.append("stop").attr("offset", "100%").attr("stop-color", l.target.color);
+  });
 
-  // Zoom/pan
-  const zoom = d3.zoom<SVGSVGElement, unknown>()
-    .scaleExtent([0.1, 8])
-    .on("zoom", (event) => g.attr("transform", event.transform));
-
-  svg.call(zoom as any);
-
-  // Arrow markers
-  svg.append("defs").selectAll("marker")
-    .data(["arrow"])
-    .join("marker")
-    .attr("id", "arrow")
-    .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 18)
-    .attr("refY", 0)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
-    .attr("orient", "auto")
-    .append("path")
-    .attr("d", "M0,-5L10,0L0,5")
-    .attr("fill", "#444");
-
-  // Edge weight scale
-  const maxEdgeCount = Math.max(1, ...edges.map((e: any) => e.count));
-  const edgeWidth = d3.scaleLinear().domain([1, maxEdgeCount]).range([1, 5]);
-  const edgeOpacity = d3.scaleLinear().domain([1, maxEdgeCount]).range([0.2, 0.7]);
-
-  // Node size scale
-  const maxNodeCount = Math.max(1, ...nodes.map((n: any) => n.count));
-  const nodeRadius = d3.scaleSqrt().domain([0, maxNodeCount]).range([5, 22]);
+  // Grid guides (vertical lines between columns, subtle)
+  svg.append("g")
+    .attr("stroke", "var(--border)")
+    .attr("stroke-dasharray", "2,4")
+    .attr("opacity", 0.25)
+    .selectAll("line")
+    .data(nodes)
+    .join("line")
+    .attr("x1", (d: any) => (d.x0 + d.x1) / 2)
+    .attr("x2", (d: any) => (d.x0 + d.x1) / 2)
+    .attr("y1", margin.top - 10)
+    .attr("y2", height - margin.bottom + 10);
 
   // Links
-  const linkSel = g.append("g")
-    .selectAll("line")
-    .data(edges)
-    .join("line")
-    .attr("stroke", "#444")
-    .attr("stroke-width", (d: any) => edgeWidth(d.count))
-    .attr("stroke-opacity", (d: any) => edgeOpacity(d.count))
-    .attr("marker-end", "url(#arrow)");
+  const linkSel = svg.append("g")
+    .selectAll("path")
+    .data(links as any[])
+    .join("path")
+    .attr("class", "sankey-link")
+    .attr("d", sankeyLinkHorizontal() as any)
+    .attr("stroke", (_d: any, i: number) => `url(#flow-grad-${i})`)
+    .attr("stroke-width", (d: any) => Math.max(1, d.width));
 
   // Nodes
-  const nodeSel = g.append("g")
+  const nodeSel = svg.append("g")
     .selectAll("g")
-    .data(nodes)
-    .join("g")
-    .attr("cursor", "pointer")
-    .call(
-      d3.drag<SVGGElement, any>()
-        .on("start", (event, d) => {
-          if (!event.active) sim.alphaTarget(0.3).restart();
-          d.fx = d.x; d.fy = d.y;
-        })
-        .on("drag", (event, d) => { d.fx = event.x; d.fy = event.y; })
-        .on("end", (event, d) => {
-          if (!event.active) sim.alphaTarget(0);
-          d.fx = null; d.fy = null;
-        }) as any
-    );
+    .data(nodes as any[])
+    .join("g");
 
-  nodeSel.append("circle")
-    .attr("r", (d: any) => nodeRadius(d.count))
-    .attr("fill", (d: any) => TACTIC_COLORS[d.tactic_id] || "#555")
-    .attr("fill-opacity", 0.85)
-    .attr("stroke", (d: any) => TACTIC_COLORS[d.tactic_id] || "#555")
-    .attr("stroke-width", 1.5)
-    .attr("stroke-opacity", 0.5);
+  nodeSel.append("rect")
+    .attr("class", "sankey-node-rect")
+    .attr("x", (d: any) => d.x0)
+    .attr("y", (d: any) => d.y0)
+    .attr("width", (d: any) => d.x1 - d.x0)
+    .attr("height", (d: any) => Math.max(4, d.y1 - d.y0))
+    .attr("fill", (d: any) => d.color)
+    .attr("stroke", (d: any) => d.color)
+    .attr("stroke-width", 1);
+
+  // Node labels — placed left for the first column, right for the last, top otherwise
+  nodeSel.append("text")
+    .attr("class", "sankey-node-label")
+    .attr("x", (d: any) => d.x0 < width / 2 ? d.x1 + 10 : d.x0 - 10)
+    .attr("y", (d: any) => (d.y0 + d.y1) / 2)
+    .attr("dy", "0.35em")
+    .attr("text-anchor", (d: any) => d.x0 < width / 2 ? "start" : "end")
+    .text((d: any) => d.name);
 
   nodeSel.append("text")
+    .attr("class", "sankey-node-sub")
+    .attr("x", (d: any) => d.x0 < width / 2 ? d.x1 + 10 : d.x0 - 10)
+    .attr("y", (d: any) => (d.y0 + d.y1) / 2 + 14)
     .attr("dy", "0.35em")
-    .attr("text-anchor", "middle")
-    .attr("font-size", "9px")
-    .attr("font-family", "var(--font-mono)")
-    .attr("fill", "#e6edf3")
-    .attr("pointer-events", "none")
-    .text((d: any) => d.id);
+    .attr("text-anchor", (d: any) => d.x0 < width / 2 ? "start" : "end")
+    .text((d: any) => `${esc(d.id)} · ${d.count} hits`);
 
-  // Tooltip
-  const tip = document.getElementById("graph-tooltip")!;
+  // Interactions
+  const tip = document.getElementById("flow-tooltip")!;
 
-  nodeSel.on("mousemove", (event: MouseEvent, d: any) => {
-    tip.innerHTML = `
-      <span class="tid">${esc(d.id)}</span>
-      <strong>${esc(d.name)}</strong>
-      <div style="color:var(--text-muted);margin-top:4px">
-        <b style="color:var(--accent)">${d.count}</b> incident${d.count !== 1 ? "s" : ""}
-        &nbsp;·&nbsp; ${esc(d.tactic_name || "")}
+  linkSel
+    .on("mousemove", (event: MouseEvent, d: any) => {
+      const srcName = d.source.name;
+      const tgtName = d.target.name;
+      const incCount = d.incidents?.size ?? 0;
+      const examples = d.incidents ? Array.from(d.incidents as Set<string>).slice(0, 5) : [];
+      tip.innerHTML = `
+        <strong>${esc(srcName)} → ${esc(tgtName)}</strong>
+        <div style="color:var(--text-muted);font-size:0.78rem;margin-top:4px">
+          ${d.value} technique transitions · <b style="color:var(--accent)">${incCount}</b> incident${incCount !== 1 ? "s" : ""}
+        </div>
+        ${examples.length ? `<div style="margin-top:6px;font-size:0.72rem;color:var(--text-muted);max-height:120px;overflow:auto">${examples.map(esc).join("<br>")}</div>` : ""}
+      `;
+      tip.classList.add("visible");
+      tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 320) + "px";
+      tip.style.top = (event.clientY + 14) + "px";
+    })
+    .on("mouseleave", () => tip.classList.remove("visible"));
+
+  nodeSel
+    .on("mousemove", (event: MouseEvent, d: any) => {
+      tip.innerHTML = `
+        <span class="tid">${esc(d.id)}</span>
+        <strong>${esc(d.name)}</strong>
+        <div style="color:var(--text-muted);font-size:0.78rem;margin-top:4px">
+          <b style="color:var(--accent)">${d.count}</b> technique hits across corpus
+        </div>
+      `;
+      tip.classList.add("visible");
+      tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 320) + "px";
+      tip.style.top = (event.clientY + 14) + "px";
+    })
+    .on("mouseleave", () => tip.classList.remove("visible"))
+    .on("click", function(this: SVGGElement, _event: MouseEvent, d: any) {
+      const svgEl = svg.node() as SVGSVGElement;
+      if (svgEl.classList.contains("sankey-dimmed") && this.querySelector(".sankey-node-active")) {
+        svgEl.classList.remove("sankey-dimmed");
+        svg.selectAll(".sankey-node-active").classed("sankey-node-active", false);
+        svg.selectAll(".sankey-link-active").classed("sankey-link-active", false);
+        return;
+      }
+      svg.selectAll(".sankey-node-active").classed("sankey-node-active", false);
+      svg.selectAll(".sankey-link-active").classed("sankey-link-active", false);
+      svgEl.classList.add("sankey-dimmed");
+      (this.querySelector(".sankey-node-rect") as any)?.classList.add("sankey-node-active");
+      linkSel.each(function(this: SVGPathElement, l: any) {
+        if (l.source.id === d.id || l.target.id === d.id) {
+          this.classList.add("sankey-link-active");
+          // Light up connected nodes
+          const other = l.source.id === d.id ? l.target.id : l.source.id;
+          nodeSel.filter((n: any) => n.id === other).select(".sankey-node-rect").classed("sankey-node-active", true);
+        }
+      });
+    });
+}
+
+function renderTopFlowsList(flowData: any) {
+  const listEl = document.getElementById("top-flows-list")!;
+  const { flows, tactics } = flowData;
+
+  const orderIdx: Record<string, number> = {};
+  TACTIC_ORDER.forEach((t, i) => (orderIdx[t] = i));
+  const forwardOnly = flows.filter((f: any) => (orderIdx[f.src] ?? 99) < (orderIdx[f.tgt] ?? 99));
+
+  const sorted = [...forwardOnly].sort((a: any, b: any) => b.incidents.size - a.incidents.size).slice(0, 10);
+  const maxInc = sorted.length ? sorted[0].incidents.size : 1;
+
+  sorted.forEach((f: any, i: number) => {
+    const srcName = tactics[f.src]?.name || f.src;
+    const tgtName = tactics[f.tgt]?.name || f.tgt;
+    const srcColor = TACTIC_COLORS[f.src] || "#777";
+    const tgtColor = TACTIC_COLORS[f.tgt] || "#777";
+    const incCount = f.incidents.size;
+    const barPct = Math.round((incCount / maxInc) * 100);
+
+    const row = document.createElement("div");
+    row.className = "flow-row";
+    row.innerHTML = `
+      <div class="flow-rank">${String(i + 1).padStart(2, "0")}</div>
+      <div class="flow-pair">
+        <span class="flow-tactic" style="color:${srcColor}">${esc(srcName)}</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-tactic" style="color:${tgtColor}">${esc(tgtName)}</span>
+      </div>
+      <div class="flow-count">
+        <b>${incCount}</b> incident${incCount !== 1 ? "s" : ""}
+        <div style="width:${barPct}%;height:2px;background:linear-gradient(90deg,${srcColor},${tgtColor});margin-top:4px;margin-left:auto"></div>
       </div>
     `;
-    tip.classList.add("visible");
-    tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 300) + "px";
-    tip.style.top = (event.clientY - 10) + "px";
-  }).on("mouseleave", () => tip.classList.remove("visible"));
-
-  // Click to isolate 1-hop neighborhood
-  let isolated: string | null = null;
-  nodeSel.on("click", (_event: MouseEvent, d: any) => {
-    if (isolated === d.id) {
-      isolated = null;
-      nodeSel.attr("opacity", 1);
-      linkSel.attr("opacity", (e: any) => edgeOpacity(e.count));
-    } else {
-      isolated = d.id;
-      const neighbors = new Set<string>([d.id]);
-      edges.forEach((e: any) => {
-        if (e.source.id === d.id || e.source === d.id) neighbors.add(typeof e.target === "object" ? e.target.id : e.target);
-        if (e.target.id === d.id || e.target === d.id) neighbors.add(typeof e.source === "object" ? e.source.id : e.source);
-      });
-      nodeSel.attr("opacity", (n: any) => neighbors.has(n.id) ? 1 : 0.1);
-      linkSel.attr("opacity", (e: any) => {
-        const sid = typeof e.source === "object" ? e.source.id : e.source;
-        const tid = typeof e.target === "object" ? e.target.id : e.target;
-        return (neighbors.has(sid) && neighbors.has(tid)) ? edgeOpacity(e.count) : 0.05;
-      });
-    }
+    listEl.appendChild(row);
   });
-
-  // Simulation
-  const sim = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(edges).id((d: any) => d.id).distance(80).strength(0.4))
-    .force("charge", d3.forceManyBody().strength(-200))
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collision", d3.forceCollide().radius((d: any) => nodeRadius((d as any).count) + 4))
-    .on("tick", () => {
-      linkSel
-        .attr("x1", (d: any) => d.source.x)
-        .attr("y1", (d: any) => d.source.y)
-        .attr("x2", (d: any) => d.target.x)
-        .attr("y2", (d: any) => d.target.y);
-      nodeSel.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
-    });
-
-  // Controls
-  let frozen = false;
-  document.getElementById("graph-reset")!.addEventListener("click", () => {
-    svg.transition().duration(500).call(
-      zoom.transform as any,
-      d3.zoomIdentity
-    );
-  });
-
-  document.getElementById("graph-freeze")!.addEventListener("click", () => {
-    frozen = !frozen;
-    if (frozen) {
-      sim.stop();
-      (document.getElementById("graph-freeze") as HTMLButtonElement).textContent = "Unfreeze";
-    } else {
-      sim.restart();
-      (document.getElementById("graph-freeze") as HTMLButtonElement).textContent = "Freeze";
-    }
-  });
-
-  // Tactic legend
-  const legendContainer = document.querySelector(".tactic-legend");
-  if (legendContainer) {
-    const usedTactics = [...new Set(nodes.map((n: any) => n.tactic_id).filter(Boolean))];
-    for (const tid of usedTactics) {
-      const tactic = tactics[tid];
-      if (!tactic) continue;
-      const swatch = document.createElement("div");
-      swatch.className = "tactic-swatch";
-      swatch.innerHTML = `<span class="dot" style="background:${TACTIC_COLORS[tid] || '#555'}"></span>${tactic.name}`;
-      legendContainer.appendChild(swatch);
-    }
-  }
 }
 
 async function init() {
   try {
     const { graphData, metaData } = await loadData();
-    renderGraph(graphData, metaData);
+    const flowData = buildTacticFlows(graphData, metaData);
+    renderSankey(flowData, metaData);
+    renderTopFlowsList(flowData);
   } catch (err) {
-    document.getElementById("graph-container")!.innerHTML =
-      `<div class="loading" style="color:var(--text-muted)">Failed to load graph data.</div>`;
+    document.getElementById("flow-container")!.innerHTML =
+      `<div class="loading" style="color:var(--text-muted)">Failed to load flow data.</div>`;
     console.error(err);
   }
 }

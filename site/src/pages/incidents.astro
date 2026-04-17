@@ -23,14 +23,18 @@ import Base from "../layouts/Base.astro";
       <select id="filter-service">
         <option value="">All services</option>
       </select>
-      <select id="group-by">
-        <option value="none">No grouping</option>
-        <option value="year">Group by year</option>
-        <option value="impact">Group by impact category</option>
-        <option value="service">Group by primary service</option>
-      </select>
+      <div class="layout-control">
+        <label class="layout-label" for="group-by">Layout</label>
+        <select id="group-by">
+          <option value="none">Flat list</option>
+          <option value="year">By year</option>
+          <option value="impact">By impact category</option>
+          <option value="service">By primary service</option>
+        </select>
+      </div>
       <span id="result-count" class="result-count"></span>
     </div>
+    <div id="layout-status" class="layout-status"></div>
 
     <div id="incidents-grid" class="incidents-grid">
       <div class="loading">Loading incidents…</div>
@@ -76,6 +80,28 @@ import Base from "../layouts/Base.astro";
     color: var(--text-muted);
     margin-left: auto;
     font-family: var(--font-mono);
+  }
+
+  .layout-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .layout-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .layout-status {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin: -0.5rem 0 1.25rem 0.25rem;
   }
 
   .incidents-grid {
@@ -243,9 +269,15 @@ function renderCard(inc: any): HTMLElement {
   const services = (inc.aws_services || []).slice(0, 4);
   const totalTechniques = (inc.technique_ids || []).length;
 
-  // Extract year from slug (format: "name-YYYY-month")
-  const slugMatch = inc.slug.match(/(19\d{2}|20\d{2})/);
-  const year = slugMatch ? slugMatch[1] : "";
+  // Prefer event_date (from build_site_data.py); fall back to LAST year in slug
+  // so threat-group codes like UNC4899 don't get picked up before the real year.
+  let year = "";
+  if (inc.event_date && /^\d{4}/.test(String(inc.event_date))) {
+    year = String(inc.event_date).slice(0, 4);
+  } else {
+    const matches = Array.from(inc.slug.matchAll(/(19\d{2}|20\d{2})/g));
+    if (matches.length) year = matches[matches.length - 1][1];
+  }
 
   card.innerHTML = `
     <div class="incident-name">${esc(inc.name)}</div>
@@ -294,8 +326,16 @@ function renderGrid(incidents: any[]) {
     grouped.set(`All incidents`, incidents);
   } else if (mode === "year") {
     for (const inc of incidents) {
-      const m = inc.slug.match(/(19\d{2}|20\d{2})/);
-      const key = m ? m[1] : "Undated";
+      // Use event_date when present (build_site_data.py adds it when available),
+      // else last 19xx/20xx match in slug — slugs often embed a threat-group
+      // code (e.g. UNC4899) or an older year in the name, so trailing wins.
+      let key = "Undated";
+      if (inc.event_date && /^\d{4}/.test(String(inc.event_date))) {
+        key = String(inc.event_date).slice(0, 4);
+      } else {
+        const matches = Array.from(inc.slug.matchAll(/(19\d{2}|20\d{2})/g));
+        if (matches.length) key = matches[matches.length - 1][1];
+      }
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(inc);
     }
@@ -338,6 +378,15 @@ function renderGrid(incidents: any[]) {
 
   const countEl = document.getElementById("result-count")!;
   countEl.textContent = `${incidents.length} incident${incidents.length !== 1 ? "s" : ""}`;
+
+  const statusEl = document.getElementById("layout-status")!;
+  if (mode === "none") {
+    // Flat list mode: the "All incidents · N" group header already communicates this.
+    statusEl.textContent = "";
+  } else {
+    const modeName = { year: "YEAR", impact: "IMPACT CATEGORY", service: "PRIMARY SERVICE" }[mode] || mode.toUpperCase();
+    statusEl.textContent = `GROUPED BY ${modeName} · ${grouped.size} BUCKET${grouped.size !== 1 ? "S" : ""} · ${incidents.length} INCIDENTS`;
+  }
 }
 
 function applyFilters() {

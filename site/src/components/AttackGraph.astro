@@ -274,12 +274,15 @@ function renderSankey(flowData: any, metaData: any) {
   const nodeIndex: Record<string, number> = {};
   nodeList.forEach((n, i) => (nodeIndex[n.id] = i));
 
+  // Size ribbons by incident count so the visual metric matches
+  // what the ranked list and tooltips report.
   const sankeyData = {
     nodes: nodeList.map(n => ({ ...n })),
     links: forwardFlows.map((f: any) => ({
       source: nodeIndex[f.src],
       target: nodeIndex[f.tgt],
-      value: Math.max(1, f.count),
+      value: Math.max(1, f.incidents.size),
+      transitions: f.count,
       incidents: f.incidents,
       srcId: f.src,
       tgtId: f.tgt,
@@ -381,13 +384,17 @@ function renderSankey(flowData: any, metaData: any) {
       tip.innerHTML = `
         <strong>${esc(srcName)} → ${esc(tgtName)}</strong>
         <div style="color:var(--text-muted);font-size:0.78rem;margin-top:4px">
-          ${d.value} technique transitions · <b style="color:var(--accent)">${incCount}</b> incident${incCount !== 1 ? "s" : ""}
+          <b style="color:var(--accent)">${incCount}</b> incident${incCount !== 1 ? "s" : ""} · ${d.transitions} technique-level transition${d.transitions !== 1 ? "s" : ""}
         </div>
         ${examples.length ? `<div style="margin-top:6px;font-size:0.72rem;color:var(--text-muted);max-height:120px;overflow:auto">${examples.map(esc).join("<br>")}</div>` : ""}
       `;
       tip.classList.add("visible");
-      tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 320) + "px";
-      tip.style.top = (event.clientY + 14) + "px";
+      const tipW = 340;
+      const left = (event.clientX + 16 + tipW <= window.innerWidth - 8)
+        ? event.clientX + 14
+        : Math.max(8, event.clientX - tipW - 14);
+      tip.style.left = left + "px";
+      tip.style.top = Math.max(8, Math.min(event.clientY + 14, window.innerHeight - 220)) + "px";
     })
     .on("mouseleave", () => tip.classList.remove("visible"));
 
@@ -401,8 +408,12 @@ function renderSankey(flowData: any, metaData: any) {
         </div>
       `;
       tip.classList.add("visible");
-      tip.style.left = Math.min(event.clientX + 12, window.innerWidth - 320) + "px";
-      tip.style.top = (event.clientY + 14) + "px";
+      const tipW = 340;
+      const left = (event.clientX + 16 + tipW <= window.innerWidth - 8)
+        ? event.clientX + 14
+        : Math.max(8, event.clientX - tipW - 14);
+      tip.style.left = left + "px";
+      tip.style.top = Math.max(8, Math.min(event.clientY + 14, window.innerHeight - 220)) + "px";
     })
     .on("mouseleave", () => tip.classList.remove("visible"))
     .on("click", function(this: SVGGElement, _event: MouseEvent, d: any) {

@@ -271,7 +271,7 @@ function renderTimeline(incident: any, metaData: any) {
         ? `<div class="step-services">${(step.aws_services_involved as string[]).map((s: string) => `<span class="service-tag">${esc(s)}</span>`).join("")}</div>`
         : ""}
       ${evidenceQuote ? `<div class="step-evidence">“${esc(evidenceQuote)}”</div>` : ""}
-      ${evidenceChunks.length ? `<div class="step-chunks">${evidenceChunks.map((c: any) => `<span class="chunk-tag">${esc(c.chunk_id || c.source_file)}</span>`).join("")}</div>` : ""}
+      ${evidenceChunks.length ? `<div class="step-chunks">${evidenceChunks.map((c: any) => `<span class="chunk-tag">${esc(c.chunk_id || c.source_file)}</span>`).join(" ")}</div>` : ""}
       ${sourceLinks ? `<div class="step-sources">${sourceLinks}</div>` : ""}
     `;
 
@@ -294,8 +294,12 @@ function renderTimeline(incident: any, metaData: any) {
         ${sourceList}
       `;
       tip.classList.add("visible");
-      tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 300) + "px";
-      tip.style.top = (e.clientY - 10) + "px";
+      // Flip to the left of the cursor if we'd clip past the right edge
+      const tipWidth = 340;
+      const preferRight = e.clientX + 16 + tipWidth <= window.innerWidth - 8;
+      const left = preferRight ? e.clientX + 14 : Math.max(8, e.clientX - tipWidth - 14);
+      tip.style.left = left + "px";
+      tip.style.top = Math.max(8, Math.min(e.clientY - 10, window.innerHeight - 200)) + "px";
     });
     inner.addEventListener("mouseleave", () => tip.classList.remove("visible"));
 

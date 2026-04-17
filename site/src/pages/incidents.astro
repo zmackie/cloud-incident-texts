@@ -337,8 +337,15 @@ function renderGrid(incidents: any[]) {
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(inc);
     }
-    // Sort descending by year
-    const sorted = new Map([...grouped.entries()].sort((a, b) => b[0].localeCompare(a[0])));
+    // Sort descending by year; non-numeric buckets (e.g. "Undated") go last.
+    const sorted = new Map([...grouped.entries()].sort((a, b) => {
+      const aNum = /^\d{4}$/.test(a[0]);
+      const bNum = /^\d{4}$/.test(b[0]);
+      if (aNum && !bNum) return -1;
+      if (!aNum && bNum) return 1;
+      if (!aNum && !bNum) return a[0].localeCompare(b[0]);
+      return b[0].localeCompare(a[0]);
+    }));
     grouped.clear();
     for (const [k, v] of sorted) grouped.set(k, v);
   } else if (mode === "impact") {

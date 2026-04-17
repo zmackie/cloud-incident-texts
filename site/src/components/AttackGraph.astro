@@ -32,9 +32,9 @@
     <h2>Revisits &amp; loops</h2>
   </div>
   <p class="section-lead">
-    Every chain that goes backward. These show where attackers circled back to
-    an earlier kill-chain stage — re-running discovery after privilege escalation,
-    planting persistence after exfiltration, etc.
+    The ten most common <em>backward</em> transitions — where attackers circled
+    back to an earlier kill-chain stage. Re-running discovery after privilege
+    escalation, planting persistence after exfiltration, and similar revisits.
   </p>
   <div id="back-flows-list"></div>
 </section>
@@ -211,35 +211,66 @@ async function loadData() {
 }
 
 /**
- * Aggregate technique-level edges into tactic-level transitions,
- * ignoring self-loops (technique → technique within same tactic).
+ * Aggregate technique-level edges into tactic-level transitions.
+ *
+ * MITRE techniques routinely span multiple tactics (e.g. T1078 "Valid
+ * Accounts" is both Initial Access and Persistence and Privilege
+ * Escalation and Defense Evasion). Using only tactic_ids[0] would
+ * misattribute transitions for those techniques. Instead, for each
+ * edge we fan out across every (srcTactic × tgtTactic) pair and
+ * distribute the edge's contribution by 1/(K×L) so the total count
+ * contributed by one edge is preserved.
+ *
+ * Self-loops (same tactic both sides) are dropped — the Sankey and
+ * ranked lists are about tactic-to-tactic movement, not intra-tactic
+ * churn.
  */
 function buildTacticFlows(graphData: any, metaData: any) {
   const techniques = metaData.techniques || {};
   const tactics = metaData.tactics || {};
 
-  // (src_tactic, tgt_tactic) -> { count, incidents: Set }
   const flowMap = new Map<string, { src: string; tgt: string; count: number; incidents: Set<string> }>();
   const tacticUsage = new Map<string, { count: number; incidents: Set<string> }>();
 
   for (const edge of (graphData.edges || [])) {
-    const srcT = (techniques[edge.source]?.tactic_ids || [])[0];
-    const tgtT = (techniques[edge.target]?.tactic_ids || [])[0];
-    if (!srcT || !tgtT || srcT === tgtT) continue;
-    const key = `${srcT}→${tgtT}`;
-    if (!flowMap.has(key)) flowMap.set(key, { src: srcT, tgt: tgtT, count: 0, incidents: new Set() });
-    const f = flowMap.get(key)!;
-    f.count += edge.count || 0;
-    for (const inc of (edge.incidents || [])) f.incidents.add(inc);
+    const srcTactics = techniques[edge.source]?.tactic_ids || [];
+    const tgtTactics = techniques[edge.target]?.tactic_ids || [];
+    if (!srcTactics.length || !tgtTactics.length) continue;
+
+    // Enumerate all non-self-loop (srcT, tgtT) combinations for this edge.
+    const pairs: Array<[string, string]> = [];
+    for (const sT of srcTactics) {
+      for (const tT of tgtTactics) {
+        if (sT !== tT) pairs.push([sT, tT]);
+      }
+    }
+    if (!pairs.length) continue;
+
+    // Fan-out weighting: split the edge count across all contributing pairs
+    // so techniques spanning many tactics don't over-contribute.
+    const weight = (edge.count || 0) / pairs.length;
+    for (const [sT, tT] of pairs) {
+      const key = `${sT}→${tT}`;
+      if (!flowMap.has(key)) flowMap.set(key, { src: sT, tgt: tT, count: 0, incidents: new Set() });
+      const f = flowMap.get(key)!;
+      f.count += weight;
+      // Incidents are shared — same incident can legitimately contribute to
+      // multiple tactic pairs for a multi-tactic technique, and that's
+      // what we want to reflect in the Sankey width.
+      for (const inc of (edge.incidents || [])) f.incidents.add(inc);
+    }
   }
 
-  // Count per-tactic usage from nodes
+  // Tactic usage: sum across all tactic_ids for each node.
   for (const node of (graphData.nodes || [])) {
-    const tid = (techniques[node.id]?.tactic_ids || [])[0];
-    if (!tid) continue;
-    if (!tacticUsage.has(tid)) tacticUsage.set(tid, { count: 0, incidents: new Set() });
-    const u = tacticUsage.get(tid)!;
-    u.count += node.count || 0;
+    const tids = techniques[node.id]?.tactic_ids || [];
+    if (!tids.length) continue;
+    const share = (node.count || 0) / tids.length;
+    for (const tid of tids) {
+      if (!tacticUsage.has(tid)) tacticUsage.set(tid, { count: 0, incidents: new Set() });
+      const u = tacticUsage.get(tid)!;
+      u.count += share;
+    }
   }
 
   return { flows: Array.from(flowMap.values()), tacticUsage, tactics };
@@ -279,7 +310,7 @@ function renderSankey(flowData: any, metaData: any) {
     return {
       id: t,
       name: tactics[t]?.name || t,
-      count: usage.count,
+      count: Math.round(usage.count),
       color: TACTIC_COLORS[t] || "#777",
     };
   });
@@ -294,7 +325,7 @@ function renderSankey(flowData: any, metaData: any) {
       source: nodeIndex[f.src],
       target: nodeIndex[f.tgt],
       value: Math.max(1, f.incidents.size),
-      transitions: f.count,
+      transitions: Math.round(f.count),
       incidents: f.incidents,
       srcId: f.src,
       tgtId: f.tgt,

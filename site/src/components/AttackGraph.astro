@@ -282,24 +282,25 @@ function renderSankey(flowData: any, metaData: any) {
 
   const { flows, tacticUsage, tactics } = flowData;
 
-  if (flows.length === 0) {
-    container.innerHTML = `<div class="loading" style="color:var(--text-muted)">No flow data available.</div>`;
-    return;
-  }
-
   const width = container.clientWidth;
   const height = container.clientHeight;
 
-  // Build sankey-compatible data.
-  // Duplicate tactic nodes are fine — Sankey handles DAG-only, so we split
-  // nodes into "waves" by kill-chain position to enforce left-to-right flow.
-  // Simpler approach: trust MITRE tactic order, filter out any back-edges
-  // (where target tactic comes earlier than source in TACTIC_ORDER).
+  // Sankey requires a DAG, so the visualization only renders forward
+  // tactic transitions. Backward transitions still appear in the
+  // "Revisits & loops" list below.
   const orderIdx: Record<string, number> = {};
   TACTIC_ORDER.forEach((t, i) => (orderIdx[t] = i));
   const forwardFlows = flows.filter((f: any) =>
     (orderIdx[f.src] ?? 99) < (orderIdx[f.tgt] ?? 99)
   );
+
+  if (forwardFlows.length === 0) {
+    const reason = flows.length === 0
+      ? "No flow data available."
+      : "No forward tactic transitions in corpus. See Revisits & loops below for backward transitions.";
+    container.innerHTML = `<div class="loading" style="color:var(--text-muted);padding:2rem;text-align:center">${reason}</div>`;
+    return;
+  }
 
   // Nodes we need = all tactics referenced in forward flows
   const usedTactics = new Set<string>();

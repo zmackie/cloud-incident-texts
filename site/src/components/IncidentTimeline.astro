@@ -6,7 +6,7 @@
 </div>
 <div class="tooltip" id="timeline-tooltip"></div>
 
-<style>
+<style is:global>
   #timeline-container {
     width: 100%;
     overflow-x: auto;
@@ -14,7 +14,7 @@
 
   .chain-wrap {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
     padding: 1.5rem 0;
     min-width: max-content;
@@ -28,20 +28,24 @@
   }
 
   .chain-step-inner {
-    width: 160px;
+    width: 200px;
     border-radius: var(--radius-lg);
-    padding: 0.875rem;
+    padding: 1rem;
     border: 1px solid var(--border);
     background: var(--bg-secondary);
     cursor: pointer;
-    transition: border-color 0.15s, transform 0.1s;
+    transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .chain-step-inner:hover {
     border-color: var(--blue);
     transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
 
   .step-num {
@@ -102,11 +106,12 @@
   .chain-arrow {
     display: flex;
     align-items: center;
-    padding: 0 4px;
+    padding: 0 6px;
     padding-top: 2.5rem;
-    color: var(--border);
-    font-size: 1.2rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
     flex-shrink: 0;
+    opacity: 0.5;
   }
 
   /* Tactic color bar at top of card */

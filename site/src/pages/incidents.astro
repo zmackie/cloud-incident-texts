@@ -38,74 +38,89 @@ import Base from "../layouts/Base.astro";
   </div>
 </Base>
 
-<style>
+<style is:global>
   .filters {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
   }
 
   .filters input,
   .filters select {
-    background: var(--bg-secondary);
+    background: var(--bg);
     border: 1px solid var(--border);
     color: var(--text);
     border-radius: var(--radius);
-    padding: 0.45rem 0.75rem;
-    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
     font-family: var(--font-body);
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
-  .filters input { min-width: 220px; }
+  .filters input { min-width: 240px; flex: 1; }
   .filters input:focus,
-  .filters select:focus { border-color: var(--blue); }
+  .filters select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px var(--blue-dim);
+  }
 
   .result-count {
     font-size: 0.8rem;
     color: var(--text-muted);
     margin-left: auto;
+    font-family: var(--font-mono);
   }
 
   .incidents-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 0.875rem;
   }
 
-  .group-block { margin-bottom: 1.5rem; grid-column: 1 / -1; }
+  .group-block { margin-bottom: 2rem; grid-column: 1 / -1; }
   .group-title {
     color: var(--text-muted);
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
   }
 
   .incident-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1.25rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.1rem;
     text-decoration: none;
     color: inherit;
-    display: block;
-    transition: border-color 0.15s, transform 0.1s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
   }
 
   .incident-card:hover {
     border-color: var(--blue);
-    transform: translateY(-1px);
+    border-left-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     text-decoration: none;
   }
 
   .incident-name {
     font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.3;
     color: var(--text);
   }
 
@@ -114,24 +129,26 @@ import Base from "../layouts/Base.astro";
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 0.75rem;
   }
 
   .impact-badge {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     padding: 0.2em 0.6em;
     border-radius: 999px;
-    font-weight: 500;
-    background: var(--accent-dim);
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border: 1px solid;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .techniques-list {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 0.5rem;
   }
 
   .tech-badge {
@@ -142,13 +159,40 @@ import Base from "../layouts/Base.astro";
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
     color: var(--text-muted);
+    transition: color 0.15s;
+  }
+
+  .incident-card:hover .tech-badge {
+    color: var(--text);
   }
 
   .services-list {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 0.5rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .card-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .card-technique-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
   }
 </style>
 
@@ -173,26 +217,47 @@ async function loadIncidents() {
   return { index, stats, catalogData };
 }
 
+function impactColor(impact: string): string {
+  const s = impact.toLowerCase();
+  if (s.includes("ransomware")) return "#bc8cff";
+  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
+  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
+  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
+  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
+  if (s.includes("account takeover")) return "#3bb5a0";
+  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
+  return "#ff6b35";
+}
+
 function renderCard(inc: any): HTMLElement {
   const card = document.createElement("a");
   card.href = `${import.meta.env.BASE_URL}/incident?slug=${encodeURIComponent(inc.slug)}`;
   card.className = "incident-card";
 
+  const impactLower = (inc.impact_type || "").toLowerCase();
+  const borderColor = impactColor(inc.impact_type || "");
+  card.style.borderLeftColor = borderColor;
+
   const confPct = Math.round((inc.confidence_score || 0) * 100);
-  const techniques = (inc.technique_ids || []).slice(0, 8);
-  const services = (inc.aws_services || []).slice(0, 5);
+  const techniques = (inc.technique_ids || []).slice(0, 6);
+  const services = (inc.aws_services || []).slice(0, 4);
+  const totalTechniques = (inc.technique_ids || []).length;
+
+  // Extract year from slug (format: "name-YYYY-month") or analyzed_at
+  const slugMatch = inc.slug.match(/(\d{4})/);
+  const year = slugMatch ? slugMatch[1] : "";
 
   card.innerHTML = `
     <div class="incident-name">${esc(inc.name)}</div>
     <div class="incident-meta">
-      ${inc.impact_type ? `<span class="impact-badge">${esc(inc.impact_type)}</span>` : ""}
-      <div class="confidence">
-        <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
-        <span>${confPct}% confidence</span>
-      </div>
+      ${inc.impact_type ? `<span class="impact-badge" style="color:${borderColor};border-color:${borderColor}40;background:${borderColor}20">${esc(inc.impact_type)}</span>` : ""}
+      ${services.length ? services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("") : ""}
     </div>
-    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${inc.technique_ids.length > 8 ? `<span class="tech-badge">+${inc.technique_ids.length - 8}</span>` : ""}</div>` : ""}
-    ${services.length ? `<div class="services-list">${services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}</div>` : ""}
+    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${totalTechniques > 6 ? `<span class="tech-badge">+${totalTechniques - 6}</span>` : ""}</div>` : ""}
+    <div class="card-footer">
+      <span class="card-date">${esc(year)}</span>
+      <span class="card-technique-count">${totalTechniques} technique${totalTechniques !== 1 ? "s" : ""}</span>
+    </div>
   `;
 
   return card;

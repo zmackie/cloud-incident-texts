@@ -5,8 +5,11 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
 <Base title="Incident Detail">
   <div class="page">
     <div id="incident-header">
-      <div style="margin-bottom:0.75rem">
-        <a href={`${import.meta.env.BASE_URL}/incidents`} style="color:var(--text-muted);font-size:0.85rem">← All incidents</a>
+      <div class="back-link-row">
+        <a href={`${import.meta.env.BASE_URL}/incidents`} class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All incidents
+        </a>
       </div>
       <div class="loading" id="header-loading">Loading…</div>
     </div>
@@ -30,27 +33,58 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
   </div>
 </Base>
 
-<style>
+<style is:global>
+  .back-link-row {
+    margin-bottom: 1.25rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 0.35rem 0.65rem 0.35rem 0.4rem;
+    border-radius: var(--radius);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+    background: var(--bg-tertiary);
+    text-decoration: none;
+  }
+
   .incident-title {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    line-height: 1.25;
   }
 
   .section-title {
-    font-size: 1rem;
     font-weight: 600;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     font-size: 0.8rem;
-    margin: 2rem 0 0.75rem;
+    margin: 2.5rem 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
   }
 
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   @media (max-width: 768px) {
@@ -66,7 +100,7 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
   }
 
   .tactic-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .tactic-name {
@@ -75,19 +109,23 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-muted);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
   }
 
   .tech-row {
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
-    padding: 0.35rem 0;
-    border-bottom: 1px solid var(--bg-tertiary);
+    padding: 0.45rem 0.5rem;
+    border-radius: var(--radius);
     font-size: 0.82rem;
+    transition: background 0.1s;
   }
 
-  .tech-row:last-child { border-bottom: none; }
+  .tech-row:hover {
+    background: var(--bg-tertiary);
+  }
 
   .tech-row .tid {
     font-family: var(--font-mono);
@@ -109,19 +147,20 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
   .meta-row {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    padding: 0.5rem 0;
+    gap: 0.25rem;
+    padding: 0.6rem 0;
     border-bottom: 1px solid var(--bg-tertiary);
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
 
   .meta-row:last-child { border-bottom: none; }
 
   .meta-row .meta-key {
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-weight: 500;
   }
 
   .evidence-quote {
@@ -129,8 +168,9 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
     color: var(--text-muted);
     border-left: 2px solid var(--border);
     padding-left: 0.5rem;
-    margin-top: 2px;
+    margin-top: 4px;
     font-size: 0.75rem;
+    line-height: 1.45;
   }
 </style>
 
@@ -150,6 +190,18 @@ const TACTIC_COLORS: Record<string, string> = {
   "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
   "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
 };
+
+function impactColor(impact: string): string {
+  const s = impact.toLowerCase();
+  if (s.includes("ransomware")) return "#bc8cff";
+  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
+  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
+  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
+  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
+  if (s.includes("account takeover")) return "#3bb5a0";
+  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
+  return "#ff6b35";
+}
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
@@ -179,12 +231,13 @@ async function init() {
 
     // Render header
     const confPct = Math.round((incident.confidence_score || 0) * 100);
+    const impactClr = impactColor(incident.impact_type || "");
     headerEl.outerHTML = `
       <div>
         <div class="incident-title">${esc(incident.incident_name || incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
-        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem">
           ${incident.incident_date ? `<span class="badge blue">${esc(incident.incident_date)}</span>` : ""}
-          ${incident.impact_type ? `<span class="badge accent">${esc(incident.impact_type)}</span>` : ""}
+          ${incident.impact_type ? `<span class="badge" style="color:${impactClr};border-color:${impactClr}40;background:${impactClr}20;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;font-family:var(--font-body)">${esc(incident.impact_type)}</span>` : ""}
           <div class="confidence">
             <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
             <span>${confPct}% confidence</span>

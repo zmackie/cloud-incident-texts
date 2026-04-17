@@ -232,9 +232,23 @@ function buildTacticFlows(graphData: any, metaData: any) {
   const flowMap = new Map<string, { src: string; tgt: string; count: number; incidents: Set<string> }>();
   const tacticUsage = new Map<string, { count: number; incidents: Set<string> }>();
 
+  // Fallback: some edges reference technique IDs that aren't in attack_meta
+  // (e.g. freshly ingested techniques, retired IDs). The graph node payload
+  // carries a tactic_id for each technique, so consult that if the metadata
+  // lookup comes up empty — avoids silently dropping those edges.
+  const nodeTactic: Record<string, string> = {};
+  for (const n of (graphData.nodes || [])) {
+    if (n.tactic_id) nodeTactic[n.id] = n.tactic_id;
+  }
+  const tacticsFor = (tid: string): string[] => {
+    const fromMeta = techniques[tid]?.tactic_ids || [];
+    if (fromMeta.length) return fromMeta;
+    return nodeTactic[tid] ? [nodeTactic[tid]] : [];
+  };
+
   for (const edge of (graphData.edges || [])) {
-    const srcTactics = techniques[edge.source]?.tactic_ids || [];
-    const tgtTactics = techniques[edge.target]?.tactic_ids || [];
+    const srcTactics = tacticsFor(edge.source);
+    const tgtTactics = tacticsFor(edge.target);
     if (!srcTactics.length || !tgtTactics.length) continue;
 
     // Enumerate all non-self-loop (srcT, tgtT) combinations for this edge.
@@ -261,9 +275,10 @@ function buildTacticFlows(graphData: any, metaData: any) {
     }
   }
 
-  // Tactic usage: sum across all tactic_ids for each node.
+  // Tactic usage: sum across all tactic_ids for each node (same fallback
+  // applied so nodes with only graph-level tactic_id still contribute).
   for (const node of (graphData.nodes || [])) {
-    const tids = techniques[node.id]?.tactic_ids || [];
+    const tids = tacticsFor(node.id);
     if (!tids.length) continue;
     const share = (node.count || 0) / tids.length;
     for (const tid of tids) {

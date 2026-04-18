@@ -1,11 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
 import EditorialTimeline from "../components/EditorialTimeline.astro";
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 <Base title="Incident Detail">
   <div class="page">
     <div class="back-link-row">
-      <a href={`${import.meta.env.BASE_URL}/incidents`} class="back-link">
+      <a href={`${BASE}/incidents`} class="back-link">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All incidents
       </a>
@@ -145,7 +146,8 @@ import EditorialTimeline from "../components/EditorialTimeline.astro";
 </style>
 
 <script>
-const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const DATA_BASE = `${BASE}/data`;
 
 function esc(s: unknown): string {
   return String(s ?? "")

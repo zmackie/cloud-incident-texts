@@ -223,7 +223,8 @@ import Base from "../layouts/Base.astro";
 </style>
 
 <script>
-const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const DATA_BASE = `${BASE}/data`;
 
 function esc(s: unknown): string {
   return String(s ?? "")
@@ -255,7 +256,7 @@ function impactColor(impact: string): string {
 
 function renderCard(inc: any): HTMLElement {
   const card = document.createElement("a");
-  card.href = `${import.meta.env.BASE_URL}/incident?slug=${encodeURIComponent(inc.slug)}`;
+  card.href = `${BASE}/incident?slug=${encodeURIComponent(inc.slug)}`;
   card.className = "incident-card";
 
   const impactLower = (inc.impact_type || "").toLowerCase();

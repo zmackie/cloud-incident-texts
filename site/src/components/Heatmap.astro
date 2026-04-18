@@ -289,7 +289,8 @@
 </style>
 
 <script>
-const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const DATA_BASE = `${BASE}/data`;
 
 function esc(s: unknown): string {
   return String(s ?? "")
@@ -397,7 +398,7 @@ function render(freqData: Record<string, any>, metaData: Record<string, any>, st
       </div>
     `;
     row.querySelector(".rank-content")!.addEventListener("click", () => {
-      window.location.href = `${import.meta.env.BASE_URL}/incidents?technique=${t.id}`;
+      window.location.href = `${BASE}/incidents?technique=${t.id}`;
     });
     topList.appendChild(row);
   });
@@ -449,7 +450,7 @@ function render(freqData: Record<string, any>, metaData: Record<string, any>, st
     const rows = displayTop.map(t => {
       const width = Math.round((t.count / localMax) * 100);
       return `
-        <a class="mini-row" href="${import.meta.env.BASE_URL}/incidents?technique=${t.id}" style="--mini-w:${width}%">
+        <a class="mini-row" href="${BASE}/incidents?technique=${t.id}" style="--mini-w:${width}%">
           <span class="mini-name">${esc(t.name)}</span>
           <span class="mini-count">${t.count}</span>
         </a>

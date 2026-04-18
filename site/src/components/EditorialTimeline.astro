@@ -437,18 +437,23 @@ function safeUrl(url: string): string {
   } catch { return "#"; }
 }
 
+// impact_type is canonicalized in build_site_data.py (see scripts/normalize.py).
+const IMPACT_COLORS: Record<string, string> = {
+  "Ransomware / Extortion": "#bc8cff",
+  "Cryptomining": "#d29922",
+  "Data Exfiltration": "#f47067",
+  "Data Destruction / Disruption": "#58a6ff",
+  "Phishing / SES Abuse": "#e09e52",
+  "Account Takeover": "#3bb5a0",
+  "LLM / Resource Hijacking": "#c548b5",
+  "Credential Theft": "#f47067",
+  "Financial Theft": "#ff6b35",
+  "Supply Chain": "#ff6b35",
+  "Unauthorized Access": "#7d8590",
+};
+
 function impactColor(impact: string): string {
-  const s = (impact || "").toLowerCase();
-  if (s.includes("ransomware")) return "#bc8cff";
-  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
-  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
-  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
-  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
-  if (s.includes("account takeover")) return "#3bb5a0";
-  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
-  if (s.includes("financial") || s.includes("cryptocurrency")) return "#ff6b35";
-  if (s.includes("supply chain") || s.includes("magecart")) return "#ff6b35";
-  return "#ff6b35";
+  return IMPACT_COLORS[impact] || "#7d8590";
 }
 
 function prettifyName(slug: string): string {

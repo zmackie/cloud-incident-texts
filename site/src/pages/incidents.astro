@@ -242,16 +242,24 @@ async function loadIncidents() {
   return { index, stats };
 }
 
+// impact_type is already canonicalized in build_site_data.py (see
+// scripts/normalize.py). Keys match CANONICAL_IMPACTS exactly.
+const IMPACT_COLORS: Record<string, string> = {
+  "Ransomware / Extortion": "#bc8cff",
+  "Cryptomining": "#d29922",
+  "Data Exfiltration": "#f47067",
+  "Data Destruction / Disruption": "#58a6ff",
+  "Phishing / SES Abuse": "#e09e52",
+  "Account Takeover": "#3bb5a0",
+  "LLM / Resource Hijacking": "#c548b5",
+  "Credential Theft": "#f47067",
+  "Financial Theft": "#ff6b35",
+  "Supply Chain": "#ff6b35",
+  "Unauthorized Access": "#7d8590",
+};
+
 function impactColor(impact: string): string {
-  const s = impact.toLowerCase();
-  if (s.includes("ransomware")) return "#bc8cff";
-  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
-  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
-  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
-  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
-  if (s.includes("account takeover")) return "#3bb5a0";
-  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
-  return "#ff6b35";
+  return IMPACT_COLORS[impact] || "#7d8590";
 }
 
 function renderCard(inc: any): HTMLElement {
@@ -259,7 +267,6 @@ function renderCard(inc: any): HTMLElement {
   card.href = `${BASE}/incident?slug=${encodeURIComponent(inc.slug)}`;
   card.className = "incident-card";
 
-  const impactLower = (inc.impact_type || "").toLowerCase();
   const borderColor = impactColor(inc.impact_type || "");
   card.style.borderLeftColor = borderColor;
 
@@ -306,21 +313,6 @@ function renderGrid(incidents: any[]) {
   const mode = (document.getElementById("group-by") as HTMLSelectElement).value;
   const grouped = new Map<string, any[]>();
 
-  function impactCategory(impact: string): string {
-    const s = (impact || "").toLowerCase();
-    if (s.includes("ransomware")) return "Ransomware";
-    if (s.includes("cryptomining") || s.includes("cryptojacking")) return "Cryptomining";
-    if (s.includes("llmjacking") || s.includes("resource hijacking")) return "LLM / Resource Hijacking";
-    if (s.includes("exfiltration") || s.includes("data breach")) return "Data Exfiltration";
-    if (s.includes("destruction") || s.includes("disruption") || s.includes("denial")) return "Service / Data Destruction";
-    if (s.includes("credential")) return "Credential Theft";
-    if (s.includes("phishing") || s.includes("ses abuse") || s.includes("smishing") || s.includes("sms")) return "Phishing / SES Abuse";
-    if (s.includes("account takeover")) return "Account Takeover";
-    if (s.includes("financial") || s.includes("cryptocurrency")) return "Financial Theft";
-    if (s.includes("supply chain") || s.includes("magecart") || s.includes("nft")) return "Supply Chain";
-    return impact ? "Other" : "Unknown";
-  }
-
   if (mode === "none") {
     grouped.set(`All incidents`, incidents);
   } else if (mode === "year") {
@@ -351,7 +343,7 @@ function renderGrid(incidents: any[]) {
     for (const [k, v] of sorted) grouped.set(k, v);
   } else if (mode === "impact") {
     for (const inc of incidents) {
-      const key = impactCategory(inc.impact_type || "");
+      const key = inc.impact_type || "Unknown";
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(inc);
     }

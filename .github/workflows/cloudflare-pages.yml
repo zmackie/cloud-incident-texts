@@ -1,0 +1,107 @@
+name: Cloudflare Pages
+
+# Deploys the Astro site to Cloudflare Pages.
+#   - push to main  → production deployment  (https://<project>.pages.dev)
+#   - pull_request  → branch/preview deployment with its own *.pages.dev URL
+#
+# One-time setup in the repo owner's Cloudflare account:
+#   1. Create a "Direct Upload" Pages project named exactly `cloud-incident-texts`.
+#   2. Generate an API token with permission: Account → Cloudflare Pages → Edit.
+#   3. Add repo secrets:
+#        CLOUDFLARE_API_TOKEN   – the token from step 2
+#        CLOUDFLARE_ACCOUNT_ID  – the Cloudflare account ID (dashboard home page)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'scripts/build_site_data.py'
+      - 'data/**'
+      - '.github/workflows/cloudflare-pages.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'scripts/build_site_data.py'
+      - 'data/**'
+      - '.github/workflows/cloudflare-pages.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Skip if the secrets haven't been configured yet rather than failing loudly.
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install Python dependencies
+        run: uv sync
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        working-directory: site
+        run: npm install
+
+      - name: Build aggregated site data
+        run: |
+          mkdir -p site/public/data/incidents
+          uv run python scripts/build_site_data.py --output-dir site/public/data
+
+      - name: Build Astro site (root base path)
+        working-directory: site
+        env:
+          SITE_BASE: /
+        run: npm run build
+
+      - name: Derive Cloudflare branch name
+        id: branch
+        run: |
+          # Pages treats the "production" branch (default: main) specially;
+          # anything else becomes a preview deployment at <branch>.<project>.pages.dev.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            name="${{ github.head_ref }}"
+          else
+            name="${{ github.ref_name }}"
+          fi
+          # Cloudflare branch names have length + character constraints; sanitise.
+          safe="$(echo "$name" | tr '[:upper:]' '[:lower:]' | sed 's|[^a-z0-9-]|-|g' | cut -c1-28)"
+          echo "name=$safe" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Cloudflare Pages
+        id: cf
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site/dist --project-name=cloud-incident-texts --branch=${{ steps.branch.outputs.name }}
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: cloudflare-pages-preview
+          message: |
+            ### Cloudflare Pages preview
+
+            | | |
+            |---|---|
+            | **Preview** | ${{ steps.cf.outputs.deployment-url }} |
+            | **Alias**   | ${{ steps.cf.outputs.pages-deployment-alias-url }} |
+            | **Branch**  | `${{ steps.branch.outputs.name }}` |
+            | **Commit**  | `${{ github.event.pull_request.head.sha }}` |
+
+            The alias URL stays stable across pushes to this PR; the per-deployment
+            URL changes with each build.

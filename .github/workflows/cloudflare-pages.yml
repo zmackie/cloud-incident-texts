@@ -37,6 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     # Skip if the secrets haven't been configured yet rather than failing loudly.
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push' }}
+    # Exported at job scope so every step (including `pages project create`,
+    # which ignores the action's accountId input) sees them.
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 

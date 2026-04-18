@@ -161,7 +161,7 @@
       "description": "Attacker achieved code execution within the Lambda function context through an application vulnerability (exact exploit unspecified; Log4Shell-style or similar RCE implied).",
       "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations",
       "aws_services_involved": [
-        "AWS Lambda"
+        "Lambda"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -175,8 +175,8 @@
       "description": "Attacker exfiltrated the Lambda function's temporary IAM credentials from its environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN) and exported them to the attacker-controlled machine.",
       "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
       "aws_services_involved": [
-        "AWS Lambda",
-        "AWS IAM"
+        "Lambda",
+        "IAM"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -190,7 +190,7 @@
       "description": "Using the stolen credentials from an external IP (50.82.94.112), the attacker called GetCallerIdentity to identify the stolen identity, account ID, and credential type \u2014 equivalent to 'whoami'.",
       "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
       "aws_services_involved": [
-        "AWS STS"
+        "STS"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -204,7 +204,7 @@
       "description": "Attacker attempted IAM enumeration via ListAttachedRolePolicies and ListRolePolicies to understand privilege scope; both calls were denied.",
       "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -218,13 +218,13 @@
       "description": "Attacker performed broad enumeration across S3, EC2, VPC networking, CloudWatch/CloudTrail logging, EBS backup, and SES services across multiple regions to map the target account's architecture and find accessible resources.",
       "evidence_quote": "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration...",
       "aws_services_involved": [
-        "Amazon S3",
-        "Amazon EC2",
-        "Amazon VPC",
-        "Amazon CloudWatch",
-        "AWS CloudTrail",
-        "Amazon EBS",
-        "Amazon SES"
+        "S3",
+        "EC2",
+        "VPC",
+        "CloudWatch",
+        "CloudTrail",
+        "EBS",
+        "SES"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -238,7 +238,7 @@
       "description": "Attacker attempted to create a new IAM user (CreateUser) to establish a persistent backdoor; the call failed due to insufficient permissions.",
       "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -252,7 +252,7 @@
       "description": "Attacker successfully enumerated SES (GetAccount, ListIdentities) and then abused it to register a sending identity and enable outbound email for a phishing campaign (VerifyEmailIdentity, UpdateAccountSendingEnabled).",
       "evidence_quote": "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
       "aws_services_involved": [
-        "Amazon SES"
+        "SES"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -266,7 +266,7 @@
       "description": "Attacker deleted the SES sending identity (DeleteIdentity) to cover tracks and reduce evidence of the phishing infrastructure within the victim's account.",
       "evidence_quote": "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command.",
       "aws_services_involved": [
-        "Amazon SES"
+        "SES"
       ],
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
@@ -275,16 +275,16 @@
     }
   ],
   "aws_services": [
-    "AWS Lambda",
-    "AWS IAM",
-    "AWS STS",
-    "Amazon S3",
-    "Amazon EC2",
-    "Amazon VPC",
-    "Amazon CloudWatch",
-    "AWS CloudTrail",
-    "Amazon EBS",
-    "Amazon SES"
+    "Lambda",
+    "IAM",
+    "STS",
+    "S3",
+    "EC2",
+    "VPC",
+    "CloudWatch",
+    "CloudTrail",
+    "EBS",
+    "SES"
   ],
   "impact_type": "Phishing / SES Abuse",
   "confidence_score": 0.92,
@@ -305,7 +305,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "AWS Lambda"
+          "Lambda"
         ]
       },
       {
@@ -319,8 +319,8 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "AWS Lambda",
-          "AWS IAM"
+          "Lambda",
+          "IAM"
         ]
       },
       {
@@ -334,7 +334,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "AWS STS"
+          "STS"
         ]
       },
       {
@@ -348,7 +348,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -362,13 +362,13 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon EC2",
-          "Amazon VPC",
-          "Amazon CloudWatch",
-          "AWS CloudTrail",
-          "Amazon EBS",
-          "Amazon SES"
+          "S3",
+          "EC2",
+          "VPC",
+          "CloudWatch",
+          "CloudTrail",
+          "EBS",
+          "SES"
         ]
       },
       {
@@ -382,7 +382,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -396,7 +396,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "Amazon SES"
+          "SES"
         ]
       },
       {
@@ -410,7 +410,7 @@
           "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
         ],
         "aws_services_involved": [
-          "Amazon SES"
+          "SES"
         ]
       }
     ],
@@ -534,5 +534,17 @@
   "incident_name": "Palo Alto Unit 42",
   "incident_date": "2022, December",
   "incident_root_cause": "Code execution in Lambda context",
-  "impact_type_raw": "Phishing / SES Abuse"
+  "impact_type_raw": "Phishing / SES Abuse",
+  "aws_services_raw": [
+    "AWS Lambda",
+    "AWS IAM",
+    "AWS STS",
+    "Amazon S3",
+    "Amazon EC2",
+    "Amazon VPC",
+    "Amazon CloudWatch",
+    "AWS CloudTrail",
+    "Amazon EBS",
+    "Amazon SES"
+  ]
 }

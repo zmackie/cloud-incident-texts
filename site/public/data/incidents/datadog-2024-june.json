@@ -81,7 +81,7 @@
       "description": "Attacker obtained and used leaked long-term AWS IAM access keys (AKIA prefix) to authenticate to victim AWS environments. The automated nature and key type strongly suggest stolen/leaked static credentials.",
       "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
@@ -107,8 +107,8 @@
       "description": "Attacker ran automated, multi-region enumeration of AWS Secrets Manager (ListSecrets) and S3 Glacier (ListVaults) across 17 AWS regions in under a minute to discover available secrets and vault resources.",
       "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute",
       "aws_services_involved": [
-        "AWS Secrets Manager",
-        "Amazon S3 Glacier"
+        "Secrets Manager",
+        "S3 Glacier"
       ],
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
@@ -122,7 +122,7 @@
       "description": "Attacker enumerated S3 buckets via ListBuckets and then inventoried contents of accessible buckets via ListObjects, successfully listing objects in several buckets.",
       "evidence_quote": "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
@@ -136,7 +136,7 @@
       "description": "Corroborated by Lacework research, the ultimate goal of the campaign was identified as targeting Amazon Bedrock LLM resources for unauthorized use (LLMJacking), abusing the victim's cloud AI/ML quota and incurring costs.",
       "evidence_quote": "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
       "aws_services_involved": [
-        "Amazon Bedrock"
+        "Bedrock"
       ],
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
@@ -145,11 +145,11 @@
     }
   ],
   "aws_services": [
-    "AWS IAM",
-    "AWS Secrets Manager",
-    "Amazon S3",
-    "Amazon S3 Glacier",
-    "Amazon Bedrock"
+    "IAM",
+    "Secrets Manager",
+    "S3",
+    "S3 Glacier",
+    "Bedrock"
   ],
   "impact_type": "LLM / Resource Hijacking",
   "confidence_score": 0.75,
@@ -170,7 +170,7 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -196,8 +196,8 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "aws_services_involved": [
-          "AWS Secrets Manager",
-          "Amazon S3 Glacier"
+          "Secrets Manager",
+          "S3 Glacier"
         ]
       },
       {
@@ -211,7 +211,7 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -225,7 +225,7 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "aws_services_involved": [
-          "Amazon Bedrock"
+          "Bedrock"
         ]
       }
     ],
@@ -304,5 +304,12 @@
   "incident_name": "Datadog",
   "incident_date": "2024, June",
   "incident_root_cause": "Stolen or compromised credentials",
-  "impact_type_raw": "LLMJacking"
+  "impact_type_raw": "LLMJacking",
+  "aws_services_raw": [
+    "AWS IAM",
+    "AWS Secrets Manager",
+    "Amazon S3",
+    "Amazon S3 Glacier",
+    "Amazon Bedrock"
+  ]
 }

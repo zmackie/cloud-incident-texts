@@ -145,7 +145,7 @@
       "description": "Attacker used the harvested AWS access keys to authenticate to npm's AWS cloud infrastructure, escalating from GitHub access to AWS infrastructure access.",
       "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
@@ -159,7 +159,7 @@
       "description": "With AWS access, the attacker enumerated S3 bucket contents, obtaining directory listings of npm registry package storage.",
       "evidence_quote": "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
@@ -173,7 +173,7 @@
       "description": "Attacker exfiltrated multiple datasets from npm's AWS cloud storage: a skimdb.npmjs.com backup (containing ~100k user records from 2015, package manifests and metadata), S3 inventory CSVs listing all private package names/versions, and private package contents from two organizations.",
       "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files...the actor exfiltrated a small subset of private package contents belonging to two specific organizations",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
@@ -182,8 +182,8 @@
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "AWS IAM"
+    "S3",
+    "IAM"
   ],
   "impact_type": "Data Exfiltration",
   "confidence_score": 0.92,
@@ -240,7 +240,7 @@
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -254,7 +254,7 @@
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -268,7 +268,7 @@
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       }
     ],
@@ -362,5 +362,9 @@
   "incident_name": "npm",
   "incident_date": "2022, April",
   "incident_root_cause": "Third party OAuth token compromise granting private repository access, containing AWS keys",
-  "impact_type_raw": "Data Exfiltration"
+  "impact_type_raw": "Data Exfiltration",
+  "aws_services_raw": [
+    "Amazon S3",
+    "AWS IAM"
+  ]
 }

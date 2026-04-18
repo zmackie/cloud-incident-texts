@@ -4,7 +4,13 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from normalize import CANONICAL_IMPACTS, UNKNOWN_IMPACT, canonical_impact
+from normalize import (
+    CANONICAL_IMPACTS,
+    UNKNOWN_IMPACT,
+    canonical_impact,
+    canonical_service,
+    canonical_services,
+)
 
 
 def test_empty_input_is_unknown():
@@ -80,6 +86,84 @@ def test_plain_passthrough_values():
     assert canonical_impact("Data Exfiltration") == "Data Exfiltration"
     assert canonical_impact("Account Takeover") == "Account Takeover"
     assert canonical_impact("Credential Theft") == "Credential Theft"
+
+
+def test_service_empty_inputs():
+    assert canonical_service(None) == ""
+    assert canonical_service("") == ""
+    assert canonical_service("   ") == ""
+
+
+def test_service_prefix_variants_collapse():
+    # Every shade of prefix should land on the same canonical label.
+    for raw in ("IAM", "AWS IAM", "aws iam", "Amazon IAM"):
+        assert canonical_service(raw) == "IAM"
+    for raw in ("S3", "AWS S3", "Amazon S3", "amazon simple storage service"):
+        assert canonical_service(raw) == "S3"
+    for raw in ("EC2", "AWS EC2", "Amazon EC2"):
+        assert canonical_service(raw) == "EC2"
+    for raw in ("CloudTrail", "AWS CloudTrail", "Amazon CloudTrail"):
+        assert canonical_service(raw) == "CloudTrail"
+
+
+def test_service_parenthetical_suffix_stripped():
+    assert canonical_service("AWS Systems Manager (SSM)") == "Systems Manager"
+    assert canonical_service("Amazon SES (Simple Email Service)") == "SES"
+    assert canonical_service("AWS EC2 (inferred)") == "EC2"
+    assert canonical_service("AWS (general cloud environment)") == "AWS"
+    assert canonical_service("AWS (BeyondTrust primary account)") == "AWS"
+
+
+def test_service_imds_variants():
+    for raw in ("IMDS", "IMDSv1", "IMDSv2",
+                "EC2 Instance Metadata Service (IMDS)",
+                "EC2 Instance Metadata Service (IMDSv1)"):
+        assert canonical_service(raw) == "IMDS"
+
+
+def test_service_identity_center_and_sso_merge():
+    for raw in ("AWS SSO", "AWS IAM Identity Center",
+                "AWS Identity Center", "IAM Identity Center", "SSO"):
+        assert canonical_service(raw) == "IAM Identity Center"
+
+
+def test_service_security_groups_merge_under_vpc():
+    for raw in ("Security Groups", "AWS Security Groups",
+                "EC2 Security Groups", "VPC Security Groups"):
+        assert canonical_service(raw) == "VPC Security Groups"
+
+
+def test_service_generic_aws_bucket():
+    for raw in ("AWS", "AWS (general)", "AWS Cloud Environment",
+                "Amazon Web Services (AWS)",
+                "Amazon Web Services (general cloud)"):
+        assert canonical_service(raw) == "AWS"
+
+
+def test_service_non_aws_tools_recognized():
+    assert canonical_service("GitHub (Enterprise)") == "GitHub"
+    assert canonical_service("Google Cloud Platform") == "Google Cloud"
+    assert canonical_service("Salesforce CRM") == "Salesforce"
+    assert canonical_service("npm (Node Package Manager)") == "npm"
+    assert canonical_service("CloudFlare CDN") == "Cloudflare"
+
+
+def test_service_unknown_passes_through_with_prefix_stripped():
+    # Services we haven't enumerated should still normalize to their bare name
+    # (prefix stripped), so new services flow through without table updates.
+    assert canonical_service("Amazon EFS") == "EFS"
+    assert canonical_service("AWS Lightsail") == "Lightsail"
+
+
+def test_canonical_services_dedupes_preserving_order():
+    raw = ["AWS IAM", "IAM", "Amazon S3", "S3", "AWS IAM"]
+    assert canonical_services(raw) == ["IAM", "S3"]
+
+
+def test_canonical_services_drops_empty_entries():
+    assert canonical_services(["", None, "   ", "AWS IAM"]) == ["IAM"]
+    assert canonical_services([]) == []
+    assert canonical_services(None) == []
 
 
 def test_all_outputs_are_canonical():

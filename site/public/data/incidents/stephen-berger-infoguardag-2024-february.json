@@ -89,8 +89,8 @@
       "description": "On January 18, 2024, the attacker ran GetSendQuota against AWS SES and ListBuckets against S3 to enumerate available resources and understand the attack surface.",
       "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
       "aws_services_involved": [
-        "Amazon S3",
-        "Amazon SES"
+        "S3",
+        "SES"
       ],
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
@@ -104,7 +104,7 @@
       "description": "Before deleting buckets on February 5, 2024, the attacker queried detailed bucket configuration APIs to check whether versioning, replication, object lock, logging, and other recovery mechanisms were enabled \u2014 confirming that deletion would be unrecoverable.",
       "evidence_quote": "GetBucketVersioning (versioning was not enabled), GetBucketReplication, GetBucketObjectLockConfiguration, GetBucketLogging, GetBucketRequestPayment, GetAccelerateConfiguration",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
@@ -118,7 +118,7 @@
       "description": "The attacker downloaded approximately 2 GB of data from the S3 buckets prior to deletion, to be used as leverage in the ransom demand.",
       "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
@@ -132,7 +132,7 @@
       "description": "On February 5, 2024, the attacker called DeleteBucket to destroy all S3 buckets, permanently eliminating the victim's data and making recovery impossible.",
       "evidence_quote": "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
@@ -146,7 +146,7 @@
       "description": "The attacker deposited a ransom note and a fraudulent 'recovery' binary (recoveryAKIAZ5ESTHWPHSNVAXZ7.tgz) in place of the deleted buckets. The binary is a scam that only reads a local aws.txt file to simulate recovery activity with no actual network calls, designed to coerce the victim into paying 0.2 BTC.",
       "evidence_quote": "The whole 'recovery' binary is just a neat trick the attackers use to trick the victims into paying the ransom... not a single domain is contacted, nor was a network connection done",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
@@ -155,10 +155,10 @@
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "Amazon SES",
-    "AWS CloudTrail",
-    "AWS IAM"
+    "S3",
+    "SES",
+    "CloudTrail",
+    "IAM"
   ],
   "impact_type": "Ransomware / Extortion",
   "confidence_score": 0.82,
@@ -179,8 +179,8 @@
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon SES"
+          "S3",
+          "SES"
         ]
       },
       {
@@ -194,7 +194,7 @@
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -208,7 +208,7 @@
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -222,7 +222,7 @@
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -236,7 +236,7 @@
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       }
     ],
@@ -300,5 +300,11 @@
   "incident_name": "Stephen Berger (InfoGuardAG)",
   "incident_date": "2024, February",
   "incident_root_cause": "Unknown",
-  "impact_type_raw": "Ransomware (S3 Bucket Deletion + Extortion)"
+  "impact_type_raw": "Ransomware (S3 Bucket Deletion + Extortion)",
+  "aws_services_raw": [
+    "Amazon S3",
+    "Amazon SES",
+    "AWS CloudTrail",
+    "AWS IAM"
+  ]
 }

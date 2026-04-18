@@ -187,7 +187,7 @@
       "description": "Attacker exploited an internet-exposed vulnerable service running in a self-managed Kubernetes cluster hosted in AWS to gain initial foothold in a container/pod.",
       "evidence_quote": "The attacker found and exploited an internet-exposed service deployed in a Kubernetes cluster.",
       "aws_services_involved": [
-        "Amazon EKS / self-managed Kubernetes",
+        "EKS / self-managed Kubernetes",
         "EC2"
       ],
       "evidence_sources": [
@@ -216,7 +216,7 @@
       "description": "Simultaneously with the cryptominer deployment, a bash script queried IMDSv1 on the worker EC2 node to harvest the temporary IAM role credentials (AccessKeyId, SecretAccessKey, and session token) bound to the Kubernetes worker instance.",
       "evidence_quote": "In order to find credentials, the attacker directly accessed IMDS... the attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys.",
       "aws_services_involved": [
-        "EC2 Instance Metadata Service (IMDS)"
+        "IMDS"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -230,7 +230,7 @@
       "description": "Using the stolen cluster-role credentials, the attacker attempted to create new IAM users, groups, and bind new access keys to existing IAM users to establish persistence. All attempts were denied due to insufficient permissions.",
       "evidence_quote": "The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Fortunately, all of these executions were denied because of a lack of permissions.",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -244,9 +244,9 @@
       "description": "Using the cluster EC2 role's excessive read permissions, the attacker enumerated AWS resources across the account including Lambda functions, S3 buckets, and other services via direct AWS API calls.",
       "evidence_quote": "Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account... the attacker focused their efforts on the most used AWS services: Serverless Lambda functions and S3 buckets.",
       "aws_services_involved": [
-        "AWS Lambda",
-        "Amazon S3",
-        "AWS IAM",
+        "Lambda",
+        "S3",
+        "IAM",
         "CloudTrail"
       ],
       "evidence_sources": [
@@ -261,7 +261,7 @@
       "description": "The attacker enumerated Lambda function configurations and extracted IAM user credentials stored as plaintext Lambda environment variables.",
       "evidence_quote": "They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account.",
       "aws_services_involved": [
-        "AWS Lambda"
+        "Lambda"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -275,7 +275,7 @@
       "description": "The attacker listed and accessed S3 buckets, reading over 1 TB of data including customer scripts, troubleshooting tools, and logging files.",
       "evidence_quote": "the attacker was able to retrieve and read more than 1 TB of information, including customer scripts, troubleshooting tools, and logging files.",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -289,7 +289,7 @@
       "description": "The attacker downloaded and exfiltrated Lambda function source code containing proprietary software and execution keys using curl/wget commands. Evidence shows the attacker also executed the stolen software.",
       "evidence_quote": "Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software.",
       "aws_services_involved": [
-        "AWS Lambda"
+        "Lambda"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -303,7 +303,7 @@
       "description": "The attacker discovered and extracted a Terraform state file (terraform.tfstate) from an S3 bucket using tools like TruffleHog and Pacu, finding plaintext IAM access key and secret key for a second connected AWS account.",
       "evidence_quote": "it was possible to find both a clear-text IAM user access key and secret key in the terraform.tfstate file inside of an S3 bucket.",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -317,7 +317,7 @@
       "description": "Using credentials of a compromised IAM user with excessive permissions, the attacker disabled CloudTrail logging in the compromised account to impair detection and destroy evidence of further activity.",
       "evidence_quote": "the attacker succeeded in disabling some of the logs configured in the account because of extra permissions assigned to one of the users compromised in the previous steps.",
       "aws_services_involved": [
-        "AWS CloudTrail"
+        "CloudTrail"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -331,8 +331,8 @@
       "description": "The attacker used the newly acquired IAM credentials from the Terraform state file to pivot laterally into a second, connected AWS account and begin a fresh enumeration cycle from that account.",
       "evidence_quote": "With the new credentials acquired, the attacker restarted their enumeration and information-gathering process... CloudTrail recorded suspicious activities in the connected AWS account.",
       "aws_services_involved": [
-        "AWS IAM",
-        "AWS CloudTrail"
+        "IAM",
+        "CloudTrail"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
@@ -341,13 +341,13 @@
     }
   ],
   "aws_services": [
-    "Amazon EKS / Self-managed Kubernetes on EC2",
-    "Amazon EC2",
-    "EC2 Instance Metadata Service (IMDSv1)",
-    "AWS Lambda",
-    "Amazon S3",
-    "AWS IAM",
-    "AWS CloudTrail"
+    "EKS / Self-managed Kubernetes on EC2",
+    "EC2",
+    "IMDS",
+    "Lambda",
+    "S3",
+    "IAM",
+    "CloudTrail"
   ],
   "impact_type": "Data Exfiltration",
   "confidence_score": 0.95,
@@ -366,7 +366,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "Amazon EKS / self-managed Kubernetes",
+          "EKS / self-managed Kubernetes",
           "EC2"
         ]
       },
@@ -395,7 +395,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "EC2 Instance Metadata Service (IMDS)"
+          "IMDS"
         ]
       },
       {
@@ -409,7 +409,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -423,9 +423,9 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS Lambda",
-          "Amazon S3",
-          "AWS IAM",
+          "Lambda",
+          "S3",
+          "IAM",
           "CloudTrail"
         ]
       },
@@ -440,7 +440,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS Lambda"
+          "Lambda"
         ]
       },
       {
@@ -454,7 +454,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -468,7 +468,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS Lambda"
+          "Lambda"
         ]
       },
       {
@@ -482,7 +482,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -496,7 +496,7 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS CloudTrail"
+          "CloudTrail"
         ]
       },
       {
@@ -510,8 +510,8 @@
           "https://sysdig.com/blog/cloud-breach-terraform-data-theft/"
         ],
         "aws_services_involved": [
-          "AWS IAM",
-          "AWS CloudTrail"
+          "IAM",
+          "CloudTrail"
         ]
       }
     ],
@@ -680,5 +680,14 @@
   "incident_name": "Sysdig",
   "incident_date": "2023, February",
   "incident_root_cause": "Exploit public facing k8s service",
-  "impact_type_raw": "Data Exfiltration"
+  "impact_type_raw": "Data Exfiltration",
+  "aws_services_raw": [
+    "Amazon EKS / Self-managed Kubernetes on EC2",
+    "Amazon EC2",
+    "EC2 Instance Metadata Service (IMDSv1)",
+    "AWS Lambda",
+    "Amazon S3",
+    "AWS IAM",
+    "AWS CloudTrail"
+  ]
 }

@@ -37,11 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     # Skip if the secrets haven't been configured yet rather than failing loudly.
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push' }}
-    # Exported at job scope so every step (including `pages project create`,
-    # which ignores the action's accountId input) sees them.
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -85,16 +82,34 @@ jobs:
           safe="$(echo "$name" | tr '[:upper:]' '[:lower:]' | sed 's|[^a-z0-9-]|-|g' | cut -c1-28)"
           echo "name=$safe" >> "$GITHUB_OUTPUT"
 
+      # Resolve the Cloudflare account ID from the API token so a second
+      # secret isn't required. `pages deploy` auto-discovers the account via
+      # /memberships internally, but `pages project create` doesn't — so we
+      # discover it up front and export for all subsequent steps.
+      - name: Resolve Cloudflare account id
+        id: cfaccount
+        run: |
+          response=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            https://api.cloudflare.com/client/v4/accounts)
+          account_id=$(echo "$response" | jq -r '.result[0].id')
+          if [ -z "$account_id" ] || [ "$account_id" = "null" ]; then
+            echo "Could not resolve Cloudflare account id from token." >&2
+            echo "$response" >&2
+            exit 1
+          fi
+          echo "::add-mask::$account_id"
+          echo "CLOUDFLARE_ACCOUNT_ID=$account_id" >> "$GITHUB_ENV"
+
       # Idempotently ensure the Pages project exists. `project create` errors
-      # if the name already exists — that's fine, we swallow it with
-      # continue-on-error and let the subsequent deploy step fail loudly
-      # if the real problem is something else (auth, quota, wrong account).
+      # if the name already exists — we swallow that with continue-on-error
+      # and let the subsequent deploy step fail loudly if the real problem
+      # is something else (auth, quota, wrong account).
       - name: Ensure Cloudflare Pages project exists
         continue-on-error: true
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           command: pages project create cloud-incident-texts --production-branch=main
 
       - name: Deploy to Cloudflare Pages
@@ -102,7 +117,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           # --commit-dirty=true: the build step regenerates the tracked files
           # in site/public/data/ (they're committed as a cached corpus but
           # rebuilt from data/analysis/ on every run), which leaves the work

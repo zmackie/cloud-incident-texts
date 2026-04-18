@@ -153,7 +153,7 @@ _SERVICE_ALIASES: dict[str, set[str]] = {
     "CodePipeline":         {"codepipeline", "aws codepipeline"},
     "CodeBuild":            {"codebuild", "aws codebuild"},
     "IAM Identity Center":  {"iam identity center", "aws iam identity center", "aws identity center", "identity center", "aws sso", "sso"},
-    "Management Console":   {"management console", "aws management console"},
+    "Management Console":   {"management console", "aws management console", "console", "aws console"},
     "CLI":                  {"aws cli"},
     "API":                  {"aws api"},
     "WAF":                  {"waf", "aws waf"},

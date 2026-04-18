@@ -80,19 +80,17 @@ jobs:
           safe="$(echo "$name" | tr '[:upper:]' '[:lower:]' | sed 's|[^a-z0-9-]|-|g' | cut -c1-28)"
           echo "name=$safe" >> "$GITHUB_OUTPUT"
 
-      # Idempotently ensure the Pages project exists before the first deploy.
-      # We install wrangler ourselves here rather than using the deploy step's
-      # `preCommands` hook, because that hook only auto-prefixes `npx wrangler`
-      # onto the first token of the command — the branch after `||` would
-      # invoke a bare `wrangler` that isn't on PATH.
+      # Idempotently ensure the Pages project exists. `project create` errors
+      # if the name already exists — that's fine, we swallow it with
+      # continue-on-error and let the subsequent deploy step fail loudly
+      # if the real problem is something else (auth, quota, wrong account).
       - name: Ensure Cloudflare Pages project exists
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          npm install --no-save wrangler@3
-          npx wrangler pages project list | grep -q 'cloud-incident-texts' \
-            || npx wrangler pages project create cloud-incident-texts --production-branch=main
+        continue-on-error: true
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create cloud-incident-texts --production-branch=main
 
       - name: Deploy to Cloudflare Pages
         id: cf

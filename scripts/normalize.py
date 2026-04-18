@@ -84,7 +84,7 @@ def canonical_impact(raw: str | None) -> str:
         or re.search(r"\bd?dos\b", s)
         or "service interruption" in s
         or "system interruption" in s
-        or "dns" in s
+        or "dns hijack" in s
     ):
         return "Data Destruction / Disruption"
 

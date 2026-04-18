@@ -80,16 +80,26 @@ jobs:
           safe="$(echo "$name" | tr '[:upper:]' '[:lower:]' | sed 's|[^a-z0-9-]|-|g' | cut -c1-28)"
           echo "name=$safe" >> "$GITHUB_OUTPUT"
 
+      # Idempotently ensure the Pages project exists before the first deploy.
+      # We install wrangler ourselves here rather than using the deploy step's
+      # `preCommands` hook, because that hook only auto-prefixes `npx wrangler`
+      # onto the first token of the command — the branch after `||` would
+      # invoke a bare `wrangler` that isn't on PATH.
+      - name: Ensure Cloudflare Pages project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npm install --no-save wrangler@3
+          npx wrangler pages project list | grep -q 'cloud-incident-texts' \
+            || npx wrangler pages project create cloud-incident-texts --production-branch=main
+
       - name: Deploy to Cloudflare Pages
         id: cf
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Idempotently ensure the Pages project exists before the first deploy.
-          # wrangler-action runs each preCommands line as a separate shell, so
-          # the conditional has to stay on one line (no `\` continuations).
-          preCommands: wrangler pages project list | grep -q 'cloud-incident-texts' || wrangler pages project create cloud-incident-texts --production-branch=main
           # --commit-dirty=true: the build step regenerates the tracked files
           # in site/public/data/ (they're committed as a cached corpus but
           # rebuilt from data/analysis/ on every run), which leaves the work

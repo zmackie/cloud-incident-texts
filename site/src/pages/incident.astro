@@ -1,26 +1,22 @@
 ---
 import Base from "../layouts/Base.astro";
-import IncidentTimeline from "../components/IncidentTimeline.astro";
+import EditorialTimeline from "../components/EditorialTimeline.astro";
 ---
 <Base title="Incident Detail">
   <div class="page">
-    <div id="incident-header">
-      <div class="back-link-row">
-        <a href={`${import.meta.env.BASE_URL}/incidents`} class="back-link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          All incidents
-        </a>
-      </div>
-      <div class="loading" id="header-loading">Loading…</div>
+    <div class="back-link-row">
+      <a href={`${import.meta.env.BASE_URL}/incidents`} class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All incidents
+      </a>
     </div>
 
-    <div id="incident-body" style="display:none">
-      <div class="section-title">Attack Chain</div>
-      <IncidentTimeline />
+    <EditorialTimeline />
 
-      <div class="two-col" style="margin-top:2rem">
+    <div id="incident-body" style="display:none">
+      <div class="two-col" style="margin-top:2.5rem">
         <div class="card" id="tactics-card">
-          <div class="card-title">Tactics & Techniques</div>
+          <div class="card-title">Tactics &amp; Techniques</div>
           <div id="tactics-list"></div>
         </div>
 
@@ -35,7 +31,7 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
 
 <style is:global>
   .back-link-row {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
   }
 
   .back-link {
@@ -53,32 +49,6 @@ import IncidentTimeline from "../components/IncidentTimeline.astro";
     color: var(--text);
     background: var(--bg-tertiary);
     text-decoration: none;
-  }
-
-  .incident-title {
-    font-size: 1.65rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    line-height: 1.25;
-  }
-
-  .section-title {
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.8rem;
-    margin: 2.5rem 0 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
   }
 
   .two-col {
@@ -191,127 +161,85 @@ const TACTIC_COLORS: Record<string, string> = {
   "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
 };
 
-function impactColor(impact: string): string {
-  const s = impact.toLowerCase();
-  if (s.includes("ransomware")) return "#bc8cff";
-  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
-  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
-  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
-  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
-  if (s.includes("account takeover")) return "#3bb5a0";
-  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
-  return "#ff6b35";
-}
-
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
+  if (!slug) return;
 
-  const headerEl = document.getElementById("header-loading")!;
-
-  if (!slug) {
-    headerEl.textContent = "No incident specified.";
-    return;
-  }
-
+  let incident: any, metaData: any;
   try {
-    const [incident, metaData] = await Promise.all([
+    [incident, metaData] = await Promise.all([
       fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
         if (!r.ok) throw new Error("not found");
         return r.json();
       }),
       fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
     ]);
-
-    const tactics = metaData.tactics || {};
-    const techniques = metaData.techniques || {};
-
-    // Update page title
-    document.title = `${incident.incident_name || incident.incident_slug} · Cloud Incident ATT&CK`;
-
-    // Render header
-    const confPct = Math.round((incident.confidence_score || 0) * 100);
-    const impactClr = impactColor(incident.impact_type || "");
-    headerEl.outerHTML = `
-      <div>
-        <div class="incident-title">${esc(incident.incident_name || incident.incident_slug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()))}</div>
-        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem">
-          ${incident.incident_date ? `<span class="badge blue">${esc(incident.incident_date)}</span>` : ""}
-          ${incident.impact_type ? `<span class="badge" style="color:${impactClr};border-color:${impactClr}40;background:${impactClr}20;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;font-family:var(--font-body)">${esc(incident.impact_type)}</span>` : ""}
-          <div class="confidence">
-            <div class="confidence-bar"><div class="fill" style="width:${confPct}%"></div></div>
-            <span>${confPct}% confidence</span>
-          </div>
-          ${(incident.aws_services || []).map((s: string) => `<span class="badge">${esc(s)}</span>`).join("")}
-        </div>
-      </div>
-    `;
-
-    // Show body
-    document.getElementById("incident-body")!.style.display = "block";
-
-    // Tactics & Techniques card
-    const tacticsList = document.getElementById("tactics-list")!;
-    for (const tactic of (incident.tactics_used || [])) {
-      const tacticMeta = tactics[tactic.tactic_id] || {};
-      const color = TACTIC_COLORS[tactic.tactic_id] || "#555";
-
-      const group = document.createElement("div");
-      group.className = "tactic-group";
-      group.innerHTML = `<div class="tactic-name" style="color:${esc(color)}">${esc(tactic.tactic_name || tacticMeta.name || tactic.tactic_id)}</div>`;
-
-      for (const tech of (tactic.techniques || [])) {
-        const techMeta = techniques[tech.technique_id] || {};
-        const row = document.createElement("div");
-        row.className = "tech-row";
-        row.innerHTML = `
-          <span class="tid">${esc(tech.technique_id)}</span>
-          <span>${esc(tech.technique_name || techMeta.name || "")}</span>
-          ${tech.inferred ? `<span class="inferred-tag">inferred</span>` : ""}
-          ${!tech.validated ? `<span class="inferred-tag" style="color:var(--text-muted);border-color:var(--text-muted)">unvalidated</span>` : ""}
-        `;
-        if (tech.evidence_quote) {
-          const quoteEl = document.createElement("div");
-          quoteEl.className = "evidence-quote";
-          quoteEl.textContent = `"${tech.evidence_quote}"`;
-          row.appendChild(quoteEl);
-        }
-        group.appendChild(row);
-      }
-
-      tacticsList.appendChild(group);
-    }
-
-    if (!incident.tactics_used?.length) {
-      tacticsList.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem">No tactics mapped.</div>`;
-    }
-
-    // Incident meta card
-    const metaList = document.getElementById("meta-list")!;
-    const metaFields = [
-      // incident_date already rendered as a badge in the header; skip to avoid
-      // duplication. Keep root-cause and vector fields which aren't surfaced elsewhere.
-      ["Root cause", incident.incident_root_cause],
-      ["Initial Access", incident.initial_access_vector],
-      ["Privilege Escalation", incident.privilege_escalation],
-      ["Persistence", incident.persistence_mechanism],
-      ["Data Exfiltrated", incident.data_exfiltrated !== undefined ? (incident.data_exfiltrated ? "Yes" : "No") : null],
-      ["Model", incident.model],
-      ["Analyzed", incident.analyzed_at ? new Date(incident.analyzed_at).toLocaleDateString() : null],
-      ["Source chars", incident.source_chars ? incident.source_chars.toLocaleString() : null],
-    ];
-
-    for (const [key, val] of metaFields) {
-      if (!val) continue;
-      const row = document.createElement("div");
-      row.className = "meta-row";
-      row.innerHTML = `<span class="meta-key">${key}</span><span>${esc(val)}</span>`;
-      metaList.appendChild(row);
-    }
-
   } catch (err) {
-    document.getElementById("header-loading")!.textContent = "Incident not found.";
     console.error(err);
+    return;
+  }
+
+  const tactics = metaData.tactics || {};
+  const techniques = metaData.techniques || {};
+
+  document.getElementById("incident-body")!.style.display = "block";
+
+  // Tactics & Techniques card
+  const tacticsList = document.getElementById("tactics-list")!;
+  for (const tactic of (incident.tactics_used || [])) {
+    const tacticMeta = tactics[tactic.tactic_id] || {};
+    const color = TACTIC_COLORS[tactic.tactic_id] || "#555";
+
+    const group = document.createElement("div");
+    group.className = "tactic-group";
+    group.innerHTML = `<div class="tactic-name" style="color:${esc(color)}">${esc(tactic.tactic_name || tacticMeta.name || tactic.tactic_id)}</div>`;
+
+    for (const tech of (tactic.techniques || [])) {
+      const techMeta = techniques[tech.technique_id] || {};
+      const row = document.createElement("div");
+      row.className = "tech-row";
+      row.innerHTML = `
+        <span class="tid">${esc(tech.technique_id)}</span>
+        <span>${esc(tech.technique_name || techMeta.name || "")}</span>
+        ${tech.inferred ? `<span class="inferred-tag">inferred</span>` : ""}
+        ${!tech.validated ? `<span class="inferred-tag" style="color:var(--text-muted);border-color:var(--text-muted)">unvalidated</span>` : ""}
+      `;
+      if (tech.evidence_quote) {
+        const quoteEl = document.createElement("div");
+        quoteEl.className = "evidence-quote";
+        quoteEl.textContent = `"${tech.evidence_quote}"`;
+        row.appendChild(quoteEl);
+      }
+      group.appendChild(row);
+    }
+
+    tacticsList.appendChild(group);
+  }
+
+  if (!incident.tactics_used?.length) {
+    tacticsList.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem">No tactics mapped.</div>`;
+  }
+
+  // Incident meta card
+  const metaList = document.getElementById("meta-list")!;
+  const metaFields: [string, string | null | undefined][] = [
+    ["Root cause", incident.incident_root_cause],
+    ["Initial Access", incident.initial_access_vector],
+    ["Privilege Escalation", incident.privilege_escalation],
+    ["Persistence", incident.persistence_mechanism],
+    ["Data Exfiltrated", incident.data_exfiltrated !== undefined ? (incident.data_exfiltrated ? "Yes" : "No") : null],
+    ["Model", incident.model],
+    ["Analyzed", incident.analyzed_at ? new Date(incident.analyzed_at).toLocaleDateString() : null],
+    ["Source chars", incident.source_chars ? Number(incident.source_chars).toLocaleString() : null],
+  ];
+
+  for (const [key, val] of metaFields) {
+    if (!val) continue;
+    const row = document.createElement("div");
+    row.className = "meta-row";
+    row.innerHTML = `<span class="meta-key">${key}</span><span>${esc(val)}</span>`;
+    metaList.appendChild(row);
   }
 }
 

@@ -229,13 +229,11 @@ async function init() {
     ["Privilege Escalation", incident.privilege_escalation],
     ["Persistence", incident.persistence_mechanism],
     ["Data Exfiltrated", incident.data_exfiltrated !== undefined ? (incident.data_exfiltrated ? "Yes" : "No") : null],
-    ["Model", incident.model],
-    ["Analyzed", incident.analyzed_at ? new Date(incident.analyzed_at).toLocaleDateString() : null],
-    ["Source chars", incident.source_chars ? Number(incident.source_chars).toLocaleString() : null],
   ];
 
+  const NULLISH = /^(n\/a|none|unknown|not (described|known|available|specified))/i;
   for (const [key, val] of metaFields) {
-    if (!val) continue;
+    if (!val || NULLISH.test(String(val))) continue;
     const row = document.createElement("div");
     row.className = "meta-row";
     row.innerHTML = `<span class="meta-key">${key}</span><span>${esc(val)}</span>`;

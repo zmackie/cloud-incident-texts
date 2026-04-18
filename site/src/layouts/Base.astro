@@ -255,6 +255,101 @@ const { title, description = "Real cloud security incidents mapped to MITRE ATT&
       ::-webkit-scrollbar-track { background: var(--bg); }
       ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
       ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--border);
+        margin-top: 4rem;
+        padding: 2.5rem 1.5rem 3rem;
+        background: var(--bg-secondary);
+      }
+
+      .site-footer-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+        gap: 2.5rem;
+        align-items: start;
+      }
+
+      @media (max-width: 720px) {
+        .site-footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      }
+
+      .footer-brand {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-variation-settings: "opsz" 144;
+        font-size: 1.35rem;
+        line-height: 1.15;
+        color: var(--text);
+        letter-spacing: -0.01em;
+        margin-bottom: 0.6rem;
+      }
+
+      .footer-brand em {
+        font-style: italic;
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      .footer-about {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+        max-width: 52ch;
+      }
+
+      .footer-col-title {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-muted);
+        margin-bottom: 0.85rem;
+      }
+
+      .footer-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .footer-links a {
+        color: var(--text);
+        font-size: 0.85rem;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.15s, color 0.15s;
+      }
+
+      .footer-links a:hover {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+        text-decoration: none;
+      }
+
+      .footer-fineprint {
+        max-width: 1400px;
+        margin: 2rem auto 0;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        color: var(--text-muted);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .footer-fineprint .dot-sep::before {
+        content: "·";
+        margin: 0 0.55rem;
+        color: var(--border);
+      }
     </style>
   </head>
   <body>
@@ -270,5 +365,38 @@ const { title, description = "Real cloud security incidents mapped to MITRE ATT&
       </ul>
     </nav>
     <slot />
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div>
+          <div class="footer-brand">Cloud Incident <em>ATT&amp;CK</em></div>
+          <p class="footer-about">
+            A catalog of real-world cloud-security incidents, reconstructed from public
+            reporting and mapped to MITRE ATT&amp;CK for Cloud. Each incident page walks
+            the kill chain step-by-step, pulling quoted evidence from the linked source
+            article. Entries with dashed rail markers are <em>reconstructed</em> — likely
+            steps inferred from context, not directly stated in the reporting.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Sources</div>
+          <ul class="footer-links">
+            <li><a href="https://github.com/ramimac/aws-customer-security-incidents" target="_blank" rel="noreferrer">ramimac / aws-customer-security-incidents</a></li>
+            <li><a href="https://attack.mitre.org/matrices/enterprise/cloud/" target="_blank" rel="noreferrer">MITRE ATT&amp;CK for Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Project</div>
+          <ul class="footer-links">
+            <li><a href="https://github.com/zmackie/cloud-incident-texts" target="_blank" rel="noreferrer">GitHub repository</a></li>
+            <li><a href={`${import.meta.env.BASE_URL}/incidents`}>Browse incidents</a></li>
+            <li><a href={`${import.meta.env.BASE_URL}/graph`}>Attack graph</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-fineprint">
+        <span>Analyzed with LLM assistance · mapped to MITRE ATT&amp;CK</span>
+        <span>Reporting remains the property of its original publishers</span>
+      </div>
+    </footer>
   </body>
 </html>

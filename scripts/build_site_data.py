@@ -206,7 +206,7 @@ def build_incidents_index(analyses: list[dict]) -> list[dict]:
             "name": meta.get("name") or slug.replace("-", " ").title(),  # fallback display name
             "technique_ids": technique_ids,
             "aws_services": canonical_services(raw_services),
-            "aws_services_raw": list(raw_services),
+            "aws_services_raw": list(raw_services or []),
             "impact_type": canonical_impact(raw_impact),
             "impact_type_raw": raw_impact,
             "initial_access_vector": analysis.get("initial_access_vector", ""),

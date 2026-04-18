@@ -86,7 +86,17 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy site/dist --project-name=cloud-incident-texts --branch=${{ steps.branch.outputs.name }}
+          # Idempotently ensure the Pages project exists before the first deploy.
+          # `project list | grep` returns 0 if present; otherwise we create it.
+          preCommands: |
+            wrangler pages project list 2>/dev/null | grep -qE '(^| )cloud-incident-texts( |$)' \
+              || wrangler pages project create cloud-incident-texts --production-branch=main
+          # --commit-dirty=true: the build step regenerates the tracked files
+          # in site/public/data/ (they're committed as a cached corpus but
+          # rebuilt from data/analysis/ on every run), which leaves the work
+          # tree "dirty" from wrangler's point of view. The generated output
+          # under site/dist/ is already gitignored.
+          command: pages deploy site/dist --project-name=cloud-incident-texts --branch=${{ steps.branch.outputs.name }} --commit-dirty=true
 
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'

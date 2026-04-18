@@ -140,9 +140,10 @@ import Heatmap from "../components/Heatmap.astro";
 </style>
 
 <script>
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 async function loadStats() {
   try {
-    const stats = await fetch(`${import.meta.env.BASE_URL}/data/stats.json`).then(r => r.ok ? r.json() : null);
+    const stats = await fetch(`${BASE}/data/stats.json`).then(r => r.ok ? r.json() : null);
     if (!stats) return;
     const set = (id: string, val: any) => {
       const el = document.getElementById(id);

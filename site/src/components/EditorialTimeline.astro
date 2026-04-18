@@ -1,0 +1,592 @@
+---
+// Editorial vertical timeline — the flagship incident-detail view.
+// Serif display header, stat strip, narrative-first steps on a rail.
+// Adapted from the Incident Timelines design exploration (V1).
+---
+<div class="editorial" id="editorial-root">
+  <div class="loading" id="editorial-loading">Loading incident…</div>
+</div>
+
+<style is:global>
+  .editorial {
+    background: var(--bg);
+    padding: 2.5rem 0 3.5rem;
+    color: var(--text);
+  }
+
+  .editorial .ed-header {
+    margin-bottom: 2.5rem;
+    max-width: 52rem;
+  }
+
+  .editorial .ed-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .editorial h1.ed-display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.125rem;
+    color: var(--text);
+    text-wrap: balance;
+  }
+
+  .editorial h1.ed-display em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .editorial .ed-lede {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .editorial .ed-lede strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .editorial .ed-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.25rem;
+  }
+
+  .editorial .ed-stat {
+    padding: 0 1.5rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .editorial .ed-stat:first-child { border-left: none; }
+
+  .editorial .ed-stat-value {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144;
+    font-weight: 500;
+    font-size: 2.125rem;
+    line-height: 1;
+    color: var(--text);
+    font-feature-settings: "tnum";
+  }
+
+  .editorial .ed-stat-value.accent { color: var(--accent); }
+
+  .editorial .ed-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* Timeline */
+  .editorial .ed-timeline {
+    position: relative;
+  }
+
+  .editorial .ed-step {
+    display: grid;
+    grid-template-columns: 120px 36px minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .editorial .ed-step.no-gutter {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .editorial .ed-gutter {
+    padding: 2px 1.25rem 0 0;
+    text-align: right;
+  }
+
+  .editorial .ed-gutter-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .editorial .ed-gutter-sev {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .editorial .ed-rail {
+    position: relative;
+  }
+
+  .editorial .ed-rail-line {
+    position: absolute;
+    left: 17px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .editorial .ed-rail-dot {
+    position: absolute;
+    left: 12px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+
+  .editorial .ed-rail-dot::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+  }
+
+  .editorial .ed-content {
+    padding: 0 0 2.25rem 0.25rem;
+    min-width: 0;
+  }
+
+  .editorial .ed-step:last-child .ed-content {
+    padding-bottom: 0.75rem;
+  }
+
+  .editorial .ed-step-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .editorial .ed-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .editorial .ed-tactic-pill {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .editorial .ed-tech-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .editorial .ed-tech-name {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  .editorial .ed-inferred {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .editorial .ed-step-title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+  }
+
+  .editorial .ed-step-narrative {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 64ch;
+    text-wrap: pretty;
+  }
+
+  .editorial .ed-step-meta {
+    margin-top: 0.65rem;
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .editorial .ed-step-service {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .editorial .ed-step-quote {
+    margin-top: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 58ch;
+  }
+
+  .editorial .ed-step-sources {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  .editorial .ed-step-source {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--blue);
+    text-decoration: none;
+    white-space: nowrap;
+    max-width: 28ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .editorial .ed-step-source:hover {
+    background: var(--bg-tertiary);
+    text-decoration: none;
+  }
+
+  .editorial .ed-empty {
+    padding: 2.5rem 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (max-width: 720px) {
+    .editorial .ed-step { grid-template-columns: 32px minmax(0, 1fr); }
+    .editorial .ed-gutter { display: none; }
+    .editorial .ed-rail-line { left: 15px; }
+    .editorial .ed-rail-dot { left: 10px; }
+    .editorial .ed-stats { grid-template-columns: repeat(2, 1fr); row-gap: 1rem; }
+    .editorial .ed-stat:nth-child(3) { border-left: none; }
+  }
+</style>
+
+<script>
+const DATA_BASE = `${import.meta.env.BASE_URL}/data`;
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
+};
+
+const SEVERITY_COLOR: Record<string, string> = {
+  critical: "var(--accent)",
+  high: "var(--red)",
+  medium: "var(--yellow)",
+  low: "var(--blue)",
+};
+
+// Tactic → severity heuristic. Initial Access and Impact are always the
+// "loud" ends of a chain; execution / persistence / privesc / creds are
+// high; everything in between is medium; pre-intrusion phases are low.
+function tacticSeverity(tacticId: string): string {
+  if (!tacticId) return "medium";
+  if (["TA0001", "TA0040"].includes(tacticId)) return "critical";
+  if (["TA0002", "TA0003", "TA0004", "TA0006"].includes(tacticId)) return "high";
+  if (["TA0043", "TA0042"].includes(tacticId)) return "low";
+  return "medium";
+}
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function safeUrl(url: string): string {
+  try {
+    const p = new URL(url).protocol;
+    return (p === "https:" || p === "http:") ? url : "#";
+  } catch { return "#"; }
+}
+
+function impactColor(impact: string): string {
+  const s = (impact || "").toLowerCase();
+  if (s.includes("ransomware")) return "#bc8cff";
+  if (s.includes("cryptomining") || s.includes("cryptojacking")) return "#d29922";
+  if (s.includes("exfiltration") || s.includes("data breach") || s.includes("credential")) return "#f47067";
+  if (s.includes("disruption") || s.includes("destruction") || s.includes("denial")) return "#58a6ff";
+  if (s.includes("phishing") || s.includes("ses abuse")) return "#e09e52";
+  if (s.includes("account takeover")) return "#3bb5a0";
+  if (s.includes("llmjacking") || s.includes("resource hijacking")) return "#c548b5";
+  if (s.includes("financial") || s.includes("cryptocurrency")) return "#ff6b35";
+  if (s.includes("supply chain") || s.includes("magecart")) return "#ff6b35";
+  return "#ff6b35";
+}
+
+function prettifyName(slug: string): string {
+  return slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function slugToHeadline(slug: string): { lead: string; dateSuffix: string } {
+  // Strip trailing year + month so we can render them as a dateline suffix.
+  const m = slug.match(/^(.+?)-((?:19|20)\d{2})(?:-([a-z]+))?$/i);
+  if (!m) return { lead: prettifyName(slug), dateSuffix: "" };
+  const lead = prettifyName(m[1]);
+  const year = m[2];
+  const month = m[3] ? m[3].charAt(0).toUpperCase() + m[3].slice(1) : "";
+  return { lead, dateSuffix: month ? `${month} ${year}` : year };
+}
+
+function techniqueToTactic(
+  step: any,
+  incident: any,
+  techniques: Record<string, any>,
+): string {
+  // Prefer the explicit tactic the analysis already attached to this technique
+  // inside tactics_used[].techniques[]; fall back to the ATT&CK meta.
+  for (const t of (incident.tactics_used || [])) {
+    for (const tech of (t.techniques || [])) {
+      if (tech.technique_id === step.technique_id) return t.tactic_id;
+    }
+  }
+  const meta = techniques[step.technique_id];
+  const ids = meta?.tactic_ids;
+  return (ids && ids.length) ? ids[0] : "";
+}
+
+function inferredForTechnique(
+  step: any,
+  incident: any,
+): { inferred: boolean; validated: boolean; evidence_quote: string | null } {
+  for (const t of (incident.tactics_used || [])) {
+    for (const tech of (t.techniques || [])) {
+      if (tech.technique_id === step.technique_id) {
+        return {
+          inferred: !!tech.inferred,
+          validated: tech.validated !== false,
+          evidence_quote: tech.evidence_quote ?? step.evidence_quote ?? null,
+        };
+      }
+    }
+  }
+  return {
+    inferred: false,
+    validated: step.validated !== false,
+    evidence_quote: step.evidence_quote ?? null,
+  };
+}
+
+function buildLede(incident: any): string {
+  const parts: string[] = [];
+  if (incident.initial_access_vector) {
+    parts.push(`<strong>Root cause.</strong> ${esc(incident.initial_access_vector)}`);
+  }
+  if (incident.persistence_mechanism && incident.persistence_mechanism !== "N/A") {
+    parts.push(`<strong>Persistence.</strong> ${esc(incident.persistence_mechanism)}`);
+  } else if (incident.privilege_escalation && incident.privilege_escalation !== "N/A") {
+    parts.push(`<strong>Escalation.</strong> ${esc(incident.privilege_escalation)}`);
+  }
+  if (parts.length === 0) {
+    return "Every step below is reconstructed from the analyzed reporting and mapped to MITRE ATT&CK for Cloud.";
+  }
+  parts.push("Every step below is reconstructed from the analyzed reporting and mapped to MITRE ATT&CK.");
+  return parts.join(" ");
+}
+
+async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+  const root = document.getElementById("editorial-root")!;
+
+  if (!slug) {
+    root.innerHTML = `<div class="ed-empty">No incident specified.</div>`;
+    return;
+  }
+
+  let incident: any, metaData: any;
+  try {
+    [incident, metaData] = await Promise.all([
+      fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
+        if (!r.ok) throw new Error("not found");
+        return r.json();
+      }),
+      fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+    ]);
+  } catch (_err) {
+    root.innerHTML = `<div class="ed-empty">Incident not found or not yet analyzed.</div>`;
+    return;
+  }
+
+  const techniques = metaData.techniques || {};
+  const tactics = metaData.tactics || {};
+  const chain: any[] = [...(incident.attack_chain || [])].sort((a, b) => (a.step || 0) - (b.step || 0));
+
+  const { lead, dateSuffix } = slugToHeadline(slug);
+  const incidentName = incident.incident_name || lead;
+  document.title = `${incidentName} · Cloud Incident ATT&CK`;
+
+  const totalTechniques = (incident.tactics_used || []).reduce(
+    (n: number, t: any) => n + (t.techniques?.length || 0), 0,
+  );
+  const services: string[] = incident.aws_services || [];
+  const confPct = Math.round((incident.confidence_score || 0) * 100);
+  const impactHex = impactColor(incident.impact_type || "");
+
+  const kicker = [
+    "Field Notes",
+    dateSuffix || "",
+    incident.impact_type ? incident.impact_type : "",
+  ].filter(Boolean).join(" · ").toUpperCase();
+
+  const title = incident.impact_type
+    ? `${esc(incidentName)}. <em style="color:${impactHex}">${esc(incident.impact_type)}.</em>`
+    : `${esc(incidentName)}.`;
+
+  const lede = buildLede(incident);
+
+  const stats = [
+    { v: String(chain.length || (incident.tactics_used || []).length), k: "Steps", accent: true },
+    { v: String(totalTechniques), k: totalTechniques === 1 ? "Technique" : "Techniques" },
+    { v: String(services.length), k: services.length === 1 ? "AWS Service" : "AWS Services" },
+    { v: `${confPct}%`, k: "Confidence" },
+  ];
+
+  let html = "";
+  html += `
+    <div class="ed-header">
+      <div class="ed-kicker" style="color:${impactHex}">${esc(kicker)}</div>
+      <h1 class="ed-display">${title}</h1>
+      <p class="ed-lede">${lede}</p>
+    </div>
+    <div class="ed-stats">
+      ${stats.map((s, i) => `
+        <div class="ed-stat">
+          <div class="ed-stat-value${i === 0 ? " accent" : ""}">${esc(s.v)}</div>
+          <span class="ed-stat-label">${esc(s.k)}</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  if (!chain.length) {
+    html += `<div class="ed-empty">No per-step attack chain available for this incident.</div>`;
+    root.innerHTML = html;
+    return;
+  }
+
+  html += `<div class="ed-timeline">`;
+  chain.forEach((step, i) => {
+    const tacticId = techniqueToTactic(step, incident, techniques);
+    const tacticName = tactics[tacticId]?.name || "Unmapped";
+    const tacticColor = TACTIC_COLORS[tacticId] || "#555";
+    const sev = tacticSeverity(tacticId);
+    const sevColor = SEVERITY_COLOR[sev];
+    const techName = step.technique_name || techniques[step.technique_id]?.name || "";
+    const { inferred, evidence_quote } = inferredForTechnique(step, incident);
+    const svcs: string[] = step.aws_services_involved || [];
+    const sources: string[] = step.evidence_sources || [];
+    const isLast = i === chain.length - 1;
+
+    html += `
+      <div class="ed-step no-gutter">
+        <div class="ed-rail">
+          <div class="ed-rail-line" style="${isLast ? 'bottom: 1.5rem;' : ''}"></div>
+          <div class="ed-rail-dot"
+               style="background:${sevColor};
+                      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px ${sevColor === 'var(--accent)' ? 'rgba(255,107,53,0.2)' : sevColor === 'var(--red)' ? 'rgba(244,112,103,0.2)' : sevColor === 'var(--yellow)' ? 'rgba(210,153,34,0.2)' : 'rgba(88,166,255,0.2)'};"></div>
+        </div>
+        <div class="ed-content">
+          <div class="ed-step-head">
+            <span class="ed-step-num">STEP ${String(step.step || i + 1).padStart(2, "0")}</span>
+            <span class="ed-tactic-pill"
+                  style="color:${tacticColor};border-color:${tacticColor}55;background:${tacticColor}1c;">
+              ${esc(tacticName)}
+            </span>
+            <span class="ed-tech-badge">${esc(step.technique_id || "")}</span>
+            ${inferred ? `<span class="ed-inferred">Inferred</span>` : ""}
+          </div>
+          <h3 class="ed-step-title">${esc(techName)}</h3>
+          ${step.description ? `<p class="ed-step-narrative">${esc(step.description)}</p>` : ""}
+          ${svcs.length ? `
+            <div class="ed-step-meta">
+              <span class="ed-step-service">On ${svcs.map(s => esc(s)).join(" · ")}</span>
+            </div>
+          ` : ""}
+          ${evidence_quote ? `<div class="ed-step-quote">&ldquo;${esc(evidence_quote)}&rdquo;</div>` : ""}
+          ${sources.length ? `
+            <div class="ed-step-sources">
+              ${sources.slice(0, 3).map(s => {
+                const label = s.replace(/^https?:\/\//, "").replace(/\/$/, "");
+                return `<a class="ed-step-source" href="${esc(safeUrl(s))}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
+              }).join("")}
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+
+  root.innerHTML = html;
+}
+
+init();
+</script>

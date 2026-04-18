@@ -89,9 +89,12 @@ jobs:
       - name: Resolve Cloudflare account id
         id: cfaccount
         run: |
+          # /memberships is the endpoint the token's User:Memberships:Read
+          # permission allows; /accounts needs an Account-scoped permission
+          # we don't grant and returns an empty list for this token.
           response=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            https://api.cloudflare.com/client/v4/accounts)
-          account_id=$(echo "$response" | jq -r '.result[0].id')
+            https://api.cloudflare.com/client/v4/memberships)
+          account_id=$(echo "$response" | jq -r '.result[0].account.id')
           if [ -z "$account_id" ] || [ "$account_id" = "null" ]; then
             echo "Could not resolve Cloudflare account id from token." >&2
             echo "$response" >&2

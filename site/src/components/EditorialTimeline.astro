@@ -1,11 +1,11 @@
 ---
 // Editorial vertical timeline — the flagship incident-detail view.
 // Serif display header, stat strip, narrative-first steps on a rail.
-// Adapted from the Incident Timelines design exploration (V1).
 ---
 <div class="editorial" id="editorial-root">
   <div class="loading" id="editorial-loading">Loading incident…</div>
 </div>
+<div id="ed-tooltip" class="ed-tooltip" role="tooltip" aria-hidden="true"></div>
 
 <style is:global>
   .editorial {
@@ -159,6 +159,13 @@
     box-shadow: 0 0 0 4px var(--bg);
   }
 
+  /* Inferred rail dot: hollow amber with ring to mark it as reconstructed. */
+  .editorial .ed-rail-dot.inferred {
+    background: transparent !important;
+    border: 2px solid var(--yellow);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px rgba(210, 153, 34, 0.25) !important;
+  }
+
   .editorial .ed-rail-dot::after {
     content: "";
     position: absolute;
@@ -278,30 +285,94 @@
     max-width: 58ch;
   }
 
-  .editorial .ed-step-sources {
-    margin-top: 0.5rem;
+  .editorial .ed-sources {
     display: flex;
-    gap: 0.375rem;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding: 1rem 0 1.75rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .editorial .ed-sources-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    flex-shrink: 0;
+  }
+
+  .editorial .ed-sources-list {
+    display: flex;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
 
-  .editorial .ed-step-source {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    padding: 1px 6px;
-    border: 1px solid var(--border);
-    border-radius: 3px;
+  .editorial .ed-source-link {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
     color: var(--blue);
     text-decoration: none;
-    white-space: nowrap;
-    max-width: 28ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+    line-height: 1.4;
   }
 
-  .editorial .ed-step-source:hover {
-    background: var(--bg-tertiary);
+  .editorial .ed-source-link:hover {
+    border-bottom-color: var(--blue);
     text-decoration: none;
+  }
+
+  .editorial .ed-source-host {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    margin-left: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* Step head hover affordance + tooltip */
+  .editorial .ed-step-head.has-hover { cursor: help; }
+
+  .ed-tooltip {
+    position: fixed;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.55rem 0.8rem;
+    font-size: 0.8rem;
+    max-width: 320px;
+    z-index: 9999;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s;
+  }
+
+  .ed-tooltip.visible { opacity: 1; }
+
+  .ed-tooltip .tip-tid {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+  }
+
+  .ed-tooltip .tip-name {
+    color: var(--text);
+    font-weight: 600;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .ed-tooltip .tip-meta {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
   }
 
   .editorial .ed-empty {
@@ -436,19 +507,55 @@ function inferredForTechnique(
 
 function buildLede(incident: any): string {
   const parts: string[] = [];
-  if (incident.initial_access_vector) {
+  if (incident.initial_access_vector && !/not (described|known|available)/i.test(incident.initial_access_vector)) {
     parts.push(`<strong>Root cause.</strong> ${esc(incident.initial_access_vector)}`);
   }
-  if (incident.persistence_mechanism && incident.persistence_mechanism !== "N/A") {
-    parts.push(`<strong>Persistence.</strong> ${esc(incident.persistence_mechanism)}`);
-  } else if (incident.privilege_escalation && incident.privilege_escalation !== "N/A") {
+  if (
+    incident.privilege_escalation &&
+    !/^(n\/a|not (described|known|available))/i.test(incident.privilege_escalation)
+  ) {
     parts.push(`<strong>Escalation.</strong> ${esc(incident.privilege_escalation)}`);
   }
   if (parts.length === 0) {
-    return "Every step below is reconstructed from the analyzed reporting and mapped to MITRE ATT&CK for Cloud.";
+    return "Each step is reconstructed from the linked reporting and mapped to MITRE ATT&CK for Cloud.";
   }
-  parts.push("Every step below is reconstructed from the analyzed reporting and mapped to MITRE ATT&CK.");
+  parts.push("Each step is reconstructed from the linked reporting and mapped to MITRE ATT&CK.");
   return parts.join(" ");
+}
+
+// Prefer the canonical MITRE name when we have it, so editorialized
+// "T1552.005: ... / Slack Channel" style labels don't leak onto the page.
+function canonicalTechName(step: any, techniques: Record<string, any>): string {
+  const canon = techniques[step.technique_id]?.name;
+  if (canon) return canon;
+  // Fall back to the analyzer's label, stripping anything after " – " or " / "
+  // which tends to be editorial flavor rather than the technique.
+  const raw = String(step.technique_name || "");
+  return raw.split(/\s+[–/:]\s+/)[0].trim();
+}
+
+// The single representative article for the incident. We prefer whatever the
+// analyzer cited most often across chain steps.
+function primaryArticleUrl(incident: any): string | null {
+  const counts = new Map<string, number>();
+  for (const step of (incident.attack_chain || [])) {
+    for (const src of (step.evidence_sources || [])) {
+      counts.set(src, (counts.get(src) || 0) + 1);
+    }
+  }
+  let best: string | null = null;
+  let bestN = 0;
+  for (const [url, n] of counts) {
+    if (n > bestN) { best = url; bestN = n; }
+  }
+  return best;
+}
+
+function hostLabel(url: string): string {
+  try {
+    const h = new URL(url).hostname.replace(/^www\./, "");
+    return h.replace(/\.org$|\.com$/, "");
+  } catch { return ""; }
 }
 
 async function init() {
@@ -509,6 +616,11 @@ async function init() {
     { v: `${confPct}%`, k: "Confidence" },
   ];
 
+  const primaryUrl = primaryArticleUrl(incident);
+  const ramimacUrl =
+    "https://github.com/ramimac/aws-customer-security-incidents#" +
+    slug.toLowerCase();
+
   let html = "";
   html += `
     <div class="ed-header">
@@ -523,6 +635,18 @@ async function init() {
           <span class="ed-stat-label">${esc(s.k)}</span>
         </div>
       `).join("")}
+    </div>
+    <div class="ed-sources">
+      <span class="ed-sources-label">Sourced from</span>
+      <div class="ed-sources-list">
+        ${primaryUrl ? `
+          <a class="ed-source-link" href="${esc(safeUrl(primaryUrl))}" target="_blank" rel="noreferrer">
+            Original reporting<span class="ed-source-host">${esc(hostLabel(primaryUrl))}</span>
+          </a>` : ""}
+        <a class="ed-source-link" href="${ramimacUrl}" target="_blank" rel="noreferrer">
+          ramimac / aws-customer-security-incidents<span class="ed-source-host">github</span>
+        </a>
+      </div>
     </div>
   `;
 
@@ -539,46 +663,42 @@ async function init() {
     const tacticColor = TACTIC_COLORS[tacticId] || "#555";
     const sev = tacticSeverity(tacticId);
     const sevColor = SEVERITY_COLOR[sev];
-    const techName = step.technique_name || techniques[step.technique_id]?.name || "";
+    const techName = canonicalTechName(step, techniques);
     const { inferred, evidence_quote } = inferredForTechnique(step, incident);
-    const svcs: string[] = step.aws_services_involved || [];
-    const sources: string[] = step.evidence_sources || [];
     const isLast = i === chain.length - 1;
+
+    const dotClass = inferred ? "ed-rail-dot inferred" : "ed-rail-dot";
+    const dotStyle = inferred
+      ? ""
+      : `background:${sevColor};
+         box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px ${
+           sevColor === 'var(--accent)' ? 'rgba(255,107,53,0.2)'
+           : sevColor === 'var(--red)' ? 'rgba(244,112,103,0.2)'
+           : sevColor === 'var(--yellow)' ? 'rgba(210,153,34,0.2)'
+           : 'rgba(88,166,255,0.2)'};`;
 
     html += `
       <div class="ed-step no-gutter">
         <div class="ed-rail">
           <div class="ed-rail-line" style="${isLast ? 'bottom: 1.5rem;' : ''}"></div>
-          <div class="ed-rail-dot"
-               style="background:${sevColor};
-                      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px ${sevColor === 'var(--accent)' ? 'rgba(255,107,53,0.2)' : sevColor === 'var(--red)' ? 'rgba(244,112,103,0.2)' : sevColor === 'var(--yellow)' ? 'rgba(210,153,34,0.2)' : 'rgba(88,166,255,0.2)'};"></div>
+          <div class="${dotClass}" style="${dotStyle}"></div>
         </div>
         <div class="ed-content">
-          <div class="ed-step-head">
+          <div class="ed-step-head has-hover"
+               data-tid="${esc(step.technique_id || "")}"
+               data-tname="${esc(techName)}"
+               data-tactic="${esc(tacticName)}"
+               data-inferred="${inferred ? "1" : ""}">
             <span class="ed-step-num">STEP ${String(step.step || i + 1).padStart(2, "0")}</span>
             <span class="ed-tactic-pill"
                   style="color:${tacticColor};border-color:${tacticColor}55;background:${tacticColor}1c;">
               ${esc(tacticName)}
             </span>
-            <span class="ed-tech-badge">${esc(step.technique_id || "")}</span>
             ${inferred ? `<span class="ed-inferred">Inferred</span>` : ""}
           </div>
           <h3 class="ed-step-title">${esc(techName)}</h3>
           ${step.description ? `<p class="ed-step-narrative">${esc(step.description)}</p>` : ""}
-          ${svcs.length ? `
-            <div class="ed-step-meta">
-              <span class="ed-step-service">On ${svcs.map(s => esc(s)).join(" · ")}</span>
-            </div>
-          ` : ""}
           ${evidence_quote ? `<div class="ed-step-quote">&ldquo;${esc(evidence_quote)}&rdquo;</div>` : ""}
-          ${sources.length ? `
-            <div class="ed-step-sources">
-              ${sources.slice(0, 3).map(s => {
-                const label = s.replace(/^https?:\/\//, "").replace(/\/$/, "");
-                return `<a class="ed-step-source" href="${esc(safeUrl(s))}" target="_blank" rel="noreferrer">${esc(label)}</a>`;
-              }).join("")}
-            </div>
-          ` : ""}
         </div>
       </div>
     `;
@@ -586,6 +706,40 @@ async function init() {
   html += `</div>`;
 
   root.innerHTML = html;
+  wireTooltip();
+}
+
+function wireTooltip(): void {
+  const tip = document.getElementById("ed-tooltip");
+  if (!tip) return;
+
+  const heads = document.querySelectorAll<HTMLElement>(".ed-step-head.has-hover");
+  heads.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      const tid = el.dataset.tid || "";
+      const tname = el.dataset.tname || "";
+      const tactic = el.dataset.tactic || "";
+      const inferred = el.dataset.inferred === "1";
+      tip.innerHTML = `
+        <span class="tip-tid">${esc(tid)}</span>
+        <span class="tip-name">${esc(tname)}</span>
+        <span class="tip-meta">${esc(tactic)}${inferred ? " · reconstructed" : ""}</span>
+      `;
+      tip.classList.add("visible");
+      tip.setAttribute("aria-hidden", "false");
+    });
+    el.addEventListener("mousemove", (e) => {
+      const pad = 14;
+      const x = Math.min(e.clientX + pad, window.innerWidth - 340);
+      const y = Math.min(e.clientY + pad, window.innerHeight - 120);
+      tip.style.left = `${x}px`;
+      tip.style.top = `${y}px`;
+    });
+    el.addEventListener("mouseleave", () => {
+      tip.classList.remove("visible");
+      tip.setAttribute("aria-hidden", "true");
+    });
+  });
 }
 
 init();

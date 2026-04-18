@@ -153,7 +153,7 @@
       "description": "The attacker accessed the compromised Google Drive and retrieved the AWS Administrator access key CSV file that the administrator had previously downloaded and stored there \u2014 providing long-lived privileged programmatic AWS credentials.",
       "evidence_quote": "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
       "aws_services_involved": [
-        "AWS IAM",
+        "IAM",
         "Google Drive"
       ],
       "evidence_sources": [
@@ -168,7 +168,7 @@
       "description": "Using the stolen AWS Administrator access key (long-lived credential), the attacker authenticated directly to the AWS production account without any additional authentication challenge.",
       "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -182,8 +182,8 @@
       "description": "The attacker executed ListBuckets API calls across the production AWS account to enumerate all S3 buckets and their contents, making approximately 2000 API requests total.",
       "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API",
       "aws_services_involved": [
-        "Amazon S3",
-        "AWS API"
+        "S3",
+        "API"
       ],
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -197,8 +197,8 @@
       "description": "The attacker downloaded all S3 buckets and their corresponding file objects via the AWS API, exfiltrating the organization's data.",
       "evidence_quote": "Attacker makes ~2000 requests to AWS API to: 1. Downloaded all S3 Buckets and corresponding file objects",
       "aws_services_involved": [
-        "Amazon S3",
-        "AWS API"
+        "S3",
+        "API"
       ],
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -212,7 +212,7 @@
       "description": "After exfiltration, the attacker deleted all S3 buckets across the production AWS account, destroying the organization's cloud data.",
       "evidence_quote": "2. Delete all S3 Buckets",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -226,7 +226,7 @@
       "description": "The attacker created a new S3 bucket named 'Ransomware' as a ransomware extortion signal, simulating a ransomware attack to pressure the victim into paying for data recovery.",
       "evidence_quote": "3. Then, created a 'Ransomware' S3 Bucket",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -235,12 +235,12 @@
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "AWS IAM",
-    "AWS API",
+    "S3",
+    "IAM",
+    "API",
     "Google Drive"
   ],
-  "impact_type": "Data Exfiltration and Pseudo-Ransomware (S3 Bucket Deletion + Ransom Note Bucket)",
+  "impact_type": "Ransomware / Extortion",
   "confidence_score": 0.9,
   "initial_access_vector": "Spearphishing email disguised as a job offer caused a former AWS Administrator to execute malware on their personal laptop, which stole credentials and cookies synced to a personal Google Drive \u2014 including a pre-existing AWS Administrator access key CSV stored there.",
   "persistence_mechanism": "None observed. The attacker leveraged a long-lived AWS Administrator access key (static credential) that had been created and stored in a personal Google Drive, providing persistent programmatic access without needing further foothold.",
@@ -296,7 +296,7 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "AWS IAM",
+          "IAM",
           "Google Drive"
         ]
       },
@@ -311,7 +311,7 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -325,8 +325,8 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "AWS API"
+          "S3",
+          "API"
         ]
       },
       {
@@ -340,8 +340,8 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "AWS API"
+          "S3",
+          "API"
         ]
       },
       {
@@ -355,7 +355,7 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
@@ -369,7 +369,7 @@
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       }
     ],
@@ -504,5 +504,15 @@
   "incident_slug": "mandiant-2024-april",
   "analyzed_at": "2026-04-15T21:00:20.108639+00:00",
   "model": "claude-sonnet-4-6",
-  "source_chars": 15532
+  "source_chars": 15532,
+  "incident_name": "Mandiant",
+  "incident_date": "2024, April",
+  "incident_root_cause": "Phishing leads to compromise of credentials in former employee's personal Google Drive",
+  "impact_type_raw": "Data Exfiltration and Pseudo-Ransomware (S3 Bucket Deletion + Ransom Note Bucket)",
+  "aws_services_raw": [
+    "Amazon S3",
+    "AWS IAM",
+    "AWS API",
+    "Google Drive"
+  ]
 }

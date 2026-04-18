@@ -26,6 +26,9 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from normalize import canonical_impact, canonical_services  # noqa: E402
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -196,12 +199,16 @@ def build_incidents_index(analyses: list[dict]) -> list[dict]:
             if s.get("technique_id")
         ))
 
+        raw_impact = analysis.get("impact_type", "")
+        raw_services = analysis.get("aws_services", [])
         index.append({
             "slug": slug,
             "name": meta.get("name") or slug.replace("-", " ").title(),  # fallback display name
             "technique_ids": technique_ids,
-            "aws_services": analysis.get("aws_services", []),
-            "impact_type": analysis.get("impact_type", ""),
+            "aws_services": canonical_services(raw_services),
+            "aws_services_raw": list(raw_services or []),
+            "impact_type": canonical_impact(raw_impact),
+            "impact_type_raw": raw_impact,
             "initial_access_vector": analysis.get("initial_access_vector", ""),
             "event_date": meta.get("date", ""),
             "data_exfiltrated": analysis.get("data_exfiltrated", False),
@@ -254,6 +261,32 @@ def write_per_incident_files(analyses: list[dict], out_dir: Path):
         enriched["incident_name"] = meta.get("name") or slug.replace("-", " ").title()
         enriched["incident_date"] = meta.get("date")
         enriched["incident_root_cause"] = meta.get("root_cause")
+
+        raw_impact = analysis.get("impact_type", "")
+        enriched["impact_type"] = canonical_impact(raw_impact)
+        enriched["impact_type_raw"] = raw_impact
+
+        raw_services = analysis.get("aws_services", [])
+        enriched["aws_services"] = canonical_services(raw_services)
+        enriched["aws_services_raw"] = list(raw_services)
+
+        # Canonicalize services referenced inside the step-by-step chain too,
+        # so detail pages render the same canonical names as the index.
+        chain = enriched.get("attack_chain")
+        if isinstance(chain, list):
+            enriched["attack_chain"] = [
+                {**step, "aws_services_involved": canonical_services(step.get("aws_services_involved", []))}
+                if isinstance(step, dict) else step
+                for step in chain
+            ]
+        graph = enriched.get("attack_chain_graph")
+        if isinstance(graph, dict) and isinstance(graph.get("nodes"), list):
+            graph["nodes"] = [
+                {**n, "aws_services_involved": canonical_services(n.get("aws_services_involved", []))}
+                if isinstance(n, dict) else n
+                for n in graph["nodes"]
+            ]
+
         out_path = incidents_dir / f"{slug}.json"
         out_path.write_text(json.dumps(enriched, indent=2), encoding="utf-8")
 
@@ -264,14 +297,14 @@ def build_stats(analyses: list[dict], technique_freq: dict) -> dict:
     """Overall statistics for the site hero section."""
     all_services: set[str] = set()
     for analysis in analyses:
-        all_services.update(analysis.get("aws_services", []))
+        all_services.update(canonical_services(analysis.get("aws_services", [])))
 
     total_chain_steps = sum(
         len(a.get("attack_chain", [])) for a in analyses
     )
 
     impact_counts: Counter = Counter(
-        a.get("impact_type", "Unknown") for a in analyses
+        canonical_impact(a.get("impact_type", "")) for a in analyses
     )
 
     return {

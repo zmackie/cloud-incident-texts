@@ -138,7 +138,7 @@
       "description": "Attackers used the stolen IAM access key credentials to authenticate to the AWS cloud environment and begin interacting with cloud services.",
       "evidence_quote": "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers.",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -152,8 +152,8 @@
       "description": "Attackers called InvokeModel with max_tokens_to_sample=-1 across all AWS Bedrock-supported regions to probe whether LLM services were enabled and accessible, distinguishing between ValidationException (enabled) and AccessDenied (restricted).",
       "evidence_quote": "They sent a legitimate request but specified 'max_tokens_to_sample' to be -1. This is an invalid error which causes the 'ValidationException' error, but it is useful information for the attacker to have because it tells them the credentials have access to the LLMs and they have been enabled.",
       "aws_services_involved": [
-        "AWS Bedrock",
-        "AWS CloudTrail"
+        "Bedrock",
+        "CloudTrail"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -167,7 +167,7 @@
       "description": "Attackers systematically probed all AWS Bedrock-supported regions (us-east-1, us-west-2, ap-southeast-1, ap-northeast-1, eu-central-1, eu-west-3, us-gov-west-1) to enumerate available models by region.",
       "evidence_quote": "AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions.",
       "aws_services_involved": [
-        "AWS Bedrock"
+        "Bedrock"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -181,9 +181,9 @@
       "description": "Attackers called GetModelInvocationLoggingConfiguration to query whether S3 and CloudWatch logging was enabled on AWS Bedrock, with intent to avoid using credentials where detailed prompt/response logging was active.",
       "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts... OAI Reverse Proxy states it will not use any AWS key that has logging enabled for the sake of 'privacy.'",
       "aws_services_involved": [
-        "AWS Bedrock",
-        "Amazon CloudWatch",
-        "Amazon S3"
+        "Bedrock",
+        "CloudWatch",
+        "S3"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -197,7 +197,7 @@
       "description": "Attackers routed LLM queries through an OAI Reverse Proxy to centrally manage access to the pool of compromised cloud credentials without directly exposing them, enabling resale of LLM access to other cybercriminals.",
       "evidence_quote": "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials.",
       "aws_services_involved": [
-        "AWS Bedrock"
+        "Bedrock"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -211,7 +211,7 @@
       "description": "Attackers abused the compromised cloud credentials to invoke Claude (v2/v3) LLM models via AWS Bedrock at scale across multiple regions, consuming victim-paid LLM quota (up to $46,000/day) while selling the access to other threat actors.",
       "evidence_quote": "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill... the cost to the victim can be over $46,000 per day.",
       "aws_services_involved": [
-        "AWS Bedrock"
+        "Bedrock"
       ],
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -220,13 +220,13 @@
     }
   ],
   "aws_services": [
-    "AWS Bedrock",
-    "AWS IAM",
-    "AWS CloudTrail",
-    "Amazon CloudWatch",
-    "Amazon S3"
+    "Bedrock",
+    "IAM",
+    "CloudTrail",
+    "CloudWatch",
+    "S3"
   ],
-  "impact_type": "LLMJacking (Resource Hijacking / AI Service Abuse)",
+  "impact_type": "LLM / Resource Hijacking",
   "confidence_score": 0.95,
   "initial_access_vector": "Exploitation of CVE-2021-3129, a known deserialization vulnerability in Laravel running on a publicly accessible server",
   "persistence_mechanism": "Use of stolen long-lived IAM access key credentials routed through an OAI Reverse Proxy, enabling continued access without re-exploitation",
@@ -269,7 +269,7 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
@@ -283,8 +283,8 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS Bedrock",
-          "AWS CloudTrail"
+          "Bedrock",
+          "CloudTrail"
         ]
       },
       {
@@ -298,7 +298,7 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS Bedrock"
+          "Bedrock"
         ]
       },
       {
@@ -312,9 +312,9 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS Bedrock",
-          "Amazon CloudWatch",
-          "Amazon S3"
+          "Bedrock",
+          "CloudWatch",
+          "S3"
         ]
       },
       {
@@ -328,7 +328,7 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS Bedrock"
+          "Bedrock"
         ]
       },
       {
@@ -342,7 +342,7 @@
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "aws_services_involved": [
-          "AWS Bedrock"
+          "Bedrock"
         ]
       }
     ],
@@ -462,5 +462,16 @@
   "incident_slug": "sysdig-2024-may",
   "analyzed_at": "2026-04-15T21:10:17.747062+00:00",
   "model": "claude-sonnet-4-6",
-  "source_chars": 31330
+  "source_chars": 31330,
+  "incident_name": "Sysdig",
+  "incident_date": "2024, May",
+  "incident_root_cause": "Exploited known vulnerable Laravel (CVE-2021-3129)",
+  "impact_type_raw": "LLMJacking (Resource Hijacking / AI Service Abuse)",
+  "aws_services_raw": [
+    "AWS Bedrock",
+    "AWS IAM",
+    "AWS CloudTrail",
+    "Amazon CloudWatch",
+    "Amazon S3"
+  ]
 }

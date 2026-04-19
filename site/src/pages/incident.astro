@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import EditorialTimeline from "../components/EditorialTimeline.astro";
+import SwimlanesTimeline from "../components/SwimlanesTimeline.astro";
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 <Base title="Incident Detail">
@@ -12,7 +13,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
       </a>
     </div>
 
-    <EditorialTimeline />
+    <div id="view-toggle" class="view-toggle" hidden>
+      <span class="view-toggle-label">View</span>
+      <div class="view-toggle-group" role="tablist" aria-label="Incident view">
+        <button type="button" class="view-toggle-btn is-active" data-view="narrative" role="tab" aria-selected="true">Narrative</button>
+        <button type="button" class="view-toggle-btn" data-view="chain" role="tab" aria-selected="false">Kill-chain</button>
+      </div>
+    </div>
+
+    <div id="view-narrative">
+      <EditorialTimeline />
+    </div>
+
+    <div id="view-chain" hidden>
+      <SwimlanesTimeline />
+    </div>
 
     <div id="incident-body" style="display:none">
       <div class="two-col" style="margin-top:2.5rem">
@@ -33,6 +48,58 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 <style is:global>
   .back-link-row {
     margin-bottom: 0.5rem;
+  }
+
+  .view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1rem 0 0.25rem;
+  }
+
+  .view-toggle-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .view-toggle-group {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+
+  .view-toggle-btn {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+
+  .view-toggle-btn + .view-toggle-btn {
+    border-left: 1px solid var(--border);
+  }
+
+  .view-toggle-btn:hover {
+    color: var(--text);
+    background: var(--bg-tertiary);
+  }
+
+  .view-toggle-btn.is-active {
+    color: var(--text);
+    background: var(--bg-tertiary);
+    box-shadow: inset 0 -2px 0 var(--view-accent, var(--accent));
   }
 
   .back-link {
@@ -163,6 +230,84 @@ const TACTIC_COLORS: Record<string, string> = {
   "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
 };
 
+const IMPACT_COLORS: Record<string, string> = {
+  "Ransomware / Extortion": "#bc8cff",
+  "Cryptomining": "#d29922",
+  "Data Exfiltration": "#f47067",
+  "Data Destruction / Disruption": "#58a6ff",
+  "Phishing / SES Abuse": "#e09e52",
+  "Account Takeover": "#3bb5a0",
+  "LLM / Resource Hijacking": "#c548b5",
+  "Credential Theft": "#f47067",
+  "Financial Theft": "#ff6b35",
+  "Supply Chain": "#ff6b35",
+  "Unauthorized Access": "#7d8590",
+};
+
+function setupViewToggle(incident: any): void {
+  const toggle = document.getElementById("view-toggle");
+  const narrativePane = document.getElementById("view-narrative");
+  const chainPane = document.getElementById("view-chain");
+  if (!toggle || !narrativePane || !chainPane) return;
+
+  // Count distinct tactics actually walked by the attack chain. One-tactic
+  // chains get no toggle — swimlanes with a single column is a degenerate case.
+  const chain: any[] = incident.attack_chain || [];
+  const tacticIds = new Set<string>();
+  for (const step of chain) {
+    for (const t of (incident.tactics_used || [])) {
+      for (const tech of (t.techniques || [])) {
+        if (tech.technique_id === step.technique_id) {
+          tacticIds.add(t.tactic_id);
+        }
+      }
+    }
+  }
+  if (tacticIds.size < 2) return;
+
+  // One-accent-per-view: active toggle underline borrows the incident's
+  // impact color so the signal stays consistent across grid → detail.
+  const impactColor = IMPACT_COLORS[incident.impact_type || ""] || "var(--accent)";
+  toggle.style.setProperty("--view-accent", impactColor);
+  toggle.hidden = false;
+
+  const params = new URLSearchParams(window.location.search);
+  const initialView = params.get("view") === "chain" ? "chain" : "narrative";
+  let chainInitialized = false;
+
+  function setView(view: "narrative" | "chain"): void {
+    if (view === "chain" && !chainInitialized) {
+      const swimInit = (window as any).__swimlanesInit;
+      const swimRoot = document.getElementById("swim-root");
+      if (swimRoot) swimRoot.hidden = false;
+      if (typeof swimInit === "function") swimInit();
+      chainInitialized = true;
+    }
+    narrativePane!.hidden = view !== "narrative";
+    chainPane!.hidden = view !== "chain";
+    toggle!.querySelectorAll<HTMLButtonElement>(".view-toggle-btn").forEach((b) => {
+      const active = b.dataset.view === view;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-selected", active ? "true" : "false");
+    });
+
+    // Keep URL in sync so back-forward and shared links preserve the view.
+    const next = new URLSearchParams(window.location.search);
+    if (view === "chain") next.set("view", "chain"); else next.delete("view");
+    const url = `${window.location.pathname}${next.toString() ? "?" + next.toString() : ""}`;
+    window.history.replaceState(null, "", url);
+  }
+
+  toggle.querySelectorAll<HTMLButtonElement>(".view-toggle-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const v = (btn.dataset.view === "chain") ? "chain" : "narrative";
+      setView(v);
+    });
+  });
+
+  setView(initialView);
+}
+
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
@@ -184,6 +329,8 @@ async function init() {
 
   const tactics = metaData.tactics || {};
   const techniques = metaData.techniques || {};
+
+  setupViewToggle(incident);
 
   document.getElementById("incident-body")!.style.display = "block";
 

@@ -244,25 +244,37 @@ const IMPACT_COLORS: Record<string, string> = {
   "Unauthorized Access": "#7d8590",
 };
 
-function setupViewToggle(incident: any): void {
+function setupViewToggle(incident: any, techniques: Record<string, any>): void {
   const toggle = document.getElementById("view-toggle");
   const narrativePane = document.getElementById("view-narrative");
   const chainPane = document.getElementById("view-chain");
   if (!toggle || !narrativePane || !chainPane) return;
 
-  // Count distinct tactics actually walked by the attack chain. One-tactic
-  // chains get no toggle — swimlanes with a single column is a degenerate case.
+  // Count distinct tactics actually walked by the attack chain. This must
+  // mirror SwimlanesTimeline's resolver exactly: prefer tactics_used, then
+  // fall back to attack_meta. Without the fallback, real multi-tactic
+  // incidents (e.g. sygnia-2025-january, kaspersky-2021-november) would
+  // hide the toggle even though the swimlane view would render fine.
   const chain: any[] = incident.attack_chain || [];
-  const tacticIds = new Set<string>();
-  for (const step of chain) {
-    for (const t of (incident.tactics_used || [])) {
-      for (const tech of (t.techniques || [])) {
-        if (tech.technique_id === step.technique_id) {
-          tacticIds.add(t.tactic_id);
-        }
+  const tuIndex: Record<string, string> = {};
+  for (const t of (incident.tactics_used || [])) {
+    for (const tech of (t.techniques || [])) {
+      if (tech.technique_id && !(tech.technique_id in tuIndex)) {
+        tuIndex[tech.technique_id] = t.tactic_id;
       }
     }
   }
+  const tacticIds = new Set<string>();
+  for (const step of chain) {
+    const tid = step.technique_id || "";
+    if (tuIndex[tid]) {
+      tacticIds.add(tuIndex[tid]);
+      continue;
+    }
+    const ids = techniques[tid]?.tactic_ids;
+    if (ids && ids.length) tacticIds.add(ids[0]);
+  }
+  // Single-column swimlanes are a degenerate case — keep the toggle hidden.
   if (tacticIds.size < 2) return;
 
   // One-accent-per-view: active toggle underline borrows the incident's
@@ -330,7 +342,7 @@ async function init() {
   const tactics = metaData.tactics || {};
   const techniques = metaData.techniques || {};
 
-  setupViewToggle(incident);
+  setupViewToggle(incident, techniques);
 
   document.getElementById("incident-body")!.style.display = "block";
 

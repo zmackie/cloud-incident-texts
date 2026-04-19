@@ -340,7 +340,10 @@ def build_stats(analyses: list[dict], technique_freq: dict) -> dict:
     """Overall statistics for the site hero section."""
     all_services: set[str] = set()
     for analysis in analyses:
-        all_services.update(canonical_services(analysis.get("aws_services", [])))
+        raw_services = analysis.get("aws_services") or []
+        if not isinstance(raw_services, list):
+            raw_services = []
+        all_services.update(canonical_services(raw_services))
 
     total_chain_steps = sum(
         len(a.get("attack_chain", [])) for a in analyses

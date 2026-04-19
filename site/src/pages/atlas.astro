@@ -1,0 +1,531 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Atlas" description="Every analyzed cloud incident, laid out by tactic signature.">
+  <div class="page">
+    <header class="atlas-hero">
+      <div class="atlas-hero-kicker">Field Notes · Tactic Atlas</div>
+      <h1 class="atlas-hero-title">
+        Every incident, at a glance.<br/>
+        <em>By tactic signature.</em>
+      </h1>
+      <p class="atlas-hero-lede" id="atlas-lede">
+        One row per incident, grouped by year. Each dot is a step in the chain,
+        colored by its MITRE tactic. Read a row left-to-right to see the shape
+        of a single attack; read a year-group top-to-bottom to see which
+        tactics dominated that year.
+      </p>
+    </header>
+
+    <div class="atlas-stats" id="atlas-stats">
+      <div class="atlas-stat"><div class="v" id="astat-inc">—</div><div class="k">Incidents</div></div>
+      <div class="atlas-stat"><div class="v" id="astat-steps">—</div><div class="k">Chain steps</div></div>
+      <div class="atlas-stat"><div class="v" id="astat-tac">14</div><div class="k">MITRE tactics</div></div>
+      <div class="atlas-stat"><div class="v" id="astat-span">—</div><div class="k">Year span</div></div>
+    </div>
+
+    <div class="atlas-legend" id="atlas-legend">
+      <span class="atlas-legend-label">Tactics</span>
+      <div class="atlas-legend-row" id="atlas-legend-row"></div>
+    </div>
+
+    <div class="atlas-body" id="atlas-body">
+      <div class="loading">Loading atlas…</div>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+  .atlas-hero {
+    padding: 2rem 0 1.25rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    max-width: 56rem;
+  }
+
+  .atlas-hero-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .atlas-hero-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.1rem;
+    color: var(--text);
+    text-wrap: balance;
+  }
+
+  .atlas-hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .atlas-hero-lede {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .atlas-hero-lede strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Stat strip */
+  .atlas-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .atlas-stat {
+    padding: 0 1.5rem;
+    border-left: 1px solid var(--border);
+  }
+  .atlas-stat:first-child { border-left: none; }
+
+  .atlas-stat .v {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--text);
+    font-feature-settings: "tnum";
+  }
+  .atlas-stat .k {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.5rem;
+  }
+
+  /* Tactic legend */
+  .atlas-legend {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .atlas-legend-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+  }
+
+  .atlas-legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+  }
+
+  .atlas-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .atlas-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Year groups */
+  .atlas-year {
+    margin-bottom: 2.25rem;
+  }
+
+  .atlas-year-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .atlas-year-n {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144;
+    font-weight: 500;
+    font-size: 1.75rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .atlas-year-count {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Row */
+  .atlas-row {
+    display: grid;
+    grid-template-columns: 14px minmax(180px, 1.4fr) minmax(0, 3fr) 4rem;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: var(--radius);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.12s, transform 0.1s;
+    border-left: 2px solid transparent;
+  }
+
+  .atlas-row:hover {
+    background: var(--bg-secondary);
+    border-left-color: var(--accent);
+    text-decoration: none;
+  }
+
+  .atlas-row + .atlas-row {
+    border-top: 1px solid rgba(48, 54, 61, 0.4);
+    border-radius: 0;
+  }
+
+  .atlas-row-impact {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+
+  .atlas-row-name {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .atlas-row-name .atlas-impact-type {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .atlas-row-sig {
+    position: relative;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .atlas-row-sig .cs-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--border);
+    transform: translateY(-0.5px);
+  }
+
+  .atlas-row-sig .cs-dots {
+    position: relative;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .atlas-row-sig .cs-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px var(--bg);
+  }
+
+  .atlas-row:hover .cs-dot {
+    box-shadow: 0 0 0 3px var(--bg-secondary);
+  }
+
+  .atlas-row-sig .cs-dot.inferred {
+    background: transparent !important;
+    border: 1.5px solid var(--yellow);
+  }
+
+  .atlas-row-sig .cs-overflow {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    padding-left: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .atlas-row-steps {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-align: right;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .atlas-stats { grid-template-columns: repeat(2, 1fr); row-gap: 1rem; }
+    .atlas-stat:nth-child(3) { border-left: none; }
+    .atlas-row {
+      grid-template-columns: 10px minmax(0, 1fr) 3rem;
+      grid-template-rows: auto auto;
+      gap: 0.3rem 0.65rem;
+    }
+    .atlas-row-sig {
+      grid-column: 1 / -1;
+      padding-left: 1.4rem;
+    }
+  }
+</style>
+
+<script>
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const DATA_BASE = `${BASE}/data`;
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a",
+};
+
+const TACTIC_NAMES: Record<string, string> = {
+  "TA0043": "Reconnaissance",
+  "TA0042": "Resource Dev",
+  "TA0001": "Initial Access",
+  "TA0002": "Execution",
+  "TA0003": "Persistence",
+  "TA0004": "Priv Escalation",
+  "TA0005": "Defense Evasion",
+  "TA0006": "Credential Access",
+  "TA0007": "Discovery",
+  "TA0008": "Lateral Movement",
+  "TA0009": "Collection",
+  "TA0011": "C2",
+  "TA0010": "Exfiltration",
+  "TA0040": "Impact",
+};
+
+// Canonical MITRE enterprise tactic order — matches the columns used in
+// the swimlanes view so the two visualizations read consistently.
+const TACTIC_ORDER: string[] = [
+  "TA0043", "TA0042", "TA0001", "TA0002", "TA0003",
+  "TA0004", "TA0005", "TA0006", "TA0007", "TA0008",
+  "TA0009", "TA0011", "TA0010", "TA0040",
+];
+
+const IMPACT_COLORS: Record<string, string> = {
+  "Ransomware / Extortion": "#bc8cff",
+  "Cryptomining": "#d29922",
+  "Data Exfiltration": "#f47067",
+  "Data Destruction / Disruption": "#58a6ff",
+  "Phishing / SES Abuse": "#e09e52",
+  "Account Takeover": "#3bb5a0",
+  "LLM / Resource Hijacking": "#c548b5",
+  "Credential Theft": "#f47067",
+  "Financial Theft": "#ff6b35",
+  "Supply Chain": "#ff6b35",
+  "Unauthorized Access": "#7d8590",
+};
+
+const SIG_MAX = 24;
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function yearOf(inc: any): string {
+  const ed = String(inc.event_date || "");
+  const m = ed.match(/^(\d{4})/);
+  if (m) return m[1];
+  // Fall back to slug — same policy as incidents.astro (last 4-digit year wins
+  // so UNC4899-style threat-group codes don't get picked up as years).
+  const ms = Array.from(String(inc.slug || "").matchAll(/(19\d{2}|20\d{2})/g));
+  if (ms.length) return ms[ms.length - 1][1];
+  return "Undated";
+}
+
+function renderSignature(signature: any[]): string {
+  const visible = (signature || []).slice(0, SIG_MAX);
+  const overflow = (signature?.length || 0) - visible.length;
+  const dots = visible.map((step) => {
+    const color = TACTIC_COLORS[step?.ta] || "#7d8590";
+    const inferred = !!step?.inferred;
+    return inferred
+      ? `<span class="cs-dot inferred" style="border-color:${color}"></span>`
+      : `<span class="cs-dot" style="background:${color}"></span>`;
+  }).join("");
+  const overflowLabel = overflow > 0
+    ? `<span class="cs-overflow">+${overflow}</span>`
+    : "";
+  return `
+    <span class="cs-rail"></span>
+    <div class="cs-dots">${dots}${overflowLabel}</div>
+  `;
+}
+
+function renderLegend(): void {
+  const row = document.getElementById("atlas-legend-row")!;
+  row.innerHTML = TACTIC_ORDER.map((tid) => `
+    <span class="atlas-legend-item">
+      <span class="atlas-legend-dot" style="background:${TACTIC_COLORS[tid]}"></span>
+      <span>${esc(TACTIC_NAMES[tid] || tid)}</span>
+    </span>
+  `).join("");
+}
+
+async function init() {
+  const body = document.getElementById("atlas-body")!;
+  let index: any[];
+  let stats: any = {};
+  try {
+    [index, stats] = await Promise.all([
+      fetch(`${DATA_BASE}/incidents_index.json`).then(r => r.ok ? r.json() : []),
+      fetch(`${DATA_BASE}/stats.json`).then(r => r.ok ? r.json() : {}),
+    ]);
+  } catch (_err) {
+    body.innerHTML = `<div class="loading">Failed to load atlas data.</div>`;
+    return;
+  }
+
+  if (!index?.length) {
+    body.innerHTML = `<div class="loading">No incidents yet.</div>`;
+    return;
+  }
+
+  renderLegend();
+
+  // Partition by year (desc); within year, sort by chain length desc so the
+  // biggest signatures — the ones that most reward a glance — surface first.
+  const byYear = new Map<string, any[]>();
+  for (const inc of index) {
+    const y = yearOf(inc);
+    if (!byYear.has(y)) byYear.set(y, []);
+    byYear.get(y)!.push(inc);
+  }
+  for (const arr of byYear.values()) {
+    arr.sort((a, b) =>
+      (b.chain_signature?.length || 0) - (a.chain_signature?.length || 0)
+    );
+  }
+  const yearsSorted = Array.from(byYear.keys()).sort((a, b) => {
+    const an = /^\d{4}$/.test(a);
+    const bn = /^\d{4}$/.test(b);
+    if (an && !bn) return -1;
+    if (!an && bn) return 1;
+    if (!an && !bn) return a.localeCompare(b);
+    return b.localeCompare(a);
+  });
+
+  // Stats (the stat strip + lede)
+  const totalIncidents = stats.total_incidents || index.length;
+  const totalSteps = stats.total_chain_steps ||
+    index.reduce((n, i) => n + (i.chain_signature?.length || 0), 0);
+  const numericYears = yearsSorted.filter(y => /^\d{4}$/.test(y)).map(Number);
+  const spanLabel = numericYears.length
+    ? `${Math.min(...numericYears)}–${Math.max(...numericYears)}`
+    : "—";
+  document.getElementById("astat-inc")!.textContent = String(totalIncidents);
+  document.getElementById("astat-steps")!.textContent = String(totalSteps);
+  document.getElementById("astat-span")!.textContent = spanLabel;
+
+  // Lede enrichment — call out the longest chain as a narrative hook.
+  const longest = [...index].sort(
+    (a, b) => (b.chain_signature?.length || 0) - (a.chain_signature?.length || 0),
+  )[0];
+  if (longest) {
+    const lede = document.getElementById("atlas-lede")!;
+    lede.innerHTML = `
+      One row per incident, grouped by year. Each dot is a step in the chain,
+      colored by its MITRE tactic. Read a row left-to-right to see the shape
+      of a single attack; read a year-group top-to-bottom to see which
+      tactics dominated that year. The longest chain in the catalog —
+      <strong>${esc(longest.name)}</strong> — runs
+      <strong>${longest.chain_signature?.length || 0} steps</strong>.
+    `;
+  }
+
+  // Render
+  const html: string[] = [];
+  for (const year of yearsSorted) {
+    const rows = byYear.get(year)!;
+    html.push(`
+      <section class="atlas-year">
+        <header class="atlas-year-head">
+          <span class="atlas-year-n">${esc(year)}</span>
+          <span class="atlas-year-count">${rows.length} incident${rows.length !== 1 ? "s" : ""}</span>
+        </header>
+        <div class="atlas-year-rows">
+          ${rows.map((inc) => {
+            const impactColor = IMPACT_COLORS[inc.impact_type || ""] || "#7d8590";
+            const sig = inc.chain_signature || [];
+            const stepCount = sig.length;
+            return `
+              <a class="atlas-row" href="${BASE}/incident?slug=${encodeURIComponent(inc.slug)}">
+                <span class="atlas-row-impact" style="background:${impactColor}"
+                      title="${esc(inc.impact_type || "Unknown")}"></span>
+                <div class="atlas-row-name">
+                  ${esc(inc.name)}
+                  ${inc.impact_type ? `<span class="atlas-impact-type">${esc(inc.impact_type)}</span>` : ""}
+                </div>
+                <div class="atlas-row-sig">
+                  ${renderSignature(sig)}
+                </div>
+                <div class="atlas-row-steps">${stepCount} STEP${stepCount !== 1 ? "S" : ""}</div>
+              </a>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    `);
+  }
+  body.innerHTML = html.join("");
+}
+
+init();
+</script>

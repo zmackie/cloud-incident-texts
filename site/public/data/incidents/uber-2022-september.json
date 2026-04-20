@@ -5,57 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "An Uber EXT contractor had their account compromised by an attacker. It is likely that the attacker purchased the contractor's Uber corporate password on the dark web, after the contractor's personal device had been infected with malware, exposing those credentials.",
-          "validated": true
-        },
-        {
           "technique_id": "T1566",
           "technique_name": "Phishing",
-          "inferred": true,
-          "evidence_quote": null,
-          "subtechnique_id": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": "the attacker accessed several other employee accounts which ultimately gave the attacker elevated permissions to a number of tools",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
           "inferred": false,
-          "evidence_quote": "the attacker accessed several other employee accounts which ultimately gave the attacker elevated permissions to a number of tools, including G-Suite and Slack",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker accessed several other employee accounts which ultimately gave the attacker elevated permissions to a number of tools",
+          "evidence_quote": "the contractor's personal device had been infected with malware, exposing those credentials. The attacker then... purchased the contractor's Uber corporate password on the dark web",
           "validated": true
         }
       ]
@@ -65,10 +18,10 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores",
-          "inferred": true,
-          "evidence_quote": "the contractor's personal device had been infected with malware, exposing those credentials",
+          "technique_id": "T1621",
+          "technique_name": "Multi-Factor Authentication Request Generation",
+          "inferred": false,
+          "evidence_quote": "The attacker then repeatedly tried to log in to the contractor's Uber account. Each time, the contractor received a two-factor login approval request, which initially blocked access. Eventually, however, the contractor accepted one, and the attacker successfully logged in.",
           "validated": true
         },
         {
@@ -76,14 +29,8 @@
           "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Root Cause: Contractor account compromise leading to AWS credential discovery on a shared drive",
-          "validated": true
-        },
-        {
-          "technique_id": "T1621",
-          "technique_name": "Multi-Factor Authentication Request Generation",
-          "inferred": false,
-          "evidence_quote": "The attacker then repeatedly tried to log in to the contractor's Uber account. Each time, the contractor received a two-factor login approval request, which initially blocked access. Eventually, however, the contractor accepted one, and the attacker successfully logged in.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -94,8 +41,8 @@
         {
           "technique_id": "T1087",
           "technique_name": "Account Discovery",
-          "inferred": true,
-          "evidence_quote": "the attacker accessed several other employee accounts which ultimately gave the attacker elevated permissions to a number of tools",
+          "inferred": false,
+          "evidence_quote": "The attacker was able to access our dashboard at HackerOne, where security researchers report bugs and vulnerabilities.",
           "validated": true
         }
       ]
@@ -105,13 +52,6 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "We also have not found that the attacker accessed any customer or user data stored by our cloud providers (e.g. AWS S3)",
-          "validated": true
-        },
-        {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
           "inferred": false,
@@ -119,23 +59,10 @@
           "validated": true
         },
         {
-          "technique_id": "T1213.003",
-          "technique_name": "Code Repositories",
-          "inferred": true,
-          "evidence_quote": "We reviewed our codebase and have not found that the attacker made any changes",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1048",
-          "technique_name": "Exfiltration Over Alternative Protocol",
-          "inferred": true,
-          "evidence_quote": "it does appear that the attacker downloaded some internal Slack messages, as well as accessed or downloaded information from an internal tool our finance team uses to manage some invoices",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "We also have not found that the attacker accessed any customer or user data stored by our cloud providers (e.g. AWS S3)",
           "validated": true
         }
       ]
@@ -148,8 +75,9 @@
           "technique_id": "T1491.001",
           "technique_name": "Defacement: Internal Defacement",
           "inferred": false,
-          "evidence_quote": "reconfigured Uber's OpenDNS to display a graphic image to employees on some internal sites",
-          "validated": false
+          "evidence_quote": "The attacker then posted a message to a company-wide Slack channel... and reconfigured Uber's OpenDNS to display a graphic image to employees on some internal sites.",
+          "validated": false,
+          "subtechnique_id": "T1491.001"
         }
       ]
     }
@@ -165,7 +93,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -177,7 +106,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -192,7 +122,8 @@
         "IAM",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -204,7 +135,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -216,7 +148,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -230,7 +163,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 7,
@@ -242,7 +176,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 8,
@@ -254,7 +189,8 @@
         "https://www.uber.com/newsroom/security-update/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -313,7 +249,7 @@
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
         "description": "Using elevated access, the attacker pivoted to several other employee accounts, gaining elevated permissions to internal tools including G-Suite and Slack.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the attacker accessed several other employee accounts which ultimately gave the attacker elevated permissions to a number of tools, including G-Suite and Slack",
         "evidence_sources": [
           "https://www.uber.com/newsroom/security-update/"

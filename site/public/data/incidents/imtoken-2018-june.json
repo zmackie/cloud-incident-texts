@@ -9,14 +9,16 @@
           "technique_name": "Compromise Accounts: Email Accounts",
           "inferred": false,
           "evidence_quote": "email account exposed imToken to our first ever security breach. The emergency response team is currently investigating the root cause of the hack on email account",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1586.002"
         },
         {
           "technique_id": "T1566.002",
           "technique_name": "Spearphishing Link",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "the worst scenario would be that, after obtaining such data, the hacker may send 'Phishing emails' to users",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1566.002"
         }
       ]
     },
@@ -25,18 +27,12 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "the hackers reset passwords through emails and obtained the Amazon AWS web account for our 2.0 Beta server",
-          "validated": true
+          "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -47,20 +43,7 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "the hacker may have obtained certain device data of 2.0 Beta testers... 36,000 devices, 73,000 corresponding wallet addresses and 10,000 subscribed emails",
           "validated": true
         }
@@ -78,7 +61,8 @@
         "https://archive.ph/bRjXi"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -93,7 +77,8 @@
         "IAM",
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 3,
@@ -108,7 +93,8 @@
         "EC2",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 4,
@@ -120,7 +106,8 @@
         "https://archive.ph/bRjXi"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     }
   ],
   "aws_services": [
@@ -153,7 +140,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using access to the compromised email account, the attacker triggered an AWS account password reset flow, successfully resetting the AWS root/console login password and taking over the AWS account at 02:11 am June 9, 2018 (UTC+8).",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "an anonymous user reset our log-in password of Amazon AWS by e-mail, where our 2.0 Beta servers are hosted",
         "evidence_sources": [
           "https://archive.ph/bRjXi"

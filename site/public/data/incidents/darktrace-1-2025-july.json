@@ -5,44 +5,12 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "The threat actor was observed leveraging likely previously compromised credential to access several AWS instances within customer's Private Cloud environment",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "leveraging likely previously compromised credential to access several AWS instances within customer's Private Cloud environment",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
-          "inferred": true,
-          "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1133",
-          "technique_name": "External Remote Services",
-          "inferred": false,
           "evidence_quote": "The earliest signs of attack observed by Darktrace involved the use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -54,21 +22,7 @@
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery",
           "inferred": false,
-          "evidence_quote": "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network",
-          "validated": true
-        },
-        {
-          "technique_id": "T1135",
-          "technique_name": "Network Share Discovery",
-          "inferred": false,
-          "evidence_quote": "around 5 GB of data downloaded from an AWS file server",
-          "validated": false
-        },
-        {
-          "technique_id": "T1049",
-          "technique_name": "System Network Connections Discovery",
-          "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network.",
           "validated": true
         }
       ]
@@ -81,15 +35,9 @@
           "technique_id": "T1021.001",
           "technique_name": "Remote Services: Remote Desktop Protocol",
           "inferred": false,
-          "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices",
-          "validated": false
-        },
-        {
-          "technique_id": "T1021.002",
-          "technique_name": "Remote Services: SMB/Windows Admin Shares",
-          "inferred": false,
-          "evidence_quote": "Device / SMB Lateral Movement",
-          "validated": false
+          "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices, likely in response to being hindered by Autonomous Response actions.",
+          "validated": false,
+          "subtechnique_id": "T1021.001"
         }
       ]
     },
@@ -101,34 +49,7 @@
           "technique_id": "T1039",
           "technique_name": "Data from Network Shared Drive",
           "inferred": false,
-          "evidence_quote": "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
-          "validated": false
-        },
-        {
-          "technique_id": "T1074.002",
-          "technique_name": "Remote Data Staging",
-          "inferred": true,
-          "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip'",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1572",
-          "technique_name": "Protocol Tunneling",
-          "inferred": false,
-          "evidence_quote": "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)",
-          "validated": false
-        },
-        {
-          "technique_id": "T1102",
-          "technique_name": "Web Service",
-          "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files. This likely represented data gathering prior to exfiltration.",
           "validated": false
         }
       ]
@@ -141,8 +62,9 @@
           "technique_id": "T1048.002",
           "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
           "inferred": false,
-          "evidence_quote": "The PKI instance continued to make repeated SSH connections attempts to transfer data to this external destination... suggesting the threat actor was exfiltrating the gathered data using the Rclone utility",
-          "validated": false
+          "evidence_quote": "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178), suggesting the threat actor was exfiltrating the gathered data using the Rclone utility they had previously installed.",
+          "validated": false,
+          "subtechnique_id": "T1048.002"
         }
       ]
     }
@@ -161,7 +83,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -175,7 +98,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": ""
     },
     {
       "step": 3,
@@ -189,7 +113,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 4,
@@ -203,7 +128,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     },
     {
       "step": 5,
@@ -217,7 +143,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -231,7 +158,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 7,
@@ -245,7 +173,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 8,
@@ -259,7 +188,8 @@
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [

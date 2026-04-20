@@ -7,7 +7,6 @@
         {
           "technique_id": "T1566",
           "technique_name": "Phishing",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "attackers initiated a wide social media phishing campaign targeting company employees... Clever social engineering was used to convince these employees to download and execute malicious payloads concealed in a variety of technical programs and data files.",
           "validated": true
@@ -21,10 +20,10 @@
         {
           "technique_id": "T1204.002",
           "technique_name": "User Execution: Malicious File",
-          "subtechnique_id": "T1204.002",
           "inferred": false,
-          "evidence_quote": "a cloud dev-ops engineer executed the malicious payload on their personal home computer",
-          "validated": false
+          "evidence_quote": "a cloud dev-ops engineer executed the malicious payload on their personal home computer which contained no sensitive company information... the unmanaged home device lacked the EDR installed on corporate devices which may have prevented execution of the malicious payload.",
+          "validated": false,
+          "subtechnique_id": "T1204.002"
         }
       ]
     },
@@ -35,31 +34,15 @@
         {
           "technique_id": "T1505",
           "technique_name": "Server Software Component",
-          "subtechnique_id": null,
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "installing reverse shells on EC2 instances in multiple VPCs",
           "validated": false
         },
         {
           "technique_id": "T1133",
           "technique_name": "External Remote Services",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "attackers had re-emerged in the environment... Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network",
+          "evidence_quote": "Once their access to AWS was revoked, they simply acquired new access through the compromised on-premises jump server... all they had to do was simply go back to the compromised employee laptop, wait for a new session on the jump server, and they were back in.",
           "validated": true
         }
       ]
@@ -71,18 +54,18 @@
         {
           "technique_id": "T1070.002",
           "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
-          "subtechnique_id": "T1070.002",
           "inferred": false,
           "evidence_quote": "Deleting local OS logs from compromised EC2 instances to prevent analysis of logins and executed commands",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1070.002"
         },
         {
           "technique_id": "T1562.007",
           "technique_name": "Disable or Modify Cloud Firewall",
-          "subtechnique_id": "T1562.007",
           "inferred": false,
           "evidence_quote": "modifying S3 and RDS audit policies to prevent the organization from knowing exactly which data was being accessed",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.007"
         }
       ]
     },
@@ -93,18 +76,17 @@
         {
           "technique_id": "T1539",
           "technique_name": "Steal Web Session Cookie",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network",
+          "evidence_quote": "attackers to extract valid Citrix session cookies from the compromised employee laptop and successfully hijack a valid privileged session into the corporate network.",
           "validated": true
         },
         {
           "technique_id": "T1552.005",
           "technique_name": "Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
-          "inferred": true,
-          "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys",
-          "validated": true
+          "inferred": false,
+          "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -115,9 +97,8 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques",
+          "inferred": false,
+          "evidence_quote": "The speed at which this phase of the attack was executed leaves little doubt that much of it was automated leveraging pre-existing cloud reconnaissance scripts and techniques.",
           "validated": true
         }
       ]
@@ -129,18 +110,10 @@
         {
           "technique_id": "T1021.001",
           "technique_name": "Remote Services: Remote Desktop Protocol",
-          "subtechnique_id": "T1021.001",
           "inferred": false,
           "evidence_quote": "This session contained direct RDP access to a jump server used to access and manage the company's production AWS environment.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1021.007",
-          "technique_name": "Cloud Services",
-          "subtechnique_id": "T1021.007",
-          "inferred": false,
-          "evidence_quote": "From this server attackers were able to extract highly privileged AWS access keys and proceed to the main phase of the attack.",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1021.001"
         }
       ]
     },
@@ -151,22 +124,7 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
-          "inferred": true,
           "evidence_quote": "they began exfiltrating data from S3 storage buckets and sensitive RDS databases containing client data",
           "validated": true
         }
@@ -184,7 +142,8 @@
         "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -196,7 +155,8 @@
         "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 3,
@@ -208,7 +168,8 @@
         "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -220,7 +181,8 @@
         "https://www.wiz.io/blog/uncovering-hybrid-cloud-attacks-part-2-the-attack"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 5,
@@ -234,7 +196,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 6,
@@ -251,7 +214,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 7,
@@ -266,7 +230,8 @@
         "S3",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 8,
@@ -281,7 +246,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0003"
     },
     {
       "step": 9,
@@ -295,7 +261,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -310,7 +277,8 @@
         "S3",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -324,7 +292,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     }
   ],
   "aws_services": [

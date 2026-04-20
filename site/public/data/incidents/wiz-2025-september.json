@@ -8,7 +8,7 @@
           "technique_id": "T1598",
           "technique_name": "Phishing for Information",
           "inferred": false,
-          "evidence_quote": "The emails linked to what we assess was a credential theft site hosted at irss[.]securesusa[.]com.",
+          "evidence_quote": "The phishing messages referenced 2024 tax forms... The emails linked to what we assess was a credential theft site hosted at irss[.]securesusa[.]com. To evade detection, the attackers concealed the site behind a redirect provided by a commercial traffic analysis service.",
           "validated": false
         }
       ]
@@ -21,15 +21,17 @@
           "technique_id": "T1583.001",
           "technique_name": "Acquire Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "The domains were a mix of attacker-owned domains... The ones owned by the attackers were: managed7.com, street7news.org, street7market.net, docfilessa.com (ATT&CK: T1583.001).",
-          "validated": false
+          "evidence_quote": "The attacker started by adding multiple domains as verified identities using the CreateEmailIdentity API. The domains were a mix of attacker-owned domains and legitimate domains with weak DMARC protections.",
+          "validated": false,
+          "subtechnique_id": "T1583.001"
         },
         {
           "technique_id": "T1584.001",
           "technique_name": "Compromise Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "legitimate domains with weak DMARC protections (which make it easier for attackers to spoof or send on behalf of the domain without being blocked by common email security controls) (ATT&CK: T1584.001).",
-          "validated": false
+          "evidence_quote": "legitimate domains with weak DMARC protections (which make it easier for attackers to spoof or send on behalf of the domain without being blocked by common email security controls).",
+          "validated": false,
+          "subtechnique_id": "T1584.001"
         }
       ]
     },
@@ -41,21 +43,9 @@
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "The attack began with a set of compromised access keys... Once they obtained the AWS access key, the attacker's first move was a simple GetCallerIdentity request (ATT&CK: T1078.004).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "Within a span of just ten seconds, we observed a burst of PutAccountDetails requests that fanned out across all AWS regions \u2014 a clear attempt to push the SES account into production mode (ATT&CK: T1098).",
-          "validated": true
+          "evidence_quote": "The attack began with a set of compromised access keys. While the exact vector remains unknown, such keys are often obtained through accidental public exposure (code repositories, misconfigured assets) or theft from a developer workstation.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -67,8 +57,9 @@
           "technique_id": "T1098.003",
           "technique_name": "Additional Cloud Roles",
           "inferred": false,
-          "evidence_quote": "They then attempted to escalate their privileges by creating an IAM policy named ses-support-policy and attaching it to the compromised IAM user (ATT&CK: T1098.003).",
-          "validated": true
+          "evidence_quote": "They then attempted to escalate their privileges by creating an IAM policy named ses-support-policy and attaching it to the compromised IAM user (ATT&CK: T1098.003). That effort also failed due to insufficient permissions.",
+          "validated": true,
+          "subtechnique_id": "T1098.003"
         }
       ]
     },
@@ -80,20 +71,7 @@
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "They issued GetSendQuota and GetAccount calls, both intended to reveal the current state of the SES configuration and whether the account was still restricted to sandbox limits (ATT&CK: T1526).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "inferred": false,
-          "evidence_quote": "SES lets adversaries launch phishing at scale from trusted domains, shifting both financial costs and reputational damage onto the victim.",
+          "evidence_quote": "The attacker's first move was a simple GetCallerIdentity request... The API call response revealed that the access key had 'ses-' embedded in its name... They issued GetSendQuota and GetAccount calls, both intended to reveal the current state of the SES configuration.",
           "validated": true
         }
       ]
@@ -112,7 +90,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -127,7 +106,8 @@
         "STS",
         "SES"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -141,7 +121,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -156,7 +137,8 @@
         "AWS Support",
         "SES"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -170,7 +152,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 6,
@@ -184,7 +167,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 7,
@@ -198,7 +182,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 8,
@@ -212,7 +197,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     }
   ],
   "aws_services": [
@@ -263,7 +249,7 @@
         "technique_id": "T1098",
         "technique_name": "Account Manipulation",
         "description": "Within ten seconds, the attacker issued a burst of PutAccountDetails API requests across all AWS regions to move the SES account from sandbox (restricted) mode to production mode, enabling sending to arbitrary recipients at up to 50,000 emails/day. A fraudulent business justification referencing an unrelated construction company website was included to pass AWS review.",
-        "tactic_id": "TA0003",
+        "tactic_id": "",
         "evidence_quote": "Within a span of just ten seconds, we observed a burst of PutAccountDetails requests that fanned out across all AWS regions \u2014 a strong indicator of automation and a clear attempt to push the SES account into production mode.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"
@@ -277,7 +263,7 @@
         "technique_id": "T1098",
         "technique_name": "Account Manipulation",
         "description": "Attacker attempted to programmatically open an AWS support ticket via the CreateCase API to further raise SES sending limits beyond the default 50,000/day quota. This failed due to insufficient permissions on the compromised key.",
-        "tactic_id": "TA0003",
+        "tactic_id": "",
         "evidence_quote": "They tried to open a support ticket programmatically through the CreateCase API, asking AWS to further raise their limits (ATT&CK: T1098), an attempt that failed due to insufficient permissions.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"

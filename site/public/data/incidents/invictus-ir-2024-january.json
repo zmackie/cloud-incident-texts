@@ -22,28 +22,24 @@
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         },
         {
           "technique_id": "T1098.001",
           "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "Additionally the TA created access keys for existing accounts... CreateKeyPair",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Additional Cloud Roles",
-          "inferred": false,
-          "evidence_quote": "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         },
         {
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -51,13 +47,6 @@
       "tactic_id": "TA0004",
       "tactic_name": "Privilege Escalation",
       "techniques": [
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Additional Cloud Roles",
-          "inferred": false,
-          "evidence_quote": "The AdministratorAccess policy was attached to the newly created account with AttachUserPolicy.",
-          "validated": true
-        },
         {
           "technique_id": "T1548",
           "technique_name": "Abuse Elevation Control Mechanism",
@@ -70,7 +59,8 @@
           "technique_name": "Temporary Elevated Cloud Access",
           "inferred": false,
           "evidence_quote": "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1548.005"
         }
       ]
     },
@@ -83,7 +73,8 @@
           "technique_name": "Match Legitimate Resource Name or Location",
           "inferred": false,
           "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1036.005"
         },
         {
           "technique_id": "T1070",
@@ -97,14 +88,16 @@
           "technique_name": "Create Cloud Instance",
           "inferred": false,
           "evidence_quote": "Creating a LightSail instance upon discovery with CreateInstances",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1578.002"
         },
         {
           "technique_id": "T1550.001",
           "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1550.001"
         }
       ]
     },
@@ -117,7 +110,8 @@
           "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -129,7 +123,7 @@
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities. These calls are used to get an idea on how much emails can be sent at once and which emails and domains are registered to send emails.",
+          "evidence_quote": "Inspecting GuardDuty findings with ListFindings and GetFindings",
           "validated": true
         },
         {
@@ -137,7 +131,8 @@
           "technique_name": "Cloud Groups",
           "inferred": false,
           "evidence_quote": "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1069.003"
         },
         {
           "technique_id": "T1580",
@@ -151,7 +146,8 @@
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1087.004"
         },
         {
           "technique_id": "T1518",
@@ -169,7 +165,7 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "ListBuckets",
           "validated": true
         }
@@ -191,7 +187,8 @@
           "technique_name": "Compromise Infrastructure: Domains",
           "inferred": false,
           "evidence_quote": "Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1584.001"
         }
       ]
     }
@@ -207,7 +204,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -219,7 +217,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 3,
@@ -231,7 +230,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 4,
@@ -243,7 +243,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -255,7 +256,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -267,7 +269,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 7,
@@ -279,7 +282,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -291,7 +295,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 9,
@@ -303,7 +308,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 10,
@@ -315,7 +321,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -327,7 +334,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 12,
@@ -339,7 +347,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 13,
@@ -351,7 +360,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 14,
@@ -363,7 +373,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 15,
@@ -375,7 +386,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 16,
@@ -387,7 +399,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 17,
@@ -399,7 +412,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 18,
@@ -411,7 +425,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 19,
@@ -423,7 +438,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 20,
@@ -435,7 +451,8 @@
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0040"
     }
   ],
   "confidence_score": 0.65,
@@ -482,7 +499,7 @@
         "technique_id": "T1098.003",
         "technique_name": "Additional Cloud Roles",
         "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"

@@ -10,13 +10,6 @@
           "inferred": false,
           "evidence_quote": "After exploiting some JupyterLab notebook containers deployed in a Kubernetes cluster, the SCARLETEEL operation proceeded with multiple types of attacks.",
           "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "they switched to in order to conduct reconnaissance... using the other new accounts created or the account compromised",
-          "validated": true
         }
       ]
     },
@@ -29,7 +22,8 @@
           "technique_name": "Command and Scripting Interpreter: Unix Shell",
           "inferred": false,
           "evidence_quote": "the actor leveraged several versions of scripts that steal credentials... it uses shell built-ins to accomplish this instead of curl.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1059.004"
         },
         {
           "technique_id": "T1610",
@@ -49,14 +43,16 @@
           "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "Using the new admin privileges, the adversary created new users and a new set of access keys for all the users in the account, including admins.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         },
         {
           "technique_id": "T1136.003",
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "One of the users created was called 'aws_support' which they switched to in order to conduct reconnaissance.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -64,13 +60,6 @@
       "tactic_id": "TA0004",
       "tactic_name": "Privilege Escalation",
       "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
-          "validated": true
-        },
         {
           "technique_id": "T1548",
           "technique_name": "Abuse Elevation Control Mechanism",
@@ -89,14 +78,16 @@
           "technique_name": "Impair Defenses: Disable or Modify System Firewall",
           "inferred": false,
           "evidence_quote": "It starts deleting the current IPtables rules and sets the firewall to make them fully permissive.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1562.004"
         },
         {
           "technique_id": "T1070.003",
           "technique_name": "Indicator Removal: Clear Command History",
           "inferred": false,
           "evidence_quote": "history -cw\nclear",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1070.003"
         },
         {
           "technique_id": "T1070",
@@ -110,7 +101,8 @@
           "technique_name": "Match Legitimate Resource Name or Location",
           "inferred": false,
           "evidence_quote": "The Monero miner is executed in background using the names for containered and the systemd service as a defense evasion technique",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1036.005"
         },
         {
           "technique_id": "T1599",
@@ -130,14 +122,16 @@
           "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "Those scripts search for AWS credentials in different places: by contacting the instance metadata (both IMDSv1 and IMDSv2)",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         },
         {
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "The get_aws_data() function also searches for credentials in all Docker containers in the target machine (even if they are not running) and in the filesystem",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         },
         {
           "technique_id": "T1555",
@@ -171,7 +165,8 @@
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "they tried to create access keys for all admin users. The victim used a specific naming convention for all of their admin accounts similar to 'adminJane,' 'adminJohn,' etc.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1087.004"
         }
       ]
     },
@@ -182,7 +177,7 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "they configured the keys for the Russian S3 environment with the 'configure' command and then attempted to access their buckets.",
           "validated": true
         }
@@ -240,7 +235,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -252,7 +248,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 3,
@@ -264,7 +261,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 4,
@@ -276,7 +274,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -288,7 +287,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -300,7 +300,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 7,
@@ -312,7 +313,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 8,
@@ -324,7 +326,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 9,
@@ -336,7 +339,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -348,7 +352,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -360,7 +365,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 12,
@@ -372,7 +378,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 13,
@@ -384,7 +391,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 14,
@@ -396,7 +404,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 15,
@@ -408,7 +417,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 16,
@@ -420,7 +430,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 17,
@@ -432,7 +443,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 18,
@@ -444,7 +456,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 19,
@@ -456,7 +469,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 20,
@@ -468,7 +482,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     },
     {
       "step": 21,
@@ -480,7 +495,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 22,
@@ -492,7 +508,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 23,
@@ -504,7 +521,8 @@
         "https://sysdig.com/blog/scarleteel-2-0/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "confidence_score": 0.65,
@@ -575,7 +593,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Valid Accounts: Cloud Accounts observed during Privilege Escalation: they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "they managed to gain access to the 'AdminJoe' user by creating access keys for it.",
         "evidence_sources": [
           "https://sysdig.com/blog/scarleteel-2-0/"

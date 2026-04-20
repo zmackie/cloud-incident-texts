@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "we observed an attacker targeting an AWS environment with a long-term access key (AKIA)",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
@@ -22,34 +9,8 @@
           "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "the attacker focused on creating another layer of persistence by creating an IAM user, supdev, with a login profile that had the AdministratorAccess policy attached",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Additional Cloud Roles",
-          "inferred": false,
-          "evidence_quote": "the attacker used their console access to create a new role named SupportAWS... They then attached a policy to that role that allows them to assume it from an attacker-controlled account 713521355166",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker then assumed the role via the 713521355166 account, authenticated as an IAM user named adminprod",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Additional Cloud Roles",
-          "inferred": false,
-          "evidence_quote": "Following this, the attacker attached the policy AdministratorAccess to the AWSSupport role. This ensures the role will have the requisite privileges to achieve the attacker's objectives.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         }
       ]
     },
@@ -58,32 +19,12 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "The attacker used several methods to obscure their activity and used temporary credentials to create backdoors, such as new users and roles.",
-          "validated": true
-        },
-        {
           "technique_id": "T1550.001",
           "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "One of the first actions was to call GetFederationToken... credentials generated are separate from the original compromised IAM identity, making it more difficult to track the attacker",
-          "validated": true
-        },
-        {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
-          "inferred": false,
-          "evidence_quote": "the attacker used their console access to create a new role named SupportAWS. This shows the attacker using names that look legitimate to avoid detections.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
-          "inferred": false,
-          "evidence_quote": "The attacker used the VPN provider VPN Jantit to perform the activity in the victims environment.",
-          "validated": false
+          "validated": true,
+          "subtechnique_id": "T1550.001"
         }
       ]
     },
@@ -95,14 +36,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "the attacker navigated to the AWS SES service, potentially checking the capabilities of the SES service in the victim's AWS account, like whether it was in a sandbox, had configured sending limits, etc.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "the attacker navigated to the AWS SES service, potentially checking the capabilities of the SES service in the victim's AWS account, like whether it was in a sandbox, had configured sending limits, etc. AWS SES enumeration API calls used: GetAccount, ListEmailIdentities, ListIdentities, GetSendQuota",
           "validated": true
         }
       ]
@@ -121,7 +55,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -135,7 +70,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 3,
@@ -151,7 +87,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -165,7 +102,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -179,7 +117,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 6,
@@ -195,7 +134,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 7,
@@ -209,7 +149,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 8,
@@ -224,7 +165,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 9,
@@ -238,7 +180,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 10,
@@ -253,7 +196,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     }
   ],
   "aws_services": [
@@ -275,7 +219,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used a stolen or compromised long-term IAM access key (AKIA) to gain initial access to the victim AWS environment.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "we observed an attacker targeting an AWS environment with a long-term access key (AKIA)",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
@@ -303,7 +247,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used GetSigninToken and ConsoleLogin to convert the federated temporary credentials into an AWS Console session, logging in as federated-user/admin without MFA.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "The attacker then generated an AWS Console sign-in link using GetSigninToken... eventName: ConsoleLogin... arn: arn:aws:sts::redacted:federated-user/admin",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
@@ -319,7 +263,7 @@
         "technique_id": "T1098.003",
         "technique_name": "Additional Cloud Roles",
         "description": "Attacker created a new IAM role named 'SupportAWS' with a trust policy allowing assumption from the attacker-controlled external AWS account (713521355166), establishing cross-account persistence backdoor.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "the attacker used their console access to create a new role named SupportAWS... They then attached a policy to that role that allows them to assume it from an attacker-controlled account 713521355166",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
@@ -333,7 +277,7 @@
         "technique_id": "T1098.003",
         "technique_name": "Additional Cloud Roles",
         "description": "Attacker attached the AWS managed AdministratorAccess policy to the SupportAWS role, granting it full administrative privileges.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "the attacker attached the policy AdministratorAccess to the AWSSupport role. This ensures the role will have the requisite privileges to achieve the attacker's objectives.",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
@@ -347,7 +291,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker assumed the SupportAWS role from their external account (713521355166) as IAM user 'adminprod', using SwitchRole and AssumeRole to gain administrative access via cross-account role assumption.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "The attacker then assumed the role via the 713521355166 account, authenticated as an IAM user named adminprod... generating API calls like SwitchRole and AssumeRole",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"
@@ -377,7 +321,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker logged into the AWS Console as the newly created IAM user 'supdev' from multiple regions in a short time period, without MFA.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "The attacker then pivoted to the user supdev, accessing the console twice from two different regions in a short time period.",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-unwanted-visitor/"

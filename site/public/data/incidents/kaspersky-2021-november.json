@@ -5,20 +5,12 @@
       "tactic_name": "Resource Development",
       "techniques": [
         {
-          "technique_id": "T1583",
-          "technique_name": "Acquire Infrastructure",
-          "subtechnique_id": "T1583.006",
-          "inferred": false,
-          "evidence_quote": "they used an official Kaspersky email and sent the emails from Amazon Web Services infrastructure, which likely helped them reach their targets mailboxes by easily evading most Secure Email Gateway (SEGs) protections",
-          "validated": false
-        },
-        {
-          "technique_id": "T1608",
-          "technique_name": "Stage Capabilities",
-          "subtechnique_id": "T1608.004",
+          "technique_id": "T1608.004",
+          "technique_name": "Stage Capabilities: Drive-by Target",
           "inferred": false,
           "evidence_quote": "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1608.004"
         }
       ]
     },
@@ -27,27 +19,12 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1199",
-          "technique_name": "Trusted Relationship",
-          "inferred": false,
-          "evidence_quote": "This access token was issued to a third party contractor during the testing of the website 2050.earth",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
-          "validated": true
-        },
-        {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
-          "subtechnique_id": "T1566.002",
+          "technique_id": "T1566.002",
+          "technique_name": "Spearphishing Link",
           "inferred": false,
           "evidence_quote": "The phishing e-mails are usually arriving in the form of 'Fax notifications' and lure users to fake websites collecting credentials for Microsoft online services",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1566.002"
         }
       ]
     },
@@ -69,25 +46,12 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.005",
-          "inferred": true,
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
           "evidence_quote": "a legitimate Amazon Simple Email Service (SES) token issued to a third-party contractor was recently used by threat actors",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1114",
-          "technique_name": "Email Collection",
-          "inferred": true,
-          "evidence_quote": "lure users to fake websites collecting credentials for Microsoft online services",
-          "validated": false
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     }
@@ -105,7 +69,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -120,7 +85,8 @@
         "SES",
         "AWS"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 3,
@@ -135,7 +101,8 @@
         "SES",
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -149,7 +116,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 5,
@@ -161,7 +129,8 @@
         "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": ""
     }
   ],
   "aws_services": [
@@ -195,7 +164,7 @@
         "technique_id": "T1608.004",
         "technique_name": "Stage Capabilities: Drive-by Target",
         "description": "Attackers deployed two phishing kits (Iamtheboss and MIRCBOOT) to set up credential-harvesting landing pages impersonating Microsoft Office 365 login pages.",
-        "tactic_id": "",
+        "tactic_id": "TA0042",
         "evidence_quote": "Kaspersky security experts linked the phishing attempts to multiple cybercriminals who used two phishing kits in this campaign, one known as Iamtheboss and another named MIRCBOOT",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/kasperskys-stolen-amazon-ses-token-used-in-office-365-phishing/"

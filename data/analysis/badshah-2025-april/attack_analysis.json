@@ -8,22 +8,9 @@
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess).",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": true,
-          "evidence_quote": "Reset master RDS database passwords for access",
-          "validated": true
+          "evidence_quote": "Used VPN IP addresses to hide their origin",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -32,20 +19,20 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
           "inferred": false,
-          "evidence_quote": "Used VPN IP addresses to hide their origin",
-          "subtechnique_id": "T1090.003",
-          "validated": false
+          "evidence_quote": "Modified database security groups to allow ingress from their VPN IPs",
+          "validated": true,
+          "subtechnique_id": "T1562.007"
         },
         {
           "technique_id": "T1562.008",
           "technique_name": "Disable or Modify Cloud Logs",
           "inferred": false,
           "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
-          "subtechnique_id": "T1562.008",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.008"
         }
       ]
     },
@@ -53,6 +40,14 @@
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess). IAM credentials for applications were shared among team members.",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
+        },
         {
           "technique_id": "T1110",
           "technique_name": "Brute Force",
@@ -72,19 +67,6 @@
           "inferred": false,
           "evidence_quote": "Used custom scripts to enumerate all resources across all regions",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
-          "inferred": false,
-          "evidence_quote": "VirusTotal and Abuse.ch listed them as known C&C servers",
-          "validated": false
         }
       ]
     },
@@ -135,7 +117,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -150,7 +133,8 @@
         "IAM",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -167,7 +151,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -182,7 +167,8 @@
         "IAM",
         "AWS Organizations"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 5,
@@ -197,7 +183,8 @@
         "EC2 Security Groups",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 6,
@@ -211,7 +198,8 @@
       "aws_services_involved": [
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 7,
@@ -225,7 +213,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 8,
@@ -240,7 +229,8 @@
         "CloudTrail",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 9,
@@ -256,7 +246,8 @@
         "RDS",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 10,
@@ -272,7 +263,8 @@
         "RDS",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

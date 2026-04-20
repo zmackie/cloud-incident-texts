@@ -8,8 +8,9 @@
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "account DevOps1-bpvbp had been used to create an unknown account DevOps3 on 26 Oct 2022 at 21:29:03 UTC",
-          "validated": true
+          "evidence_quote": "We can see that this user did not have MFA enabled. We can also see the source IP address from where the user logged in on the console.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -18,17 +19,10 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1059.004",
-          "technique_name": "Command and Scripting Interpreter: Unix Shell",
-          "inferred": false,
-          "evidence_quote": "ssm-user switched user to the default Amazon Linux2 account ec2-user which initiated a new bash session",
-          "validated": false
-        },
-        {
           "technique_id": "T1651",
           "technique_name": "Cloud Administration Command",
           "inferred": false,
-          "evidence_quote": "DevOps1-bpvbp account had initiated a StartSession which provided a connection to EC2 instance i-08e56d6b6c0439daf using Session Manager",
+          "evidence_quote": "a StartSession event was recorded with the same account... a session was started from the account DevOps1-bpvbp towards an instance with identifier i-08e56d6b6c0439daf",
           "validated": true
         }
       ]
@@ -41,8 +35,9 @@
           "technique_id": "T1136.003",
           "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "A new super user account was found and no one recognised it which triggered an incident... the first event we find related to the user is the CreateUser event",
-          "validated": true
+          "evidence_quote": "the first event we find related to the user is the CreateUser event... A new super user account was found and no one recognised it... one of the options is to use it as a persistence method.",
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -54,8 +49,9 @@
           "technique_id": "T1548.003",
           "technique_name": "Abuse Elevation Control Mechanism: Sudo and Sudo Caching",
           "inferred": false,
-          "evidence_quote": "there is log evidence that indicates that sudo command was executed to switch user to ec2-user during the attacker's session",
-          "validated": false
+          "evidence_quote": "the ssm-user switched user to the default Amazon Linux2 account ec2-user which initiated a new bash session... log evidence that indicates that sudo command was executed to switch user to ec2-user during the attacker's session",
+          "validated": false,
+          "subtechnique_id": "T1548.003"
         }
       ]
     },
@@ -67,8 +63,9 @@
           "technique_id": "T1552.005",
           "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
-          "evidence_quote": "The first command in the code box above, shows the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id.",
-          "validated": true
+          "evidence_quote": "the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id.",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -80,14 +77,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id. The VPC Id is then used in conjunction with the aws command line tool to provide detailed information of the security group that the instance belongs to, in particular looking for port 22 entries",
-          "validated": true
-        },
-        {
-          "technique_id": "T1046",
-          "technique_name": "Network Service Discovery",
-          "inferred": false,
-          "evidence_quote": "in particular looking for port 22 entries, port 22 is commonly associated with SSH. This could be seen as a method to perform network discovery to find other hosts that can be used for lateral movement.",
+          "evidence_quote": "The VPC Id is then used in conjunction with the aws command line tool to provide detailed information of the security group that the instance belongs to, in particular looking for port 22 entries",
           "validated": true
         }
       ]
@@ -100,8 +90,9 @@
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
           "inferred": false,
-          "evidence_quote": "the ec2-user known-hosts file was accessed... the ssh commands are linked to the attacker's session... connected to another host i-020e722274233c7f2 for additional suspicious activity",
-          "validated": false
+          "evidence_quote": "The ec2-user known-hosts file was accessed and... the ssh commands are linked to the attacker's session... connected to another host i-020e722274233c7f2 for additional suspicious activity",
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     },
@@ -120,8 +111,9 @@
           "technique_id": "T1074.001",
           "technique_name": "Data Staged: Local Data Staging",
           "inferred": false,
-          "evidence_quote": "copied the database dump file staff.txt file from i-020e722274233c7f2 to i-08e56d6b6c0439daf... created a new s3 bucket and copied the database dump file staff.txt to it. This could be seen as staging data for exfiltration.",
-          "validated": false
+          "evidence_quote": "copied the database dump file staff.txt file from i-020e722274233c7f2 to i-08e56d6b6c0439daf... in our timeline we can see the file staff.txt was created during the attacker's session which is likely to be the result of the scp command.",
+          "validated": false,
+          "subtechnique_id": "T1074.001"
         }
       ]
     },
@@ -153,7 +145,8 @@
         "IAM",
         "Management Console"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -167,7 +160,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 3,
@@ -183,7 +177,8 @@
         "Systems Manager",
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 4,
@@ -197,7 +192,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0004"
     },
     {
       "step": 5,
@@ -212,7 +208,8 @@
         "EC2",
         "IMDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 6,
@@ -228,7 +225,8 @@
         "CLI",
         "VPC Security Groups"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 7,
@@ -242,7 +240,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 8,
@@ -256,7 +255,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 9,
@@ -270,7 +270,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 10,
@@ -285,7 +286,8 @@
         "S3",
         "CLI"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [

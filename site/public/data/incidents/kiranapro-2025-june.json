@@ -1,54 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Hackers gained access to KiranaPro's root accounts on AWS and GitHub... the hacking happened after someone gained access to their systems via a former employee's account.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
         {
           "technique_id": "T1098.001",
           "technique_name": "Additional Cloud Credentials",
-          "inferred": true,
-          "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Hackers gained access to KiranaPro's root accounts on AWS and GitHub",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.008",
-          "technique_name": "Disable or Modify Cloud Logs",
-          "inferred": true,
-          "evidence_quote": "we are not able to get any logs or anything because we don't have the root account",
-          "validated": true
+          "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account last week",
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         }
       ]
     },
@@ -60,14 +22,14 @@
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
           "inferred": false,
-          "evidence_quote": "all their Electric Compute Cloud (EC2) services... were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
+          "evidence_quote": "all their Electric Compute Cloud (EC2) services, which let clients access virtual computers to run their applications, were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
           "validated": true
         },
         {
           "technique_id": "T1489",
           "technique_name": "Service Stop",
           "inferred": false,
-          "evidence_quote": "The company's app is online but cannot process orders... the app remained online in a limited capacity and is in the process of being rebuilt from scratch",
+          "evidence_quote": "The company's app is online but cannot process orders",
           "validated": true
         }
       ]
@@ -88,7 +50,8 @@
         "IAM",
         "GitHub"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -103,7 +66,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 3,
@@ -120,7 +84,8 @@
         "IAM",
         "GitHub"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 4,
@@ -134,7 +99,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -155,7 +121,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "A disgruntled former employee (reportedly named Lava Kumar, laid off prior to the incident) used retained credentials to access KiranaPro's root AWS account and GitHub account. Credentials were never revoked after the employee's departure.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee's account",
         "evidence_sources": [
           "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",

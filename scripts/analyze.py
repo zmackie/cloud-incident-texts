@@ -136,11 +136,27 @@ ATTACK_ANALYSIS_TOOL = {
                 ),
                 "items": {
                     "type": "object",
-                    "required": ["step", "technique_id", "technique_name", "description"],
+                    "required": ["step", "technique_id", "technique_name", "tactic_id", "description"],
                     "properties": {
                         "step": {"type": "integer", "minimum": 1},
                         "technique_id": {"type": "string"},
                         "technique_name": {"type": "string"},
+                        "tactic_id": {
+                            "type": "string",
+                            "description": (
+                                "The MITRE ATT&CK tactic_id (TA####) that matches what the "
+                                "attacker was doing at this specific step. MUST be one of the "
+                                "technique's canonical tactic_ids per MITRE. For techniques that "
+                                "MITRE maps to multiple tactics (e.g. T1078.004 Cloud Accounts is "
+                                "valid under TA0001 Initial Access, TA0003 Persistence, TA0004 "
+                                "Privilege Escalation, and TA0005 Defense Evasion), pick the one "
+                                "that matches the attacker's goal in context: "
+                                "TA0001 when they just gained access, "
+                                "TA0003 when they're maintaining access, "
+                                "TA0004 when they're escalating privileges, "
+                                "TA0005 when the account is used to blend in / evade detection."
+                            ),
+                        },
                         "description": {
                             "type": "string",
                             "description": "Concise description of what the attacker did at this step",
@@ -429,6 +445,13 @@ def _sanitize_chain_steps(steps: list) -> list[dict]:
         if not step["technique_id"]:
             continue
 
+        raw_tactic = step.get("tactic_id")
+        step["tactic_id"] = (
+            str(raw_tactic).strip().upper().replace(" ", "")
+            if isinstance(raw_tactic, str) and raw_tactic.strip()
+            else ""
+        )
+
         raw_step_no = step.get("step")
         if not isinstance(raw_step_no, int) or raw_step_no <= 0:
             step["step"] = idx + 1
@@ -573,16 +596,76 @@ def _build_fallback_attack_chain(
     return chain
 
 
-def _realign_tactics_used(analysis: dict, attack_data: dict) -> dict:
-    """Move every technique under its canonical MITRE tactic.
+def _canonical_tactic_ids(technique_id: str, attack_data: dict) -> list[str]:
+    technique_lookup = attack_data.get("techniques", {})
+    meta = technique_lookup.get(technique_id) or (
+        technique_lookup.get(technique_id.split(".")[0])
+        if "." in technique_id
+        else None
+    )
+    return list(meta.get("tactic_ids", [])) if meta else []
 
-    The model occasionally nests a technique under a tactic that isn't in its
-    MITRE `tactic_ids` list (e.g. T1530 "Data from Cloud Storage" under
-    Exfiltration rather than Collection). We regroup `tactics_used` using the
-    canonical mapping and drop any resulting empty tactic buckets. When the
-    technique has multiple valid tactics, we keep the current tactic if it's
-    canonical; otherwise we pick the earliest tactic in kill-chain order,
-    preferring tactics the analysis already uses.
+
+def _resolve_step_tactic(
+    step: dict,
+    attack_data: dict,
+    original_tactics_used: list,
+) -> str:
+    """Return the step's tactic_id, or "" if it can't be inferred.
+
+    Resolution order:
+      1. If step.tactic_id is already set and canonical for this technique -> keep.
+      2. If the technique has exactly one canonical MITRE tactic -> use it.
+      3. If the technique appears in exactly one tactic of the original
+         tactics_used (the model's initial grouping) and that tactic is
+         canonical -> use it.
+      4. Otherwise return "" (caller can backfill via Claude).
+    """
+    tid = _normalize_technique_id(str(step.get("technique_id", "")))
+    if not tid:
+        return ""
+
+    canonical = _canonical_tactic_ids(tid, attack_data)
+    current = str(step.get("tactic_id", "")).strip().upper()
+
+    if current and (not canonical or current in canonical):
+        return current
+
+    if len(canonical) == 1:
+        return canonical[0]
+
+    containing_tactics: list[str] = []
+    for tactic in original_tactics_used or []:
+        if not isinstance(tactic, dict):
+            continue
+        tactic_id = str(tactic.get("tactic_id", "")).strip().upper()
+        if not tactic_id:
+            continue
+        for tech in tactic.get("techniques", []) or []:
+            if not isinstance(tech, dict):
+                continue
+            cand_tid = _normalize_technique_id(str(tech.get("technique_id", "")))
+            parent = cand_tid.split(".")[0] if "." in cand_tid else cand_tid
+            step_parent = tid.split(".")[0] if "." in tid else tid
+            if cand_tid == tid or parent == step_parent:
+                if tactic_id not in containing_tactics:
+                    containing_tactics.append(tactic_id)
+    canonical_hits = [t for t in containing_tactics if not canonical or t in canonical]
+    if len(canonical_hits) == 1:
+        return canonical_hits[0]
+
+    return ""
+
+
+def _rebuild_tactics_used_from_chain(
+    analysis: dict, attack_data: dict
+) -> dict:
+    """Derive tactics_used from per-step tactic_ids in the attack_chain.
+
+    A technique can legitimately appear under multiple tactics (same technique
+    used for different purposes across the chain); it's listed once per tactic.
+    Chain steps with an empty tactic_id are skipped — they don't yet belong to
+    any tactic group.
     """
     from collections import OrderedDict
 
@@ -590,71 +673,78 @@ def _realign_tactics_used(analysis: dict, attack_data: dict) -> dict:
     tactic_lookup = attack_data.get("tactics", {})
     rank = {tid: idx for idx, tid in enumerate(TACTIC_EXECUTION_ORDER)}
 
-    def _canonical_tactic_ids(tid: str) -> list[str]:
-        meta = technique_lookup.get(tid) or (
-            technique_lookup.get(tid.split(".")[0]) if "." in tid else None
-        )
-        return list(meta.get("tactic_ids", [])) if meta else []
-
-    # Collect (current_tactic, technique) pairs.
-    flat: list[tuple[str, dict]] = []
-    for tactic in analysis.get("tactics_used", []) or []:
-        if not isinstance(tactic, dict):
-            continue
-        current = str(tactic.get("tactic_id", "")).strip().upper()
-        for tech in tactic.get("techniques", []) or []:
-            if not isinstance(tech, dict):
-                continue
-            tech = dict(tech)
-            tech["technique_id"] = _normalize_technique_id(
-                str(tech.get("technique_id", ""))
-            )
-            if not tech["technique_id"]:
-                continue
-            flat.append((current, tech))
-
-    in_use = {c for c, _ in flat}
-
     buckets: "OrderedDict[str, OrderedDict[str, dict]]" = OrderedDict()
-    for current, tech in flat:
-        tid = tech["technique_id"]
-        canonical_list = _canonical_tactic_ids(tid)
-
-        if not canonical_list:
-            target = current or "UNKNOWN"
-        elif current in canonical_list:
-            target = current
-        else:
-            reused = [t for t in canonical_list if t in in_use]
-            pool = reused or canonical_list
-            target = sorted(pool, key=lambda t: rank.get(t, 99))[0]
-
-        canonical_name = technique_lookup.get(tid, {}).get("name")
-        if canonical_name:
-            tech["technique_name"] = canonical_name
-
-        group = buckets.setdefault(target, OrderedDict())
-        if tid in group:
-            if not group[tid].get("evidence_quote") and tech.get("evidence_quote"):
-                group[tid]["evidence_quote"] = tech["evidence_quote"]
+    for step in analysis.get("attack_chain", []) or []:
+        if not isinstance(step, dict):
             continue
-        group[tid] = tech
+        tid = _normalize_technique_id(str(step.get("technique_id", "")))
+        tactic_id = str(step.get("tactic_id", "")).strip().upper()
+        if not tid or not tactic_id:
+            continue
 
-    new_tactics_used = []
+        canonical_name = technique_lookup.get(tid, {}).get("name") or step.get(
+            "technique_name"
+        ) or tid
+        bucket = buckets.setdefault(tactic_id, OrderedDict())
+        if tid not in bucket:
+            bucket[tid] = {
+                "technique_id": tid,
+                "technique_name": canonical_name,
+                "inferred": False,
+                "evidence_quote": step.get("evidence_quote"),
+                "validated": bool(technique_lookup.get(tid)),
+            }
+            if "." in tid:
+                bucket[tid]["subtechnique_id"] = tid
+        else:
+            # Merge: pick up an evidence quote if we still don't have one.
+            if not bucket[tid].get("evidence_quote") and step.get("evidence_quote"):
+                bucket[tid]["evidence_quote"] = step.get("evidence_quote")
+
+    new_tactics_used: list[dict] = []
     for tactic_id in sorted(buckets.keys(), key=lambda t: rank.get(t, 99)):
-        new_tactics_used.append({
-            "tactic_id": tactic_id,
-            "tactic_name": tactic_lookup.get(tactic_id, {}).get("name") or tactic_id,
-            "techniques": list(buckets[tactic_id].values()),
-        })
+        new_tactics_used.append(
+            {
+                "tactic_id": tactic_id,
+                "tactic_name": tactic_lookup.get(tactic_id, {}).get("name")
+                or tactic_id,
+                "techniques": list(buckets[tactic_id].values()),
+            }
+        )
     analysis["tactics_used"] = new_tactics_used
+    return analysis
 
-    # Propagate canonical tactic into attack_chain_graph nodes.
-    tid_to_tactic = {
-        tech["technique_id"]: tactic["tactic_id"]
-        for tactic in new_tactics_used
-        for tech in tactic["techniques"]
-    }
+
+def _realign_tactics_used(analysis: dict, attack_data: dict) -> dict:
+    """Resolve per-step tactic_ids and rebuild tactics_used from the chain.
+
+    The chain is the source of truth: every step carries a per-step tactic_id
+    describing what the attacker was doing at that step. We resolve any missing
+    or non-canonical tactic_ids using the model's original tactics_used
+    grouping as a hint, then regroup tactics_used by scanning the chain.
+    """
+    original_tactics_used = list(analysis.get("tactics_used", []) or [])
+
+    # Resolve per-step tactic_id for every chain entry.
+    chain = analysis.get("attack_chain", []) or []
+    for step in chain:
+        if not isinstance(step, dict):
+            continue
+        resolved = _resolve_step_tactic(step, attack_data, original_tactics_used)
+        step["tactic_id"] = resolved
+
+    # Rebuild tactics_used from the resolved chain.
+    analysis = _rebuild_tactics_used_from_chain(analysis, attack_data)
+
+    # Propagate step-level tactic_id + canonical names into graph nodes.
+    technique_lookup = attack_data.get("techniques", {})
+    step_tactic_by_step: dict[int, str] = {}
+    for step in chain:
+        if isinstance(step, dict):
+            step_no = step.get("step")
+            if isinstance(step_no, int):
+                step_tactic_by_step[step_no] = str(step.get("tactic_id", ""))
+
     graph = analysis.get("attack_chain_graph")
     if isinstance(graph, dict) and isinstance(graph.get("nodes"), list):
         for node in graph["nodes"]:
@@ -663,13 +753,9 @@ def _realign_tactics_used(analysis: dict, attack_data: dict) -> dict:
             tid = _normalize_technique_id(str(node.get("technique_id", "")))
             if not tid:
                 continue
-            canonical_list = _canonical_tactic_ids(tid)
-            if tid in tid_to_tactic:
-                node["tactic_id"] = tid_to_tactic[tid]
-            elif canonical_list and node.get("tactic_id") not in canonical_list:
-                reused = [t for t in canonical_list if t in tid_to_tactic.values()]
-                pool = reused or canonical_list
-                node["tactic_id"] = sorted(pool, key=lambda t: rank.get(t, 99))[0]
+            step_no = node.get("step")
+            if isinstance(step_no, int) and step_no in step_tactic_by_step:
+                node["tactic_id"] = step_tactic_by_step[step_no]
             canonical_name = technique_lookup.get(tid, {}).get("name")
             if canonical_name:
                 node["technique_name"] = canonical_name
@@ -761,7 +847,13 @@ def _request_attack_analysis(
         "Be conservative: only assert techniques with evidence in the text. "
         "Mark techniques as inferred=true if strongly implied but not explicitly described. "
         "Always order attack_chain chronologically as the attack actually unfolded. "
-        "Use real ATT&CK technique IDs (e.g. T1190, T1552.005)."
+        "Use real ATT&CK technique IDs (e.g. T1190, T1552.005). "
+        "CRITICAL: a tactic describes the attacker's GOAL at a particular step, not an "
+        "intrinsic property of a technique. For every attack_chain step, set tactic_id to "
+        "the tactic that matches what the attacker was doing at that step — picked from the "
+        "technique's canonical MITRE tactic list. The same technique can appear in the chain "
+        "under different tactics if the attacker used it for different purposes. Never pick "
+        "a tactic that isn't in the technique's canonical tactic_ids."
     )
     user_message = context
     if best_effort:
@@ -803,14 +895,19 @@ def _build_attack_chain_graph(analysis: dict, attack_data: dict) -> dict:
         if not tid:
             continue
         technique_info = technique_lookup.get(tid, {})
-        tactic_ids = technique_info.get("tactic_ids", [])
-        tactic_id = tactic_ids[0] if tactic_ids else ""
+        # Prefer the step's per-step tactic_id (what the attacker was doing at
+        # this step); only fall back to the technique's first canonical tactic
+        # when the step lacks one.
+        step_tactic = str(step.get("tactic_id", "")).strip().upper()
+        if not step_tactic:
+            tactic_ids = technique_info.get("tactic_ids", [])
+            step_tactic = tactic_ids[0] if tactic_ids else ""
         nodes.append({
             "step": step.get("step"),
             "technique_id": tid,
             "technique_name": technique_info.get("name", step.get("technique_name", tid)),
             "description": step.get("description", ""),
-            "tactic_id": tactic_id,
+            "tactic_id": step_tactic,
             "evidence_quote": step.get("evidence_quote"),
             "evidence_sources": step.get("evidence_sources", []),
             "aws_services_involved": step.get("aws_services_involved", []),

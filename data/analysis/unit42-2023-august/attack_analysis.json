@@ -7,37 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "The initial attack vector of these AWS account compromises was the zero-day SugarCRM vulnerability, CVE-2023-22952... This vulnerability allows threat actors to inject custom PHP code through the SugarCRM email templates module due to missing input validation.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1059.004",
-          "technique_name": "Command and Scripting Interpreter: Unix Shell",
-          "subtechnique_id": "T1059.004",
-          "inferred": true,
-          "evidence_quote": "CVE-2023-22952 was published by NIST National Vulnerability Database on Jan. 11, 2023... This vulnerability allows threat actors to inject custom PHP code through the SugarCRM email templates module due to missing input validation.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the threat actors proceeded to create new EC2 instances... ImportKeyPair command to import their public key pair that they created with a third-party tool.",
+          "evidence_quote": "This vulnerability allows threat actors to inject custom PHP code through the SugarCRM email templates module due to missing input validation.",
           "validated": true
         }
       ]
@@ -49,10 +20,10 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
-          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "the threat actors did not attempt to create new IAM users like we have seen in other cases. They instead opted for attempting to login as the Root user.",
-          "validated": true
+          "evidence_quote": "Despite using information they obtained from the Organizations calls made during the discovery phase, the threat actors still failed to successfully log in as the Root user.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -61,20 +32,28 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1578.002",
-          "technique_name": "Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
+          "technique_id": "T1578.001",
+          "technique_name": "Create Snapshot",
           "inferred": false,
-          "evidence_quote": "The threat actors created EC2 instances in the same regions that the organizations used for the rest of their normal infrastructure. They also switched regions to a geographically new area... and created a new security group that allowed port 22 SSH traffic from any IP address.",
-          "validated": true
+          "evidence_quote": "The threat actors moved laterally from the compromised SugarCRM EC2 instances to the RDS service and started executing commands to create new RDS snapshots from the various SugarCRM RDS databases.",
+          "validated": true,
+          "subtechnique_id": "T1578.001"
         },
         {
-          "technique_id": "T1578",
-          "technique_name": "Modify Cloud Compute Infrastructure",
-          "subtechnique_id": null,
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
           "inferred": false,
-          "evidence_quote": "stopping these resources also avoids incurring extra costs in the organization's account... threat actors stopping the resources they created minimizes costs and helps prevent triggering a cost alert.",
-          "validated": true
+          "evidence_quote": "the attackers modified pre-existing security group rules that already allowed SSH inbound, and they added port 3306 for MySQL traffic.",
+          "validated": true,
+          "subtechnique_id": "T1562.007"
+        },
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "the threat actors did was create new Amazon Machine Images (AMIs) from the running SugarCRM EC2 instances... proceeded to create new EC2 instances... also attached existing security groups to the EC2 instances that allowed inbound port 22 access from any IP address.",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
         }
       ]
     },
@@ -85,10 +64,10 @@
         {
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "Once the threat actors gained access to the EC2 instances, they successfully compromised long-term AWS access keys that existed on the host... these plain-text credentials existed on the compromised hosts, which allowed the threat actors to steal them.",
-          "validated": true
+          "evidence_quote": "these plain-text credentials existed on the compromised hosts, which allowed the threat actors to steal them and start using the access keys for discovery activity.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -97,41 +76,25 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
+          "technique_id": "T1087.004",
+          "technique_name": "Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Before the threat actors performed any scanning activity, they first ran the command GetCallerIdentity. GetCallerIdentity is the AWS version of whoami.",
+          "validated": true,
+          "subtechnique_id": "T1087.004"
+        },
+        {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "They utilized the tools Pacu and Scout Suite to gain a better understanding of what resources existed within the AWS account... these tools scanned a variety of traditional services such as EC2, IAM, RDS, S3, SNS, SES, Lambda.",
           "validated": true
         },
         {
-          "technique_id": "T1087.004",
-          "technique_name": "Cloud Account",
-          "subtechnique_id": "T1087.004",
-          "inferred": false,
-          "evidence_quote": "Before the threat actors performed any scanning activity, they first ran the command GetCallerIdentity. GetCallerIdentity is the AWS version of whoami.",
-          "validated": true
-        },
-        {
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "The threat actors also performed other discovery calls against services that would not necessarily be expected that provided helpful information to the attackers, such as the Organizations service and Cost and Usage service.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Application Access Token",
-          "subtechnique_id": "T1550.001",
-          "inferred": false,
-          "evidence_quote": "the threat actors took advantage of misconfigurations to expand their access after initial compromise... allowed the threat actors to steal them and start using the access keys for discovery activity.",
+          "evidence_quote": "three Organizations API calls stood out... DescribeOrganization API call. This event returns the master account ID as well as the master account email address associated with that account. With that information, the threat actors have enough to attempt to log in as the Root user.",
           "validated": true
         }
       ]
@@ -143,9 +106,8 @@
         {
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the attackers modified pre-existing security group rules... creating brand new databases from the snapshots, making them public and attaching the modified security groups. Finally, they modified the newly created RDS databases by changing the master user password, which would allow them to log in to the databases.",
+          "evidence_quote": "creating brand new databases from the snapshots, making them public and attaching the modified security groups. Finally, they modified the newly created RDS databases by changing the master user password, which would allow them to log in to the databases.",
           "validated": true
         }
       ]
@@ -164,7 +126,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -179,7 +142,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -194,7 +158,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -214,7 +179,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -229,7 +195,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -243,7 +210,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 7,
@@ -258,7 +226,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -272,7 +241,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 9,
@@ -286,7 +256,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -301,7 +272,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 11,
@@ -315,7 +287,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     }
   ],
   "confidence_score": 0.65,

@@ -1,59 +1,14 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "These are authenticated API calls with valid IAM user access keys... the attacker had access to a total of eight different IAM user access keys",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker had access to a total of eight different IAM user access keys, and was active from two different IPs",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        },
         {
           "technique_id": "T1098",
           "technique_name": "Account Manipulation",
           "inferred": false,
           "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance.",
-          "subtechnique_id": null,
-          "validated": true
-        },
-        {
-          "technique_id": "T1556",
-          "technique_name": "Modify Authentication Process",
-          "inferred": true,
-          "evidence_quote": "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script",
-          "subtechnique_id": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "as soon as the attacker identified a key with considerable permissions",
-          "subtechnique_id": "T1078.004",
           "validated": true
         }
       ]
@@ -63,20 +18,20 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
           "inferred": false,
-          "evidence_quote": "These are authenticated API calls with valid IAM user access keys",
-          "subtechnique_id": "T1078.004",
-          "validated": true
+          "evidence_quote": "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script. This allowed for any TCP/IP access into the victim's environment.",
+          "validated": true,
+          "subtechnique_id": "T1562.007"
         },
         {
           "technique_id": "T1578.002",
           "technique_name": "Create Cloud Instance",
           "inferred": false,
-          "evidence_quote": "the attacker turned it on via a RunInstances call",
-          "subtechnique_id": "T1578.002",
-          "validated": true
+          "evidence_quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call.",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
         }
       ]
     },
@@ -88,24 +43,14 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment",
-          "subtechnique_id": null,
-          "validated": true
-        },
-        {
-          "technique_id": "T1087.004",
-          "technique_name": "Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Mitre ATT&CK Cloud Tactics observed... Discovery | Account Discovery",
-          "subtechnique_id": "T1087.004",
+          "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment. Once these groups were enumerated...",
           "validated": true
         },
         {
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user",
-          "subtechnique_id": null,
+          "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user.",
           "validated": true
         }
       ]
@@ -118,9 +63,9 @@
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
           "inferred": false,
-          "evidence_quote": "this series of actions resulted in command line access to the targeted EC2 instance",
-          "subtechnique_id": "T1021.004",
-          "validated": false
+          "evidence_quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance, at which point visibility can be a challenge without additional OS logging or security products.",
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     }
@@ -138,7 +83,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -153,7 +99,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -168,7 +115,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -182,7 +130,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -197,7 +146,8 @@
         "EC2",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -211,7 +161,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 7,
@@ -225,7 +176,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     }
   ],
   "aws_services": [
@@ -249,7 +201,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker obtained 8 compromised IAM user access keys, likely sourced from a public repository (e.g., GitHub) or developer machines. These keys provided authenticated API access without requiring console login.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Expel was able to identify that they had access to a total of eight different IAM user access keys, and was active from two different IPs.",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"

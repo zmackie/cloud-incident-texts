@@ -5,13 +5,6 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
-          "validated": true
-        },
-        {
           "technique_id": "T1566",
           "technique_name": "Phishing",
           "inferred": false,
@@ -29,7 +22,8 @@
           "technique_name": "Hybrid Identity",
           "inferred": false,
           "evidence_quote": "the IT infrastructure architect was observed configuring Okta with a secondary identity provider (IdP)... the exact event that allows cross-tenant Okta impersonation of a privileged user",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1556.007"
         },
         {
           "technique_id": "T1133",
@@ -37,13 +31,6 @@
           "inferred": false,
           "evidence_quote": "To maintain persistence, the group used RMM and reverse proxy solutions; use of Ngrok was shortly followed by a URL request to retrieve Ngrok keys from paste.ee",
           "validated": true
-        },
-        {
-          "technique_id": "T1219",
-          "technique_name": "Remote Access Software",
-          "inferred": false,
-          "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
-          "validated": false
         }
       ]
     },
@@ -51,13 +38,6 @@
       "tactic_id": "TA0004",
       "tactic_name": "Privilege Escalation",
       "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "IT infrastructure architect authenticating and passing MFA from the same malicious IP address (99.25.84[.]9). The IT infrastructure architect also served as the organization's virtualization engineer and had a highly privileged account.",
-          "validated": true
-        },
         {
           "technique_id": "T1068",
           "technique_name": "Exploitation for Privilege Escalation",
@@ -76,7 +56,8 @@
           "technique_name": "Disable or Modify Tools",
           "inferred": false,
           "evidence_quote": "WindowsDefenderATPOffboardingPackage_valid_until_2023-XX-XX.zip (defense evasion)",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.001"
         },
         {
           "technique_id": "T1070",
@@ -88,7 +69,7 @@
         {
           "technique_id": "T1036",
           "technique_name": "Masquerading",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "the adversary deleted some CyberArk files for vCenter-related credentials, seemingly in an attempt to disrupt access to the hosts after earlier actions",
           "validated": true
         },
@@ -97,7 +78,8 @@
           "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
           "evidence_quote": "the group used a US-based IP address not connected to VPN infrastructure. We believe the threat actor exhibited a strong sense of operational security, used to evade typical rules",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         }
       ]
     },
@@ -117,7 +99,8 @@
           "technique_name": "Multi-Factor Authentication",
           "inferred": false,
           "evidence_quote": "Once Scattered Spider gained access to the account, the group enrolled a new MFA device.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1556.006"
         },
         {
           "technique_id": "T1555",
@@ -158,14 +141,16 @@
           "technique_name": "Account Discovery: Domain Account",
           "inferred": false,
           "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com to perform Active Directory (AD) discovery... the group downloaded AD Explorer from the Sysinternals website and executed it",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1087.002"
         },
         {
           "technique_id": "T1087.004",
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1087.004"
         },
         {
           "technique_id": "T1526",
@@ -179,7 +164,8 @@
           "technique_name": "Cloud Groups",
           "inferred": false,
           "evidence_quote": "Enumerating Azure AD Permission... Performing Azure AD user, group, onPremSync, PIM role, enumeration queries",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1069.003"
         }
       ]
     },
@@ -192,28 +178,32 @@
           "technique_name": "Cloud Services",
           "inferred": false,
           "evidence_quote": "Scattered Spider authenticated to Citrix Workspace via the IT administrator's Okta SSO credentials",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1021.007"
         },
         {
           "technique_id": "T1021.001",
           "technique_name": "Remote Services: Remote Desktop Protocol",
           "inferred": false,
           "evidence_quote": "We observed the use of RDP for lateral movement to additional hosts. We saw explicit logins using the credentials of two compromised service accounts",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1021.001"
         },
         {
           "technique_id": "T1550.004",
           "technique_name": "Web Session Cookie",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "Scattered Spider hijacked active Citrix VDI sessions on the host GenericCitrixAPPServer.CUSTOMER.com",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1550.004"
         },
         {
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
           "inferred": false,
           "evidence_quote": "The group used CyberArk access for lateral movement, which included SSH access to vCenter hosts, such as CUSTOMERvCenter100.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     },
@@ -246,13 +236,6 @@
           "technique_name": "Web Service",
           "inferred": false,
           "evidence_quote": "a URL request to retrieve Ngrok keys from paste.ee",
-          "validated": false
-        },
-        {
-          "technique_id": "T1219",
-          "technique_name": "Remote Access Software",
-          "inferred": false,
-          "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
           "validated": false
         }
       ]
@@ -302,7 +285,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -314,7 +298,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -326,7 +311,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 4,
@@ -338,7 +324,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -350,7 +337,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": ""
     },
     {
       "step": 6,
@@ -362,7 +350,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 7,
@@ -374,7 +363,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -386,7 +376,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 9,
@@ -398,7 +389,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -410,7 +402,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -422,7 +415,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 12,
@@ -434,7 +428,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 13,
@@ -446,7 +441,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 14,
@@ -458,7 +454,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 15,
@@ -470,7 +467,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 16,
@@ -482,7 +480,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0007"
     },
     {
       "step": 17,
@@ -494,7 +493,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0007"
     },
     {
       "step": 18,
@@ -506,7 +506,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 19,
@@ -518,7 +519,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 20,
@@ -530,7 +532,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 21,
@@ -542,7 +545,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 22,
@@ -554,7 +558,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 23,
@@ -566,7 +571,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 24,
@@ -578,7 +584,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 25,
@@ -590,7 +597,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 26,
@@ -602,7 +610,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 27,
@@ -614,7 +623,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 28,
@@ -626,7 +636,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 29,
@@ -638,7 +649,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 30,
@@ -650,7 +662,8 @@
         "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "confidence_score": 0.65,
@@ -661,7 +674,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Valid Accounts: Cloud Accounts observed during Initial Access: the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "the intrusion began in the customer's cloud environment, where the group gained access to an IT administrator's account, via Okta single sign-on (SSO)",
         "evidence_sources": [
           "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"
@@ -709,7 +722,7 @@
         "technique_id": "T1219",
         "technique_name": "Remote Access Software",
         "description": "Remote Access Software observed during Persistence: PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
-        "tactic_id": "TA0011",
+        "tactic_id": "",
         "evidence_quote": "PDQConnectAgent, ScreenConnect, fleet.io, rsocx",
         "evidence_sources": [
           "https://www.reliaquest.com/blog/scattered-spider-attack-analysis-account-compromise/"

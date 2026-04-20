@@ -1,60 +1,14 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the entry point of the attack was the compromise of a GitHub access token belonging to a Kiln infrastructure engineer",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0002",
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
-          "inferred": false,
-          "evidence_quote": "these commands were launched from thousands of different IP addresses... relied on stealthy commands run directly inside short-lived workloads in the cloud",
-          "validated": true
-        },
-        {
           "technique_id": "T1648",
           "technique_name": "Serverless Execution",
           "inferred": false,
-          "evidence_quote": "The malicious actor created and immediately deleted branches to trigger CI/CD (Continuous Integration/Deployment) workflows in our IaC (infrastructure as code) repository",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1053",
-          "technique_name": "Scheduled Task/Job",
-          "inferred": true,
-          "evidence_quote": "The malicious actor created and immediately deleted branches to trigger CI/CD workflows",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "These credentials granted access to cloud service accounts and production systems across Amazon Web Services (AWS), Google Cloud Platform (GCP), and our bare-metal infrastructure",
+          "evidence_quote": "The malicious actor created and immediately deleted branches to trigger CI/CD (Continuous Integration/Deployment) workflows in our IaC (infrastructure as code) repository. The branches changed a very large number of files to remain hidden.",
           "validated": true
         }
       ]
@@ -67,29 +21,8 @@
           "technique_id": "T1070",
           "technique_name": "Indicator Removal",
           "inferred": false,
-          "evidence_quote": "The threat actor avoided leaving traces by never writing persistent files, never modifying code in repositories, and never modifying container images or databases",
+          "evidence_quote": "The threat actor avoided leaving traces by never writing persistent files, never modifying code in repositories, and never modifying container images or databases. Instead, they relied on stealthy commands run directly inside short-lived workloads in the cloud. To further cover their tracks, these commands were launched from thousands of different IP addresses.",
           "validated": true
-        },
-        {
-          "technique_id": "T1070.004",
-          "technique_name": "Indicator Removal: File Deletion",
-          "inferred": false,
-          "evidence_quote": "The malicious actor created and immediately deleted branches to trigger CI/CD workflows",
-          "validated": false
-        },
-        {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
-          "inferred": false,
-          "evidence_quote": "The branches changed a very large number of files to remain hidden",
-          "validated": true
-        },
-        {
-          "technique_id": "T1665",
-          "technique_name": "Hide Infrastructure",
-          "inferred": false,
-          "evidence_quote": "these commands were launched from thousands of different IP addresses",
-          "validated": false
         }
       ]
     },
@@ -101,15 +34,9 @@
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "they harvested stored secrets and cloud credentials from these workflows",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": true,
-          "evidence_quote": "harvested stored secrets and cloud credentials from these workflows. These credentials granted access to cloud service accounts and production systems",
-          "validated": false
+          "evidence_quote": "From the triggered CI workflows, they harvested stored secrets and cloud credentials from these workflows.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -121,8 +48,9 @@
           "technique_id": "T1550.001",
           "technique_name": "Application Access Token",
           "inferred": false,
-          "evidence_quote": "These credentials granted access to cloud service accounts and production systems across Amazon Web Services (AWS), Google Cloud Platform (GCP), and our bare-metal infrastructure",
-          "validated": true
+          "evidence_quote": "These credentials granted access to cloud service accounts and production systems across Amazon Web Services (AWS), Google Cloud Platform (GCP), and our bare-metal infrastructure.",
+          "validated": true,
+          "subtechnique_id": "T1550.001"
         }
       ]
     },
@@ -134,14 +62,15 @@
           "technique_id": "T1565.001",
           "technique_name": "Data Manipulation: Stored Data Manipulation",
           "inferred": false,
-          "evidence_quote": "The threat actor injected a malicious payload into a running Kubernetes pod hosting the Kiln Connect API, modifying the logic of a Kiln API endpoint to return a malicious transaction",
-          "validated": false
+          "evidence_quote": "The threat actor injected a malicious payload into a running Kubernetes pod hosting the Kiln Connect API, modifying the logic of a Kiln API endpoint to return a malicious transaction, in addition to the expected 'deactivate stake' transaction.",
+          "validated": false,
+          "subtechnique_id": "T1565.001"
         },
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
           "inferred": false,
-          "evidence_quote": "The malicious transaction changed the withdrawal authority of the Solana stakes... causing a loss of funds",
+          "evidence_quote": "The malicious transaction changed the withdrawal authority of the Solana stakes, only if the existing withdrawal authority of the stake account provided in the POST call held stake balances above 150k SOL... it was approved by a quorum of signatories in the customer's custody instance... causing a loss of funds.",
           "validated": true
         }
       ]
@@ -158,7 +87,8 @@
         "https://www.kiln.fi/post/re-enablement-of-kiln-services-and-security-incident-information"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -172,7 +102,8 @@
       "aws_services_involved": [
         "GitHub Actions"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 3,
@@ -187,7 +118,8 @@
         "AWS IAM",
         "GitHub Actions"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -202,7 +134,8 @@
         "AWS IAM",
         "Amazon EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 5,
@@ -216,7 +149,8 @@
       "aws_services_involved": [
         "Amazon EKS"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0040"
     },
     {
       "step": 6,
@@ -230,7 +164,8 @@
       "aws_services_involved": [
         "Amazon EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 7,
@@ -242,7 +177,8 @@
         "https://www.kiln.fi/post/re-enablement-of-kiln-services-and-security-incident-information"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -264,7 +200,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker obtained a compromised GitHub access token belonging to a Kiln infrastructure engineer, granting them initial access to Kiln's GitHub environment.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "the entry point of the attack was the compromise of a GitHub access token belonging to a Kiln infrastructure engineer",
         "evidence_sources": [
           "https://www.kiln.fi/post/re-enablement-of-kiln-services-and-security-incident-information"

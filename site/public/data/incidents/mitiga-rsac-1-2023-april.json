@@ -1,29 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
-          "inferred": true,
-          "evidence_quote": "Programmatic UserAgents, such as boto3 and CURL",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
           "evidence_quote": "Developer accidentally merges company git repo to personal one (public) \u2022 Two AWS keys exposed",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -35,7 +22,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "One of the AWS Keys used for initial reconnaissance",
+          "evidence_quote": "One of the AWS Keys used for initial reconnaissance \u2022 suspicious reconnaissance actions, such as: ListBuckets \u2022 GetCallerIdentity",
           "validated": true
         }
       ]
@@ -54,7 +41,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -69,7 +57,8 @@
         "IAM",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 3,
@@ -85,7 +74,8 @@
         "STS",
         "CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     }
   ],
   "aws_services": [
@@ -121,7 +111,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The threat actor obtained one of the exposed AWS access keys from the public GitHub repository (exact timing unknown) and used it to authenticate to AWS.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Key obtained (timing unknown) \u2022 One of the AWS Keys used for initial reconnaissance",
         "evidence_sources": [
           "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"

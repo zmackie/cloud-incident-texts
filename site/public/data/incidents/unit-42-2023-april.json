@@ -8,7 +8,7 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability allowed attackers to send HTTP requests to hosts behind the firewall.",
+          "evidence_quote": "An internal web server was accidentally made public due to a misconfigured security group setting during a migration process. The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438.",
           "validated": true
         }
       ]
@@ -42,7 +42,8 @@
           "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         }
       ]
     },
@@ -55,7 +56,8 @@
           "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -68,14 +70,16 @@
           "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         },
         {
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -86,34 +90,8 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
-          "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Application Access Token",
           "inferred": false,
-          "evidence_quote": "Control plane \u2192 data plane: The threat actor enumerated and viewed all the VM instances' user data. A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "The threat actor cloned all the repositories in the company's GitHub organization.",
+          "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
           "validated": true
         }
       ]
@@ -166,7 +144,8 @@
         "EC2",
         "VPC Security Groups"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -182,7 +161,8 @@
         "IMDS",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -197,7 +177,8 @@
         "IAM",
         "API"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 4,
@@ -211,7 +192,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -225,7 +207,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -239,7 +222,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 7,
@@ -253,7 +237,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 8,
@@ -265,7 +250,8 @@
         "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 9,
@@ -281,7 +267,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 10,
@@ -295,7 +282,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 11,
@@ -310,7 +298,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

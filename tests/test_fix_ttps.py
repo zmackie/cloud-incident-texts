@@ -55,9 +55,11 @@ def test_data_from_cloud_storage_moves_from_exfiltration_to_collection():
     assert any(c["technique_id"] == "T1530" and c["to_tactic"] == "TA0009" for c in changes)
 
 
-def test_abuse_elevation_control_moves_to_privilege_escalation():
+def test_abuse_elevation_control_flagged_when_ambiguous():
     # T1548 is valid under Privilege Escalation (TA0004) and Defense Evasion
-    # (TA0005). Tagging it under Lateral Movement (TA0008) is wrong.
+    # (TA0005). Tagging it under Lateral Movement (TA0008) is wrong. The new
+    # resolver refuses to force-pick between TA0004 and TA0005 when the input
+    # gives no signal, so T1548 is left unassigned for backfill.
     analysis = {
         "tactics_used": [
             {
@@ -70,7 +72,11 @@ def test_abuse_elevation_control_moves_to_privilege_escalation():
         ]
     }
     repaired, _ = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
-    assert _tactic_of(repaired, "T1548") == "TA0004"
+    # T1548 should NOT land under a non-canonical tactic. It should also NOT
+    # be force-picked — leave it off tactics_used entirely when ambiguous.
+    assert _tactic_of(repaired, "T1548") is None
+    # And the bucket that used to hold it (TA0008) must be gone.
+    assert "TA0008" not in {t["tactic_id"] for t in repaired["tactics_used"]}
 
 
 def test_unsecured_credentials_moves_to_credential_access():
@@ -197,3 +203,143 @@ def test_canonical_tactic_name_is_set_from_mitre():
             break
     else:
         raise AssertionError("TA0009 group missing after realignment")
+
+
+# ── Per-step tactic tagging (the NIM-241 regression the user reported) ──────
+
+def test_multi_tactic_technique_initial_access_keeps_initial_access():
+    # NIM-241 bug: T1078.004 "Cloud Accounts" is valid under TA0001, TA0003,
+    # TA0004, and TA0005. The 20/20 Eye Care incident's graph node ended up
+    # under TA0005 Defense Evasion despite the chain step meaning Initial
+    # Access. The per-step tactic_id must be trusted when canonical.
+    analysis = {
+        "tactics_used": [
+            {
+                "tactic_id": "TA0001",
+                "tactic_name": "Initial Access",
+                "techniques": [{"technique_id": "T1078", "technique_name": "Valid Accounts"}],
+            }
+        ],
+        "attack_chain": [
+            {
+                "step": 1,
+                "technique_id": "T1078.004",
+                "technique_name": "Valid Accounts: Cloud Accounts",
+                "tactic_id": "TA0001",
+                "description": "attacker used compromised AWS creds to gain unauthorized access",
+            }
+        ],
+        "attack_chain_graph": {
+            "nodes": [
+                {"step": 1, "technique_id": "T1078.004", "tactic_id": "TA0005"}
+            ],
+            "edges": [],
+        },
+    }
+    repaired, changes = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
+    assert repaired["attack_chain"][0]["tactic_id"] == "TA0001"
+    assert repaired["attack_chain_graph"]["nodes"][0]["tactic_id"] == "TA0001"
+    assert _tactic_of(repaired, "T1078.004") == "TA0001"
+    # The graph node's stale TA0005 must show up as a recorded change.
+    assert any(
+        c.get("where") == "attack_chain_graph.node"
+        and c.get("from_tactic") == "TA0005"
+        and c.get("to_tactic") == "TA0001"
+        for c in changes
+    )
+
+
+def test_same_technique_used_twice_under_different_tactics():
+    # Same technique used twice in one chain under different attacker goals:
+    # once for Initial Access, later for Persistence. tactics_used must list
+    # T1078.004 under BOTH TA0001 and TA0003 — not collapse into one.
+    analysis = {
+        "tactics_used": [
+            {
+                "tactic_id": "TA0001",
+                "tactic_name": "Initial Access",
+                "techniques": [{"technique_id": "T1078.004", "technique_name": "Cloud Accounts"}],
+            }
+        ],
+        "attack_chain": [
+            {
+                "step": 1,
+                "technique_id": "T1078.004",
+                "technique_name": "Cloud Accounts",
+                "tactic_id": "TA0001",
+                "description": "attacker gained access using stolen creds",
+            },
+            {
+                "step": 2,
+                "technique_id": "T1078.004",
+                "technique_name": "Cloud Accounts",
+                "tactic_id": "TA0003",
+                "description": "attacker kept using the same account as a persistence foothold",
+            },
+        ],
+    }
+    repaired, _ = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
+    tactic_ids = {t["tactic_id"] for t in repaired["tactics_used"]}
+    assert "TA0001" in tactic_ids
+    assert "TA0003" in tactic_ids
+    # And the chain keeps per-step tactic_ids distinct.
+    per_step = [s["tactic_id"] for s in repaired["attack_chain"]]
+    assert per_step == ["TA0001", "TA0003"]
+
+
+def test_step_tactic_not_in_canonical_list_is_dropped():
+    # If the model assigned a tactic that isn't in the technique's canonical
+    # MITRE tactic list, the resolver must NOT silently keep it. For T1530
+    # (canonical = TA0009 only), any other current tactic is wrong.
+    analysis = {
+        "tactics_used": [],
+        "attack_chain": [
+            {
+                "step": 1,
+                "technique_id": "T1530",
+                "technique_name": "Data from Cloud Storage",
+                "tactic_id": "TA0010",
+                "description": "attacker read S3 data",
+            }
+        ],
+    }
+    repaired, _ = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
+    # Single canonical tactic → auto-filled to TA0009.
+    assert repaired["attack_chain"][0]["tactic_id"] == "TA0009"
+
+
+def test_unset_step_tactic_with_single_canonical_is_autofilled():
+    analysis = {
+        "tactics_used": [],
+        "attack_chain": [
+            {
+                "step": 1,
+                "technique_id": "T1580",
+                "technique_name": "Cloud Infrastructure Discovery",
+                "description": "ran aws ec2 describe-*",
+                # no tactic_id
+            }
+        ],
+    }
+    repaired, _ = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
+    assert repaired["attack_chain"][0]["tactic_id"] == "TA0007"
+
+
+def test_ambiguous_multi_tactic_step_is_left_unassigned():
+    # No signal: no prior tactics_used grouping, step has no tactic_id, and
+    # the technique has multiple canonical tactics. Resolver refuses to pick.
+    analysis = {
+        "tactics_used": [],
+        "attack_chain": [
+            {
+                "step": 1,
+                "technique_id": "T1078.004",
+                "technique_name": "Cloud Accounts",
+                "description": "attacker used an AWS IAM user",
+                # no tactic_id
+            }
+        ],
+    }
+    repaired, _ = realign_analysis(copy.deepcopy(analysis), _ATTACK_DATA)
+    assert repaired["attack_chain"][0]["tactic_id"] == ""
+    assert repaired["tactics_used"] == []

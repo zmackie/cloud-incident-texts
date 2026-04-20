@@ -5,17 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1195",
-          "technique_name": "Supply Chain Compromise",
-          "inferred": true,
-          "evidence_quote": "NOBELIUM abusing identities and credentialed access to maintain persistence and facilitate covert access",
-          "validated": true
-        },
-        {
           "technique_id": "T1199",
           "technique_name": "Trusted Relationship",
           "inferred": false,
-          "evidence_quote": "the IAM Identity Center (formerly AWS SSO), enables customers to use ADFS as an identity source (an external identity provider (IdP))",
+          "evidence_quote": "the IAM Identity Center (formerly AWS SSO), enables customers to use ADFS as an identity source (an external identity provider (IdP)). If you have an AWS environment with ADFS configured as your IdP, and NOBELIUM compromised your ADFS server with MagicWeb, NOBELIUM may have moved laterally into your AWS environment",
           "validated": true
         }
       ]
@@ -25,20 +18,20 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1556",
-          "technique_name": "Modify Authentication Process",
-          "subtechnique_id": "T1556.006",
+          "technique_id": "T1556.006",
+          "technique_name": "Multi-Factor Authentication",
           "inferred": false,
           "evidence_quote": "NOBELIUM compromised your ADFS server with MagicWeb",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1556.006"
         },
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "masquerading as one of your valid users to perform further malicious activity and persist indefinitely",
-          "validated": true
+          "evidence_quote": "masquerading as one of your valid users to perform further malicious activity and persist indefinitely ... roles typically start with 'AWSReservedSSO_' ... the use of the API call AssumeRoleWithSAML",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -47,46 +40,12 @@
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1550",
-          "technique_name": "Use Alternate Authentication Material",
-          "subtechnique_id": "T1550.001",
+          "technique_id": "T1550.001",
+          "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "a possible NOBELIUM actor using credentials obtained for an ADFS user through MagicWeb",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1484",
-          "technique_name": "Domain Policy Modification",
-          "subtechnique_id": "T1484.002",
-          "inferred": false,
-          "evidence_quote": "Review the identity provider metadata and SAML certificates",
-          "validated": false
-        },
-        {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism",
-          "inferred": true,
-          "evidence_quote": "ADFS users assumed the AWS SSO roles both current and historic ... the use of the API call AssumeRoleWithSAML",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": true,
-          "evidence_quote": "manually review what activity might be malicious ... all activity performed by the ADFS users and any roles assumed by these users",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1550.001"
         }
       ]
     },
@@ -98,7 +57,7 @@
           "technique_id": "T1498",
           "technique_name": "Network Denial of Service",
           "inferred": false,
-          "evidence_quote": "this actor logged into AWS via the ADFS IdP and blocked all future executions of a Lambda function, causing a DoS for the business",
+          "evidence_quote": "this actor logged into AWS via the ADFS IdP and blocked all future executions of a Lambda function, causing a DoS for the business. In addition, our risk engine flagged this activity as a high notification to review.",
           "validated": true
         }
       ]
@@ -116,7 +75,8 @@
         "https://www.microsoft.com/security/blog/2022/08/24/magicweb-nobeliums-post-compromise-trick-to-authenticate-as-anyone/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 2,
@@ -130,7 +90,8 @@
       "aws_services_involved": [
         "IAM Identity Center"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 3,
@@ -144,7 +105,8 @@
       "aws_services_involved": [
         "IAM Identity Center"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 4,
@@ -160,7 +122,8 @@
         "IAM Identity Center",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -174,7 +137,8 @@
       "aws_services_involved": [
         "Lambda"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -197,7 +161,7 @@
         "technique_id": "T1556.006",
         "technique_name": "Multi-Factor Authentication",
         "description": "NOBELIUM deployed the MagicWeb backdoor on the victim's ADFS server, implanting a malicious DLL that allows the attacker to authenticate as any user by manipulating SAML token claims/assertions without needing valid credentials.",
-        "tactic_id": "TA0006",
+        "tactic_id": "TA0003",
         "evidence_quote": "NOBELIUM compromised your ADFS server with MagicWeb",
         "evidence_sources": [
           "https://www.clearvector.com/blog/auditing-identity-activity-for-nobelium-and-magicweb-in-aws/",
@@ -210,7 +174,7 @@
         "technique_id": "T1550.001",
         "technique_name": "Application Access Token",
         "description": "NOBELIUM used MagicWeb-forged SAML assertions to impersonate a valid ADFS user, generating fraudulent credentials accepted by the AWS IAM Identity Center (SSO) SAML integration without triggering normal authentication controls.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "a possible NOBELIUM actor using credentials obtained for an ADFS user through MagicWeb",
         "evidence_sources": [
           "https://www.clearvector.com/blog/auditing-identity-activity-for-nobelium-and-magicweb-in-aws/"
@@ -238,7 +202,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Once the forged SAML assertion was accepted, the attacker assumed an AWSReservedSSO_ role inside AWS, operating as a legitimate ADFS-federated user with all privileges that user's permission set granted.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0003",
         "evidence_quote": "masquerading as one of your valid users to perform further malicious activity and persist indefinitely ... roles typically start with 'AWSReservedSSO_' ... the use of the API call AssumeRoleWithSAML",
         "evidence_sources": [
           "https://www.clearvector.com/blog/auditing-identity-activity-for-nobelium-and-magicweb-in-aws/"

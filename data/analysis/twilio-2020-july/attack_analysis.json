@@ -1,44 +1,29 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1608.004",
-          "technique_name": "Stage Capabilities: Drive-by Target",
-          "subtechnique_id": "T1608.004",
-          "inferred": false,
-          "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "Due to a misconfiguration in the S3 bucket that was hosting the library, a bad actor was able to inject code",
+          "evidence_quote": "We had not properly configured the access policy for one of our AWS S3 buckets... that meant that anybody on the Internet could read and write to that specific path.",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1505",
-          "technique_name": "Server Software Component",
-          "subtechnique_id": null,
+          "technique_id": "T1059.007",
+          "technique_name": "Command and Scripting Interpreter: JavaScript",
           "inferred": false,
-          "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-          "validated": false
+          "evidence_quote": "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content.",
+          "validated": false,
+          "subtechnique_id": "T1059.007"
         }
       ]
     },
@@ -49,18 +34,18 @@
         {
           "technique_id": "T1090.003",
           "technique_name": "Proxy: Multi-hop Proxy",
-          "subtechnique_id": "T1090.003",
           "inferred": false,
           "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         },
         {
           "technique_id": "T1565.001",
           "technique_name": "Stored Data Manipulation",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "a bad actor was able to inject code that made the user's browser load an extraneous URL",
-          "validated": false
+          "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
+          "validated": false,
+          "subtechnique_id": "T1565.001"
         }
       ]
     },
@@ -71,37 +56,21 @@
         {
           "technique_id": "T1185",
           "technique_name": "Browser Session Hijacking",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently.",
+          "inferred": false,
+          "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently. This script also specifically attempts to gather data about the size of the user's touchscreen.",
           "validated": false
         }
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1119",
-          "technique_name": "Automated Collection",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "This script also specifically attempts to gather data about the size of the user's touchscreen and uses events that are targeted at mobile devices.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "we believe that this attack was designed to serve malicious advertising to users on mobile devices",
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
           "validated": true
         }
       ]
@@ -120,7 +89,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 2,
@@ -134,7 +104,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -148,7 +119,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -163,7 +135,8 @@
         "Amazon S3",
         "CloudFlare CDN"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -175,7 +148,8 @@
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 6,
@@ -187,7 +161,8 @@
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     }
   ],
   "aws_services": [

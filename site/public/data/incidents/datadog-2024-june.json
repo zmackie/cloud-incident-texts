@@ -7,9 +7,10 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -22,7 +23,8 @@
           "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
           "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         }
       ]
     },
@@ -34,7 +36,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment",
+          "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute",
           "validated": true
         },
         {
@@ -47,26 +49,13 @@
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "They are running a broad automated campaign against many AWS environments, and as such may assess what data is available before attempting to exfiltrate",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0040",
       "tactic_name": "Impact",
       "techniques": [
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
           "validated": true
         }
@@ -86,7 +75,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -98,7 +88,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 3,
@@ -113,7 +104,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -127,7 +119,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -141,7 +134,8 @@
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

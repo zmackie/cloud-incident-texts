@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "This particular incident involved the use of compromised IAM user access keys (AKIA) to gain initial access to a cloud account and invoke Bedrock models.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
@@ -21,28 +8,9 @@
           "technique_id": "T1136.003",
           "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "the attacker used the high-level permissions of the IAM user to create new IAM users, along with IAM access keys and a policy granting Bedrock permissions",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "along with IAM access keys and a policy granting Bedrock permissions",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "the attacker used the high-level permissions of the IAM user to create new IAM users, along with IAM access keys and a policy granting Bedrock permissions",
-          "validated": true
+          "evidence_quote": "the attacker used the high-level permissions of the IAM user to create new IAM users, along with IAM access keys and a policy granting Bedrock permissions. The newly created IAM users and policy names adhered to the same naming patterns we had previously identified with this attacker.",
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -55,27 +23,8 @@
           "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
           "evidence_quote": "we discovered an IAM user operating from a Proton VPN IP address",
-          "validated": false
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "the attacker used the high-level permissions of the IAM user to create new IAM users, along with IAM access keys and a policy granting Bedrock permissions",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
-          "evidence_quote": "made numerous unsuccessful attempts to invoke Bedrock models, likely using a Python script",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         }
       ]
     },
@@ -87,8 +36,9 @@
           "technique_id": "T1496.002",
           "technique_name": "Bandwidth Hijacking",
           "inferred": false,
-          "evidence_quote": "attempts to invoke Bedrock models... the attacker tried to invoke the model again, this time using the new user credentials",
-          "validated": true
+          "evidence_quote": "made numerous unsuccessful attempts to invoke Bedrock models, likely using a Python script",
+          "validated": true,
+          "subtechnique_id": "T1496.002"
         }
       ]
     }
@@ -106,7 +56,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -118,7 +69,8 @@
         "https://www.wiz.io/blog/jinx-2401-llm-hijacking-aws"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 3,
@@ -132,7 +84,8 @@
       "aws_services_involved": [
         "Bedrock"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 4,
@@ -146,7 +99,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -160,7 +114,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 6,
@@ -175,7 +130,8 @@
         "IAM",
         "Bedrock"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 7,
@@ -190,7 +146,8 @@
         "Bedrock",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -211,7 +168,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "JINX-2401 used stolen/compromised IAM user long-term access keys (AKIA type) to authenticate to a victim AWS account, gaining initial access.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "This particular incident involved the use of compromised IAM user access keys (AKIA) to gain initial access to a cloud account and invoke Bedrock models.",
         "evidence_sources": [
           "https://www.wiz.io/blog/jinx-2401-llm-hijacking-aws"
@@ -265,7 +222,7 @@
         "technique_id": "T1098.001",
         "technique_name": "Additional Cloud Credentials",
         "description": "The attacker created IAM access keys for the newly created IAM users and attached a custom policy ('New_Policy') granting bedrock:InvokeModel, bedrock:InvokeModelWithResponseStream, and bedrock:GetModelInvocationLoggingConfiguration permissions.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "along with IAM access keys and a policy granting Bedrock permissions",
         "evidence_sources": [
           "https://www.wiz.io/blog/jinx-2401-llm-hijacking-aws"
@@ -279,7 +236,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker created a console login profile for the new IAM user to complete the LLM model use-case agreement process via the AWS Console, using the PutUseCaseForModelAccess and CreateFoundationModelAgreement API calls.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the attacker created a console profile for the new IAM user, likely to complete the LLM agreement process. This activity was evidenced by the AWS API call PutUseCaseForModelAccess, performed via the console. Subsequently, the user attempted to request access to specific models using the CreateFoundationModelAgreement API call.",
         "evidence_sources": [
           "https://www.wiz.io/blog/jinx-2401-llm-hijacking-aws"

@@ -8,8 +8,9 @@
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure... Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both",
-          "validated": true
+          "evidence_quote": "Motherboard decompiled both the latest version of the Android Cameo app as well as another from June 2018. The key was present in both, indicating that the credentials for Cameo's servers could have been exposed for around two years.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -22,13 +23,6 @@
           "technique_name": "Cloud Storage Object Discovery",
           "inferred": false,
           "evidence_quote": "The researcher said they used the credentials to access the servers 'to verify what was accessible.'",
-          "validated": true
-        },
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
-          "evidence_quote": "the credentials granted access to Amazon S3 buckets used to store data",
           "validated": true
         }
       ]
@@ -45,32 +39,6 @@
           "validated": true
         }
       ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "The researcher provided Motherboard with a sample of the data stored in Cameo's backend, including user email addresses and messages.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565.001",
-          "technique_name": "Stored Data Manipulation",
-          "inferred": true,
-          "evidence_quote": "it not clear if the keys allowed read and write access for that entire period",
-          "validated": false
-        }
-      ]
     }
   ],
   "attack_chain": [
@@ -84,7 +52,8 @@
         "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -99,7 +68,8 @@
         "AWS IAM",
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 3,
@@ -113,7 +83,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -127,7 +98,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 5,
@@ -141,7 +113,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": ""
     }
   ],
   "aws_services": [
@@ -173,7 +146,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the hardcoded credentials extracted from the app, the researcher authenticated to Cameo's AWS backend infrastructure, gaining access as a valid cloud identity.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the Cameo app included credentials that they said allowed anyone to log into Cameo's backend infrastructure. Specifically, the credentials granted access to Amazon S3 buckets used to store data.",
         "evidence_sources": [
           "https://www.vice.com/en/article/akwj5z/cameo-app-exposed-private-videos-user-data-passwords"

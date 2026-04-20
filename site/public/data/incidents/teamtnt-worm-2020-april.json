@@ -7,9 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
           "validated": true
         }
       ]
@@ -19,20 +18,12 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "subtechnique_id": "T1098.004",
+          "technique_id": "T1098.004",
+          "technique_name": "SSH Authorized Keys",
           "inferred": false,
           "evidence_quote": "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
-          "validated": true
-        },
-        {
-          "technique_id": "T1543",
-          "technique_name": "Create or Modify System Process",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1098.004"
         }
       ]
     },
@@ -43,34 +34,32 @@
         {
           "technique_id": "T1610",
           "technique_name": "Deploy Container",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "evidence_quote": "spin up docker images and install itself",
           "validated": true
         },
         {
-          "technique_id": "T1070",
-          "technique_name": "Indicator Removal",
-          "subtechnique_id": "T1070.002",
-          "inferred": false,
-          "evidence_quote": "A log cleaning tool",
-          "validated": true
-        },
-        {
-          "technique_id": "T1562",
-          "technique_name": "Impair Defenses",
-          "subtechnique_id": "T1562.001",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools",
           "inferred": false,
           "evidence_quote": "contains code copied from another worm named Kinsing, which is designed to stop the Alibaba Cloud Security tools",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.001"
         },
         {
           "technique_id": "T1014",
           "technique_name": "Rootkit",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Diamorphine Rootkit",
           "validated": false
+        },
+        {
+          "technique_id": "T1070.002",
+          "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
+          "inferred": false,
+          "evidence_quote": "A log cleaning tool",
+          "validated": false,
+          "subtechnique_id": "T1070.002"
         }
       ]
     },
@@ -79,12 +68,20 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.001",
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "The AWS CLI stores credentials in an unencrypted file at ~/.aws/credentials... on execution it uploads the default AWS .credentials and .config files to the attackers server",
-          "validated": true
+          "evidence_quote": "echo 'found: /root/.aws/credentials' ... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": false,
+          "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
+          "validated": false,
+          "subtechnique_id": "T1552.004"
         }
       ]
     },
@@ -95,17 +92,8 @@
         {
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
-          "validated": true
-        },
-        {
-          "technique_id": "T1082",
-          "technique_name": "System Information Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -115,12 +103,12 @@
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1021",
-          "technique_name": "Remote Services",
-          "subtechnique_id": "T1021.004",
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
           "inferred": false,
           "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     },
@@ -129,17 +117,8 @@
       "tactic_name": "Command and Control",
       "techniques": [
         {
-          "technique_id": "T1071",
-          "technique_name": "Application Layer Protocol",
-          "subtechnique_id": "T1071.001",
-          "inferred": false,
-          "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server",
-          "validated": false
-        },
-        {
           "technique_id": "T1219",
           "technique_name": "Remote Access Software",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Tsunami IRC Backdoor",
           "validated": false
@@ -153,7 +132,6 @@
         {
           "technique_id": "T1041",
           "technique_name": "Exfiltration Over C2 Channel",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
           "validated": false
@@ -167,7 +145,6 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "The worm deploys the XMRig mining tool to mine monero crypto-currency and generate cash for the attackers",
           "validated": true
@@ -186,7 +163,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 2,
@@ -201,7 +179,8 @@
         "ECS",
         "EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -213,7 +192,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -225,7 +205,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -240,7 +221,8 @@
         "CLI",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 6,
@@ -252,7 +234,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 7,
@@ -264,7 +247,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     },
     {
       "step": 8,
@@ -276,7 +260,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 9,
@@ -288,7 +273,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -300,7 +286,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 11,
@@ -312,7 +299,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 12,
@@ -324,7 +312,8 @@
         "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 13,
@@ -339,7 +328,8 @@
         "EC2",
         "EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

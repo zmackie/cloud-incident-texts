@@ -7,10 +7,10 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
-          "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "These cloud credentials allowed the threat actors to gain access to the AWS account where this IAM user resided and perform AWS application program interface (API) calls.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -21,10 +21,10 @@
         {
           "technique_id": "T1059.009",
           "technique_name": "Cloud API",
-          "subtechnique_id": "T1059.009",
           "inferred": false,
-          "evidence_quote": "the threat actor used an automated script with the AWS CLI and attempted to create new S3 buckets... All the buckets were created within ten minutes of starting the CreateBucket operations.",
-          "validated": true
+          "evidence_quote": "the threat actor used an automated script with the AWS CLI and attempted to create new S3 buckets. These buckets had various name variations of contact-shinycorp-tutanota-com-# with the # replaced with ascending numbers... All the buckets were created within ten minutes of starting the CreateBucket operations.",
+          "validated": true,
+          "subtechnique_id": "T1059.009"
         }
       ]
     },
@@ -35,10 +35,10 @@
         {
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
           "evidence_quote": "the threat actors obtained AWS credentials from a sensitive file exposed on the internet. The file contained a variety of credentials, but the group specifically targeted the exposed AWS access key belonging to an identity and access management (IAM) user",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -47,19 +47,18 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the group performed the ListBuckets API call using the AWS Command Line Interface (CLI)... the threat actors switched to using the S3 Browser tool to iterate through the S3 buckets in the account and that generated both GetBucketLocation and GetBucketObjectLockConfiguration events in the CloudTrail logs.",
-          "validated": true
-        },
-        {
           "technique_id": "T1069.003",
           "technique_name": "Cloud Groups",
-          "subtechnique_id": "T1069.003",
           "inferred": false,
           "evidence_quote": "Against the IAM service, the threat actor performed ListUsers, which returns a list of the existing users within the AWS account. Due to the limited permissions associated with the access key, the API call failed.",
+          "validated": true,
+          "subtechnique_id": "T1069.003"
+        },
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "the group performed the ListBuckets API call using the AWS Command Line Interface (CLI)... the threat actors switched to using the S3 Browser tool to iterate through the S3 buckets in the account and that generated both GetBucketLocation and GetBucketObjectLockConfiguration events in the CloudTrail logs.",
           "validated": true
         }
       ]
@@ -71,9 +70,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "The ransom note later sent by the threat actor provided proof of data access, but it did not provide enough specifics to determine what S3 data left the environment.",
+          "inferred": false,
+          "evidence_quote": "the threat actor group used WinSCP to graphically view all the S3 buckets in the account... The ransom note later sent by the threat actor provided proof of data access, but it did not provide enough specifics to determine what S3 data left the environment.",
           "validated": true
         }
       ]
@@ -85,23 +83,13 @@
         {
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the threat actor group used WinSCP to graphically view all the S3 buckets in the account... the threat actor deleted a handful of buckets, which resulted in the DeleteBucket API call.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1491",
-          "technique_name": "Defacement",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the threat actor used an automated script with the AWS CLI and attempted to create new S3 buckets. These buckets had various name variations of contact-shinycorp-tutanota-com-# with the # replaced with ascending numbers.",
+          "evidence_quote": "the threat actor deleted a handful of buckets, which resulted in the DeleteBucket API call.",
           "validated": true
         },
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "they completed their attack by sending an extortion email to the victim organization. The note stated the group had shifted to extortion to make more money and that the victim organization had one week to pay",
           "validated": true
@@ -122,7 +110,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -137,7 +126,8 @@
         "IAM",
         "AWS STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -152,7 +142,8 @@
         "IAM",
         "AWS CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -167,7 +158,8 @@
         "Amazon S3",
         "AWS CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -181,7 +173,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -196,7 +189,8 @@
         "Amazon S3",
         "AWS CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 7,
@@ -210,7 +204,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 8,
@@ -222,7 +217,8 @@
         "https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

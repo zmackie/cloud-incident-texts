@@ -7,7 +7,6 @@
         {
           "technique_id": "T1566",
           "technique_name": "Phishing",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "attackers socially engineered AWS into freezing its domain",
           "validated": true
@@ -21,38 +20,9 @@
         {
           "technique_id": "T1036",
           "technique_name": "Masquerading",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "it was the registrar who improperly froze our domain as a result of the fraudulent legal order",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the potential consequences could have seen them intercept Kodex's emails, potentially accessing sensitive information, or taking control of accounts with access to MFA authentication resets",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1114",
-          "technique_name": "Email Collection",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the potential consequences could have seen them intercept Kodex's emails, potentially accessing sensitive information",
-          "validated": false
         }
       ]
     },
@@ -61,20 +31,19 @@
       "tactic_name": "Impact",
       "techniques": [
         {
+          "technique_id": "T1584.001",
+          "technique_name": "Compromise Infrastructure: Domains",
+          "inferred": false,
+          "evidence_quote": "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar",
+          "validated": false,
+          "subtechnique_id": "T1584.001"
+        },
+        {
           "technique_id": "T1498",
           "technique_name": "Network Denial of Service",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "its website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
           "validated": true
-        },
-        {
-          "technique_id": "T1584",
-          "technique_name": "Compromise Infrastructure",
-          "subtechnique_id": "T1584.001",
-          "inferred": false,
-          "evidence_quote": "attackers attempted to transfer the domain to a different registrar",
-          "validated": false
         }
       ]
     }
@@ -92,7 +61,8 @@
       "aws_services_involved": [
         "Route 53"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 2,
@@ -106,7 +76,8 @@
       "aws_services_involved": [
         "Route 53"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -120,7 +91,8 @@
       "aws_services_involved": [
         "Route 53"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0040"
     },
     {
       "step": 4,
@@ -134,7 +106,8 @@
       "aws_services_involved": [
         "Route 53"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -181,7 +154,7 @@
         "technique_id": "T1584.001",
         "technique_name": "Compromise Infrastructure: Domains",
         "description": "Attackers attempted to transfer Kodex's domain to a different registrar as the intended outcome of the social engineering. AWS froze the domain instead of transferring it, causing a partial but unintended outcome.",
-        "tactic_id": "",
+        "tactic_id": "TA0040",
         "evidence_quote": "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar",
         "evidence_sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"

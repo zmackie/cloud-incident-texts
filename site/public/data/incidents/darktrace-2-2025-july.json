@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1595",
-          "technique_name": "Active Scanning",
-          "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -21,7 +8,7 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
+          "evidence_quote": "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176).",
           "validated": true
         }
       ]
@@ -34,15 +21,8 @@
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery",
           "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network",
+          "evidence_quote": "Around the same time, the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
           "validated": true
-        },
-        {
-          "technique_id": "T1018",
-          "technique_name": "Remote System Discovery",
-          "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
-          "validated": false
         }
       ]
     },
@@ -52,17 +32,19 @@
       "techniques": [
         {
           "technique_id": "T1021.001",
-          "technique_name": "Remote Desktop Protocol",
+          "technique_name": "Remote Services: Remote Desktop Protocol",
           "inferred": false,
-          "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance... the same behavior was replicated across multiple EC2 instances, whereby compromised instances uploaded data over internal RDP connections to other instances",
-          "validated": false
+          "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network, and another EC2 instance",
+          "validated": false,
+          "subtechnique_id": "T1021.001"
         },
         {
           "technique_id": "T1021.002",
-          "technique_name": "SMB/Windows Admin Shares",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares",
           "inferred": false,
           "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1021.002"
         }
       ]
     },
@@ -71,38 +53,12 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1039",
-          "technique_name": "Data from Network Shared Drive",
-          "inferred": false,
-          "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
-          "validated": false
-        },
-        {
           "technique_id": "T1074.002",
           "technique_name": "Remote Data Staging",
           "inferred": false,
           "evidence_quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1571",
-          "technique_name": "Non-Standard Port",
-          "inferred": false,
-          "evidence_quote": "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)",
-          "validated": false
-        },
-        {
-          "technique_id": "T1102",
-          "technique_name": "Web Service",
-          "inferred": false,
-          "evidence_quote": "The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176)",
-          "validated": false
+          "validated": true,
+          "subtechnique_id": "T1074.002"
         }
       ]
     },
@@ -114,7 +70,7 @@
           "technique_id": "T1048",
           "technique_name": "Exfiltration Over Alternative Protocol",
           "inferred": false,
-          "evidence_quote": "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000",
+          "evidence_quote": "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000... Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint",
           "validated": true
         }
       ]
@@ -127,7 +83,7 @@
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact",
           "inferred": false,
-          "evidence_quote": "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks",
+          "evidence_quote": "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response capability was not configured to act on these devices.",
           "validated": true
         }
       ]
@@ -147,7 +103,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -162,7 +119,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -177,7 +135,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 4,
@@ -191,7 +150,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 5,
@@ -205,7 +165,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -220,7 +181,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 7,
@@ -235,7 +197,8 @@
         "EC2",
         "VPC"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

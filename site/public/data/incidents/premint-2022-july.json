@@ -7,8 +7,8 @@
         {
           "technique_id": "T1596",
           "technique_name": "Search Open Technical Databases",
-          "inferred": true,
-          "evidence_quote": "there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
+          "inferred": false,
+          "evidence_quote": "we suspect that there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
           "validated": false
         }
       ]
@@ -21,15 +21,17 @@
           "technique_id": "T1584.001",
           "technique_name": "Compromise Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
-          "validated": false
+          "evidence_quote": "attack script file hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
+          "validated": false,
+          "subtechnique_id": "T1584.001"
         },
         {
           "technique_id": "T1588.001",
           "technique_name": "Obtain Capabilities: Malware",
           "inferred": false,
-          "evidence_quote": "loads another attack script file hosted on a fake domain... cdn.min.js?v=1658050292559. This script contained interactions to deceive users into granting authorization",
-          "validated": false
+          "evidence_quote": "cdn.min.js?v=1658050292559. This script contained interactions to deceive users into granting authorization",
+          "validated": false,
+          "subtechnique_id": "T1588.001"
         }
       ]
     },
@@ -41,7 +43,7 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "we suspect that there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
+          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will, thus tampering with the JS resource files",
           "validated": true
         }
       ]
@@ -54,60 +56,9 @@
           "technique_id": "T1059.007",
           "technique_name": "Command and Scripting Interpreter: JavaScript",
           "inferred": false,
-          "evidence_quote": "injecting malicious JS scripts. When users performed regular operations, the malicious code was executed",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505.004",
-          "technique_name": "Server Software Component: IIS Components",
-          "inferred": true,
           "evidence_quote": "This file was injected by hackers with a script that loads another attack script file hosted on a fake domain owned by the hackers",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1534",
-          "technique_name": "Internal Spearphishing",
-          "inferred": true,
-          "evidence_quote": "the website loads the following JS resource file... This file was injected by hackers with a script",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1059.007"
         }
       ]
     },
@@ -119,7 +70,7 @@
           "technique_id": "T1185",
           "technique_name": "Browser Session Hijacking",
           "inferred": false,
-          "evidence_quote": "tricking users into signing the authorization operation setApprovalForAll(address,bool). After obtaining the authorization, the attacker stole users' NFTs and other assets",
+          "evidence_quote": "this script was triggered, replacing the original verification signature with a transaction that authorized the attacker to transfer users' high-value NFTs",
           "validated": false
         }
       ]
@@ -132,7 +83,7 @@
           "technique_id": "T1102",
           "technique_name": "Web Service",
           "inferred": false,
-          "evidence_quote": "loads another attack script file hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
+          "evidence_quote": "the website loads the following JS resource file https://s3-redwood-labs.premint.xyz/theme/js/boomerang.min.js ... loads another attack script file hosted on a fake domain",
           "validated": false
         }
       ]
@@ -145,7 +96,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "resulting in the theft of some users' NFTs",
+          "evidence_quote": "After obtaining the authorization, the attacker stole users' NFTs and other assets",
           "validated": true
         }
       ]
@@ -164,7 +115,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -176,7 +128,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 3,
@@ -188,7 +141,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 4,
@@ -202,7 +156,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 5,
@@ -216,7 +171,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 6,
@@ -228,7 +184,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 7,
@@ -240,7 +197,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 8,
@@ -252,7 +210,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

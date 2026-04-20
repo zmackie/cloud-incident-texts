@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1583.006",
-          "technique_name": "Acquire Infrastructure: Web Services",
-          "inferred": true,
-          "evidence_quote": "Almost all of the 75k prompts we were able to capture with invocation logging sourced from a single IP Address 194.48.248.108 (ASN: AlexHost) geo located in Moldova.",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -21,8 +8,9 @@
           "technique_id": "T1078.004",
           "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Attacks against GenAI Infrastructure like AWS Bedrock have increased substantially over the last six (6) months. Particularly with exposed access keys.",
-          "validated": true
+          "evidence_quote": "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -34,7 +22,7 @@
           "technique_id": "T1098",
           "technique_name": "Account Manipulation",
           "inferred": false,
-          "evidence_quote": "Attackers will create a use case form if one doesn't already exist, and if one does exist they will instead reuse the existing form when requesting access to a model.",
+          "evidence_quote": "Attackers will create a use case form if one doesn't already exist... PutUseCaseForModelAccess... CreateFoundationModelAgreement... PutFoundationModelEntitlement",
           "validated": true
         }
       ]
@@ -48,14 +36,8 @@
           "technique_name": "Disable or Modify Cloud Logs",
           "inferred": false,
           "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
-          "inferred": true,
-          "evidence_quote": "AKIA* with Mozilla UA: A long lived access key with a user-agent that includes Mozilla rarely occurs legitimately.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.008"
         }
       ]
     },
@@ -67,8 +49,9 @@
           "technique_id": "T1552.004",
           "technique_name": "Unsecured Credentials: Private Keys",
           "inferred": false,
-          "evidence_quote": "the initial access almost always being an exposed access key on GitHub",
-          "validated": false
+          "evidence_quote": "the initial access almost always being an exposed access key on GitHub... 2024-06-25: Permiso team placed an exposed access key and secret in a file on GitHub to simulate exactly what occurred at previous clients",
+          "validated": false,
+          "subtechnique_id": "T1552.004"
         }
       ]
     },
@@ -77,30 +60,17 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "Attackers will just try to run an InvokeModel and see if it is successful... GetFoundationModelAvailability: This is an API... Attackers are using this API programmatically",
-          "validated": true
-        },
-        {
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
           "inferred": false,
           "evidence_quote": "Actors from twelve (12) ASNs consistently attempted to interact with the bedrock service via nine (9) APIs (InvokeModel, GetFoundationModelAvailability, ... ListFoundationModels, GetModelInvocationLoggingConfiguration, ...)",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
+        },
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "GetModelInvocationLoggingConfiguration",
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "GetFoundationModelAvailability: This is an API that is not included in the aws-cli (SDK) or in the API reference guide... Attackers are using this API programmatically (not via the web console) with manually formatted requests.",
           "validated": true
         }
       ]
@@ -113,7 +83,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Attackers are hijacking victim GenAI infrastructure to power their own LLM applications... pass all the cost and compute to victim organizations that they've hijacked.",
+          "evidence_quote": "Over the course of two (2) days we saw over 75,000 successful model invocations, almost all of a sexual nature... pass all the cost and compute to victim organizations that they've hijacked.",
           "validated": true
         }
       ]
@@ -132,7 +102,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -146,7 +117,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -160,7 +132,8 @@
       "aws_services_involved": [
         "AWS Bedrock"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -174,7 +147,8 @@
       "aws_services_involved": [
         "AWS Bedrock"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -189,7 +163,8 @@
         "AWS Bedrock",
         "CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 6,
@@ -204,7 +179,8 @@
         "AWS Bedrock",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 7,
@@ -218,7 +194,8 @@
       "aws_services_involved": [
         "AWS Bedrock"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [

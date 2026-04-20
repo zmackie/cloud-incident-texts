@@ -8,8 +8,9 @@
           "technique_id": "T1596.005",
           "technique_name": "Search Open Technical Databases: Scan Databases",
           "inferred": false,
-          "evidence_quote": "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers",
-          "validated": false
+          "evidence_quote": "browsing shodan (or well, technically zoomeye, chinese shodan), looking for exposed jenkins servers that may contain some interesting goods",
+          "validated": false,
+          "subtechnique_id": "T1596.005"
         }
       ]
     },
@@ -21,7 +22,7 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "an exposed jenkins server belonging to CommuteAir... we do have access to build workspaces",
+          "evidence_quote": "while we don't have anonymous admin access... we do have access to build workspaces. this means we get to see the repositories that were built for each one of the ~70 build jobs",
           "validated": true
         }
       ]
@@ -34,8 +35,9 @@
           "technique_id": "T1552.001",
           "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "a file called application-prod.properties... hardcoded credentials and s3 bucket names... i have ended up finding AWS credentials",
-          "validated": true
+          "evidence_quote": "a file called application-prod.properties... two minutes after finding said file im staring at filezilla connected to a navtech sftp server... hardcoded credentials there would allow me access to navblue apis... i have ended up finding AWS credentials",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -44,17 +46,10 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "inferred": false,
-          "evidence_quote": "numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
-          "validated": true
-        },
-        {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli",
+          "evidence_quote": "i now seemingly have access to pretty much their entire aws infrastructure via aws-cli. numerous s3 buckets, dozens of dynamodb tables, as well as various servers and much more",
           "validated": true
         }
       ]
@@ -64,30 +59,17 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
-          "evidence_quote": "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables",
-          "validated": true
-        },
-        {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
           "inferred": false,
-          "evidence_quote": "three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
+          "evidence_quote": "for the first time actually take a peek at the test data in the repository. and there it is. three csv files, employee_information.csv, NOFLY.CSV and SELECTEE.CSV. all commited to the repository in july 2022",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
+        },
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "the data is available for access (upon request) via DDoSecrets",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "grabbing sample documents from various s3 buckets, going through flight plans and dumping some dynamodb tables. at this point i had found pretty much all PII imaginable for each of their crew members",
           "validated": true
         }
       ]
@@ -105,7 +87,8 @@
         "https://www.dailydot.com/debug/no-fly-list-us-tsa-unprotected-server-commuteair/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -117,7 +100,8 @@
         "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -133,7 +117,8 @@
         "Amazon S3",
         "Amazon DynamoDB"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -149,7 +134,8 @@
         "Amazon DynamoDB",
         "AWS CLI"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -161,7 +147,8 @@
         "https://maia.crimew.gay/posts/how-to-hack-an-airline/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -177,7 +164,8 @@
         "Amazon S3",
         "Amazon DynamoDB"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [

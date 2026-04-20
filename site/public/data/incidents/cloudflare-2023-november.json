@@ -9,27 +9,16 @@
           "technique_name": "Gather Victim Identity Information: Credentials",
           "inferred": false,
           "evidence_quote": "a threat actor gaining access to a set of credentials... One was a Moveworks service token that granted remote access into our Atlassian system.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1589.001"
         },
         {
           "technique_id": "T1595.002",
           "technique_name": "Active Scanning: Vulnerability Scanning",
           "inferred": false,
           "evidence_quote": "Our logs show that the threat actor started probing and performing reconnaissance of our systems beginning on November 14, looking for a way to use the credentials and what systems were accessible.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1595.002"
         }
       ]
     },
@@ -55,19 +44,21 @@
           "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "The threat actor used the Smartsheet credential to create an Atlassian account that looked like a normal Cloudflare user. They added this user to a number of groups within Atlassian so that they'd have persistent access to the Atlassian environment should the Smartsheet service account be removed.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         },
         {
           "technique_id": "T1505.003",
           "technique_name": "Server Software Component: Web Shell",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "Sliver was installed using the ScriptRunner for Jira plugin.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1505.003"
         },
         {
           "technique_id": "T1546",
           "technique_name": "Event Triggered Execution",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... using the ScriptRunner for Jira plugin",
           "validated": true
         }
@@ -83,13 +74,6 @@
           "inferred": false,
           "evidence_quote": "15:58 - The threat actor adds the Smartsheet service account to an administrator group.",
           "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the threat actor was able to install the Sliver Adversary Emulation Framework... Since the Smartsheet service account had administrative access to Atlassian Jira",
-          "validated": true
         }
       ]
     },
@@ -102,7 +86,8 @@
           "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "A small number of the repositories contained encrypted secrets which were rotated immediately... we went searching for secrets that might have been left in Jira tickets or source code",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         },
         {
           "technique_id": "T1528",
@@ -142,7 +127,8 @@
           "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "gained access to our source code management system (which uses Atlassian Bitbucket)... the third account was a Bitbucket service account which was used to access our source code management system",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1550.001"
         }
       ]
     },
@@ -155,7 +141,8 @@
           "technique_name": "Confluence",
           "inferred": false,
           "evidence_quote": "The threat actor searched the wiki for things like remote access, secret, client-secret, openconnect, cloudflared, and token. They accessed 36 Jira tickets... and 202 wiki pages",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1213.001"
         },
         {
           "technique_id": "T1213",
@@ -169,7 +156,8 @@
           "technique_name": "Code Repositories",
           "inferred": false,
           "evidence_quote": "the threat actor used the Atlassian Bitbucket git archive feature on 76 repositories to download them to the Atlassian server",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1213.003"
         },
         {
           "technique_id": "T1560",
@@ -200,7 +188,7 @@
         {
           "technique_id": "T1567",
           "technique_name": "Exfiltration Over Web Service",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "even though we were not able to confirm whether or not they had been exfiltrated, we decided to treat them as having been exfiltrated.",
           "validated": true
         }
@@ -218,7 +206,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -230,7 +219,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 3,
@@ -242,7 +232,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -254,7 +245,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 5,
@@ -266,7 +258,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -278,7 +271,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0003"
     },
     {
       "step": 7,
@@ -290,7 +284,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 8,
@@ -302,7 +297,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 9,
@@ -314,7 +310,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 10,
@@ -326,7 +323,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 11,
@@ -338,7 +336,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 12,
@@ -350,7 +349,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 13,
@@ -362,7 +362,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 14,
@@ -374,7 +375,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 15,
@@ -386,7 +388,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 16,
@@ -398,7 +401,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 17,
@@ -410,7 +414,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 18,
@@ -422,7 +427,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 19,
@@ -434,7 +440,8 @@
         "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     }
   ],
   "confidence_score": 0.65,
@@ -469,7 +476,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Valid Accounts: Cloud Accounts observed during Initial Access: They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
-        "tactic_id": "TA0004",
+        "tactic_id": "",
         "evidence_quote": "They did this by using one access token and three service account credentials that had been taken, and that we failed to rotate, after the Okta compromise of October 2023.",
         "evidence_sources": [
           "https://web.archive.org/web/20240201200520/https://blog.cloudflare.com/thanksgiving-2023-security-incident/"

@@ -68,11 +68,17 @@ def build_technique_frequency(
     """
     Build a map: technique_id → {count, tactic, name, incidents, tactic_id}.
     Uses the attack_chain for counting (not tactics_used) to avoid duplicates.
+    The display tactic is the most common per-step tactic observed for this
+    technique across the corpus, so multi-tactic techniques (e.g. T1078.004)
+    are shown under the tactic they're actually used for — not whatever tactic
+    happens to sort first in MITRE's STIX output.
     """
     technique_lookup = attack_data.get("techniques", {})
     tactic_lookup = attack_data.get("tactics", {})
 
     freq: dict[str, dict] = {}
+    # technique_id → Counter of per-step tactic_ids observed in the corpus.
+    per_step_tactic_counts: dict[str, Counter] = defaultdict(Counter)
 
     for analysis in analyses:
         slug = analysis.get("incident_slug", "unknown")
@@ -80,25 +86,24 @@ def build_technique_frequency(
 
         for step in analysis.get("attack_chain", []):
             tid = step.get("technique_id", "")
-            if not tid or tid in seen_in_incident:
+            if not tid:
+                continue
+            step_tactic = str(step.get("tactic_id", "") or "").strip().upper()
+            if step_tactic:
+                per_step_tactic_counts[tid][step_tactic] += 1
+
+            if tid in seen_in_incident:
                 continue
             seen_in_incident.add(tid)
 
             if tid not in freq:
-                # Resolve display info from ATT&CK data
                 tech_info = technique_lookup.get(tid, {})
-                tactic_ids = tech_info.get("tactic_ids", [])
-                tactic_id = tactic_ids[0] if tactic_ids else ""
-                tactic_name = ""
-                if tactic_id:
-                    tactic_name = tactic_lookup.get(tactic_id, {}).get("name", "")
-
                 freq[tid] = {
                     "technique_id": tid,
                     "technique_name": tech_info.get("name", step.get("technique_name", tid)),
-                    "tactic_id": tactic_id,
-                    "tactic_name": tactic_name,
-                    "tactic_shortname": tactic_lookup.get(tactic_id, {}).get("shortname", ""),
+                    "tactic_id": "",
+                    "tactic_name": "",
+                    "tactic_shortname": "",
                     "is_subtechnique": tech_info.get("is_subtechnique", "." in tid),
                     "parent_id": tech_info.get("parent_id"),
                     "url": tech_info.get("url", f"https://attack.mitre.org/techniques/{tid.replace('.', '/')}/"),
@@ -108,6 +113,21 @@ def build_technique_frequency(
 
             freq[tid]["count"] += 1
             freq[tid]["incidents"].append(slug)
+
+    # Resolve display tactic for each technique: most common per-step tactic
+    # observed. Fall back to MITRE's canonical list when nothing was observed.
+    for tid, entry in freq.items():
+        tech_info = technique_lookup.get(tid, {})
+        display_tactic = ""
+        counter = per_step_tactic_counts.get(tid)
+        if counter:
+            display_tactic = counter.most_common(1)[0][0]
+        if not display_tactic:
+            tactic_ids = tech_info.get("tactic_ids", [])
+            display_tactic = tactic_ids[0] if tactic_ids else ""
+        entry["tactic_id"] = display_tactic
+        entry["tactic_name"] = tactic_lookup.get(display_tactic, {}).get("name", "") if display_tactic else ""
+        entry["tactic_shortname"] = tactic_lookup.get(display_tactic, {}).get("shortname", "") if display_tactic else ""
 
     # Sort incidents list for determinism
     for v in freq.values():

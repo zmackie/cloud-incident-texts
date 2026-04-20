@@ -1,15 +1,51 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1136.003",
+          "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "Exposed IAM Access keys in Public S3 Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+          "evidence_quote": "Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
+          "validated": true,
+          "subtechnique_id": "T1136.003"
+        },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy) SES commands issued to verify new domain, DKIM and email address",
+          "validated": true,
+          "subtechnique_id": "T1098.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal",
+          "inferred": false,
+          "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
           "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "Exposed IAM Access keys in Public S3",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -20,41 +56,8 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1583",
-          "technique_name": "Acquire Infrastructure",
-          "inferred": false,
-          "evidence_quote": "Resource Development T1098 & T1583 Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "Resource Development T1098 & T1583 Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed",
-          "validated": true
-        },
-        {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
           "validated": true
         }
       ]
@@ -67,40 +70,7 @@
           "technique_id": "T1021",
           "technique_name": "Remote Services",
           "inferred": false,
-          "evidence_quote": "Lateral Movement T1021 Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1070",
-          "technique_name": "Indicator Removal",
-          "inferred": false,
-          "evidence_quote": "Evasion T1070 Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+          "evidence_quote": "SES commands issued to verify new domain, DKIM and email address",
           "validated": true
         }
       ]
@@ -133,7 +103,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -149,7 +120,8 @@
         "EC2",
         "Service Quotas"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 3,
@@ -164,7 +136,8 @@
         "EC2",
         "Service Quotas"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -180,7 +153,8 @@
         "SES",
         "SNS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -196,7 +170,8 @@
         "SES",
         "SQS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -211,7 +186,8 @@
         "SES",
         "SQS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 7,
@@ -225,7 +201,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -240,7 +217,8 @@
         "SES",
         "SNS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -282,7 +260,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker authenticated to AWS using the compromised IAM access keys via the AWS CLI, gaining initial access as a legitimate user.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
         "evidence_sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"

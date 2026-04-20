@@ -5,18 +5,20 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1098.001",
-          "technique_name": "Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user.",
-          "validated": true
-        },
-        {
           "technique_id": "T1136.003",
           "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users with accompanying long-term access keys",
-          "validated": true
+          "evidence_quote": "Immediately following the authentication to the AWS console, the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users",
+          "validated": true,
+          "subtechnique_id": "T1136.003"
+        },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user... create two new IAM users with accompanying long-term access keys",
+          "validated": true,
+          "subtechnique_id": "T1098.001"
         }
       ]
     },
@@ -25,31 +27,12 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker issued an API call to UpdateLoginProfile to change the AWS console password for the arn:aws:iam::123456789012:user/comp_user1 account. Authenticated into the AWS console using the arn:aws:iam::123456789012:user/comp_user1 account.",
-          "validated": true
-        },
-        {
           "technique_id": "T1098.003",
           "technique_name": "Additional Cloud Roles",
           "inferred": false,
-          "evidence_quote": "AttachUserPolicy attaches a specified policy to a specified user... the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API",
-          "validated": true
+          "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
+          "validated": true,
+          "subtechnique_id": "T1098.003"
         }
       ]
     },
@@ -62,7 +45,8 @@
           "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -75,7 +59,8 @@
           "technique_name": "Cloud Groups",
           "inferred": false,
           "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1069.003"
         }
       ]
     },
@@ -86,8 +71,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "inferred": true,
-          "evidence_quote": "It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining.",
+          "inferred": false,
+          "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API in order to increase the EC2 quota. It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining.",
           "validated": true
         }
       ]
@@ -106,7 +91,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -121,7 +107,8 @@
         "IAM",
         "CLI"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -136,7 +123,8 @@
         "IAM",
         "CLI"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -152,7 +140,8 @@
         "Management Console",
         "CloudTrail"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -166,7 +155,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -180,7 +170,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 7,
@@ -194,7 +185,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 8,
@@ -208,7 +200,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 9,
@@ -224,7 +217,8 @@
         "Service Quotas",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -277,7 +271,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker called UpdateLoginProfile via the CLI to set/change the AWS console password for comp_user1 (succeeded), enabling console login for an account that may not have had one. The same call for comp_user2 failed.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded) and one for the arn:aws:iam::123456789012:user/comp_user2 IAM user (failed with the NoSuchEntityException reason).",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
@@ -292,7 +286,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker authenticated to the AWS Management Console as comp_user1 from an IP address in Indonesia, with no MFA, using the password set in the previous step.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "The authentication originated from Indonesia... CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"

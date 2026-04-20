@@ -1,8 +1,67 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_id": "T1583.006",
+          "technique_name": "Acquire Infrastructure: Web Services",
+          "inferred": true,
+          "evidence_quote": "Almost all of the 75k prompts we were able to capture with invocation logging sourced from a single IP Address 194.48.248.108 (ASN: AlexHost) geo located in Moldova.",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Attacks against GenAI Infrastructure like AWS Bedrock have increased substantially over the last six (6) months. Particularly with exposed access keys.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "Attackers will create a use case form if one doesn't already exist, and if one does exist they will instead reuse the existing form when requesting access to a model.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Disable or Modify Cloud Logs",
+          "inferred": false,
+          "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
+          "inferred": true,
+          "evidence_quote": "AKIA* with Mozilla UA: A long lived access key with a user-agent that includes Mozilla rarely occurs legitimately.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.004",
@@ -10,13 +69,6 @@
           "inferred": false,
           "evidence_quote": "the initial access almost always being an exposed access key on GitHub",
           "validated": false
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Attacks against GenAI Infrastructure like AWS Bedrock have increased substantially over the last six (6) months. Particularly with exposed access keys.",
-          "validated": true
         }
       ]
     },
@@ -41,27 +93,14 @@
       ]
     },
     {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1583.006",
-          "technique_name": "Acquire Infrastructure: Web Services",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "Almost all of the 75k prompts we were able to capture with invocation logging sourced from a single IP Address 194.48.248.108 (ASN: AlexHost) geo located in Moldova.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "Attackers will create a use case form if one doesn't already exist, and if one does exist they will instead reuse the existing form when requesting access to a model.",
+          "evidence_quote": "GetModelInvocationLoggingConfiguration",
           "validated": true
         }
       ]
@@ -75,39 +114,6 @@
           "technique_name": "Resource Hijacking",
           "inferred": false,
           "evidence_quote": "Attackers are hijacking victim GenAI infrastructure to power their own LLM applications... pass all the cost and compute to victim organizations that they've hijacked.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "inferred": false,
-          "evidence_quote": "oai-reverse-proxy is configured by default to not use an access key if Invocation logging (prompt logging) is enabled. It checks if invocation logging is enabled and if so, it will not attempt to invoke the models.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
-          "inferred": true,
-          "evidence_quote": "AKIA* with Mozilla UA: A long lived access key with a user-agent that includes Mozilla rarely occurs legitimately.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "GetModelInvocationLoggingConfiguration",
           "validated": true
         }
       ]
@@ -235,7 +241,7 @@
         "technique_id": "T1552.004",
         "technique_name": "Unsecured Credentials: Private Keys",
         "description": "Attacker discovers long-lived AWS IAM access keys (AKIA*) exposed publicly on GitHub, providing initial foothold into victim AWS account.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "the initial access almost always being an exposed access key on GitHub... 2024-06-25: Permiso team placed an exposed access key and secret in a file on GitHub to simulate exactly what occurred at previous clients",
         "evidence_sources": [
           "https://permiso.io/blog/exploiting-hosted-models"
@@ -249,7 +255,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker uses the stolen long-lived AWS access key credentials to authenticate to the victim's AWS environment within minutes of exposure.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "Within minutes actors were attempting to leverage the exposed key to perform activities in bedrock, amongst other commonly attacked services.",
         "evidence_sources": [
           "https://permiso.io/blog/exploiting-hosted-models"

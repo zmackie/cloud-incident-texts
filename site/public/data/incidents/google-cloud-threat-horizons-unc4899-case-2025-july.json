@@ -29,6 +29,20 @@
       ]
     },
     {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1505",
+          "technique_name": "Server Software Component",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "CloudFront & S3 JS modification \u2014 attacker modified JavaScript served via CloudFront and S3",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
@@ -48,25 +62,11 @@
       "techniques": [
         {
           "technique_id": "T1550.004",
-          "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+          "technique_name": "Web Session Cookie",
           "subtechnique_id": "T1550.004",
           "inferred": false,
           "evidence_quote": "Session cookie theft \u2014 stolen cookies used to authenticate to cloud services",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505",
-          "technique_name": "Server Software Component",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "CloudFront & S3 JS modification \u2014 attacker modified JavaScript served via CloudFront and S3",
-          "validated": false
         }
       ]
     },
@@ -196,7 +196,7 @@
         "technique_id": "T1566.003",
         "technique_name": "Phishing: Spearphishing via Service",
         "description": "UNC4899 contacted the victim under the guise of a job opportunity \u2014 a social engineering lure used to deliver malware. This is consistent with the 'job opportunity premise' used by DPRK-linked threat actors to target cryptocurrency sector employees.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "Malware via job opportunity premise",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
@@ -208,7 +208,7 @@
         "technique_id": "T1204.002",
         "technique_name": "User Execution: Malicious File",
         "description": "The victim executed a malicious file delivered as part of the fake job opportunity, resulting in malware infection on the endpoint.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "Malware via job opportunity premise",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
@@ -232,7 +232,7 @@
         "technique_id": "T1550.004",
         "technique_name": "Web Session Cookie",
         "description": "The attacker replayed the stolen session cookies to authenticate to cloud services (likely AWS/GCP) as the victim, bypassing MFA and password controls.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "Session cookie theft",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
@@ -247,7 +247,7 @@
         "technique_id": "T1505",
         "technique_name": "Server Software Component",
         "description": "Using the hijacked cloud session, the attacker modified JavaScript files stored in Amazon S3 and distributed via CloudFront CDN. This constitutes supply-chain-style tampering of web content served to end users \u2014 likely cryptocurrency platform users.",
-        "tactic_id": "",
+        "tactic_id": "TA0003",
         "evidence_quote": "CloudFront & S3 JS modification",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"

@@ -6,10 +6,23 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess).",
           "subtechnique_id": "T1078.004",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": true,
+          "evidence_quote": "Reset master RDS database passwords for access",
           "validated": true
         }
       ]
@@ -28,10 +41,23 @@
         },
         {
           "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "technique_name": "Disable or Modify Cloud Logs",
           "inferred": false,
           "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
           "subtechnique_id": "T1562.008",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1110",
+          "technique_name": "Brute Force",
+          "inferred": false,
+          "evidence_quote": "Reset master RDS database passwords for access",
           "validated": true
         }
       ]
@@ -50,41 +76,27 @@
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "the attacker had access to nearly everything and can laterally move from staging to production account",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1110",
-          "technique_name": "Brute Force / Credential Manipulation",
+          "technique_id": "T1090",
+          "technique_name": "Proxy",
           "inferred": false,
-          "evidence_quote": "Reset master RDS database passwords for access",
-          "validated": true
+          "evidence_quote": "VirusTotal and Abuse.ch listed them as known C&C servers",
+          "validated": false
         }
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": true,
-          "evidence_quote": "Reset master RDS database passwords for access",
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
           "validated": true
         }
       ]
@@ -106,32 +118,6 @@
           "inferred": false,
           "evidence_quote": "Critical resources and backups deleted",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
-          "inferred": false,
-          "evidence_quote": "VirusTotal and Abuse.ch listed them as known C&C servers",
-          "validated": false
         }
       ]
     }
@@ -331,7 +317,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used the stolen IAM access keys to authenticate to the AWS environment with AdministratorAccess, routing through VPN IPs to obscure their origin.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "Used VPN IP addresses to hide their origin",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
@@ -363,7 +349,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker leveraged the same or discovered credentials to move laterally from the staging account into the production account, which was also the AWS Organization management account.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "the attacker had access to nearly everything and can laterally move from staging to production account",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"

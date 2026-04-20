@@ -1,15 +1,15 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
-          "subtechnique_id": null,
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
+          "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
           "validated": true
         }
       ]
@@ -19,8 +19,16 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
+          "validated": true
+        },
+        {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "subtechnique_id": "T1552.001",
           "inferred": false,
           "evidence_quote": "the actor was able to exfiltrate a set of private npm repositories, some of which included secrets such as AWS access keys",
@@ -33,20 +41,14 @@
           "inferred": true,
           "evidence_quote": "private npm repositories, some of which included secrets such as AWS access keys",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
+        },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
-          "validated": true
+          "technique_id": "T1552.003",
+          "technique_name": "Unsecured Credentials: Bash History",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "a subset of npm service logs stored in our internal logging system contained data that was not properly sanitized to remove credentials received in requests to npm services",
+          "validated": false
         }
       ]
     },
@@ -65,8 +67,8 @@
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
@@ -75,13 +77,7 @@
           "inferred": false,
           "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets...the actor exfiltrated a small subset of private package contents",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
+        },
         {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
@@ -89,14 +85,6 @@
           "inferred": false,
           "evidence_quote": "exfiltrate an older backup of the skimdb.npmjs.com mirror, which included metadata and package manifests for all public and private packages",
           "validated": true
-        },
-        {
-          "technique_id": "T1552.003",
-          "technique_name": "Unsecured Credentials: Bash History",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "a subset of npm service logs stored in our internal logging system contained data that was not properly sanitized to remove credentials received in requests to npm services",
-          "validated": false
         }
       ]
     }
@@ -234,7 +222,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used the harvested AWS access keys to authenticate to npm's AWS cloud infrastructure, escalating from GitHub access to AWS infrastructure access.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"

@@ -11,41 +11,13 @@
           "inferred": false,
           "evidence_quote": "The incident originated from a likely exploitation of a known remote code execution vulnerability in a Jenkins instance, an open source software development automation server.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
-          "validated": true
         },
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files (GCP/FTP via BitBucket config)",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "they used a compromised hard-coded credential found in one of the configuration files in their BitBucket repository, also suspected to be compromised.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "the threat actor created multiple IAM user accounts",
+          "evidence_quote": "From AWS, the threat actor managed to access a FTP server within a parallel Google Cloud Platform (GCP) environment.",
           "validated": true
         }
       ]
@@ -56,7 +28,7 @@
       "techniques": [
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_name": "Cloud Account",
           "subtechnique_id": "T1136.003",
           "inferred": false,
           "evidence_quote": "the threat actor created multiple IAM user accounts",
@@ -64,10 +36,60 @@
         },
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts (re-entry via unreset root key)",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "the threat actor created multiple IAM user accounts",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "subtechnique_id": "T1578.002",
+          "inferred": false,
+          "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
+          "validated": true
+        },
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Disable or Modify Cloud Logs",
+          "subtechnique_id": "T1562.008",
+          "inferred": true,
+          "evidence_quote": "Logs availability has been an issue due to the lack of CloudTrail log retention",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The server was hosted in an Amazon Web Service (AWS) environment and had a hardcoded root access key.",
           "validated": true
         }
       ]
@@ -121,14 +143,6 @@
           "inferred": false,
           "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
           "validated": false
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts (GCP access via FTP creds)",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "From AWS, the threat actor managed to access a FTP server within a parallel Google Cloud Platform (GCP) environment.",
-          "validated": true
         }
       ]
     },
@@ -156,28 +170,6 @@
           "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "accessed internal data, including those stored in S3 buckets via the free Windows client S3 Browser",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
-          "inferred": false,
-          "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment... The attacker deployed the additional EC2 instances in a different AWS region than that used by the victim",
-          "validated": true
-        },
-        {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "subtechnique_id": "T1562.008",
-          "inferred": true,
-          "evidence_quote": "Logs availability has been an issue due to the lack of CloudTrail log retention",
           "validated": true
         }
       ]
@@ -399,7 +391,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Valid Accounts: Cloud Accounts (re-entry via unreset root key) observed during Persistence: while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "while the victim restored their AWS system they were not aware to reset the root access key. Unsurprisingly, the attacker quickly re-established a presence in their cloud",
         "evidence_sources": [
           "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
@@ -471,7 +463,7 @@
         "technique_id": "T1595.001",
         "technique_name": "Active Scanning: Scanning IP Blocks",
         "description": "Active Scanning: Scanning IP Blocks observed during Discovery: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
-        "tactic_id": "",
+        "tactic_id": "TA0007",
         "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
         "evidence_sources": [
           "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
@@ -483,7 +475,7 @@
         "technique_id": "T1596.005",
         "technique_name": "Search Open Technical Databases: Scan Databases",
         "description": "Search Open Technical Databases: Scan Databases observed during Discovery: the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
-        "tactic_id": "",
+        "tactic_id": "TA0007",
         "evidence_quote": "the attacker likely used Shodan to identify other vulnerable Jenkins instances online",
         "evidence_sources": [
           "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"
@@ -495,7 +487,7 @@
         "technique_id": "T1210",
         "technique_name": "Exploitation of Remote Services",
         "description": "Exploitation of Remote Services observed during Lateral Movement: deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "deploying Linux and Windows virtual machines in new EC2 instances in the compromised environment to scan and exploit external IP addresses",
         "evidence_sources": [
           "https://blog.darklab.hk/2021/07/06/trouble-in-paradise/"

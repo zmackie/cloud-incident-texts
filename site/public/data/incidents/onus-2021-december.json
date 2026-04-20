@@ -56,7 +56,7 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "this file contains AWS credentials. The most serious mistake of ONUS is that ONUS granted the AmazonS3FullAccess permission to the access key",
@@ -100,7 +100,7 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "subtechnique_id": "T1552.001",
           "inferred": false,
           "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials.",
@@ -108,7 +108,7 @@
         },
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "subtechnique_id": "T1552.005",
           "inferred": true,
           "evidence_quote": null,
@@ -134,6 +134,20 @@
           "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "we narrowed down the scope of the investigation by identifying services that interacted with those buckets",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the attackers could access the ONUS database to get user information",
           "validated": true
         }
       ]
@@ -170,14 +184,6 @@
           "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "the user data in the AWS S3 had been deleted",
-          "validated": true
-        },
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the attackers could access the ONUS database to get user information",
           "validated": true
         }
       ]
@@ -403,7 +409,7 @@
         "technique_id": "T1036.004",
         "technique_name": "Masquerading: Masquerade Task or Service",
         "description": "The backdoor was named 'kworker' to masquerade as a legitimate Linux kernel worker process, evading casual inspection.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
@@ -415,7 +421,7 @@
         "technique_id": "T1572",
         "technique_name": "Protocol Tunneling",
         "description": "The kworker backdoor established a persistent SSH tunnel to C2 server 45.147.230.219:81, with a SOCKS5 proxy as a fallback channel, enabling ongoing interactive access.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)... SOCKS connection used as a backup when SSH is down",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
@@ -427,7 +433,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the harvested AWS access keys (with AmazonS3FullAccess), attackers authenticated to AWS and gained full control over ONUS's S3 buckets.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "ONUS granted the AmazonS3FullAccess permission to the access key which allowed attackers to compromise and easily delete all of the S3 buckets",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"

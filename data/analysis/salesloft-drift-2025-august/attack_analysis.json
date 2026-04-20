@@ -15,12 +15,26 @@
       ]
     },
     {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Application Access Token",
+          "inferred": true,
+          "evidence_quote": "OAuth tokens stolen",
+          "subtechnique_id": "T1550.001",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": true,
           "evidence_quote": "GitHub repository compromise (UNC6395)",
           "subtechnique_id": "T1552.001",
@@ -37,26 +51,12 @@
       ]
     },
     {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": true,
-          "evidence_quote": "OAuth tokens stolen",
-          "subtechnique_id": "T1550.001",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0008",
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
           "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "OAuth tokens stolen; AWS environment accessed",
           "subtechnique_id": "T1550.001",
@@ -211,7 +211,7 @@
         "technique_id": "T1195.001",
         "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
         "description": "UNC6395 compromised a GitHub repository associated with Salesloft/Drift, establishing a foothold within the software supply chain.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "GitHub repository compromise (UNC6395)",
         "evidence_sources": [
           "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"
@@ -247,7 +247,7 @@
         "technique_id": "T1550.001",
         "technique_name": "Application Access Token",
         "description": "Using the stolen OAuth tokens, UNC6395 authenticated to Salesloft/Drift's AWS environment and Salesforce integrations without needing valid passwords, enabling lateral movement across cloud services.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "AWS environment accessed; OAuth tokens stolen; Escalation Vectors: AWS environment accessed, OAuth tokens stolen",
         "evidence_sources": [
           "https://cloud.google.com/blog/topics/threat-intelligence/unc6395-github-malware-salesforce-data"

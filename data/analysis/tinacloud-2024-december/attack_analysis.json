@@ -1,27 +1,27 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "AWS access keys with root permissions were compromised and misused",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
           "validated": true
         }
       ]
@@ -126,7 +126,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker harvested the exposed AWS access keys from the publicly served JavaScript file and used them to authenticate to the TinaCloud AWS environment with root-level permissions, beginning unauthorized activity on 13th December 2024.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "AWS access keys with root permissions were compromised and misused",
         "evidence_sources": [
           "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"

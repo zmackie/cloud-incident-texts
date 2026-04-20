@@ -573,6 +573,110 @@ def _build_fallback_attack_chain(
     return chain
 
 
+def _realign_tactics_used(analysis: dict, attack_data: dict) -> dict:
+    """Move every technique under its canonical MITRE tactic.
+
+    The model occasionally nests a technique under a tactic that isn't in its
+    MITRE `tactic_ids` list (e.g. T1530 "Data from Cloud Storage" under
+    Exfiltration rather than Collection). We regroup `tactics_used` using the
+    canonical mapping and drop any resulting empty tactic buckets. When the
+    technique has multiple valid tactics, we keep the current tactic if it's
+    canonical; otherwise we pick the earliest tactic in kill-chain order,
+    preferring tactics the analysis already uses.
+    """
+    from collections import OrderedDict
+
+    technique_lookup = attack_data.get("techniques", {})
+    tactic_lookup = attack_data.get("tactics", {})
+    rank = {tid: idx for idx, tid in enumerate(TACTIC_EXECUTION_ORDER)}
+
+    def _canonical_tactic_ids(tid: str) -> list[str]:
+        meta = technique_lookup.get(tid) or (
+            technique_lookup.get(tid.split(".")[0]) if "." in tid else None
+        )
+        return list(meta.get("tactic_ids", [])) if meta else []
+
+    # Collect (current_tactic, technique) pairs.
+    flat: list[tuple[str, dict]] = []
+    for tactic in analysis.get("tactics_used", []) or []:
+        if not isinstance(tactic, dict):
+            continue
+        current = str(tactic.get("tactic_id", "")).strip().upper()
+        for tech in tactic.get("techniques", []) or []:
+            if not isinstance(tech, dict):
+                continue
+            tech = dict(tech)
+            tech["technique_id"] = _normalize_technique_id(
+                str(tech.get("technique_id", ""))
+            )
+            if not tech["technique_id"]:
+                continue
+            flat.append((current, tech))
+
+    in_use = {c for c, _ in flat}
+
+    buckets: "OrderedDict[str, OrderedDict[str, dict]]" = OrderedDict()
+    for current, tech in flat:
+        tid = tech["technique_id"]
+        canonical_list = _canonical_tactic_ids(tid)
+
+        if not canonical_list:
+            target = current or "UNKNOWN"
+        elif current in canonical_list:
+            target = current
+        else:
+            reused = [t for t in canonical_list if t in in_use]
+            pool = reused or canonical_list
+            target = sorted(pool, key=lambda t: rank.get(t, 99))[0]
+
+        canonical_name = technique_lookup.get(tid, {}).get("name")
+        if canonical_name:
+            tech["technique_name"] = canonical_name
+
+        group = buckets.setdefault(target, OrderedDict())
+        if tid in group:
+            if not group[tid].get("evidence_quote") and tech.get("evidence_quote"):
+                group[tid]["evidence_quote"] = tech["evidence_quote"]
+            continue
+        group[tid] = tech
+
+    new_tactics_used = []
+    for tactic_id in sorted(buckets.keys(), key=lambda t: rank.get(t, 99)):
+        new_tactics_used.append({
+            "tactic_id": tactic_id,
+            "tactic_name": tactic_lookup.get(tactic_id, {}).get("name") or tactic_id,
+            "techniques": list(buckets[tactic_id].values()),
+        })
+    analysis["tactics_used"] = new_tactics_used
+
+    # Propagate canonical tactic into attack_chain_graph nodes.
+    tid_to_tactic = {
+        tech["technique_id"]: tactic["tactic_id"]
+        for tactic in new_tactics_used
+        for tech in tactic["techniques"]
+    }
+    graph = analysis.get("attack_chain_graph")
+    if isinstance(graph, dict) and isinstance(graph.get("nodes"), list):
+        for node in graph["nodes"]:
+            if not isinstance(node, dict):
+                continue
+            tid = _normalize_technique_id(str(node.get("technique_id", "")))
+            if not tid:
+                continue
+            canonical_list = _canonical_tactic_ids(tid)
+            if tid in tid_to_tactic:
+                node["tactic_id"] = tid_to_tactic[tid]
+            elif canonical_list and node.get("tactic_id") not in canonical_list:
+                reused = [t for t in canonical_list if t in tid_to_tactic.values()]
+                pool = reused or canonical_list
+                node["tactic_id"] = sorted(pool, key=lambda t: rank.get(t, 99))[0]
+            canonical_name = technique_lookup.get(tid, {}).get("name")
+            if canonical_name:
+                node["technique_name"] = canonical_name
+
+    return analysis
+
+
 def _validate_techniques(analysis: dict, known_ids: set[str]) -> dict:
     """Mark unknown technique IDs as validated=False."""
     for tactic in analysis.get("tactics_used", []):
@@ -603,6 +707,7 @@ def _normalize_analysis(
     source_urls = _load_incident_source_urls(incident_dir)
     known_ids = set(attack_data.get("techniques", {}).keys())
 
+    analysis = _realign_tactics_used(analysis, attack_data)
     analysis = _validate_techniques(analysis, known_ids)
     if not analysis.get("attack_chain"):
         analysis["attack_chain"] = _build_fallback_attack_chain(analysis, attack_data, source_urls)

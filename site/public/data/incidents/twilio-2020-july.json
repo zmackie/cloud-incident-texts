@@ -1,6 +1,20 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_id": "T1608.004",
+          "technique_name": "Stage Capabilities: Drive-by Target",
+          "subtechnique_id": "T1608.004",
+          "inferred": false,
+          "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -89,20 +103,6 @@
           "inferred": true,
           "evidence_quote": "we believe that this attack was designed to serve malicious advertising to users on mobile devices",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1608.004",
-          "technique_name": "Stage Capabilities: Drive-by Target",
-          "subtechnique_id": "T1608.004",
-          "inferred": false,
-          "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
-          "validated": false
         }
       ]
     }
@@ -235,7 +235,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "Attacker used the TOR anonymizing network to obscure their identity when uploading the malicious file to the S3 bucket.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
@@ -249,7 +249,7 @@
         "technique_id": "T1565.001",
         "technique_name": "Stored Data Manipulation",
         "description": "Attacker overwrote the legitimate taskrouter.min.js (v1.20) in the S3 bucket with a maliciously modified version containing injected Magecart JavaScript code.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
@@ -264,7 +264,7 @@
         "technique_id": "T1059.007",
         "technique_name": "Command and Scripting Interpreter: JavaScript",
         "description": "The injected JavaScript set a tracking cookie (jqueryapi1oad) in victims' browsers and beaconed to an attacker-controlled URL, then loaded a secondary malicious script from a .tk domain targeting mobile device users.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content.",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
@@ -276,7 +276,7 @@
         "technique_id": "T1185",
         "technique_name": "Browser Session Hijacking",
         "description": "The second-stage Magecart script redirected mobile users to malicious advertising sites, suppressed browser back-button navigation, and opened transparent new targets \u2014 consistent with malvertising and potential data harvesting.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently. This script also specifically attempts to gather data about the size of the user's touchscreen.",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"

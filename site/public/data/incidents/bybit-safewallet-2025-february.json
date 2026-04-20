@@ -65,7 +65,7 @@
       "techniques": [
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": true,
           "evidence_quote": null,
           "validated": true
@@ -119,19 +119,6 @@
       ]
     },
     {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1657",
-          "technique_name": "Financial Theft",
-          "inferred": false,
-          "evidence_quote": "$1.5 Billion dollars stolen",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0010",
       "tactic_name": "Exfiltration",
       "techniques": [
@@ -141,6 +128,19 @@
           "inferred": true,
           "evidence_quote": "Malicious JavaScript exfiltrated signing data/transaction details to attacker-controlled infrastructure",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": false,
+          "evidence_quote": "$1.5 Billion dollars stolen",
+          "validated": true
         }
       ]
     }
@@ -300,7 +300,7 @@
         "technique_id": "T1195.002",
         "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
         "description": "The attacker wrote malicious JavaScript to the Safe{Wallet} S3 bucket, poisoning the frontend JavaScript bundle served to all users of the Safe{Wallet} web application, including Bybit's operators.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "Escalation Vectors: Malicious JavaScript via S3 bucket write access",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
@@ -315,7 +315,7 @@
         "technique_id": "T1059.007",
         "technique_name": "Command and Scripting Interpreter: JavaScript",
         "description": "The malicious JavaScript executed in the browsers of Bybit signers when they loaded the Safe{Wallet} interface, enabling the attacker to intercept and manipulate transaction signing operations in real time.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "Malicious JavaScript via S3 bucket write access ... $1.5 Billion dollars stolen",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
@@ -329,7 +329,7 @@
         "technique_id": "T1185",
         "technique_name": "Browser Session Hijacking",
         "description": "The injected JavaScript silently manipulated transaction parameters (destination address and amounts) presented to Bybit signers during the signing ceremony, causing signers to unknowingly approve a fraudulent transaction transferring ~$1.5B in assets to attacker-controlled wallets.",
-        "tactic_id": "",
+        "tactic_id": "TA0009",
         "evidence_quote": "Impact: $1.5 Billion dollars stolen",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"

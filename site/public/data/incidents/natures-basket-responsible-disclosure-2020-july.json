@@ -14,14 +14,27 @@
       ]
     },
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
+          "technique_id": "T1136.003",
+          "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
+          "evidence_quote": "An audit user account was set-up and access to the console was verified.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
           "validated": true
         }
       ]
@@ -32,7 +45,7 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Server backend code -> Hardcoded AWS keys in configuration file",
           "validated": true
@@ -53,27 +66,14 @@
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "An audit user account was set-up and access to the console was verified.",
+          "evidence_quote": "gnbdevcdn bucket was found to be world readable. A quick search revealed hardcoded credentials and AWS access keys",
           "validated": true
         }
       ]
@@ -185,7 +185,7 @@
         "technique_id": "T1596.003",
         "technique_name": "Search Open Websites/Domains: Code Repositories",
         "description": "Attacker used Google dorks to discover the publicly exposed 'gnbdevcdn' S3 bucket belonging to Nature's Basket.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "Google dorks revealed Natures basket's 'gnbdevcdn' open bucket",
         "evidence_sources": [
           "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"
@@ -242,7 +242,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker leveraged a second set of hardcoded credentials which turned out to belong to the AWS root account, achieving full account takeover.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "Second gathered credentials found with root user access: GotRoot!!",
         "evidence_sources": [
           "https://web.archive.org/web/20200825004529/https://medium.com/@gchib/naturesbasket-aws-root-account-takeover-e4aa5c5e95e1"

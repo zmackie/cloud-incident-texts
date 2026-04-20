@@ -15,6 +15,34 @@
       ]
     },
     {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": true,
+          "evidence_quote": "From 3 pm, when his termination meeting began, to 10:30 am, the next morning, First Republic neglected to disable Brody's VPN access.",
+          "subtechnique_id": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.003",
+          "technique_name": "Local Accounts",
+          "inferred": false,
+          "evidence_quote": "used a Linux administrator account to impersonate another employee",
+          "subtechnique_id": "T1078.003",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0005",
       "tactic_name": "Defense Evasion",
       "techniques": [
@@ -28,7 +56,7 @@
         },
         {
           "technique_id": "T1078.003",
-          "technique_name": "Valid Accounts: Local Accounts",
+          "technique_name": "Local Accounts",
           "inferred": false,
           "evidence_quote": "used a Linux administrator account to impersonate another employee",
           "subtechnique_id": "T1078.003",
@@ -37,30 +65,30 @@
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1078.003",
-          "technique_name": "Valid Accounts: Local Accounts",
-          "inferred": false,
-          "evidence_quote": "used a Linux administrator account to impersonate another employee",
-          "subtechnique_id": "T1078.003",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
           "inferred": true,
-          "evidence_quote": "From 3 pm, when his termination meeting began, to 10:30 am, the next morning, First Republic neglected to disable Brody's VPN access.",
+          "evidence_quote": "Logged into a Linux jump box",
+          "subtechnique_id": "T1021.004",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1025",
+          "technique_name": "Data from Removable Media",
+          "inferred": true,
+          "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
           "subtechnique_id": null,
-          "validated": true
+          "validated": false
         }
       ]
     },
@@ -99,34 +127,6 @@
           "evidence_quote": "broke the Ansible Tower",
           "subtechnique_id": null,
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1021.004",
-          "technique_name": "Remote Services: SSH",
-          "inferred": true,
-          "evidence_quote": "Logged into a Linux jump box",
-          "subtechnique_id": "T1021.004",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1025",
-          "technique_name": "Data from Removable Media",
-          "inferred": true,
-          "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
-          "subtechnique_id": null,
-          "validated": false
         }
       ]
     }
@@ -263,7 +263,7 @@
         "technique_id": "T1025",
         "technique_name": "Data from Removable Media",
         "description": "Nine days before termination, Brody connected two USB sticks to his company-issued PC, likely staging data or tools for later use.",
-        "tactic_id": "",
+        "tactic_id": "TA0009",
         "evidence_quote": "Brody plugs in two USB Sticks to his company-issued PC",
         "evidence_sources": [
           "https://www.breaches.cloud/incidents/first-republic/"
@@ -275,7 +275,7 @@
         "technique_id": "T1078.002",
         "technique_name": "Valid Accounts: Domain Accounts",
         "description": "After being terminated at 3pm, Brody used his still-active corporate VPN credentials and MFA to re-authenticate that evening from his retained company Macbook.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "Brody signs into First Republic VPN using MFA.",
         "evidence_sources": [
           "https://www.breaches.cloud/incidents/first-republic/"
@@ -287,7 +287,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "Once on the VPN, Brody connected to a Linux jump box to gain an internal network foothold.",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "Logged into a Linux jump box",
         "evidence_sources": [
           "https://www.breaches.cloud/incidents/first-republic/"
@@ -299,7 +299,7 @@
         "technique_id": "T1070.002",
         "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
         "description": "Brody overwrote system logs on the Linux jump box to cover his tracks.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "Overwrote system logs",
         "evidence_sources": [
           "https://www.breaches.cloud/incidents/first-republic/"

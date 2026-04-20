@@ -10,13 +10,6 @@
           "inferred": false,
           "evidence_quote": "The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability allowed attackers to send HTTP requests to hosts behind the firewall.",
           "validated": true
-        },
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": false,
-          "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
-          "validated": true
         }
       ]
     },
@@ -46,7 +39,7 @@
       "techniques": [
         {
           "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
           "validated": true
@@ -58,17 +51,30 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials in Files",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
+          "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
           "validated": true
         },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
+          "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
           "validated": true
         }
       ]
@@ -92,7 +98,7 @@
       "techniques": [
         {
           "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "Control plane \u2192 data plane: The threat actor enumerated and viewed all the VM instances' user data. A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
           "validated": true
@@ -416,7 +422,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "A cloud access key found hard-coded in a CI/CD automation script granted the attacker administrator-level permissions, completing privilege escalation to full cloud administrator.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
         "evidence_sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
@@ -442,7 +448,7 @@
         "technique_id": "T1610",
         "technique_name": "Deploy Container",
         "description": "Using administrator-level credentials and CloudFormation, the attacker deployed hundreds of GPU-based VM instances across multiple regions to conduct large-scale cryptomining.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0002",
         "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
         "evidence_sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"

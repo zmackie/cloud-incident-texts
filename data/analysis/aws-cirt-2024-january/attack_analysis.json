@@ -14,25 +14,11 @@
         },
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
           "inferred": true,
           "evidence_quote": "Federated access to AWS environment",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "subtechnique_id": "T1552.004",
-          "inferred": false,
-          "evidence_quote": "Root Cause: Third-party IdP compromise",
-          "validated": false
         }
       ]
     },
@@ -46,6 +32,20 @@
           "subtechnique_id": "T1484.002",
           "inferred": true,
           "evidence_quote": "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "subtechnique_id": "T1552.004",
+          "inferred": false,
+          "evidence_quote": "Root Cause: Third-party IdP compromise",
           "validated": false
         }
       ]
@@ -190,7 +190,7 @@
         "technique_id": "T1552.004",
         "technique_name": "Unsecured Credentials: Private Keys",
         "description": "Attacker compromised a third-party Identity Provider (IdP), obtaining its signing keys or credentials used for federated authentication into the target AWS environment.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "Root Cause: Third-party IdP compromise",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
@@ -221,7 +221,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker used the federated identity to assume valid IAM roles within the AWS environment, generating temporary security credentials via AWS STS to act as a legitimate user.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "Federated access to AWS environment",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
@@ -236,7 +236,7 @@
         "technique_id": "T1484.002",
         "technique_name": "Domain or Tenant Policy Modification: Trust Modification",
         "description": "The attacker leveraged or potentially modified the federated IdP trust configuration within AWS IAM to escalate privileges and broaden access across the environment.",
-        "tactic_id": "",
+        "tactic_id": "TA0004",
         "evidence_quote": "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"

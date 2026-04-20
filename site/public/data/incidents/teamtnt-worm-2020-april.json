@@ -15,64 +15,6 @@
       ]
     },
     {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1046",
-          "technique_name": "Network Service Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
-          "validated": true
-        },
-        {
-          "technique_id": "T1082",
-          "technique_name": "System Information Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "The AWS CLI stores credentials in an unencrypted file at ~/.aws/credentials... on execution it uploads the default AWS .credentials and .config files to the attackers server",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.004",
-          "inferred": false,
-          "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1041",
-          "technique_name": "Exfiltration Over C2 Channel",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
@@ -82,14 +24,6 @@
           "subtechnique_id": "T1098.004",
           "inferred": false,
           "evidence_quote": "touch /root/.ssh/authorized_keys 2>/dev/null 1>/dev/null",
-          "validated": true
-        },
-        {
-          "technique_id": "T1610",
-          "technique_name": "Deploy Container",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
           "validated": true
         },
         {
@@ -106,6 +40,14 @@
       "tactic_id": "TA0005",
       "tactic_name": "Defense Evasion",
       "techniques": [
+        {
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
+          "validated": true
+        },
         {
           "technique_id": "T1070",
           "technique_name": "Indicator Removal",
@@ -133,6 +75,56 @@
       ]
     },
     {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The AWS CLI stores credentials in an unencrypted file at ~/.aws/credentials... on execution it uploads the default AWS .credentials and .config files to the attackers server",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "The worm also includes code to scan for open Docker API's using masscan",
+          "validated": true
+        },
+        {
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery",
+          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": null,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "subtechnique_id": "T1021.004",
+          "inferred": false,
+          "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0011",
       "tactic_name": "Command and Control",
       "techniques": [
@@ -155,24 +147,16 @@
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1021",
-          "technique_name": "Remote Services",
-          "subtechnique_id": "T1021.004",
-          "inferred": false,
-          "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
-          "validated": true
-        },
-        {
-          "technique_id": "T1610",
-          "technique_name": "Deploy Container",
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
           "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "scan for open Docker API's using masscan, then spin up docker images and install itself",
-          "validated": true
+          "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
+          "validated": false
         }
       ]
     },
@@ -440,7 +424,7 @@
         "technique_id": "T1552.004",
         "technique_name": "Unsecured Credentials: Private Keys",
         "description": "The worm also harvests SSH private keys and public keys from the compromised host to facilitate lateral movement.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "userfile=@/root/.ssh/id_ed25519.pub",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
@@ -452,7 +436,7 @@
         "technique_id": "T1041",
         "technique_name": "Exfiltration Over C2 Channel",
         "description": "Stolen AWS credentials and SSH keys are exfiltrated via curl over HTTP to the attacker-controlled server sayhi.bplaced[.]net.",
-        "tactic_id": "",
+        "tactic_id": "TA0010",
         "evidence_quote": "Curl is used to send the AWS credentials to TeamTNT's server, which responds with the message 'THX'",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
@@ -476,7 +460,7 @@
         "technique_id": "T1014",
         "technique_name": "Rootkit",
         "description": "The Diamorphine kernel rootkit is deployed to hide malicious processes and files from defenders on the compromised host.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "Diamorphine Rootkit",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
@@ -488,7 +472,7 @@
         "technique_id": "T1219",
         "technique_name": "Remote Access Software",
         "description": "The Tsunami IRC backdoor is installed to provide persistent C2 communication channel back to the attacker.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "Tsunami IRC Backdoor",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
@@ -500,7 +484,7 @@
         "technique_id": "T1070.002",
         "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
         "description": "A log cleaning tool is deployed to remove forensic evidence of the intrusion from the compromised host.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "A log cleaning tool",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"
@@ -512,7 +496,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "punk.py SSH post-exploitation tool is used to move laterally across other reachable systems using harvested SSH credentials.",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "punk.py \u2013 A SSH post-exploitation tool",
         "evidence_sources": [
           "https://web.archive.org/web/20210607223609/https://www.cadosecurity.com/post/team-tnt-the-first-crypto-mining-worm-to-steal-aws-credentials/"

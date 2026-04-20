@@ -15,12 +15,76 @@
       ]
     },
     {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "subtechnique_id": "T1059.004",
+          "inferred": true,
+          "evidence_quote": "CVE-2023-22952 was published by NIST National Vulnerability Database on Jan. 11, 2023... This vulnerability allows threat actors to inject custom PHP code through the SugarCRM email templates module due to missing input validation.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "the threat actors proceeded to create new EC2 instances... ImportKeyPair command to import their public key pair that they created with a third-party tool.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "the threat actors did not attempt to create new IAM users like we have seen in other cases. They instead opted for attempting to login as the Root user.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "subtechnique_id": "T1578.002",
+          "inferred": false,
+          "evidence_quote": "The threat actors created EC2 instances in the same regions that the organizations used for the rest of their normal infrastructure. They also switched regions to a geographically new area... and created a new security group that allowed port 22 SSH traffic from any IP address.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1578",
+          "technique_name": "Modify Cloud Compute Infrastructure",
+          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "stopping these resources also avoids incurring extra costs in the organization's account... threat actors stopping the resources they created minimizes costs and helps prevent triggering a cost alert.",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "subtechnique_id": "T1552.001",
           "inferred": false,
           "evidence_quote": "Once the threat actors gained access to the EC2 instances, they successfully compromised long-term AWS access keys that existed on the host... these plain-text credentials existed on the compromised hosts, which allowed the threat actors to steal them.",
@@ -42,7 +106,7 @@
         },
         {
           "technique_id": "T1087.004",
-          "technique_name": "Account Discovery: Cloud Account",
+          "technique_name": "Cloud Account",
           "subtechnique_id": "T1087.004",
           "inferred": false,
           "evidence_quote": "Before the threat actors performed any scanning activity, they first ran the command GetCallerIdentity. GetCallerIdentity is the AWS version of whoami.",
@@ -64,25 +128,11 @@
       "techniques": [
         {
           "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_name": "Application Access Token",
           "subtechnique_id": "T1550.001",
           "inferred": false,
           "evidence_quote": "the threat actors took advantage of misconfigurations to expand their access after initial compromise... allowed the threat actors to steal them and start using the access keys for discovery activity.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1059.004",
-          "technique_name": "Command and Scripting Interpreter: Unix Shell",
-          "subtechnique_id": "T1059.004",
-          "inferred": true,
-          "evidence_quote": "CVE-2023-22952 was published by NIST National Vulnerability Database on Jan. 11, 2023... This vulnerability allows threat actors to inject custom PHP code through the SugarCRM email templates module due to missing input validation.",
-          "validated": false
         }
       ]
     },
@@ -96,64 +146,6 @@
           "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "the attackers modified pre-existing security group rules... creating brand new databases from the snapshots, making them public and attaching the modified security groups. Finally, they modified the newly created RDS databases by changing the master user password, which would allow them to log in to the databases.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "the threat actors did not attempt to create new IAM users like we have seen in other cases. They instead opted for attempting to login as the Root user.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
-          "inferred": false,
-          "evidence_quote": "The threat actors created EC2 instances in the same regions that the organizations used for the rest of their normal infrastructure. They also switched regions to a geographically new area... and created a new security group that allowed port 22 SSH traffic from any IP address.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the threat actors proceeded to create new EC2 instances... ImportKeyPair command to import their public key pair that they created with a third-party tool.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
-          "inferred": false,
-          "evidence_quote": "the threat actors deployed resources in non-standard regions... they also turned the EC2 instances on and off throughout their time in the environments.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1578",
-          "technique_name": "Modify Cloud Compute Infrastructure",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "stopping these resources also avoids incurring extra costs in the organization's account... threat actors stopping the resources they created minimizes costs and helps prevent triggering a cost alert.",
           "validated": true
         }
       ]
@@ -470,7 +462,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using master account email and ID obtained via Organizations API calls, attackers attempted to log in as the AWS Root user to escalate privileges. The attempts failed and were visible in CloudTrail logs.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "Despite using information they obtained from the Organizations calls made during the discovery phase, the threat actors still failed to successfully log in as the Root user.",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/sugarcrm-cloud-incident-black-hat/"

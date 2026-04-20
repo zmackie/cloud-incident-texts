@@ -1,15 +1,28 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
+          "technique_id": "T1136.003",
+          "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "exposed long-term credentials / a specific access key was used which was publicly exposed",
-          "validated": false
+          "evidence_quote": "Escalation Vectors: CreateUser",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
+          "inferred": true,
+          "evidence_quote": "I didn't think you could disable versioning on a bucket once enabled",
+          "validated": true
         }
       ]
     },
@@ -21,7 +34,7 @@
           "technique_id": "T1552.004",
           "technique_name": "Unsecured Credentials: Private Keys",
           "inferred": false,
-          "evidence_quote": "open-source analysis we were able to determine that a specific access key was used which was publicly exposed",
+          "evidence_quote": "exposed long-term credentials / a specific access key was used which was publicly exposed",
           "validated": false
         }
       ]
@@ -40,27 +53,14 @@
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Escalation Vectors: CreateUser",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Escalation Vectors: CreateUser",
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "data exfiltration and deletion with ransom note",
           "validated": true
         }
       ]
@@ -88,32 +88,6 @@
           "technique_name": "Service Stop",
           "inferred": true,
           "evidence_quote": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "data exfiltration and deletion with ransom note",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.007",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "inferred": true,
-          "evidence_quote": "I didn't think you could disable versioning on a bucket once enabled",
           "validated": true
         }
       ]
@@ -224,7 +198,7 @@
         "technique_id": "T1552.004",
         "technique_name": "Unsecured Credentials: Private Keys",
         "description": "Attacker obtained a publicly exposed long-term AWS IAM access key through open-source analysis (e.g., GitHub, public repository, or similar public exposure).",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "open-source analysis we were able to determine that a specific access key was used which was publicly exposed",
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"

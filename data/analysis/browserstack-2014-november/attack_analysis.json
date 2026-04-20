@@ -15,23 +15,15 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
+          "technique_id": "T1136.003",
+          "technique_name": "Cloud Account",
+          "subtechnique_id": "T1136.003",
           "inferred": false,
-          "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files (DB password in config file)",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
+          "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
           "validated": true
         }
       ]
@@ -42,22 +34,8 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "subtechnique_id": "T1136.003",
           "inferred": false,
           "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
           "validated": true
@@ -70,10 +48,24 @@
       "techniques": [
         {
           "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "technique_name": "Create Cloud Instance",
           "subtechnique_id": "T1578.002",
           "inferred": false,
           "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
           "validated": true
         }
       ]
@@ -98,25 +90,11 @@
       "techniques": [
         {
           "technique_id": "T1021.007",
-          "technique_name": "Remote Services: Cloud Services",
+          "technique_name": "Cloud Services",
           "subtechnique_id": "T1021.007",
           "inferred": true,
           "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565.001",
-          "technique_name": "Data Manipulation: Stored Data Manipulation",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
-          "validated": false
         }
       ]
     },
@@ -143,6 +121,20 @@
       ]
     },
     {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1071.003",
+          "technique_name": "Application Layer Protocol: Mail Protocols",
+          "subtechnique_id": "T1071.003",
+          "inferred": false,
+          "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0010",
       "tactic_name": "Exfiltration",
       "techniques": [
@@ -157,15 +149,15 @@
       ]
     },
     {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1071.003",
-          "technique_name": "Application Layer Protocol: Mail Protocols",
-          "subtechnique_id": "T1071.003",
+          "technique_id": "T1565.001",
+          "technique_name": "Data Manipulation: Stored Data Manipulation",
+          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
+          "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
           "validated": false
         }
       ]
@@ -471,7 +463,7 @@
         "technique_id": "T1071.003",
         "technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
         "description": "Using the exfiltrated email addresses and SES credentials found during the intrusion, the attacker sent a fraudulent email to approximately 5,000 BrowserStack users claiming the service was shutting down.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
         "evidence_sources": [
           "http://archive.today/rsmmS"

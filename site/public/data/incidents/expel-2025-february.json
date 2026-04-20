@@ -21,6 +21,32 @@
       ]
     },
     {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.005",
+          "technique_name": "Account Manipulation: Device Registration",
+          "inferred": true,
+          "evidence_quote": "In many situations, attackers will attempt to add MFA devices to maintain an account connection even after the session has ended.",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1548",
+          "technique_name": "Abuse Elevation Control Mechanism",
+          "inferred": false,
+          "evidence_quote": "One compromised account was then used to authenticate access to the organization's AWS console and assume an engineering role.",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
@@ -48,19 +74,6 @@
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism (Assume AWS Role)",
-          "inferred": false,
-          "evidence_quote": "One compromised account was then used to authenticate access to the organization's AWS console and assume an engineering role.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
@@ -70,19 +83,6 @@
           "inferred": false,
           "evidence_quote": "The attacker attempted AWS discovery before being locked out of the account.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098.005",
-          "technique_name": "Account Manipulation: Device Registration",
-          "inferred": true,
-          "evidence_quote": "In many situations, attackers will attempt to add MFA devices to maintain an account connection even after the session has ended.",
-          "validated": false
         }
       ]
     },
@@ -220,7 +220,7 @@
         "technique_id": "T1566.004",
         "technique_name": "Phishing: Spearphishing via Service (Smishing / PhaaS AiTM)",
         "description": "Scattered Spider (The Com) actors launched a phishing/smishing campaign targeting employees. A PhaaS platform deployed an adversary-in-the-middle proxy page that impersonated the organization's legitimate Okta login portal, capturing credentials, MFA/OTP tokens, and session cookies in real time.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "During a 2024 phishing/smishing campaign, Expel confirmed Scattered Spider actors accessed multiple applications via compromised user accounts while using Okta SSO.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
@@ -232,7 +232,7 @@
         "technique_id": "T1557",
         "technique_name": "Adversary-in-the-Middle (Session Cookie Hijacking to Bypass MFA)",
         "description": "The PhaaS proxy page intercepted the victim's Okta session cookies after successful authentication, allowing the attacker to replay the authenticated session and bypass MFA entirely without needing the victim's password or OTP again.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "The proxying page intercepts session cookies, which can then be used by an attacker to access the account and bypass MFA.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"

@@ -1,45 +1,19 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1069.003",
-          "technique_name": "Permission Groups Discovery: Cloud Groups",
-          "inferred": false,
-          "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
         {
           "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "technique_name": "Additional Cloud Credentials",
           "inferred": false,
           "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user.",
           "validated": true
         },
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users with accompanying long-term access keys",
           "validated": true
@@ -52,14 +26,14 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "the attacker issued an API call to UpdateLoginProfile to change the AWS console password for the arn:aws:iam::123456789012:user/comp_user1 account. Authenticated into the AWS console using the arn:aws:iam::123456789012:user/comp_user1 account.",
           "validated": true
         },
         {
           "technique_id": "T1098.003",
-          "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "technique_name": "Additional Cloud Roles",
           "inferred": false,
           "evidence_quote": "AttachUserPolicy attaches a specified policy to a specified user... the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
           "validated": true
@@ -72,9 +46,35 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1069.003",
+          "technique_name": "Cloud Groups",
+          "inferred": false,
+          "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
           "validated": true
         }
       ]
@@ -336,7 +336,7 @@
         "technique_id": "T1098.003",
         "technique_name": "Additional Cloud Roles",
         "description": "The attacker called AttachUserPolicy to attach the AWS-managed AdministratorAccess policy to one of the newly created IAM users, granting full administrative privileges.",
-        "tactic_id": "TA0003",
+        "tactic_id": "TA0004",
         "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"

@@ -6,10 +6,23 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": true,
           "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
           "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1090.003",
+          "technique_name": "Proxy: Multi-hop Proxy",
+          "inferred": false,
+          "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
+          "validated": false
         }
       ]
     },
@@ -30,19 +43,6 @@
           "inferred": false,
           "evidence_quote": "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
-          "inferred": false,
-          "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
-          "validated": false
         }
       ]
     },
@@ -164,7 +164,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker obtained and used leaked long-term AWS IAM access keys (AKIA prefix) to authenticate to victim AWS environments. The automated nature and key type strongly suggest stolen/leaked static credentials.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
@@ -178,7 +178,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "Attacker routed malicious API calls through a combination of residential proxies (Vodafone UK mobile network) and the Cloudflare WARP VPN client to obscure their true origin and appear less suspicious.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"

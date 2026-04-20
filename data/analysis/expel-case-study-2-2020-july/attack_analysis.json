@@ -6,7 +6,7 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "subtechnique_id": "T1078.004",
           "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s to mine Monero.",
@@ -42,7 +42,7 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "subtechnique_id": "T1078.004",
           "evidence_quote": "For reference, below are the MITRE ATT&CK Enterprise and Cloud Tactics observed: Persistence | Valid Accounts, Redundant Access",
@@ -59,6 +59,20 @@
       ]
     },
     {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
+          "subtechnique_id": "T1078.004",
+          "evidence_quote": "The root AWS access key was potentially compromised.",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
@@ -68,20 +82,6 @@
           "inferred": false,
           "subtechnique_id": null,
           "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "The root AWS access key was potentially compromised.",
           "validated": true
         }
       ]
@@ -359,7 +359,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "Attacker SSHed into the newly spun-up EC2 instances using the imported SSH key pairs to install CoinMiner malware.",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
@@ -401,7 +401,7 @@
         "technique_id": "T1571",
         "technique_name": "Non-Standard Port",
         "description": "Miner C2 communications used TCP port 7777 (non-standard) to connect to the monerohash[.]com mining pool, evading standard port-based detection.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "monerohash[.]com on TCP port 7777",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"

@@ -6,7 +6,7 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "account DevOps1-bpvbp had been used to create an unknown account DevOps3 on 26 Oct 2022 at 21:29:03 UTC",
           "validated": true
@@ -39,7 +39,7 @@
       "techniques": [
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "A new super user account was found and no one recognised it which triggered an incident... the first event we find related to the user is the CreateUser event",
           "validated": true
@@ -60,6 +60,19 @@
       ]
     },
     {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "The first command in the code box above, shows the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id.",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
@@ -68,13 +81,6 @@
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
           "evidence_quote": "the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id. The VPC Id is then used in conjunction with the aws command line tool to provide detailed information of the security group that the instance belongs to, in particular looking for port 22 entries",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": false,
-          "evidence_quote": "The first command in the code box above, shows the Instance MetaData Service (IMDS) being used to extract information regarding the Virtual Private Cloud (VPC) Id.",
           "validated": true
         },
         {
@@ -307,7 +313,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used compromised IAM account DevOps1-bpvbp (no MFA enabled) to authenticate to the AWS Management Console from IP 185.195.232.111",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "We can see that this user did not have MFA enabled. We can also see the source IP address from where the user logged in on the console.",
         "evidence_sources": [
           "https://awstip.com/responding-to-an-attack-in-aws-9048a1a551ac"
@@ -352,7 +358,7 @@
         "technique_id": "T1548.003",
         "technique_name": "Abuse Elevation Control Mechanism: Sudo and Sudo Caching",
         "description": "On EC2 instance i-08e56d6b6c0439daf, the attacker (operating as ssm-user) used sudo to switch to the ec2-user account, initiating a new bash session under process ID 32627",
-        "tactic_id": "",
+        "tactic_id": "TA0004",
         "evidence_quote": "the ssm-user switched user to the default Amazon Linux2 account ec2-user which initiated a new bash session... log evidence that indicates that sudo command was executed to switch user to ec2-user during the attacker's session",
         "evidence_sources": [
           "https://awstip.com/responding-to-an-attack-in-aws-dae857806aa7"
@@ -397,7 +403,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "Attacker used SSH from i-08e56d6b6c0439daf to laterally move to EC2 instance i-020e722274233c7f2 (10.0.8.25), with known_hosts file access confirming SSH activity",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "The ec2-user known-hosts file was accessed and... the ssh commands are linked to the attacker's session... connected to another host i-020e722274233c7f2 for additional suspicious activity",
         "evidence_sources": [
           "https://awstip.com/responding-to-an-attack-in-aws-dae857806aa7"
@@ -411,7 +417,7 @@
         "technique_id": "T1005",
         "technique_name": "Data from Local System",
         "description": "On the second EC2 instance i-020e722274233c7f2, the attacker queried the PostgreSQL database's staff table and dumped the results to /tmp/staff.txt",
-        "tactic_id": "",
+        "tactic_id": "TA0009",
         "evidence_quote": "the attacker was very much interested in information from the staff table in the postgres database... after the last command was executed /tmp/staff.txt was created",
         "evidence_sources": [
           "https://awstip.com/responding-to-an-attack-in-aws-dae857806aa7"
@@ -425,7 +431,7 @@
         "technique_id": "T1074.001",
         "technique_name": "Data Staged: Local Data Staging",
         "description": "Attacker used SCP to copy staff.txt from i-020e722274233c7f2 back to i-08e56d6b6c0439daf, consolidating the stolen data on the initial beachhead instance",
-        "tactic_id": "",
+        "tactic_id": "TA0009",
         "evidence_quote": "copied the database dump file staff.txt file from i-020e722274233c7f2 to i-08e56d6b6c0439daf... in our timeline we can see the file staff.txt was created during the attacker's session which is likely to be the result of the scp command.",
         "evidence_sources": [
           "https://awstip.com/responding-to-an-attack-in-aws-dae857806aa7"

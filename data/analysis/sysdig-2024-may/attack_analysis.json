@@ -14,12 +14,32 @@
       ]
     },
     {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.008",
+          "technique_name": "Disable or Modify Cloud Logs",
+          "inferred": false,
+          "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1535",
+          "technique_name": "Unused/Unsupported Cloud Regions",
+          "inferred": false,
+          "evidence_quote": "the attackers called 'InvokeModel' only in the supported regions.",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
           "validated": true
@@ -47,47 +67,14 @@
       ]
     },
     {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "inferred": false,
-          "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1535",
-          "technique_name": "Unused/Unsupported Cloud Regions",
-          "inferred": false,
-          "evidence_quote": "the attackers called 'InvokeModel' only in the supported regions.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0008",
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
           "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_name": "Application Access Token",
           "inferred": false,
           "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "inferred": false,
-          "evidence_quote": "Attacks against LLM-based Artificial Intelligence (AI) systems... attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill.",
           "validated": true
         }
       ]
@@ -102,6 +89,19 @@
           "inferred": false,
           "evidence_quote": "Sysdig researchers discovered evidence of a reverse proxy for LLMs being used to provide access to the compromised accounts... a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models.",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "Attacks against LLM-based Artificial Intelligence (AI) systems... attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill.",
+          "validated": true
         }
       ]
     }
@@ -263,7 +263,7 @@
         "technique_id": "T1550.001",
         "technique_name": "Application Access Token",
         "description": "Attackers used the stolen IAM access key credentials to authenticate to the AWS cloud environment and begin interacting with cloud services.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers.",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
@@ -322,7 +322,7 @@
         "technique_id": "T1090",
         "technique_name": "Proxy",
         "description": "Attackers routed LLM queries through an OAI Reverse Proxy to centrally manage access to the pool of compromised cloud credentials without directly exposing them, enabling resale of LLM access to other cybercriminals.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials.",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"

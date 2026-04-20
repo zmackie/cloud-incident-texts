@@ -1,61 +1,15 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1598",
+          "technique_name": "Phishing for Information",
           "inferred": false,
-          "evidence_quote": "The attack began with a set of compromised access keys... Once they obtained the AWS access key, the attacker's first move was a simple GetCallerIdentity request (ATT&CK: T1078.004).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "They issued GetSendQuota and GetAccount calls, both intended to reveal the current state of the SES configuration and whether the account was still restricted to sandbox limits (ATT&CK: T1526).",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts \u2014 Identity Probing via GetCallerIdentity",
-          "inferred": false,
-          "evidence_quote": "The API call response revealed that the access key had 'ses-' embedded in its name, indicating it was originally provisioned with SES permissions.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Account Manipulation: Additional Cloud Roles",
-          "inferred": false,
-          "evidence_quote": "They then attempted to escalate their privileges by creating an IAM policy named ses-support-policy and attaching it to the compromised IAM user (ATT&CK: T1098.003).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "Within a span of just ten seconds, we observed a burst of PutAccountDetails requests that fanned out across all AWS regions \u2014 a clear attempt to push the SES account into production mode (ATT&CK: T1098).",
-          "validated": true
+          "evidence_quote": "The emails linked to what we assess was a credential theft site hosted at irss[.]securesusa[.]com.",
+          "validated": false
         }
       ]
     },
@@ -80,6 +34,58 @@
       ]
     },
     {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "The attack began with a set of compromised access keys... Once they obtained the AWS access key, the attacker's first move was a simple GetCallerIdentity request (ATT&CK: T1078.004).",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "Within a span of just ten seconds, we observed a burst of PutAccountDetails requests that fanned out across all AWS regions \u2014 a clear attempt to push the SES account into production mode (ATT&CK: T1098).",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1098.003",
+          "technique_name": "Additional Cloud Roles",
+          "inferred": false,
+          "evidence_quote": "They then attempted to escalate their privileges by creating an IAM policy named ses-support-policy and attaching it to the compromised IAM user (ATT&CK: T1098.003).",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "They issued GetSendQuota and GetAccount calls, both intended to reveal the current state of the SES configuration and whether the account was still restricted to sandbox limits (ATT&CK: T1526).",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0040",
       "tactic_name": "Impact",
       "techniques": [
@@ -89,19 +95,6 @@
           "inferred": false,
           "evidence_quote": "SES lets adversaries launch phishing at scale from trusted domains, shifting both financial costs and reputational damage onto the victim.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1598",
-          "technique_name": "Phishing for Information",
-          "inferred": false,
-          "evidence_quote": "The emails linked to what we assess was a credential theft site hosted at irss[.]securesusa[.]com.",
-          "validated": false
         }
       ]
     }
@@ -241,7 +234,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker obtained stolen AWS IAM access keys (likely from accidental public exposure in a code repository or developer workstation) and used them to authenticate to the victim's AWS environment.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "The attack began with a set of compromised access keys. While the exact vector remains unknown, such keys are often obtained through accidental public exposure (code repositories, misconfigured assets) or theft from a developer workstation.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"
@@ -299,7 +292,7 @@
         "technique_id": "T1098.003",
         "technique_name": "Additional Cloud Roles",
         "description": "After the support ticket attempt failed, attacker tried to escalate privileges by creating a new IAM policy named 'ses-support-policy' and attaching it to the compromised IAM user. This also failed due to insufficient permissions.",
-        "tactic_id": "TA0003",
+        "tactic_id": "TA0004",
         "evidence_quote": "They then attempted to escalate their privileges by creating an IAM policy named ses-support-policy and attaching it to the compromised IAM user (ATT&CK: T1098.003). That effort also failed due to insufficient permissions.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"
@@ -313,7 +306,7 @@
         "technique_id": "T1583.001",
         "technique_name": "Acquire Infrastructure: Domains",
         "description": "Attacker registered and controlled attacker-owned domains (managed7.com, street7news.org, street7market.net, docfilessa.com) and verified them as SES sender identities via the CreateEmailIdentity API. They also added legitimate domains with weak DMARC protections as verified identities.",
-        "tactic_id": "",
+        "tactic_id": "TA0042",
         "evidence_quote": "The attacker started by adding multiple domains as verified identities using the CreateEmailIdentity API. The domains were a mix of attacker-owned domains and legitimate domains with weak DMARC protections.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"
@@ -327,7 +320,7 @@
         "technique_id": "T1584.001",
         "technique_name": "Compromise Infrastructure: Domains",
         "description": "Attacker added legitimate third-party domains with weak DMARC protections as verified SES sender identities, enabling spoofed or on-behalf-of sending that bypasses common email security controls.",
-        "tactic_id": "",
+        "tactic_id": "TA0042",
         "evidence_quote": "legitimate domains with weak DMARC protections (which make it easier for attackers to spoof or send on behalf of the domain without being blocked by common email security controls).",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"
@@ -341,7 +334,7 @@
         "technique_id": "T1598",
         "technique_name": "Phishing for Information",
         "description": "Attacker launched a phishing campaign via SES using the verified sender identities (admin@, billing@, sales@, noreply@ prefixes). Emails impersonated tax form notifications, linking victims to a credential theft site at irss[.]securesusa[.]com hidden behind a redirect from a commercial traffic analysis service to evade detection.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "The phishing messages referenced 2024 tax forms... The emails linked to what we assess was a credential theft site hosted at irss[.]securesusa[.]com. To evade detection, the attackers concealed the site behind a redirect provided by a commercial traffic analysis service.",
         "evidence_sources": [
           "https://www.wiz.io/blog/wiz-discovers-cloud-email-abuse-campaign"

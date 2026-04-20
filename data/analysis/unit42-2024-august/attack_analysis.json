@@ -5,19 +5,39 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "the threat actors obtained AWS credentials from a sensitive file exposed on the internet. The file contained a variety of credentials, but the group specifically targeted the exposed AWS access key belonging to an identity and access management (IAM) user",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "These cloud credentials allowed the threat actors to gain access to the AWS account where this IAM user resided and perform AWS application program interface (API) calls.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.009",
+          "technique_name": "Cloud API",
+          "subtechnique_id": "T1059.009",
+          "inferred": false,
+          "evidence_quote": "the threat actor used an automated script with the AWS CLI and attempted to create new S3 buckets... All the buckets were created within ten minutes of starting the CreateBucket operations.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": false,
+          "evidence_quote": "the threat actors obtained AWS credentials from a sensitive file exposed on the internet. The file contained a variety of credentials, but the group specifically targeted the exposed AWS access key belonging to an identity and access management (IAM) user",
           "validated": true
         }
       ]
@@ -36,7 +56,7 @@
         },
         {
           "technique_id": "T1069.003",
-          "technique_name": "Permission Groups Discovery: Cloud Groups",
+          "technique_name": "Cloud Groups",
           "subtechnique_id": "T1069.003",
           "inferred": false,
           "evidence_quote": "Against the IAM service, the threat actor performed ListUsers, which returns a list of the existing users within the AWS account. Due to the limited permissions associated with the access key, the API call failed.",
@@ -45,8 +65,8 @@
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
@@ -84,20 +104,6 @@
           "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "they completed their attack by sending an extortion email to the victim organization. The note stated the group had shifted to extortion to make more money and that the victim organization had one week to pay",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1059.009",
-          "technique_name": "Command and Scripting Interpreter: Cloud API",
-          "subtechnique_id": "T1059.009",
-          "inferred": false,
-          "evidence_quote": "the threat actor used an automated script with the AWS CLI and attempted to create new S3 buckets... All the buckets were created within ten minutes of starting the CreateBucket operations.",
           "validated": true
         }
       ]
@@ -255,7 +261,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the stolen IAM access key and secret, the threat actors authenticated to the victim's AWS account and began making API calls, leveraging the AmazonS3FullAccess policy attached to the compromised IAM user.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "These cloud credentials allowed the threat actors to gain access to the AWS account where this IAM user resided and perform AWS application program interface (API) calls.",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/shinyhunters-ransomware-extortion/"

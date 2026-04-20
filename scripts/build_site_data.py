@@ -213,7 +213,7 @@ def _resolve_chain_signature(analysis: dict, attack_data: dict) -> list[dict]:
     meta_techniques = (attack_data or {}).get("techniques", {})
 
     signature = []
-    for step in analysis.get("attack_chain", []) or []:
+    for step in sorted(analysis.get("attack_chain", []) or [], key=lambda s: s.get("step", 0)):
         tech_id = step.get("technique_id") or ""
         hit = tech_index.get(tech_id)
         if hit:

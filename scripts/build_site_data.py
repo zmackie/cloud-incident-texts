@@ -186,7 +186,49 @@ def _load_article_metadata(slug: str) -> dict:
         return {}
 
 
-def build_incidents_index(analyses: list[dict]) -> list[dict]:
+def _resolve_chain_signature(analysis: dict, attack_data: dict) -> list[dict]:
+    """Tactic-ordered signature for the incidents list cards.
+
+    One entry per attack_chain step (preserves order). The tactic is
+    resolved the same way the detail page's EditorialTimeline does it:
+    prefer the explicit tactic attached to the technique in tactics_used[];
+    fall back to MITRE meta; otherwise leave empty so the card can still
+    render a neutral dot.
+    """
+    tech_index: dict[str, dict] = {}  # technique_id -> {"ta": ..., "inferred": bool}
+    for t in analysis.get("tactics_used", []) or []:
+        tid = t.get("tactic_id") or ""
+        for tech in (t.get("techniques") or []):
+            tech_id = tech.get("technique_id")
+            if not tech_id:
+                continue
+            # First tactic wins — tactics_used is authored in order, and a
+            # technique that spans multiple tactics gets its earliest one,
+            # which matches MITRE's kill-chain-ordered convention.
+            tech_index.setdefault(tech_id, {
+                "ta": tid,
+                "inferred": bool(tech.get("inferred")),
+            })
+
+    meta_techniques = (attack_data or {}).get("techniques", {})
+
+    signature = []
+    for step in sorted(analysis.get("attack_chain", []) or [], key=lambda s: s.get("step", 0)):
+        tech_id = step.get("technique_id") or ""
+        hit = tech_index.get(tech_id)
+        if hit:
+            signature.append({"ta": hit["ta"], "inferred": hit["inferred"]})
+            continue
+        meta = meta_techniques.get(tech_id) or {}
+        tactic_ids = meta.get("tactic_ids") or []
+        signature.append({
+            "ta": tactic_ids[0] if tactic_ids else "",
+            "inferred": bool(step.get("inferred")),
+        })
+    return signature
+
+
+def build_incidents_index(analyses: list[dict], attack_data: dict | None = None) -> list[dict]:
     """Lightweight per-incident index for list/browse views."""
     index = []
     for analysis in sorted(analyses, key=lambda a: a.get("incident_slug", "")):
@@ -205,6 +247,7 @@ def build_incidents_index(analyses: list[dict]) -> list[dict]:
             "slug": slug,
             "name": meta.get("name") or slug.replace("-", " ").title(),  # fallback display name
             "technique_ids": technique_ids,
+            "chain_signature": _resolve_chain_signature(analysis, attack_data or {}),
             "aws_services": canonical_services(raw_services),
             "aws_services_raw": list(raw_services or []),
             "impact_type": canonical_impact(raw_impact),
@@ -297,7 +340,10 @@ def build_stats(analyses: list[dict], technique_freq: dict) -> dict:
     """Overall statistics for the site hero section."""
     all_services: set[str] = set()
     for analysis in analyses:
-        all_services.update(canonical_services(analysis.get("aws_services", [])))
+        raw_services = analysis.get("aws_services") or []
+        if not isinstance(raw_services, list):
+            raw_services = []
+        all_services.update(canonical_services(raw_services))
 
     total_chain_steps = sum(
         len(a.get("attack_chain", [])) for a in analyses
@@ -382,7 +428,7 @@ def main():
     attack_graph = build_attack_graph(analyses, technique_freq)
 
     log.info("Building incidents index...")
-    incidents_index = build_incidents_index(analyses)
+    incidents_index = build_incidents_index(analyses, attack_data)
     catalog = build_catalog(incidents_index)
 
     log.info("Building stats...")

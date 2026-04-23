@@ -192,6 +192,64 @@ import Base from "../layouts/Base.astro";
     color: var(--text);
   }
 
+  /* Chain signature — ordinal strip of tactic-colored dots on a hairline.
+     One dot per attack_chain step. Inferred steps render hollow. */
+  .chain-signature {
+    position: relative;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    margin: 0.15rem 0 0.1rem;
+  }
+
+  .chain-signature .cs-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--border);
+    transform: translateY(-0.5px);
+  }
+
+  .chain-signature .cs-dots {
+    position: relative;
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+  }
+
+  .chain-signature .cs-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--text-muted);
+    box-shadow: 0 0 0 3px var(--bg-secondary);
+    transition: transform 0.15s;
+  }
+
+  .incident-card:hover .chain-signature .cs-dot {
+    transform: scale(1.1);
+  }
+
+  .chain-signature .cs-dot.inferred {
+    background: transparent;
+    border: 1.5px solid var(--yellow);
+  }
+
+  .chain-signature .cs-overflow {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    padding-left: 6px;
+    background: var(--bg-secondary);
+    z-index: 1;
+    letter-spacing: 0.04em;
+  }
+
   .services-list {
     display: flex;
     flex-wrap: wrap;
@@ -242,6 +300,37 @@ async function loadIncidents() {
   return { index, stats };
 }
 
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a",
+};
+
+const SIGNATURE_MAX = 12;
+
+function renderChainSignature(signature: any[]): string {
+  if (!signature?.length) return "";
+  const visible = signature.slice(0, SIGNATURE_MAX);
+  const overflow = signature.length - visible.length;
+  const dots = visible.map((step) => {
+    const color = TACTIC_COLORS[step?.ta] || "#7d8590";
+    const inferred = !!step?.inferred;
+    return inferred
+      ? `<span class="cs-dot inferred" style="border-color:${color}"></span>`
+      : `<span class="cs-dot" style="background:${color}"></span>`;
+  }).join("");
+  const overflowLabel = overflow > 0
+    ? `<span class="cs-overflow">+${overflow}</span>`
+    : "";
+  return `
+    <div class="chain-signature" aria-hidden="true">
+      <span class="cs-rail"></span>
+      <div class="cs-dots">${dots}${overflowLabel}</div>
+    </div>`;
+}
+
 // impact_type is already canonicalized in build_site_data.py (see
 // scripts/normalize.py). Keys match CANONICAL_IMPACTS exactly.
 const IMPACT_COLORS: Record<string, string> = {
@@ -271,9 +360,14 @@ function renderCard(inc: any): HTMLElement {
   card.style.borderLeftColor = borderColor;
 
   const confPct = Math.round((inc.confidence_score || 0) * 100);
-  const techniques = (inc.technique_ids || []).slice(0, 6);
   const services = (inc.aws_services || []).slice(0, 4);
-  const totalTechniques = (inc.technique_ids || []).length;
+  const signature = inc.chain_signature || [];
+  const stepCount = signature.length;
+  // Legacy fallback: when chain_signature is absent (e.g. stale build output)
+  // render today's layout so the grid never looks broken mid-deploy.
+  const hasSignature = stepCount > 0;
+  const legacyTechniques = (inc.technique_ids || []).slice(0, 6);
+  const legacyTechniqueTotal = (inc.technique_ids || []).length;
 
   // Prefer event_date (from build_site_data.py); fall back to LAST year in slug
   // so threat-group codes like UNC4899 don't get picked up before the real year.
@@ -285,16 +379,26 @@ function renderCard(inc: any): HTMLElement {
     if (matches.length) year = matches[matches.length - 1][1];
   }
 
+  const footerCount = hasSignature
+    ? `${stepCount} STEP${stepCount !== 1 ? "S" : ""}`
+    : `${legacyTechniqueTotal} TECHNIQUE${legacyTechniqueTotal !== 1 ? "S" : ""}`;
+
+  const middleRow = hasSignature
+    ? renderChainSignature(signature)
+    : (legacyTechniques.length
+        ? `<div class="techniques-list">${legacyTechniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${legacyTechniqueTotal > 6 ? `<span class="tech-badge">+${legacyTechniqueTotal - 6}</span>` : ""}</div>`
+        : "");
+
   card.innerHTML = `
     <div class="incident-name">${esc(inc.name)}</div>
     <div class="incident-meta">
       ${inc.impact_type ? `<span class="impact-badge" style="color:${borderColor};border-color:${borderColor}40;background:${borderColor}20">${esc(inc.impact_type)}</span>` : ""}
       ${services.length ? services.map((s: string) => `<span class="badge">${esc(s)}</span>`).join("") : ""}
     </div>
-    ${techniques.length ? `<div class="techniques-list">${techniques.map((t: string) => `<span class="tech-badge">${esc(t)}</span>`).join("")}${totalTechniques > 6 ? `<span class="tech-badge">+${totalTechniques - 6}</span>` : ""}</div>` : ""}
+    ${middleRow}
     <div class="card-footer">
       <span class="card-date">${esc(year)}</span>
-      <span class="card-technique-count">${totalTechniques} technique${totalTechniques !== 1 ? "s" : ""}</span>
+      <span class="card-technique-count">${footerCount}</span>
     </div>
   `;
 

@@ -1,0 +1,471 @@
+---
+// Kill-chain swimlanes — tactics as columns, chain steps drop into the
+// column for their tactic. Connector arrows expose how the attacker
+// "bent" through the kill chain (backward arrows = tactic regressions).
+---
+<div class="swim" id="swim-root" hidden>
+  <div class="loading" id="swim-loading">Loading kill-chain…</div>
+</div>
+
+<style is:global>
+  .swim {
+    background: var(--bg);
+    padding: 1.5rem 0 3rem;
+    color: var(--text);
+  }
+
+  .swim .sw-intro {
+    max-width: 62ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .swim .sw-intro p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .swim .sw-grid {
+    position: relative;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .swim .sw-grid-inner {
+    position: relative;
+  }
+
+  /* Column headers */
+  .swim .sw-headers {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .swim .sw-header {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-top-width: 2px;
+    border-radius: var(--radius);
+    padding: 0.55rem 0.7rem;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .swim .sw-header-tid {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .swim .sw-header-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .swim .sw-header-count {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* Lane grid (absolute-positioned nodes) */
+  .swim .sw-lanes {
+    position: relative;
+  }
+
+  .swim .sw-lane-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed rgba(139, 148, 158, 0.08);
+    border-right: 1px dashed rgba(139, 148, 158, 0.08);
+    pointer-events: none;
+  }
+
+  .swim .sw-lane-bg.alt {
+    background: rgba(255, 255, 255, 0.012);
+  }
+
+  /* Connector SVG */
+  .swim .sw-connectors {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* Step card */
+  .swim .sw-step {
+    position: absolute;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .swim .sw-step-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .swim .sw-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .swim .sw-step-tech {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text);
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .swim .sw-step-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .swim .sw-step-foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .swim .sw-step.inferred {
+    border-style: dashed;
+  }
+
+  /* Footer legend */
+  .swim .sw-legend {
+    margin-top: 1.25rem;
+    padding: 0.75rem 0 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .swim .sw-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .swim .sw-legend-swatch {
+    width: 18px;
+    height: 0;
+    border-top: 1.5px solid var(--text-muted);
+  }
+
+  .swim .sw-legend-swatch.backward {
+    border-top-style: dashed;
+    border-top-color: var(--yellow);
+  }
+
+  .swim .sw-empty {
+    padding: 2rem 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+</style>
+
+<script>
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const DATA_BASE = `${BASE}/data`;
+
+const TACTIC_COLORS: Record<string, string> = {
+  "TA0043": "#e05252", "TA0042": "#e07852", "TA0001": "#e09e52",
+  "TA0002": "#c5a832", "TA0003": "#8fb83e", "TA0004": "#4ab56e",
+  "TA0005": "#3bb5a0", "TA0006": "#3898c5", "TA0007": "#4872c5",
+  "TA0008": "#6456c5", "TA0009": "#9048c5", "TA0011": "#c548b5",
+  "TA0010": "#c5486e", "TA0040": "#c5485a", "": "#555",
+};
+
+// MITRE ATT&CK Enterprise tactic order — drives left-to-right column layout
+// and powers the "backward arrow" detection for kill-chain regressions.
+const TACTIC_ORDER: string[] = [
+  "TA0043", "TA0042", "TA0001", "TA0002", "TA0003",
+  "TA0004", "TA0005", "TA0006", "TA0007", "TA0008",
+  "TA0009", "TA0011", "TA0010", "TA0040",
+];
+
+function esc(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+// Mirrors EditorialTimeline's resolver. The per-step tactic_id reflects
+// what the attacker was doing at THIS step — that's the only trustworthy
+// signal for multi-tactic techniques like T1078.004 (valid under TA0001/
+// TA0003/TA0004/TA0005). Fall back to tactics_used only when the technique
+// lives under a single tactic; beyond that, leave unmapped instead of
+// guessing via tactic_ids[0].
+function techniqueToTactic(
+  step: any,
+  incident: any,
+  techniques: Record<string, any>,
+): string {
+  if (step.tactic_id) return step.tactic_id;
+  const hits: string[] = [];
+  for (const t of (incident.tactics_used || [])) {
+    for (const tech of (t.techniques || [])) {
+      if (tech.technique_id === step.technique_id && !hits.includes(t.tactic_id)) {
+        hits.push(t.tactic_id);
+      }
+    }
+  }
+  if (hits.length === 1) return hits[0];
+  return "";
+}
+
+function inferredForStep(step: any, incident: any): boolean {
+  for (const t of (incident.tactics_used || [])) {
+    for (const tech of (t.techniques || [])) {
+      if (tech.technique_id === step.technique_id) return !!tech.inferred;
+    }
+  }
+  return !!step.inferred;
+}
+
+function canonicalTechName(step: any, techniques: Record<string, any>): string {
+  const canon = techniques[step.technique_id]?.name;
+  if (canon) return canon;
+  const raw = String(step.technique_name || "");
+  return raw.split(/\s+[–/:]\s+/)[0].trim();
+}
+
+type Coord = { col: number; row: number; step: any; tacticId: string };
+
+async function init() {
+  const root = document.getElementById("swim-root")!;
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+  if (!slug) return;
+
+  let incident: any, metaData: any;
+  try {
+    [incident, metaData] = await Promise.all([
+      fetch(`${DATA_BASE}/incidents/${slug}.json`).then(r => {
+        if (!r.ok) throw new Error("not found");
+        return r.json();
+      }),
+      fetch(`${DATA_BASE}/attack_meta.json`).then(r => r.ok ? r.json() : {}),
+    ]);
+  } catch (_err) {
+    root.innerHTML = `<div class="sw-empty">Incident not found.</div>`;
+    return;
+  }
+
+  const techniques = metaData.techniques || {};
+  const tacticsMeta = metaData.tactics || {};
+  const chain: any[] = [...(incident.attack_chain || [])].sort((a, b) => (a.step || 0) - (b.step || 0));
+
+  if (!chain.length) {
+    root.innerHTML = `<div class="sw-empty">No attack chain available for this incident.</div>`;
+    return;
+  }
+
+  // Resolve tactic for each step, then filter to the set actually used,
+  // preserving MITRE order. Columns that aren't used don't render — keeps
+  // the grid tight for short chains.
+  const stepTactics = chain.map((s) => techniqueToTactic(s, incident, techniques) || "");
+  const usedTactics = TACTIC_ORDER.filter(tid => stepTactics.includes(tid));
+
+  if (usedTactics.length < 2) {
+    root.innerHTML = `<div class="sw-empty">Swimlanes need at least two tactics — this chain only uses one.</div>`;
+    return;
+  }
+
+  const laneIndex: Record<string, number> = {};
+  usedTactics.forEach((tid, i) => { laneIndex[tid] = i; });
+
+  // Geometry
+  const COL_W = 200;
+  const GAP = 8;
+  const ROW_H = 108;
+  const STEP_H = 84;
+  const STEP_W = COL_W - 12;
+  const GRID_W = usedTactics.length * COL_W + (usedTactics.length - 1) * GAP;
+  const GRID_H = chain.length * ROW_H;
+
+  const coords: Coord[] = chain.map((step, i) => ({
+    col: laneIndex[stepTactics[i]] ?? 0,
+    row: i,
+    step,
+    tacticId: stepTactics[i],
+  }));
+
+  const stepCenterX = (col: number) =>
+    col * (COL_W + GAP) + COL_W / 2;
+  const stepCenterY = (row: number) =>
+    row * ROW_H + STEP_H / 2 + 6;
+
+  // Build headers
+  const headers = usedTactics.map(tid => {
+    const name = tacticsMeta[tid]?.name || tid;
+    const count = stepTactics.filter(t => t === tid).length;
+    const color = TACTIC_COLORS[tid] || "#555";
+    return `
+      <div class="sw-header" style="border-top-color:${color}; width:${COL_W}px">
+        <span class="sw-header-tid">TA · ${esc(tid)}</span>
+        <span class="sw-header-name">${esc(name)}</span>
+        <span class="sw-header-count" style="color:${color}">${count} STEP${count === 1 ? "" : "S"}</span>
+      </div>`;
+  }).join("");
+
+  // Lane backgrounds (alternating stripe)
+  const laneBgs = usedTactics.map((_tid, i) => `
+    <div class="sw-lane-bg ${i % 2 === 0 ? 'alt' : ''}"
+         style="left:${i * (COL_W + GAP)}px; width:${COL_W}px"></div>
+  `).join("");
+
+  // Step cards
+  const stepCards = coords.map((c) => {
+    const color = TACTIC_COLORS[c.tacticId] || "#555";
+    const tname = canonicalTechName(c.step, techniques);
+    const inferred = inferredForStep(c.step, incident);
+    const x = c.col * (COL_W + GAP) + 6;
+    const y = c.row * ROW_H + 6;
+    const stepN = String(c.step.step || (c.row + 1)).padStart(2, "0");
+    const shortDesc = c.step.description
+      ? String(c.step.description).split(/(?<=[.!?])\s/)[0]
+      : tname;
+    return `
+      <div class="sw-step${inferred ? ' inferred' : ''}"
+           style="left:${x}px; top:${y}px; width:${STEP_W}px; height:${STEP_H}px; border-left-color:${color}">
+        <div class="sw-step-head">
+          <span class="sw-step-num">STEP ${stepN}</span>
+          ${c.step.technique_id ? `<span class="sw-step-tech">${esc(c.step.technique_id)}</span>` : ""}
+        </div>
+        <div class="sw-step-title">${esc(shortDesc)}</div>
+        <div class="sw-step-foot">
+          <span>${esc((c.step.aws_services_involved || [])[0] || "")}</span>
+          ${inferred ? `<span style="color:var(--yellow)">INFERRED</span>` : ""}
+        </div>
+      </div>`;
+  }).join("");
+
+  // Connector arrows — cubic bezier between consecutive step centers.
+  // Backward arrows (col regression) render dashed yellow to highlight the
+  // "bounce" pattern the handoff calls out.
+  const connectors: string[] = [];
+  for (let i = 0; i < coords.length - 1; i++) {
+    const a = coords[i];
+    const b = coords[i + 1];
+    const x1 = stepCenterX(a.col);
+    const y1 = a.row * ROW_H + STEP_H + 4;  // bottom-edge of card a
+    const x2 = stepCenterX(b.col);
+    const y2 = b.row * ROW_H + 2;            // top-edge of card b
+    const midY = (y1 + y2) / 2;
+    const path = `M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2 - 6}`;
+    const backward = b.col < a.col;
+    const strokeColor = backward ? "var(--yellow)" : TACTIC_COLORS[b.tacticId] || "#8b949e";
+    const dash = backward ? 'stroke-dasharray="5 3"' : "";
+    // Arrowhead: small triangle pointing down at (x2, y2).
+    connectors.push(`
+      <g>
+        <path d="${path}" stroke="${strokeColor}" stroke-width="1.5" fill="none"
+              opacity="${backward ? 0.9 : 0.55}" ${dash}/>
+        <polygon points="${x2 - 3.5},${y2 - 6} ${x2 + 3.5},${y2 - 6} ${x2},${y2 - 1}"
+                 fill="${strokeColor}" opacity="${backward ? 0.95 : 0.8}"/>
+      </g>`);
+  }
+
+  const backwardCount = coords.slice(1).filter((c, i) => c.col < coords[i].col).length;
+
+  const intro = `
+    <div class="sw-intro">
+      <p>
+        Each MITRE tactic is a column. Steps fall into their tactic in chronological
+        order; the arrow traces the path.
+        ${backwardCount > 0
+          ? `<span style="color:var(--yellow)">Dashed arrows mark kill-chain regressions</span> — the attacker returned to an earlier tactic after progressing past it. Here, that happens <strong>${backwardCount} time${backwardCount === 1 ? "" : "s"}</strong>.`
+          : `No backward arrows on this chain — the attacker moved straight through the kill chain.`}
+      </p>
+    </div>`;
+
+  const legend = `
+    <div class="sw-legend">
+      <span class="sw-legend-item">
+        <span class="sw-legend-swatch"></span>Forward
+      </span>
+      <span class="sw-legend-item">
+        <span class="sw-legend-swatch backward"></span>Backward (regression)
+      </span>
+      <span style="margin-left:auto">
+        ${chain.length} STEPS · ${usedTactics.length} TACTICS
+      </span>
+    </div>`;
+
+  root.innerHTML = `
+    ${intro}
+    <div class="sw-grid">
+      <div class="sw-grid-inner" style="width:${GRID_W}px">
+        <div class="sw-headers">${headers}</div>
+        <div class="sw-lanes" style="width:${GRID_W}px; height:${GRID_H}px">
+          ${laneBgs}
+          <svg class="sw-connectors" width="${GRID_W}" height="${GRID_H}">
+            ${connectors.join("")}
+          </svg>
+          ${stepCards}
+        </div>
+      </div>
+    </div>
+    ${legend}
+  `;
+}
+
+// Expose init so the parent page can trigger a load only when the user
+// actually flips to the kill-chain view — keeps the narrative-default path
+// from paying the parse/build cost on every incident visit.
+(window as any).__swimlanesInit = init;
+</script>

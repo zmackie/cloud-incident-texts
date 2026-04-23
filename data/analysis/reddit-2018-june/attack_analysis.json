@@ -1,37 +1,27 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1111",
           "technique_name": "Multi-Factor Authentication Interception",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the main attack was via SMS intercept... SMS-based authentication is not nearly as secure as we would hope",
+          "evidence_quote": "the main attack was via SMS intercept",
           "validated": false
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
-          "inferred": true,
-          "evidence_quote": "we have taken steps since the event to further lock down and rotate all production secrets and API keys",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers",
           "validated": true
         }
       ]
@@ -41,11 +31,10 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
           "inferred": true,
-          "evidence_quote": "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files",
+          "evidence_quote": "the attacker had read access to our storage systems",
           "validated": true
         }
       ]
@@ -57,9 +46,16 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data... Logs containing the email digests we sent between June 3 and June 17, 2018",
+          "evidence_quote": "read-only access to some systems that contained backup data, source code and other logs",
+          "validated": true
+        },
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "subtechnique_id": "T1213.003",
+          "inferred": false,
+          "evidence_quote": "Reddit source code, internal logs, configuration files and other employee workspace files",
           "validated": true
         }
       ]
@@ -69,11 +65,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "the attacker had read access to our storage systems... A complete copy of an old database backup containing very early Reddit user data",
+          "evidence_quote": "a complete copy of an old database backup",
           "validated": true
         }
       ]
@@ -84,11 +79,30 @@
       "step": 1,
       "technique_id": "T1111",
       "technique_name": "Multi-Factor Authentication Interception",
-      "description": "The attacker intercepted SMS-based 2FA codes sent to Reddit employees, bypassing the MFA protection on their cloud and source code hosting provider accounts.",
-      "evidence_quote": "the main attack was via SMS intercept. We point this out to encourage everyone here to move to token-based 2FA.",
+      "description": "Attacker intercepted SMS-based 2FA codes sent to Reddit employees to bypass two-factor authentication protecting cloud and source code hosting accounts.",
+      "event_time": "2018-06-14",
+      "event_time_precision": "day",
+      "evidence_quote": "SMS-based authentication is not nearly as secure as we would hope, and the main attack was via SMS intercept",
       "aws_services_involved": [],
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c003",
+          "source_file": "link_00.clean.md",
+          "char_start": 764,
+          "char_end": 1267,
+          "quote": "SMS-based authentication is not nearly as secure as we would hope, and the main attack was via SMS intercept"
+        },
+        {
+          "chunk_id": "link_00.md#c009",
+          "source_file": "link_00.md",
+          "char_start": 1570,
+          "char_end": 2073,
+          "quote": "SMS-based authentication is not nearly as secure as we would hope, and the main attack was via SMS intercept"
+        }
       ],
       "validated": false
     },
@@ -96,23 +110,64 @@
       "step": 2,
       "technique_id": "T1078",
       "technique_name": "Valid Accounts",
-      "description": "Using intercepted SMS 2FA codes combined with employee credentials, the attacker successfully authenticated to Reddit's cloud and source code hosting providers as legitimate employees.",
-      "evidence_quote": "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
-      "aws_services_involved": [],
+      "description": "Using intercepted SMS 2FA codes along with employee credentials, the attacker logged in to employee accounts at Reddit's cloud and source code hosting providers.",
+      "event_time": "2018-06-14",
+      "event_time_precision": "day",
+      "evidence_quote": "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers",
+      "aws_services_involved": [
+        "Cloud hosting provider",
+        "Source code hosting provider"
+      ],
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c003",
+          "source_file": "link_00.clean.md",
+          "char_start": 764,
+          "char_end": 1267,
+          "quote": "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers"
+        },
+        {
+          "chunk_id": "link_00.md#c009",
+          "source_file": "link_00.md",
+          "char_start": 1570,
+          "char_end": 2073,
+          "quote": "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Once authenticated with read-only access, the attacker explored Reddit's cloud storage systems, discovering backup data, source code, internal logs, and configuration files.",
-      "evidence_quote": "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files",
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker explored accessible cloud storage systems, source code repositories, and log stores to identify sensitive data.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "the attacker had read access to our storage systems",
       "aws_services_involved": [],
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c012",
+          "source_file": "link_00.clean.md",
+          "char_start": 3781,
+          "char_end": 4029,
+          "quote": "the attacker had read access to our storage systems"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 4587,
+          "char_end": 4835,
+          "quote": "the attacker had read access to our storage systems"
+        }
       ],
       "validated": true
     },
@@ -120,31 +175,115 @@
       "step": 4,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "The attacker accessed and collected a full 2007 database backup containing usernames, salted hashed passwords, email addresses, and private messages, as well as email digest logs from June 2018 linking usernames to email addresses.",
-      "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data -- from the site's launch in 2005 through May 2007... Logs containing the email digests we sent between June 3 and June 17, 2018.",
+      "description": "Attacker accessed a 2007 Reddit database backup containing usernames, salted hashed passwords, email addresses, public content, and private messages.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data",
       "aws_services_involved": [],
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2255,
+          "char_end": 2678,
+          "quote": "A complete copy of an old database backup containing very early Reddit user data"
+        },
+        {
+          "chunk_id": "link_00.md#c014",
+          "source_file": "link_00.md",
+          "char_start": 3061,
+          "char_end": 3484,
+          "quote": "A complete copy of an old database backup containing very early Reddit user data"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Attacker accessed Reddit source code, internal logs, configuration files, and employee workspace files from the source code hosting provider.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Reddit source code, internal logs, configuration files and other employee workspace files",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c012",
+          "source_file": "link_00.clean.md",
+          "char_start": 3781,
+          "char_end": 4029,
+          "quote": "Reddit source code, internal logs, configuration files and other employee workspace files"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 4587,
+          "char_end": 4835,
+          "quote": "Reddit source code, internal logs, configuration files and other employee workspace files"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed logs containing email digests sent between June 3 and June 17, 2018, linking usernames to email addresses.",
+      "event_time": "2018-06-17",
+      "event_time_precision": "day",
+      "evidence_quote": "Logs containing the email digests we sent between June 3 and June 17, 2018",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 3064,
+          "char_end": 3431,
+          "quote": "Logs containing the email digests we sent between June 3 and June 17, 2018"
+        },
+        {
+          "chunk_id": "link_00.md#c016",
+          "source_file": "link_00.md",
+          "char_start": 3870,
+          "char_end": 4237,
+          "quote": "Logs containing the email digests we sent between June 3 and June 17, 2018"
+        }
       ],
       "validated": true
     }
   ],
-  "aws_services": [],
+  "aws_services": [
+    "Cloud hosting provider (unspecified)",
+    "Source code hosting provider (unspecified)"
+  ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.9,
-  "initial_access_vector": "Employee SMS-based 2FA codes were intercepted, allowing the attacker to authenticate to Reddit's cloud and source code hosting provider accounts using compromised employee credentials.",
+  "confidence_score": 0.8,
   "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Compromise of employee accounts at cloud and source code hosting providers via SMS-based 2FA interception",
+  "persistence_mechanism": "None described; read-only access was maintained with the compromised valid employee accounts for the duration of the incident (June 14-18, 2018)",
+  "privilege_escalation": "None; attacker operated with the compromised employees' existing read-only privileges and did not obtain write access",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1111",
         "technique_name": "Multi-Factor Authentication Interception",
-        "description": "The attacker intercepted SMS-based 2FA codes sent to Reddit employees, bypassing the MFA protection on their cloud and source code hosting provider accounts.",
+        "description": "Attacker intercepted SMS-based 2FA codes sent to Reddit employees to bypass two-factor authentication protecting cloud and source code hosting accounts.",
         "tactic_id": "",
-        "evidence_quote": "the main attack was via SMS intercept. We point this out to encourage everyone here to move to token-based 2FA.",
+        "evidence_quote": "SMS-based authentication is not nearly as secure as we would hope, and the main attack was via SMS intercept",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
@@ -154,21 +293,24 @@
         "step": 2,
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
-        "description": "Using intercepted SMS 2FA codes combined with employee credentials, the attacker successfully authenticated to Reddit's cloud and source code hosting providers as legitimate employees.",
+        "description": "Using intercepted SMS 2FA codes along with employee credentials, the attacker logged in to employee accounts at Reddit's cloud and source code hosting providers.",
         "tactic_id": "TA0005",
-        "evidence_quote": "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
+        "evidence_quote": "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "Cloud hosting provider",
+          "Source code hosting provider"
+        ]
       },
       {
         "step": 3,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "Once authenticated with read-only access, the attacker explored Reddit's cloud storage systems, discovering backup data, source code, internal logs, and configuration files.",
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker explored accessible cloud storage systems, source code repositories, and log stores to identify sensitive data.",
         "tactic_id": "TA0007",
-        "evidence_quote": "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files",
+        "evidence_quote": "the attacker had read access to our storage systems",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
@@ -178,9 +320,33 @@
         "step": 4,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker accessed and collected a full 2007 database backup containing usernames, salted hashed passwords, email addresses, and private messages, as well as email digest logs from June 2018 linking usernames to email addresses.",
+        "description": "Attacker accessed a 2007 Reddit database backup containing usernames, salted hashed passwords, email addresses, public content, and private messages.",
         "tactic_id": "TA0009",
-        "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data -- from the site's launch in 2005 through May 2007... Logs containing the email digests we sent between June 3 and June 17, 2018.",
+        "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data",
+        "evidence_sources": [
+          "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Attacker accessed Reddit source code, internal logs, configuration files, and employee workspace files from the source code hosting provider.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Reddit source code, internal logs, configuration files and other employee workspace files",
+        "evidence_sources": [
+          "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed logs containing email digests sent between June 3 and June 17, 2018, linking usernames to email addresses.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Logs containing the email digests we sent between June 3 and June 17, 2018",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
@@ -199,38 +365,68 @@
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
         "evidence_quotes": [
-          "the main attack was via SMS intercept. We point this out to encourage everyone here to move to token-based 2FA.",
-          "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers"
+          "SMS-based authentication is not nearly as secure as we would hope, and the main attack was via SMS intercept",
+          "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers"
         ]
       },
       {
         "source": "T1078",
-        "target": "T1619",
+        "target": "T1580",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Valid Accounts",
-        "target_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
         "evidence_quotes": [
-          "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
-          "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files"
+          "an attacker compromised a few of our employees\u2019 accounts with our cloud and source code hosting providers",
+          "the attacker had read access to our storage systems"
         ]
       },
       {
-        "source": "T1619",
+        "source": "T1580",
         "target": "T1530",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Cloud Storage Object Discovery",
+        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
         ],
         "evidence_quotes": [
-          "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files",
-          "A complete copy of an old database backup containing very early Reddit user data -- from the site's launch in 2005 through May 2007... Logs containing the email digests we sent between June 3 and June 17, 2018."
+          "the attacker had read access to our storage systems",
+          "A complete copy of an old database backup containing very early Reddit user data"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1213.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Code Repositories",
+        "sources": [
+          "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+        ],
+        "evidence_quotes": [
+          "A complete copy of an old database backup containing very early Reddit user data",
+          "Reddit source code, internal logs, configuration files and other employee workspace files"
+        ]
+      },
+      {
+        "source": "T1213.003",
+        "target": "T1530",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Code Repositories",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
+        ],
+        "evidence_quotes": [
+          "Reddit source code, internal logs, configuration files and other employee workspace files",
+          "Logs containing the email digests we sent between June 3 and June 17, 2018"
         ]
       }
     ]
@@ -241,7 +437,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "reddit-2018-june",
-  "analyzed_at": "2026-04-15T21:06:05.185198+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 8892
+  "analyzed_at": "2026-04-23T18:51:40.578489+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 15927
 }

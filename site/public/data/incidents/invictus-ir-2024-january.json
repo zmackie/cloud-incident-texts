@@ -5,10 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
+          "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
           "validated": true
         }
       ]
@@ -18,45 +18,45 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities. These calls are used to get an idea on how much emails can be sent at once and which emails and domains are registered to send emails.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1069.003",
-          "technique_name": "Permission Groups Discovery: Cloud Groups",
-          "inferred": false,
-          "evidence_quote": "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
-          "validated": true
-        },
-        {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
-          "validated": true
-        },
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "ListBuckets",
+          "evidence_quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities",
           "validated": true
         },
         {
           "technique_id": "T1087.004",
           "technique_name": "Account Discovery: Cloud Account",
           "inferred": false,
-          "evidence_quote": "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
+          "evidence_quote": "the TA came back and ran ListUsers to list the IAM users in the AWS account",
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "ListBuckets",
+          "validated": true
+        },
+        {
+          "technique_id": "T1069.003",
+          "technique_name": "Permission Groups Discovery: Cloud Groups",
+          "inferred": false,
+          "evidence_quote": "ListGroupsForUser",
           "validated": true
         },
         {
           "technique_id": "T1518",
           "technique_name": "Software Discovery",
+          "inferred": true,
+          "evidence_quote": "SimulatePrincipalPolicy",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
+          "evidence_quote": "DescribeSecurityGroups event which lists all security groups in the account",
           "validated": true
         }
       ]
@@ -69,28 +69,21 @@
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
           "inferred": false,
-          "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
+          "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me",
           "validated": true
         },
         {
           "technique_id": "T1098.001",
           "technique_name": "Account Manipulation: Additional Cloud Credentials",
           "inferred": false,
-          "evidence_quote": "Additionally the TA created access keys for existing accounts... CreateKeyPair",
+          "evidence_quote": "the TA created access keys for existing accounts",
           "validated": true
         },
         {
           "technique_id": "T1098.003",
           "technique_name": "Account Manipulation: Additional Cloud Roles",
           "inferred": false,
-          "evidence_quote": "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
+          "evidence_quote": "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
           "validated": true
         }
       ]
@@ -103,14 +96,14 @@
           "technique_id": "T1098.003",
           "technique_name": "Account Manipulation: Additional Cloud Roles",
           "inferred": false,
-          "evidence_quote": "The AdministratorAccess policy was attached to the newly created account with AttachUserPolicy.",
+          "evidence_quote": "The AdministratorAccess policy was attached to the newly created account with AttachUserPolicy",
           "validated": true
         },
         {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
+          "evidence_quote": "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account",
           "validated": true
         }
       ]
@@ -120,54 +113,32 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1036.005",
-          "technique_name": "Masquerading: Match Legitimate Name or Location",
-          "inferred": false,
-          "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
-          "validated": true
-        },
-        {
           "technique_id": "T1070",
           "technique_name": "Indicator Removal",
           "inferred": false,
-          "evidence_quote": "Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
+          "evidence_quote": "Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
           "validated": true
         },
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
+          "technique_id": "T1036.005",
+          "technique_name": "Masquerading: Match Legitimate Name or Location",
           "inferred": false,
+          "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
+          "validated": true
+        },
+        {
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools",
+          "inferred": true,
           "evidence_quote": "Inspecting GuardDuty findings with ListFindings and GetFindings",
-          "validated": true
-        },
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "inferred": false,
-          "evidence_quote": "Creating a LightSail instance upon discovery with CreateInstances",
-          "validated": true
-        },
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": false,
-          "evidence_quote": "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1548.005",
-          "technique_name": "Abuse Elevation Control Mechanism: Temporary Elevated Cloud Access",
-          "inferred": false,
-          "evidence_quote": "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
-          "validated": true
-        }
-      ]
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": []
     },
     {
       "tactic_id": "TA0040",
@@ -177,22 +148,48 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
+          "evidence_quote": "the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining",
           "validated": true
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
         {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
+          "technique_id": "T1583.001",
+          "technique_name": "Acquire Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1584.001",
-          "technique_name": "Compromise Infrastructure: Domains",
-          "inferred": false,
-          "evidence_quote": "Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
+          "evidence_quote": "four domains were created with RegisterDomain",
           "validated": false
+        },
+        {
+          "technique_id": "T1583.006",
+          "technique_name": "Acquire Infrastructure: Web Services",
+          "inferred": false,
+          "evidence_quote": "the TA was able to launch a LightSail instance",
+          "validated": false
+        },
+        {
+          "technique_id": "T1585.002",
+          "technique_name": "Establish Accounts: Email Accounts",
+          "inferred": false,
+          "evidence_quote": "the TA created the following identities with CreateEmailIdentity",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "inferred": false,
+          "evidence_quote": "an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
+          "validated": true
         }
       ]
     }
@@ -200,243 +197,493 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "Unsecured Credentials: Cloud Instance Metadata API observed during Initial Access: Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
-      "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
+      "technique_id": "T1583.001",
+      "technique_name": "Acquire Infrastructure: Domains",
+      "description": "Acquire Infrastructure: Domains observed during Resource Development: four domains were created with RegisterDomain",
+      "evidence_quote": "four domains were created with RegisterDomain",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c102",
+          "source_file": "link_00.clean.md",
+          "char_start": 18860,
+          "char_end": 18955,
+          "quote": "four domains were created with RegisterDomain"
+        },
+        {
+          "chunk_id": "link_00.md#c107",
+          "source_file": "link_00.md",
+          "char_start": 20134,
+          "char_end": 20229,
+          "quote": "four domains were created with RegisterDomain"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Create Account: Cloud Account observed during Persistence: A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
-      "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
+      "technique_id": "T1583.006",
+      "technique_name": "Acquire Infrastructure: Web Services",
+      "description": "Acquire Infrastructure: Web Services observed during Resource Development: the TA was able to launch a LightSail instance",
+      "evidence_quote": "the TA was able to launch a LightSail instance",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c086",
+          "source_file": "link_00.clean.md",
+          "char_start": 16321,
+          "char_end": 16438,
+          "quote": "the TA was able to launch a LightSail instance"
+        },
+        {
+          "chunk_id": "link_00.md#c091",
+          "source_file": "link_00.md",
+          "char_start": 17595,
+          "char_end": 17712,
+          "quote": "the TA was able to launch a LightSail instance"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 3,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: Additionally the TA created access keys for existing accounts... CreateKeyPair",
-      "evidence_quote": "Additionally the TA created access keys for existing accounts... CreateKeyPair",
+      "technique_id": "T1585.002",
+      "technique_name": "Establish Accounts: Email Accounts",
+      "description": "Establish Accounts: Email Accounts observed during Resource Development: the TA created the following identities with CreateEmailIdentity",
+      "evidence_quote": "the TA created the following identities with CreateEmailIdentity",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c099",
+          "source_file": "link_00.clean.md",
+          "char_start": 18485,
+          "char_end": 18575,
+          "quote": "the TA created the following identities with CreateEmailIdentity"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 19759,
+          "char_end": 19849,
+          "quote": "the TA created the following identities with CreateEmailIdentity"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 4,
-      "technique_id": "T1098.003",
-      "technique_name": "Account Manipulation: Additional Cloud Roles",
-      "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-      "evidence_quote": "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Valid Accounts: Cloud Accounts observed during Initial Access: Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
+      "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c012",
+          "source_file": "link_00.clean.md",
+          "char_start": 3210,
+          "char_end": 3464,
+          "quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user."
+        },
+        {
+          "chunk_id": "link_00.md#c017",
+          "source_file": "link_00.md",
+          "char_start": 4484,
+          "char_end": 4738,
+          "quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Valid Accounts: Cloud Accounts observed during Persistence: After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
-      "evidence_quote": "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Create Account: Cloud Account observed during Persistence: A CreateUser call was made for a new account DangerDev@protonmail.me",
+      "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 4637,
+          "char_end": 4783,
+          "quote": "A CreateUser call was made for a new account DangerDev@protonmail.me"
+        },
+        {
+          "chunk_id": "link_00.md#c024",
+          "source_file": "link_00.md",
+          "char_start": 5911,
+          "char_end": 6057,
+          "quote": "A CreateUser call was made for a new account DangerDev@protonmail.me"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1548",
-      "technique_name": "Abuse Elevation Control Mechanism",
-      "description": "Abuse Elevation Control Mechanism observed during Privilege Escalation: Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
-      "evidence_quote": "Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: the TA created access keys for existing accounts",
+      "evidence_quote": "the TA created access keys for existing accounts",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c053",
+          "source_file": "link_00.clean.md",
+          "char_start": 10419,
+          "char_end": 10611,
+          "quote": "the TA created access keys for existing accounts"
+        },
+        {
+          "chunk_id": "link_00.md#c058",
+          "source_file": "link_00.md",
+          "char_start": 11693,
+          "char_end": 11885,
+          "quote": "the TA created access keys for existing accounts"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1036.005",
-      "technique_name": "Masquerading: Match Legitimate Name or Location",
-      "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
-      "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
+      "evidence_quote": "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c055",
+          "source_file": "link_00.clean.md",
+          "char_start": 10761,
+          "char_end": 11006,
+          "quote": "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant"
+        },
+        {
+          "chunk_id": "link_00.md#c060",
+          "source_file": "link_00.md",
+          "char_start": 12035,
+          "char_end": 12280,
+          "quote": "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 8,
       "technique_id": "T1070",
       "technique_name": "Indicator Removal",
-      "description": "Indicator Removal observed during Defense Evasion: Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
-      "evidence_quote": "Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
+      "description": "Indicator Removal observed during Defense Evasion: Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
+      "evidence_quote": "Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 9,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Cloud Service Discovery observed during Defense Evasion: Inspecting GuardDuty findings with ListFindings and GetFindings",
+      "technique_id": "T1036.005",
+      "technique_name": "Masquerading: Match Legitimate Name or Location",
+      "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
+      "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
+      "evidence_sources": [
+        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1562.001",
+      "technique_name": "Impair Defenses: Disable or Modify Tools",
+      "description": "Impair Defenses: Disable or Modify Tools observed during Defense Evasion: Inspecting GuardDuty findings with ListFindings and GetFindings",
       "evidence_quote": "Inspecting GuardDuty findings with ListFindings and GetFindings",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 10,
-      "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "Modify Cloud Compute Infrastructure: Create Cloud Instance observed during Defense Evasion: Creating a LightSail instance upon discovery with CreateInstances",
-      "evidence_quote": "Creating a LightSail instance upon discovery with CreateInstances",
-      "evidence_sources": [
-        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-      ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 11,
-      "technique_id": "T1550.001",
-      "technique_name": "Use Alternate Authentication Material: Application Access Token",
-      "description": "Use Alternate Authentication Material: Application Access Token observed during Defense Evasion: UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
-      "evidence_quote": "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Cloud Infrastructure Discovery observed during Discovery: Repeated calls were made towards SES with GetSendQuota and ListIdentities",
+      "evidence_quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 3594,
+          "char_end": 3878,
+          "quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 4868,
+          "char_end": 5152,
+          "quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 12,
-      "technique_id": "T1069.003",
-      "technique_name": "Permission Groups Discovery: Cloud Groups",
-      "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
-      "evidence_quote": "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Account Discovery: Cloud Account observed during Discovery: the TA came back and ran ListUsers to list the IAM users in the AWS account",
+      "evidence_quote": "the TA came back and ran ListUsers to list the IAM users in the AWS account",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c016",
+          "source_file": "link_00.clean.md",
+          "char_start": 4187,
+          "char_end": 4293,
+          "quote": "the TA came back and ran ListUsers to list the IAM users in the AWS account"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 5461,
+          "char_end": 5567,
+          "quote": "the TA came back and ran ListUsers to list the IAM users in the AWS account"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 13,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Cloud Infrastructure Discovery observed during Discovery: The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
-      "evidence_quote": "The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
-      "evidence_sources": [
-        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 14,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Data from Cloud Storage observed during Discovery: ListBuckets",
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Cloud Storage Object Discovery observed during Discovery: ListBuckets",
       "evidence_quote": "ListBuckets",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c070",
+          "source_file": "link_00.clean.md",
+          "char_start": 13110,
+          "char_end": 13226,
+          "quote": "ListBuckets"
+        },
+        {
+          "chunk_id": "link_00.md#c075",
+          "source_file": "link_00.md",
+          "char_start": 14384,
+          "char_end": 14500,
+          "quote": "ListBuckets"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1069.003",
+      "technique_name": "Permission Groups Discovery: Cloud Groups",
+      "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: ListGroupsForUser",
+      "evidence_quote": "ListGroupsForUser",
+      "evidence_sources": [
+        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c070",
+          "source_file": "link_00.clean.md",
+          "char_start": 13110,
+          "char_end": 13226,
+          "quote": "ListGroupsForUser"
+        },
+        {
+          "chunk_id": "link_00.md#c075",
+          "source_file": "link_00.md",
+          "char_start": 14384,
+          "char_end": 14500,
+          "quote": "ListGroupsForUser"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 15,
-      "technique_id": "T1087.004",
-      "technique_name": "Account Discovery: Cloud Account",
-      "description": "Account Discovery: Cloud Account observed during Discovery: ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
-      "evidence_quote": "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
+      "technique_id": "T1518",
+      "technique_name": "Software Discovery",
+      "description": "Software Discovery observed during Discovery: SimulatePrincipalPolicy",
+      "evidence_quote": "SimulatePrincipalPolicy",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c070",
+          "source_file": "link_00.clean.md",
+          "char_start": 13110,
+          "char_end": 13226,
+          "quote": "SimulatePrincipalPolicy"
+        },
+        {
+          "chunk_id": "link_00.clean.md#c071",
+          "source_file": "link_00.clean.md",
+          "char_start": 13228,
+          "char_end": 13427,
+          "quote": "SimulatePrincipalPolicy"
+        },
+        {
+          "chunk_id": "link_00.md#c075",
+          "source_file": "link_00.md",
+          "char_start": 14384,
+          "char_end": 14500,
+          "quote": "SimulatePrincipalPolicy"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 16,
-      "technique_id": "T1518",
-      "technique_name": "Software Discovery",
-      "description": "Software Discovery observed during Discovery: SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
-      "evidence_quote": "SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Cloud Service Discovery observed during Discovery: DescribeSecurityGroups event which lists all security groups in the account",
+      "evidence_quote": "DescribeSecurityGroups event which lists all security groups in the account",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c031",
+          "source_file": "link_00.clean.md",
+          "char_start": 6663,
+          "char_end": 7007,
+          "quote": "DescribeSecurityGroups event which lists all security groups in the account"
+        },
+        {
+          "chunk_id": "link_00.md#c036",
+          "source_file": "link_00.md",
+          "char_start": 7937,
+          "char_end": 8281,
+          "quote": "DescribeSecurityGroups event which lists all security groups in the account"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 17,
-      "technique_id": "T1548.005",
-      "technique_name": "Abuse Elevation Control Mechanism: Temporary Elevated Cloud Access",
-      "description": "Abuse Elevation Control Mechanism: Temporary Elevated Cloud Access observed during Lateral Movement: After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
-      "evidence_quote": "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "Use Alternate Authentication Material: Application Access Token observed during Lateral Movement: an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
+      "evidence_quote": "an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 18,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Resource Hijacking observed during Impact: The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
-      "evidence_quote": "The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
+      "description": "Resource Hijacking observed during Impact: the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining",
+      "evidence_quote": "the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining",
       "evidence_sources": [
         "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
-    },
-    {
-      "step": 19,
-      "technique_id": "T1566",
-      "technique_name": "Phishing",
-      "description": "Phishing observed during Impact: They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-      "evidence_quote": "They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-      "evidence_sources": [
-        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 20,
-      "technique_id": "T1584.001",
-      "technique_name": "Compromise Infrastructure: Domains",
-      "description": "Compromise Infrastructure: Domains observed during Impact: Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
-      "evidence_quote": "Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
-      "evidence_sources": [
-        "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-      ],
-      "aws_services_involved": [],
-      "validated": false
     }
   ],
   "confidence_score": 0.65,
@@ -444,11 +691,11 @@
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "Unsecured Credentials: Cloud Instance Metadata API observed during Initial Access: Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
+        "technique_id": "T1583.001",
+        "technique_name": "Acquire Infrastructure: Domains",
+        "description": "Acquire Infrastructure: Domains observed during Resource Development: four domains were created with RegisterDomain",
+        "tactic_id": "",
+        "evidence_quote": "four domains were created with RegisterDomain",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -456,11 +703,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1136.003",
-        "technique_name": "Cloud Account",
-        "description": "Create Account: Cloud Account observed during Persistence: A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
+        "technique_id": "T1583.006",
+        "technique_name": "Acquire Infrastructure: Web Services",
+        "description": "Acquire Infrastructure: Web Services observed during Resource Development: the TA was able to launch a LightSail instance",
+        "tactic_id": "",
+        "evidence_quote": "the TA was able to launch a LightSail instance",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -468,11 +715,11 @@
       },
       {
         "step": 3,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: Additionally the TA created access keys for existing accounts... CreateKeyPair",
-        "tactic_id": "TA0003",
-        "evidence_quote": "Additionally the TA created access keys for existing accounts... CreateKeyPair",
+        "technique_id": "T1585.002",
+        "technique_name": "Establish Accounts: Email Accounts",
+        "description": "Establish Accounts: Email Accounts observed during Resource Development: the TA created the following identities with CreateEmailIdentity",
+        "tactic_id": "",
+        "evidence_quote": "the TA created the following identities with CreateEmailIdentity",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -480,11 +727,11 @@
       },
       {
         "step": 4,
-        "technique_id": "T1098.003",
-        "technique_name": "Additional Cloud Roles",
-        "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Valid Accounts: Cloud Accounts observed during Initial Access: Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -492,11 +739,11 @@
       },
       {
         "step": 5,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Valid Accounts: Cloud Accounts observed during Persistence: After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Create Account: Cloud Account observed during Persistence: A CreateUser call was made for a new account DangerDev@protonmail.me",
+        "tactic_id": "TA0003",
+        "evidence_quote": "A CreateUser call was made for a new account DangerDev@protonmail.me",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -504,11 +751,11 @@
       },
       {
         "step": 6,
-        "technique_id": "T1548",
-        "technique_name": "Abuse Elevation Control Mechanism",
-        "description": "Abuse Elevation Control Mechanism observed during Privilege Escalation: Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
-        "tactic_id": "TA0004",
-        "evidence_quote": "Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Account Manipulation: Additional Cloud Credentials observed during Persistence: the TA created access keys for existing accounts",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the TA created access keys for existing accounts",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -516,11 +763,11 @@
       },
       {
         "step": 7,
-        "technique_id": "T1036.005",
-        "technique_name": "Match Legitimate Resource Name or Location",
-        "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
-        "tactic_id": "TA0005",
-        "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Account Manipulation: Additional Cloud Roles observed during Persistence: creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
+        "tactic_id": "TA0003",
+        "evidence_quote": "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -530,9 +777,9 @@
         "step": 8,
         "technique_id": "T1070",
         "technique_name": "Indicator Removal",
-        "description": "Indicator Removal observed during Defense Evasion: Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
+        "description": "Indicator Removal observed during Defense Evasion: Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
         "tactic_id": "TA0005",
-        "evidence_quote": "Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
+        "evidence_quote": "Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -540,11 +787,11 @@
       },
       {
         "step": 9,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Cloud Service Discovery observed during Defense Evasion: Inspecting GuardDuty findings with ListFindings and GetFindings",
-        "tactic_id": "TA0007",
-        "evidence_quote": "Inspecting GuardDuty findings with ListFindings and GetFindings",
+        "technique_id": "T1036.005",
+        "technique_name": "Match Legitimate Resource Name or Location",
+        "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -552,11 +799,11 @@
       },
       {
         "step": 10,
-        "technique_id": "T1578.002",
-        "technique_name": "Create Cloud Instance",
-        "description": "Modify Cloud Compute Infrastructure: Create Cloud Instance observed during Defense Evasion: Creating a LightSail instance upon discovery with CreateInstances",
+        "technique_id": "T1562.001",
+        "technique_name": "Disable or Modify Tools",
+        "description": "Impair Defenses: Disable or Modify Tools observed during Defense Evasion: Inspecting GuardDuty findings with ListFindings and GetFindings",
         "tactic_id": "TA0005",
-        "evidence_quote": "Creating a LightSail instance upon discovery with CreateInstances",
+        "evidence_quote": "Inspecting GuardDuty findings with ListFindings and GetFindings",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -564,11 +811,11 @@
       },
       {
         "step": 11,
-        "technique_id": "T1550.001",
-        "technique_name": "Application Access Token",
-        "description": "Use Alternate Authentication Material: Application Access Token observed during Defense Evasion: UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Cloud Infrastructure Discovery observed during Discovery: Repeated calls were made towards SES with GetSendQuota and ListIdentities",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Repeated calls were made towards SES with GetSendQuota and ListIdentities",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -576,11 +823,11 @@
       },
       {
         "step": 12,
-        "technique_id": "T1069.003",
-        "technique_name": "Cloud Groups",
-        "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Account Discovery: Cloud Account observed during Discovery: the TA came back and ran ListUsers to list the IAM users in the AWS account",
         "tactic_id": "TA0007",
-        "evidence_quote": "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
+        "evidence_quote": "the TA came back and ran ListUsers to list the IAM users in the AWS account",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -588,22 +835,10 @@
       },
       {
         "step": 13,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Cloud Infrastructure Discovery observed during Discovery: The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Cloud Storage Object Discovery observed during Discovery: ListBuckets",
         "tactic_id": "TA0007",
-        "evidence_quote": "The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
-        "evidence_sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 14,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Data from Cloud Storage observed during Discovery: ListBuckets",
-        "tactic_id": "TA0009",
         "evidence_quote": "ListBuckets",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
@@ -611,12 +846,24 @@
         "aws_services_involved": []
       },
       {
-        "step": 15,
-        "technique_id": "T1087.004",
-        "technique_name": "Cloud Account",
-        "description": "Account Discovery: Cloud Account observed during Discovery: ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
+        "step": 14,
+        "technique_id": "T1069.003",
+        "technique_name": "Cloud Groups",
+        "description": "Permission Groups Discovery: Cloud Groups observed during Discovery: ListGroupsForUser",
         "tactic_id": "TA0007",
-        "evidence_quote": "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
+        "evidence_quote": "ListGroupsForUser",
+        "evidence_sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1518",
+        "technique_name": "Software Discovery",
+        "description": "Software Discovery observed during Discovery: SimulatePrincipalPolicy",
+        "tactic_id": "TA0007",
+        "evidence_quote": "SimulatePrincipalPolicy",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -624,11 +871,11 @@
       },
       {
         "step": 16,
-        "technique_id": "T1518",
-        "technique_name": "Software Discovery",
-        "description": "Software Discovery observed during Discovery: SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Cloud Service Discovery observed during Discovery: DescribeSecurityGroups event which lists all security groups in the account",
         "tactic_id": "TA0007",
-        "evidence_quote": "SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
+        "evidence_quote": "DescribeSecurityGroups event which lists all security groups in the account",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -636,11 +883,11 @@
       },
       {
         "step": 17,
-        "technique_id": "T1548.005",
-        "technique_name": "Temporary Elevated Cloud Access",
-        "description": "Abuse Elevation Control Mechanism: Temporary Elevated Cloud Access observed during Lateral Movement: After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
-        "tactic_id": "TA0004",
-        "evidence_quote": "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "Use Alternate Authentication Material: Application Access Token observed during Lateral Movement: an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
+        "tactic_id": "TA0005",
+        "evidence_quote": "an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -650,33 +897,9 @@
         "step": 18,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Resource Hijacking observed during Impact: The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
+        "description": "Resource Hijacking observed during Impact: the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining",
         "tactic_id": "TA0040",
-        "evidence_quote": "The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
-        "evidence_sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 19,
-        "technique_id": "T1566",
-        "technique_name": "Phishing",
-        "description": "Phishing observed during Impact: They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-        "evidence_sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 20,
-        "technique_id": "T1584.001",
-        "technique_name": "Compromise Infrastructure: Domains",
-        "description": "Compromise Infrastructure: Domains observed during Impact: Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
-        "tactic_id": "",
-        "evidence_quote": "Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com...",
+        "evidence_quote": "the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining",
         "evidence_sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
@@ -685,288 +908,258 @@
     ],
     "edges": [
       {
-        "source": "T1552.005",
-        "target": "T1136.003",
+        "source": "T1583.001",
+        "target": "T1583.006",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Acquire Infrastructure: Domains",
+        "target_technique_name": "Acquire Infrastructure: Web Services",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "four domains were created with RegisterDomain",
+          "the TA was able to launch a LightSail instance"
+        ]
+      },
+      {
+        "source": "T1583.006",
+        "target": "T1585.002",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Acquire Infrastructure: Web Services",
+        "target_technique_name": "Establish Accounts: Email Accounts",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "the TA was able to launch a LightSail instance",
+          "the TA created the following identities with CreateEmailIdentity"
+        ]
+      },
+      {
+        "source": "T1585.002",
+        "target": "T1078.004",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Establish Accounts: Email Accounts",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "the TA created the following identities with CreateEmailIdentity",
+          "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1136.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user. The access key belonged to a user with Administrator Access.",
-          "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses."
+          "Access to the environment was achieved through an accidentally exposed long term access key belonging to an IAM user.",
+          "A CreateUser call was made for a new account DangerDev@protonmail.me"
         ]
       },
       {
         "source": "T1136.003",
         "target": "T1098.001",
-        "source_step": 2,
-        "target_step": 3,
+        "source_step": 5,
+        "target_step": 6,
         "source_technique_name": "Cloud Account",
         "target_technique_name": "Additional Cloud Credentials",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "A CreateUser call was made for a new account DangerDev@protonmail.me... The TA manually created a user account called ses.",
-          "Additionally the TA created access keys for existing accounts... CreateKeyPair"
+          "A CreateUser call was made for a new account DangerDev@protonmail.me",
+          "the TA created access keys for existing accounts"
         ]
       },
       {
         "source": "T1098.001",
         "target": "T1098.003",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Additional Cloud Credentials",
         "target_technique_name": "Additional Cloud Roles",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "Additionally the TA created access keys for existing accounts... CreateKeyPair",
-          "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant."
+          "the TA created access keys for existing accounts",
+          "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant"
         ]
       },
       {
         "source": "T1098.003",
-        "target": "T1078.004",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Additional Cloud Roles",
-        "target_technique_name": "Cloud Accounts",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "The TA used an interesting technique to achieve persistent access into the AWS account... the creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant.",
-          "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console."
-        ]
-      },
-      {
-        "source": "T1078.004",
-        "target": "T1548",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Abuse Elevation Control Mechanism",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "After this action the TA performed a CreateLoginProfile call which is used to give a user the ability to login through the AWS management console.",
-          "Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access"
-        ]
-      },
-      {
-        "source": "T1548",
-        "target": "T1036.005",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Abuse Elevation Control Mechanism",
-        "target_technique_name": "Match Legitimate Resource Name or Location",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "Using AttachRolePolicy the TA added the AWS managed AdministratorAccess policy to the AssumeRole that allows for external access",
-          "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*"
-        ]
-      },
-      {
-        "source": "T1036.005",
         "target": "T1070",
         "source_step": 7,
         "target_step": 8,
-        "source_technique_name": "Match Legitimate Resource Name or Location",
+        "source_technique_name": "Additional Cloud Roles",
         "target_technique_name": "Indicator Removal",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "The username ses is interesting, because it mimics accounts automatically created when using SES... the roleName is AWSLanding-Zones-ConfigRecorderRoles which was very similar to an existing role name... AWSeservedSSO_* vs. AWSReservedSSO_*",
-          "Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey"
+          "creation of a role that allows identities from an external AWS account to assume a privileged role in the victim tenant",
+          "Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey"
         ]
       },
       {
         "source": "T1070",
-        "target": "T1526",
+        "target": "T1036.005",
         "source_step": 8,
         "target_step": 9,
         "source_technique_name": "Indicator Removal",
-        "target_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Match Legitimate Resource Name or Location",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "Removing IAM users with DeleteUser, Cleaning up policies with DetachUserPolicy and DeleteUserPolicy, Deactivating long term access keys with UpdateAccessKey, Cleaning up long term access keys with DeleteAccessKey",
+          "Removing IAM users with DeleteUser ... Cleaning up policies with DetachUserPolicy and DeleteUserPolicy ... Deactivating long term access keys with UpdateAccessKey ... Cleaning up long term access keys with DeleteAccessKey",
+          "The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*"
+        ]
+      },
+      {
+        "source": "T1036.005",
+        "target": "T1562.001",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Match Legitimate Resource Name or Location",
+        "target_technique_name": "Disable or Modify Tools",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "The username ses is interesting, because it mimics accounts automatically created when using SES ... AWSeservedSSO_* vs. AWSReservedSSO_*",
           "Inspecting GuardDuty findings with ListFindings and GetFindings"
         ]
       },
       {
-        "source": "T1526",
-        "target": "T1578.002",
-        "source_step": 9,
-        "target_step": 10,
-        "source_technique_name": "Cloud Service Discovery",
-        "target_technique_name": "Create Cloud Instance",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "Inspecting GuardDuty findings with ListFindings and GetFindings",
-          "Creating a LightSail instance upon discovery with CreateInstances"
-        ]
-      },
-      {
-        "source": "T1578.002",
-        "target": "T1550.001",
+        "source": "T1562.001",
+        "target": "T1580",
         "source_step": 10,
         "target_step": 11,
-        "source_technique_name": "Create Cloud Instance",
-        "target_technique_name": "Application Access Token",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "Creating a LightSail instance upon discovery with CreateInstances",
-          "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account."
-        ]
-      },
-      {
-        "source": "T1550.001",
-        "target": "T1069.003",
-        "source_step": 11,
-        "target_step": 12,
-        "source_technique_name": "Application Access Token",
-        "target_technique_name": "Cloud Groups",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "UpdateLoginProfile where the TA uses the initially compromised account to update the console password of another account.",
-          "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account."
-        ]
-      },
-      {
-        "source": "T1069.003",
-        "target": "T1580",
-        "source_step": 12,
-        "target_step": 13,
-        "source_technique_name": "Cloud Groups",
+        "source_technique_name": "Disable or Modify Tools",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "After approximately two weeks the TA came back and ran ListUsers to list the IAM users in the AWS account.",
-          "The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account"
+          "Inspecting GuardDuty findings with ListFindings and GetFindings",
+          "Repeated calls were made towards SES with GetSendQuota and ListIdentities"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1530",
-        "source_step": 13,
-        "target_step": 14,
-        "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Data from Cloud Storage",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "The majority of this activity relates to EC2 instances... DescribeSecurityGroups event which lists all security groups in the account",
-          "ListBuckets"
-        ]
-      },
-      {
-        "source": "T1530",
         "target": "T1087.004",
-        "source_step": 14,
-        "target_step": 15,
-        "source_technique_name": "Data from Cloud Storage",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "ListBuckets",
-          "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys"
+          "Repeated calls were made towards SES with GetSendQuota and ListIdentities",
+          "the TA came back and ran ListUsers to list the IAM users in the AWS account"
         ]
       },
       {
         "source": "T1087.004",
-        "target": "T1518",
-        "source_step": 15,
-        "target_step": 16,
+        "target": "T1619",
+        "source_step": 12,
+        "target_step": 13,
         "source_technique_name": "Cloud Account",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "the TA came back and ran ListUsers to list the IAM users in the AWS account",
+          "ListBuckets"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1069.003",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Groups",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "ListBuckets",
+          "ListGroupsForUser"
+        ]
+      },
+      {
+        "source": "T1069.003",
+        "target": "T1518",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Cloud Groups",
         "target_technique_name": "Software Discovery",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "ListGroupsForUser, ListInstanceProfiles, ListSSHPublicKeys",
-          "SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager."
+          "ListGroupsForUser",
+          "SimulatePrincipalPolicy"
         ]
       },
       {
         "source": "T1518",
-        "target": "T1548.005",
-        "source_step": 16,
-        "target_step": 17,
+        "target": "T1526",
+        "source_step": 15,
+        "target_step": 16,
         "source_technique_name": "Software Discovery",
-        "target_technique_name": "Temporary Elevated Cloud Access",
+        "target_technique_name": "Cloud Service Discovery",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "SimulatePrincipalPolicy... the TA used this service to test certain actions... they were interested in actions related to the SSM service and AWS Secrets Manager.",
-          "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472)."
+          "SimulatePrincipalPolicy",
+          "DescribeSecurityGroups event which lists all security groups in the account"
         ]
       },
       {
-        "source": "T1548.005",
+        "source": "T1526",
+        "target": "T1550.001",
+        "source_step": 16,
+        "target_step": 17,
+        "source_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
+        ],
+        "evidence_quotes": [
+          "DescribeSecurityGroups event which lists all security groups in the account",
+          "an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)"
+        ]
+      },
+      {
+        "source": "T1550.001",
         "target": "T1496",
         "source_step": 17,
         "target_step": 18,
-        "source_technique_name": "Temporary Elevated Cloud Access",
+        "source_technique_name": "Application Access Token",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
         ],
         "evidence_quotes": [
-          "After the creation of both roles, an AssumeRole event was observed... The TA assumed the role from their own account (671050157472).",
-          "The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs."
-        ]
-      },
-      {
-        "source": "T1496",
-        "target": "T1566",
-        "source_step": 18,
-        "target_step": 19,
-        "source_technique_name": "Resource Hijacking",
-        "target_technique_name": "Phishing",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "The TA launched three instances with instance type p3.16xlarge... This instance type is much better for crypto mining as it has a GPU with 128GB and 64 vCPUs.",
-          "They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam."
-        ]
-      },
-      {
-        "source": "T1566",
-        "target": "T1584.001",
-        "source_step": 19,
-        "target_step": 20,
-        "source_technique_name": "Phishing",
-        "target_technique_name": "Compromise Infrastructure: Domains",
-        "sources": [
-          "https://www.invictus-ir.com/news/the-curious-case-of-dangerdev-protonmail-me"
-        ],
-        "evidence_quotes": [
-          "They were mostly aimed at individuals to phish for cryptocurrency exchange credentials and general spam.",
-          "Four domains were created with RegisterDomain... login.3dlntl-paypal.com, paypal-lntl.com, 3dlntl-paypal.com..."
+          "an AssumeRole event was observed ... The TA assumed the role from their own account (671050157472)",
+          "the TA launched three instances with instance type p3.16xlarge ... This instance type is much better for crypto mining"
         ]
       }
     ]
@@ -977,9 +1170,9 @@
   },
   "schema_version": "1.0",
   "incident_slug": "invictus-ir-2024-january",
-  "analyzed_at": "2026-04-15T21:25:47.998882+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 30258,
+  "analyzed_at": "2026-04-23T18:45:40.396812+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 56783,
   "incident_name": "Invictus IR",
   "incident_date": "2024, January",
   "incident_root_cause": "Exposed IAM User (Administrator) Access Key",

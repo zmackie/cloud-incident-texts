@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "Private GitHub Repo with AWS credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -27,13 +14,26 @@
       ]
     },
     {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": true,
+          "evidence_quote": "Root Cause: Private GitHub Repo with AWS credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
           "evidence_quote": "gain access to the Amazon servers that stored data for those companies",
           "validated": true
         }
@@ -44,9 +44,9 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
           "evidence_quote": "they then downloaded private customer information",
           "validated": true
         }
@@ -60,7 +60,7 @@
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
           "inferred": false,
-          "evidence_quote": "anonymously contacted security officials at Lynda.com and asked for payment in exchange for the data",
+          "evidence_quote": "tried to extort them for hundreds of thousands of dollars in bitcoin",
           "validated": true
         }
       ]
@@ -71,54 +71,117 @@
       "step": 1,
       "technique_id": "T1552.001",
       "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attackers discovered AWS credentials stored in a private GitHub repository belonging to Lynda.com/LinkedIn employees.",
-      "evidence_quote": "Private GitHub Repo with AWS credentials",
+      "description": "Attackers obtained AWS credentials belonging to Lynda.com employees from a private GitHub repository.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "event_time": "2016",
+      "event_time_precision": "year",
+      "evidence_quote": "Root Cause: Private GitHub Repo with AWS credentials",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "http://archive.today/oU2ZL"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attackers used the harvested AWS credentials to authenticate to Lynda.com's Amazon Web Services accounts, gaining access to the cloud environment.",
+      "description": "Attackers used the stolen AWS credentials of Lynda.com employees to authenticate to the company's AWS environment.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "event_time": "2016",
+      "event_time_precision": "year",
       "evidence_quote": "they were able to enter by using the credentials of the Amazon Web Services accounts belonging to Uber and Lynda.com employees",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "http://archive.today/oU2ZL"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 2174,
+          "char_end": 2593,
+          "quote": "they were able to enter by using the credentials of the Amazon Web Services accounts belonging to Uber and Lynda.com employees"
+        },
+        {
+          "chunk_id": "link_00.md#c029",
+          "source_file": "link_00.md",
+          "char_start": 7865,
+          "char_end": 8284,
+          "quote": "they were able to enter by using the credentials of the Amazon Web Services accounts belonging to Uber and Lynda.com employees"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Attackers accessed and enumerated Amazon servers/storage holding Lynda.com's customer data to locate target datasets.",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers accessed Amazon servers storing Lynda.com customer data.",
+      "aws_services_involved": [
+        "S3",
+        "EC2"
+      ],
+      "event_time": "2016",
+      "event_time_precision": "year",
       "evidence_quote": "gain access to the Amazon servers that stored data for those companies",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "http://archive.today/oU2ZL"
       ],
-      "aws_services_involved": [
-        "Amazon S3",
-        "Amazon EC2"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 2174,
+          "char_end": 2593,
+          "quote": "gain access to the Amazon servers that stored data for those companies"
+        },
+        {
+          "chunk_id": "link_00.md#c029",
+          "source_file": "link_00.md",
+          "char_start": 7865,
+          "char_end": 8284,
+          "quote": "gain access to the Amazon servers that stored data for those companies"
+        }
       ],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attackers downloaded private customer information for approximately 9.5 million Lynda.com users from AWS-hosted storage.",
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Attackers downloaded private customer information from the Amazon servers.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": "2016",
+      "event_time_precision": "year",
       "evidence_quote": "they then downloaded private customer information",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "http://archive.today/oU2ZL"
       ],
-      "aws_services_involved": [
-        "Amazon S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 2174,
+          "char_end": 2593,
+          "quote": "they then downloaded private customer information"
+        },
+        {
+          "chunk_id": "link_00.md#c029",
+          "source_file": "link_00.md",
+          "char_start": 7865,
+          "char_end": 8284,
+          "quote": "they then downloaded private customer information"
+        }
       ],
       "validated": true
     },
@@ -126,90 +189,111 @@
       "step": 5,
       "technique_id": "T1657",
       "technique_name": "Financial Theft",
-      "description": "Attackers anonymously contacted Lynda.com security officials using pseudonyms and untraceable accounts, demanding payment in bitcoin in exchange for the stolen data (extortion).",
-      "evidence_quote": "Mr. Glover and Mr. Mereacre, using pseudonyms and untraceable accounts, contacted security officials at Lynda.com and asked for payment in exchange for the data",
+      "description": "Attackers anonymously contacted Lynda.com security officials and attempted to extort payment in bitcoin in exchange for the stolen data.",
+      "aws_services_involved": [],
+      "event_time": "2016",
+      "event_time_precision": "year",
+      "evidence_quote": "contacted security officials at Lynda.com and asked for payment in exchange for the data",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "http://archive.today/oU2ZL"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c011",
+          "source_file": "link_00.clean.md",
+          "char_start": 2595,
+          "char_end": 2888,
+          "quote": "contacted security officials at Lynda.com and asked for payment in exchange for the data"
+        },
+        {
+          "chunk_id": "link_00.md#c030",
+          "source_file": "link_00.md",
+          "char_start": 8286,
+          "char_end": 8579,
+          "quote": "contacted security officials at Lynda.com and asked for payment in exchange for the data"
+        }
+      ],
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS IAM",
-    "Amazon S3",
-    "Amazon EC2"
+    "IAM",
+    "S3",
+    "EC2"
   ],
-  "impact_type": "Data Exfiltration and Extortion",
-  "confidence_score": 0.82,
-  "initial_access_vector": "AWS credentials discovered in a private GitHub repository belonging to Lynda.com employees",
+  "impact_type": "Data Exfiltration / Extortion",
+  "confidence_score": 0.6,
   "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Use of AWS credentials exposed in a private GitHub repository belonging to Lynda.com employees.",
+  "persistence_mechanism": "None described",
+  "privilege_escalation": "None described; attackers used credentials that already had access to data stores.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "Attackers discovered AWS credentials stored in a private GitHub repository belonging to Lynda.com/LinkedIn employees.",
+        "description": "Attackers obtained AWS credentials belonging to Lynda.com employees from a private GitHub repository.",
         "tactic_id": "TA0006",
-        "evidence_quote": "Private GitHub Repo with AWS credentials",
+        "evidence_quote": "Root Cause: Private GitHub Repo with AWS credentials",
         "evidence_sources": [
           "http://archive.today/oU2ZL"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "IAM"
+        ]
       },
       {
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attackers used the harvested AWS credentials to authenticate to Lynda.com's Amazon Web Services accounts, gaining access to the cloud environment.",
+        "description": "Attackers used the stolen AWS credentials of Lynda.com employees to authenticate to the company's AWS environment.",
         "tactic_id": "TA0005",
         "evidence_quote": "they were able to enter by using the credentials of the Amazon Web Services accounts belonging to Uber and Lynda.com employees",
         "evidence_sources": [
           "http://archive.today/oU2ZL"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "Attackers accessed and enumerated Amazon servers/storage holding Lynda.com's customer data to locate target datasets.",
-        "tactic_id": "TA0007",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attackers accessed Amazon servers storing Lynda.com customer data.",
+        "tactic_id": "TA0009",
         "evidence_quote": "gain access to the Amazon servers that stored data for those companies",
         "evidence_sources": [
           "http://archive.today/oU2ZL"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon EC2"
+          "S3",
+          "EC2"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Attackers downloaded private customer information for approximately 9.5 million Lynda.com users from AWS-hosted storage.",
-        "tactic_id": "TA0009",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Attackers downloaded private customer information from the Amazon servers.",
+        "tactic_id": "TA0010",
         "evidence_quote": "they then downloaded private customer information",
         "evidence_sources": [
           "http://archive.today/oU2ZL"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
         "step": 5,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "Attackers anonymously contacted Lynda.com security officials using pseudonyms and untraceable accounts, demanding payment in bitcoin in exchange for the stolen data (extortion).",
+        "description": "Attackers anonymously contacted Lynda.com security officials and attempted to extort payment in bitcoin in exchange for the stolen data.",
         "tactic_id": "TA0040",
-        "evidence_quote": "Mr. Glover and Mr. Mereacre, using pseudonyms and untraceable accounts, contacted security officials at Lynda.com and asked for payment in exchange for the data",
+        "evidence_quote": "contacted security officials at Lynda.com and asked for payment in exchange for the data",
         "evidence_sources": [
           "http://archive.today/oU2ZL"
         ],
@@ -228,17 +312,17 @@
           "http://archive.today/oU2ZL"
         ],
         "evidence_quotes": [
-          "Private GitHub Repo with AWS credentials",
+          "Root Cause: Private GitHub Repo with AWS credentials",
           "they were able to enter by using the credentials of the Amazon Web Services accounts belonging to Uber and Lynda.com employees"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1619",
+        "target": "T1530",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "http://archive.today/oU2ZL"
         ],
@@ -248,12 +332,12 @@
         ]
       },
       {
-        "source": "T1619",
-        "target": "T1530",
+        "source": "T1530",
+        "target": "T1567",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Cloud Storage Object Discovery",
-        "target_technique_name": "Data from Cloud Storage",
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "http://archive.today/oU2ZL"
         ],
@@ -263,18 +347,18 @@
         ]
       },
       {
-        "source": "T1530",
+        "source": "T1567",
         "target": "T1657",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Data from Cloud Storage",
+        "source_technique_name": "Exfiltration Over Web Service",
         "target_technique_name": "Financial Theft",
         "sources": [
           "http://archive.today/oU2ZL"
         ],
         "evidence_quotes": [
           "they then downloaded private customer information",
-          "Mr. Glover and Mr. Mereacre, using pseudonyms and untraceable accounts, contacted security officials at Lynda.com and asked for payment in exchange for the data"
+          "contacted security officials at Lynda.com and asked for payment in exchange for the data"
         ]
       }
     ]
@@ -285,7 +369,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "lyndacom-2016-december",
-  "analyzed_at": "2026-04-15T20:59:59.106379+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 26659
+  "analyzed_at": "2026-04-23T18:47:31.693523+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 33349
 }

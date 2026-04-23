@@ -5,11 +5,31 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
+          "technique_id": "T1199",
+          "technique_name": "Trusted Relationship",
+          "inferred": false,
+          "evidence_quote": "the attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
+          "validated": true
+        },
+        {
           "technique_id": "T1528",
           "technique_name": "Steal Application Access Token",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1213.003",
+          "technique_name": "Code Repositories",
+          "subtechnique_id": "T1213.003",
+          "inferred": false,
+          "evidence_quote": "the actor was able to exfiltrate a set of private npm repositories, some of which included secrets such as AWS access keys",
           "validated": true
         }
       ]
@@ -20,46 +40,24 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "the actor was able to exfiltrate a set of private npm repositories, some of which included secrets such as AWS access keys",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "subtechnique_id": "T1552.004",
-          "inferred": true,
           "evidence_quote": "private npm repositories, some of which included secrets such as AWS access keys",
-          "validated": false
+          "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1550.001",
+          "technique_name": "Application Access Token",
+          "subtechnique_id": "T1550.001",
           "inferred": false,
           "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
           "validated": true
         }
       ]
@@ -71,32 +69,16 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets...the actor exfiltrated a small subset of private package contents",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "exfiltrate an older backup of the skimdb.npmjs.com mirror, which included metadata and package manifests for all public and private packages",
+          "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror",
           "validated": true
         },
         {
-          "technique_id": "T1552.003",
-          "technique_name": "Unsecured Credentials: Bash History",
-          "subtechnique_id": null,
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
           "inferred": true,
-          "evidence_quote": "a subset of npm service logs stored in our internal logging system contained data that was not properly sanitized to remove credentials received in requests to npm services",
-          "validated": false
+          "evidence_quote": "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets",
+          "validated": true
         }
       ]
     }
@@ -106,100 +88,251 @@
       "step": 1,
       "technique_id": "T1528",
       "technique_name": "Steal Application Access Token",
-      "description": "Attacker obtained stolen OAuth user tokens originally issued to third-party integrators Heroku and Travis CI, granting access to GitHub.com organizations including the npm organization.",
-      "evidence_quote": "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI, to download data from dozens of GitHub.com organizations",
+      "description": "Attacker obtained OAuth user tokens issued to third-party GitHub integrators Heroku and Travis CI (not via compromise of GitHub itself).",
       "aws_services_involved": [],
+      "event_time": "2022-04",
+      "event_time_precision": "month",
+      "evidence_quote": "the attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1213",
-      "technique_name": "Data from Information Repositories",
-      "description": "Using stolen OAuth tokens, attacker cloned and exfiltrated a set of private npm GitHub repositories.",
-      "evidence_quote": "Using their initial foothold of OAuth user tokens for GitHub.com, the actor was able to exfiltrate a set of private npm repositories",
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "description": "Attacker used the stolen third-party OAuth tokens to authenticate to GitHub.com and access npm's private repositories via the trusted integrator relationship.",
       "aws_services_involved": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm.",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c011",
+          "source_file": "link_00.clean.md",
+          "char_start": 3055,
+          "char_end": 3721,
+          "quote": "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm."
+        },
+        {
+          "chunk_id": "link_00.md#c109",
+          "source_file": "link_00.md",
+          "char_start": 21606,
+          "char_end": 22272,
+          "quote": "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm."
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Within the exfiltrated private repositories, the attacker found plaintext AWS access keys embedded in repository files.",
-      "evidence_quote": "a set of private npm repositories, some of which included secrets such as AWS access keys",
+      "technique_id": "T1213.003",
+      "technique_name": "Code Repositories",
+      "description": "Attacker exfiltrated a set of private npm GitHub repositories containing source code and secrets.",
       "aws_services_involved": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "the actor was able to exfiltrate a set of private npm repositories",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 4058,
+          "char_end": 4247,
+          "quote": "the actor was able to exfiltrate a set of private npm repositories"
+        },
+        {
+          "chunk_id": "link_00.md#c112",
+          "source_file": "link_00.md",
+          "char_start": 22609,
+          "char_end": 22798,
+          "quote": "the actor was able to exfiltrate a set of private npm repositories"
+        }
       ],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker used the harvested AWS access keys to authenticate to npm's AWS cloud infrastructure, escalating from GitHub access to AWS infrastructure access.",
-      "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
+      "technique_id": "T1552.001",
+      "technique_name": "Credentials In Files",
+      "description": "Attacker harvested AWS access keys stored as secrets inside the stolen private npm repositories.",
       "aws_services_involved": [
-        "AWS IAM"
+        "IAM"
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "some of which included secrets such as AWS access keys",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 4058,
+          "char_end": 4247,
+          "quote": "some of which included secrets such as AWS access keys"
+        },
+        {
+          "chunk_id": "link_00.md#c112",
+          "source_file": "link_00.md",
+          "char_start": 22609,
+          "char_end": 22798,
+          "quote": "some of which included secrets such as AWS access keys"
+        }
       ],
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "With AWS access, the attacker enumerated S3 bucket contents, obtaining directory listings of npm registry package storage.",
-      "evidence_quote": "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used the stolen AWS access keys to authenticate to and access npm's AWS infrastructure.",
       "aws_services_involved": [
-        "Amazon S3"
+        "IAM",
+        "AWS"
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attacker exfiltrated multiple datasets from npm's AWS cloud storage: a skimdb.npmjs.com backup (containing ~100k user records from 2015, package manifests and metadata), S3 inventory CSVs listing all private package names/versions, and private package contents from two organizations.",
-      "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files...the actor exfiltrated a small subset of private package contents belonging to two specific organizations",
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker enumerated S3 buckets and inventory, obtaining CSV directory listings of private package names and versions.",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
       "evidence_sources": [
         "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 5824,
+          "char_end": 6128,
+          "quote": "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry"
+        },
+        {
+          "chunk_id": "link_00.md#c116",
+          "source_file": "link_00.md",
+          "char_start": 24375,
+          "char_end": 24679,
+          "quote": "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker exfiltrated an older backup of skimdb.npmjs.com (April 7, 2021) from npm's AWS cloud storage, containing package metadata/manifests and a 2015 user archive with ~100k usernames, password hashes, and emails.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror",
+      "evidence_sources": [
+        "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c016",
+          "source_file": "link_00.clean.md",
+          "char_start": 4349,
+          "char_end": 4799,
+          "quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror"
+        },
+        {
+          "chunk_id": "link_00.md#c114",
+          "source_file": "link_00.md",
+          "char_start": 22900,
+          "char_end": 23350,
+          "quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker exfiltrated private package contents from S3 belonging to two specific npm customer organizations.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "the actor exfiltrated a small subset of private package contents belonging to two specific organizations",
+      "evidence_sources": [
+        "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 6130,
+          "char_end": 6321,
+          "quote": "the actor exfiltrated a small subset of private package contents belonging to two specific organizations"
+        },
+        {
+          "chunk_id": "link_00.md#c117",
+          "source_file": "link_00.md",
+          "char_start": 24681,
+          "char_end": 24872,
+          "quote": "the actor exfiltrated a small subset of private package contents belonging to two specific organizations"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "AWS IAM"
+    "S3",
+    "IAM"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.92,
+  "confidence_score": 0.9,
   "data_exfiltrated": true,
-  "initial_access_vector": "Stolen third-party OAuth user tokens (Heroku and Travis CI integrations) used to access GitHub.com organizations, including the npm organization's private repositories",
-  "persistence_mechanism": null,
-  "privilege_escalation": "AWS access keys discovered in exfiltrated private GitHub repositories were used to authenticate directly to npm's AWS infrastructure (T1078.004)",
+  "initial_access_vector": "Stolen OAuth user tokens issued to third-party GitHub integrators (Heroku and Travis CI) used to access npm's private GitHub repositories.",
+  "persistence_mechanism": "None documented; access was maintained via stolen OAuth tokens and AWS access keys for the duration of the intrusion.",
+  "privilege_escalation": "Pivoted from GitHub repo access to AWS infrastructure by harvesting AWS access keys hardcoded in private npm repositories.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1528",
         "technique_name": "Steal Application Access Token",
-        "description": "Attacker obtained stolen OAuth user tokens originally issued to third-party integrators Heroku and Travis CI, granting access to GitHub.com organizations including the npm organization.",
+        "description": "Attacker obtained OAuth user tokens issued to third-party GitHub integrators Heroku and Travis CI (not via compromise of GitHub itself).",
         "tactic_id": "TA0006",
-        "evidence_quote": "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI, to download data from dozens of GitHub.com organizations",
+        "evidence_quote": "the attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
@@ -207,11 +340,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1213",
-        "technique_name": "Data from Information Repositories",
-        "description": "Using stolen OAuth tokens, attacker cloned and exfiltrated a set of private npm GitHub repositories.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "Using their initial foothold of OAuth user tokens for GitHub.com, the actor was able to exfiltrate a set of private npm repositories",
+        "technique_id": "T1199",
+        "technique_name": "Trusted Relationship",
+        "description": "Attacker used the stolen third-party OAuth tokens to authenticate to GitHub.com and access npm's private repositories via the trusted integrator relationship.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm.",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
@@ -219,11 +352,11 @@
       },
       {
         "step": 3,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "Within the exfiltrated private repositories, the attacker found plaintext AWS access keys embedded in repository files.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "a set of private npm repositories, some of which included secrets such as AWS access keys",
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Attacker exfiltrated a set of private npm GitHub repositories containing source code and secrets.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the actor was able to exfiltrate a set of private npm repositories",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
@@ -231,121 +364,165 @@
       },
       {
         "step": 4,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker harvested AWS access keys stored as secrets inside the stolen private npm repositories.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "some of which included secrets such as AWS access keys",
+        "evidence_sources": [
+          "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker used the harvested AWS access keys to authenticate to npm's AWS cloud infrastructure, escalating from GitHub access to AWS infrastructure access.",
+        "description": "Attacker used the stolen AWS access keys to authenticate to and access npm's AWS infrastructure.",
         "tactic_id": "TA0005",
         "evidence_quote": "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
-        ]
-      },
-      {
-        "step": 5,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "With AWS access, the attacker enumerated S3 bucket contents, obtaining directory listings of npm registry package storage.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
-        "evidence_sources": [
-          "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
-        ],
-        "aws_services_involved": [
-          "Amazon S3"
+          "IAM",
+          "AWS"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Attacker exfiltrated multiple datasets from npm's AWS cloud storage: a skimdb.npmjs.com backup (containing ~100k user records from 2015, package manifests and metadata), S3 inventory CSVs listing all private package names/versions, and private package contents from two organizations.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files...the actor exfiltrated a small subset of private package contents belonging to two specific organizations",
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker enumerated S3 buckets and inventory, obtaining CSV directory listings of private package names and versions.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
         "evidence_sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker exfiltrated an older backup of skimdb.npmjs.com (April 7, 2021) from npm's AWS cloud storage, containing package metadata/manifests and a 2015 user archive with ~100k usernames, password hashes, and emails.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror",
+        "evidence_sources": [
+          "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker exfiltrated private package contents from S3 belonging to two specific npm customer organizations.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the actor exfiltrated a small subset of private package contents belonging to two specific organizations",
+        "evidence_sources": [
+          "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+        ],
+        "aws_services_involved": [
+          "S3"
         ]
       }
     ],
     "edges": [
       {
         "source": "T1528",
-        "target": "T1213",
+        "target": "T1199",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Steal Application Access Token",
-        "target_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Trusted Relationship",
         "sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "evidence_quotes": [
-          "an attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI, to download data from dozens of GitHub.com organizations",
-          "Using their initial foothold of OAuth user tokens for GitHub.com, the actor was able to exfiltrate a set of private npm repositories"
+          "the attacker abused stolen OAuth user tokens issued to two third-party OAuth integrators, Heroku and Travis CI",
+          "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm."
         ]
       },
       {
-        "source": "T1213",
-        "target": "T1552.001",
+        "source": "T1199",
+        "target": "T1213.003",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Data from Information Repositories",
+        "source_technique_name": "Trusted Relationship",
+        "target_technique_name": "Code Repositories",
+        "sources": [
+          "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
+        ],
+        "evidence_quotes": [
+          "to download data from dozens of GitHub.com organizations. One of the victim organizations impacted was npm.",
+          "the actor was able to exfiltrate a set of private npm repositories"
+        ]
+      },
+      {
+        "source": "T1213.003",
+        "target": "T1552.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Code Repositories",
         "target_technique_name": "Credentials In Files",
         "sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "evidence_quotes": [
-          "Using their initial foothold of OAuth user tokens for GitHub.com, the actor was able to exfiltrate a set of private npm repositories",
-          "a set of private npm repositories, some of which included secrets such as AWS access keys"
+          "the actor was able to exfiltrate a set of private npm repositories",
+          "some of which included secrets such as AWS access keys"
         ]
       },
       {
         "source": "T1552.001",
         "target": "T1078.004",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Credentials In Files",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "evidence_quotes": [
-          "a set of private npm repositories, some of which included secrets such as AWS access keys",
+          "some of which included secrets such as AWS access keys",
           "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1619",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1580",
+        "source_step": 5,
+        "target_step": 6,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "evidence_quotes": [
           "Using one of these AWS access keys, the actor was able to gain access to npm's AWS infrastructure",
-          "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry"
+          "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry"
         ]
       },
       {
-        "source": "T1619",
+        "source": "T1580",
         "target": "T1530",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Cloud Storage Object Discovery",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://github.blog/2022-05-26-npm-security-update-oauth-tokens/"
         ],
         "evidence_quotes": [
-          "the actor exfiltrated a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
-          "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror...the actor exfiltrated a set of npm inventory CSV files...the actor exfiltrated a small subset of private package contents belonging to two specific organizations"
+          "a set of npm inventory CSV files containing directory listings of the S3 buckets storing packages for the npm registry",
+          "the actor was able to exfiltrate an older backup of the skimdb.npmjs.com mirror"
         ]
       }
     ]
@@ -356,7 +533,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "npm-2022-april",
-  "analyzed_at": "2026-04-15T21:01:59.405990+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 36371
+  "analyzed_at": "2026-04-23T18:49:14.298949+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 47872
 }

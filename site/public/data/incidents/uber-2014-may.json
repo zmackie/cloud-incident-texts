@@ -1,5 +1,215 @@
 {
+  "aws_services": [
+    "S3",
+    "IAM",
+    "CloudTrail"
+  ],
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Uber engineer inadvertently posted an AWS access key in a public GitHub Gist (a data analysis script) in March 2014. The key remained publicly accessible for months.",
+      "event_time": "2014-03",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014",
+      "evidence_sources": [
+        "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c016",
+          "source_file": "link_00.clean.md",
+          "char_start": 3672,
+          "char_end": 4049,
+          "quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014"
+        },
+        {
+          "chunk_id": "link_00.md#c041",
+          "source_file": "link_00.md",
+          "char_start": 12406,
+          "char_end": 12783,
+          "quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1596",
+      "technique_name": "Search Open Technical Databases",
+      "description": "Adversary discovered the AWS credential by visiting the public GitHub Gist page containing the data analysis script.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "aws_services_involved": [],
+      "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c024",
+          "source_file": "link_01.clean.md",
+          "char_start": 7822,
+          "char_end": 8401,
+          "quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist."
+        },
+        {
+          "chunk_id": "link_01.md#c040",
+          "source_file": "link_01.md",
+          "char_start": 11293,
+          "char_end": 11872,
+          "quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist."
+        }
+      ],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1090.003",
+      "technique_name": "Proxy: Multi-hop Proxy",
+      "description": "Adversary pivoted from the initial Comcast IP to use a Scandinavian VPN service to anonymize traffic prior to accessing AWS.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "aws_services_involved": [],
+      "evidence_quote": "the address from which the hack was launched is associated with a virtual private network service ... based in a Scandinavian country",
+      "evidence_sources": [
+        "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 4,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Adversary used the leaked Uber AWS access key to authenticate to the AWS API as a valid Uber cloud identity.",
+      "event_time": "2014-05-12",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "IAM",
+        "S3"
+      ],
+      "evidence_quote": "someone had used an Uber digital security key to access the driver database",
+      "evidence_sources": [
+        "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008",
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c016",
+          "source_file": "link_00.clean.md",
+          "char_start": 3672,
+          "char_end": 4049,
+          "quote": "someone had used an Uber digital security key to access the driver database"
+        },
+        {
+          "chunk_id": "link_00.md#c041",
+          "source_file": "link_00.md",
+          "char_start": 12406,
+          "char_end": 12783,
+          "quote": "someone had used an Uber digital security key to access the driver database"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Adversary enumerated S3 buckets/objects to identify database prune files stored in S3.",
+      "event_time": "2014-05-12",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "exfiltrate several objects containing database prunes held in an S3 bucket",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c024",
+          "source_file": "link_01.clean.md",
+          "char_start": 7822,
+          "char_end": 8401,
+          "quote": "exfiltrate several objects containing database prunes held in an S3 bucket"
+        },
+        {
+          "chunk_id": "link_01.md#c040",
+          "source_file": "link_01.md",
+          "char_start": 11293,
+          "char_end": 11872,
+          "quote": "exfiltrate several objects containing database prunes held in an S3 bucket"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Adversary downloaded database prune objects from the S3 bucket containing ~50,000 records including names and driver's license numbers.",
+      "event_time": "2014-05-12",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312 ... These S3 objects contained about 50,000 records, including names and driver's licenses.",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Adversary exfiltrated the downloaded S3 objects out over the internet (via VPN) to their own infrastructure.",
+      "event_time": "2014-05-12",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "to exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312",
+      "evidence_sources": [
+        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "confidence_score": 0.85,
+  "data_exfiltrated": true,
+  "impact_type": "Data Exfiltration",
+  "initial_access_vector": "Leaked AWS access key in a public GitHub Gist (Uber data analysis script), discovered by the adversary and used to call the AWS API.",
+  "persistence_mechanism": "None documented; access persisted only through continued validity of the leaked static AWS credential which was not rotated.",
+  "privilege_escalation": "None; the leaked credential already had sufficient privileges to read the S3 bucket containing database prunes.",
   "tactics_used": [
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1596",
+          "technique_name": "Search Open Technical Databases",
+          "inferred": true,
+          "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist.",
+          "validated": false
+        }
+      ]
+    },
     {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
@@ -7,9 +217,8 @@
         {
           "technique_id": "T1552.001",
           "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
+          "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub",
           "validated": true
         }
       ]
@@ -21,37 +230,8 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... to exfiltrate several objects containing database prunes held in an S3 bucket.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses.",
+          "evidence_quote": "someone had used an Uber digital security key to access the driver database",
           "validated": true
         }
       ]
@@ -63,10 +243,22 @@
         {
           "technique_id": "T1090.003",
           "technique_name": "Proxy: Multi-hop Proxy",
-          "subtechnique_id": "T1090.003",
           "inferred": false,
-          "evidence_quote": "The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
+          "evidence_quote": "the address from which the hack was launched is associated with a virtual private network service ... based in a Scandinavian country",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "exfiltrate several objects containing database prunes held in an S3 bucket",
+          "validated": true
         }
       ]
     },
@@ -75,163 +267,77 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "A database prune redacts production data and generates datasets for local development... This pruning process was incomplete at removing sensitive data, putting customer data at risk.",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "These S3 objects contained about 50,000 records, including names and driver's licenses.",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1593.003",
-          "technique_name": "Search Open Websites/Domains: Code Repositories",
-          "subtechnique_id": "T1593.003",
-          "inferred": false,
-          "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach.",
-          "validated": false
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "to exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312",
+          "validated": true
         }
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1593.003",
-      "technique_name": "Search Open Websites/Domains: Code Repositories",
-      "description": "The attacker discovered an Uber data analysis script (GitHub Gist) that had been inadvertently published publicly on GitHub in March 2014, containing AWS IAM key material.",
-      "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach, the court filings show, and remained there for months.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
-        "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 2,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "The attacker harvested AWS credentials (IAM access key) from the publicly accessible GitHub Gist containing an Uber data analysis script.",
-      "evidence_quote": "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used the stolen AWS credentials to authenticate to the AWS API, accessing Uber's cloud environment without authorization.",
-      "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "The attacker pivoted from a Comcast IP address (used to discover the credentials) to a Scandinavian VPN service to anonymize the actual exfiltration activity and avoid attribution.",
-      "evidence_quote": "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
-        "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 5,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Using the stolen AWS credentials and the S3 Browser tool, the attacker browsed Uber's S3 buckets to identify available objects, discovering database prune files stored in the cloud.",
-      "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The attacker exfiltrated approximately 50,000 records (driver names and license numbers) stored as database prune objects in Uber's S3 bucket on 2014-05-12.",
-      "evidence_quote": "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses.",
-      "evidence_sources": [
-        "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "S3",
-    "IAM",
-    "CloudTrail"
-  ],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.92,
-  "initial_access_vector": "AWS IAM credentials inadvertently committed to a public GitHub Gist as part of a data analysis script, discovered and harvested by the attacker",
-  "data_exfiltrated": true,
-  "persistence_mechanism": "None identified in the sources; the attack appears to have been a one-time opportunistic exfiltration using the stolen static IAM key",
-  "privilege_escalation": "None described; the stolen AWS credential had sufficient permissions to access the S3 bucket directly",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1593.003",
-        "technique_name": "Search Open Websites/Domains: Code Repositories",
-        "description": "The attacker discovered an Uber data analysis script (GitHub Gist) that had been inadvertently published publicly on GitHub in March 2014, containing AWS IAM key material.",
-        "tactic_id": "",
-        "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach, the court filings show, and remained there for months.",
-        "evidence_sources": [
-          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
-          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 2,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "The attacker harvested AWS credentials (IAM access key) from the publicly accessible GitHub Gist containing an Uber data analysis script.",
+        "description": "Uber engineer inadvertently posted an AWS access key in a public GitHub Gist (a data analysis script) in March 2014. The key remained publicly accessible for months.",
         "tactic_id": "TA0006",
-        "evidence_quote": "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
+        "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014",
         "evidence_sources": [
-          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
         ],
         "aws_services_involved": [
           "IAM"
         ]
       },
       {
+        "step": 2,
+        "technique_id": "T1596",
+        "technique_name": "Search Open Technical Databases",
+        "description": "Adversary discovered the AWS credential by visiting the public GitHub Gist page containing the data analysis script.",
+        "tactic_id": "",
+        "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": []
+      },
+      {
         "step": 3,
+        "technique_id": "T1090.003",
+        "technique_name": "Proxy: Multi-hop Proxy",
+        "description": "Adversary pivoted from the initial Comcast IP to use a Scandinavian VPN service to anonymize traffic prior to accessing AWS.",
+        "tactic_id": "",
+        "evidence_quote": "the address from which the hack was launched is associated with a virtual private network service ... based in a Scandinavian country",
+        "evidence_sources": [
+          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker used the stolen AWS credentials to authenticate to the AWS API, accessing Uber's cloud environment without authorization.",
+        "description": "Adversary used the leaked Uber AWS access key to authenticate to the AWS API as a valid Uber cloud identity.",
         "tactic_id": "TA0005",
-        "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket.",
+        "evidence_quote": "someone had used an Uber digital security key to access the driver database",
         "evidence_sources": [
+          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008",
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
         ],
         "aws_services_involved": [
@@ -240,25 +346,12 @@
         ]
       },
       {
-        "step": 4,
-        "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "The attacker pivoted from a Comcast IP address (used to discover the credentials) to a Scandinavian VPN service to anonymize the actual exfiltration activity and avoid attribution.",
-        "tactic_id": "",
-        "evidence_quote": "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
-        "evidence_sources": [
-          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
-          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
-        ],
-        "aws_services_involved": []
-      },
-      {
         "step": 5,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "Using the stolen AWS credentials and the S3 Browser tool, the attacker browsed Uber's S3 buckets to identify available objects, discovering database prune files stored in the cloud.",
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Adversary enumerated S3 buckets/objects to identify database prune files stored in S3.",
         "tactic_id": "TA0007",
-        "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+        "evidence_quote": "exfiltrate several objects containing database prunes held in an S3 bucket",
         "evidence_sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
         ],
@@ -270,9 +363,23 @@
         "step": 6,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker exfiltrated approximately 50,000 records (driver names and license numbers) stored as database prune objects in Uber's S3 bucket on 2014-05-12.",
+        "description": "Adversary downloaded database prune objects from the S3 bucket containing ~50,000 records including names and driver's license numbers.",
         "tactic_id": "TA0009",
-        "evidence_quote": "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses.",
+        "evidence_quote": "exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312 ... These S3 objects contained about 50,000 records, including names and driver's licenses.",
+        "evidence_sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Adversary exfiltrated the downloaded S3 objects out over the internet (via VPN) to their own infrastructure.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "to exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312",
         "evidence_sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
         ],
@@ -283,81 +390,97 @@
     ],
     "edges": [
       {
-        "source": "T1593.003",
-        "target": "T1552.001",
+        "source": "T1552.001",
+        "target": "T1596",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Search Open Websites/Domains: Code Repositories",
-        "target_technique_name": "Credentials In Files",
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Search Open Technical Databases",
         "sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
           "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
         ],
         "evidence_quotes": [
-          "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach, the court filings show, and remained there for months.",
-          "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material."
+          "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014",
+          "An adversary discovered an Uber credential that was leaked in a GitHub Gist."
         ]
       },
       {
-        "source": "T1552.001",
-        "target": "T1078.004",
+        "source": "T1596",
+        "target": "T1090.003",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Cloud Accounts",
-        "sources": [
-          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
-        ],
-        "evidence_quotes": [
-          "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
-          "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket."
-        ]
-      },
-      {
-        "source": "T1078.004",
-        "target": "T1090.003",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Accounts",
+        "source_technique_name": "Search Open Technical Databases",
         "target_technique_name": "Proxy: Multi-hop Proxy",
         "sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
           "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
         ],
         "evidence_quotes": [
-          "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket.",
-          "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users."
+          "An adversary discovered an Uber credential that was leaked in a GitHub Gist.",
+          "the address from which the hack was launched is associated with a virtual private network service ... based in a Scandinavian country"
         ]
       },
       {
         "source": "T1090.003",
-        "target": "T1619",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1078.004",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Proxy: Multi-hop Proxy",
-        "target_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
           "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
         ],
         "evidence_quotes": [
-          "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
-          "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups."
+          "the address from which the hack was launched is associated with a virtual private network service ... based in a Scandinavian country",
+          "someone had used an Uber digital security key to access the driver database"
         ]
       },
       {
-        "source": "T1619",
+        "source": "T1078.004",
+        "target": "T1580",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
+          "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
+        ],
+        "evidence_quotes": [
+          "someone had used an Uber digital security key to access the driver database",
+          "exfiltrate several objects containing database prunes held in an S3 bucket"
+        ]
+      },
+      {
+        "source": "T1580",
         "target": "T1530",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Cloud Storage Object Discovery",
+        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
         ],
         "evidence_quotes": [
-          "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
-          "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses."
+          "exfiltrate several objects containing database prunes held in an S3 bucket",
+          "exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312 ... These S3 objects contained about 50,000 records, including names and driver's licenses."
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1567",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
+        ],
+        "evidence_quotes": [
+          "exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312 ... These S3 objects contained about 50,000 records, including names and driver's licenses.",
+          "to exfiltrate several objects containing database prunes held in an S3 bucket on 2014\u201305\u201312"
         ]
       }
     ]
@@ -368,16 +491,16 @@
   },
   "schema_version": "1.0",
   "incident_slug": "uber-2014-may",
-  "analyzed_at": "2026-04-15T21:12:19.996086+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 114590,
+  "analyzed_at": "2026-04-23T18:55:23.331679+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 152674,
   "incident_name": "Uber",
   "incident_date": "2014, May",
   "incident_root_cause": "GitHub Gist (data analysis script) with AWS credentials",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
-    "Amazon S3",
-    "AWS IAM",
-    "AWS CloudTrail"
+    "S3",
+    "IAM",
+    "CloudTrail"
   ]
 }

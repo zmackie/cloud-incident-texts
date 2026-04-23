@@ -1,4 +1,94 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "description": "Attacker compromised a third-party identity provider (IdP), obtaining IdP signing keys that could be used to mint SAML assertions trusted by AWS.",
+      "aws_services_involved": [
+        "IAM",
+        "IAM Identity Center"
+      ],
+      "event_time": "2024-01",
+      "event_time_precision": "month",
+      "evidence_quote": "compromised third-party identity provider keys",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1606.002",
+      "technique_name": "Forge Web Credentials: SAML Tokens",
+      "description": "Using the stolen IdP signing keys, the adversary forged SAML assertions to authenticate to AWS as federated users.",
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "compromised third-party identity provider keys",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Adversary assumed federated IAM roles in AWS via the forged SAML assertions, gaining valid cloud account access.",
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Federated access to AWS environment",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Adversary used federated AWS access to access and exfiltrate data from cloud storage resources.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Impact: Data exfiltration",
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
+      ],
+      "ordering_confidence": 0.6,
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "STS",
+    "IAM Identity Center",
+    "S3",
+    "CloudTrail"
+  ],
+  "confidence_score": 0.2,
+  "data_exfiltrated": true,
+  "impact_type": "Data Exfiltration",
+  "initial_access_vector": "Compromise of a third-party identity provider (IdP), allowing the attacker to use federated access into the AWS environment.",
+  "persistence_mechanism": "Continued use of compromised IdP keys to mint federated sessions into AWS until keys were rotated.",
+  "privilege_escalation": "Federated login mapped to IAM roles granted by the trust to the third-party IdP.",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
@@ -7,16 +97,14 @@
         {
           "technique_id": "T1199",
           "technique_name": "Trusted Relationship",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "Root Cause: Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
+          "evidence_quote": "Third-party IdP compromise ... Federated access to AWS environment",
           "validated": true
         },
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "Federated access to AWS environment",
           "validated": true
         }
@@ -27,12 +115,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "subtechnique_id": "T1552.004",
-          "inferred": false,
-          "evidence_quote": "Root Cause: Third-party IdP compromise",
-          "validated": false
+          "technique_id": "T1606.002",
+          "technique_name": "Forge Web Credentials: SAML Tokens",
+          "inferred": true,
+          "evidence_quote": "compromised third-party identity provider keys",
+          "validated": true
         }
       ]
     },
@@ -41,12 +128,11 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1484.002",
-          "technique_name": "Domain or Tenant Policy Modification: Trust Modification",
-          "subtechnique_id": "T1484.002",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": true,
-          "evidence_quote": "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
-          "validated": false
+          "evidence_quote": "Federated access to AWS environment",
+          "validated": true
         }
       ]
     },
@@ -57,7 +143,6 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "Impact: Data exfiltration",
           "validated": true
@@ -71,7 +156,6 @@
         {
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "Impact: Data exfiltration",
           "validated": true
@@ -79,119 +163,15 @@
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1552.004",
-      "technique_name": "Unsecured Credentials: Private Keys",
-      "description": "Attacker compromised a third-party Identity Provider (IdP), obtaining its signing keys or credentials used for federated authentication into the target AWS environment.",
-      "evidence_quote": "Root Cause: Third-party IdP compromise",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "IAM Identity Center"
-      ],
-      "validated": false
-    },
-    {
-      "step": 2,
-      "technique_id": "T1199",
-      "technique_name": "Trusted Relationship",
-      "description": "Using the compromised IdP credentials/keys, the attacker exploited the existing federated trust relationship to gain initial access to the AWS environment, bypassing normal authentication controls.",
-      "evidence_quote": "Escalation Vectors: Federated access to AWS environment",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "IAM Identity Center",
-        "IAM",
-        "STS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used the federated identity to assume valid IAM roles within the AWS environment, generating temporary security credentials via AWS STS to act as a legitimate user.",
-      "evidence_quote": "Federated access to AWS environment",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "STS",
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1484.002",
-      "technique_name": "Domain or Tenant Policy Modification: Trust Modification",
-      "description": "The attacker leveraged or potentially modified the federated IdP trust configuration within AWS IAM to escalate privileges and broaden access across the environment.",
-      "evidence_quote": "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "IAM Identity Center"
-      ],
-      "validated": false
-    },
-    {
-      "step": 5,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Using the privileged federated session, the attacker accessed and collected data stored in AWS cloud storage resources as part of the exfiltration campaign.",
-      "evidence_quote": "Impact: Data exfiltration",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "The attacker exfiltrated the collected data to an external cloud account or endpoint under their control.",
-      "evidence_quote": "Impact: Data exfiltration",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "IAM",
-    "IAM Identity Center",
-    "STS",
-    "S3",
-    "CloudTrail"
-  ],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.35,
-  "initial_access_vector": "Compromise of a third-party Identity Provider (IdP) and its signing keys, enabling forged federated authentication assertions (e.g., SAML tokens) to gain access to the target AWS environment.",
-  "persistence_mechanism": "Continued use of compromised IdP trust relationship for federated role assumption via AWS STS, granting persistent access as long as the malicious IdP keys remain valid and the trust relationship is intact.",
-  "privilege_escalation": "Exploitation of the federated SAML/OIDC trust to assume high-privilege IAM roles within the AWS environment, effectively inheriting elevated permissions through the trusted IdP relationship.",
-  "data_exfiltrated": true,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.004",
-        "technique_name": "Unsecured Credentials: Private Keys",
-        "description": "Attacker compromised a third-party Identity Provider (IdP), obtaining its signing keys or credentials used for federated authentication into the target AWS environment.",
-        "tactic_id": "",
-        "evidence_quote": "Root Cause: Third-party IdP compromise",
+        "technique_id": "T1199",
+        "technique_name": "Trusted Relationship",
+        "description": "Attacker compromised a third-party identity provider (IdP), obtaining IdP signing keys that could be used to mint SAML assertions trusted by AWS.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "compromised third-party identity provider keys",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
@@ -202,16 +182,15 @@
       },
       {
         "step": 2,
-        "technique_id": "T1199",
-        "technique_name": "Trusted Relationship",
-        "description": "Using the compromised IdP credentials/keys, the attacker exploited the existing federated trust relationship to gain initial access to the AWS environment, bypassing normal authentication controls.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "Escalation Vectors: Federated access to AWS environment",
+        "technique_id": "T1606.002",
+        "technique_name": "SAML Tokens",
+        "description": "Using the stolen IdP signing keys, the adversary forged SAML assertions to authenticate to AWS as federated users.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "compromised third-party identity provider keys",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
         "aws_services_involved": [
-          "IAM Identity Center",
           "IAM",
           "STS"
         ]
@@ -220,52 +199,23 @@
         "step": 3,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker used the federated identity to assume valid IAM roles within the AWS environment, generating temporary security credentials via AWS STS to act as a legitimate user.",
+        "description": "Adversary assumed federated IAM roles in AWS via the forged SAML assertions, gaining valid cloud account access.",
         "tactic_id": "TA0005",
         "evidence_quote": "Federated access to AWS environment",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
         "aws_services_involved": [
-          "STS",
-          "IAM"
+          "IAM",
+          "STS"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1484.002",
-        "technique_name": "Domain or Tenant Policy Modification: Trust Modification",
-        "description": "The attacker leveraged or potentially modified the federated IdP trust configuration within AWS IAM to escalate privileges and broaden access across the environment.",
-        "tactic_id": "",
-        "evidence_quote": "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
-        "evidence_sources": [
-          "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "IAM Identity Center"
-        ]
-      },
-      {
-        "step": 5,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Using the privileged federated session, the attacker accessed and collected data stored in AWS cloud storage resources as part of the exfiltration campaign.",
+        "description": "Adversary used federated AWS access to access and exfiltrate data from cloud storage resources.",
         "tactic_id": "TA0009",
-        "evidence_quote": "Impact: Data exfiltration",
-        "evidence_sources": [
-          "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-        ],
-        "aws_services_involved": [
-          "S3"
-        ]
-      },
-      {
-        "step": 6,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "The attacker exfiltrated the collected data to an external cloud account or endpoint under their control.",
-        "tactic_id": "TA0010",
         "evidence_quote": "Impact: Data exfiltration",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
@@ -277,77 +227,47 @@
     ],
     "edges": [
       {
-        "source": "T1552.004",
-        "target": "T1199",
+        "source": "T1199",
+        "target": "T1606.002",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Unsecured Credentials: Private Keys",
-        "target_technique_name": "Trusted Relationship",
+        "source_technique_name": "Trusted Relationship",
+        "target_technique_name": "SAML Tokens",
         "sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
         "evidence_quotes": [
-          "Root Cause: Third-party IdP compromise",
-          "Escalation Vectors: Federated access to AWS environment"
+          "compromised third-party identity provider keys",
+          "compromised third-party identity provider keys"
         ]
       },
       {
-        "source": "T1199",
+        "source": "T1606.002",
         "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Trusted Relationship",
+        "source_technique_name": "SAML Tokens",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
         "evidence_quotes": [
-          "Escalation Vectors: Federated access to AWS environment",
+          "compromised third-party identity provider keys",
           "Federated access to AWS environment"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1484.002",
+        "target": "T1530",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Domain or Tenant Policy Modification: Trust Modification",
-        "sources": [
-          "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-        ],
-        "evidence_quotes": [
-          "Federated access to AWS environment",
-          "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment"
-        ]
-      },
-      {
-        "source": "T1484.002",
-        "target": "T1530",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Domain or Tenant Policy Modification: Trust Modification",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
         ],
         "evidence_quotes": [
-          "Third-party IdP compromise; Escalation Vectors: Federated access to AWS environment",
-          "Impact: Data exfiltration"
-        ]
-      },
-      {
-        "source": "T1530",
-        "target": "T1537",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
-        "sources": [
-          "https://aws.amazon.com/blogs/security/how-to-investigate-and-respond-to-compromised-third-party-identity-provider-keys/"
-        ],
-        "evidence_quotes": [
-          "Impact: Data exfiltration",
+          "Federated access to AWS environment",
           "Impact: Data exfiltration"
         ]
       }
@@ -359,17 +279,17 @@
   },
   "schema_version": "1.0",
   "incident_slug": "aws-cirt-2024-january",
-  "analyzed_at": "2026-04-15T20:44:17.621544+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 12495,
+  "analyzed_at": "2026-04-23T18:37:15.213737+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 24686,
   "incident_name": "AWS CIRT",
   "incident_date": "2024, January",
   "incident_root_cause": "Third-party IdP compromise",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
-    "IAM",
-    "AWS IAM Identity Center",
+    "AWS IAM",
     "AWS STS",
+    "AWS IAM Identity Center",
     "Amazon S3",
     "AWS CloudTrail"
   ]

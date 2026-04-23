@@ -7,7 +7,6 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed.",
           "validated": true
@@ -19,33 +18,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
           "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files (DB password in config file)",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
+          "evidence_quote": "The old prototype machine had our AWS API access key and secret key.",
           "validated": true
         }
       ]
@@ -55,8 +32,8 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_id": "T1136",
+          "technique_name": "Create Account",
           "subtechnique_id": "T1136.003",
           "inferred": false,
           "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
@@ -69,11 +46,25 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1578.002",
+          "technique_id": "T1562",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+          "subtechnique_id": "T1562.007",
+          "inferred": false,
+          "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1578",
           "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
           "subtechnique_id": "T1578.002",
           "inferred": false,
-          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials",
           "validated": true
         }
       ]
@@ -85,9 +76,8 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+          "evidence_quote": "mount one of our backup disks",
           "validated": true
         }
       ]
@@ -97,26 +87,11 @@
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1021.007",
-          "technique_name": "Remote Services: Cloud Services",
-          "subtechnique_id": "T1021.007",
+          "technique_id": "T1578.004",
+          "technique_name": "Modify Cloud Compute Infrastructure: Revert Cloud Instance",
           "inferred": true,
-          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+          "evidence_quote": "mount one of our backup disks",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565.001",
-          "technique_name": "Data Manipulation: Stored Data Manipulation",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
-          "validated": false
         }
       ]
     },
@@ -127,7 +102,6 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
           "validated": true
@@ -135,7 +109,6 @@
         {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL.",
           "validated": true
@@ -149,7 +122,6 @@
         {
           "technique_id": "T1048",
           "technique_name": "Exfiltration Over Alternative Protocol",
-          "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "the hacker had been able to retrieve only a portion of the data",
           "validated": true
@@ -157,16 +129,15 @@
       ]
     },
     {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1071.003",
-          "technique_name": "Application Layer Protocol: Mail Protocols",
-          "subtechnique_id": "T1071.003",
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
           "inferred": false,
           "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
-          "validated": false
+          "validated": true
         }
       ]
     }
@@ -175,171 +146,362 @@
     {
       "step": 1,
       "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application (Shellshock)",
-      "description": "Attacker exploited the Shellshock (CVE-2014-6271) vulnerability against an old, unpatched prototype EC2 machine that had been running since before 2012 and was not in active use.",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker exploited the Shellshock (Bash) vulnerability on an unpatched, inactive prototype EC2 machine that had been running since before 2012.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "event_time": "2014-11-09T23:30:00Z",
+      "event_time_precision": "exact",
       "evidence_quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed.",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "http://archive.today/rsmmS"
       ],
-      "aws_services_involved": [
-        "EC2"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed."
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files (AWS API Keys)",
-      "description": "After gaining shell access on the prototype machine, the attacker found the AWS API access key and secret key stored on the machine.",
-      "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
-      "evidence_sources": [
-        "http://archive.today/rsmmS"
-      ],
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker harvested long-lived AWS API access key and secret key stored on the compromised prototype machine.",
       "aws_services_involved": [
         "IAM",
         "EC2"
       ],
+      "evidence_quote": "The old prototype machine had our AWS API access key and secret key.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "http://archive.today/rsmmS"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "The old prototype machine had our AWS API access key and secret key."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "The old prototype machine had our AWS API access key and secret key."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1136.003",
       "technique_name": "Create Account: Cloud Account",
-      "description": "Using the stolen AWS API credentials, the attacker created a new IAM user and generated a key-pair to establish persistent, independent access to the AWS account.",
-      "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
+      "description": "Using the stolen AWS keys, the attacker created a new IAM user and generated an EC2 key-pair for persistent access to the AWS account.",
+      "aws_services_involved": [
+        "IAM",
+        "EC2"
+      ],
+      "evidence_quote": "he created an IAM user, and generated a key-pair",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "http://archive.today/rsmmS"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "he created an IAM user, and generated a key-pair"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "he created an IAM user, and generated a key-pair"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1578.002",
       "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "With the newly created IAM user credentials, the attacker launched a new EC2 instance within BrowserStack's AWS account to use as an operational platform.",
-      "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+      "description": "Attacker launched a new EC2 instance inside the BrowserStack AWS account using the attacker-controlled credentials.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "http://archive.today/rsmmS"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "He was then able to run an instance inside our AWS account using these credentials"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "He was then able to run an instance inside our AWS account using these credentials"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage (Backup EBS Volume)",
-      "description": "The attacker mounted one of BrowserStack's backup EBS disks on their rogue EC2 instance and accessed its contents, discovering a config file containing the production database password.",
-      "evidence_quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
-      "evidence_sources": [
-        "http://archive.today/rsmmS"
-      ],
+      "technique_id": "T1578.004",
+      "technique_name": "Modify Cloud Compute Infrastructure: Revert Cloud Instance",
+      "description": "Attacker mounted one of BrowserStack's backup disks (EBS snapshot) to the attacker-controlled instance to access production configuration data.",
       "aws_services_involved": [
         "EC2",
         "EBS"
       ],
+      "evidence_quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "http://archive.today/rsmmS"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files (DB Password in Config)",
-      "description": "Attacker retrieved the production database password from a plaintext config file found on the mounted backup disk.",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker read the mounted backup's config file to obtain the production database password.",
+      "aws_services_involved": [
+        "EC2",
+        "EBS"
+      ],
       "evidence_quote": "contained a config file with our database password",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "http://archive.today/rsmmS"
       ],
-      "aws_services_involved": [
-        "EBS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "contained a config file with our database password"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "contained a config file with our database password"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
       "technique_id": "T1562.007",
       "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
-      "description": "The attacker modified the AWS database security group to whitelist their own IP address, granting direct external access to the production database.",
+      "description": "Attacker modified the database security group (AWS firewall) to whitelist their own IP address, enabling direct connection to the production DB.",
+      "aws_services_involved": [
+        "EC2 Security Groups",
+        "VPC"
+      ],
       "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "http://archive.today/rsmmS"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC Security Groups",
-        "RDS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "He also whitelisted his IP on our database security group, which is the AWS firewall."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "He also whitelisted his IP on our database security group, which is the AWS firewall."
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
       "technique_id": "T1213",
-      "technique_name": "Data from Information Repositories (Database Table Copy)",
-      "description": "Using the stolen database password and newly whitelisted IP, the attacker connected to the production database and began copying a table containing user email IDs, hashed passwords, and last tested URLs.",
-      "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL.",
-      "evidence_sources": [
-        "http://archive.today/rsmmS"
-      ],
+      "technique_name": "Data from Information Repositories",
+      "description": "Attacker connected to the production database and began copying a user table containing email IDs, bcrypt-hashed passwords, and last tested URL. The copy operation locked the table, triggering monitoring alerts.",
       "aws_services_involved": [
         "RDS"
       ],
+      "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "http://archive.today/rsmmS"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 9,
       "technique_id": "T1048",
       "technique_name": "Exfiltration Over Alternative Protocol",
-      "description": "The attacker exfiltrated a partial copy of the user data table before being detected. The table lock triggered monitoring alerts and BrowserStack blocked the unrecognized IP.",
-      "evidence_quote": "His copy operation locked the database table, which raised alerts on our monitoring system. On receiving the alerts, we checked the logs, saw an unrecognized IP, and blocked it right away. In that time, the hacker had been able to retrieve only a portion of the data.",
-      "evidence_sources": [
-        "http://archive.today/rsmmS"
-      ],
+      "description": "Attacker exfiltrated a portion of the user-table data before defenders blocked the unrecognized source IP.",
       "aws_services_involved": [
         "RDS"
       ],
+      "evidence_quote": "In that time, the hacker had been able to retrieve only a portion of the data.",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "http://archive.today/rsmmS"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "In that time, the hacker had been able to retrieve only a portion of the data."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "In that time, the hacker had been able to retrieve only a portion of the data."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 10,
-      "technique_id": "T1071.003",
-      "technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
-      "description": "Using the exfiltrated email addresses and SES credentials found during the intrusion, the attacker sent a fraudulent email to approximately 5,000 BrowserStack users claiming the service was shutting down.",
-      "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
-      "evidence_sources": [
-        "http://archive.today/rsmmS"
-      ],
+      "technique_id": "T1566",
+      "technique_name": "Phishing",
+      "description": "Using the exfiltrated email addresses and the victim's SES credentials, the attacker sent a phishing/hoax email (claiming BrowserStack was shutting down) to approximately 5,000 BrowserStack users.",
       "aws_services_involved": [
         "SES"
       ],
-      "validated": false
+      "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "http://archive.today/rsmmS"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 762,
+          "char_end": 8799,
+          "quote": "using this data and the SES credentials, he was able to send an email to some of our users."
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3814,
+          "char_end": 11851,
+          "quote": "using this data and the SES credentials, he was able to send an email to some of our users."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     }
   ],
   "aws_services": [
     "EC2",
     "IAM",
     "EBS",
-    "SES",
+    "EC2 Security Groups",
+    "VPC",
     "RDS",
-    "VPC Security Groups",
+    "SES",
     "CloudTrail"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Shellshock (CVE-2014-6271) exploitation against an unpatched, inactive prototype EC2 machine exposed to the internet",
-  "persistence_mechanism": "Creation of a new IAM user with a generated key-pair using stolen AWS API access keys from the compromised prototype machine",
-  "privilege_escalation": "Used AWS API access key and secret key stored on the compromised prototype machine to call IAM APIs, creating a new IAM user with an independent key-pair \u2014 effectively escalating from EC2 instance-level access to full AWS account-level access",
+  "initial_access_vector": "Exploitation of the Shellshock (CVE-2014-6271) vulnerability on an unpatched, inactive prototype EC2 machine exposed to the internet.",
+  "persistence_mechanism": "Attacker created a new IAM user and generated an EC2 key-pair in the victim's AWS account to maintain access independent of the compromised prototype host.",
+  "privilege_escalation": "Harvested long-lived AWS API access/secret keys stored on the compromised host, granting full AWS account privileges far exceeding those of the local prototype server.",
   "data_exfiltrated": true,
+  "confidence_score": 0.9,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited the Shellshock (CVE-2014-6271) vulnerability against an old, unpatched prototype EC2 machine that had been running since before 2012 and was not in active use.",
+        "description": "Attacker exploited the Shellshock (Bash) vulnerability on an unpatched, inactive prototype EC2 machine that had been running since before 2012.",
         "tactic_id": "TA0001",
         "evidence_quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed.",
         "evidence_sources": [
@@ -353,9 +515,9 @@
         "step": 2,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "After gaining shell access on the prototype machine, the attacker found the AWS API access key and secret key stored on the machine.",
+        "description": "Attacker harvested long-lived AWS API access key and secret key stored on the compromised prototype machine.",
         "tactic_id": "TA0006",
-        "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
+        "evidence_quote": "The old prototype machine had our AWS API access key and secret key.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
@@ -368,37 +530,37 @@
         "step": 3,
         "technique_id": "T1136.003",
         "technique_name": "Cloud Account",
-        "description": "Using the stolen AWS API credentials, the attacker created a new IAM user and generated a key-pair to establish persistent, independent access to the AWS account.",
+        "description": "Using the stolen AWS keys, the attacker created a new IAM user and generated an EC2 key-pair for persistent access to the AWS account.",
         "tactic_id": "TA0003",
-        "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
+        "evidence_quote": "he created an IAM user, and generated a key-pair",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
         "aws_services_involved": [
-          "IAM"
+          "IAM",
+          "EC2"
         ]
       },
       {
         "step": 4,
         "technique_id": "T1578.002",
         "technique_name": "Create Cloud Instance",
-        "description": "With the newly created IAM user credentials, the attacker launched a new EC2 instance within BrowserStack's AWS account to use as an operational platform.",
+        "description": "Attacker launched a new EC2 instance inside the BrowserStack AWS account using the attacker-controlled credentials.",
         "tactic_id": "TA0005",
-        "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+        "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
         "aws_services_involved": [
-          "EC2",
-          "IAM"
+          "EC2"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "The attacker mounted one of BrowserStack's backup EBS disks on their rogue EC2 instance and accessed its contents, discovering a config file containing the production database password.",
-        "tactic_id": "TA0009",
+        "technique_id": "T1578.004",
+        "technique_name": "Revert Cloud Instance",
+        "description": "Attacker mounted one of BrowserStack's backup disks (EBS snapshot) to the attacker-controlled instance to access production configuration data.",
+        "tactic_id": "TA0005",
         "evidence_quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
@@ -412,13 +574,14 @@
         "step": 6,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "Attacker retrieved the production database password from a plaintext config file found on the mounted backup disk.",
+        "description": "Attacker read the mounted backup's config file to obtain the production database password.",
         "tactic_id": "TA0006",
         "evidence_quote": "contained a config file with our database password",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
         "aws_services_involved": [
+          "EC2",
           "EBS"
         ]
       },
@@ -426,25 +589,24 @@
         "step": 7,
         "technique_id": "T1562.007",
         "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "The attacker modified the AWS database security group to whitelist their own IP address, granting direct external access to the production database.",
+        "description": "Attacker modified the database security group (AWS firewall) to whitelist their own IP address, enabling direct connection to the production DB.",
         "tactic_id": "TA0005",
         "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC Security Groups",
-          "RDS"
+          "EC2 Security Groups",
+          "VPC"
         ]
       },
       {
         "step": 8,
         "technique_id": "T1213",
         "technique_name": "Data from Information Repositories",
-        "description": "Using the stolen database password and newly whitelisted IP, the attacker connected to the production database and began copying a table containing user email IDs, hashed passwords, and last tested URLs.",
+        "description": "Attacker connected to the production database and began copying a user table containing email IDs, bcrypt-hashed passwords, and last tested URL. The copy operation locked the table, triggering monitoring alerts.",
         "tactic_id": "TA0009",
-        "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL.",
+        "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
@@ -456,9 +618,9 @@
         "step": 9,
         "technique_id": "T1048",
         "technique_name": "Exfiltration Over Alternative Protocol",
-        "description": "The attacker exfiltrated a partial copy of the user data table before being detected. The table lock triggered monitoring alerts and BrowserStack blocked the unrecognized IP.",
+        "description": "Attacker exfiltrated a portion of the user-table data before defenders blocked the unrecognized source IP.",
         "tactic_id": "TA0010",
-        "evidence_quote": "His copy operation locked the database table, which raised alerts on our monitoring system. On receiving the alerts, we checked the logs, saw an unrecognized IP, and blocked it right away. In that time, the hacker had been able to retrieve only a portion of the data.",
+        "evidence_quote": "In that time, the hacker had been able to retrieve only a portion of the data.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
         ],
@@ -468,10 +630,10 @@
       },
       {
         "step": 10,
-        "technique_id": "T1071.003",
-        "technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
-        "description": "Using the exfiltrated email addresses and SES credentials found during the intrusion, the attacker sent a fraudulent email to approximately 5,000 BrowserStack users claiming the service was shutting down.",
-        "tactic_id": "",
+        "technique_id": "T1566",
+        "technique_name": "Phishing",
+        "description": "Using the exfiltrated email addresses and the victim's SES credentials, the attacker sent a phishing/hoax email (claiming BrowserStack was shutting down) to approximately 5,000 BrowserStack users.",
+        "tactic_id": "TA0001",
         "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
         "evidence_sources": [
           "http://archive.today/rsmmS"
@@ -494,7 +656,7 @@
         ],
         "evidence_quotes": [
           "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed.",
-          "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys..."
+          "The old prototype machine had our AWS API access key and secret key."
         ]
       },
       {
@@ -508,8 +670,8 @@
           "http://archive.today/rsmmS"
         ],
         "evidence_quotes": [
-          "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
-          "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair."
+          "The old prototype machine had our AWS API access key and secret key.",
+          "he created an IAM user, and generated a key-pair"
         ]
       },
       {
@@ -523,31 +685,31 @@
           "http://archive.today/rsmmS"
         ],
         "evidence_quotes": [
-          "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
-          "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks."
+          "he created an IAM user, and generated a key-pair",
+          "He was then able to run an instance inside our AWS account using these credentials"
         ]
       },
       {
         "source": "T1578.002",
-        "target": "T1530",
+        "target": "T1578.004",
         "source_step": 4,
         "target_step": 5,
         "source_technique_name": "Create Cloud Instance",
-        "target_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Revert Cloud Instance",
         "sources": [
           "http://archive.today/rsmmS"
         ],
         "evidence_quotes": [
-          "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
+          "He was then able to run an instance inside our AWS account using these credentials",
           "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password."
         ]
       },
       {
-        "source": "T1530",
+        "source": "T1578.004",
         "target": "T1552.001",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Data from Cloud Storage",
+        "source_technique_name": "Revert Cloud Instance",
         "target_technique_name": "Credentials In Files",
         "sources": [
           "http://archive.today/rsmmS"
@@ -584,7 +746,7 @@
         ],
         "evidence_quotes": [
           "He also whitelisted his IP on our database security group, which is the AWS firewall.",
-          "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL."
+          "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system."
         ]
       },
       {
@@ -598,22 +760,22 @@
           "http://archive.today/rsmmS"
         ],
         "evidence_quotes": [
-          "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL.",
-          "His copy operation locked the database table, which raised alerts on our monitoring system. On receiving the alerts, we checked the logs, saw an unrecognized IP, and blocked it right away. In that time, the hacker had been able to retrieve only a portion of the data."
+          "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL. His copy operation locked the database table, which raised alerts on our monitoring system.",
+          "In that time, the hacker had been able to retrieve only a portion of the data."
         ]
       },
       {
         "source": "T1048",
-        "target": "T1071.003",
+        "target": "T1566",
         "source_step": 9,
         "target_step": 10,
         "source_technique_name": "Exfiltration Over Alternative Protocol",
-        "target_technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
+        "target_technique_name": "Phishing",
         "sources": [
           "http://archive.today/rsmmS"
         ],
         "evidence_quotes": [
-          "His copy operation locked the database table, which raised alerts on our monitoring system. On receiving the alerts, we checked the logs, saw an unrecognized IP, and blocked it right away. In that time, the hacker had been able to retrieve only a portion of the data.",
+          "In that time, the hacker had been able to retrieve only a portion of the data.",
           "using this data and the SES credentials, he was able to send an email to some of our users."
         ]
       }
@@ -625,7 +787,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "browserstack-2014-november",
-  "analyzed_at": "2026-04-15T20:44:56.648106+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 44516
+  "analyzed_at": "2026-04-23T18:38:22.181016+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 53351
 }

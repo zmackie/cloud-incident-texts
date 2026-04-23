@@ -7,37 +7,8 @@
         {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Root Cause: Compromised credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "hackers accessed all of its customers' personal data and a large amount of health claims data",
+          "evidence_quote": "Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
           "validated": true
         }
       ]
@@ -47,11 +18,10 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": true,
+          "evidence_quote": "involved access to the firm's Redshift platform",
           "validated": true
         }
       ]
@@ -61,11 +31,17 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "we have evidence that the criminal has removed some of this data, and it is now likely that the criminal has stolen further personal and health claims data",
+          "evidence_quote": "the criminal has removed some of this data",
+          "validated": true
+        },
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "200GB of data stolen during the attack",
           "validated": true
         }
       ]
@@ -77,9 +53,8 @@
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+          "evidence_quote": "the ransomware gang made contact to extort the company",
           "validated": true
         }
       ]
@@ -90,40 +65,83 @@
       "step": 1,
       "technique_id": "T1078",
       "technique_name": "Valid Accounts",
-      "description": "Attackers gained initial access to Medibank's environment using compromised credentials, bypassing authentication controls.",
-      "evidence_quote": "Root Cause: Compromised credentials",
-      "evidence_sources": [
-        "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
+      "description": "Threat actors obtained compromised credentials and used them to access Medibank's environment, including the Amazon Redshift platform.",
+      "aws_services_involved": [
+        "Amazon Redshift"
       ],
-      "aws_services_involved": [],
+      "event_time": "2022-10",
+      "event_time_precision": "month",
+      "evidence_quote": "Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Using compromised credentials, attackers accessed Medibank's Amazon Redshift data warehouse platform and queried/accessed all customers' personal data and significant amounts of health claims data.",
-      "evidence_quote": "poor configurations and lax default settings have led to massive data breaches, like the Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
-      "evidence_sources": [
-        "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/",
-        "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
-      ],
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Attackers accessed Medibank's Redshift data warehouse containing personal and health claims data for all customers.",
       "aws_services_involved": [
         "Amazon Redshift"
+      ],
+      "event_time": "2022-10",
+      "event_time_precision": "month",
+      "evidence_quote": "hackers accessed all of its customers' personal data and a large amount of health claims data",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 702,
+          "char_end": 885,
+          "quote": "hackers accessed all of its customers' personal data and a large amount of health claims data"
+        },
+        {
+          "chunk_id": "link_00.md#c029",
+          "source_file": "link_00.md",
+          "char_start": 12487,
+          "char_end": 12670,
+          "quote": "hackers accessed all of its customers' personal data and a large amount of health claims data"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Attackers exfiltrated approximately 200GB of customer personal and health claims data, removing it from Medibank's environment.",
-      "evidence_quote": "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers exfiltrated approximately 200GB of personal and health claims data from the Redshift platform.",
+      "aws_services_involved": [
+        "Amazon Redshift"
+      ],
+      "event_time": "2022-10",
+      "event_time_precision": "month",
+      "evidence_quote": "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
       "evidence_sources": [
         "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
       ],
-      "aws_services_involved": [
-        "Amazon Redshift"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 2518,
+          "char_end": 2836,
+          "quote": "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack"
+        },
+        {
+          "chunk_id": "link_00.md#c039",
+          "source_file": "link_00.md",
+          "char_start": 14599,
+          "char_end": 14917,
+          "quote": "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack"
+        }
       ],
       "validated": true
     },
@@ -131,47 +149,52 @@
       "step": 4,
       "technique_id": "T1657",
       "technique_name": "Financial Theft",
-      "description": "The ransomware group contacted Medibank to extort the company, leveraging the stolen 200GB of sensitive customer and health data as leverage.",
-      "evidence_quote": "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+      "description": "Ransomware gang contacted Medibank to extort the company using stolen data as leverage.",
+      "aws_services_involved": [],
+      "event_time": "2022-10",
+      "event_time_precision": "month",
+      "evidence_quote": "the ransomware gang made contact to extort the company",
       "evidence_sources": [
         "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
       ],
-      "aws_services_involved": [],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
       "validated": true
     }
   ],
   "aws_services": [
     "Amazon Redshift"
   ],
-  "impact_type": "Data Exfiltration / Ransomware Extortion",
-  "confidence_score": 0.55,
-  "initial_access_vector": "Compromised credentials used to authenticate to Medibank's environment, reportedly including access to the Amazon Redshift platform",
-  "persistence_mechanism": "Continued use of compromised valid account credentials to maintain access throughout the dwell period",
-  "privilege_escalation": "Unknown \u2014 not described in source texts",
+  "impact_type": "Data Exfiltration / Extortion",
+  "confidence_score": 0.4,
   "data_exfiltrated": true,
+  "initial_access_vector": "Compromised credentials used to access Medibank's Amazon Redshift data warehouse platform (reportedly exposed due to public access / lax default settings).",
+  "persistence_mechanism": "Unknown",
+  "privilege_escalation": "Unknown",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
-        "description": "Attackers gained initial access to Medibank's environment using compromised credentials, bypassing authentication controls.",
+        "description": "Threat actors obtained compromised credentials and used them to access Medibank's environment, including the Amazon Redshift platform.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Root Cause: Compromised credentials",
+        "evidence_quote": "Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
         "evidence_sources": [
-          "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
+          "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "Amazon Redshift"
+        ]
       },
       {
         "step": 2,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Using compromised credentials, attackers accessed Medibank's Amazon Redshift data warehouse platform and queried/accessed all customers' personal data and significant amounts of health claims data.",
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Attackers accessed Medibank's Redshift data warehouse containing personal and health claims data for all customers.",
         "tactic_id": "TA0009",
-        "evidence_quote": "poor configurations and lax default settings have led to massive data breaches, like the Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
+        "evidence_quote": "hackers accessed all of its customers' personal data and a large amount of health claims data",
         "evidence_sources": [
-          "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/",
           "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
         ],
         "aws_services_involved": [
@@ -180,11 +203,11 @@
       },
       {
         "step": 3,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Attackers exfiltrated approximately 200GB of customer personal and health claims data, removing it from Medibank's environment.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attackers exfiltrated approximately 200GB of personal and health claims data from the Redshift platform.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
         ],
@@ -196,9 +219,9 @@
         "step": 4,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "The ransomware group contacted Medibank to extort the company, leveraging the stolen 200GB of sensitive customer and health data as leverage.",
+        "description": "Ransomware gang contacted Medibank to extort the company using stolen data as leverage.",
         "tactic_id": "TA0040",
-        "evidence_quote": "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+        "evidence_quote": "the ransomware gang made contact to extort the company",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
         ],
@@ -208,49 +231,48 @@
     "edges": [
       {
         "source": "T1078",
-        "target": "T1530",
+        "target": "T1213",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Valid Accounts",
-        "target_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data from Information Repositories",
         "sources": [
           "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/",
           "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
         ],
         "evidence_quotes": [
-          "Root Cause: Compromised credentials",
-          "poor configurations and lax default settings have led to massive data breaches, like the Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform"
+          "Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
+          "hackers accessed all of its customers' personal data and a large amount of health claims data"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
+        ],
+        "evidence_quotes": [
+          "hackers accessed all of its customers' personal data and a large amount of health claims data",
+          "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1537",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
-        "sources": [
-          "https://www.bleepingcomputer.com/news/security/amazon-redshift-gets-new-default-settings-to-prevent-data-breaches/",
-          "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
-        ],
-        "evidence_quotes": [
-          "poor configurations and lax default settings have led to massive data breaches, like the Medibank ransomware incident in October 2022, which reportedly involved access to the firm's Redshift platform",
-          "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack"
-        ]
-      },
-      {
-        "source": "T1537",
         "target": "T1657",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Transfer Data to Cloud Account",
+        "source_technique_name": "Data from Cloud Storage",
         "target_technique_name": "Financial Theft",
         "sources": [
           "https://www.bleepingcomputer.com/news/security/medibank-now-says-hackers-accessed-all-its-customers-personal-data/"
         ],
         "evidence_quotes": [
-          "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
-          "the ransomware gang made contact to extort the company, providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack"
+          "providing a sample of 100 stolen files out of an alleged 200GB of data stolen during the attack",
+          "the ransomware gang made contact to extort the company"
         ]
       }
     ]
@@ -261,7 +283,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "medibank-2022-october",
-  "analyzed_at": "2026-04-15T21:00:59.532236+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 54600
+  "analyzed_at": "2026-04-23T18:48:23.296115+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 63605
 }

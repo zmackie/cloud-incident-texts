@@ -8,14 +8,15 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205). The attacker exploited the vulnerability in Gitlab, and gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment.",
+          "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)",
           "validated": true
         },
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252",
+          "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
           "validated": true
         }
       ]
@@ -25,10 +26,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": false,
-          "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": true,
+          "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity",
           "validated": true
         }
       ]
@@ -38,37 +40,17 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "Services explored by the attacker included: health.amazonaws.com, support.amazonaws.com, ec2.amazonaws.com, elasticloadbalancing.amazonaws.com, s3.amazonaws.com, cloudfront.amazonaws.com, trustedadvisor.amazonaws.com, monitoring.amazonaws.com, compute-optimizer.amazonaws.com",
-          "validated": true
-        },
-        {
           "technique_id": "T1619",
           "technique_name": "Cloud Storage Object Discovery",
           "inferred": false,
-          "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser.",
+          "evidence_quote": "initial access into the AWS environment was a ListBuckets",
           "validated": true
         },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "The attacker than initiated a PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
+          "evidence_quote": "logged into AWS console with the newly created backup identity and explored the services",
           "validated": true
         }
       ]
@@ -80,28 +62,31 @@
         {
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
+          "subtechnique_id": "T1136.003",
           "inferred": false,
-          "evidence_quote": "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser.",
+          "evidence_quote": "leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser",
+          "validated": true
+        },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "subtechnique_id": "T1098.001",
+          "inferred": false,
+          "evidence_quote": "CreateUser named backup and CreateAccessKey",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "inferred": true,
-          "evidence_quote": "Had detailed cloudwatch monitoring disabled \"monitoring\": { \"state\": \"disabled\"}",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "Armed with the new identity backup the attacker now began enumeration efforts. The attacker logged into AWS console with the newly created backup identity",
+          "technique_id": "T1098.003",
+          "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "subtechnique_id": "T1098.003",
+          "inferred": false,
+          "evidence_quote": "PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
           "validated": true
         }
       ]
@@ -114,7 +99,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "About thirty-one (31) minutes after initial access, the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining.",
+          "evidence_quote": "attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining",
           "validated": true
         }
       ]
@@ -125,134 +110,266 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited GitLab CVE-2021-22205, a remote code execution vulnerability in the victim's GitLab instance, to gain access to sensitive files stored on the system.",
-      "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205). The attacker exploited the vulnerability in Gitlab, and gained access to sensitive data",
+      "description": "Attacker exploited Gitlab vulnerability CVE-2021-22205 to gain access to sensitive data on the victim's Gitlab instance.",
+      "aws_services_involved": [],
+      "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 267,
+          "char_end": 5330,
+          "quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5105,
+          "quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "Attacker retrieved AWS Admin-level IAM access keys stored in sensitive data exposed by the GitLab vulnerability.",
-      "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
-      "evidence_sources": [
-        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
-      ],
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker obtained AWS access key for an Admin-level identity from sensitive data exposed via the Gitlab compromise.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 267,
+          "char_end": 5330,
+          "quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5105,
+          "quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker used the stolen Admin-level AWS access key from an Indonesian IP address with S3 Browser user-agent to authenticate into the AWS environment and called ListBuckets.",
-      "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252 with a User-Agent of S3 Browser 9.5.5",
+      "description": "Attacker used the stolen admin access key to access AWS, issuing ListBuckets from Indonesian IP 182.1.229.252 with S3 Browser 9.5.5 user-agent.",
+      "aws_services_involved": [
+        "IAM",
+        "S3"
+      ],
+      "evidence_quote": "initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
       ],
-      "aws_services_involved": [
-        "S3",
-        "IAM"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1619",
       "technique_name": "Cloud Storage Object Discovery",
-      "description": "Attacker issued a ListBuckets API call to enumerate all S3 buckets in the AWS environment using the stolen Admin access key.",
-      "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key",
-      "evidence_sources": [
-        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
-      ],
+      "description": "Attacker enumerated S3 buckets via ListBuckets using S3 Browser.",
       "aws_services_involved": [
         "S3"
       ],
+      "evidence_quote": "initial access into the AWS environment was a ListBuckets",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 267,
+          "char_end": 5330,
+          "quote": "initial access into the AWS environment was a ListBuckets"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5105,
+          "quote": "initial access into the AWS environment was a ListBuckets"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "After a failed attempt to PutUserPolicy on an existing backup identity (due to an invalid resource ARN template left in the policy), the attacker created a new IAM user named 'backup' and generated an access key for it.",
-      "evidence_quote": "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser.",
-      "evidence_sources": [
-        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
-      ],
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Attacker attempted PutUserPolicy to attach a policy named 'dq' granting s3:GetObject to an existing backup-related identity, but it failed due to the unmodified template resource ARN.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "attempted to PutUserPolicy to add a policy named dq to an existing identity associated with backups. The PutUserPolicy attempt failed",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1136.003",
       "technique_name": "Create Account: Cloud Account",
-      "description": "Attacker created a new IAM user named 'backup' with an inline policy ('backupuser') granting full wildcard permissions (Action: *, Resource: *) to maintain persistent privileged access.",
-      "evidence_quote": "The attacker than initiated a PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
-      "evidence_sources": [
-        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
-      ],
+      "description": "Attacker used the stolen key to CreateUser named 'backup' to maintain persistent access.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "leveraged the stolen access key to CreateUser named backup",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Using both the original stolen key and the new 'backup' identity, the attacker logged into the AWS console and enumerated a broad range of AWS services including EC2, ELB, S3, CloudFront, CloudWatch, and others.",
-      "evidence_quote": "Services explored by the attacker included: health.amazonaws.com, support.amazonaws.com, ec2.amazonaws.com, elasticloadbalancing.amazonaws.com, s3.amazonaws.com, cloudfront.amazonaws.com, trustedadvisor.amazonaws.com, monitoring.amazonaws.com, compute-optimizer.amazonaws.com",
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Attacker generated a new access key (CreateAccessKey) for the newly created 'backup' IAM user.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "CreateUser named backup and CreateAccessKey via S3 Browser",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "S3",
-        "CloudFront",
-        "CloudWatch",
-        "Elastic Load Balancing",
-        "Trusted Advisor",
-        "Compute Optimizer",
-        "AWS Health",
-        "AWS Support"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
-      "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "Approximately 31 minutes after initial access, the attacker used the AWS EC2 launch wizard to create an SSH key pair, a security group with port 22 open to 0.0.0.0/0, and attempted to launch dozens of xlarge EC2 instances across multiple regions for cryptomining. 13 instances were successfully created across 5 regions. All instances had CloudWatch detailed monitoring disabled.",
-      "evidence_quote": "About thirty-one (31) minutes after initial access, the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining. Using the AWS EC2 launch wizard the attacker would CreateKeyPair and CreateSecurityGroup",
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Attacker attached inline policy 'backupuser' granting Action:* Resource:* (full admin) to the new 'backup' IAM user.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "CloudWatch"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 9,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Attacker successfully launched 13 xlarge EC2 instances across 5 AWS regions to perform cryptocurrency mining, exploiting the victim's cloud compute resources.",
-      "evidence_quote": "In total the attacker successfully created thirteen (13) ec2 instances in five (5) different regions... the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining.",
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attacker logged into the AWS console as the new 'backup' identity and enumerated services including health, support, ec2, elb, s3, cloudfront, trustedadvisor, monitoring, and compute-optimizer.",
+      "aws_services_involved": [
+        "IAM",
+        "EC2",
+        "S3",
+        "ELB",
+        "CloudFront",
+        "CloudWatch",
+        "TrustedAdvisor",
+        "ComputeOptimizer",
+        "Support",
+        "Health"
+      ],
+      "evidence_quote": "logged into AWS console with the newly created backup identity and explored the services",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 10,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "About 31 minutes after initial access, the attacker used the EC2 launch wizard to CreateKeyPair and CreateSecurityGroup (allowing TCP/22 from 0.0.0.0/0) and launched EC2 instances.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "the attacker began to use the AWS web console to create EC2 instances... CreateKeyPair and CreateSecurityGroup",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Attacker successfully launched 13 xlarge EC2 instances across 5 regions with CloudWatch detailed monitoring disabled, to perform cryptomining.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "the attacker successfully created thirteen (13) ec2 instances in five (5) different regions",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 267,
+          "char_end": 5330,
+          "quote": "the attacker successfully created thirteen (13) ec2 instances in five (5) different regions"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5105,
+          "quote": "the attacker successfully created thirteen (13) ec2 instances in five (5) different regions"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
@@ -262,27 +379,27 @@
     "EC2",
     "CloudWatch",
     "CloudFront",
-    "Elastic Load Balancing",
-    "Trusted Advisor",
-    "Compute Optimizer",
-    "AWS Health",
-    "AWS Support"
+    "ELB",
+    "TrustedAdvisor",
+    "ComputeOptimizer",
+    "Support",
+    "Health"
   ],
-  "impact_type": "Cryptojacking",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Exploitation of GitLab CVE-2021-22205 to extract AWS Admin-level IAM access keys stored on the GitLab server",
-  "persistence_mechanism": "Created new IAM user 'backup' with an access key and a wildcard inline policy (Action: *, Resource: *) using the stolen Admin credentials",
-  "privilege_escalation": "Attacker already had Admin-level keys; created new IAM user 'backup' with full wildcard permissions via PutUserPolicy to ensure continued privileged access",
+  "impact_type": "Cryptomining",
+  "confidence_score": 0.9,
   "data_exfiltrated": false,
+  "initial_access_vector": "Exploitation of Gitlab vulnerability CVE-2021-22205 exposed sensitive data containing an AWS admin access key, which the attacker used to access the victim's AWS environment.",
+  "persistence_mechanism": "Created a new IAM user named 'backup' with a new access key and attached an inline policy granting Action:* Resource:* to maintain access if the original stolen key was revoked.",
+  "privilege_escalation": "Attached an inline IAM policy (PutUserPolicy 'backupuser') granting full administrative privileges (Action:*, Resource:*) to the newly created 'backup' IAM user.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited GitLab CVE-2021-22205, a remote code execution vulnerability in the victim's GitLab instance, to gain access to sensitive files stored on the system.",
+        "description": "Attacker exploited Gitlab vulnerability CVE-2021-22205 to gain access to sensitive data on the victim's Gitlab instance.",
         "tactic_id": "TA0001",
-        "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205). The attacker exploited the vulnerability in Gitlab, and gained access to sensitive data",
+        "evidence_quote": "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
@@ -290,9 +407,9 @@
       },
       {
         "step": 2,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "Attacker retrieved AWS Admin-level IAM access keys stored in sensitive data exposed by the GitLab vulnerability.",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker obtained AWS access key for an Admin-level identity from sensitive data exposed via the Gitlab compromise.",
         "tactic_id": "TA0006",
         "evidence_quote": "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
         "evidence_sources": [
@@ -306,24 +423,24 @@
         "step": 3,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker used the stolen Admin-level AWS access key from an Indonesian IP address with S3 Browser user-agent to authenticate into the AWS environment and called ListBuckets.",
+        "description": "Attacker used the stolen admin access key to access AWS, issuing ListBuckets from Indonesian IP 182.1.229.252 with S3 Browser 9.5.5 user-agent.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252 with a User-Agent of S3 Browser 9.5.5",
+        "evidence_quote": "initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "aws_services_involved": [
-          "S3",
-          "IAM"
+          "IAM",
+          "S3"
         ]
       },
       {
         "step": 4,
         "technique_id": "T1619",
         "technique_name": "Cloud Storage Object Discovery",
-        "description": "Attacker issued a ListBuckets API call to enumerate all S3 buckets in the AWS environment using the stolen Admin access key.",
+        "description": "Attacker enumerated S3 buckets via ListBuckets using S3 Browser.",
         "tactic_id": "TA0007",
-        "evidence_quote": "The attackers initial access into the AWS environment was a ListBuckets that came through this access key",
+        "evidence_quote": "initial access into the AWS environment was a ListBuckets",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
@@ -333,11 +450,11 @@
       },
       {
         "step": 5,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "After a failed attempt to PutUserPolicy on an existing backup identity (due to an invalid resource ARN template left in the policy), the attacker created a new IAM user named 'backup' and generated an access key for it.",
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Attacker attempted PutUserPolicy to attach a policy named 'dq' granting s3:GetObject to an existing backup-related identity, but it failed due to the unmodified template resource ARN.",
         "tactic_id": "TA0003",
-        "evidence_quote": "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser.",
+        "evidence_quote": "attempted to PutUserPolicy to add a policy named dq to an existing identity associated with backups. The PutUserPolicy attempt failed",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
@@ -349,9 +466,9 @@
         "step": 6,
         "technique_id": "T1136.003",
         "technique_name": "Cloud Account",
-        "description": "Attacker created a new IAM user named 'backup' with an inline policy ('backupuser') granting full wildcard permissions (Action: *, Resource: *) to maintain persistent privileged access.",
+        "description": "Attacker used the stolen key to CreateUser named 'backup' to maintain persistent access.",
         "tactic_id": "TA0003",
-        "evidence_quote": "The attacker than initiated a PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
+        "evidence_quote": "leveraged the stolen access key to CreateUser named backup",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
@@ -361,48 +478,76 @@
       },
       {
         "step": 7,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Using both the original stolen key and the new 'backup' identity, the attacker logged into the AWS console and enumerated a broad range of AWS services including EC2, ELB, S3, CloudFront, CloudWatch, and others.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "Services explored by the attacker included: health.amazonaws.com, support.amazonaws.com, ec2.amazonaws.com, elasticloadbalancing.amazonaws.com, s3.amazonaws.com, cloudfront.amazonaws.com, trustedadvisor.amazonaws.com, monitoring.amazonaws.com, compute-optimizer.amazonaws.com",
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Attacker generated a new access key (CreateAccessKey) for the newly created 'backup' IAM user.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "CreateUser named backup and CreateAccessKey via S3 Browser",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "aws_services_involved": [
-          "EC2",
-          "S3",
-          "CloudFront",
-          "CloudWatch",
-          "Elastic Load Balancing",
-          "Trusted Advisor",
-          "Compute Optimizer",
-          "AWS Health",
-          "AWS Support"
+          "IAM"
         ]
       },
       {
         "step": 8,
-        "technique_id": "T1578.002",
-        "technique_name": "Create Cloud Instance",
-        "description": "Approximately 31 minutes after initial access, the attacker used the AWS EC2 launch wizard to create an SSH key pair, a security group with port 22 open to 0.0.0.0/0, and attempted to launch dozens of xlarge EC2 instances across multiple regions for cryptomining. 13 instances were successfully created across 5 regions. All instances had CloudWatch detailed monitoring disabled.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "About thirty-one (31) minutes after initial access, the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining. Using the AWS EC2 launch wizard the attacker would CreateKeyPair and CreateSecurityGroup",
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Attacker attached inline policy 'backupuser' granting Action:* Resource:* (full admin) to the new 'backup' IAM user.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "aws_services_involved": [
-          "EC2",
-          "CloudWatch"
+          "IAM"
         ]
       },
       {
         "step": 9,
+        "technique_id": "T1526",
+        "technique_name": "Cloud Service Discovery",
+        "description": "Attacker logged into the AWS console as the new 'backup' identity and enumerated services including health, support, ec2, elb, s3, cloudfront, trustedadvisor, monitoring, and compute-optimizer.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "logged into AWS console with the newly created backup identity and explored the services",
+        "evidence_sources": [
+          "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "EC2",
+          "S3",
+          "ELB",
+          "CloudFront",
+          "CloudWatch",
+          "TrustedAdvisor",
+          "ComputeOptimizer",
+          "Support",
+          "Health"
+        ]
+      },
+      {
+        "step": 10,
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "About 31 minutes after initial access, the attacker used the EC2 launch wizard to CreateKeyPair and CreateSecurityGroup (allowing TCP/22 from 0.0.0.0/0) and launched EC2 instances.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker began to use the AWS web console to create EC2 instances... CreateKeyPair and CreateSecurityGroup",
+        "evidence_sources": [
+          "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 11,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Attacker successfully launched 13 xlarge EC2 instances across 5 AWS regions to perform cryptocurrency mining, exploiting the victim's cloud compute resources.",
+        "description": "Attacker successfully launched 13 xlarge EC2 instances across 5 regions with CloudWatch detailed monitoring disabled, to perform cryptomining.",
         "tactic_id": "TA0040",
-        "evidence_quote": "In total the attacker successfully created thirteen (13) ec2 instances in five (5) different regions... the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining.",
+        "evidence_quote": "the attacker successfully created thirteen (13) ec2 instances in five (5) different regions",
         "evidence_sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
@@ -414,32 +559,32 @@
     "edges": [
       {
         "source": "T1190",
-        "target": "T1552.005",
+        "target": "T1552.001",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Credentials In Files",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205). The attacker exploited the vulnerability in Gitlab, and gained access to sensitive data",
+          "the initial compromise of the client was a Gitlab vulnerability (CVE-2021-22205)",
           "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment"
         ]
       },
       {
-        "source": "T1552.005",
+        "source": "T1552.001",
         "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Credentials In Files",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
           "gained access to sensitive data, which included the access key for an Admin level identity in the victims AWS environment",
-          "The attackers initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252 with a User-Agent of S3 Browser 9.5.5"
+          "initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252"
         ]
       },
       {
@@ -453,83 +598,113 @@
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "The attackers initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252 with a User-Agent of S3 Browser 9.5.5",
-          "The attackers initial access into the AWS environment was a ListBuckets that came through this access key"
+          "initial access into the AWS environment was a ListBuckets that came through this access key from the Indonesian IP address 182.1.229.252",
+          "initial access into the AWS environment was a ListBuckets"
         ]
       },
       {
         "source": "T1619",
-        "target": "T1098.001",
+        "target": "T1098.003",
         "source_step": 4,
         "target_step": 5,
         "source_technique_name": "Cloud Storage Object Discovery",
-        "target_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Additional Cloud Roles",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "The attackers initial access into the AWS environment was a ListBuckets that came through this access key",
-          "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser."
+          "initial access into the AWS environment was a ListBuckets",
+          "attempted to PutUserPolicy to add a policy named dq to an existing identity associated with backups. The PutUserPolicy attempt failed"
         ]
       },
       {
-        "source": "T1098.001",
+        "source": "T1098.003",
         "target": "T1136.003",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Additional Cloud Credentials",
+        "source_technique_name": "Additional Cloud Roles",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "The attacker leveraged the stolen access key to CreateUser named backup and CreateAccessKey via S3 Browser.",
-          "The attacker than initiated a PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup"
+          "attempted to PutUserPolicy to add a policy named dq to an existing identity associated with backups. The PutUserPolicy attempt failed",
+          "leveraged the stolen access key to CreateUser named backup"
         ]
       },
       {
         "source": "T1136.003",
-        "target": "T1526",
+        "target": "T1098.001",
         "source_step": 6,
         "target_step": 7,
         "source_technique_name": "Cloud Account",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "leveraged the stolen access key to CreateUser named backup",
+          "CreateUser named backup and CreateAccessKey via S3 Browser"
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1098.003",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Additional Cloud Roles",
+        "sources": [
+          "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
+        ],
+        "evidence_quotes": [
+          "CreateUser named backup and CreateAccessKey via S3 Browser",
+          "PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup"
+        ]
+      },
+      {
+        "source": "T1098.003",
+        "target": "T1526",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Additional Cloud Roles",
         "target_technique_name": "Cloud Service Discovery",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "The attacker than initiated a PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
-          "Services explored by the attacker included: health.amazonaws.com, support.amazonaws.com, ec2.amazonaws.com, elasticloadbalancing.amazonaws.com, s3.amazonaws.com, cloudfront.amazonaws.com, trustedadvisor.amazonaws.com, monitoring.amazonaws.com, compute-optimizer.amazonaws.com"
+          "PutUserPolicy to create a policy named backupuser which allowed full privileges to all resources for the identity backup",
+          "logged into AWS console with the newly created backup identity and explored the services"
         ]
       },
       {
         "source": "T1526",
         "target": "T1578.002",
-        "source_step": 7,
-        "target_step": 8,
+        "source_step": 9,
+        "target_step": 10,
         "source_technique_name": "Cloud Service Discovery",
         "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "Services explored by the attacker included: health.amazonaws.com, support.amazonaws.com, ec2.amazonaws.com, elasticloadbalancing.amazonaws.com, s3.amazonaws.com, cloudfront.amazonaws.com, trustedadvisor.amazonaws.com, monitoring.amazonaws.com, compute-optimizer.amazonaws.com",
-          "About thirty-one (31) minutes after initial access, the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining. Using the AWS EC2 launch wizard the attacker would CreateKeyPair and CreateSecurityGroup"
+          "logged into AWS console with the newly created backup identity and explored the services",
+          "the attacker began to use the AWS web console to create EC2 instances... CreateKeyPair and CreateSecurityGroup"
         ]
       },
       {
         "source": "T1578.002",
         "target": "T1496",
-        "source_step": 8,
-        "target_step": 9,
+        "source_step": 10,
+        "target_step": 11,
         "source_technique_name": "Create Cloud Instance",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://web.archive.org/web/20220629061640/https://permiso.io/blog/s/anatomy-of-attack-exposed-keys-to-crypto-mining/"
         ],
         "evidence_quotes": [
-          "About thirty-one (31) minutes after initial access, the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining. Using the AWS EC2 launch wizard the attacker would CreateKeyPair and CreateSecurityGroup",
-          "In total the attacker successfully created thirteen (13) ec2 instances in five (5) different regions... the attacker began to use the AWS web console to create EC2 instances for the purpose of crypto mining."
+          "the attacker began to use the AWS web console to create EC2 instances... CreateKeyPair and CreateSecurityGroup",
+          "the attacker successfully created thirteen (13) ec2 instances in five (5) different regions"
         ]
       }
     ]
@@ -540,7 +715,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "permiso-case-study-1-2022-june",
-  "analyzed_at": "2026-04-15T21:04:20.857079+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 5504
+  "analyzed_at": "2026-04-23T18:50:39.278175+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 10870
 }

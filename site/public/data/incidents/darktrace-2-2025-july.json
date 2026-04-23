@@ -8,21 +8,15 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
+          "evidence_quote": "gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
+        },
         {
-          "technique_id": "T1595",
-          "technique_name": "Active Scanning",
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services",
           "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment",
-          "validated": false
+          "evidence_quote": "SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
+          "validated": true
         }
       ]
     },
@@ -31,18 +25,18 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1046",
-          "technique_name": "Network Service Discovery",
-          "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network",
-          "validated": true
-        },
-        {
           "technique_id": "T1018",
           "technique_name": "Remote System Discovery",
           "inferred": false,
-          "evidence_quote": "the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
+          "evidence_quote": "the EC2 instance started scanning the environment",
           "validated": false
+        },
+        {
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Scanning of Multiple Devices",
+          "validated": true
         }
       ]
     },
@@ -52,17 +46,18 @@
       "techniques": [
         {
           "technique_id": "T1021.001",
-          "technique_name": "Remote Desktop Protocol",
+          "technique_name": "Remote Services: Remote Desktop Protocol",
+          "subtechnique_id": "T1021.001",
           "inferred": false,
-          "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance... the same behavior was replicated across multiple EC2 instances, whereby compromised instances uploaded data over internal RDP connections to other instances",
+          "evidence_quote": "attempted to pivot to other internal systems via RDP",
           "validated": false
         },
         {
-          "technique_id": "T1021.002",
-          "technique_name": "SMB/Windows Admin Shares",
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
           "inferred": false,
           "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
-          "validated": false
+          "validated": true
         }
       ]
     },
@@ -79,22 +74,10 @@
         },
         {
           "technique_id": "T1074.002",
-          "technique_name": "Remote Data Staging",
+          "technique_name": "Data Staged: Remote Data Staging",
+          "subtechnique_id": "T1074.002",
           "inferred": false,
           "evidence_quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1048",
-          "technique_name": "Exfiltration Over Alternative Protocol",
-          "inferred": false,
-          "evidence_quote": "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000",
           "validated": true
         }
       ]
@@ -113,8 +96,21 @@
         {
           "technique_id": "T1102",
           "technique_name": "Web Service",
+          "inferred": true,
+          "evidence_quote": "received HTTPS connections from three rare Vultr VPS endpoints",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
           "inferred": false,
-          "evidence_quote": "The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176)",
+          "evidence_quote": "transfer more than 230 GB of data to the rare external GTHost VPS endpoint",
           "validated": false
         }
       ]
@@ -127,7 +123,7 @@
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact",
           "inferred": false,
-          "evidence_quote": "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks",
+          "evidence_quote": "they detonated ransomware within the compromised VPC networks",
           "validated": true
         }
       ]
@@ -138,103 +134,284 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "The threat actor exploited the SonicWall SMA 500v EC2 instance (publicly exposed, allowing inbound traffic on any port) to gain initial access into the customer's AWS VPC network. Three rare Vultr VPS endpoints established HTTPS connections to the instance, acting as C2 infrastructure.",
-      "evidence_quote": "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176).",
-      "evidence_sources": [
-        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
-      ],
+      "description": "Threat actor gained entry into the AWS VPC via a SonicWall SMA 500v EC2 instance that was allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (45.32.205.52, 207.246.74.166, 45.32.90.176).",
       "aws_services_involved": [
         "EC2",
         "VPC"
       ],
+      "evidence_quote": "gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
+      "ordering_confidence": 1.0,
+      "event_time": "2025-03",
+      "event_time_precision": "month",
+      "evidence_sources": [
+        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+      ],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1046",
       "technique_name": "Network Service Discovery",
-      "description": "Immediately following initial compromise, the SonicWall EC2 instance began scanning the internal VPC environment to identify other reachable systems and services.",
-      "evidence_quote": "Around the same time, the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
+      "description": "Compromised SonicWall EC2 instance began scanning the internal environment to identify other systems and services.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "the EC2 instance started scanning the environment",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c057",
+          "source_file": "link_00.clean.md",
+          "char_start": 13510,
+          "char_end": 13733,
+          "quote": "the EC2 instance started scanning the environment"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 30045,
+          "char_end": 30268,
+          "quote": "the EC2 instance started scanning the environment"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1021.001",
       "technique_name": "Remote Services: Remote Desktop Protocol",
-      "description": "The compromised SonicWall EC2 instance pivoted laterally via RDP to a Domain Controller EC2 instance, which then also began scanning the network. The DC subsequently pivoted to additional EC2 instances via RDP.",
-      "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network, and another EC2 instance",
+      "description": "Attacker pivoted from the compromised SonicWall EC2 instance to internal EC2 systems including a DC EC2 instance via RDP.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c057",
+          "source_file": "link_00.clean.md",
+          "char_start": 13510,
+          "char_end": 13733,
+          "quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 30045,
+          "char_end": 30268,
+          "quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 4,
-      "technique_id": "T1021.002",
-      "technique_name": "Remote Services: SMB/Windows Admin Shares",
-      "description": "Compromised EC2 instances downloaded hundreds of gigabytes of data from another EC2 instance using SMB, gathering data for staging and exfiltration.",
-      "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
-      "evidence_sources": [
-        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
-      ],
+      "technique_id": "T1018",
+      "technique_name": "Remote System Discovery",
+      "description": "The DC EC2 instance also began scanning the network after being compromised via RDP.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "a DC EC2 instance, which also started scanning the network",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c057",
+          "source_file": "link_00.clean.md",
+          "char_start": 13510,
+          "char_end": 13733,
+          "quote": "a DC EC2 instance, which also started scanning the network"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 30045,
+          "char_end": 30268,
+          "quote": "a DC EC2 instance, which also started scanning the network"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 5,
-      "technique_id": "T1074.002",
-      "technique_name": "Stage Capabilities: Remote Data Staging",
-      "description": "Data collected via SMB was staged by uploading it across multiple compromised EC2 instances via internal RDP connections before being sent to an external destination, creating a multi-hop staging chain.",
-      "evidence_quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
-      "evidence_sources": [
-        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
-      ],
+      "technique_id": "T1039",
+      "technique_name": "Data from Network Shared Drive",
+      "description": "Attacker collected hundreds of GBs of data via SMB from another EC2 instance.",
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1048",
-      "technique_name": "Exfiltration Over Alternative Protocol",
-      "description": "Staged data was exfiltrated from multiple EC2 instances to the external GTHost VPS endpoint (23.150.248[.]189) over port 5000 (non-standard, typically UPnP), totaling 718 GB of data uploaded to the external endpoint.",
-      "evidence_quote": "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000... Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint",
+      "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c058",
+          "source_file": "link_00.clean.md",
+          "char_start": 13735,
+          "char_end": 13934,
+          "quote": "downloading hundreds of GBs of data over SMB from another EC2 instance"
+        },
+        {
+          "chunk_id": "link_00.md#c105",
+          "source_file": "link_00.md",
+          "char_start": 30270,
+          "char_end": 30469,
+          "quote": "downloading hundreds of GBs of data over SMB from another EC2 instance"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 6,
+      "technique_id": "T1074.002",
+      "technique_name": "Data Staged: Remote Data Staging",
+      "description": "Compromised instances uploaded data over internal RDP connections to other EC2 instances, which were then used for exfiltration.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c061",
+          "source_file": "link_00.clean.md",
+          "char_start": 14351,
+          "char_end": 14653,
+          "quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint"
+        },
+        {
+          "chunk_id": "link_00.md#c108",
+          "source_file": "link_00.md",
+          "char_start": 30886,
+          "char_end": 31188,
+          "quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1486",
-      "technique_name": "Data Encrypted for Impact",
-      "description": "After completing data exfiltration (718 GB total), the threat actor detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response was not configured on these devices, so the attack was not autonomously blocked.",
-      "evidence_quote": "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response capability was not configured to act on these devices.",
+      "technique_id": "T1571",
+      "technique_name": "Non-Standard Port",
+      "description": "Data was transferred to the external GTHost VPS endpoint over port 5000, typically used for UPnP.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c061",
+          "source_file": "link_00.clean.md",
+          "char_start": 14351,
+          "char_end": 14653,
+          "quote": "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)"
+        },
+        {
+          "chunk_id": "link_00.md#c108",
+          "source_file": "link_00.md",
+          "char_start": 30886,
+          "char_end": 31188,
+          "quote": "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 8,
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "description": "A total of 718 GB of data was exfiltrated to the external GTHost VPS endpoint 23.150.248.189 (initial transfer of 230+ GB).",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "the threat actor uploading a total of 718 GB to the external endpoint",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c062",
+          "source_file": "link_00.clean.md",
+          "char_start": 14684,
+          "char_end": 14848,
+          "quote": "the threat actor uploading a total of 718 GB to the external endpoint"
+        },
+        {
+          "chunk_id": "link_00.md#c109",
+          "source_file": "link_00.md",
+          "char_start": 31219,
+          "char_end": 31383,
+          "quote": "the threat actor uploading a total of 718 GB to the external endpoint"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 9,
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "description": "After exfiltration, the threat actor detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response was not configured for these devices so the activity was not blocked.",
       "aws_services_involved": [
         "EC2",
         "VPC"
       ],
+      "evidence_quote": "they detonated ransomware within the compromised VPC networks",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c062",
+          "source_file": "link_00.clean.md",
+          "char_start": 14684,
+          "char_end": 14848,
+          "quote": "they detonated ransomware within the compromised VPC networks"
+        },
+        {
+          "chunk_id": "link_00.md#c109",
+          "source_file": "link_00.md",
+          "char_start": 31219,
+          "char_end": 31383,
+          "quote": "they detonated ransomware within the compromised VPC networks"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
@@ -243,20 +420,20 @@
     "VPC"
   ],
   "impact_type": "Ransomware / Extortion",
-  "confidence_score": 0.9,
-  "initial_access_vector": "Exploitation of a publicly exposed SonicWall SMA 500v EC2 instance configured to allow inbound traffic on any port, targeted by three Vultr VPS C2 endpoints via HTTPS",
+  "confidence_score": 0.8,
   "data_exfiltrated": true,
-  "persistence_mechanism": "Not explicitly described for Case 3 (SonicWall incident); foothold maintained via lateral movement across multiple EC2 instances",
-  "privilege_escalation": "Not explicitly described; lateral movement to Domain Controller EC2 instance implies elevated access was achieved",
+  "initial_access_vector": "Exploitation of an internet-exposed SonicWall SMA 500v EC2 instance configured to allow inbound traffic on any port; HTTPS connections originated from rare Vultr VPS endpoints.",
+  "persistence_mechanism": "Maintained foothold via the compromised SonicWall appliance and lateral RDP access to additional EC2 instances including a domain controller.",
+  "privilege_escalation": "Not explicitly described; attacker leveraged lateral movement to a domain controller EC2 instance.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "The threat actor exploited the SonicWall SMA 500v EC2 instance (publicly exposed, allowing inbound traffic on any port) to gain initial access into the customer's AWS VPC network. Three rare Vultr VPS endpoints established HTTPS connections to the instance, acting as C2 infrastructure.",
+        "description": "Threat actor gained entry into the AWS VPC via a SonicWall SMA 500v EC2 instance that was allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (45.32.205.52, 207.246.74.166, 45.32.90.176).",
         "tactic_id": "TA0001",
-        "evidence_quote": "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176).",
+        "evidence_quote": "gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
@@ -269,37 +446,49 @@
         "step": 2,
         "technique_id": "T1046",
         "technique_name": "Network Service Discovery",
-        "description": "Immediately following initial compromise, the SonicWall EC2 instance began scanning the internal VPC environment to identify other reachable systems and services.",
+        "description": "Compromised SonicWall EC2 instance began scanning the internal environment to identify other systems and services.",
         "tactic_id": "TA0007",
-        "evidence_quote": "Around the same time, the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
+        "evidence_quote": "the EC2 instance started scanning the environment",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC"
+          "EC2"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1021.001",
         "technique_name": "Remote Services: Remote Desktop Protocol",
-        "description": "The compromised SonicWall EC2 instance pivoted laterally via RDP to a Domain Controller EC2 instance, which then also began scanning the network. The DC subsequently pivoted to additional EC2 instances via RDP.",
+        "description": "Attacker pivoted from the compromised SonicWall EC2 instance to internal EC2 systems including a DC EC2 instance via RDP.",
         "tactic_id": "",
-        "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network, and another EC2 instance",
+        "evidence_quote": "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC"
+          "EC2"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1021.002",
-        "technique_name": "Remote Services: SMB/Windows Admin Shares",
-        "description": "Compromised EC2 instances downloaded hundreds of gigabytes of data from another EC2 instance using SMB, gathering data for staging and exfiltration.",
+        "technique_id": "T1018",
+        "technique_name": "Remote System Discovery",
+        "description": "The DC EC2 instance also began scanning the network after being compromised via RDP.",
+        "tactic_id": "",
+        "evidence_quote": "a DC EC2 instance, which also started scanning the network",
+        "evidence_sources": [
+          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1039",
+        "technique_name": "Data from Network Shared Drive",
+        "description": "Attacker collected hundreds of GBs of data via SMB from another EC2 instance.",
         "tactic_id": "",
         "evidence_quote": "downloading hundreds of GBs of data over SMB from another EC2 instance",
         "evidence_sources": [
@@ -310,10 +499,10 @@
         ]
       },
       {
-        "step": 5,
+        "step": 6,
         "technique_id": "T1074.002",
         "technique_name": "Remote Data Staging",
-        "description": "Data collected via SMB was staged by uploading it across multiple compromised EC2 instances via internal RDP connections before being sent to an external destination, creating a multi-hop staging chain.",
+        "description": "Compromised instances uploaded data over internal RDP connections to other EC2 instances, which were then used for exfiltration.",
         "tactic_id": "TA0009",
         "evidence_quote": "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
         "evidence_sources": [
@@ -324,27 +513,40 @@
         ]
       },
       {
-        "step": 6,
-        "technique_id": "T1048",
-        "technique_name": "Exfiltration Over Alternative Protocol",
-        "description": "Staged data was exfiltrated from multiple EC2 instances to the external GTHost VPS endpoint (23.150.248[.]189) over port 5000 (non-standard, typically UPnP), totaling 718 GB of data uploaded to the external endpoint.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000... Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint",
+        "step": 7,
+        "technique_id": "T1571",
+        "technique_name": "Non-Standard Port",
+        "description": "Data was transferred to the external GTHost VPS endpoint over port 5000, typically used for UPnP.",
+        "tactic_id": "",
+        "evidence_quote": "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC"
+          "EC2"
         ]
       },
       {
-        "step": 7,
+        "step": 8,
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "A total of 718 GB of data was exfiltrated to the external GTHost VPS endpoint 23.150.248.189 (initial transfer of 230+ GB).",
+        "tactic_id": "",
+        "evidence_quote": "the threat actor uploading a total of 718 GB to the external endpoint",
+        "evidence_sources": [
+          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 9,
         "technique_id": "T1486",
         "technique_name": "Data Encrypted for Impact",
-        "description": "After completing data exfiltration (718 GB total), the threat actor detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response was not configured on these devices, so the attack was not autonomously blocked.",
+        "description": "After exfiltration, the threat actor detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response was not configured for these devices so the activity was not blocked.",
         "tactic_id": "TA0040",
-        "evidence_quote": "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response capability was not configured to act on these devices.",
+        "evidence_quote": "they detonated ransomware within the compromised VPC networks",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
@@ -366,8 +568,8 @@
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "the threat actor appeared to have gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port. The instance received HTTPS connections from three rare Vultr VPS endpoints (i.e., 45.32.205[.]52, 207.246.74[.]166, 45.32.90[.]176).",
-          "Around the same time, the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP"
+          "gained entry into the AWS-based Virtual Private Cloud (VPC) network via a SonicWall SMA 500v EC2 instance allowing inbound traffic on any port",
+          "the EC2 instance started scanning the environment"
         ]
       },
       {
@@ -381,31 +583,46 @@
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "Around the same time, the EC2 instance started scanning the environment and attempted to pivot to other internal systems via RDP",
-          "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network, and another EC2 instance"
+          "the EC2 instance started scanning the environment",
+          "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance"
         ]
       },
       {
         "source": "T1021.001",
-        "target": "T1021.002",
+        "target": "T1018",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Remote Services: Remote Desktop Protocol",
-        "target_technique_name": "Remote Services: SMB/Windows Admin Shares",
+        "target_technique_name": "Remote System Discovery",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance, which also started scanning the network, and another EC2 instance",
+          "attempted to pivot to other internal systems via RDP, notably a DC EC2 instance",
+          "a DC EC2 instance, which also started scanning the network"
+        ]
+      },
+      {
+        "source": "T1018",
+        "target": "T1039",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Remote System Discovery",
+        "target_technique_name": "Data from Network Shared Drive",
+        "sources": [
+          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+        ],
+        "evidence_quotes": [
+          "a DC EC2 instance, which also started scanning the network",
           "downloading hundreds of GBs of data over SMB from another EC2 instance"
         ]
       },
       {
-        "source": "T1021.002",
+        "source": "T1039",
         "target": "T1074.002",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Remote Services: SMB/Windows Admin Shares",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Data from Network Shared Drive",
         "target_technique_name": "Remote Data Staging",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
@@ -417,32 +634,47 @@
       },
       {
         "source": "T1074.002",
-        "target": "T1048",
-        "source_step": 5,
-        "target_step": 6,
+        "target": "T1571",
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Remote Data Staging",
-        "target_technique_name": "Exfiltration Over Alternative Protocol",
+        "target_technique_name": "Non-Standard Port",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
           "compromised instances uploaded data over internal RDP connections to other instances, which then started transferring data to the same GTHost VPS endpoint",
-          "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000... Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint"
+          "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)"
         ]
       },
       {
-        "source": "T1048",
+        "source": "T1571",
+        "target": "T1041",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Non-Standard Port",
+        "target_technique_name": "Exfiltration Over C2 Channel",
+        "sources": [
+          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+        ],
+        "evidence_quotes": [
+          "transferring data to the same GTHost VPS endpoint over port 5000, which is typically used for Universal Plug and Play (UPnP)",
+          "the threat actor uploading a total of 718 GB to the external endpoint"
+        ]
+      },
+      {
+        "source": "T1041",
         "target": "T1486",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Exfiltration Over Alternative Protocol",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Exfiltration Over C2 Channel",
         "target_technique_name": "Data Encrypted for Impact",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "The latter then proceeded to transfer more than 230 GB of data to the rare external GTHost VPS endpoint 23.150.248[.]189... transferring data to the same GTHost VPS endpoint over port 5000... Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint",
-          "Darktrace observed the threat actor uploading a total of 718 GB to the external endpoint, after which they detonated ransomware within the compromised VPC networks. Darktrace's Autonomous Response capability was not configured to act on these devices."
+          "the threat actor uploading a total of 718 GB to the external endpoint",
+          "they detonated ransomware within the compromised VPC networks"
         ]
       }
     ]
@@ -453,13 +685,13 @@
   },
   "schema_version": "1.0",
   "incident_slug": "darktrace-2-2025-july",
-  "analyzed_at": "2026-04-15T20:49:34.903314+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 72830,
+  "analyzed_at": "2026-04-23T18:41:19.473097+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 95551,
   "incident_name": "Darktrace #2",
   "incident_date": "2025, July",
   "incident_root_cause": "SonicWall",
-  "impact_type_raw": "Data Exfiltration, Ransomware",
+  "impact_type_raw": "Ransomware and Data Exfiltration",
   "aws_services_raw": [
     "EC2",
     "VPC"

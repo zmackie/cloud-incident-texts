@@ -1,21 +1,27 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": true,
+          "evidence_quote": null,
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "Unknown exposure of Access Key",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": true,
-          "evidence_quote": "Unknown exposure of Access Key",
+          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -28,7 +34,7 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "Potential access to network telemetry and contact trace data",
+          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -38,10 +44,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "Potential access to network telemetry and contact trace data",
+          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -50,55 +56,80 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "An AWS/cloud access key was exposed through an unknown vector, providing the attacker with valid credentials to HPE Aruba Central's cloud environment.",
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker obtained an exposed HPE Aruba Central access key via unknown means (root cause: unknown exposure of access key).",
+      "event_time": "2021-10",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.7,
       "evidence_quote": "Unknown exposure of Access Key",
       "evidence_sources": [
         "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used the exposed access key to authenticate to HPE Aruba Central cloud services as a legitimate cloud account.",
-      "evidence_quote": "Unknown exposure of Access Key",
+      "description": "Attacker used the exposed access key to authenticate to the Aruba Central cloud environment.",
+      "event_time": "2021-10",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.8,
+      "evidence_quote": null,
       "evidence_sources": [
         "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "Using the valid cloud account credentials, the attacker accessed HPE Aruba Central's cloud-stored network telemetry and contact trace data.",
+      "description": "Attacker accessed network telemetry and contact trace data stored within the Aruba Central cloud platform.",
+      "event_time": "2021-10",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.7,
       "evidence_quote": "Potential access to network telemetry and contact trace data",
       "evidence_sources": [
         "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Potential exfiltration of accessed network telemetry and contact trace data via the cloud service interface.",
+      "event_time": "2021-10",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.4,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
+      ],
+      "evidence_chunks": [],
       "validated": true
     }
   ],
-  "aws_services": [],
-  "impact_type": "Data Exfiltration",
+  "aws_services": [
+    "HPE Aruba Central (cloud management platform)"
+  ],
+  "impact_type": "Data Exposure",
   "confidence_score": 0.2,
-  "initial_access_vector": "Unknown exposure of a cloud access key for HPE Aruba Central",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Unknown exposure of an HPE Aruba Central access key, used by an attacker to authenticate as a valid cloud account.",
+  "persistence_mechanism": "Continued use of the exposed access key (no rotation observed prior to detection).",
   "data_exfiltrated": true,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "An AWS/cloud access key was exposed through an unknown vector, providing the attacker with valid credentials to HPE Aruba Central's cloud environment.",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker obtained an exposed HPE Aruba Central access key via unknown means (root cause: unknown exposure of access key).",
         "tactic_id": "TA0006",
         "evidence_quote": "Unknown exposure of Access Key",
         "evidence_sources": [
@@ -110,9 +141,9 @@
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker used the exposed access key to authenticate to HPE Aruba Central cloud services as a legitimate cloud account.",
+        "description": "Attacker used the exposed access key to authenticate to the Aruba Central cloud environment.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Unknown exposure of Access Key",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
         ],
@@ -122,9 +153,21 @@
         "step": 3,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Using the valid cloud account credentials, the attacker accessed HPE Aruba Central's cloud-stored network telemetry and contact trace data.",
+        "description": "Attacker accessed network telemetry and contact trace data stored within the Aruba Central cloud platform.",
         "tactic_id": "TA0009",
         "evidence_quote": "Potential access to network telemetry and contact trace data",
+        "evidence_sources": [
+          "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Potential exfiltration of accessed network telemetry and contact trace data via the cloud service interface.",
+        "tactic_id": "TA0010",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
         ],
@@ -133,17 +176,16 @@
     ],
     "edges": [
       {
-        "source": "T1552.005",
+        "source": "T1552.001",
         "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Credentials In Files",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
         ],
         "evidence_quotes": [
-          "Unknown exposure of Access Key",
           "Unknown exposure of Access Key"
         ]
       },
@@ -158,7 +200,20 @@
           "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
         ],
         "evidence_quotes": [
-          "Unknown exposure of Access Key",
+          "Potential access to network telemetry and contact trace data"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1567",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://www.arubanetworks.com/support-services/security-bulletins/central-incident-faq/"
+        ],
+        "evidence_quotes": [
           "Potential access to network telemetry and contact trace data"
         ]
       }
@@ -170,7 +225,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "hpe-aruba-2021-october",
-  "analyzed_at": "2026-04-15T20:55:24.677081+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 685
+  "analyzed_at": "2026-04-23T18:44:34.667569+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 1089
 }

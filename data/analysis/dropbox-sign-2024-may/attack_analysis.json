@@ -7,8 +7,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "The actor compromised a service account that was part of Sign's back-end, which is a type of non-human account used to execute applications and run automated services.",
+          "evidence_quote": "Using an access token that had been compromised.",
           "validated": true
         }
       ]
@@ -20,16 +21,9 @@
         {
           "technique_id": "T1528",
           "technique_name": "Steal Application Access Token",
-          "inferred": false,
+          "inferred": true,
           "evidence_quote": "Using an access token that had been compromised.",
           "validated": true
-        },
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": true,
-          "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool",
-          "validated": false
         }
       ]
     },
@@ -40,8 +34,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "this account had privileges to take a variety of actions within Sign's production environment",
+          "evidence_quote": "The actor compromised a service account... this account had privileges to take a variety of actions within Sign's production environment.",
           "validated": true
         }
       ]
@@ -54,7 +49,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": true,
-          "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+          "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool",
           "validated": true
         }
       ]
@@ -66,8 +61,15 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "used this access to the production environment to access our customer database",
+          "validated": true
+        },
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
           "inferred": false,
-          "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+          "evidence_quote": "access our customer database",
           "validated": true
         }
       ]
@@ -77,10 +79,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords, in addition to general account settings and certain authentication information such as API keys, OAuth tokens, and multi-factor authentication.",
+          "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information",
           "validated": true
         }
       ]
@@ -91,65 +93,132 @@
       "step": 1,
       "technique_id": "T1528",
       "technique_name": "Steal Application Access Token",
-      "description": "The threat actor obtained a compromised access token, which was used as the initial foothold into the Dropbox Sign environment.",
+      "description": "Threat actor obtained a compromised access token for Dropbox Sign infrastructure (exact method of theft not disclosed).",
+      "event_time": "2024-04-19",
+      "event_time_precision": "day",
       "evidence_quote": "Using an access token that had been compromised.",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [],
       "evidence_sources": [
         "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Using the compromised access token, the threat actor gained access to a back-end service account with broad production environment privileges via the automated system configuration tool.",
-      "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool. The actor compromised a service account that was part of Sign's back-end, which is a type of non-human account used to execute applications and run automated services. As such, this account had privileges to take a variety of actions within Sign's production environment.",
+      "description": "Using the compromised access token, the attacker gained initial access to a Dropbox Sign automated system configuration tool on April 19, 2024.",
+      "event_time": "2024-04-19",
+      "event_time_precision": "day",
+      "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool",
+      "ordering_confidence": 0.95,
+      "aws_services_involved": [],
       "evidence_sources": [
         "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2578,
+          "char_end": 3062,
+          "quote": "a third party gained access to a Dropbox Sign automated system configuration tool"
+        },
+        {
+          "chunk_id": "link_00.md#c031",
+          "source_file": "link_00.md",
+          "char_start": 8461,
+          "char_end": 8945,
+          "quote": "a third party gained access to a Dropbox Sign automated system configuration tool"
+        }
+      ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "The threat actor used the service account's broad privileges to explore the production environment and locate the customer database.",
-      "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker compromised a service account (non-human back-end account) used to run automated services, inheriting its elevated privileges in the production environment.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "The actor compromised a service account that was part of Sign's back-end... this account had privileges to take a variety of actions within Sign's production environment.",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [],
       "evidence_sources": [
         "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The threat actor accessed the customer database and collected sensitive data including email addresses, usernames, phone numbers, hashed passwords, API keys, OAuth tokens, and MFA information.",
-      "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords, in addition to general account settings and certain authentication information such as API keys, OAuth tokens, and multi-factor authentication.",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Using the service account's privileges, the attacker accessed the Dropbox Sign customer database containing emails, names, phone numbers, hashed passwords, API keys, OAuth tokens, and MFA data.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [],
       "evidence_sources": [
         "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2578,
+          "char_end": 3062,
+          "quote": "The threat actor then used this access to the production environment to access our customer database."
+        },
+        {
+          "chunk_id": "link_00.md#c031",
+          "source_file": "link_00.md",
+          "char_start": 8461,
+          "char_end": 8945,
+          "quote": "The threat actor then used this access to the production environment to access our customer database."
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Attacker exfiltrated customer authentication data (emails, names, hashed passwords, API keys, OAuth tokens, MFA data). Last observed activity April 20, 2024.",
+      "event_time": "2024-04-20",
+      "event_time_precision": "day",
+      "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords... API keys, OAuth tokens, and multi-factor authentication",
+      "ordering_confidence": 0.8,
       "aws_services_involved": [],
+      "evidence_sources": [
+        "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
+      ],
+      "evidence_chunks": [],
       "validated": true
     }
   ],
-  "aws_services": [],
+  "aws_services": [
+    "Production Environment (Dropbox Sign back-end)",
+    "Automated System Configuration Tool",
+    "Customer Database",
+    "Service Account"
+  ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.75,
-  "initial_access_vector": "Compromised access token used to gain entry into the Dropbox Sign automated system configuration tool and its associated back-end service account",
-  "persistence_mechanism": "Not described in source; no persistence mechanism was explicitly observed",
-  "privilege_escalation": "Service account inherently held broad production environment privileges; no additional escalation step described beyond gaining control of the service account itself",
+  "confidence_score": 0.7,
   "data_exfiltrated": true,
+  "initial_access_vector": "Compromised access token used to gain entry into a Dropbox Sign automated system configuration tool.",
+  "persistence_mechanism": "Use of compromised service account credentials (no malware observed).",
+  "privilege_escalation": "Compromise of a highly privileged non-human service account used for automated back-end services in Sign's production environment.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1528",
         "technique_name": "Steal Application Access Token",
-        "description": "The threat actor obtained a compromised access token, which was used as the initial foothold into the Dropbox Sign environment.",
+        "description": "Threat actor obtained a compromised access token for Dropbox Sign infrastructure (exact method of theft not disclosed).",
         "tactic_id": "TA0006",
         "evidence_quote": "Using an access token that had been compromised.",
         "evidence_sources": [
@@ -161,9 +230,9 @@
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Using the compromised access token, the threat actor gained access to a back-end service account with broad production environment privileges via the automated system configuration tool.",
+        "description": "Using the compromised access token, the attacker gained initial access to a Dropbox Sign automated system configuration tool on April 19, 2024.",
         "tactic_id": "TA0005",
-        "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool. The actor compromised a service account that was part of Sign's back-end, which is a type of non-human account used to execute applications and run automated services. As such, this account had privileges to take a variety of actions within Sign's production environment.",
+        "evidence_quote": "a third party gained access to a Dropbox Sign automated system configuration tool",
         "evidence_sources": [
           "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
         ],
@@ -171,11 +240,11 @@
       },
       {
         "step": 3,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "The threat actor used the service account's broad privileges to explore the production environment and locate the customer database.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker compromised a service account (non-human back-end account) used to run automated services, inheriting its elevated privileges in the production environment.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The actor compromised a service account that was part of Sign's back-end... this account had privileges to take a variety of actions within Sign's production environment.",
         "evidence_sources": [
           "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
         ],
@@ -183,11 +252,23 @@
       },
       {
         "step": 4,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "The threat actor accessed the customer database and collected sensitive data including email addresses, usernames, phone numbers, hashed passwords, API keys, OAuth tokens, and MFA information.",
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Using the service account's privileges, the attacker accessed the Dropbox Sign customer database containing emails, names, phone numbers, hashed passwords, API keys, OAuth tokens, and MFA data.",
         "tactic_id": "TA0009",
-        "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords, in addition to general account settings and certain authentication information such as API keys, OAuth tokens, and multi-factor authentication.",
+        "evidence_quote": "The threat actor then used this access to the production environment to access our customer database.",
+        "evidence_sources": [
+          "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Attacker exfiltrated customer authentication data (emails, names, hashed passwords, API keys, OAuth tokens, MFA data). Last observed activity April 20, 2024.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords... API keys, OAuth tokens, and multi-factor authentication",
         "evidence_sources": [
           "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
         ],
@@ -207,37 +288,37 @@
         ],
         "evidence_quotes": [
           "Using an access token that had been compromised.",
-          "a third party gained access to a Dropbox Sign automated system configuration tool. The actor compromised a service account that was part of Sign's back-end, which is a type of non-human account used to execute applications and run automated services. As such, this account had privileges to take a variety of actions within Sign's production environment."
+          "a third party gained access to a Dropbox Sign automated system configuration tool"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
+        "target": "T1213",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Information Repositories",
         "sources": [
           "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
         ],
         "evidence_quotes": [
-          "a third party gained access to a Dropbox Sign automated system configuration tool. The actor compromised a service account that was part of Sign's back-end, which is a type of non-human account used to execute applications and run automated services. As such, this account had privileges to take a variety of actions within Sign's production environment.",
+          "The actor compromised a service account that was part of Sign's back-end... this account had privileges to take a variety of actions within Sign's production environment.",
           "The threat actor then used this access to the production environment to access our customer database."
         ]
       },
       {
-        "source": "T1580",
-        "target": "T1530",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Data from Cloud Storage",
+        "source": "T1213",
+        "target": "T1567",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://sign.dropbox.com/blog/a-recent-security-incident-involving-dropbox-sign"
         ],
         "evidence_quotes": [
           "The threat actor then used this access to the production environment to access our customer database.",
-          "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords, in addition to general account settings and certain authentication information such as API keys, OAuth tokens, and multi-factor authentication."
+          "a threat actor had accessed data including Dropbox Sign customer information such as email addresses, user names, phone numbers and hashed passwords... API keys, OAuth tokens, and multi-factor authentication"
         ]
       }
     ]
@@ -248,7 +329,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "dropbox-sign-2024-may",
-  "analyzed_at": "2026-04-15T20:52:37.445093+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 21917
+  "analyzed_at": "2026-04-23T18:43:01.599080+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 31889
 }

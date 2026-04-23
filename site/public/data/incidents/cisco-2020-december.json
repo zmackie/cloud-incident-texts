@@ -5,47 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
           "evidence_quote": "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Ramesh worked for Cisco between July 2016 and April 2018, when he resigned...five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
-          "validated": true
-        },
-        {
-          "technique_id": "T1489",
-          "technique_name": "Service Stop",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "actions that resulted in the temporary deletion of more than 16,000 Webex accounts",
           "validated": true
         }
       ]
@@ -57,9 +20,35 @@
         {
           "technique_id": "T1059",
           "technique_name": "Command and Scripting Interpreter",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction",
+          "inferred": false,
+          "evidence_quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
+          "validated": true
+        },
+        {
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal",
+          "inferred": false,
+          "evidence_quote": "temporary deletion of more than 16,000 Webex accounts",
+          "validated": true
+        },
+        {
+          "technique_id": "T1498",
+          "technique_name": "Network Denial of Service",
+          "inferred": true,
+          "evidence_quote": "Webex Teams outage was the result of intentional sabotage",
           "validated": true
         }
       ]
@@ -70,14 +59,32 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Former employee Ramesh leveraged retained AWS cloud credentials that were not revoked upon his resignation in April 2018, gaining unauthorized access to Cisco's AWS environment approximately five months after departure.",
+      "description": "Former Cisco engineer Sudhish Kasaba Ramesh, five months after resigning, used still-valid AWS credentials to access Cisco's cloud infrastructure without authorization.",
+      "event_time": "2018-09",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "IAM"
+      ],
       "evidence_quote": "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services",
       "evidence_sources": [
         "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "EC2"
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 317,
+          "char_end": 2111,
+          "quote": "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 1794,
+          "quote": "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services"
+        }
       ],
       "validated": true
     },
@@ -85,13 +92,32 @@
       "step": 2,
       "technique_id": "T1059",
       "technique_name": "Command and Scripting Interpreter",
-      "description": "Ramesh executed a script targeting Cisco's AWS infrastructure to programmatically identify and delete EC2 virtual machines hosting the Webex Teams service.",
-      "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
+      "description": "Ramesh executed a script against the AWS environment to automate deletion of EC2 instances hosting WebEx Teams.",
+      "event_time": "2018-09",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines",
       "evidence_sources": [
         "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
       ],
-      "aws_services_involved": [
-        "EC2"
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 317,
+          "char_end": 2111,
+          "quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 1794,
+          "quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines"
+        }
       ],
       "validated": true
     },
@@ -99,13 +125,65 @@
       "step": 3,
       "technique_id": "T1485",
       "technique_name": "Data Destruction",
-      "description": "The script successfully deleted 456 EC2 virtual machines supporting Cisco Webex Teams, causing the temporary loss of over 16,000 customer accounts and a multi-week outage costing Cisco over $2.4 million.",
-      "evidence_quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams, actions that resulted in the temporary deletion of more than 16,000 Webex accounts",
+      "description": "The script deleted 456 EC2 virtual machines supporting WebEx Teams infrastructure, destroying the underlying servers.",
+      "event_time": "2018-09",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
       "evidence_sources": [
         "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 317,
+          "char_end": 2111,
+          "quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 1794,
+          "quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1531",
+      "technique_name": "Account Access Removal",
+      "description": "As a downstream consequence of the VM deletions, more than 16,000 Webex user accounts were temporarily removed, denying users access to the service.",
+      "event_time": "2018-09",
+      "event_time_precision": "month",
       "aws_services_involved": [
         "EC2"
+      ],
+      "evidence_quote": "actions that resulted in the temporary deletion of more than 16,000 Webex accounts",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 317,
+          "char_end": 2111,
+          "quote": "actions that resulted in the temporary deletion of more than 16,000 Webex accounts"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 1794,
+          "quote": "actions that resulted in the temporary deletion of more than 16,000 Webex accounts"
+        }
       ],
       "validated": true
     }
@@ -115,35 +193,34 @@
     "IAM"
   ],
   "impact_type": "Data Destruction / Disruption",
-  "confidence_score": 0.92,
-  "initial_access_vector": "Former employee retained active AWS cloud account credentials after resignation in April 2018; no evidence of credential revocation or access deprovisioning",
-  "persistence_mechanism": "No active persistence mechanism established \u2014 attacker leveraged a pre-existing, never-revoked cloud account from their period of employment",
-  "privilege_escalation": "No privilege escalation required \u2014 retained credentials already carried sufficient permissions to delete EC2 instances at scale",
+  "confidence_score": 0.85,
   "data_exfiltrated": false,
+  "initial_access_vector": "Former employee used retained/valid AWS credentials five months after resignation to log in to Cisco's AWS environment without authorization.",
+  "persistence_mechanism": "Credentials/access were not revoked after employee's April 2018 resignation, allowing access in September 2018.",
+  "privilege_escalation": "None required \u2014 existing account retained sufficient privileges to terminate EC2 instances.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Former employee Ramesh leveraged retained AWS cloud credentials that were not revoked upon his resignation in April 2018, gaining unauthorized access to Cisco's AWS environment approximately five months after departure.",
+        "description": "Former Cisco engineer Sudhish Kasaba Ramesh, five months after resigning, used still-valid AWS credentials to access Cisco's cloud infrastructure without authorization.",
         "tactic_id": "TA0005",
         "evidence_quote": "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services",
         "evidence_sources": [
           "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
         ],
         "aws_services_involved": [
-          "IAM",
-          "EC2"
+          "IAM"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1059",
         "technique_name": "Command and Scripting Interpreter",
-        "description": "Ramesh executed a script targeting Cisco's AWS infrastructure to programmatically identify and delete EC2 virtual machines hosting the Webex Teams service.",
+        "description": "Ramesh executed a script against the AWS environment to automate deletion of EC2 instances hosting WebEx Teams.",
         "tactic_id": "TA0002",
-        "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
+        "evidence_quote": "Ramesh then proceeded to run a script that deleted 456 virtual machines",
         "evidence_sources": [
           "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
         ],
@@ -155,9 +232,23 @@
         "step": 3,
         "technique_id": "T1485",
         "technique_name": "Data Destruction",
-        "description": "The script successfully deleted 456 EC2 virtual machines supporting Cisco Webex Teams, causing the temporary loss of over 16,000 customer accounts and a multi-week outage costing Cisco over $2.4 million.",
+        "description": "The script deleted 456 EC2 virtual machines supporting WebEx Teams infrastructure, destroying the underlying servers.",
         "tactic_id": "TA0040",
-        "evidence_quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams, actions that resulted in the temporary deletion of more than 16,000 Webex accounts",
+        "evidence_quote": "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1531",
+        "technique_name": "Account Access Removal",
+        "description": "As a downstream consequence of the VM deletions, more than 16,000 Webex user accounts were temporarily removed, denying users access to the service.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "actions that resulted in the temporary deletion of more than 16,000 Webex accounts",
         "evidence_sources": [
           "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
         ],
@@ -179,7 +270,7 @@
         ],
         "evidence_quotes": [
           "five months later, in September 2018, Ramesh accessed Cisco's cloud infrastructure hosted on Amazon's Web Services",
-          "Ramesh then proceeded to run a script that deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams"
+          "Ramesh then proceeded to run a script that deleted 456 virtual machines"
         ]
       },
       {
@@ -193,8 +284,23 @@
           "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
         ],
         "evidence_quotes": [
-          "Ramesh then proceeded to run a script that deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
-          "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams, actions that resulted in the temporary deletion of more than 16,000 Webex accounts"
+          "Ramesh then proceeded to run a script that deleted 456 virtual machines",
+          "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams"
+        ]
+      },
+      {
+        "source": "T1485",
+        "target": "T1531",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data Destruction",
+        "target_technique_name": "Account Access Removal",
+        "sources": [
+          "https://web.archive.org/web/20210304053727/https://www.zdnet.com/article/former-cisco-engineer-sentenced-to-prison-for-deleting-16k-webex-accounts/"
+        ],
+        "evidence_quotes": [
+          "deleted 456 virtual machines that were supporting Cisco's video conferencing software WebEx Teams",
+          "actions that resulted in the temporary deletion of more than 16,000 Webex accounts"
         ]
       }
     ]
@@ -205,15 +311,15 @@
   },
   "schema_version": "1.0",
   "incident_slug": "cisco-2020-december",
-  "analyzed_at": "2026-04-15T20:46:32.526306+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 2189,
+  "analyzed_at": "2026-04-23T18:39:10.757763+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 4336,
   "incident_name": "Cisco",
   "incident_date": "2020,  December",
   "incident_root_cause": "Former employee with AWS access 5 months post-resignation",
-  "impact_type_raw": "Destructive Attack / Service Disruption",
+  "impact_type_raw": "Data Destruction / Sabotage",
   "aws_services_raw": [
-    "Amazon EC2",
+    "EC2",
     "AWS IAM"
   ]
 }

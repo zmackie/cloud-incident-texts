@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1595.001",
-          "technique_name": "Active Scanning: Scanning IP Blocks",
-          "inferred": true,
-          "evidence_quote": "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -27,15 +14,22 @@
       ]
     },
     {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
-          "validated": false
+          "evidence_quote": "aws iam list-roles ... aws iam list-policies ... aws iam list-instance-profiles",
+          "validated": true
+        },
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "a list of more than 700 folders or buckets of data",
+          "validated": true
         }
       ]
     },
@@ -46,8 +40,9 @@
         {
           "technique_id": "T1552.005",
           "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "subtechnique_id": "T1552.005",
           "inferred": false,
-          "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... This command retrieves the current IAM temporary credentials from the role from the EC2 instance metadata.",
+          "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/ ... This command retrieves the current IAM temporary credentials from the role from the EC2 instance metadata.",
           "validated": true
         }
       ]
@@ -57,50 +52,11 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1098.003",
-          "technique_name": "Account Manipulation: Additional Cloud Roles",
-          "inferred": true,
-          "evidence_quote": "If the compromised server did not have access to the private S3 buckets, but did have permissions to list and attach IAM policies, the attacker could have used these capabilities to essentially go shopping for a set of credentials",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "Other useful commands for such a fishing expedition include: aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles",
-          "validated": true
-        },
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "inferred": false,
-          "evidence_quote": "the April 21 File contained code for three commands, as well as a list of more than 700 folders or buckets of data",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism",
-          "inferred": true,
-          "evidence_quote": "IAM permissions can effectively 'jump' to private resources in your environment... aws ec2 replace-iam-instance-profile-association",
+          "evidence_quote": "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
           "validated": true
         }
       ]
@@ -113,7 +69,27 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space",
+          "evidence_quote": "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets",
+          "validated": true
+        },
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "aws s3 sync",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1535",
+          "technique_name": "Unused/Unsupported Cloud Regions",
+          "inferred": true,
+          "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
           "validated": true
         }
       ]
@@ -122,175 +98,217 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1595.001",
-      "technique_name": "Active Scanning: Scanning IP Blocks",
-      "description": "Attacker used Tor and IPredator to anonymize their identity while scanning Capital One's AWS environment, discovering a misconfigured firewall/Security Group with a dangerous port exposed to the internet.",
-      "evidence_quote": "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
-      "evidence_sources": [
-        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-      ],
-      "aws_services_involved": [
-        "VPC Security Groups",
-        "WAF"
-      ],
-      "validated": false
-    },
-    {
-      "step": 2,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "Attacker routed all attack traffic through Tor combined with IPredator VPN to obfuscate their true origin and identity throughout the attack.",
-      "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
-      "evidence_sources": [
-        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 3,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited the misconfigured firewall (WAF/Security Group) to reach and execute commands on the EC2 server \u2014 a Server-Side Request Forgery (SSRF) condition that allowed interaction with the EC2 instance metadata service.",
+      "description": "Attacker discovered a misconfigured firewall (likely Security Group/WAF) in the Capital One AWS environment, permitting commands to reach and be executed by a server, resulting in SSRF/command execution on an EC2 instance.",
+      "aws_services_involved": [
+        "WAF",
+        "EC2",
+        "VPC Security Groups"
+      ],
       "evidence_quote": "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets",
+      "ordering_confidence": 0.95,
+      "event_time": "2019-04-21",
+      "event_time_precision": "day",
       "evidence_sources": [
         "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "WAF",
-        "VPC Security Groups"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 4033,
+          "char_end": 4213,
+          "quote": "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets"
+        },
+        {
+          "chunk_id": "link_00.md#c156",
+          "source_file": "link_00.md",
+          "char_start": 19760,
+          "char_end": 19940,
+          "quote": "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets"
+        }
       ],
       "validated": true
     },
     {
-      "step": 4,
+      "step": 2,
       "technique_id": "T1552.005",
       "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "Attacker queried the EC2 Instance Metadata Service (IMDS) at 169.254.169.254 to retrieve the temporary IAM security credentials (Access Key, Secret Key, Session Token) associated with the WAF-Role attached to the EC2 instance.",
-      "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
-      "evidence_sources": [
-        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-      ],
+      "description": "Attacker queried the EC2 Instance Metadata Service (IMDS at 169.254.169.254) to obtain temporary IAM credentials for the ***-WAF-Role attached to the compromised EC2 instance.",
       "aws_services_involved": [
         "EC2",
         "IMDS",
         "IAM"
       ],
+      "evidence_quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 5643,
+          "char_end": 5886,
+          "quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role"
+        },
+        {
+          "chunk_id": "link_00.md#c159",
+          "source_file": "link_00.md",
+          "char_start": 21370,
+          "char_end": 21613,
+          "quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used the stolen ***-WAF-Role IAM temporary credentials to authenticate to AWS APIs with the over-privileged role's permissions.",
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "evidence_quote": "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 5643,
+          "char_end": 5886,
+          "quote": "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders"
+        },
+        {
+          "chunk_id": "link_00.md#c159",
+          "source_file": "link_00.md",
+          "char_start": 21370,
+          "char_end": 21613,
+          "quote": "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Using the assumed role, the attacker enumerated S3 buckets and folders accessible to the role, identifying more than 700 folders/buckets of data.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "a list of more than 700 folders or buckets of data",
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 3715,
+          "char_end": 3993,
+          "quote": "a list of more than 700 folders or buckets of data"
+        },
+        {
+          "chunk_id": "link_00.md#c155",
+          "source_file": "link_00.md",
+          "char_start": 19442,
+          "char_end": 19720,
+          "quote": "a list of more than 700 folders or buckets of data"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Using the stolen IAM credentials, attacker enumerated available IAM roles, policies, and instance profiles to identify roles with broader S3 permissions, and potentially used 'aws ec2 replace-iam-instance-profile-association' to assume a more privileged role.",
-      "evidence_quote": "aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles... These do what it says on the tin \u2014 enumerate the catalogue of available IAM resources an attacker might want to use once they have shell on an EC2 instance.",
-      "evidence_sources": [
-        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "EC2"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Using the over-privileged WAF-Role credentials, attacker enumerated over 700 S3 buckets and folders accessible to the role, generating a target list for exfiltration.",
-      "evidence_quote": "the April 21 File contained code for three commands, as well as a list of more than 700 folders or buckets of data",
-      "evidence_sources": [
-        "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-      ],
-      "aws_services_involved": [
-        "S3",
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 7,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "Attacker executed 'aws s3 sync' (the Sync Command) using the WAF-Role credentials to extract and copy sensitive data \u2014 including over 100 million credit card applications \u2014 from Capital One's private S3 buckets.",
-      "evidence_quote": "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space for which the ***-WAF-Role account had the requisite permissions.",
+      "description": "Attacker executed the 'Sync Command' (aws s3 sync) with the ***-WAF-Role credentials to copy/exfiltrate data from S3 buckets containing ~100 million credit application records.",
+      "aws_services_involved": [
+        "S3",
+        "CLI"
+      ],
+      "evidence_quote": "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
       ],
-      "aws_services_involved": [
-        "S3",
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c034",
+          "source_file": "link_00.clean.md",
+          "char_start": 10136,
+          "char_end": 10406,
+          "quote": "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets"
+        },
+        {
+          "chunk_id": "link_00.md#c175",
+          "source_file": "link_00.md",
+          "char_start": 25863,
+          "char_end": 26133,
+          "quote": "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "EC2",
-    "S3",
     "IAM",
-    "VPC Security Groups",
+    "S3",
     "WAF",
-    "IMDS"
+    "VPC Security Groups",
+    "IMDS",
+    "CLI",
+    "STS"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Misconfigured WAF/Security Group exposed a dangerous port to the internet, enabling SSRF-style commands to be executed on the EC2 server",
-  "persistence_mechanism": "None described in source text",
-  "privilege_escalation": "Over-privileged EC2 IAM role (***-WAF-Role) with broad S3 read/list permissions; potential additional escalation via 'aws ec2 replace-iam-instance-profile-association' to swap in a more privileged IAM instance profile",
+  "confidence_score": 0.85,
   "data_exfiltrated": true,
+  "initial_access_vector": "Misconfigured WAF/firewall allowed SSRF-style command execution against an EC2-hosted server, enabling the attacker to interact with the EC2 Instance Metadata Service.",
+  "privilege_escalation": "Use of an over-privileged EC2 IAM role (***-WAF-Role) whose credentials were retrieved via IMDS; the role had broad S3 list/read permissions that the compromised server should not have had.",
+  "persistence_mechanism": "None documented; attacker relied on temporary IAM credentials obtained via IMDS rather than establishing persistence.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1595.001",
-        "technique_name": "Active Scanning: Scanning IP Blocks",
-        "description": "Attacker used Tor and IPredator to anonymize their identity while scanning Capital One's AWS environment, discovering a misconfigured firewall/Security Group with a dangerous port exposed to the internet.",
-        "tactic_id": "",
-        "evidence_quote": "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
-        "evidence_sources": [
-          "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-        ],
-        "aws_services_involved": [
-          "VPC Security Groups",
-          "WAF"
-        ]
-      },
-      {
-        "step": 2,
-        "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "Attacker routed all attack traffic through Tor combined with IPredator VPN to obfuscate their true origin and identity throughout the attack.",
-        "tactic_id": "",
-        "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
-        "evidence_sources": [
-          "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 3,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited the misconfigured firewall (WAF/Security Group) to reach and execute commands on the EC2 server \u2014 a Server-Side Request Forgery (SSRF) condition that allowed interaction with the EC2 instance metadata service.",
+        "description": "Attacker discovered a misconfigured firewall (likely Security Group/WAF) in the Capital One AWS environment, permitting commands to reach and be executed by a server, resulting in SSRF/command execution on an EC2 instance.",
         "tactic_id": "TA0001",
         "evidence_quote": "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "aws_services_involved": [
-          "EC2",
           "WAF",
+          "EC2",
           "VPC Security Groups"
         ]
       },
       {
-        "step": 4,
+        "step": 2,
         "technique_id": "T1552.005",
         "technique_name": "Cloud Instance Metadata API",
-        "description": "Attacker queried the EC2 Instance Metadata Service (IMDS) at 169.254.169.254 to retrieve the temporary IAM security credentials (Access Key, Secret Key, Session Token) associated with the WAF-Role attached to the EC2 instance.",
+        "description": "Attacker queried the EC2 Instance Metadata Service (IMDS at 169.254.169.254) to obtain temporary IAM credentials for the ***-WAF-Role attached to the compromised EC2 instance.",
         "tactic_id": "TA0006",
-        "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
+        "evidence_quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
@@ -301,87 +319,56 @@
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Using the stolen IAM credentials, attacker enumerated available IAM roles, policies, and instance profiles to identify roles with broader S3 permissions, and potentially used 'aws ec2 replace-iam-instance-profile-association' to assume a more privileged role.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles... These do what it says on the tin \u2014 enumerate the catalogue of available IAM resources an attacker might want to use once they have shell on an EC2 instance.",
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker used the stolen ***-WAF-Role IAM temporary credentials to authenticate to AWS APIs with the over-privileged role's permissions.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "aws_services_involved": [
           "IAM",
-          "EC2"
+          "STS"
         ]
       },
       {
-        "step": 6,
+        "step": 4,
         "technique_id": "T1619",
         "technique_name": "Cloud Storage Object Discovery",
-        "description": "Using the over-privileged WAF-Role credentials, attacker enumerated over 700 S3 buckets and folders accessible to the role, generating a target list for exfiltration.",
+        "description": "Using the assumed role, the attacker enumerated S3 buckets and folders accessible to the role, identifying more than 700 folders/buckets of data.",
         "tactic_id": "TA0007",
-        "evidence_quote": "the April 21 File contained code for three commands, as well as a list of more than 700 folders or buckets of data",
+        "evidence_quote": "a list of more than 700 folders or buckets of data",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "aws_services_involved": [
-          "S3",
-          "IAM"
+          "S3"
         ]
       },
       {
-        "step": 7,
+        "step": 5,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Attacker executed 'aws s3 sync' (the Sync Command) using the WAF-Role credentials to extract and copy sensitive data \u2014 including over 100 million credit card applications \u2014 from Capital One's private S3 buckets.",
+        "description": "Attacker executed the 'Sync Command' (aws s3 sync) with the ***-WAF-Role credentials to copy/exfiltrate data from S3 buckets containing ~100 million credit application records.",
         "tactic_id": "TA0009",
-        "evidence_quote": "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space for which the ***-WAF-Role account had the requisite permissions.",
+        "evidence_quote": "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "aws_services_involved": [
           "S3",
-          "IAM"
+          "CLI"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1595.001",
-        "target": "T1090.003",
-        "source_step": 1,
-        "target_step": 2,
-        "source_technique_name": "Active Scanning: Scanning IP Blocks",
-        "target_technique_name": "Proxy: Multi-hop Proxy",
-        "sources": [
-          "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-        ],
-        "evidence_quotes": [
-          "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
-          "the attacker used Tor and IPredator in combination to obfuscate her identity"
-        ]
-      },
-      {
-        "source": "T1090.003",
-        "target": "T1190",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Proxy: Multi-hop Proxy",
-        "target_technique_name": "Exploit Public-Facing Application",
-        "sources": [
-          "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
-        ],
-        "evidence_quotes": [
-          "the attacker used Tor and IPredator in combination to obfuscate her identity",
-          "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets"
-        ]
-      },
-      {
         "source": "T1190",
         "target": "T1552.005",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 1,
+        "target_step": 2,
         "source_technique_name": "Exploit Public-Facing Application",
         "target_technique_name": "Cloud Instance Metadata API",
         "sources": [
@@ -389,52 +376,52 @@
         ],
         "evidence_quotes": [
           "A firewall misconfiguration permitted commands to reach and be executed by that server, which enabled access to folders or buckets",
-          "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role"
+          "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role"
         ]
       },
       {
         "source": "T1552.005",
-        "target": "T1580",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Cloud Instance Metadata API",
-        "target_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "evidence_quotes": [
-          "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
-          "aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles... These do what it says on the tin \u2014 enumerate the catalogue of available IAM resources an attacker might want to use once they have shell on an EC2 instance."
+          "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
+          "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders"
         ]
       },
       {
-        "source": "T1580",
+        "source": "T1078.004",
         "target": "T1619",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Cloud Infrastructure Discovery",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Storage Object Discovery",
         "sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "evidence_quotes": [
-          "aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles... These do what it says on the tin \u2014 enumerate the catalogue of available IAM resources an attacker might want to use once they have shell on an EC2 instance.",
-          "the April 21 File contained code for three commands, as well as a list of more than 700 folders or buckets of data"
+          "obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
+          "a list of more than 700 folders or buckets of data"
         ]
       },
       {
         "source": "T1619",
         "target": "T1530",
-        "source_step": 6,
-        "target_step": 7,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Cloud Storage Object Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
         ],
         "evidence_quotes": [
-          "the April 21 File contained code for three commands, as well as a list of more than 700 folders or buckets of data",
-          "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space for which the ***-WAF-Role account had the requisite permissions."
+          "a list of more than 700 folders or buckets of data",
+          "the third command (the \"Sync Command\"), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets"
         ]
       }
     ]
@@ -445,19 +432,21 @@
   },
   "schema_version": "1.0",
   "incident_slug": "capital-one-2019-april",
-  "analyzed_at": "2026-04-15T20:46:06.926408+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 41460,
+  "analyzed_at": "2026-04-23T18:38:42.064686+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 53891,
   "incident_name": "Capital One",
   "incident_date": "2019, April",
   "incident_root_cause": "\"Misconfigured WAF\" that allowed for a SSRF attack",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
     "EC2",
-    "S3",
     "IAM",
-    "VPC Security Groups",
-    "WAF",
-    "EC2 Instance Metadata Service (IMDS)"
+    "S3",
+    "AWS WAF",
+    "Security Groups",
+    "EC2 Instance Metadata Service (IMDS)",
+    "AWS CLI",
+    "AWS STS"
   ]
 }

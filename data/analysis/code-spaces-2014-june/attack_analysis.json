@@ -8,16 +8,7 @@
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        },
-        {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
-          "inferred": true,
-          "evidence_quote": null,
-          "subtechnique_id": null,
+          "evidence_quote": "an intrusion into Code Spaces' Amazon EC2 control panel",
           "validated": true
         }
       ]
@@ -30,8 +21,7 @@
           "technique_id": "T1498",
           "technique_name": "Network Denial of Service",
           "inferred": false,
-          "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
-          "subtechnique_id": null,
+          "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday",
           "validated": true
         },
         {
@@ -39,15 +29,20 @@
           "technique_name": "Data Destruction",
           "inferred": false,
           "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances",
-          "subtechnique_id": null,
           "validated": true
         },
         {
-          "technique_id": "T1531",
-          "technique_name": "Account Access Removal",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
           "inferred": false,
-          "evidence_quote": "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins",
-          "subtechnique_id": null,
+          "evidence_quote": "Extortion demands were left for Code Spaces officials",
+          "validated": true
+        },
+        {
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery",
+          "inferred": false,
+          "evidence_quote": "all of its svn repositories\u2014backups and snapshots\u2014were deleted",
           "validated": true
         }
       ]
@@ -60,51 +55,21 @@
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
           "inferred": false,
-          "evidence_quote": "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins",
-          "subtechnique_id": "T1136.003",
+          "evidence_quote": "the attacker had created backup logins",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_id": "T1586.002",
+          "technique_name": "Compromise Accounts: Email Accounts",
           "inferred": true,
-          "evidence_quote": null,
-          "subtechnique_id": "T1552.005",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "we started to investigate how access had been gained and what access that person had to the data in our systems",
-          "subtechnique_id": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances",
-          "subtechnique_id": null,
-          "validated": true
+          "evidence_quote": "a Hotmail address they were supposed to use to contact the attackers",
+          "validated": false
         }
       ]
     }
@@ -112,15 +77,32 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1566",
-      "technique_name": "Phishing",
-      "description": "Attacker likely obtained Code Spaces' AWS console credentials via phishing (noted as probable root cause in incident metadata), gaining knowledge of the EC2 control panel login.",
-      "evidence_quote": null,
+      "technique_id": "T1498",
+      "technique_name": "Network Denial of Service",
+      "description": "Attacker launched a DDoS attack against Code Spaces as the opening move of the intrusion.",
+      "event_time": "2014-06-17",
+      "event_time_precision": "day",
+      "aws_services_involved": [],
+      "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c007",
+          "source_file": "link_00.clean.md",
+          "char_start": 1454,
+          "char_end": 1733,
+          "quote": "The beginning of the end was a DDoS attack initiated yesterday"
+        },
+        {
+          "chunk_id": "link_00.md#c016",
+          "source_file": "link_00.md",
+          "char_start": 3167,
+          "char_end": 3446,
+          "quote": "The beginning of the end was a DDoS attack initiated yesterday"
+        }
       ],
       "validated": true
     },
@@ -128,305 +110,319 @@
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker used the stolen AWS console credentials to gain unauthorized access to Code Spaces' Amazon EC2 control panel.",
-      "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
+      "description": "Attacker gained unauthorized access to the Amazon EC2 control panel using valid AWS console credentials.",
+      "event_time": "2014-06-17",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "AWS Management Console",
+        "EC2"
+      ],
+      "evidence_quote": "accompanied by an intrusion into Code Spaces' Amazon EC2 control panel",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "AWS Management Console",
-        "Amazon EC2"
-      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1498",
-      "technique_name": "Network Denial of Service",
-      "description": "Attacker simultaneously launched a DDoS attack against Code Spaces as a distraction and to accompany the extortion demand, overwhelming services while the intrusion proceeded.",
-      "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Attacker left extortion demands along with a Hotmail contact address demanding payment from Code Spaces.",
+      "aws_services_involved": [],
+      "evidence_quote": "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "Amazon EC2"
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c007",
+          "source_file": "link_00.clean.md",
+          "char_start": 1454,
+          "char_end": 1733,
+          "quote": "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers"
+        },
+        {
+          "chunk_id": "link_00.md#c016",
+          "source_file": "link_00.md",
+          "char_start": 3167,
+          "char_end": 3446,
+          "quote": "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker surveyed the AWS environment via the control panel to enumerate EC2 instances, S3 buckets, EBS volumes/snapshots, and AMIs available for destruction.",
-      "evidence_quote": "It became clear that so far no machine access had been achieved due to the intruder not having our private keys.",
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created additional backup logins within the AWS console to maintain persistence after the legitimate owners attempted to lock them out.",
+      "aws_services_involved": [
+        "IAM",
+        "AWS Management Console"
+      ],
+      "evidence_quote": "the attacker had created backup logins",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "AWS Management Console",
-        "Amazon EC2",
-        "Amazon S3",
-        "Amazon EBS"
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c009",
+          "source_file": "link_00.clean.md",
+          "char_start": 2048,
+          "char_end": 2252,
+          "quote": "the attacker had created backup logins"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 3761,
+          "char_end": 3965,
+          "quote": "the attacker had created backup logins"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Before Code Spaces could respond, the attacker created backup AWS IAM accounts and access keys to maintain persistent access, ensuring they could not be locked out.",
-      "evidence_quote": "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins",
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Once Code Spaces began recovery actions, the attacker deleted EBS snapshots, S3 buckets, all AMIs, some EBS instances/volumes, and several EC2 instances.",
+      "aws_services_involved": [
+        "EC2",
+        "S3",
+        "EBS",
+        "AMI"
+      ],
+      "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1531",
-      "technique_name": "Account Access Removal",
-      "description": "When Code Spaces changed passwords in an attempt to recover control of the console, the attacker detected this and responded by escalating their destructive actions, effectively denying Code Spaces access to their own environment.",
-      "evidence_quote": "once recovery attempts were noticed, the attacker began deleting artifacts from the panel",
+      "technique_id": "T1490",
+      "technique_name": "Inhibit System Recovery",
+      "description": "Attacker specifically destroyed backups, snapshots, and offsite backups, preventing Code Spaces from recovering and forcing it out of business.",
+      "aws_services_involved": [
+        "S3",
+        "EBS"
+      ],
+      "evidence_quote": "all of its svn repositories\u2014backups and snapshots\u2014were deleted. All EBS volumes containing database files were also deleted",
       "evidence_sources": [
         "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
       ],
-      "aws_services_involved": [
-        "AWS Management Console",
-        "AWS IAM"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c013",
+          "source_file": "link_00.clean.md",
+          "char_start": 3100,
+          "char_end": 3399,
+          "quote": "all of its svn repositories\u2014backups and snapshots\u2014were deleted. All EBS volumes containing database files were also deleted"
+        },
+        {
+          "chunk_id": "link_00.md#c022",
+          "source_file": "link_00.md",
+          "char_start": 4813,
+          "char_end": 5112,
+          "quote": "all of its svn repositories\u2014backups and snapshots\u2014were deleted. All EBS volumes containing database files were also deleted"
+        }
       ],
-      "validated": true
-    },
-    {
-      "step": 7,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Attacker deleted all EBS snapshots, S3 buckets, AMIs, EBS volumes (containing database files), and EC2 machine instances, causing catastrophic and irreversible destruction of Code Spaces' entire infrastructure and data.",
-      "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances... most of our data, backups, machine configurations and offsite backups were either partially or completely deleted.",
-      "evidence_sources": [
-        "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
-      ],
-      "aws_services_involved": [
-        "Amazon S3",
-        "Amazon EBS",
-        "Amazon EC2",
-        "Amazon AMI"
-      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS Management Console",
-    "Amazon EC2",
-    "Amazon S3",
-    "Amazon EBS",
-    "AWS IAM"
+    "EC2",
+    "S3",
+    "EBS",
+    "AMI",
+    "IAM",
+    "AWS Management Console"
   ],
-  "impact_type": "Data Destruction",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Compromised AWS Management Console credentials (likely via phishing) used to access the EC2 control panel",
-  "persistence_mechanism": "Attacker created backup IAM accounts and access keys before Code Spaces could revoke access",
-  "privilege_escalation": "Attacker already had administrative-level console access; no additional privilege escalation described beyond the initial console access",
+  "impact_type": "Data Destruction / Extortion",
+  "confidence_score": 0.85,
   "data_exfiltrated": false,
+  "initial_access_vector": "Attacker gained access to Code Spaces' AWS EC2 control panel using valid console credentials (suspected phishing), coinciding with a DDoS attack.",
+  "persistence_mechanism": "Attacker created additional backup logins (cloud accounts) in the AWS control panel to retain access after password resets.",
+  "privilege_escalation": "Not explicitly described; initial AWS console credentials already had administrative privileges sufficient for destructive actions.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1566",
-        "technique_name": "Phishing",
-        "description": "Attacker likely obtained Code Spaces' AWS console credentials via phishing (noted as probable root cause in incident metadata), gaining knowledge of the EC2 control panel login.",
-        "tactic_id": "TA0001",
-        "evidence_quote": null,
+        "technique_id": "T1498",
+        "technique_name": "Network Denial of Service",
+        "description": "Attacker launched a DDoS attack against Code Spaces as the opening move of the intrusion.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
-        "aws_services_involved": [
-          "AWS IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker used the stolen AWS console credentials to gain unauthorized access to Code Spaces' Amazon EC2 control panel.",
+        "description": "Attacker gained unauthorized access to the Amazon EC2 control panel using valid AWS console credentials.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
+        "evidence_quote": "accompanied by an intrusion into Code Spaces' Amazon EC2 control panel",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "aws_services_involved": [
           "AWS Management Console",
-          "Amazon EC2"
+          "EC2"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1498",
-        "technique_name": "Network Denial of Service",
-        "description": "Attacker simultaneously launched a DDoS attack against Code Spaces as a distraction and to accompany the extortion demand, overwhelming services while the intrusion proceeded.",
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Attacker left extortion demands along with a Hotmail contact address demanding payment from Code Spaces.",
         "tactic_id": "TA0040",
-        "evidence_quote": "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
+        "evidence_quote": "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
-        "aws_services_involved": [
-          "Amazon EC2"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 4,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker surveyed the AWS environment via the control panel to enumerate EC2 instances, S3 buckets, EBS volumes/snapshots, and AMIs available for destruction.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "It became clear that so far no machine access had been achieved due to the intruder not having our private keys.",
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker created additional backup logins within the AWS console to maintain persistence after the legitimate owners attempted to lock them out.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attacker had created backup logins",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "aws_services_involved": [
-          "AWS Management Console",
-          "Amazon EC2",
-          "Amazon S3",
-          "Amazon EBS"
+          "IAM",
+          "AWS Management Console"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1136.003",
-        "technique_name": "Cloud Account",
-        "description": "Before Code Spaces could respond, the attacker created backup AWS IAM accounts and access keys to maintain persistent access, ensuring they could not be locked out.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins",
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Once Code Spaces began recovery actions, the attacker deleted EBS snapshots, S3 buckets, all AMIs, some EBS instances/volumes, and several EC2 instances.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "EC2",
+          "S3",
+          "EBS",
+          "AMI"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1531",
-        "technique_name": "Account Access Removal",
-        "description": "When Code Spaces changed passwords in an attempt to recover control of the console, the attacker detected this and responded by escalating their destructive actions, effectively denying Code Spaces access to their own environment.",
+        "technique_id": "T1490",
+        "technique_name": "Inhibit System Recovery",
+        "description": "Attacker specifically destroyed backups, snapshots, and offsite backups, preventing Code Spaces from recovering and forcing it out of business.",
         "tactic_id": "TA0040",
-        "evidence_quote": "once recovery attempts were noticed, the attacker began deleting artifacts from the panel",
+        "evidence_quote": "all of its svn repositories\u2014backups and snapshots\u2014were deleted. All EBS volumes containing database files were also deleted",
         "evidence_sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "aws_services_involved": [
-          "AWS Management Console",
-          "AWS IAM"
-        ]
-      },
-      {
-        "step": 7,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "Attacker deleted all EBS snapshots, S3 buckets, AMIs, EBS volumes (containing database files), and EC2 machine instances, causing catastrophic and irreversible destruction of Code Spaces' entire infrastructure and data.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances... most of our data, backups, machine configurations and offsite backups were either partially or completely deleted.",
-        "evidence_sources": [
-          "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
-        ],
-        "aws_services_involved": [
-          "Amazon S3",
-          "Amazon EBS",
-          "Amazon EC2",
-          "Amazon AMI"
+          "S3",
+          "EBS"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1566",
+        "source": "T1498",
         "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Phishing",
+        "source_technique_name": "Network Denial of Service",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "evidence_quotes": [
-          "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel."
+          "The beginning of the end was a DDoS attack initiated yesterday",
+          "accompanied by an intrusion into Code Spaces' Amazon EC2 control panel"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1498",
+        "target": "T1657",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Network Denial of Service",
+        "target_technique_name": "Financial Theft",
         "sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "evidence_quotes": [
-          "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
-          "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel."
+          "accompanied by an intrusion into Code Spaces' Amazon EC2 control panel",
+          "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers"
         ]
       },
       {
-        "source": "T1498",
-        "target": "T1580",
+        "source": "T1657",
+        "target": "T1136.003",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Network Denial of Service",
-        "target_technique_name": "Cloud Infrastructure Discovery",
-        "sources": [
-          "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
-        ],
-        "evidence_quotes": [
-          "The beginning of the end was a DDoS attack initiated yesterday that was accompanied by an intrusion into Code Spaces' Amazon EC2 control panel.",
-          "It became clear that so far no machine access had been achieved due to the intruder not having our private keys."
-        ]
-      },
-      {
-        "source": "T1580",
-        "target": "T1136.003",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Cloud Infrastructure Discovery",
+        "source_technique_name": "Financial Theft",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "evidence_quotes": [
-          "It became clear that so far no machine access had been achieved due to the intruder not having our private keys.",
-          "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins"
+          "Extortion demands were left for Code Spaces officials, along with a Hotmail address they were supposed to use to contact the attackers",
+          "the attacker had created backup logins"
         ]
       },
       {
         "source": "T1136.003",
-        "target": "T1531",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Cloud Account",
-        "target_technique_name": "Account Access Removal",
-        "sources": [
-          "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
-        ],
-        "evidence_quotes": [
-          "Code Spaces said it changed its EC2 passwords, but quickly discovered the attacker had created backup logins",
-          "once recovery attempts were noticed, the attacker began deleting artifacts from the panel"
-        ]
-      },
-      {
-        "source": "T1531",
         "target": "T1485",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Account Access Removal",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Account",
         "target_technique_name": "Data Destruction",
         "sources": [
           "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
         ],
         "evidence_quotes": [
-          "once recovery attempts were noticed, the attacker began deleting artifacts from the panel",
-          "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances... most of our data, backups, machine configurations and offsite backups were either partially or completely deleted."
+          "the attacker had created backup logins",
+          "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances"
+        ]
+      },
+      {
+        "source": "T1485",
+        "target": "T1490",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Data Destruction",
+        "target_technique_name": "Inhibit System Recovery",
+        "sources": [
+          "https://threatpost.com/hacker-puts-hosting-service-code-spaces-out-of-business/106761/"
+        ],
+        "evidence_quotes": [
+          "he had removed all EBS snapshots, S3 buckets, all AMI's, some EBS instances and several machine instances",
+          "all of its svn repositories\u2014backups and snapshots\u2014were deleted. All EBS volumes containing database files were also deleted"
         ]
       }
     ]
@@ -437,7 +433,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "code-spaces-2014-june",
-  "analyzed_at": "2026-04-15T20:47:28.029254+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 16617
+  "analyzed_at": "2026-04-23T18:39:36.510470+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 20626
 }

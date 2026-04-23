@@ -5,23 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": true,
-          "evidence_quote": "it appears that the attack was possible due to cybersecurity failures on Angel One's part rather than a hack of AWS's systems",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "some of Angel One's AWS resources were compromised",
+          "evidence_quote": "Angel One says it immediately changed the passwords for its AWS cloud and related applications",
           "validated": true
         }
       ]
@@ -31,10 +18,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "client information was compromised in a data breach involving its AWS account",
+          "evidence_quote": "some of Angel One's AWS resources were compromised",
           "validated": true
         }
       ]
@@ -43,66 +30,90 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1078",
-      "technique_name": "Valid Accounts",
-      "description": "Attacker gained unauthorized access to Angel One's AWS account, likely through compromised credentials or cybersecurity misconfigurations on Angel One's part, rather than exploiting AWS infrastructure itself.",
-      "evidence_quote": "it appears that the attack was possible due to cybersecurity failures on Angel One's part rather than a hack of AWS's systems",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker gained access to Angel One's AWS account, likely via compromised credentials (root cause undisclosed; company rotated AWS passwords in response).",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "Angel One says it immediately changed the passwords for its AWS cloud and related applications",
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 1083,
+          "char_end": 1311,
+          "quote": "Angel One says it immediately changed the passwords for its AWS cloud and related applications"
+        },
+        {
+          "chunk_id": "link_00.md#c036",
+          "source_file": "link_00.md",
+          "char_start": 10261,
+          "char_end": 10489,
+          "quote": "Angel One says it immediately changed the passwords for its AWS cloud and related applications"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "Attacker accessed and collected client information stored within Angel One's AWS resources.",
-      "evidence_quote": "some of Angel One's AWS resources were compromised",
+      "description": "Attacker accessed client information stored in AWS resources.",
       "aws_services_involved": [
-        "S3",
         "AWS"
       ],
+      "evidence_quote": "some of Angel One's AWS resources were compromised",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1567",
       "technique_name": "Exfiltration Over Web Service",
-      "description": "Exfiltrated client data was subsequently posted to the dark web, discovered by Angel One's dark web monitoring partner.",
-      "evidence_quote": "received an email alert from a 'dark web monitoring partner' on February 27, regarding a 'data leakage post'",
+      "description": "Stolen client data was posted on a dark web forum, detected by Angel One's dark web monitoring partner on February 27.",
       "aws_services_involved": [],
+      "event_time": "2025-02-27",
+      "event_time_precision": "day",
+      "evidence_quote": "received an email alert from a 'dark web monitoring partner' on February 27, regarding a 'data leakage post'",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
       ],
+      "evidence_chunks": [],
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
-    "S3",
     "AWS"
   ],
   "impact_type": "Data Exfiltration",
   "confidence_score": 0.3,
   "data_exfiltrated": true,
-  "initial_access_vector": "Unknown \u2014 likely compromised AWS credentials or misconfiguration attributed to cybersecurity failures on Angel One's part, not an AWS infrastructure hack",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Unknown \u2014 Angel One's AWS resources were compromised, likely via stolen/leaked credentials (company rotated AWS passwords in response). No technical details disclosed.",
+  "persistence_mechanism": "Not disclosed",
+  "privilege_escalation": "Not disclosed",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1078",
-        "technique_name": "Valid Accounts",
-        "description": "Attacker gained unauthorized access to Angel One's AWS account, likely through compromised credentials or cybersecurity misconfigurations on Angel One's part, rather than exploiting AWS infrastructure itself.",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker gained access to Angel One's AWS account, likely via compromised credentials (root cause undisclosed; company rotated AWS passwords in response).",
         "tactic_id": "TA0005",
-        "evidence_quote": "it appears that the attack was possible due to cybersecurity failures on Angel One's part rather than a hack of AWS's systems",
+        "evidence_quote": "Angel One says it immediately changed the passwords for its AWS cloud and related applications",
         "evidence_sources": [
           "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
         ],
@@ -114,14 +125,13 @@
         "step": 2,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Attacker accessed and collected client information stored within Angel One's AWS resources.",
+        "description": "Attacker accessed client information stored in AWS resources.",
         "tactic_id": "TA0009",
         "evidence_quote": "some of Angel One's AWS resources were compromised",
         "evidence_sources": [
           "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
         ],
         "aws_services_involved": [
-          "S3",
           "AWS"
         ]
       },
@@ -129,7 +139,7 @@
         "step": 3,
         "technique_id": "T1567",
         "technique_name": "Exfiltration Over Web Service",
-        "description": "Exfiltrated client data was subsequently posted to the dark web, discovered by Angel One's dark web monitoring partner.",
+        "description": "Stolen client data was posted on a dark web forum, detected by Angel One's dark web monitoring partner on February 27.",
         "tactic_id": "TA0010",
         "evidence_quote": "received an email alert from a 'dark web monitoring partner' on February 27, regarding a 'data leakage post'",
         "evidence_sources": [
@@ -140,17 +150,17 @@
     ],
     "edges": [
       {
-        "source": "T1078",
+        "source": "T1078.004",
         "target": "T1530",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Valid Accounts",
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.securityweek.com/indian-stock-broker-angel-one-discloses-data-breach/"
         ],
         "evidence_quotes": [
-          "it appears that the attack was possible due to cybersecurity failures on Angel One's part rather than a hack of AWS's systems",
+          "Angel One says it immediately changed the passwords for its AWS cloud and related applications",
           "some of Angel One's AWS resources were compromised"
         ]
       },
@@ -177,16 +187,14 @@
   },
   "schema_version": "1.0",
   "incident_slug": "angelone-2025-march",
-  "analyzed_at": "2026-04-15T20:43:25.725623+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 22475,
+  "analyzed_at": "2026-04-23T18:37:08.019337+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 24660,
   "incident_name": "AngelOne",
   "incident_date": "2025, March",
   "incident_root_cause": "Unknown",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
-    "AWS IAM",
-    "Amazon S3",
-    "Amazon Web Services (AWS)"
+    "AWS"
   ]
 }

@@ -7,9 +7,58 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
           "subtechnique_id": "T1078.004",
-          "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s to mine Monero.",
+          "inferred": false,
+          "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": true,
+          "evidence_quote": "used it to enumerate the environment",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.004",
+          "technique_name": "Account Manipulation: SSH Authorized Keys",
+          "subtechnique_id": "T1098.004",
+          "inferred": false,
+          "evidence_quote": "EC2 SSH access keys were generated for the root access key ... create SSH key pairs via the ImportKeyPair API",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Persistence | Valid Accounts, Redundant Access",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
+          "evidence_quote": "access the AWS environment ... using the AWS Golang SDK",
           "validated": true
         }
       ]
@@ -22,66 +71,14 @@
           "technique_id": "T1059",
           "technique_name": "Command and Scripting Interpreter",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "For reference, below are the MITRE ATT&CK Enterprise and Cloud Tactics observed during Expel's response: Execution | Scripting",
+          "evidence_quote": "Execution | Scripting",
           "validated": true
         },
         {
-          "technique_id": "T1204",
-          "technique_name": "User Execution",
+          "technique_id": "T1648",
+          "technique_name": "Serverless Execution",
           "inferred": true,
-          "subtechnique_id": null,
-          "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "For reference, below are the MITRE ATT&CK Enterprise and Cloud Tactics observed: Persistence | Valid Accounts, Redundant Access",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": true,
-          "subtechnique_id": null,
-          "evidence_quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK. It was then used to create SSH keys, spin up EC2 instances via the RunInstances API call and created new security groups likely to allow inbound access from the Internet.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "The root AWS access key was potentially compromised.",
+          "evidence_quote": "spin up EC2 instances via the RunInstances API call",
           "validated": true
         }
       ]
@@ -93,9 +90,9 @@
         {
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
-          "inferred": true,
           "subtechnique_id": "T1021.004",
-          "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
+          "inferred": false,
+          "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot)",
           "validated": false
         }
       ]
@@ -108,8 +105,7 @@
           "technique_id": "T1571",
           "technique_name": "Non-Standard Port",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
+          "evidence_quote": "communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)",
           "validated": false
         }
       ]
@@ -122,8 +118,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero.",
+          "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero",
           "validated": true
         }
       ]
@@ -134,133 +129,244 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker obtained and leveraged a compromised root IAM user access key to authenticate to the AWS environment from a cloud hosting provider IP using the AWS Golang SDK.",
-      "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment.",
+      "description": "Attacker obtained and used the compromised root IAM user access key to access the AWS environment via the AWS Golang SDK from a cloud hosting provider IP (ASN AS135629).",
       "aws_services_involved": [
         "IAM",
         "CloudTrail"
       ],
+      "evidence_quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 346,
+          "char_end": 13036,
+          "quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12690,
+          "quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker enumerated the AWS environment using the root access key, issuing API calls (non-Get/List/Describe) to understand the infrastructure.",
-      "evidence_quote": "The root access key was used to access the AWS environment... Ruxie pulled up API calls made by the principal (interesting in this context is mostly anything that isn't Get*, List*, Describe* and Head*).",
+      "description": "Used the root access key to enumerate the AWS environment.",
       "aws_services_involved": [
-        "CloudTrail",
         "EC2",
-        "IAM"
+        "CloudTrail"
       ],
+      "evidence_quote": "used it to enumerate the environment",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 346,
+          "char_end": 13036,
+          "quote": "used it to enumerate the environment"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12690,
+          "quote": "used it to enumerate the environment"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "Attacker used the root access key to generate SSH key pairs for EC2 instances via the ImportKeyPair API from a cloud hosting provider IP, establishing a mechanism for SSH access.",
-      "evidence_quote": "EC2 SSH access keys were generated for the root access key from a suspicious source IP address using the AWS Golang SDK... This was the first time we saw an attacker bring their own SSH key pairs that were uniquely named.",
+      "technique_id": "T1098.004",
+      "technique_name": "Account Manipulation: SSH Authorized Keys",
+      "description": "Imported attacker-owned SSH key pairs into EC2 via the ImportKeyPair API to enable later SSH access to spun-up instances.",
       "aws_services_involved": [
-        "EC2",
-        "CloudTrail"
+        "EC2"
       ],
+      "evidence_quote": "EC2 SSH access keys were generated for the root access key from a suspicious source IP address ... create SSH key pairs via the ImportKeyPair API",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1562.007",
-      "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
-      "description": "Attacker created new EC2 security groups to allow inbound SSH access from the Internet, modifying network controls to enable subsequent lateral access.",
-      "evidence_quote": "created new security groups likely to allow inbound access from the Internet... an ingress rule was created in the bot automation to allow SSH from the Internet.",
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Spun up ten c5.4xlarge EC2 instances via the RunInstances API.",
       "aws_services_involved": [
-        "EC2",
-        "VPC"
+        "EC2"
       ],
+      "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero ... spin up EC2 instances via the RunInstances API call",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "Attacker used the root access key to spin up ten c5.4xlarge EC2 instances via the RunInstances API call to serve as cryptomining workers.",
-      "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero... spin up EC2 instances via the RunInstances API call.",
+      "technique_id": "T1578",
+      "technique_name": "Modify Cloud Compute Infrastructure",
+      "description": "Created new AWS security groups with an ingress rule allowing SSH from the Internet to the new EC2 instances.",
+      "aws_services_invoked": [
+        "EC2"
+      ],
       "aws_services_involved": [
         "EC2",
-        "CloudTrail"
+        "VPC"
       ],
+      "evidence_quote": "created new security groups likely to allow inbound access from the Internet ... an ingress rule was created in the bot automation to allow SSH from the Internet",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1021.004",
       "technique_name": "Remote Services: SSH",
-      "description": "Attacker SSHed into the newly spun-up EC2 instances using the imported SSH key pairs to install CoinMiner malware.",
-      "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
+      "description": "Attacker SSH'd into newly created EC2 instances from the Internet using the imported SSH keys.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot)",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 346,
+          "char_end": 13036,
+          "quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot)"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12690,
+          "quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 7,
       "technique_id": "T1059",
       "technique_name": "Command and Scripting Interpreter",
-      "description": "Attacker executed scripting/automation (AWS Golang SDK bot) to orchestrate the full attack chain, including key import, instance creation, security group modification, and miner installation.",
-      "evidence_quote": "This was also the first time we'd observed a bot written in the AWS Golang software development kit (SDK).",
+      "description": "Executed scripted bot automation to install CoinMiner malware on the EC2 instances.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "Execution | Scripting ... install CoinMiner malware",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Attacker deployed Monero cryptomining software on the ten EC2 instances, which communicated with the monerohash[.]com mining pool over TCP port 7777.",
-      "evidence_quote": "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
+      "technique_id": "T1571",
+      "technique_name": "Non-Standard Port",
+      "description": "Compromised EC2 instances established C2/mining connections to monerohash[.]com over TCP 7777.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 346,
+          "char_end": 13036,
+          "quote": "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12690,
+          "quote": "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 9,
-      "technique_id": "T1571",
-      "technique_name": "Non-Standard Port",
-      "description": "Miner C2 communications used TCP port 7777 (non-standard) to connect to the monerohash[.]com mining pool, evading standard port-based detection.",
-      "evidence_quote": "monerohash[.]com on TCP port 7777",
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Used the ten c5.4xlarge EC2 instances to mine Monero cryptocurrency (cryptojacking).",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": false
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 346,
+          "char_end": 13036,
+          "quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12690,
+          "quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     }
   ],
   "aws_services": [
@@ -268,23 +374,23 @@
     "EC2",
     "CloudTrail",
     "GuardDuty",
-    "VPC"
+    "VPC Security Groups"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.92,
+  "confidence_score": 0.9,
   "data_exfiltrated": false,
-  "initial_access_vector": "Root IAM user access key compromised (exact compromise vector unknown; key was likely scraped and passed to an automated bot)",
-  "persistence_mechanism": "Attacker imported uniquely-named SSH key pairs via the EC2 ImportKeyPair API and created permissive security groups allowing inbound SSH from the Internet, enabling persistent access to newly provisioned EC2 instances",
-  "privilege_escalation": "No privilege escalation required \u2014 attacker entered with root IAM access key, the highest-privilege credential in the AWS account",
+  "initial_access_vector": "Compromised AWS root IAM user access key (source of compromise unknown); used from a cloud hosting provider IP via the AWS Golang SDK.",
+  "persistence_mechanism": "Imported attacker-owned SSH key pairs (ImportKeyPair) and created security groups allowing inbound SSH, enabling redundant access to newly launched EC2 instances. Continued use of valid root access key.",
+  "privilege_escalation": "Not applicable \u2014 attacker already held root AWS account credentials.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker obtained and leveraged a compromised root IAM user access key to authenticate to the AWS environment from a cloud hosting provider IP using the AWS Golang SDK.",
+        "description": "Attacker obtained and used the compromised root IAM user access key to access the AWS environment via the AWS Golang SDK from a cloud hosting provider IP (ASN AS135629).",
         "tactic_id": "TA0005",
-        "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment.",
+        "evidence_quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -297,25 +403,9 @@
         "step": 2,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker enumerated the AWS environment using the root access key, issuing API calls (non-Get/List/Describe) to understand the infrastructure.",
+        "description": "Used the root access key to enumerate the AWS environment.",
         "tactic_id": "TA0007",
-        "evidence_quote": "The root access key was used to access the AWS environment... Ruxie pulled up API calls made by the principal (interesting in this context is mostly anything that isn't Get*, List*, Describe* and Head*).",
-        "evidence_sources": [
-          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
-        ],
-        "aws_services_involved": [
-          "CloudTrail",
-          "EC2",
-          "IAM"
-        ]
-      },
-      {
-        "step": 3,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "Attacker used the root access key to generate SSH key pairs for EC2 instances via the ImportKeyPair API from a cloud hosting provider IP, establishing a mechanism for SSH access.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "EC2 SSH access keys were generated for the root access key from a suspicious source IP address using the AWS Golang SDK... This was the first time we saw an attacker bring their own SSH key pairs that were uniquely named.",
+        "evidence_quote": "used it to enumerate the environment",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -325,12 +415,40 @@
         ]
       },
       {
+        "step": 3,
+        "technique_id": "T1098.004",
+        "technique_name": "SSH Authorized Keys",
+        "description": "Imported attacker-owned SSH key pairs into EC2 via the ImportKeyPair API to enable later SSH access to spun-up instances.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "EC2 SSH access keys were generated for the root access key from a suspicious source IP address ... create SSH key pairs via the ImportKeyPair API",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
         "step": 4,
-        "technique_id": "T1562.007",
-        "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "Attacker created new EC2 security groups to allow inbound SSH access from the Internet, modifying network controls to enable subsequent lateral access.",
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Spun up ten c5.4xlarge EC2 instances via the RunInstances API.",
         "tactic_id": "TA0005",
-        "evidence_quote": "created new security groups likely to allow inbound access from the Internet... an ingress rule was created in the bot automation to allow SSH from the Internet.",
+        "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero ... spin up EC2 instances via the RunInstances API call",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1578",
+        "technique_name": "Modify Cloud Compute Infrastructure",
+        "description": "Created new AWS security groups with an ingress rule allowing SSH from the Internet to the new EC2 instances.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "created new security groups likely to allow inbound access from the Internet ... an ingress rule was created in the bot automation to allow SSH from the Internet",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -340,27 +458,12 @@
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1578.002",
-        "technique_name": "Create Cloud Instance",
-        "description": "Attacker used the root access key to spin up ten c5.4xlarge EC2 instances via the RunInstances API call to serve as cryptomining workers.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero... spin up EC2 instances via the RunInstances API call.",
-        "evidence_sources": [
-          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
-        ],
-        "aws_services_involved": [
-          "EC2",
-          "CloudTrail"
-        ]
-      },
-      {
         "step": 6,
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
-        "description": "Attacker SSHed into the newly spun-up EC2 instances using the imported SSH key pairs to install CoinMiner malware.",
+        "description": "Attacker SSH'd into newly created EC2 instances from the Internet using the imported SSH keys.",
         "tactic_id": "",
-        "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
+        "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot)",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -372,9 +475,9 @@
         "step": 7,
         "technique_id": "T1059",
         "technique_name": "Command and Scripting Interpreter",
-        "description": "Attacker executed scripting/automation (AWS Golang SDK bot) to orchestrate the full attack chain, including key import, instance creation, security group modification, and miner installation.",
+        "description": "Executed scripted bot automation to install CoinMiner malware on the EC2 instances.",
         "tactic_id": "TA0002",
-        "evidence_quote": "This was also the first time we'd observed a bot written in the AWS Golang software development kit (SDK).",
+        "evidence_quote": "Execution | Scripting ... install CoinMiner malware",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -384,11 +487,11 @@
       },
       {
         "step": 8,
-        "technique_id": "T1496",
-        "technique_name": "Resource Hijacking",
-        "description": "Attacker deployed Monero cryptomining software on the ten EC2 instances, which communicated with the monerohash[.]com mining pool over TCP port 7777.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
+        "technique_id": "T1571",
+        "technique_name": "Non-Standard Port",
+        "description": "Compromised EC2 instances established C2/mining connections to monerohash[.]com over TCP 7777.",
+        "tactic_id": "",
+        "evidence_quote": "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -398,11 +501,11 @@
       },
       {
         "step": 9,
-        "technique_id": "T1571",
-        "technique_name": "Non-Standard Port",
-        "description": "Miner C2 communications used TCP port 7777 (non-standard) to connect to the monerohash[.]com mining pool, evading standard port-based detection.",
-        "tactic_id": "",
-        "evidence_quote": "monerohash[.]com on TCP port 7777",
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Used the ten c5.4xlarge EC2 instances to mine Monero cryptocurrency (cryptojacking).",
+        "tactic_id": "TA0040",
+        "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
@@ -423,68 +526,68 @@
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "The attacker compromised the root IAM user access key and used it to enumerate the environment.",
-          "The root access key was used to access the AWS environment... Ruxie pulled up API calls made by the principal (interesting in this context is mostly anything that isn't Get*, List*, Describe* and Head*)."
+          "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK",
+          "used it to enumerate the environment"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1098.001",
+        "target": "T1098.004",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "SSH Authorized Keys",
         "sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "The root access key was used to access the AWS environment... Ruxie pulled up API calls made by the principal (interesting in this context is mostly anything that isn't Get*, List*, Describe* and Head*).",
-          "EC2 SSH access keys were generated for the root access key from a suspicious source IP address using the AWS Golang SDK... This was the first time we saw an attacker bring their own SSH key pairs that were uniquely named."
+          "used it to enumerate the environment",
+          "EC2 SSH access keys were generated for the root access key from a suspicious source IP address ... create SSH key pairs via the ImportKeyPair API"
         ]
       },
       {
-        "source": "T1098.001",
-        "target": "T1562.007",
+        "source": "T1098.004",
+        "target": "T1578.002",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Additional Cloud Credentials",
-        "target_technique_name": "Disable or Modify Cloud Firewall",
-        "sources": [
-          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
-        ],
-        "evidence_quotes": [
-          "EC2 SSH access keys were generated for the root access key from a suspicious source IP address using the AWS Golang SDK... This was the first time we saw an attacker bring their own SSH key pairs that were uniquely named.",
-          "created new security groups likely to allow inbound access from the Internet... an ingress rule was created in the bot automation to allow SSH from the Internet."
-        ]
-      },
-      {
-        "source": "T1562.007",
-        "target": "T1578.002",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Disable or Modify Cloud Firewall",
+        "source_technique_name": "SSH Authorized Keys",
         "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "created new security groups likely to allow inbound access from the Internet... an ingress rule was created in the bot automation to allow SSH from the Internet.",
-          "spin up ten (10) c5.4xlarge EC2s to mine Monero... spin up EC2 instances via the RunInstances API call."
+          "EC2 SSH access keys were generated for the root access key from a suspicious source IP address ... create SSH key pairs via the ImportKeyPair API",
+          "spin up ten (10) c5.4xlarge EC2s to mine Monero ... spin up EC2 instances via the RunInstances API call"
         ]
       },
       {
         "source": "T1578.002",
+        "target": "T1578",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Modify Cloud Compute Infrastructure",
+        "sources": [
+          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
+        ],
+        "evidence_quotes": [
+          "spin up ten (10) c5.4xlarge EC2s to mine Monero ... spin up EC2 instances via the RunInstances API call",
+          "created new security groups likely to allow inbound access from the Internet ... an ingress rule was created in the bot automation to allow SSH from the Internet"
+        ]
+      },
+      {
+        "source": "T1578",
         "target": "T1021.004",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Create Cloud Instance",
+        "source_technique_name": "Modify Cloud Compute Infrastructure",
         "target_technique_name": "Remote Services: SSH",
         "sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "spin up ten (10) c5.4xlarge EC2s to mine Monero... spin up EC2 instances via the RunInstances API call.",
-          "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet."
+          "created new security groups likely to allow inbound access from the Internet ... an ingress rule was created in the bot automation to allow SSH from the Internet",
+          "The CoinMiner was likely installed via SSH remote access (as a part of the bot)"
         ]
       },
       {
@@ -498,38 +601,38 @@
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
-          "This was also the first time we'd observed a bot written in the AWS Golang software development kit (SDK)."
+          "The CoinMiner was likely installed via SSH remote access (as a part of the bot)",
+          "Execution | Scripting ... install CoinMiner malware"
         ]
       },
       {
         "source": "T1059",
-        "target": "T1496",
+        "target": "T1571",
         "source_step": 7,
         "target_step": 8,
         "source_technique_name": "Command and Scripting Interpreter",
-        "target_technique_name": "Resource Hijacking",
-        "sources": [
-          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
-        ],
-        "evidence_quotes": [
-          "This was also the first time we'd observed a bot written in the AWS Golang software development kit (SDK).",
-          "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)."
-        ]
-      },
-      {
-        "source": "T1496",
-        "target": "T1571",
-        "source_step": 8,
-        "target_step": 9,
-        "source_technique_name": "Resource Hijacking",
         "target_technique_name": "Non-Standard Port",
         "sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
         ],
         "evidence_quotes": [
-          "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
-          "monerohash[.]com on TCP port 7777"
+          "Execution | Scripting ... install CoinMiner malware",
+          "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)"
+        ]
+      },
+      {
+        "source": "T1571",
+        "target": "T1496",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Non-Standard Port",
+        "target_technique_name": "Resource Hijacking",
+        "sources": [
+          "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
+        ],
+        "evidence_quotes": [
+          "EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777)",
+          "spin up ten (10) c5.4xlarge EC2s to mine Monero"
         ]
       }
     ]
@@ -540,18 +643,18 @@
   },
   "schema_version": "1.0",
   "incident_slug": "expel-case-study-2-2020-july",
-  "analyzed_at": "2026-04-15T20:53:51.157957+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 13046,
+  "analyzed_at": "2026-04-23T18:43:52.182047+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 26118,
   "incident_name": "Expel case study 2",
   "incident_date": "2020, July",
   "incident_root_cause": "Root IAM user access keycompromised",
-  "impact_type_raw": "Cryptomining",
+  "impact_type_raw": "Cryptojacking",
   "aws_services_raw": [
     "IAM",
     "EC2",
     "CloudTrail",
     "GuardDuty",
-    "VPC"
+    "VPC Security Groups"
   ]
 }

@@ -8,7 +8,7 @@
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes... The attacker has compromised credentials, but they don't know where they've landed in the breached environment.",
+          "evidence_quote": "the attacker was targeting the SNS service with a long-term access key beginning with AKIA",
           "validated": true
         }
       ]
@@ -21,21 +21,14 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes",
+          "evidence_quote": "attacker attempting and failing to enumerate the settings for sending SMS messages (GetSMSAttributes) in 10 AWS regions over a period of five minutes",
           "validated": true
         },
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "`sts:GetCallerIdentity` - 'What are the credentials I compromised?'",
-          "validated": true
-        },
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
           "inferred": true,
-          "evidence_quote": "sns:GetSMSSandboxAccountStatus - 'Is the account in a sandbox and therefore limited?'",
+          "evidence_quote": "sts:GetCallerIdentity | \"What are the credentials I compromised?\"",
           "validated": true
         }
       ]
@@ -48,28 +41,8 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Attackers with the correct permissions will enumerate SMS settings with `GetSMSAttributes` or `GetSMSSandboxAccountStatus` and then use the AWS SNS API call `Publish` to send out SMS messages with their phishing links.",
+          "evidence_quote": "use the AWS SNS API call Publish to send out SMS messages with their phishing links",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1583.001",
-          "technique_name": "Acquire Infrastructure: Domains",
-          "inferred": false,
-          "evidence_quote": "Pivoting on the unique URL path `/app/pages/bill.php` using URLScan, we were able to find several other kits deployed over the last 11 months, across 20 domains.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1588.005",
-          "technique_name": "Obtain Capabilities: Exploits",
-          "inferred": true,
-          "evidence_quote": "Several publicly available threat actor toolsets abuse services like Twilio and Amazon SNS, attackers will then advertise on platforms like Telegram for individuals or groups interested in SMS spam or smishing.",
-          "validated": false
         }
       ]
     },
@@ -78,50 +51,11 @@
       "tactic_name": "Reconnaissance",
       "techniques": [
         {
-          "technique_id": "T1591",
-          "technique_name": "Gather Victim Org Information",
-          "inferred": true,
-          "evidence_quote": "Their goal is to gain situational awareness and understand the value and potential of the compromised account.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1056.003",
-          "technique_name": "Input Capture: Web Portal Capture",
+          "technique_id": "T1660",
+          "technique_name": "Phishing",
           "inferred": false,
-          "evidence_quote": "we were able to confirm that three users had submitted their details to the phishing site... we were able to determine that it was running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information.",
+          "evidence_quote": "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1102.002",
-          "technique_name": "Web Service: Bidirectional Communication",
-          "inferred": false,
-          "evidence_quote": "One of the notable things we observed was the use of Telegram to send users' PII, credit card details, and other request metadata to an attacker-controlled channel.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
-          "inferred": false,
-          "evidence_quote": "the use of Telegram to send users' PII, credit card details, and other request metadata to an attacker-controlled channel. This function was found in the `/server/config.php` file, which also contained Telegram API tokens.",
-          "validated": true
         }
       ]
     }
@@ -131,117 +65,110 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker obtained stolen AWS long-term IAM access keys (AKIA prefix) through an unspecified prior compromise, gaining initial access to the victim AWS environment.",
-      "evidence_quote": "The attacker has compromised credentials, but they don't know where they've landed in the breached environment.",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
+      "description": "Attacker obtained and used compromised long-term AWS access keys (AKIA prefix) to access the victim AWS environment.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "the attacker was targeting the SNS service with a long-term access key beginning with AKIA",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Attacker called `sts:GetCallerIdentity` to identify the compromised account and understand what credentials they held.",
-      "evidence_quote": "`sts:GetCallerIdentity` - 'What are the credentials I compromised?'",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
-      "aws_services_involved": [
-        "STS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker enumerated SMS sending capabilities via `sns:GetSMSAttributes` and `sns:GetSMSSandboxAccountStatus` across 10 AWS regions in approximately five minutes to assess the account's SMS sending potential and sandbox status.",
-      "evidence_quote": "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
+      "description": "Attacker enumerated AWS SNS SMS sending capabilities by calling GetSMSAttributes across 10 AWS regions in ~5 minutes from IP 134.209.127.249, attempting to identify SMS spend limits and sandbox status.",
       "aws_services_involved": [
         "SNS",
         "CloudTrail"
       ],
+      "evidence_quote": "IP address 134[.]209.127.249 was running the GetSMSAttributes API call across multiple regions, in a short period of time",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Intended/attempted abuse of AWS SNS Publish API to send out smishing SMS messages containing links to attacker-hosted French government impersonation phishing sites (attempts failed in this case).",
+      "aws_services_involved": [
+        "SNS"
+      ],
+      "evidence_quote": "use the AWS SNS API call Publish to send out SMS messages with their phishing links",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Attacker intended to use `sns:Publish` to send smishing (SMS phishing) messages via the victim's AWS account, abusing its SMS-sending capacity to distribute phishing links at scale. (Enumeration attempts failed in this specific case but the technique is the intended next step per attacker pattern.)",
-      "evidence_quote": "Attackers with the correct permissions will enumerate SMS settings with `GetSMSAttributes` or `GetSMSSandboxAccountStatus` and then use the AWS SNS API call `Publish` to send out SMS messages with their phishing links.",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
-      "aws_services_involved": [
-        "SNS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1583.001",
-      "technique_name": "Acquire Infrastructure: Domains",
-      "description": "Using the same IP infrastructure, the attacker hosted phishing sites impersonating the French government for payment of fines across 20 domains over 11 months.",
-      "evidence_quote": "Pivoting on the unique URL path `/app/pages/bill.php` using URLScan, we were able to find several other kits deployed over the last 11 months, across 20 domains.",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
+      "technique_id": "T1660",
+      "technique_name": "Phishing",
+      "description": "Attacker operated phishing sites impersonating the French government (fine payment portals) on the same infrastructure, harvesting victim PII and credit card details, exfiltrated via Telegram bot API.",
       "aws_services_involved": [],
+      "evidence_quote": "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c007",
+          "source_file": "link_00.clean.md",
+          "char_start": 1427,
+          "char_end": 2323,
+          "quote": "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information"
+        },
+        {
+          "chunk_id": "link_00.md#c016",
+          "source_file": "link_00.md",
+          "char_start": 4381,
+          "char_end": 5277,
+          "quote": "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
-    },
-    {
-      "step": 6,
-      "technique_id": "T1056.003",
-      "technique_name": "Input Capture: Web Portal Capture",
-      "description": "Victims visiting the phishing site impersonating a French government fine-payment portal submitted their PII and credit card details, which were captured by the phishing kit.",
-      "evidence_quote": "we were able to determine that it was running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information. We confirmed this through a world-readable text file that had been left on the web server.",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 7,
-      "technique_id": "T1567",
-      "technique_name": "Exfiltration Over Web Service",
-      "description": "Captured victim PII, credit card details, and request metadata were exfiltrated in real-time to an attacker-controlled Telegram channel via the Telegram Bot API, using hardcoded tokens in `/server/config.php`.",
-      "evidence_quote": "One of the notable things we observed was the use of Telegram to send users' PII, credit card details, and other request metadata to an attacker-controlled channel. This function was found in the `/server/config.php` file, which also contained Telegram API tokens.",
-      "evidence_sources": [
-        "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-      ],
-      "aws_services_involved": [],
-      "validated": true
     }
   ],
   "aws_services": [
     "SNS",
-    "STS",
+    "CloudTrail",
     "IAM",
-    "CloudTrail"
+    "STS"
   ],
-  "impact_type": "Phishing / SES Abuse",
-  "confidence_score": 0.85,
-  "initial_access_vector": "Stolen long-term IAM access keys (AKIA prefix) obtained through an unspecified prior credential compromise",
-  "persistence_mechanism": "Long-lived IAM access keys (AKIA prefix) provided persistent access without requiring re-authentication",
-  "privilege_escalation": null,
+  "impact_type": "LLM / Resource Hijacking",
+  "confidence_score": 0.8,
   "data_exfiltrated": true,
+  "initial_access_vector": "Compromised long-term AWS IAM access keys (AKIA) used from attacker IP 134.209.127.249",
+  "persistence_mechanism": "Continued use of valid long-term AWS access keys (no separate persistence mechanism established in AWS)",
+  "privilege_escalation": "None observed",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker obtained stolen AWS long-term IAM access keys (AKIA prefix) through an unspecified prior compromise, gaining initial access to the victim AWS environment.",
+        "description": "Attacker obtained and used compromised long-term AWS access keys (AKIA prefix) to access the victim AWS environment.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The attacker has compromised credentials, but they don't know where they've landed in the breached environment.",
+        "evidence_quote": "the attacker was targeting the SNS service with a long-term access key beginning with AKIA",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
@@ -251,25 +178,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Attacker called `sts:GetCallerIdentity` to identify the compromised account and understand what credentials they held.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "`sts:GetCallerIdentity` - 'What are the credentials I compromised?'",
-        "evidence_sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "aws_services_involved": [
-          "STS"
-        ]
-      },
-      {
-        "step": 3,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker enumerated SMS sending capabilities via `sns:GetSMSAttributes` and `sns:GetSMSSandboxAccountStatus` across 10 AWS regions in approximately five minutes to assess the account's SMS sending potential and sandbox status.",
+        "description": "Attacker enumerated AWS SNS SMS sending capabilities by calling GetSMSAttributes across 10 AWS regions in ~5 minutes from IP 134.209.127.249, attempting to identify SMS spend limits and sandbox status.",
         "tactic_id": "TA0007",
-        "evidence_quote": "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes",
+        "evidence_quote": "IP address 134[.]209.127.249 was running the GetSMSAttributes API call across multiple regions, in a short period of time",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
@@ -279,12 +192,12 @@
         ]
       },
       {
-        "step": 4,
+        "step": 3,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Attacker intended to use `sns:Publish` to send smishing (SMS phishing) messages via the victim's AWS account, abusing its SMS-sending capacity to distribute phishing links at scale. (Enumeration attempts failed in this specific case but the technique is the intended next step per attacker pattern.)",
+        "description": "Intended/attempted abuse of AWS SNS Publish API to send out smishing SMS messages containing links to attacker-hosted French government impersonation phishing sites (attempts failed in this case).",
         "tactic_id": "TA0040",
-        "evidence_quote": "Attackers with the correct permissions will enumerate SMS settings with `GetSMSAttributes` or `GetSMSSandboxAccountStatus` and then use the AWS SNS API call `Publish` to send out SMS messages with their phishing links.",
+        "evidence_quote": "use the AWS SNS API call Publish to send out SMS messages with their phishing links",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
@@ -293,36 +206,12 @@
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1583.001",
-        "technique_name": "Acquire Infrastructure: Domains",
-        "description": "Using the same IP infrastructure, the attacker hosted phishing sites impersonating the French government for payment of fines across 20 domains over 11 months.",
+        "step": 4,
+        "technique_id": "T1660",
+        "technique_name": "Phishing",
+        "description": "Attacker operated phishing sites impersonating the French government (fine payment portals) on the same infrastructure, harvesting victim PII and credit card details, exfiltrated via Telegram bot API.",
         "tactic_id": "",
-        "evidence_quote": "Pivoting on the unique URL path `/app/pages/bill.php` using URLScan, we were able to find several other kits deployed over the last 11 months, across 20 domains.",
-        "evidence_sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 6,
-        "technique_id": "T1056.003",
-        "technique_name": "Input Capture: Web Portal Capture",
-        "description": "Victims visiting the phishing site impersonating a French government fine-payment portal submitted their PII and credit card details, which were captured by the phishing kit.",
-        "tactic_id": "",
-        "evidence_quote": "we were able to determine that it was running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information. We confirmed this through a world-readable text file that had been left on the web server.",
-        "evidence_sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 7,
-        "technique_id": "T1567",
-        "technique_name": "Exfiltration Over Web Service",
-        "description": "Captured victim PII, credit card details, and request metadata were exfiltrated in real-time to an attacker-controlled Telegram channel via the Telegram Bot API, using hardcoded tokens in `/server/config.php`.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "One of the notable things we observed was the use of Telegram to send users' PII, credit card details, and other request metadata to an attacker-controlled channel. This function was found in the `/server/config.php` file, which also contained Telegram API tokens.",
+        "evidence_quote": "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
@@ -332,92 +221,47 @@
     "edges": [
       {
         "source": "T1078.004",
-        "target": "T1526",
+        "target": "T1580",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Service Discovery",
-        "sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "evidence_quotes": [
-          "The attacker has compromised credentials, but they don't know where they've landed in the breached environment.",
-          "`sts:GetCallerIdentity` - 'What are the credentials I compromised?'"
-        ]
-      },
-      {
-        "source": "T1526",
-        "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Cloud Service Discovery",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
         "evidence_quotes": [
-          "`sts:GetCallerIdentity` - 'What are the credentials I compromised?'",
-          "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes"
+          "the attacker was targeting the SNS service with a long-term access key beginning with AKIA",
+          "IP address 134[.]209.127.249 was running the GetSMSAttributes API call across multiple regions, in a short period of time"
         ]
       },
       {
         "source": "T1580",
         "target": "T1496",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
         "evidence_quotes": [
-          "We observed an attacker attempting and failing to enumerate the settings for sending SMS messages (`GetSMSAttributes`) in 10 AWS regions over a period of five minutes",
-          "Attackers with the correct permissions will enumerate SMS settings with `GetSMSAttributes` or `GetSMSSandboxAccountStatus` and then use the AWS SNS API call `Publish` to send out SMS messages with their phishing links."
+          "IP address 134[.]209.127.249 was running the GetSMSAttributes API call across multiple regions, in a short period of time",
+          "use the AWS SNS API call Publish to send out SMS messages with their phishing links"
         ]
       },
       {
         "source": "T1496",
-        "target": "T1583.001",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1660",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Resource Hijacking",
-        "target_technique_name": "Acquire Infrastructure: Domains",
+        "target_technique_name": "Phishing",
         "sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
         ],
         "evidence_quotes": [
-          "Attackers with the correct permissions will enumerate SMS settings with `GetSMSAttributes` or `GetSMSSandboxAccountStatus` and then use the AWS SNS API call `Publish` to send out SMS messages with their phishing links.",
-          "Pivoting on the unique URL path `/app/pages/bill.php` using URLScan, we were able to find several other kits deployed over the last 11 months, across 20 domains."
-        ]
-      },
-      {
-        "source": "T1583.001",
-        "target": "T1056.003",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Acquire Infrastructure: Domains",
-        "target_technique_name": "Input Capture: Web Portal Capture",
-        "sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "evidence_quotes": [
-          "Pivoting on the unique URL path `/app/pages/bill.php` using URLScan, we were able to find several other kits deployed over the last 11 months, across 20 domains.",
-          "we were able to determine that it was running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information. We confirmed this through a world-readable text file that had been left on the web server."
-        ]
-      },
-      {
-        "source": "T1056.003",
-        "target": "T1567",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Input Capture: Web Portal Capture",
-        "target_technique_name": "Exfiltration Over Web Service",
-        "sources": [
-          "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-aws-activity-to-phishing/"
-        ],
-        "evidence_quotes": [
-          "we were able to determine that it was running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information. We confirmed this through a world-readable text file that had been left on the web server.",
-          "One of the notable things we observed was the use of Telegram to send users' PII, credit card details, and other request metadata to an attacker-controlled channel. This function was found in the `/server/config.php` file, which also contained Telegram API tokens."
+          "use the AWS SNS API call Publish to send out SMS messages with their phishing links",
+          "running a phishing campaign impersonating the French government and had successfully phished user PII and credit card information"
         ]
       }
     ]
@@ -428,17 +272,17 @@
   },
   "schema_version": "1.0",
   "incident_slug": "datadog-2024-march",
-  "analyzed_at": "2026-04-15T20:51:27.623324+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 24631,
+  "analyzed_at": "2026-04-23T18:42:09.525664+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 42543,
   "incident_name": "Datadog",
   "incident_date": "2024, March",
   "incident_root_cause": "Compromised Credentials",
-  "impact_type_raw": "AWS SNS SMS Phishing (Smishing)",
+  "impact_type_raw": "Resource Hijacking (AWS SNS SMS smishing / phishing distribution)",
   "aws_services_raw": [
-    "AWS SNS",
-    "AWS STS",
-    "AWS IAM",
-    "AWS CloudTrail"
+    "SNS",
+    "CloudTrail",
+    "IAM",
+    "STS"
   ]
 }

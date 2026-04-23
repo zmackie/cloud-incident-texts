@@ -5,11 +5,11 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "access credentials to the AWS environment were reviewed and deactivated/reset",
-          "subtechnique_id": "T1078.004",
           "validated": true
         }
       ]
@@ -32,10 +32,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "data was potentially removed from the S3 buckets hosted in AWS",
+          "evidence_quote": "data was potentially removed from the S3 buckets",
           "validated": true
         }
       ]
@@ -59,13 +59,33 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used compromised AWS credentials to gain unauthorized access to 20/20's AWS environment.",
+      "description": "Threat actor used compromised AWS access credentials to gain access to the 20/20 AWS environment.",
+      "aws_services_involved": [
+        "IAM",
+        "AWS"
+      ],
+      "event_time": "2021-01-11",
+      "event_time_precision": "day",
       "evidence_quote": "access credentials to the AWS environment were reviewed and deactivated/reset",
       "evidence_sources": [
         "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 1253,
+          "char_end": 2590,
+          "quote": "access credentials to the AWS environment were reviewed and deactivated/reset"
+        },
+        {
+          "chunk_id": "link_00.md#c011",
+          "source_file": "link_00.md",
+          "char_start": 2022,
+          "char_end": 3359,
+          "quote": "access credentials to the AWS environment were reviewed and deactivated/reset"
+        }
       ],
       "validated": true
     },
@@ -73,83 +93,169 @@
       "step": 2,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "The attacker accessed the S3 buckets and potentially exfiltrated data containing PII and health insurance information belonging to over 3.25 million health plan members.",
+      "description": "Attacker accessed S3 buckets containing health plan member records (names, SSNs, DOBs, health insurance information).",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": "2021-01-11",
+      "event_time_precision": "day",
       "evidence_quote": "data was potentially removed from the S3 buckets hosted in AWS",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
       ],
-      "aws_services_involved": [
-        "Amazon S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 1253,
+          "char_end": 2590,
+          "quote": "data was potentially removed from the S3 buckets hosted in AWS"
+        },
+        {
+          "chunk_id": "link_00.md#c011",
+          "source_file": "link_00.md",
+          "char_start": 2022,
+          "char_end": 3359,
+          "quote": "data was potentially removed from the S3 buckets hosted in AWS"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Following the suspected data exfiltration, the attacker deleted all contents of the S3 buckets, destroying the data and triggering the initial alert.",
-      "evidence_quote": "all the data in the S3 buckets was then deleted",
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Data potentially exfiltrated from S3 buckets prior to deletion (unconfirmed but suspected).",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": "2021-01-11",
+      "event_time_precision": "day",
+      "evidence_quote": "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted",
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 1253,
+          "char_end": 2590,
+          "quote": "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted"
+        },
+        {
+          "chunk_id": "link_00.md#c011",
+          "source_file": "link_00.md",
+          "char_start": 2022,
+          "char_end": 3359,
+          "quote": "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deleted all data in the S3 buckets.",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
+      ],
+      "event_time": "2021-01-11",
+      "event_time_precision": "day",
+      "evidence_quote": "all the data in the S3 buckets was then deleted",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 1253,
+          "char_end": 2590,
+          "quote": "all the data in the S3 buckets was then deleted"
+        },
+        {
+          "chunk_id": "link_00.md#c011",
+          "source_file": "link_00.md",
+          "char_start": 2022,
+          "char_end": 3359,
+          "quote": "all the data in the S3 buckets was then deleted"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "AWS IAM"
+    "S3",
+    "IAM"
   ],
-  "impact_type": "Data Destruction / Data Exfiltration",
-  "confidence_score": 0.65,
-  "initial_access_vector": "Compromised AWS credentials used to authenticate directly to the AWS environment",
+  "impact_type": "Data Destruction",
+  "confidence_score": 0.6,
   "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Compromised AWS access credentials used to access the AWS environment",
+  "persistence_mechanism": "None described; credentials were deactivated/reset upon detection",
+  "privilege_escalation": "None described",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker used compromised AWS credentials to gain unauthorized access to 20/20's AWS environment.",
+        "description": "Threat actor used compromised AWS access credentials to gain access to the 20/20 AWS environment.",
         "tactic_id": "TA0005",
         "evidence_quote": "access credentials to the AWS environment were reviewed and deactivated/reset",
         "evidence_sources": [
           "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "IAM",
+          "AWS"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker accessed the S3 buckets and potentially exfiltrated data containing PII and health insurance information belonging to over 3.25 million health plan members.",
+        "description": "Attacker accessed S3 buckets containing health plan member records (names, SSNs, DOBs, health insurance information).",
         "tactic_id": "TA0009",
         "evidence_quote": "data was potentially removed from the S3 buckets hosted in AWS",
         "evidence_sources": [
           "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
         "step": 3,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Data potentially exfiltrated from S3 buckets prior to deletion (unconfirmed but suspected).",
+        "tactic_id": "TA0010",
+        "evidence_quote": "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted",
+        "evidence_sources": [
+          "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 4,
         "technique_id": "T1485",
         "technique_name": "Data Destruction",
-        "description": "Following the suspected data exfiltration, the attacker deleted all contents of the S3 buckets, destroying the data and triggering the initial alert.",
+        "description": "Attacker deleted all data in the S3 buckets.",
         "tactic_id": "TA0040",
         "evidence_quote": "all the data in the S3 buckets was then deleted",
         "evidence_sources": [
           "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       }
     ],
@@ -171,16 +277,31 @@
       },
       {
         "source": "T1530",
-        "target": "T1485",
+        "target": "T1567",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Data Destruction",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
         ],
         "evidence_quotes": [
           "data was potentially removed from the S3 buckets hosted in AWS",
+          "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted"
+        ]
+      },
+      {
+        "source": "T1567",
+        "target": "T1485",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Exfiltration Over Web Service",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://www.databreaches.net/20-20-eye-care-network-and-hearing-care-network-notify-3253822-health-plan-members-of-breach-that-deleted-contents-of-aws-buckets/"
+        ],
+        "evidence_quotes": [
+          "data was potentially removed from the S3 buckets hosted in AWS and all the data in the S3 buckets was then deleted",
           "all the data in the S3 buckets was then deleted"
         ]
       }
@@ -192,7 +313,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "2020-eye-care-network-and-hearing-care-network-2021-january",
-  "analyzed_at": "2026-04-15T20:43:26.096742+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 11931
+  "analyzed_at": "2026-04-23T18:37:11.405468+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 15705
 }

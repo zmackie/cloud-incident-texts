@@ -1,13 +1,79 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker (current or former employee) used compromised valid credentials to access the Sendtech AWS environment.",
+      "event_time": "2021-02",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created an additional administrator account in AWS to maintain and escalate access.",
+      "event_time": "2021-02",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage Object",
+      "description": "Attacker accessed customer data stored in S3 buckets.",
+      "event_time": "2021-02",
+      "event_time_precision": "month",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "AWS IAM",
+    "Amazon S3"
+  ],
+  "confidence_score": 0.3,
+  "data_exfiltrated": true,
+  "impact_type": "Data Exfiltration",
+  "initial_access_vector": "Compromised credentials belonging to a current or former employee",
+  "persistence_mechanism": "Created an additional administrator account in AWS",
+  "privilege_escalation": "Creation of additional admin account provided elevated privileges",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "Root Cause: (Current or former employee) Compromised credentials",
           "validated": true
@@ -19,8 +85,8 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1136",
-          "technique_name": "Create Account",
+          "technique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
           "subtechnique_id": "T1136.003",
           "inferred": false,
           "evidence_quote": "Escalation Vectors: Created additional admin account",
@@ -48,10 +114,9 @@
       "techniques": [
         {
           "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
+          "technique_name": "Data from Cloud Storage Object",
           "inferred": false,
-          "evidence_quote": "Impact: Accessed customer data in S3",
+          "evidence_quote": "Accessed customer data in S3",
           "validated": true
         }
       ]
@@ -61,9 +126,8 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
-          "subtechnique_id": null,
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage Object",
           "inferred": true,
           "evidence_quote": "Accessed customer data in S3",
           "validated": true
@@ -71,69 +135,15 @@
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1078",
-      "technique_name": "Valid Accounts",
-      "description": "Attacker (current or former employee) used compromised credentials to gain access to the AWS environment.",
-      "evidence_quote": "(Current or former employee) Compromised credentials",
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
-      "evidence_sources": [
-        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
-      ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Attacker created an additional admin-level cloud account to establish persistence and escalate privileges within the AWS environment.",
-      "evidence_quote": "Created additional admin account",
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
-      "evidence_sources": [
-        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Using the elevated admin account, the attacker accessed customer data stored in Amazon S3 buckets.",
-      "evidence_quote": "Accessed customer data in S3",
-      "aws_services_involved": [
-        "Amazon S3"
-      ],
-      "evidence_sources": [
-        "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "AWS IAM",
-    "Amazon S3"
-  ],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.5,
-  "initial_access_vector": "Compromised credentials belonging to a current or former employee used to access the AWS environment",
-  "persistence_mechanism": "Creation of an additional admin-level cloud account (T1136.003)",
-  "privilege_escalation": "Newly created admin account provided full administrative privileges within the AWS environment",
-  "data_exfiltrated": true,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1078",
-        "technique_name": "Valid Accounts",
-        "description": "Attacker (current or former employee) used compromised credentials to gain access to the AWS environment.",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker (current or former employee) used compromised valid credentials to access the Sendtech AWS environment.",
         "tactic_id": "TA0005",
-        "evidence_quote": "(Current or former employee) Compromised credentials",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
         ],
@@ -145,9 +155,9 @@
         "step": 2,
         "technique_id": "T1136.003",
         "technique_name": "Cloud Account",
-        "description": "Attacker created an additional admin-level cloud account to establish persistence and escalate privileges within the AWS environment.",
+        "description": "Attacker created an additional administrator account in AWS to maintain and escalate access.",
         "tactic_id": "TA0003",
-        "evidence_quote": "Created additional admin account",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
         ],
@@ -159,9 +169,9 @@
         "step": 3,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Using the elevated admin account, the attacker accessed customer data stored in Amazon S3 buckets.",
+        "description": "Attacker accessed customer data stored in S3 buckets.",
         "tactic_id": "TA0009",
-        "evidence_quote": "Accessed customer data in S3",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
         ],
@@ -172,19 +182,16 @@
     ],
     "edges": [
       {
-        "source": "T1078",
+        "source": "T1078.004",
         "target": "T1136.003",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Valid Accounts",
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
         ],
-        "evidence_quotes": [
-          "(Current or former employee) Compromised credentials",
-          "Created additional admin account"
-        ]
+        "evidence_quotes": []
       },
       {
         "source": "T1136.003",
@@ -196,10 +203,7 @@
         "sources": [
           "https://web.archive.org/web/20220923025502/https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Commissions-Decisions/Decision---Sendtech-Pte-Ltd---220721.ashx?la=en"
         ],
-        "evidence_quotes": [
-          "Created additional admin account",
-          "Accessed customer data in S3"
-        ]
+        "evidence_quotes": []
       }
     ]
   },
@@ -209,7 +213,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "sendtech-2021-february",
-  "analyzed_at": "2026-04-15T21:07:45.042995+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 866
+  "analyzed_at": "2026-04-23T18:52:13.928164+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 1400
 }

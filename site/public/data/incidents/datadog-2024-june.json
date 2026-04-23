@@ -21,14 +21,21 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment",
+          "evidence_quote": "attempting the API calls ListSecrets and ListVaults",
           "validated": true
         },
         {
           "technique_id": "T1619",
           "technique_name": "Cloud Storage Object Discovery",
           "inferred": false,
-          "evidence_quote": "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
+          "evidence_quote": "attempts to enumerate AWS S3 buckets with the ListBuckets API call and then determine their contents by using the ListObjects API call",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": true,
+          "evidence_quote": "the attacker attempted to run each of these API calls across 17 regions in under a minute",
           "validated": true
         }
       ]
@@ -38,24 +45,11 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_id": "T1090.002",
+          "technique_name": "Proxy: External Proxy",
           "inferred": false,
           "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "They are running a broad automated campaign against many AWS environments, and as such may assess what data is available before attempting to exfiltrate",
-          "validated": true
         }
       ]
     },
@@ -67,7 +61,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": true,
-          "evidence_quote": "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
+          "evidence_quote": "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
           "validated": true
         }
       ]
@@ -78,92 +72,143 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker obtained and used leaked long-term AWS IAM access keys (AKIA prefix) to authenticate to victim AWS environments. The automated nature and key type strongly suggest stolen/leaked static credentials.",
-      "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
+      "description": "Attacker used likely leaked long-term AWS IAM access keys (AKIA) to authenticate to victim AWS environments.",
       "aws_services_involved": [
         "IAM"
       ],
+      "event_time": "2024-05-23",
+      "event_time_precision": "day",
+      "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c007",
+          "source_file": "link_00.clean.md",
+          "char_start": 1363,
+          "char_end": 2313,
+          "quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys"
+        },
+        {
+          "chunk_id": "link_00.md#c015",
+          "source_file": "link_00.md",
+          "char_start": 4625,
+          "char_end": 5575,
+          "quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys"
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "Attacker routed malicious API calls through a combination of residential proxies (Vodafone UK mobile network) and the Cloudflare WARP VPN client to obscure their true origin and appear less suspicious.",
-      "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
+      "technique_id": "T1090.002",
+      "technique_name": "Proxy: External Proxy",
+      "description": "Attacker routed API calls through residential proxies and Cloudflare WARP VPN to mask origin.",
       "aws_services_involved": [],
+      "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 3,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker ran automated, multi-region enumeration of AWS Secrets Manager (ListSecrets) and S3 Glacier (ListVaults) across 17 AWS regions in under a minute to discover available secrets and vault resources.",
-      "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute",
+      "description": "Attacker issued ListSecrets (Secrets Manager) and ListVaults (S3 Glacier) API calls across 17 regions within a minute to enumerate available secrets and Glacier vaults.",
       "aws_services_involved": [
         "Secrets Manager",
         "S3 Glacier"
       ],
+      "evidence_quote": "attempting the API calls ListSecrets and ListVaults ... across 17 regions in under a minute",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1619",
       "technique_name": "Cloud Storage Object Discovery",
-      "description": "Attacker enumerated S3 buckets via ListBuckets and then inventoried contents of accessible buckets via ListObjects, successfully listing objects in several buckets.",
-      "evidence_quote": "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
+      "description": "Attacker enumerated S3 buckets using ListBuckets and then contents using ListObjects across available buckets.",
       "aws_services_involved": [
         "S3"
       ],
+      "evidence_quote": "attempts to enumerate AWS S3 buckets with the ListBuckets API call and then determine their contents by using the ListObjects API call",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Corroborated by Lacework research, the ultimate goal of the campaign was identified as targeting Amazon Bedrock LLM resources for unauthorized use (LLMJacking), abusing the victim's cloud AI/ML quota and incurring costs.",
-      "evidence_quote": "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
+      "description": "According to parallel Lacework reporting on the same campaign, attackers targeted Amazon Bedrock for LLMjacking / misuse of LLM resources.",
       "aws_services_involved": [
         "Bedrock"
       ],
+      "evidence_quote": "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
+      "ordering_confidence": 0.5,
       "evidence_sources": [
         "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c031",
+          "source_file": "link_00.clean.md",
+          "char_start": 11164,
+          "char_end": 11494,
+          "quote": "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources"
+        },
+        {
+          "chunk_id": "link_00.md#c039",
+          "source_file": "link_00.md",
+          "char_start": 14426,
+          "char_end": 14756,
+          "quote": "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
     "Secrets Manager",
     "S3",
     "S3 Glacier",
-    "Bedrock"
+    "IAM",
+    "Bedrock",
+    "CloudTrail"
   ],
   "impact_type": "LLM / Resource Hijacking",
-  "confidence_score": 0.75,
-  "initial_access_vector": "Stolen or leaked long-term AWS IAM access keys (AKIA) used to authenticate directly to victim AWS environments via automated tooling",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "confidence_score": 0.8,
   "data_exfiltrated": false,
+  "initial_access_vector": "Likely leaked long-term AWS IAM access keys (AKIA) used to authenticate automated enumeration activity.",
+  "persistence_mechanism": "None observed; attacker continued to use the compromised long-term access keys.",
+  "privilege_escalation": "None observed.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker obtained and used leaked long-term AWS IAM access keys (AKIA prefix) to authenticate to victim AWS environments. The automated nature and key type strongly suggest stolen/leaked static credentials.",
+        "description": "Attacker used likely leaked long-term AWS IAM access keys (AKIA) to authenticate to victim AWS environments.",
         "tactic_id": "TA0005",
         "evidence_quote": "based on the use of long-term access keys (AKIA) and the automated activity, we surmise that the attacker was likely using leaked access keys",
         "evidence_sources": [
@@ -175,9 +220,9 @@
       },
       {
         "step": 2,
-        "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "Attacker routed malicious API calls through a combination of residential proxies (Vodafone UK mobile network) and the Cloudflare WARP VPN client to obscure their true origin and appear less suspicious.",
+        "technique_id": "T1090.002",
+        "technique_name": "Proxy: External Proxy",
+        "description": "Attacker routed API calls through residential proxies and Cloudflare WARP VPN to mask origin.",
         "tactic_id": "",
         "evidence_quote": "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
         "evidence_sources": [
@@ -189,9 +234,9 @@
         "step": 3,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker ran automated, multi-region enumeration of AWS Secrets Manager (ListSecrets) and S3 Glacier (ListVaults) across 17 AWS regions in under a minute to discover available secrets and vault resources.",
+        "description": "Attacker issued ListSecrets (Secrets Manager) and ListVaults (S3 Glacier) API calls across 17 regions within a minute to enumerate available secrets and Glacier vaults.",
         "tactic_id": "TA0007",
-        "evidence_quote": "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute",
+        "evidence_quote": "attempting the API calls ListSecrets and ListVaults ... across 17 regions in under a minute",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
@@ -204,9 +249,9 @@
         "step": 4,
         "technique_id": "T1619",
         "technique_name": "Cloud Storage Object Discovery",
-        "description": "Attacker enumerated S3 buckets via ListBuckets and then inventoried contents of accessible buckets via ListObjects, successfully listing objects in several buckets.",
+        "description": "Attacker enumerated S3 buckets using ListBuckets and then contents using ListObjects across available buckets.",
         "tactic_id": "TA0007",
-        "evidence_quote": "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
+        "evidence_quote": "attempts to enumerate AWS S3 buckets with the ListBuckets API call and then determine their contents by using the ListObjects API call",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
@@ -218,9 +263,9 @@
         "step": 5,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Corroborated by Lacework research, the ultimate goal of the campaign was identified as targeting Amazon Bedrock LLM resources for unauthorized use (LLMJacking), abusing the victim's cloud AI/ML quota and incurring costs.",
+        "description": "According to parallel Lacework reporting on the same campaign, attackers targeted Amazon Bedrock for LLMjacking / misuse of LLM resources.",
         "tactic_id": "TA0040",
-        "evidence_quote": "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
+        "evidence_quote": "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources",
         "evidence_sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
@@ -232,11 +277,11 @@
     "edges": [
       {
         "source": "T1078.004",
-        "target": "T1090.003",
+        "target": "T1090.002",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Proxy: Multi-hop Proxy",
+        "target_technique_name": "Proxy: External Proxy",
         "sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
@@ -246,18 +291,18 @@
         ]
       },
       {
-        "source": "T1090.003",
+        "source": "T1090.002",
         "target": "T1580",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Proxy: Multi-hop Proxy",
+        "source_technique_name": "Proxy: External Proxy",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "evidence_quotes": [
           "The attacker was using a mix of residential proxies and a VPN client, specifically the Cloudflare Warp VPN",
-          "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute"
+          "attempting the API calls ListSecrets and ListVaults ... across 17 regions in under a minute"
         ]
       },
       {
@@ -271,8 +316,8 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "evidence_quotes": [
-          "attempting the API calls `ListSecrets` and `ListVaults` in a single AWS environment ... the attacker attempted to run each of these API calls across 17 regions in under a minute",
-          "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets"
+          "attempting the API calls ListSecrets and ListVaults ... across 17 regions in under a minute",
+          "attempts to enumerate AWS S3 buckets with the ListBuckets API call and then determine their contents by using the ListObjects API call"
         ]
       },
       {
@@ -286,8 +331,8 @@
           "https://securitylabs.datadoghq.com/articles/tales-from-the-cloud-trenches-raiding-for-vaults-buckets-secrets/"
         ],
         "evidence_quotes": [
-          "attempts to enumerate AWS S3 buckets with the `ListBuckets` API call and then determine their contents by using the `ListObjects` API call across any available buckets",
-          "They captured additional AWS API calls indicating that the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources"
+          "attempts to enumerate AWS S3 buckets with the ListBuckets API call and then determine their contents by using the ListObjects API call",
+          "the target of the campaign may have been Amazon Bedrock and the possible misuse of LLM resources"
         ]
       }
     ]
@@ -298,18 +343,19 @@
   },
   "schema_version": "1.0",
   "incident_slug": "datadog-2024-june",
-  "analyzed_at": "2026-04-15T20:50:53.446127+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 19746,
+  "analyzed_at": "2026-04-23T18:41:50.041230+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 32304,
   "incident_name": "Datadog",
   "incident_date": "2024, June",
   "incident_root_cause": "Stolen or compromised credentials",
-  "impact_type_raw": "LLMJacking",
+  "impact_type_raw": "LLMJacking / Resource Hijacking",
   "aws_services_raw": [
-    "AWS IAM",
     "AWS Secrets Manager",
     "Amazon S3",
-    "Amazon S3 Glacier",
-    "Amazon Bedrock"
+    "S3 Glacier",
+    "AWS IAM",
+    "Amazon Bedrock",
+    "AWS CloudTrail"
   ]
 }

@@ -8,7 +8,7 @@
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Exposed IAM Access keys in Public S3 Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+          "evidence_quote": "Initial Access T1078 ... Exposed IAM Access keys in Public S3",
           "validated": true
         }
       ]
@@ -34,7 +34,14 @@
           "technique_id": "T1583",
           "technique_name": "Acquire Infrastructure",
           "inferred": false,
-          "evidence_quote": "Resource Development T1098 & T1583 Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
+          "evidence_quote": "Resource Development T1098 & T1583 ... New microservice deployed",
+          "validated": false
+        },
+        {
+          "technique_id": "T1583.001",
+          "technique_name": "Acquire Infrastructure: Domains",
+          "inferred": false,
+          "evidence_quote": "SES commands issued to verify new domain, DKIM and email address",
           "validated": false
         }
       ]
@@ -44,17 +51,30 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
           "inferred": false,
-          "evidence_quote": "Resource Development T1098 & T1583 Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed",
+          "evidence_quote": "T1098 ... New IAM Resource created, assigned additional permissions",
           "validated": true
         },
         {
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
           "inferred": false,
-          "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
+          "evidence_quote": "Two new IAM Resource created & assigned additional permissions",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1098.003",
+          "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "inferred": false,
+          "evidence_quote": "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
           "validated": true
         }
       ]
@@ -67,20 +87,7 @@
           "technique_id": "T1021",
           "technique_name": "Remote Services",
           "inferred": false,
-          "evidence_quote": "Lateral Movement T1021 Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
+          "evidence_quote": "Lateral Movement T1021",
           "validated": true
         }
       ]
@@ -93,14 +100,14 @@
           "technique_id": "T1070",
           "technique_name": "Indicator Removal",
           "inferred": false,
-          "evidence_quote": "Evasion T1070 Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+          "evidence_quote": "Evasion T1070 Delete profile elements, policies and access keys for a previously created user",
           "validated": true
         },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal",
+          "inferred": false,
+          "evidence_quote": "Delete profile elements, policies and access keys for a previously created user",
           "validated": true
         }
       ]
@@ -113,7 +120,14 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue and rate increase",
+          "evidence_quote": "Real-World Scenario 2: Resource Hijacking",
+          "validated": true
+        },
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign",
           "validated": true
         }
       ]
@@ -122,182 +136,301 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API / Exposed Credentials in Public Storage",
-      "description": "Attacker discovered exposed IAM access keys stored in a public S3 bucket, providing the initial foothold into the AWS environment.",
-      "evidence_quote": "Exposed IAM Access keys in Public S3",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker obtained exposed IAM access keys from a public S3 bucket and used them via AWS CLI for initial access.",
+      "event_time": "2024-03-29",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "IAM",
+        "S3",
+        "CLI"
+      ],
+      "evidence_quote": "Earliest evidence of compromise March 29th, 2024. Exposed IAM Access keys in Public S3",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "S3",
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c017",
+          "source_file": "link_00.clean.md",
+          "char_start": 4643,
+          "char_end": 4801,
+          "quote": "Earliest evidence of compromise March 29th, 2024. Exposed IAM Access keys in Public S3"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 4721,
+          "char_end": 4879,
+          "quote": "Earliest evidence of compromise March 29th, 2024. Exposed IAM Access keys in Public S3"
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker authenticated to AWS using the compromised IAM access keys via the AWS CLI, gaining initial access as a legitimate user.",
-      "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
-      "evidence_sources": [
-        "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-      ],
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker issued AWS CLI calls to Start Instance and RequestServiceQuotaIncrease to probe the environment.",
       "aws_services_involved": [
-        "IAM",
         "EC2",
         "Service Quotas"
       ],
+      "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker issued CLI commands to start EC2 instances and request service quota increases, probing the environment's capabilities and limits.",
-      "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created new IAM users/resources via CLI.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "Via CLI New IAM Resource created, assigned additional permissions",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "Service Quotas"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 4882,
+          "char_end": 5039,
+          "quote": "Via CLI New IAM Resource created, assigned additional permissions"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 4960,
+          "char_end": 5117,
+          "quote": "Via CLI New IAM Resource created, assigned additional permissions"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Via CLI, attacker created new IAM resources (users/roles), assigned additional permissions, and deployed a new microservice. SES and SNS quotas and sending rates were also increased.",
-      "evidence_quote": "Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
-      "evidence_sources": [
-        "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-      ],
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Attacker attached additional IAM policies/roles to compromised and newly created users (AttachUserPolicy) to grant SES and SQS permissions.",
       "aws_services_involved": [
         "IAM",
         "SES",
-        "SNS"
+        "SQS"
       ],
+      "evidence_quote": "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 5067,
+          "char_end": 5237,
+          "quote": "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)"
+        },
+        {
+          "chunk_id": "link_00.md#c020",
+          "source_file": "link_00.md",
+          "char_start": 5145,
+          "char_end": 5315,
+          "quote": "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "Two additional new IAM resources were created and assigned elevated permissions and roles specifically for SES and SQS access using AttachUserPolicy.",
-      "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy) SES commands issued to verify new domain, DKIM and email address",
+      "technique_id": "T1583",
+      "technique_name": "Acquire Infrastructure",
+      "description": "Attacker deployed a new microservice and increased SES sending quota, sending rate, and SNS quota to prepare email-sending infrastructure.",
+      "aws_services_involved": [
+        "SES",
+        "SNS",
+        "Service Quotas"
+      ],
+      "evidence_quote": "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "SES",
-        "SQS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 4882,
+          "char_end": 5039,
+          "quote": "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 4960,
+          "char_end": 5117,
+          "quote": "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota"
+        }
       ],
-      "validated": true
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1021",
-      "technique_name": "Remote Services",
-      "description": "Attacker laterally moved by pivoting to SES and SQS services using the newly created IAM users/roles, issuing SES commands to verify a new domain, configure DKIM, and verify email addresses for the phishing campaign.",
+      "technique_id": "T1583.001",
+      "technique_name": "Acquire Infrastructure: Domains",
+      "description": "Attacker issued SES commands to verify a new domain, DKIM, and email address to enable large-scale mail sending.",
+      "aws_services_involved": [
+        "SES"
+      ],
       "evidence_quote": "SES commands issued to verify new domain, DKIM and email address",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "SES",
-        "SQS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 5067,
+          "char_end": 5237,
+          "quote": "SES commands issued to verify new domain, DKIM and email address"
+        },
+        {
+          "chunk_id": "link_00.md#c020",
+          "source_file": "link_00.md",
+          "char_start": 5145,
+          "char_end": 5315,
+          "quote": "SES commands issued to verify new domain, DKIM and email address"
+        }
       ],
-      "validated": true
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 7,
-      "technique_id": "T1070",
-      "technique_name": "Indicator Removal",
-      "description": "Attacker deleted profile elements, policies, and access keys for a previously created IAM user to cover tracks. This activity was executed from an external IP address not belonging to the customer.",
-      "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Attacker used the hijacked SES infrastructure to send an abnormally large volume of emails in a mass phishing campaign.",
+      "aws_services_involved": [
+        "SES"
+      ],
+      "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c021",
+          "source_file": "link_00.clean.md",
+          "char_start": 5396,
+          "char_end": 5542,
+          "quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue"
+        },
+        {
+          "chunk_id": "link_00.md#c022",
+          "source_file": "link_00.md",
+          "char_start": 5474,
+          "char_end": 5620,
+          "quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Attacker leveraged the hijacked SES infrastructure to send an abnormally large volume of emails as part of a mass phishing campaign, causing SES bounce rate issues that triggered an AWS notification to the customer.",
-      "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue and rate increase",
+      "technique_id": "T1070",
+      "technique_name": "Indicator Removal",
+      "description": "From an external IP, attacker deleted profile elements, policies, and access keys of a previously created user to cover tracks.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
       ],
-      "aws_services_involved": [
-        "SES",
-        "SNS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c020",
+          "source_file": "link_00.clean.md",
+          "char_start": 5256,
+          "char_end": 5384,
+          "quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 5334,
+          "char_end": 5462,
+          "quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "S3",
     "IAM",
+    "S3",
     "EC2",
     "SES",
-    "SQS",
     "SNS",
+    "SQS",
     "Service Quotas",
-    "KMS",
+    "CLI",
     "CloudTrail"
   ],
   "impact_type": "LLM / Resource Hijacking",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Exposed IAM access keys discovered in a public S3 bucket, used via AWS CLI to authenticate into the environment",
-  "persistence_mechanism": "Creation of multiple new IAM users/roles with AttachUserPolicy granting elevated permissions for SES, SQS, and SNS; new microservice deployed",
-  "privilege_escalation": "AttachUserPolicy used to assign additional permissions and roles to newly created IAM resources, granting SES and SQS access beyond the original compromised account's scope",
+  "confidence_score": 0.7,
   "data_exfiltrated": false,
+  "initial_access_vector": "Exposed IAM access keys found in a public S3 bucket, used by attacker via AWS CLI",
+  "persistence_mechanism": "Created new IAM users and attached additional policies (AttachUserPolicy) granting SES/SQS permissions",
+  "privilege_escalation": "Attached additional IAM policies/roles to existing and newly created users via AttachUserPolicy",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "Attacker discovered exposed IAM access keys stored in a public S3 bucket, providing the initial foothold into the AWS environment.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Exposed IAM Access keys in Public S3",
-        "evidence_sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "aws_services_involved": [
-          "S3",
-          "IAM"
-        ]
-      },
-      {
-        "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker authenticated to AWS using the compromised IAM access keys via the AWS CLI, gaining initial access as a legitimate user.",
+        "description": "Attacker obtained exposed IAM access keys from a public S3 bucket and used them via AWS CLI for initial access.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+        "evidence_quote": "Earliest evidence of compromise March 29th, 2024. Exposed IAM Access keys in Public S3",
         "evidence_sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "aws_services_involved": [
           "IAM",
-          "EC2",
-          "Service Quotas"
+          "S3",
+          "CLI"
         ]
       },
       {
-        "step": 3,
+        "step": 2,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker issued CLI commands to start EC2 instances and request service quota increases, probing the environment's capabilities and limits.",
+        "description": "Attacker issued AWS CLI calls to Start Instance and RequestServiceQuotaIncrease to probe the environment.",
         "tactic_id": "TA0007",
         "evidence_quote": "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
         "evidence_sources": [
@@ -309,59 +442,12 @@
         ]
       },
       {
-        "step": 4,
+        "step": 3,
         "technique_id": "T1136.003",
         "technique_name": "Cloud Account",
-        "description": "Via CLI, attacker created new IAM resources (users/roles), assigned additional permissions, and deployed a new microservice. SES and SNS quotas and sending rates were also increased.",
+        "description": "Attacker created new IAM users/resources via CLI.",
         "tactic_id": "TA0003",
-        "evidence_quote": "Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
-        "evidence_sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "SES",
-          "SNS"
-        ]
-      },
-      {
-        "step": 5,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "Two additional new IAM resources were created and assigned elevated permissions and roles specifically for SES and SQS access using AttachUserPolicy.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy) SES commands issued to verify new domain, DKIM and email address",
-        "evidence_sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "SES",
-          "SQS"
-        ]
-      },
-      {
-        "step": 6,
-        "technique_id": "T1021",
-        "technique_name": "Remote Services",
-        "description": "Attacker laterally moved by pivoting to SES and SQS services using the newly created IAM users/roles, issuing SES commands to verify a new domain, configure DKIM, and verify email addresses for the phishing campaign.",
-        "tactic_id": "TA0008",
-        "evidence_quote": "SES commands issued to verify new domain, DKIM and email address",
-        "evidence_sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "aws_services_involved": [
-          "SES",
-          "SQS"
-        ]
-      },
-      {
-        "step": 7,
-        "technique_id": "T1070",
-        "technique_name": "Indicator Removal",
-        "description": "Attacker deleted profile elements, policies, and access keys for a previously created IAM user to cover tracks. This activity was executed from an external IP address not belonging to the customer.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+        "evidence_quote": "Via CLI New IAM Resource created, assigned additional permissions",
         "evidence_sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
@@ -370,57 +456,101 @@
         ]
       },
       {
-        "step": 8,
-        "technique_id": "T1496",
-        "technique_name": "Resource Hijacking",
-        "description": "Attacker leveraged the hijacked SES infrastructure to send an abnormally large volume of emails as part of a mass phishing campaign, causing SES bounce rate issues that triggered an AWS notification to the customer.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue and rate increase",
+        "step": 4,
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Attacker attached additional IAM policies/roles to compromised and newly created users (AttachUserPolicy) to grant SES and SQS permissions.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
+        "evidence_sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "SES",
+          "SQS"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1583",
+        "technique_name": "Acquire Infrastructure",
+        "description": "Attacker deployed a new microservice and increased SES sending quota, sending rate, and SNS quota to prepare email-sending infrastructure.",
+        "tactic_id": "",
+        "evidence_quote": "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
         "evidence_sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "aws_services_involved": [
           "SES",
-          "SNS"
+          "SNS",
+          "Service Quotas"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1583.001",
+        "technique_name": "Acquire Infrastructure: Domains",
+        "description": "Attacker issued SES commands to verify a new domain, DKIM, and email address to enable large-scale mail sending.",
+        "tactic_id": "",
+        "evidence_quote": "SES commands issued to verify new domain, DKIM and email address",
+        "evidence_sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "aws_services_involved": [
+          "SES"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "Attacker used the hijacked SES infrastructure to send an abnormally large volume of emails in a mass phishing campaign.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue",
+        "evidence_sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "aws_services_involved": [
+          "SES"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1070",
+        "technique_name": "Indicator Removal",
+        "description": "From an external IP, attacker deleted profile elements, policies, and access keys of a previously created user to cover tracks.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
+        "evidence_sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1552.005",
-        "target": "T1078.004",
-        "source_step": 1,
-        "target_step": 2,
-        "source_technique_name": "Cloud Instance Metadata API",
-        "target_technique_name": "Cloud Accounts",
-        "sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "evidence_quotes": [
-          "Exposed IAM Access keys in Public S3",
-          "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'"
-        ]
-      },
-      {
         "source": "T1078.004",
         "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
+        "source_step": 1,
+        "target_step": 2,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "evidence_quotes": [
-          "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
+          "Earliest evidence of compromise March 29th, 2024. Exposed IAM Access keys in Public S3",
           "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'"
         ]
       },
       {
         "source": "T1580",
         "target": "T1136.003",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Cloud Account",
         "sources": [
@@ -428,67 +558,82 @@
         ],
         "evidence_quotes": [
           "Request via AWS CLI to 'Start Instance' & 'RequestServiceQuotaIncrease'",
-          "Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota"
+          "Via CLI New IAM Resource created, assigned additional permissions"
         ]
       },
       {
         "source": "T1136.003",
-        "target": "T1098.001",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1098.003",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Account",
-        "target_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Additional Cloud Roles",
         "sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "evidence_quotes": [
-          "Via CLI New IAM Resource created, assigned additional permissions & New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
-          "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy) SES commands issued to verify new domain, DKIM and email address"
+          "Via CLI New IAM Resource created, assigned additional permissions",
+          "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)"
         ]
       },
       {
-        "source": "T1098.001",
-        "target": "T1021",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Additional Cloud Credentials",
-        "target_technique_name": "Remote Services",
+        "source": "T1098.003",
+        "target": "T1583",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Roles",
+        "target_technique_name": "Acquire Infrastructure",
         "sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "evidence_quotes": [
-          "Two new IAM Resource created & assigned additional permissions and roles for SES & SQS (AttachUserPolicy) SES commands issued to verify new domain, DKIM and email address",
+          "assigned additional permissions and roles for SES & SQS (AttachUserPolicy)",
+          "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota"
+        ]
+      },
+      {
+        "source": "T1583",
+        "target": "T1583.001",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Acquire Infrastructure",
+        "target_technique_name": "Acquire Infrastructure: Domains",
+        "sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "evidence_quotes": [
+          "New microservice deployed. Increase Sending Quote initiated & Sending Rate, and SNS quota",
           "SES commands issued to verify new domain, DKIM and email address"
         ]
       },
       {
-        "source": "T1021",
-        "target": "T1070",
+        "source": "T1583.001",
+        "target": "T1496",
         "source_step": 6,
         "target_step": 7,
-        "source_technique_name": "Remote Services",
-        "target_technique_name": "Indicator Removal",
-        "sources": [
-          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
-        ],
-        "evidence_quotes": [
-          "SES commands issued to verify new domain, DKIM and email address",
-          "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer"
-        ]
-      },
-      {
-        "source": "T1070",
-        "target": "T1496",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Indicator Removal",
+        "source_technique_name": "Acquire Infrastructure: Domains",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
         ],
         "evidence_quotes": [
-          "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer",
-          "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue and rate increase"
+          "SES commands issued to verify new domain, DKIM and email address",
+          "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue"
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1070",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Indicator Removal",
+        "sources": [
+          "https://2631050.fs1.hubspotusercontent-na1.net/hubfs/2631050/1108-24/Day%201%20-%20Presentations/Daniel%20Comarmond.pdf"
+        ],
+        "evidence_quotes": [
+          "Sending an abnormally large amount of emails in mass phishing campaign. Customer contacted by AWS re SES email bounce rate issue",
+          "Delete profile elements, policies and access keys for a previously created user, executed from external IP not owned by customer"
         ]
       }
     ]
@@ -499,22 +644,22 @@
   },
   "schema_version": "1.0",
   "incident_slug": "rapid7-1-2024-july",
-  "analyzed_at": "2026-04-15T21:05:52.466448+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 10645,
+  "analyzed_at": "2026-04-23T18:51:18.720565+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 20889,
   "incident_name": "Rapid7 #1",
   "incident_date": "2024, July",
   "incident_root_cause": "Compromised credential",
-  "impact_type_raw": "Resource Hijacking / Mass Phishing via SES",
+  "impact_type_raw": "Resource Hijacking (SES mass phishing)",
   "aws_services_raw": [
-    "S3",
     "IAM",
+    "S3",
     "EC2",
     "SES",
-    "SQS",
     "SNS",
+    "SQS",
     "Service Quotas",
-    "KMS",
+    "AWS CLI",
     "CloudTrail"
   ]
 }

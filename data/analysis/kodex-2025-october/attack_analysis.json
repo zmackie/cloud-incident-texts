@@ -1,58 +1,28 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_id": "T1585",
+          "technique_name": "Establish Accounts",
+          "inferred": true,
+          "evidence_quote": "attackers attempted to transfer the domain to a different registrar",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
-          "subtechnique_id": null,
+          "technique_id": "T1199",
+          "technique_name": "Trusted Relationship",
           "inferred": false,
           "evidence_quote": "attackers socially engineered AWS into freezing its domain",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "it was the registrar who improperly froze our domain as a result of the fraudulent legal order",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the potential consequences could have seen them intercept Kodex's emails, potentially accessing sensitive information, or taking control of accounts with access to MFA authentication resets",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1114",
-          "technique_name": "Email Collection",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the potential consequences could have seen them intercept Kodex's emails, potentially accessing sensitive information",
-          "validated": false
         }
       ]
     },
@@ -63,16 +33,14 @@
         {
           "technique_id": "T1498",
           "technique_name": "Network Denial of Service",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "its website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
+          "inferred": true,
+          "evidence_quote": "website, portal, API, and some email services were rendered unavailable",
           "validated": true
         },
         {
-          "technique_id": "T1584",
-          "technique_name": "Compromise Infrastructure",
-          "subtechnique_id": "T1584.001",
-          "inferred": false,
+          "technique_id": "T1565",
+          "technique_name": "Data Manipulation",
+          "inferred": true,
           "evidence_quote": "attackers attempted to transfer the domain to a different registrar",
           "validated": false
         }
@@ -82,43 +50,98 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1036",
-      "technique_name": "Masquerading",
-      "description": "Attackers fabricated a fraudulent legal order (impersonating a legal/law enforcement authority) and submitted it to AWS (acting as Kodex's domain registrar) to manipulate them into taking action against Kodex's domain.",
-      "evidence_quote": "it was the registrar who improperly froze our domain as a result of the fraudulent legal order",
+      "technique_id": "T1585",
+      "technique_name": "Establish Accounts",
+      "description": "Attackers prepared a fraudulent legal order document to impersonate law enforcement and target Kodex's domain registrar (AWS).",
+      "aws_services_involved": [],
+      "event_time": "2025-10-01",
+      "event_time_precision": "day",
+      "evidence_quote": "the registrar who improperly froze our domain as a result of the fraudulent legal order",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
       ],
-      "aws_services_involved": [
-        "AWS Route 53 (Domain Registrar)"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 1680,
+          "char_end": 1960,
+          "quote": "the registrar who improperly froze our domain as a result of the fraudulent legal order"
+        },
+        {
+          "chunk_id": "link_00.md#c028",
+          "source_file": "link_00.md",
+          "char_start": 8562,
+          "char_end": 8842,
+          "quote": "the registrar who improperly froze our domain as a result of the fraudulent legal order"
+        }
       ],
-      "validated": true
+      "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1566",
-      "technique_name": "Phishing \u2014 Social Engineering of Service Provider",
-      "description": "Attackers socially engineered AWS support/registrar staff by presenting the fraudulent legal order, causing AWS to freeze Kodex's domain.",
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "description": "Attackers socially engineered AWS (Kodex's domain registrar) by submitting a fraudulent legal order, exploiting the trust relationship between Kodex and its registrar.",
+      "aws_services_involved": [
+        "AWS Route 53/Domain Registrar"
+      ],
+      "event_time": "2025-10-01",
+      "event_time_precision": "day",
       "evidence_quote": "attackers socially engineered AWS into freezing its domain",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
       ],
-      "aws_services_involved": [
-        "AWS Route 53 (Domain Registrar)"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c004",
+          "source_file": "link_00.clean.md",
+          "char_start": 714,
+          "char_end": 915,
+          "quote": "attackers socially engineered AWS into freezing its domain"
+        },
+        {
+          "chunk_id": "link_00.md#c024",
+          "source_file": "link_00.md",
+          "char_start": 7596,
+          "char_end": 7797,
+          "quote": "attackers socially engineered AWS into freezing its domain"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1584.001",
-      "technique_name": "Compromise Infrastructure: Domains",
-      "description": "Attackers attempted to transfer Kodex's domain to a different registrar as the intended outcome of the social engineering. AWS froze the domain instead of transferring it, causing a partial but unintended outcome.",
-      "evidence_quote": "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar",
+      "technique_id": "T1565",
+      "technique_name": "Data Manipulation",
+      "description": "Attackers attempted to transfer the Kodex domain to a different registrar based on the fraudulent order, though ownership was never actually transferred.",
+      "aws_services_involved": [
+        "AWS Route 53/Domain Registrar"
+      ],
+      "event_time": "2025-10-01",
+      "event_time_precision": "day",
+      "evidence_quote": "attackers attempted to transfer the domain to a different registrar",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
       ],
-      "aws_services_involved": [
-        "AWS Route 53 (Domain Registrar)"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c007",
+          "source_file": "link_00.clean.md",
+          "char_start": 1390,
+          "char_end": 1678,
+          "quote": "attackers attempted to transfer the domain to a different registrar"
+        },
+        {
+          "chunk_id": "link_00.md#c027",
+          "source_file": "link_00.md",
+          "char_start": 8272,
+          "char_end": 8560,
+          "quote": "attackers attempted to transfer the domain to a different registrar"
+        }
       ],
       "validated": false
     },
@@ -126,129 +149,146 @@
       "step": 4,
       "technique_id": "T1498",
       "technique_name": "Network Denial of Service",
-      "description": "The domain freeze by AWS caused Kodex's website, portal, API, and email services to go offline, effectively resulting in a denial of service for Kodex and its customers (15,000+ government agencies and major tech companies).",
-      "evidence_quote": "its website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
+      "description": "AWS improperly froze the Kodex domain in response to the fraudulent order, causing the website, portal, API, and some email services to be unavailable from 08:54-12:47 EDT.",
+      "aws_services_involved": [
+        "AWS Route 53/Domain Registrar"
+      ],
+      "event_time": "2025-10-01T08:54:00-04:00",
+      "event_time_precision": "exact",
+      "evidence_quote": "website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
       ],
-      "aws_services_involved": [
-        "AWS Route 53 (Domain Registrar)"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c005",
+          "source_file": "link_00.clean.md",
+          "char_start": 917,
+          "char_end": 1094,
+          "quote": "website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT"
+        },
+        {
+          "chunk_id": "link_00.md#c025",
+          "source_file": "link_00.md",
+          "char_start": 7799,
+          "char_end": 7976,
+          "quote": "website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS Route 53 (Domain Registrar)"
+    "AWS Route 53 / Domain Registrar"
   ],
-  "impact_type": "Denial of Service",
-  "confidence_score": 0.75,
-  "initial_access_vector": "Attackers submitted a fraudulent legal order to AWS (Kodex's domain registrar), socially engineering AWS staff into freezing Kodex's domain \u2014 no compromise of Kodex's own systems or credentials occurred.",
-  "persistence_mechanism": "None achieved \u2014 domain transfer was not completed; AWS froze rather than transferred the domain, and the freeze was reversed within approximately 4 hours.",
-  "privilege_escalation": "Not applicable \u2014 attack targeted the third-party registrar (AWS), not Kodex's internal systems. No privilege escalation within Kodex infrastructure occurred.",
+  "impact_type": "Denial of Service (domain freeze outage)",
+  "confidence_score": 0.7,
   "data_exfiltrated": false,
+  "initial_access_vector": "Social engineering of AWS (as domain registrar) via a fraudulent legal order requesting domain transfer",
+  "persistence_mechanism": "None - ownership was never actually transferred; registrar froze domain but attackers did not maintain access",
+  "privilege_escalation": "None observed - attackers did not compromise Kodex credentials or systems",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1036",
-        "technique_name": "Masquerading",
-        "description": "Attackers fabricated a fraudulent legal order (impersonating a legal/law enforcement authority) and submitted it to AWS (acting as Kodex's domain registrar) to manipulate them into taking action against Kodex's domain.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "it was the registrar who improperly froze our domain as a result of the fraudulent legal order",
+        "technique_id": "T1585",
+        "technique_name": "Establish Accounts",
+        "description": "Attackers prepared a fraudulent legal order document to impersonate law enforcement and target Kodex's domain registrar (AWS).",
+        "tactic_id": "",
+        "evidence_quote": "the registrar who improperly froze our domain as a result of the fraudulent legal order",
         "evidence_sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
-        "aws_services_involved": [
-          "AWS Route 53 (Domain Registrar)"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 2,
-        "technique_id": "T1566",
-        "technique_name": "Phishing",
-        "description": "Attackers socially engineered AWS support/registrar staff by presenting the fraudulent legal order, causing AWS to freeze Kodex's domain.",
+        "technique_id": "T1199",
+        "technique_name": "Trusted Relationship",
+        "description": "Attackers socially engineered AWS (Kodex's domain registrar) by submitting a fraudulent legal order, exploiting the trust relationship between Kodex and its registrar.",
         "tactic_id": "TA0001",
         "evidence_quote": "attackers socially engineered AWS into freezing its domain",
         "evidence_sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "aws_services_involved": [
-          "AWS Route 53 (Domain Registrar)"
+          "AWS Route 53/Domain Registrar"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1584.001",
-        "technique_name": "Compromise Infrastructure: Domains",
-        "description": "Attackers attempted to transfer Kodex's domain to a different registrar as the intended outcome of the social engineering. AWS froze the domain instead of transferring it, causing a partial but unintended outcome.",
+        "technique_id": "T1565",
+        "technique_name": "Data Manipulation",
+        "description": "Attackers attempted to transfer the Kodex domain to a different registrar based on the fraudulent order, though ownership was never actually transferred.",
         "tactic_id": "",
-        "evidence_quote": "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar",
+        "evidence_quote": "attackers attempted to transfer the domain to a different registrar",
         "evidence_sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "aws_services_involved": [
-          "AWS Route 53 (Domain Registrar)"
+          "AWS Route 53/Domain Registrar"
         ]
       },
       {
         "step": 4,
         "technique_id": "T1498",
         "technique_name": "Network Denial of Service",
-        "description": "The domain freeze by AWS caused Kodex's website, portal, API, and email services to go offline, effectively resulting in a denial of service for Kodex and its customers (15,000+ government agencies and major tech companies).",
+        "description": "AWS improperly froze the Kodex domain in response to the fraudulent order, causing the website, portal, API, and some email services to be unavailable from 08:54-12:47 EDT.",
         "tactic_id": "TA0040",
-        "evidence_quote": "its website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
+        "evidence_quote": "website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT",
         "evidence_sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "aws_services_involved": [
-          "AWS Route 53 (Domain Registrar)"
+          "AWS Route 53/Domain Registrar"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1036",
-        "target": "T1566",
+        "source": "T1585",
+        "target": "T1199",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Masquerading",
-        "target_technique_name": "Phishing",
+        "source_technique_name": "Establish Accounts",
+        "target_technique_name": "Trusted Relationship",
         "sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "evidence_quotes": [
-          "it was the registrar who improperly froze our domain as a result of the fraudulent legal order",
+          "the registrar who improperly froze our domain as a result of the fraudulent legal order",
           "attackers socially engineered AWS into freezing its domain"
         ]
       },
       {
-        "source": "T1566",
-        "target": "T1584.001",
+        "source": "T1199",
+        "target": "T1565",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Phishing",
-        "target_technique_name": "Compromise Infrastructure: Domains",
+        "source_technique_name": "Trusted Relationship",
+        "target_technique_name": "Data Manipulation",
         "sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "evidence_quotes": [
           "attackers socially engineered AWS into freezing its domain",
-          "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar"
+          "attackers attempted to transfer the domain to a different registrar"
         ]
       },
       {
-        "source": "T1584.001",
+        "source": "T1565",
         "target": "T1498",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Compromise Infrastructure: Domains",
+        "source_technique_name": "Data Manipulation",
         "target_technique_name": "Network Denial of Service",
         "sources": [
           "https://www.theregister.com/2025/10/02/subpoena_tracking_platform_outage_blamed/"
         ],
         "evidence_quotes": [
-          "cyber sleuths identified that attackers attempted to transfer the domain to a different registrar",
-          "its website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT"
+          "attackers attempted to transfer the domain to a different registrar",
+          "website, portal, API, and some email services were rendered unavailable on October 1 between 08:54-12:47 EDT"
         ]
       }
     ]
@@ -259,7 +299,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "kodex-2025-october",
-  "analyzed_at": "2026-04-15T20:57:45.341480+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 22396
+  "analyzed_at": "2026-04-23T18:46:03.279756+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 26429
 }

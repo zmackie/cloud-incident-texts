@@ -1,9 +1,26 @@
 {
+  "confidence_score": 0.2,
+  "aws_services": [
+    "AWS",
+    "IAM"
+  ],
+  "impact_type": "Data Exfiltration",
+  "data_exfiltrated": true,
+  "initial_access_vector": "Third-party compromise exposed an AWS access key belonging to Open Exchange Rates, which the attacker used to access the environment.",
+  "persistence_mechanism": "Use of valid AWS access key obtained via third-party compromise",
+  "privilege_escalation": "N/A",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Third-party compromise exposing access key",
+          "validated": true
+        },
         {
           "technique_id": "T1199",
           "technique_name": "Trusted Relationship",
@@ -18,9 +35,8 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Cloud Instance Metadata API / Unsecured Credentials: Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": true,
           "evidence_quote": "Third-party compromise exposing access key",
           "validated": true
@@ -45,10 +61,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "exchange-rate-services-customer-details-hacked-via-aws",
+          "evidence_quote": "customer details hacked via AWS",
           "validated": true
         }
       ]
@@ -59,119 +75,150 @@
       "step": 1,
       "technique_id": "T1199",
       "technique_name": "Trusted Relationship",
-      "description": "A third-party vendor or integration partner was compromised, exposing an AWS access key belonging to Open Exchange Rates.",
+      "description": "Attacker compromised a third-party that had access to Open Exchange Rates' AWS environment, exposing an AWS access key.",
+      "aws_services_involved": [
+        "AWS"
+      ],
       "evidence_quote": "Third-party compromise exposing access key",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "The attacker obtained and leveraged the exposed AWS access key to authenticate to the Open Exchange Rates AWS environment.",
-      "evidence_quote": "Third-party compromise exposing access key",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used the exposed AWS access key to authenticate to Open Exchange Rates' AWS account.",
+      "aws_services_involved": [
+        "AWS",
+        "IAM"
+      ],
+      "evidence_quote": "exchange-rate-services-customer-details-hacked-via-aws",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c001",
+          "source_file": "link_00.clean.md",
+          "char_start": 0,
+          "char_end": 290,
+          "quote": "exchange-rate-services-customer-details-hacked-via-aws"
+        },
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 292,
+          "char_end": 455,
+          "quote": "exchange-rate-services-customer-details-hacked-via-aws"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 38,
+          "char_end": 149,
+          "quote": "exchange-rate-services-customer-details-hacked-via-aws"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "Using the compromised AWS access key, the attacker accessed cloud-hosted storage containing the Open Exchange Rates user database.",
+      "description": "Attacker accessed the customer/user database within the AWS environment.",
+      "aws_services_involved": [
+        "AWS"
+      ],
       "evidence_quote": "Impact: User database",
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
       ],
-      "aws_services_involved": [
-        "Amazon RDS",
-        "Amazon S3"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Customer details from the user database were exfiltrated by the attacker via AWS infrastructure.",
-      "evidence_quote": "exchange-rate-services-customer-details-hacked-via-aws",
-      "evidence_sources": [
-        "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
-      ],
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Customer user database details were exfiltrated from the AWS environment.",
       "aws_services_involved": [
         "AWS"
       ],
+      "evidence_quote": "customer details hacked via AWS",
+      "ordering_confidence": 0.6,
+      "evidence_sources": [
+        "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
-  "aws_services": [
-    "AWS IAM",
-    "Amazon S3",
-    "Amazon RDS"
-  ],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.4,
-  "initial_access_vector": "Third-party compromise exposing an AWS access key belonging to Open Exchange Rates",
-  "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1199",
         "technique_name": "Trusted Relationship",
-        "description": "A third-party vendor or integration partner was compromised, exposing an AWS access key belonging to Open Exchange Rates.",
+        "description": "Attacker compromised a third-party that had access to Open Exchange Rates' AWS environment, exposing an AWS access key.",
         "tactic_id": "TA0001",
         "evidence_quote": "Third-party compromise exposing access key",
         "evidence_sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "AWS"
+        ]
       },
       {
         "step": 2,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "The attacker obtained and leveraged the exposed AWS access key to authenticate to the Open Exchange Rates AWS environment.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Third-party compromise exposing access key",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker used the exposed AWS access key to authenticate to Open Exchange Rates' AWS account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "exchange-rate-services-customer-details-hacked-via-aws",
         "evidence_sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "AWS",
+          "IAM"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Using the compromised AWS access key, the attacker accessed cloud-hosted storage containing the Open Exchange Rates user database.",
+        "description": "Attacker accessed the customer/user database within the AWS environment.",
         "tactic_id": "TA0009",
         "evidence_quote": "Impact: User database",
         "evidence_sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
         "aws_services_involved": [
-          "Amazon RDS",
-          "Amazon S3"
+          "AWS"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Customer details from the user database were exfiltrated by the attacker via AWS infrastructure.",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Customer user database details were exfiltrated from the AWS environment.",
         "tactic_id": "TA0010",
-        "evidence_quote": "exchange-rate-services-customer-details-hacked-via-aws",
+        "evidence_quote": "customer details hacked via AWS",
         "evidence_sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
@@ -183,47 +230,47 @@
     "edges": [
       {
         "source": "T1199",
-        "target": "T1552.005",
+        "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Trusted Relationship",
-        "target_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
         "evidence_quotes": [
           "Third-party compromise exposing access key",
-          "Third-party compromise exposing access key"
+          "exchange-rate-services-customer-details-hacked-via-aws"
         ]
       },
       {
-        "source": "T1552.005",
+        "source": "T1078.004",
         "target": "T1530",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
         "evidence_quotes": [
-          "Third-party compromise exposing access key",
+          "exchange-rate-services-customer-details-hacked-via-aws",
           "Impact: User database"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1537",
+        "target": "T1567",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://nakedsecurity.sophos.com/2020/03/20/exchange-rate-services-customer-details-hacked-via-aws/"
         ],
         "evidence_quotes": [
           "Impact: User database",
-          "exchange-rate-services-customer-details-hacked-via-aws"
+          "customer details hacked via AWS"
         ]
       }
     ]
@@ -234,7 +281,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "open-exchange-rates-2020-march",
-  "analyzed_at": "2026-04-15T21:02:31.081413+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 23696
+  "analyzed_at": "2026-04-23T18:49:16.277711+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 46916
 }

@@ -7,21 +7,30 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "Hackers gained access to KiranaPro's root accounts on AWS and GitHub... the hacking happened after someone gained access to their systems via a former employee's account.",
+          "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee\u2019s account",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "technique_id": "T1621",
+          "technique_name": "Multi-Factor Authentication Request Generation",
           "inferred": true,
           "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account",
+          "validated": true
+        },
+        {
+          "technique_id": "T1556.006",
+          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+          "subtechnique_id": "T1556.006",
+          "inferred": false,
+          "evidence_quote": "the authentication code had been changed before executives attempted to log in",
           "validated": true
         }
       ]
@@ -33,21 +42,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "Hackers gained access to KiranaPro's root accounts on AWS and GitHub",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "inferred": true,
-          "evidence_quote": "we are not able to get any logs or anything because we don't have the root account",
+          "evidence_quote": "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub",
           "validated": true
         }
       ]
@@ -60,14 +57,21 @@
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
           "inferred": false,
-          "evidence_quote": "all their Electric Compute Cloud (EC2) services... were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
+          "evidence_quote": "all their Electric Compute Cloud (EC2) services ... were deleted",
           "validated": true
         },
         {
-          "technique_id": "T1489",
-          "technique_name": "Service Stop",
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal",
           "inferred": false,
-          "evidence_quote": "The company's app is online but cannot process orders... the app remained online in a limited capacity and is in the process of being rebuilt from scratch",
+          "evidence_quote": "we are not able to get any logs or anything because we don\u2019t have the root account",
+          "validated": true
+        },
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": true,
+          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -78,188 +82,338 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "A disgruntled former employee (reportedly named Lava Kumar, laid off prior to the incident) used retained credentials to access KiranaPro's root AWS account and GitHub account. Credentials were never revoked after the employee's departure.",
-      "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee's account",
-      "evidence_sources": [
-        "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
-        "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
-      ],
+      "description": "A former (laid-off) employee used still-valid credentials tied to their account to access KiranaPro's systems, including AWS and GitHub.",
       "aws_services_involved": [
-        "AWS IAM",
-        "GitHub"
+        "AWS IAM"
+      ],
+      "event_time": "2025-05-24",
+      "event_time_precision": "day",
+      "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee\u2019s account",
+      "evidence_sources": [
+        "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c011",
+          "source_file": "link_00.clean.md",
+          "char_start": 2001,
+          "char_end": 2265,
+          "quote": "the hacking happened after someone gained access to their systems via a former employee\u2019s account"
+        },
+        {
+          "chunk_id": "link_00.md#c028",
+          "source_file": "link_00.md",
+          "char_start": 8749,
+          "char_end": 9013,
+          "quote": "the hacking happened after someone gained access to their systems via a former employee\u2019s account"
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "The attacker modified or replaced the MFA (Google Authenticator) configuration on the AWS root account, locking out legitimate owners and entrenching their own access.",
+      "technique_id": "T1556.006",
+      "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+      "description": "The attacker changed/replaced the Google Authenticator MFA configuration on the AWS root account so legitimate users could no longer log in with their existing MFA code.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS Root Account"
+      ],
+      "event_time": "2025-05-24",
+      "event_time_precision": "day",
       "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account last week",
       "evidence_sources": [
         "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
         "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c013",
+          "source_file": "link_00.clean.md",
+          "char_start": 2375,
+          "char_end": 2727,
+          "quote": "the multi-factor code had changed when they tried to log into their AWS account last week"
+        },
+        {
+          "chunk_id": "link_00.md#c030",
+          "source_file": "link_00.md",
+          "char_start": 9123,
+          "char_end": 9475,
+          "quote": "the multi-factor code had changed when they tried to log into their AWS account last week"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Using root-level AWS access, the attacker deleted all EC2 instances hosting the application and its data, including app source code and customer records (names, addresses, payment details). GitHub repositories were also wiped.",
-      "evidence_quote": "all their Electric Compute Cloud (EC2) services, which let clients access virtual computers to run their applications, were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
-      "evidence_sources": [
-        "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
-        "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
-      ],
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker obtained root-level access to AWS and GitHub accounts belonging to KiranaPro, achieving full control over the cloud tenant and source code repositories.",
       "aws_services_involved": [
-        "Amazon EC2",
-        "AWS IAM",
-        "GitHub"
+        "AWS Root Account",
+        "AWS IAM"
+      ],
+      "event_time": "2025-05-24",
+      "event_time_precision": "day",
+      "evidence_quote": "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub",
+      "evidence_sources": [
+        "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 1788,
+          "char_end": 1999,
+          "quote": "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub"
+        },
+        {
+          "chunk_id": "link_00.md#c027",
+          "source_file": "link_00.md",
+          "char_start": 8536,
+          "char_end": 8747,
+          "quote": "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub"
+        }
       ],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1489",
-      "technique_name": "Service Stop",
-      "description": "As a direct consequence of the EC2 deletion, KiranaPro's grocery delivery app became unable to process orders, effectively halting all business operations.",
-      "evidence_quote": "The company's app is online but cannot process orders",
+      "technique_id": "T1531",
+      "technique_name": "Account Access Removal",
+      "description": "By taking over the root account and changing the MFA, the attacker locked legitimate KiranaPro staff out of root access, leaving them only able to use lower-privileged IAM accounts.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS Root Account"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "We can only log in through the IAM [Identity and Access Management] account ... we are not able to get any logs or anything because we don\u2019t have the root account",
       "evidence_sources": [
         "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
       ],
+      "ordering_confidence": 0.85,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deleted all EC2 instances hosting KiranaPro's application servers, wiping app code and servers containing customer names, addresses, and payment details, causing service disruption.",
       "aws_services_involved": [
         "Amazon EC2"
+      ],
+      "event_time": "2025-05-25",
+      "event_time_precision": "day",
+      "evidence_quote": "all their Electric Compute Cloud (EC2) services ... were deleted",
+      "evidence_sources": [
+        "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker also destroyed/wiped source code in the GitHub repositories, requiring restoration from an employee-held backup.",
+      "aws_services_involved": [
+        "GitHub"
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "the GitHub data was restored using a backup provided by one of their employees",
+      "evidence_sources": [
+        "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c016",
+          "source_file": "link_01.clean.md",
+          "char_start": 3564,
+          "char_end": 3766,
+          "quote": "the GitHub data was restored using a backup provided by one of their employees"
+        },
+        {
+          "chunk_id": "link_01.md#c089",
+          "source_file": "link_01.md",
+          "char_start": 23608,
+          "char_end": 23810,
+          "quote": "the GitHub data was restored using a backup provided by one of their employees"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "Amazon EC2",
+    "AWS Root Account",
     "AWS IAM",
-    "GitHub"
+    "Amazon EC2"
   ],
-  "impact_type": "Service Disruption / Data Destruction",
-  "confidence_score": 0.85,
-  "initial_access_vector": "Former employee retained valid cloud credentials (AWS root account and GitHub) after being laid off; credentials were never revoked, enabling direct login without any exploitation of external vulnerabilities.",
-  "persistence_mechanism": "Attacker modified the AWS root account's MFA (Google Authenticator) configuration, changing the TOTP seed and locking out legitimate account owners, thereby entrenching exclusive access.",
-  "privilege_escalation": "No escalation required \u2014 the former employee already possessed root-level AWS credentials from their time of employment, granting the highest possible privilege tier from the outset.",
+  "impact_type": "Data Destruction / Service Disruption (Insider Sabotage)",
+  "confidence_score": 0.8,
   "data_exfiltrated": false,
+  "initial_access_vector": "A laid-off (former) employee used retained/valid account credentials to access KiranaPro's AWS and GitHub environments; the company had failed to revoke the ex-employee's access post-layoff.",
+  "persistence_mechanism": "Attacker replaced the Google Authenticator MFA seed bound to the AWS root account, ensuring only they could reauthenticate as root while locking out legitimate staff.",
+  "privilege_escalation": "Gained control of the AWS and GitHub root accounts (highest-privilege tier) after leveraging the former-employee account.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "A disgruntled former employee (reportedly named Lava Kumar, laid off prior to the incident) used retained credentials to access KiranaPro's root AWS account and GitHub account. Credentials were never revoked after the employee's departure.",
+        "description": "A former (laid-off) employee used still-valid credentials tied to their account to access KiranaPro's systems, including AWS and GitHub.",
         "tactic_id": "TA0005",
-        "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee's account",
+        "evidence_quote": "the hacking happened after someone gained access to their systems via a former employee\u2019s account",
         "evidence_sources": [
-          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
-          "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
-        ],
-        "aws_services_involved": [
-          "AWS IAM",
-          "GitHub"
-        ]
-      },
-      {
-        "step": 2,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "The attacker modified or replaced the MFA (Google Authenticator) configuration on the AWS root account, locking out legitimate owners and entrenching their own access.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account last week",
-        "evidence_sources": [
-          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
-          "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
+          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
         ],
         "aws_services_involved": [
           "AWS IAM"
         ]
       },
       {
-        "step": 3,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "Using root-level AWS access, the attacker deleted all EC2 instances hosting the application and its data, including app source code and customer records (names, addresses, payment details). GitHub repositories were also wiped.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "all their Electric Compute Cloud (EC2) services, which let clients access virtual computers to run their applications, were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
+        "step": 2,
+        "technique_id": "T1556.006",
+        "technique_name": "Multi-Factor Authentication",
+        "description": "The attacker changed/replaced the Google Authenticator MFA configuration on the AWS root account so legitimate users could no longer log in with their existing MFA code.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "the multi-factor code had changed when they tried to log into their AWS account last week",
         "evidence_sources": [
           "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
           "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
         ],
         "aws_services_involved": [
-          "Amazon EC2",
           "AWS IAM",
-          "GitHub"
+          "AWS Root Account"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker obtained root-level access to AWS and GitHub accounts belonging to KiranaPro, achieving full control over the cloud tenant and source code repositories.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub",
+        "evidence_sources": [
+          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+        ],
+        "aws_services_involved": [
+          "AWS Root Account",
+          "AWS IAM"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1489",
-        "technique_name": "Service Stop",
-        "description": "As a direct consequence of the EC2 deletion, KiranaPro's grocery delivery app became unable to process orders, effectively halting all business operations.",
+        "technique_id": "T1531",
+        "technique_name": "Account Access Removal",
+        "description": "By taking over the root account and changing the MFA, the attacker locked legitimate KiranaPro staff out of root access, leaving them only able to use lower-privileged IAM accounts.",
         "tactic_id": "TA0040",
-        "evidence_quote": "The company's app is online but cannot process orders",
+        "evidence_quote": "We can only log in through the IAM [Identity and Access Management] account ... we are not able to get any logs or anything because we don\u2019t have the root account",
+        "evidence_sources": [
+          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS Root Account"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker deleted all EC2 instances hosting KiranaPro's application servers, wiping app code and servers containing customer names, addresses, and payment details, causing service disruption.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "all their Electric Compute Cloud (EC2) services ... were deleted",
         "evidence_sources": [
           "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
         ],
         "aws_services_involved": [
           "Amazon EC2"
         ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker also destroyed/wiped source code in the GitHub repositories, requiring restoration from an employee-held backup.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the GitHub data was restored using a backup provided by one of their employees",
+        "evidence_sources": [
+          "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
+        ],
+        "aws_services_involved": [
+          "GitHub"
+        ]
       }
     ],
     "edges": [
       {
         "source": "T1078.004",
-        "target": "T1098.001",
+        "target": "T1556.006",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Multi-Factor Authentication",
         "sources": [
           "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
           "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
         ],
         "evidence_quotes": [
-          "the hacking happened after someone gained access to their systems via a former employee's account",
+          "the hacking happened after someone gained access to their systems via a former employee\u2019s account",
           "the multi-factor code had changed when they tried to log into their AWS account last week"
         ]
       },
       {
-        "source": "T1098.001",
-        "target": "T1485",
+        "source": "T1556.006",
+        "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Additional Cloud Credentials",
-        "target_technique_name": "Data Destruction",
+        "source_technique_name": "Multi-Factor Authentication",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
           "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
         ],
         "evidence_quotes": [
           "the multi-factor code had changed when they tried to log into their AWS account last week",
-          "all their Electric Compute Cloud (EC2) services, which let clients access virtual computers to run their applications, were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details."
+          "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub"
         ]
       },
       {
-        "source": "T1485",
-        "target": "T1489",
+        "source": "T1078.004",
+        "target": "T1531",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Data Destruction",
-        "target_technique_name": "Service Stop",
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Account Access Removal",
         "sources": [
-          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/",
-          "https://www.outlookbusiness.com/start-up/explainers/kiranapro-crisis-explained-ex-employees-revenge-move-that-paralysed-the-app"
+          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
         ],
         "evidence_quotes": [
-          "all their Electric Compute Cloud (EC2) services, which let clients access virtual computers to run their applications, were deleted... the attackers destroyed critical data on the company's servers, including the app code and user information such as names, mailing addresses and payment details.",
-          "The company's app is online but cannot process orders"
+          "Hackers gained access to KiranaPro\u2019s root accounts on AWS and GitHub",
+          "We can only log in through the IAM [Identity and Access Management] account ... we are not able to get any logs or anything because we don\u2019t have the root account"
+        ]
+      },
+      {
+        "source": "T1531",
+        "target": "T1485",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Account Access Removal",
+        "target_technique_name": "Data Destruction",
+        "sources": [
+          "https://techcrunch.com/2025/06/03/indian-grocery-startup-kiranapro-was-hacked-and-its-servers-deleted-ceo-confirms/"
+        ],
+        "evidence_quotes": [
+          "We can only log in through the IAM [Identity and Access Management] account ... we are not able to get any logs or anything because we don\u2019t have the root account",
+          "all their Electric Compute Cloud (EC2) services ... were deleted"
         ]
       }
     ]
@@ -270,7 +424,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "kiranapro-2025-june",
-  "analyzed_at": "2026-04-15T20:57:33.092259+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 59001
+  "analyzed_at": "2026-04-23T18:46:17.460569+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 69044
 }

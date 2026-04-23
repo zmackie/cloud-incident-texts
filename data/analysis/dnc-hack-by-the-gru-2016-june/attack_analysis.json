@@ -5,24 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1566.002",
-          "technique_name": "Spearphishing Link",
-          "inferred": false,
-          "evidence_quote": "dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
-          "validated": true
-        },
-        {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
           "inferred": false,
           "evidence_quote": "Cozy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
-          "validated": true
-        },
-        {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "inferred": true,
-          "evidence_quote": "Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
           "validated": true
         }
       ]
@@ -32,10 +18,9 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1204",
-          "technique_name": "User Execution",
-          "inferred": false,
-          "evidence_quote": "GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter",
+          "inferred": true,
           "validated": true
         }
       ]
@@ -45,17 +30,10 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1543",
-          "technique_name": "Create or Modify System Process",
-          "inferred": true,
-          "evidence_quote": "Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-          "validated": true
-        },
-        {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
           "inferred": false,
-          "evidence_quote": "both Cozy Bear and Fancy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
+          "evidence_quote": "forensic analysis showed that both Cozy Bear and Fancy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
           "validated": true
         }
       ]
@@ -66,17 +44,19 @@
       "techniques": [
         {
           "technique_id": "T1070.001",
+          "subtechnique_id": "T1070.001",
           "technique_name": "Indicator Removal: Clear Windows Event Logs",
           "inferred": false,
-          "evidence_quote": "the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
+          "evidence_quote": "on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
           "validated": false
         },
         {
-          "technique_id": "T1036",
-          "technique_name": "Masquerading",
+          "technique_id": "T1070.004",
+          "subtechnique_id": "T1070.004",
+          "technique_name": "Indicator Removal: File Deletion",
           "inferred": false,
-          "evidence_quote": "Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-          "validated": true
+          "evidence_quote": "the GRU intentionally deleted logs and computer files to cover their tracks",
+          "validated": false
         }
       ]
     },
@@ -86,16 +66,18 @@
       "techniques": [
         {
           "technique_id": "T1056.001",
-          "technique_name": "Keylogging",
+          "subtechnique_id": "T1056.001",
+          "technique_name": "Input Capture: Keylogging",
           "inferred": false,
-          "evidence_quote": "The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
+          "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
           "validated": false
         },
         {
-          "technique_id": "T1110",
-          "technique_name": "Brute Force",
-          "inferred": true,
-          "evidence_quote": "Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
+          "technique_id": "T1566.002",
+          "subtechnique_id": "T1566.002",
+          "technique_name": "Phishing: Spearphishing Link",
+          "inferred": false,
+          "evidence_quote": "sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired",
           "validated": true
         }
       ]
@@ -105,18 +87,22 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1083",
-          "technique_name": "File and Directory Discovery",
-          "inferred": false,
-          "evidence_quote": "The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
-          "validated": false
-        },
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery",
+          "inferred": true,
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
         {
-          "technique_id": "T1113",
-          "technique_name": "Screen Capture",
-          "inferred": false,
-          "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
-          "validated": false
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "inferred": true,
+          "validated": true
         }
       ]
     },
@@ -125,44 +111,31 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1114.002",
-          "technique_name": "Remote Email Collection",
+          "technique_id": "T1113",
+          "technique_name": "Screen Capture",
           "inferred": false,
-          "evidence_quote": "Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
+          "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
           "validated": false
         },
         {
-          "technique_id": "T1123",
-          "technique_name": "Audio Capture",
+          "technique_id": "T1114",
+          "technique_name": "Email Collection",
           "inferred": false,
-          "evidence_quote": "forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
+          "evidence_quote": "the GRU hacked into the DNC's email server and stole thousands of emails",
           "validated": false
         },
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
+          "evidence_quote": "unauthorized users had accessed the DNC's cloud-computing service",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1048.002",
-          "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-          "inferred": false,
-          "evidence_quote": "the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
-          "validated": false
         },
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
           "inferred": false,
-          "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
+          "evidence_quote": "The attackers targeted the DNC's research department, document repositories",
           "validated": true
         }
       ]
@@ -172,25 +145,45 @@
       "tactic_name": "Command and Control",
       "techniques": [
         {
-          "technique_id": "T1571",
-          "technique_name": "Non-Standard Port",
-          "inferred": true,
-          "evidence_quote": "X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
+          "technique_id": "T1071",
+          "technique_name": "Application Layer Protocol",
+          "inferred": false,
+          "evidence_quote": "Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
           "validated": false
         },
         {
-          "technique_id": "T1568",
-          "technique_name": "Dynamic Resolution",
+          "technique_id": "T1573",
+          "technique_name": "Encrypted Channel",
           "inferred": false,
-          "evidence_quote": "GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
+          "evidence_quote": "GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
           "validated": false
         },
         {
-          "technique_id": "T1583.001",
-          "technique_name": "Acquire Infrastructure: Domains",
+          "technique_id": "T1584",
+          "technique_name": "Compromise Infrastructure",
           "inferred": false,
-          "evidence_quote": "Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
+          "evidence_quote": "Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol",
+          "inferred": false,
+          "evidence_quote": "GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
+          "validated": true
+        },
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service",
+          "validated": true
         }
       ]
     },
@@ -199,10 +192,15 @@
       "tactic_name": "Impact",
       "techniques": [
         {
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": true,
+          "validated": true
+        },
+        {
           "technique_id": "T1565",
           "technique_name": "Data Manipulation",
-          "inferred": false,
-          "evidence_quote": "GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails",
+          "inferred": true,
           "validated": false
         }
       ]
@@ -211,18 +209,6 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1566.002",
-      "technique_name": "Spearphishing Link",
-      "description": "Spearphishing Link observed during Initial Access: dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
-      "evidence_quote": "dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 2,
       "technique_id": "T1078",
       "technique_name": "Valid Accounts",
       "description": "Valid Accounts observed during Initial Access: Cozy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
@@ -231,222 +217,328 @@
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1059",
+      "technique_name": "Command and Scripting Interpreter",
+      "description": "Command and Scripting Interpreter observed during Execution.",
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Exploit Public-Facing Application observed during Initial Access: Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
-      "evidence_quote": "Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
+      "technique_id": "T1070.001",
+      "technique_name": "Indicator Removal: Clear Windows Event Logs",
+      "description": "Indicator Removal: Clear Windows Event Logs observed during Defense Evasion: on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
+      "evidence_quote": "on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 4,
-      "technique_id": "T1204",
-      "technique_name": "User Execution",
-      "description": "User Execution observed during Execution: GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
-      "evidence_quote": "GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
+      "technique_id": "T1070.004",
+      "technique_name": "Indicator Removal: File Deletion",
+      "description": "Indicator Removal: File Deletion observed during Defense Evasion: the GRU intentionally deleted logs and computer files to cover their tracks",
+      "evidence_quote": "the GRU intentionally deleted logs and computer files to cover their tracks",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 5,
-      "technique_id": "T1543",
-      "technique_name": "Create or Modify System Process",
-      "description": "Create or Modify System Process observed during Persistence: Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-      "evidence_quote": "Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1070.001",
-      "technique_name": "Indicator Removal: Clear Windows Event Logs",
-      "description": "Indicator Removal: Clear Windows Event Logs observed during Defense Evasion: the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
-      "evidence_quote": "the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 7,
-      "technique_id": "T1036",
-      "technique_name": "Masquerading",
-      "description": "Masquerading observed during Defense Evasion: Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-      "evidence_quote": "Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 8,
       "technique_id": "T1056.001",
-      "technique_name": "Keylogging",
-      "description": "Keylogging observed during Credential Access: The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
-      "evidence_quote": "The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 9,
-      "technique_id": "T1110",
-      "technique_name": "Brute Force",
-      "description": "Brute Force observed during Credential Access: Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
-      "evidence_quote": "Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 10,
-      "technique_id": "T1083",
-      "technique_name": "File and Directory Discovery",
-      "description": "File and Directory Discovery observed during Discovery: The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
-      "evidence_quote": "The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 11,
-      "technique_id": "T1113",
-      "technique_name": "Screen Capture",
-      "description": "Screen Capture observed during Discovery: collected data from DNC computers, including keylogs and screenshots",
+      "technique_name": "Input Capture: Keylogging",
+      "description": "Input Capture: Keylogging observed during Credential Access: collected data from DNC computers, including keylogs and screenshots",
       "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c739",
+          "source_file": "link_00.clean.md",
+          "char_start": 74165,
+          "char_end": 74247,
+          "quote": "collected data from DNC computers, including keylogs and screenshots"
+        },
+        {
+          "chunk_id": "link_00.md#c739",
+          "source_file": "link_00.md",
+          "char_start": 74159,
+          "char_end": 74241,
+          "quote": "collected data from DNC computers, including keylogs and screenshots"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
+    },
+    {
+      "step": 6,
+      "technique_id": "T1566.002",
+      "technique_name": "Phishing: Spearphishing Link",
+      "description": "Phishing: Spearphishing Link observed during Credential Access: sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired",
+      "evidence_quote": "sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired",
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1082",
+      "technique_name": "System Information Discovery",
+      "description": "System Information Discovery observed during Discovery.",
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "description": "Remote Services observed during Lateral Movement.",
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1113",
+      "technique_name": "Screen Capture",
+      "description": "Screen Capture observed during Collection: collected data from DNC computers, including keylogs and screenshots",
+      "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c739",
+          "source_file": "link_00.clean.md",
+          "char_start": 74165,
+          "char_end": 74247,
+          "quote": "collected data from DNC computers, including keylogs and screenshots"
+        },
+        {
+          "chunk_id": "link_00.md#c739",
+          "source_file": "link_00.md",
+          "char_start": 74159,
+          "char_end": 74241,
+          "quote": "collected data from DNC computers, including keylogs and screenshots"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1114",
+      "technique_name": "Email Collection",
+      "description": "Email Collection observed during Collection: the GRU hacked into the DNC's email server and stole thousands of emails",
+      "evidence_quote": "the GRU hacked into the DNC's email server and stole thousands of emails",
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 11,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Collection: unauthorized users had accessed the DNC's cloud-computing service",
+      "evidence_quote": "unauthorized users had accessed the DNC's cloud-computing service",
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
     },
     {
       "step": 12,
-      "technique_id": "T1114.002",
-      "technique_name": "Remote Email Collection",
-      "description": "Remote Email Collection observed during Collection: Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
-      "evidence_quote": "Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Data from Information Repositories observed during Collection: The attackers targeted the DNC's research department, document repositories",
+      "evidence_quote": "The attackers targeted the DNC's research department, document repositories",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
     },
     {
       "step": 13,
-      "technique_id": "T1123",
-      "technique_name": "Audio Capture",
-      "description": "Audio Capture observed during Collection: forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
-      "evidence_quote": "forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
+      "technique_id": "T1071",
+      "technique_name": "Application Layer Protocol",
+      "description": "Application Layer Protocol observed during Command and Control: Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
+      "evidence_quote": "Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
       "step": 14,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Data from Cloud Storage observed during Collection: unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-      "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
+      "technique_id": "T1573",
+      "technique_name": "Encrypted Channel",
+      "description": "Encrypted Channel observed during Command and Control: GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
+      "evidence_quote": "GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 15,
-      "technique_id": "T1571",
-      "technique_name": "Non-Standard Port",
-      "description": "Non-Standard Port observed during Command and Control: X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
-      "evidence_quote": "X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
+      "technique_id": "T1584",
+      "technique_name": "Compromise Infrastructure",
+      "description": "Compromise Infrastructure observed during Command and Control: Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
+      "evidence_quote": "Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
       "step": 16,
-      "technique_id": "T1568",
-      "technique_name": "Dynamic Resolution",
-      "description": "Dynamic Resolution observed during Command and Control: GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
-      "evidence_quote": "GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
+      "technique_id": "T1048",
+      "technique_name": "Exfiltration Over Alternative Protocol",
+      "description": "Exfiltration Over Alternative Protocol observed during Exfiltration: GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
+      "evidence_quote": "GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 17,
-      "technique_id": "T1583.001",
-      "technique_name": "Acquire Infrastructure: Domains",
-      "description": "Acquire Infrastructure: Domains observed during Command and Control: Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
-      "evidence_quote": "Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 18,
-      "technique_id": "T1048.002",
-      "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-      "description": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol observed during Exfiltration: the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
-      "evidence_quote": "the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 19,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Transfer Data to Cloud Account observed during Exfiltration: unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-      "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-      "evidence_sources": [
-        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-      ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
-      "step": 20,
-      "technique_id": "T1565",
-      "technique_name": "Data Manipulation",
-      "description": "Data Manipulation observed during Impact: GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails",
-      "evidence_quote": "GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails",
+      "step": 17,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Transfer Data to Cloud Account observed during Exfiltration: unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service",
+      "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service",
       "evidence_sources": [
         "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 18,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Financial Theft observed during Impact.",
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 19,
+      "technique_id": "T1565",
+      "technique_name": "Data Manipulation",
+      "description": "Data Manipulation observed during Impact.",
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     }
   ],
@@ -455,18 +547,6 @@
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1566.002",
-        "technique_name": "Spearphishing Link",
-        "description": "Spearphishing Link observed during Initial Access: dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
-        "tactic_id": "TA0001",
-        "evidence_quote": "dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 2,
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
         "description": "Valid Accounts observed during Initial Access: Cozy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
@@ -478,12 +558,24 @@
         "aws_services_involved": []
       },
       {
+        "step": 2,
+        "technique_id": "T1059",
+        "technique_name": "Command and Scripting Interpreter",
+        "description": "Command and Scripting Interpreter observed during Execution.",
+        "tactic_id": "TA0002",
+        "evidence_quote": null,
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
         "step": 3,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "Exploit Public-Facing Application observed during Initial Access: Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
+        "technique_id": "T1070.001",
+        "technique_name": "Indicator Removal: Clear Windows Event Logs",
+        "description": "Indicator Removal: Clear Windows Event Logs observed during Defense Evasion: on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
+        "tactic_id": "",
+        "evidence_quote": "on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -491,11 +583,11 @@
       },
       {
         "step": 4,
-        "technique_id": "T1204",
-        "technique_name": "User Execution",
-        "description": "User Execution observed during Execution: GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
-        "tactic_id": "TA0002",
-        "evidence_quote": "GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
+        "technique_id": "T1070.004",
+        "technique_name": "Indicator Removal: File Deletion",
+        "description": "Indicator Removal: File Deletion observed during Defense Evasion: the GRU intentionally deleted logs and computer files to cover their tracks",
+        "tactic_id": "",
+        "evidence_quote": "the GRU intentionally deleted logs and computer files to cover their tracks",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -503,81 +595,9 @@
       },
       {
         "step": 5,
-        "technique_id": "T1543",
-        "technique_name": "Create or Modify System Process",
-        "description": "Create or Modify System Process observed during Persistence: Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-        "tactic_id": "TA0003",
-        "evidence_quote": "Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 6,
-        "technique_id": "T1070.001",
-        "technique_name": "Indicator Removal: Clear Windows Event Logs",
-        "description": "Indicator Removal: Clear Windows Event Logs observed during Defense Evasion: the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
-        "tactic_id": "",
-        "evidence_quote": "the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 7,
-        "technique_id": "T1036",
-        "technique_name": "Masquerading",
-        "description": "Masquerading observed during Defense Evasion: Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 8,
         "technique_id": "T1056.001",
-        "technique_name": "Keylogging",
-        "description": "Keylogging observed during Credential Access: The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
-        "tactic_id": "",
-        "evidence_quote": "The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 9,
-        "technique_id": "T1110",
-        "technique_name": "Brute Force",
-        "description": "Brute Force observed during Credential Access: Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 10,
-        "technique_id": "T1083",
-        "technique_name": "File and Directory Discovery",
-        "description": "File and Directory Discovery observed during Discovery: The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
-        "tactic_id": "",
-        "evidence_quote": "The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 11,
-        "technique_id": "T1113",
-        "technique_name": "Screen Capture",
-        "description": "Screen Capture observed during Discovery: collected data from DNC computers, including keylogs and screenshots",
+        "technique_name": "Input Capture: Keylogging",
+        "description": "Input Capture: Keylogging observed during Credential Access: collected data from DNC computers, including keylogs and screenshots",
         "tactic_id": "",
         "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
         "evidence_sources": [
@@ -586,12 +606,84 @@
         "aws_services_involved": []
       },
       {
-        "step": 12,
-        "technique_id": "T1114.002",
-        "technique_name": "Remote Email Collection",
-        "description": "Remote Email Collection observed during Collection: Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
+        "step": 6,
+        "technique_id": "T1566.002",
+        "technique_name": "Spearphishing Link",
+        "description": "Phishing: Spearphishing Link observed during Credential Access: sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired",
+        "tactic_id": "TA0001",
+        "evidence_quote": "sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired",
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "description": "System Information Discovery observed during Discovery.",
+        "tactic_id": "TA0007",
+        "evidence_quote": null,
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "description": "Remote Services observed during Lateral Movement.",
+        "tactic_id": "TA0008",
+        "evidence_quote": null,
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1113",
+        "technique_name": "Screen Capture",
+        "description": "Screen Capture observed during Collection: collected data from DNC computers, including keylogs and screenshots",
         "tactic_id": "",
-        "evidence_quote": "Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
+        "evidence_quote": "collected data from DNC computers, including keylogs and screenshots",
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1114",
+        "technique_name": "Email Collection",
+        "description": "Email Collection observed during Collection: the GRU hacked into the DNC's email server and stole thousands of emails",
+        "tactic_id": "",
+        "evidence_quote": "the GRU hacked into the DNC's email server and stole thousands of emails",
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Collection: unauthorized users had accessed the DNC's cloud-computing service",
+        "tactic_id": "TA0009",
+        "evidence_quote": "unauthorized users had accessed the DNC's cloud-computing service",
+        "evidence_sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Data from Information Repositories observed during Collection: The attackers targeted the DNC's research department, document repositories",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The attackers targeted the DNC's research department, document repositories",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -599,11 +691,11 @@
       },
       {
         "step": 13,
-        "technique_id": "T1123",
-        "technique_name": "Audio Capture",
-        "description": "Audio Capture observed during Collection: forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
+        "technique_id": "T1071",
+        "technique_name": "Application Layer Protocol",
+        "description": "Application Layer Protocol observed during Command and Control: Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
         "tactic_id": "",
-        "evidence_quote": "forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
+        "evidence_quote": "Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -611,11 +703,11 @@
       },
       {
         "step": 14,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Data from Cloud Storage observed during Collection: unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-        "tactic_id": "TA0009",
-        "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
+        "technique_id": "T1573",
+        "technique_name": "Encrypted Channel",
+        "description": "Encrypted Channel observed during Command and Control: GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
+        "tactic_id": "",
+        "evidence_quote": "GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -623,11 +715,11 @@
       },
       {
         "step": 15,
-        "technique_id": "T1571",
-        "technique_name": "Non-Standard Port",
-        "description": "Non-Standard Port observed during Command and Control: X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
+        "technique_id": "T1584",
+        "technique_name": "Compromise Infrastructure",
+        "description": "Compromise Infrastructure observed during Command and Control: Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
         "tactic_id": "",
-        "evidence_quote": "X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
+        "evidence_quote": "Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -635,11 +727,11 @@
       },
       {
         "step": 16,
-        "technique_id": "T1568",
-        "technique_name": "Dynamic Resolution",
-        "description": "Dynamic Resolution observed during Command and Control: GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
-        "tactic_id": "",
-        "evidence_quote": "GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
+        "technique_id": "T1048",
+        "technique_name": "Exfiltration Over Alternative Protocol",
+        "description": "Exfiltration Over Alternative Protocol observed during Exfiltration: GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
+        "tactic_id": "TA0010",
+        "evidence_quote": "GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -647,11 +739,11 @@
       },
       {
         "step": 17,
-        "technique_id": "T1583.001",
-        "technique_name": "Acquire Infrastructure: Domains",
-        "description": "Acquire Infrastructure: Domains observed during Command and Control: Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
-        "tactic_id": "",
-        "evidence_quote": "Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Transfer Data to Cloud Account observed during Exfiltration: unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service",
+        "tactic_id": "TA0010",
+        "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service",
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -659,11 +751,11 @@
       },
       {
         "step": 18,
-        "technique_id": "T1048.002",
-        "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-        "description": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol observed during Exfiltration: the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
-        "tactic_id": "",
-        "evidence_quote": "the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Financial Theft observed during Impact.",
+        "tactic_id": "TA0040",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -671,23 +763,11 @@
       },
       {
         "step": 19,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Transfer Data to Cloud Account observed during Exfiltration: unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-        "tactic_id": "TA0010",
-        "evidence_quote": "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-        "evidence_sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 20,
         "technique_id": "T1565",
         "technique_name": "Data Manipulation",
-        "description": "Data Manipulation observed during Impact: GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails",
+        "description": "Data Manipulation observed during Impact.",
         "tactic_id": "",
-        "evidence_quote": "GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
@@ -696,289 +776,263 @@
     ],
     "edges": [
       {
-        "source": "T1566.002",
-        "target": "T1078",
+        "source": "T1078",
+        "target": "T1059",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Spearphishing Link",
-        "target_technique_name": "Valid Accounts",
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Command and Scripting Interpreter",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "dozens of DNC email addresses were targeted in a spear-phishing campaign...consistent with a spear-phishing campaign that leading cybersecurity experts have tied to Russian intelligence",
           "Cozy Bear used the stolen credentials of user accounts to access the DNC's computer systems"
         ]
       },
       {
-        "source": "T1078",
-        "target": "T1190",
+        "source": "T1059",
+        "target": "T1070.001",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Valid Accounts",
-        "target_technique_name": "Exploit Public-Facing Application",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "Cozy Bear used the stolen credentials of user accounts to access the DNC's computer systems",
-          "Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C."
-        ]
-      },
-      {
-        "source": "T1190",
-        "target": "T1204",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "User Execution",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "Russia launched a pervasive cyberattack on DNC servers located in Virginia and Washington, D.C.",
-          "GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'"
-        ]
-      },
-      {
-        "source": "T1204",
-        "target": "T1543",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "User Execution",
-        "target_technique_name": "Create or Modify System Process",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "GRU breach'd the DNC's cyberdefenses and, with the help of the GRU Operatives, placed malware on the DNC network, including proprietary malware known as 'X-Agent'",
-          "Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015"
-        ]
-      },
-      {
-        "source": "T1543",
-        "target": "T1070.001",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Create or Modify System Process",
+        "source_technique_name": "Command and Scripting Interpreter",
         "target_technique_name": "Indicator Removal: Clear Windows Event Logs",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "Cozy Bear had infiltrated and remained present in the DNC's network since at least July 27, 2015",
-          "the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer"
+          "on or about May 13, 2016, the GRU cleared the event logs from a DNC computer"
         ]
       },
       {
         "source": "T1070.001",
-        "target": "T1036",
-        "source_step": 6,
-        "target_step": 7,
+        "target": "T1070.004",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Indicator Removal: Clear Windows Event Logs",
-        "target_technique_name": "Masquerading",
+        "target_technique_name": "Indicator Removal: File Deletion",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "the GRU covered its tracks by intentionally deleting logs and computer files. For example, on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
-          "Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia"
+          "on or about May 13, 2016, the GRU cleared the event logs from a DNC computer",
+          "the GRU intentionally deleted logs and computer files to cover their tracks"
         ]
       },
       {
-        "source": "T1036",
+        "source": "T1070.004",
         "target": "T1056.001",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Masquerading",
-        "target_technique_name": "Keylogging",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Indicator Removal: File Deletion",
+        "target_technique_name": "Input Capture: Keylogging",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "Guccifer 2.0, a fictitious persona created by Russian military intelligence officers...falsely claimed to be a Romanian hacker with no relationship with Russia",
-          "The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots"
-        ]
-      },
-      {
-        "source": "T1056.001",
-        "target": "T1110",
-        "source_step": 8,
-        "target_step": 9,
-        "source_technique_name": "Keylogging",
-        "target_technique_name": "Brute Force",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "The GRU Operatives monitored this malware in realtime and collected data from DNC computers, including keylogs and screenshots",
-          "Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems"
-        ]
-      },
-      {
-        "source": "T1110",
-        "target": "T1083",
-        "source_step": 9,
-        "target_step": 10,
-        "source_technique_name": "Brute Force",
-        "target_technique_name": "File and Directory Discovery",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "Russia knowingly and with the intent to defraud, trafficked passwords and similar information from the DNC systems",
-          "The attackers targeted the DNC's research department, document repositories, information technology department, and other departments"
-        ]
-      },
-      {
-        "source": "T1083",
-        "target": "T1113",
-        "source_step": 10,
-        "target_step": 11,
-        "source_technique_name": "File and Directory Discovery",
-        "target_technique_name": "Screen Capture",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "The attackers targeted the DNC's research department, document repositories, information technology department, and other departments",
+          "the GRU intentionally deleted logs and computer files to cover their tracks",
           "collected data from DNC computers, including keylogs and screenshots"
         ]
       },
       {
-        "source": "T1113",
-        "target": "T1114.002",
-        "source_step": 11,
-        "target_step": 12,
-        "source_technique_name": "Screen Capture",
-        "target_technique_name": "Remote Email Collection",
+        "source": "T1056.001",
+        "target": "T1566.002",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Input Capture: Keylogging",
+        "target_technique_name": "Spearphishing Link",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
           "collected data from DNC computers, including keylogs and screenshots",
-          "Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees"
+          "sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired"
         ]
       },
       {
-        "source": "T1114.002",
-        "target": "T1123",
-        "source_step": 12,
-        "target_step": 13,
-        "source_technique_name": "Remote Email Collection",
-        "target_technique_name": "Audio Capture",
+        "source": "T1566.002",
+        "target": "T1082",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Spearphishing Link",
+        "target_technique_name": "System Information Discovery",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "Between May 25 and June 1, 2016, the GRU hacked into the DNC's email server and stole thousands of emails from the accounts of DNC employees",
-          "forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime"
+          "sent forged notification emails to Senate staff members, claiming the staff member's Microsoft Exchange password had expired"
         ]
       },
       {
-        "source": "T1123",
+        "source": "T1082",
+        "target": "T1021",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "System Information Discovery",
+        "target_technique_name": "Remote Services",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": []
+      },
+      {
+        "source": "T1021",
+        "target": "T1113",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Remote Services",
+        "target_technique_name": "Screen Capture",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": [
+          "collected data from DNC computers, including keylogs and screenshots"
+        ]
+      },
+      {
+        "source": "T1113",
+        "target": "T1114",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Screen Capture",
+        "target_technique_name": "Email Collection",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": [
+          "collected data from DNC computers, including keylogs and screenshots",
+          "the GRU hacked into the DNC's email server and stole thousands of emails"
+        ]
+      },
+      {
+        "source": "T1114",
         "target": "T1530",
-        "source_step": 13,
-        "target_step": 14,
-        "source_technique_name": "Audio Capture",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Email Collection",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "forensic analysis showed that the hackers accessed the DNC's Voice-over Internet Protocol ('VOIP') transfers...allowed the hackers to monitor voice-based communications, such as phone calls and voicemail, in realtime",
-          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service"
+          "the GRU hacked into the DNC's email server and stole thousands of emails",
+          "unauthorized users had accessed the DNC's cloud-computing service"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1571",
+        "target": "T1213",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": [
+          "unauthorized users had accessed the DNC's cloud-computing service",
+          "The attackers targeted the DNC's research department, document repositories"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1071",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Application Layer Protocol",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": [
+          "The attackers targeted the DNC's research department, document repositories",
+          "Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net"
+        ]
+      },
+      {
+        "source": "T1071",
+        "target": "T1573",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Application Layer Protocol",
+        "target_technique_name": "Encrypted Channel",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": [
+          "Linux-based version of X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
+          "GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels"
+        ]
+      },
+      {
+        "source": "T1573",
+        "target": "T1584",
         "source_step": 14,
         "target_step": 15,
-        "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Non-Standard Port",
+        "source_technique_name": "Encrypted Channel",
+        "target_technique_name": "Compromise Infrastructure",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-          "X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois"
+          "GRU later used proprietary malware known as 'X-Tunnel' to move this data outside of the DNC network through encrypted channels",
+          "Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names"
         ]
       },
       {
-        "source": "T1571",
-        "target": "T1568",
+        "source": "T1584",
+        "target": "T1048",
         "source_step": 15,
         "target_step": 16,
-        "source_technique_name": "Non-Standard Port",
-        "target_technique_name": "Dynamic Resolution",
+        "source_technique_name": "Compromise Infrastructure",
+        "target_technique_name": "Exfiltration Over Alternative Protocol",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "X-Tunnel to move this data outside of the DNC network through encrypted channels to a GRU-leased computer in Illinois",
-          "GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net"
+          "Russian hackers\u2014including the GRU Operatives\u2014purchased servers in the United States, registered several domain names",
+          "GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois"
         ]
       },
       {
-        "source": "T1568",
-        "target": "T1583.001",
+        "source": "T1048",
+        "target": "T1537",
         "source_step": 16,
         "target_step": 17,
-        "source_technique_name": "Dynamic Resolution",
-        "target_technique_name": "Acquire Infrastructure: Domains",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "GRU's X-Agent malware, programmed to communicate with the GRU-registered domain linuxkrnl.net",
-          "Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'"
-        ]
-      },
-      {
-        "source": "T1583.001",
-        "target": "T1048.002",
-        "source_step": 17,
-        "target_step": 18,
-        "source_technique_name": "Acquire Infrastructure: Domains",
-        "target_technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-        "sources": [
-          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
-        ],
-        "evidence_quotes": [
-          "Russian hackers purchased servers in the United States, registered several domain names, and made multiple 'payments in furtherance of hacking activity'",
-          "the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois"
-        ]
-      },
-      {
-        "source": "T1048.002",
-        "target": "T1537",
-        "source_step": 18,
-        "target_step": 19,
-        "source_technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+        "source_technique_name": "Exfiltration Over Alternative Protocol",
         "target_technique_name": "Transfer Data to Cloud Account",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "the GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
-          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service"
+          "GRU then used malware known as 'X-Tunnel' to exfiltrate this stolen DNC data to a GRU-leased computer located in Illinois",
+          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service"
         ]
       },
       {
         "source": "T1537",
-        "target": "T1565",
-        "source_step": 19,
-        "target_step": 20,
+        "target": "T1657",
+        "source_step": 17,
+        "target_step": 18,
         "source_technique_name": "Transfer Data to Cloud Account",
-        "target_technique_name": "Data Manipulation",
+        "target_technique_name": "Financial Theft",
         "sources": [
           "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
         ],
         "evidence_quotes": [
-          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates ('snapshots') of them and moving those snapshots to other accounts they owned on the same service",
-          "GRU operatives posted some of those documents publicly online...disseminated thousands of stolen documents and emails"
+          "unauthorized users had stolen the contents of these virtual servers by making exact duplicates (\"snapshots\") of them and moving those snapshots to other accounts they owned on the same service"
         ]
+      },
+      {
+        "source": "T1657",
+        "target": "T1565",
+        "source_step": 18,
+        "target_step": 19,
+        "source_technique_name": "Financial Theft",
+        "target_technique_name": "Data Manipulation",
+        "sources": [
+          "https://www.politico.com/f/?id=00000168-6161-de11-af7d-ef7327ea0000"
+        ],
+        "evidence_quotes": []
       }
     ]
   },
@@ -988,7 +1042,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "dnc-hack-by-the-gru-2016-june",
-  "analyzed_at": "2026-04-15T21:23:21.942139+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 230274
+  "analyzed_at": "2026-04-23T18:42:50.341178+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 460250
 }

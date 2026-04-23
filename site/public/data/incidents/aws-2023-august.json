@@ -7,7 +7,6 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet. That interface allowed unauthenticated users to run commands on the system.",
           "validated": true
@@ -19,25 +18,17 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1609",
-          "technique_name": "Container Administration Command",
-          "subtechnique_id": null,
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter",
           "inferred": false,
           "evidence_quote": "That interface allowed unauthenticated users to run commands on the system.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
+        },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task.",
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "inferred": true,
+          "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining",
           "validated": true
         }
       ]
@@ -47,11 +38,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
           "subtechnique_id": "T1552.005",
-          "inferred": true,
-          "evidence_quote": "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task.",
+          "inferred": false,
+          "evidence_quote": "a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task",
           "validated": true
         }
       ]
@@ -63,9 +54,22 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls.",
+          "evidence_quote": "failed with either a Client.UnauthorizedOperation or an AccessDenied error message",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task",
           "validated": true
         }
       ]
@@ -77,17 +81,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining rather than a larger number of Amazon EC2 instances.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
-          "inferred": false,
-          "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions, along with the other actions attempted, failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
+          "evidence_quote": "running a number of Amazon EC2 instances (most likely for surreptitious crypto mining)",
           "validated": true
         }
       ]
@@ -98,100 +93,199 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "The attacker discovered and exploited a web interface unintentionally exposed to the internet by a third-party ECS task definition. The interface required no authentication and allowed arbitrary command execution.",
-      "evidence_quote": "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet. That interface allowed unauthenticated users to run commands on the system.",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
-      ],
+      "description": "Threat actor discovered and accessed a web interface unintentionally exposed to the internet by a third-party ECS task definition.",
       "aws_services_involved": [
         "ECS"
       ],
+      "evidence_quote": "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1609",
-      "technique_name": "Container Administration Command",
-      "description": "Using the exposed unauthenticated web interface, the attacker executed commands within the running ECS container, achieving remote code execution on the task.",
-      "evidence_quote": "That interface allowed unauthenticated users to run commands on the system.",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
-      ],
+      "technique_id": "T1059",
+      "technique_name": "Command and Scripting Interpreter",
+      "description": "Attacker used the exposed web interface to execute arbitrary commands on the ECS task container without authentication.",
       "aws_services_involved": [
         "ECS"
       ],
+      "evidence_quote": "That interface allowed unauthenticated users to run commands on the system.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c023",
+          "source_file": "link_00.clean.md",
+          "char_start": 9715,
+          "char_end": 10093,
+          "quote": "That interface allowed unauthenticated users to run commands on the system."
+        },
+        {
+          "chunk_id": "link_00.md#c047",
+          "source_file": "link_00.md",
+          "char_start": 16382,
+          "char_end": 16760,
+          "quote": "That interface allowed unauthenticated users to run commands on the system."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1552.005",
       "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "The attacker obtained the Task IAM role credentials from within the ECS task environment, most likely via the container metadata/credentials endpoint, in order to make AWS API calls.",
-      "evidence_quote": "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task.",
-      "evidence_sources": [
-        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
-      ],
+      "description": "Attacker obtained the ECS Task IAM role credentials, likely via the container/instance metadata service.",
       "aws_services_involved": [
         "ECS",
         "IAM"
       ],
+      "evidence_quote": "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c024",
+          "source_file": "link_00.clean.md",
+          "char_start": 10095,
+          "char_end": 10623,
+          "quote": "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task"
+        },
+        {
+          "chunk_id": "link_00.md#c048",
+          "source_file": "link_00.md",
+          "char_start": 16762,
+          "char_end": 17290,
+          "quote": "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "The attacker attempted to launch multiple EC2 instances via RunInstances API calls using the stolen Task IAM role credentials, presumably to deploy cryptomining workloads at scale. All attempts were denied due to the IAM role only permitting S3 actions.",
-      "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions, along with the other actions attempted, failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker attempted to leverage the stolen Task IAM role credentials to perform AWS API actions.",
+      "aws_services_involved": [
+        "IAM",
+        "CloudTrail"
+      ],
+      "evidence_quote": "a number of attempts to use the credentials of the Task IAM role",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c024",
+          "source_file": "link_00.clean.md",
+          "char_start": 10095,
+          "char_end": 10623,
+          "quote": "a number of attempts to use the credentials of the Task IAM role"
+        },
+        {
+          "chunk_id": "link_00.md#c048",
+          "source_file": "link_00.md",
+          "char_start": 16762,
+          "char_end": 17290,
+          "quote": "a number of attempts to use the credentials of the Task IAM role"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Attacker attempted to launch multiple EC2 instances via RunInstances for crypto mining; all attempts were denied due to the Task IAM role only granting s3:* permissions.",
       "aws_services_involved": [
         "EC2",
         "IAM",
         "CloudTrail"
       ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Failing to launch additional EC2 instances, the attacker fell back to running a cryptomining process within the single compromised ECS task. Amazon GuardDuty detected this activity via CryptoCurrency:EC2/BitcoinTool findings.",
-      "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining rather than a larger number of Amazon EC2 instances.",
+      "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions ... failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Unable to launch additional EC2 instances, the attacker instead ran crypto mining within the compromised ECS task, triggering GuardDuty CryptoCurrency:EC2/BitcoinTool alerts.",
       "aws_services_involved": [
         "ECS",
         "GuardDuty"
       ],
+      "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c027",
+          "source_file": "link_00.clean.md",
+          "char_start": 11161,
+          "char_end": 11883,
+          "quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining"
+        },
+        {
+          "chunk_id": "link_00.md#c051",
+          "source_file": "link_00.md",
+          "char_start": 17828,
+          "char_end": 18550,
+          "quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "ECS",
     "EC2",
-    "S3",
     "IAM",
+    "S3",
     "GuardDuty",
     "CloudTrail"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.92,
-  "initial_access_vector": "Unauthenticated RCE via a web interface unintentionally exposed to the internet by a third-party ECS task definition",
-  "persistence_mechanism": "None identified; the attacker re-exploited the same vulnerability after the customer rebuilt resources, rather than establishing an independent persistence mechanism",
-  "privilege_escalation": "Attacker accessed the Task IAM role credentials associated with the ECS task (likely via the container credentials endpoint), effectively inheriting the cloud permissions of that role",
+  "confidence_score": 0.85,
   "data_exfiltrated": false,
+  "initial_access_vector": "Remote code execution via an unauthenticated web interface unintentionally exposed to the internet by a third-party Amazon ECS task definition.",
+  "persistence_mechanism": "None established; attacker's RunInstances attempts to spawn additional EC2 instances were blocked by IAM policy limited to s3:*.",
+  "privilege_escalation": "Attempted to use stolen ECS Task IAM role credentials to gain access to additional AWS resources (EC2), but the role only had s3:* permissions so escalation failed.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "The attacker discovered and exploited a web interface unintentionally exposed to the internet by a third-party ECS task definition. The interface required no authentication and allowed arbitrary command execution.",
+        "description": "Threat actor discovered and accessed a web interface unintentionally exposed to the internet by a third-party ECS task definition.",
         "tactic_id": "TA0001",
-        "evidence_quote": "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet. That interface allowed unauthenticated users to run commands on the system.",
+        "evidence_quote": "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
@@ -201,9 +295,9 @@
       },
       {
         "step": 2,
-        "technique_id": "T1609",
-        "technique_name": "Container Administration Command",
-        "description": "Using the exposed unauthenticated web interface, the attacker executed commands within the running ECS container, achieving remote code execution on the task.",
+        "technique_id": "T1059",
+        "technique_name": "Command and Scripting Interpreter",
+        "description": "Attacker used the exposed web interface to execute arbitrary commands on the ECS task container without authentication.",
         "tactic_id": "TA0002",
         "evidence_quote": "That interface allowed unauthenticated users to run commands on the system.",
         "evidence_sources": [
@@ -217,9 +311,9 @@
         "step": 3,
         "technique_id": "T1552.005",
         "technique_name": "Cloud Instance Metadata API",
-        "description": "The attacker obtained the Task IAM role credentials from within the ECS task environment, most likely via the container metadata/credentials endpoint, in order to make AWS API calls.",
+        "description": "Attacker obtained the ECS Task IAM role credentials, likely via the container/instance metadata service.",
         "tactic_id": "TA0006",
-        "evidence_quote": "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task.",
+        "evidence_quote": "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
@@ -230,11 +324,26 @@
       },
       {
         "step": 4,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker attempted to leverage the stolen Task IAM role credentials to perform AWS API actions.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "a number of attempts to use the credentials of the Task IAM role",
+        "evidence_sources": [
+          "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 5,
         "technique_id": "T1578.002",
         "technique_name": "Create Cloud Instance",
-        "description": "The attacker attempted to launch multiple EC2 instances via RunInstances API calls using the stolen Task IAM role credentials, presumably to deploy cryptomining workloads at scale. All attempts were denied due to the IAM role only permitting S3 actions.",
+        "description": "Attacker attempted to launch multiple EC2 instances via RunInstances for crypto mining; all attempts were denied due to the Task IAM role only granting s3:* permissions.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions, along with the other actions attempted, failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
+        "evidence_quote": "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions ... failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
@@ -245,12 +354,12 @@
         ]
       },
       {
-        "step": 5,
+        "step": 6,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Failing to launch additional EC2 instances, the attacker fell back to running a cryptomining process within the single compromised ECS task. Amazon GuardDuty detected this activity via CryptoCurrency:EC2/BitcoinTool findings.",
+        "description": "Unable to launch additional EC2 instances, the attacker instead ran crypto mining within the compromised ECS task, triggering GuardDuty CryptoCurrency:EC2/BitcoinTool alerts.",
         "tactic_id": "TA0040",
-        "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining rather than a larger number of Amazon EC2 instances.",
+        "evidence_quote": "the threat actor decided to leave with just the one Amazon ECS task running crypto mining",
         "evidence_sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
@@ -263,62 +372,77 @@
     "edges": [
       {
         "source": "T1190",
-        "target": "T1609",
+        "target": "T1059",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Container Administration Command",
+        "target_technique_name": "Command and Scripting Interpreter",
         "sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
         "evidence_quotes": [
-          "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet. That interface allowed unauthenticated users to run commands on the system.",
+          "the 3rd party Amazon ECS task definition that the customer was using, was unintentionally exposing a web interface to the internet",
           "That interface allowed unauthenticated users to run commands on the system."
         ]
       },
       {
-        "source": "T1609",
+        "source": "T1059",
         "target": "T1552.005",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Container Administration Command",
+        "source_technique_name": "Command and Scripting Interpreter",
         "target_technique_name": "Cloud Instance Metadata API",
         "sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
         "evidence_quotes": [
           "That interface allowed unauthenticated users to run commands on the system.",
-          "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task."
+          "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task"
         ]
       },
       {
         "source": "T1552.005",
-        "target": "T1578.002",
+        "target": "T1078.004",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
+        ],
+        "evidence_quotes": [
+          "attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task",
+          "a number of attempts to use the credentials of the Task IAM role"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1578.002",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
         "evidence_quotes": [
-          "there were a number of attempts to use the credentials of the Task IAM role that was associated with the Amazon ECS task.",
-          "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions, along with the other actions attempted, failed with either a Client.UnauthorizedOperation or an AccessDenied error message."
+          "a number of attempts to use the credentials of the Task IAM role",
+          "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions ... failed with either a Client.UnauthorizedOperation or an AccessDenied error message."
         ]
       },
       {
         "source": "T1578.002",
         "target": "T1496",
-        "source_step": 4,
-        "target_step": 5,
+        "source_step": 5,
+        "target_step": 6,
         "source_technique_name": "Create Cloud Instance",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://aws.amazon.com/blogs/security/two-real-life-examples-of-why-limiting-permissions-works-lessons-from-aws-cirt/"
         ],
         "evidence_quotes": [
-          "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions, along with the other actions attempted, failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
-          "the threat actor decided to leave with just the one Amazon ECS task running crypto mining rather than a larger number of Amazon EC2 instances."
+          "The majority of actions were attempting to launch multiple Amazon EC2 instances via RunInstances calls. Every one of these actions ... failed with either a Client.UnauthorizedOperation or an AccessDenied error message.",
+          "the threat actor decided to leave with just the one Amazon ECS task running crypto mining"
         ]
       }
     ]
@@ -329,9 +453,9 @@
   },
   "schema_version": "1.0",
   "incident_slug": "aws-2023-august",
-  "analyzed_at": "2026-04-15T20:43:36.672578+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 31488,
+  "analyzed_at": "2026-04-23T18:37:24.641447+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 50667,
   "incident_name": "AWS",
   "incident_date": "2023, August",
   "incident_root_cause": "RCE via unintentionally exposed port in ECS task definition",
@@ -339,8 +463,8 @@
   "aws_services_raw": [
     "Amazon ECS",
     "Amazon EC2",
+    "IAM",
     "Amazon S3",
-    "AWS IAM",
     "Amazon GuardDuty",
     "AWS CloudTrail"
   ]

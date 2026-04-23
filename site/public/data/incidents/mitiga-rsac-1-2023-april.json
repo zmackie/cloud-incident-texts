@@ -1,19 +1,110 @@
 {
-  "tactics_used": [
+  "attack_chain": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "Developer accidentally merges company git repo to personal one (public) \u2022 Two AWS keys exposed",
-          "validated": true
-        }
-      ]
+      "step": 1,
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Developer accidentally merged the company git repository into their personal (public) GitHub repo, exposing two AWS access keys.",
+      "event_time": "2023-01-09",
+      "event_time_precision": "day",
+      "evidence_quote": "Developer accidentally merges company git repo to personal one (public) - Two AWS keys exposed",
+      "aws_services_involved": [
+        "GitHub",
+        "IAM"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+      ],
+      "evidence_chunks": [],
+      "validated": true
     },
+    {
+      "step": 2,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Threat actor obtained the exposed AWS keys from the public GitHub repository (timing unknown).",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Key obtained (timing unknown)",
+      "aws_services_involved": [
+        "GitHub",
+        "IAM"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Threat actor used one of the stolen AWS access keys to authenticate to the AWS environment.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "One of the AWS Keys used for initial reconnaissance",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker performed initial reconnaissance within the AWS environment using the stolen key.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "One of the AWS Keys used for initial reconnaissance",
+      "aws_services_involved": [
+        "AWS"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1531",
+      "technique_name": "Account Access Removal",
+      "description": "Defenders detected abnormal AWS access, then blocked and rotated the exposed keys as containment (note: history remains in GitHub forever).",
+      "event_time": "2023-01-11",
+      "event_time_precision": "day",
+      "evidence_quote": "Abnormal access to AWS identified - Keys blocked, then rotated (History stays forever in GitHub)",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "GitHub",
+    "EC2"
+  ],
+  "confidence_score": 0.6,
+  "data_exfiltrated": false,
+  "impact_type": "Credential Theft",
+  "initial_access_vector": "Developer accidentally merged a company git repository into their personal public GitHub repository, exposing two AWS access keys which a threat actor then used to access AWS.",
+  "persistence_mechanism": "None observed; access relied on the leaked AWS access keys until they were rotated.",
+  "privilege_escalation": "None observed.",
+  "tactics_used": [
     {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
@@ -21,10 +112,16 @@
         {
           "technique_id": "T1552.001",
           "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "Two AWS keys exposed \u2022 Key obtained (timing unknown)",
+          "evidence_quote": "Two AWS keys exposed ... Key obtained (timing unknown)",
           "validated": true
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": true,
+          "evidence_quote": "Two AWS keys exposed",
+          "validated": false
         }
       ]
     },
@@ -32,6 +129,13 @@
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
+        {
+          "technique_id": "T1213.003",
+          "technique_name": "Data from Information Repositories: Code Repositories",
+          "inferred": false,
+          "evidence_quote": "Developer accidentally merges company git repo to personal one (public)",
+          "validated": true
+        },
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
@@ -42,155 +146,153 @@
       ]
     },
     {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
-          "inferred": true,
-          "evidence_quote": "Programmatic UserAgents, such as boto3 and CURL",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Abnormal access to AWS identified",
           "validated": true
         }
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "A developer accidentally merged the company's internal git repository into a personal public GitHub repository, exposing two AWS access keys in the source code.",
-      "evidence_quote": "Developer accidentally merges company git repo to personal one (public) \u2022 Two AWS keys exposed",
-      "evidence_sources": [
-        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The threat actor obtained one of the exposed AWS access keys from the public GitHub repository (exact timing unknown) and used it to authenticate to AWS.",
-      "evidence_quote": "Key obtained (timing unknown) \u2022 One of the AWS Keys used for initial reconnaissance",
-      "evidence_sources": [
-        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "STS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "The threat actor used the compromised AWS access key to perform initial reconnaissance against the AWS environment, including actions such as ListBuckets and GetCallerIdentity.",
-      "evidence_quote": "One of the AWS Keys used for initial reconnaissance \u2022 suspicious reconnaissance actions, such as: ListBuckets \u2022 GetCallerIdentity",
-      "evidence_sources": [
-        "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
-      ],
-      "aws_services_involved": [
-        "S3",
-        "STS",
-        "CloudTrail"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "IAM",
-    "STS",
-    "S3",
-    "CloudTrail"
-  ],
-  "impact_type": "Unauthorized Access",
-  "confidence_score": 0.75,
-  "initial_access_vector": "AWS access keys accidentally exposed in a public GitHub repository after a developer merged the company repository into their personal public repo.",
-  "persistence_mechanism": "None observed; keys were blocked and rotated during containment before persistence was established.",
-  "privilege_escalation": "None described in the source text.",
-  "data_exfiltrated": false,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Developer accidentally merged the company git repository into their personal (public) GitHub repo, exposing two AWS access keys.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Developer accidentally merges company git repo to personal one (public) - Two AWS keys exposed",
+        "evidence_sources": [
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+        ],
+        "aws_services_involved": [
+          "GitHub",
+          "IAM"
+        ]
+      },
+      {
+        "step": 2,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "A developer accidentally merged the company's internal git repository into a personal public GitHub repository, exposing two AWS access keys in the source code.",
+        "description": "Threat actor obtained the exposed AWS keys from the public GitHub repository (timing unknown).",
         "tactic_id": "TA0006",
-        "evidence_quote": "Developer accidentally merges company git repo to personal one (public) \u2022 Two AWS keys exposed",
+        "evidence_quote": "Key obtained (timing unknown)",
         "evidence_sources": [
-          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+        ],
+        "aws_services_involved": [
+          "GitHub",
+          "IAM"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Threat actor used one of the stolen AWS access keys to authenticate to the AWS environment.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "One of the AWS Keys used for initial reconnaissance",
+        "evidence_sources": [
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
         ],
         "aws_services_involved": [
           "IAM"
         ]
       },
       {
-        "step": 2,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "The threat actor obtained one of the exposed AWS access keys from the public GitHub repository (exact timing unknown) and used it to authenticate to AWS.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Key obtained (timing unknown) \u2022 One of the AWS Keys used for initial reconnaissance",
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker performed initial reconnaissance within the AWS environment using the stolen key.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "One of the AWS Keys used for initial reconnaissance",
         "evidence_sources": [
-          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
         ],
         "aws_services_involved": [
-          "IAM",
-          "STS"
+          "AWS"
         ]
       },
       {
-        "step": 3,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "The threat actor used the compromised AWS access key to perform initial reconnaissance against the AWS environment, including actions such as ListBuckets and GetCallerIdentity.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "One of the AWS Keys used for initial reconnaissance \u2022 suspicious reconnaissance actions, such as: ListBuckets \u2022 GetCallerIdentity",
+        "step": 5,
+        "technique_id": "T1531",
+        "technique_name": "Account Access Removal",
+        "description": "Defenders detected abnormal AWS access, then blocked and rotated the exposed keys as containment (note: history remains in GitHub forever).",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Abnormal access to AWS identified - Keys blocked, then rotated (History stays forever in GitHub)",
         "evidence_sources": [
-          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
         ],
         "aws_services_involved": [
-          "S3",
-          "STS",
-          "CloudTrail"
+          "IAM"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1552.001",
-        "target": "T1078.004",
+        "source": "T1213.003",
+        "target": "T1552.001",
         "source_step": 1,
         "target_step": 2,
+        "source_technique_name": "Code Repositories",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+        ],
+        "evidence_quotes": [
+          "Developer accidentally merges company git repo to personal one (public) - Two AWS keys exposed",
+          "Key obtained (timing unknown)"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Credentials In Files",
         "target_technique_name": "Cloud Accounts",
         "sources": [
-          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
         ],
         "evidence_quotes": [
-          "Developer accidentally merges company git repo to personal one (public) \u2022 Two AWS keys exposed",
-          "Key obtained (timing unknown) \u2022 One of the AWS Keys used for initial reconnaissance"
+          "Key obtained (timing unknown)",
+          "One of the AWS Keys used for initial reconnaissance"
         ]
       },
       {
         "source": "T1078.004",
         "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
-          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf"
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
         ],
         "evidence_quotes": [
-          "Key obtained (timing unknown) \u2022 One of the AWS Keys used for initial reconnaissance",
-          "One of the AWS Keys used for initial reconnaissance \u2022 suspicious reconnaissance actions, such as: ListBuckets \u2022 GetCallerIdentity"
+          "One of the AWS Keys used for initial reconnaissance",
+          "One of the AWS Keys used for initial reconnaissance"
+        ]
+      },
+      {
+        "source": "T1580",
+        "target": "T1531",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Account Access Removal",
+        "sources": [
+          "https://static.rainfocus.com/rsac/us23/sess/1664697541032001cak3/finalwebsite/2023_USA23_AIR-T02_01_It%E2%80%99s_Getting_Real__Hitting_the_Fan_2023_Edition_Real_World_SaaS_Attacks_1682607053333001zlzZ.pdf?_gl=1*trgj4t*_ga*MjAwODIwNzYxLjE2NzA0MzUzODQ.*_ga_Q3JZKF3KQM*MTY4MzYzODkzMS44My4xLjE2ODM2NDEwMTQuNTkuMC4w"
+        ],
+        "evidence_quotes": [
+          "One of the AWS Keys used for initial reconnaissance",
+          "Abnormal access to AWS identified - Keys blocked, then rotated (History stays forever in GitHub)"
         ]
       }
     ]
@@ -201,17 +303,16 @@
   },
   "schema_version": "1.0",
   "incident_slug": "mitiga-rsac-1-2023-april",
-  "analyzed_at": "2026-04-15T21:01:15.048661+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 11835,
+  "analyzed_at": "2026-04-23T18:48:32.052368+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 20194,
   "incident_name": "Mitiga (RSAC) #1",
   "incident_date": "2023, April",
   "incident_root_cause": "Company repository w/ AWS keys merged to personal github",
-  "impact_type_raw": "Reconnaissance / Unauthorized Access",
+  "impact_type_raw": "Credential Exposure / Unauthorized AWS Access (contained)",
   "aws_services_raw": [
-    "IAM",
-    "STS",
-    "S3",
-    "CloudTrail"
+    "AWS IAM",
+    "GitHub",
+    "AWS EC2"
   ]
 }

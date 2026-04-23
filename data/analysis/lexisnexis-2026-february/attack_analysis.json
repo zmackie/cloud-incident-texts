@@ -8,20 +8,20 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "Fulcrumsec reckons it exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+          "evidence_quote": "exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1611",
-          "technique_name": "Escape to Host",
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter",
           "inferred": true,
-          "evidence_quote": "exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+          "evidence_quote": "React2Shell vulnerability",
           "validated": true
         }
       ]
@@ -31,15 +31,9 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "53 secrets swiped from AWS Secrets Manager",
-          "validated": true
-        },
-        {
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores",
+          "technique_id": "T1555.006",
+          "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+          "subtechnique_id": "T1555.006",
           "inferred": false,
           "evidence_quote": "53 secrets swiped from AWS Secrets Manager",
           "validated": true
@@ -53,15 +47,8 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records",
-          "validated": true
-        },
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
           "inferred": true,
-          "evidence_quote": "Among the other files are 17 VPC databases and more than 430 VPC database tables, 536 Redshift tables",
+          "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables",
           "validated": true
         }
       ]
@@ -71,10 +58,17 @@
       "tactic_name": "Collection",
       "techniques": [
         {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "3.9 million database records",
+          "validated": true
+        },
+        {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": false,
-          "evidence_quote": "3.9 million database records, and 53 secrets swiped from AWS Secrets Manager",
+          "inferred": true,
+          "evidence_quote": "exfiltrated the files from a LexisNexis AWS instance",
           "validated": true
         }
       ]
@@ -84,10 +78,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "Crooks claim 2 GB haul from AWS instance via React2Shell exploit",
+          "evidence_quote": "2 GB haul from AWS instance",
           "validated": true
         }
       ]
@@ -97,11 +91,11 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1565.001",
-          "technique_name": "Stored Data Manipulation",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
           "inferred": true,
-          "evidence_quote": "only 'a limited number of servers' were accessed",
-          "validated": false
+          "evidence_quote": "efforts to publicly shame the company",
+          "validated": true
         }
       ]
     }
@@ -111,146 +105,237 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Fulcrumsec exploited CVE-2025-55182 (React2Shell), an unpatched vulnerability in a React container running on a LexisNexis AWS instance, to gain initial code execution on the server.",
-      "evidence_quote": "Fulcrumsec reckons it exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+      "description": "Attackers exploited an unpatched React2Shell vulnerability (CVE-2025-55182) in a vulnerable React container exposed from a LexisNexis AWS instance.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
       ],
-      "aws_services_involved": [
-        "Amazon EC2",
-        "Amazon ECS"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1611",
-      "technique_name": "Escape to Host",
-      "description": "Attackers leveraged the React2Shell container escape vulnerability to break out of the container context and gain access to the broader AWS environment and underlying host resources.",
-      "evidence_quote": "exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+      "technique_id": "T1059",
+      "technique_name": "Command and Scripting Interpreter",
+      "description": "React2Shell exploit provides shell execution on the compromised container, enabling attacker command execution.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "React2Shell vulnerability",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
       ],
-      "aws_services_involved": [
-        "Amazon ECS",
-        "Amazon EC2"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c011",
+          "source_file": "link_00.clean.md",
+          "char_start": 2367,
+          "char_end": 2722,
+          "quote": "React2Shell vulnerability"
+        },
+        {
+          "chunk_id": "link_00.md#c031",
+          "source_file": "link_00.md",
+          "char_start": 9204,
+          "char_end": 9559,
+          "quote": "React2Shell vulnerability"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1555",
-      "technique_name": "Credentials from Password Stores",
-      "description": "Attackers accessed AWS Secrets Manager and stole 53 secrets, likely obtaining database credentials and other service credentials to enable lateral movement to data stores.",
-      "evidence_quote": "53 secrets swiped from AWS Secrets Manager",
-      "evidence_sources": [
-        "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
-      ],
+      "technique_id": "T1555.006",
+      "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+      "description": "Attackers accessed AWS Secrets Manager and exfiltrated 53 secrets, likely used to pivot to databases and other AWS resources.",
       "aws_services_involved": [
         "AWS Secrets Manager"
       ],
+      "evidence_quote": "53 secrets swiped from AWS Secrets Manager",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 3627,
+          "char_end": 3826,
+          "quote": "53 secrets swiped from AWS Secrets Manager"
+        },
+        {
+          "chunk_id": "link_00.md#c034",
+          "source_file": "link_00.md",
+          "char_start": 10464,
+          "char_end": 10663,
+          "quote": "53 secrets swiped from AWS Secrets Manager"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Using harvested credentials, attackers enumerated the AWS environment, discovering VPC databases, Redshift clusters, and other data stores available to the compromised identity.",
-      "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records",
+      "description": "Attackers enumerated VPC databases, tables, and Redshift data warehouses in the AWS environment.",
+      "aws_services_involved": [
+        "VPC",
+        "Redshift"
+      ],
+      "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
       ],
-      "aws_services_involved": [
-        "Amazon VPC",
-        "Amazon Redshift",
-        "Amazon RDS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 3627,
+          "char_end": 3826,
+          "quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables"
+        },
+        {
+          "chunk_id": "link_00.md#c034",
+          "source_file": "link_00.md",
+          "char_start": 10464,
+          "char_end": 10663,
+          "quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attackers queried and collected data from VPC databases (17 databases, 430+ tables), Redshift clusters (536 tables), and Secrets Manager, aggregating approximately 3.9 million records and 2 GB of data including ~400K user profiles.",
-      "evidence_quote": "Among the other files are 17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records, and 53 secrets swiped from AWS Secrets Manager",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Attackers collected approximately 3.9 million database records across VPC databases and Redshift tables, including customer profiles and contracts.",
+      "aws_services_involved": [
+        "Redshift",
+        "VPC",
+        "RDS"
+      ],
+      "evidence_quote": "3.9 million database records",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
       ],
-      "aws_services_involved": [
-        "Amazon Redshift",
-        "Amazon RDS",
-        "Amazon VPC",
-        "AWS Secrets Manager"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 3627,
+          "char_end": 3826,
+          "quote": "3.9 million database records"
+        },
+        {
+          "chunk_id": "link_00.md#c034",
+          "source_file": "link_00.md",
+          "char_start": 10464,
+          "char_end": 10663,
+          "quote": "3.9 million database records"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Fulcrumsec exfiltrated the collected data (2 GB haul) from the LexisNexis AWS environment to attacker-controlled infrastructure, later publishing the listing on a data leak site.",
-      "evidence_quote": "Crooks claim 2 GB haul from AWS instance via React2Shell exploit",
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Approximately 2GB of data including ~400K cloud user profiles was exfiltrated and later listed on a leak site by Fulcrumsec.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "2 GB haul from AWS instance via React2Shell exploit",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
       ],
-      "aws_services_involved": [
-        "Amazon EC2",
-        "Amazon VPC"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 318,
+          "char_end": 549,
+          "quote": "2 GB haul from AWS instance via React2Shell exploit"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 5680,
+          "char_end": 5747,
+          "quote": "2 GB haul from AWS instance via React2Shell exploit"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "Amazon EC2",
-    "Amazon ECS",
-    "Amazon Redshift",
-    "Amazon RDS",
-    "Amazon VPC",
-    "AWS Secrets Manager"
+    "EC2",
+    "AWS Secrets Manager",
+    "Redshift",
+    "VPC",
+    "RDS"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.8,
+  "confidence_score": 0.7,
   "data_exfiltrated": true,
-  "initial_access_vector": "Exploitation of unpatched React2Shell vulnerability (CVE-2025-55182) in a React container hosted on a LexisNexis AWS instance",
-  "persistence_mechanism": "Not described in the source text",
-  "privilege_escalation": "Container escape via React2Shell (CVE-2025-55182), followed by credential harvesting from AWS Secrets Manager to access broader cloud resources",
+  "initial_access_vector": "Exploitation of an unpatched React2Shell vulnerability (CVE-2025-55182) in a vulnerable React container running on a LexisNexis AWS instance.",
+  "persistence_mechanism": "Not described in source text.",
+  "privilege_escalation": "Likely via 53 secrets stolen from AWS Secrets Manager enabling access to databases and other services (inferred).",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Fulcrumsec exploited CVE-2025-55182 (React2Shell), an unpatched vulnerability in a React container running on a LexisNexis AWS instance, to gain initial code execution on the server.",
+        "description": "Attackers exploited an unpatched React2Shell vulnerability (CVE-2025-55182) in a vulnerable React container exposed from a LexisNexis AWS instance.",
         "tactic_id": "TA0001",
-        "evidence_quote": "Fulcrumsec reckons it exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+        "evidence_quote": "exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
         "evidence_sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "aws_services_involved": [
-          "Amazon EC2",
-          "Amazon ECS"
+          "EC2"
         ]
       },
       {
         "step": 2,
-        "technique_id": "T1611",
-        "technique_name": "Escape to Host",
-        "description": "Attackers leveraged the React2Shell container escape vulnerability to break out of the container context and gain access to the broader AWS environment and underlying host resources.",
-        "tactic_id": "TA0004",
-        "evidence_quote": "exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+        "technique_id": "T1059",
+        "technique_name": "Command and Scripting Interpreter",
+        "description": "React2Shell exploit provides shell execution on the compromised container, enabling attacker command execution.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "React2Shell vulnerability",
         "evidence_sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "aws_services_involved": [
-          "Amazon ECS",
-          "Amazon EC2"
+          "EC2"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1555",
-        "technique_name": "Credentials from Password Stores",
-        "description": "Attackers accessed AWS Secrets Manager and stole 53 secrets, likely obtaining database credentials and other service credentials to enable lateral movement to data stores.",
+        "technique_id": "T1555.006",
+        "technique_name": "Cloud Secrets Management Stores",
+        "description": "Attackers accessed AWS Secrets Manager and exfiltrated 53 secrets, likely used to pivot to databases and other AWS resources.",
         "tactic_id": "TA0006",
         "evidence_quote": "53 secrets swiped from AWS Secrets Manager",
         "evidence_sources": [
@@ -264,125 +349,122 @@
         "step": 4,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Using harvested credentials, attackers enumerated the AWS environment, discovering VPC databases, Redshift clusters, and other data stores available to the compromised identity.",
+        "description": "Attackers enumerated VPC databases, tables, and Redshift data warehouses in the AWS environment.",
         "tactic_id": "TA0007",
-        "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records",
+        "evidence_quote": "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables",
         "evidence_sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "aws_services_involved": [
-          "Amazon VPC",
-          "Amazon Redshift",
-          "Amazon RDS"
+          "VPC",
+          "Redshift"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Attackers queried and collected data from VPC databases (17 databases, 430+ tables), Redshift clusters (536 tables), and Secrets Manager, aggregating approximately 3.9 million records and 2 GB of data including ~400K user profiles.",
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Attackers collected approximately 3.9 million database records across VPC databases and Redshift tables, including customer profiles and contracts.",
         "tactic_id": "TA0009",
-        "evidence_quote": "Among the other files are 17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records, and 53 secrets swiped from AWS Secrets Manager",
+        "evidence_quote": "3.9 million database records",
         "evidence_sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "aws_services_involved": [
-          "Amazon Redshift",
-          "Amazon RDS",
-          "Amazon VPC",
-          "AWS Secrets Manager"
+          "Redshift",
+          "VPC",
+          "RDS"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Fulcrumsec exfiltrated the collected data (2 GB haul) from the LexisNexis AWS environment to attacker-controlled infrastructure, later publishing the listing on a data leak site.",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Approximately 2GB of data including ~400K cloud user profiles was exfiltrated and later listed on a leak site by Fulcrumsec.",
         "tactic_id": "TA0010",
-        "evidence_quote": "Crooks claim 2 GB haul from AWS instance via React2Shell exploit",
+        "evidence_quote": "2 GB haul from AWS instance via React2Shell exploit",
         "evidence_sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "aws_services_involved": [
-          "Amazon EC2",
-          "Amazon VPC"
+          "EC2"
         ]
       }
     ],
     "edges": [
       {
         "source": "T1190",
-        "target": "T1611",
+        "target": "T1059",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Escape to Host",
+        "target_technique_name": "Command and Scripting Interpreter",
         "sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "evidence_quotes": [
-          "Fulcrumsec reckons it exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
-          "exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability"
+          "exfiltrated the files from a LexisNexis AWS instance by exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+          "React2Shell vulnerability"
         ]
       },
       {
-        "source": "T1611",
-        "target": "T1555",
+        "source": "T1059",
+        "target": "T1555.006",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Escape to Host",
-        "target_technique_name": "Credentials from Password Stores",
+        "source_technique_name": "Command and Scripting Interpreter",
+        "target_technique_name": "Cloud Secrets Management Stores",
         "sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "evidence_quotes": [
-          "exploiting a vulnerable React container - specifically, an unpatched React2Shell vulnerability",
+          "React2Shell vulnerability",
           "53 secrets swiped from AWS Secrets Manager"
         ]
       },
       {
-        "source": "T1555",
+        "source": "T1555.006",
         "target": "T1580",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Credentials from Password Stores",
+        "source_technique_name": "Cloud Secrets Management Stores",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "evidence_quotes": [
           "53 secrets swiped from AWS Secrets Manager",
-          "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records"
+          "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1530",
+        "target": "T1213",
         "source_step": 4,
         "target_step": 5,
         "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data from Information Repositories",
         "sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "evidence_quotes": [
-          "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records",
-          "Among the other files are 17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records, and 53 secrets swiped from AWS Secrets Manager"
+          "17 VPC databases and more than 430 VPC database tables, 536 Redshift tables",
+          "3.9 million database records"
         ]
       },
       {
-        "source": "T1530",
-        "target": "T1537",
+        "source": "T1213",
+        "target": "T1567",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://www.theregister.com/2026/03/04/lexisnexis_legal_professional_confirms_data/"
         ],
         "evidence_quotes": [
-          "Among the other files are 17 VPC databases and more than 430 VPC database tables, 536 Redshift tables, 3.9 million database records, and 53 secrets swiped from AWS Secrets Manager",
-          "Crooks claim 2 GB haul from AWS instance via React2Shell exploit"
+          "3.9 million database records",
+          "2 GB haul from AWS instance via React2Shell exploit"
         ]
       }
     ]
@@ -393,7 +475,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "lexisnexis-2026-february",
-  "analyzed_at": "2026-04-15T20:59:12.282335+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 20511
+  "analyzed_at": "2026-04-23T18:47:12.952111+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 25061
 }

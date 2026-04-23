@@ -1,39 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        },
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "inferred": false,
-          "evidence_quote": "an unknown third party accessed our systems from September 1, 2023, through September 5, 2023 and acquired certain files from our systems during that time",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0010",
       "tactic_name": "Exfiltration",
       "techniques": [
@@ -41,7 +8,7 @@
           "technique_id": "T1041",
           "technique_name": "Exfiltration Over C2 Channel",
           "inferred": true,
-          "evidence_quote": "acquired certain files from our systems during that time",
+          "evidence_quote": "Theft of customer information, attempted extortion",
           "validated": false
         }
       ]
@@ -51,17 +18,10 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1486",
-          "technique_name": "Data Encrypted for Impact",
-          "inferred": false,
-          "evidence_quote": "an unknown, unauthorized third party encrypted some of our files",
-          "validated": true
-        },
-        {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "inferred": true,
-          "evidence_quote": null,
+          "inferred": false,
+          "evidence_quote": "attempted extortion",
           "validated": true
         }
       ]
@@ -70,184 +30,130 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Unknown attacker gained initial access to Sonder's systems. The root cause is not documented in available sources, but initial compromise occurred prior to data access.",
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "Unknown initial access vector; attacker gained unauthorized access to Sonder systems.",
+      "ordering_confidence": 0.3,
       "evidence_quote": null,
-      "aws_services_involved": [],
-      "evidence_sources": [],
+      "evidence_sources": [
+        "https://blog.sonder.com/news/security-update/",
+        "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1213",
-      "technique_name": "Data from Information Repositories",
-      "description": "The attacker accessed and collected customer files containing PII over a multi-day period (September 1\u20135, 2023), including names, addresses, dates of birth, Social Security numbers, driver's license numbers, medical treatment information, and health insurance information.",
-      "evidence_quote": "an unknown third party accessed our systems from September 1, 2023, through September 5, 2023 and acquired certain files from our systems during that time",
-      "aws_services_involved": [],
-      "evidence_sources": [
-        "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
       "technique_id": "T1041",
       "technique_name": "Exfiltration Over C2 Channel",
-      "description": "Customer PII files were exfiltrated from the victim's systems by the attacker before encryption was triggered.",
-      "evidence_quote": "acquired certain files from our systems during that time",
-      "aws_services_involved": [],
+      "description": "Attacker exfiltrated customer information from Sonder.",
+      "evidence_quote": "Theft of customer information",
       "evidence_sources": [
+        "https://blog.sonder.com/news/security-update/",
         "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
-      "step": 4,
-      "technique_id": "T1486",
-      "technique_name": "Data Encrypted for Impact",
-      "description": "The attacker deployed ransomware, encrypting files on the victim's systems. The encryption was discovered on September 5, 2023.",
-      "evidence_quote": "an unknown, unauthorized third party encrypted some of our files",
-      "aws_services_involved": [],
-      "evidence_sources": [
-        "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
+      "step": 3,
       "technique_id": "T1657",
       "technique_name": "Financial Theft",
-      "description": "Following data exfiltration and encryption, the attacker attempted extortion against the victim organization (consistent with double-extortion ransomware methodology).",
-      "evidence_quote": null,
-      "aws_services_involved": [],
-      "evidence_sources": [],
+      "description": "Attacker attempted to extort Sonder using the stolen customer data.",
+      "evidence_quote": "attempted extortion",
+      "evidence_sources": [
+        "https://blog.sonder.com/news/security-update/",
+        "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     }
   ],
   "aws_services": [],
-  "impact_type": "Ransomware / Data Exfiltration / Extortion",
-  "confidence_score": 0.3,
-  "initial_access_vector": "Unknown \u2014 root cause not disclosed in available sources. Primary source URL (Sonder blog) returned 404; secondary source (Montana DOJ letter) belongs to a different organization (Mulkay Cardiology Consultants) and does not describe the Sonder incident.",
-  "persistence_mechanism": "Unknown \u2014 not documented in available sources",
+  "impact_type": "Data Exfiltration and Extortion",
+  "confidence_score": 0.2,
   "data_exfiltrated": true,
-  "privilege_escalation": "Unknown \u2014 not documented in available sources",
+  "initial_access_vector": "Unknown - source URLs did not contain relevant incident details (one returned 404, the other was an unrelated Mulkay Cardiology breach notification)",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "Unknown attacker gained initial access to Sonder's systems. The root cause is not documented in available sources, but initial compromise occurred prior to data access.",
-        "tactic_id": "TA0001",
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Unknown initial access vector; attacker gained unauthorized access to Sonder systems.",
+        "tactic_id": "TA0005",
         "evidence_quote": null,
-        "evidence_sources": [],
+        "evidence_sources": [
+          "https://blog.sonder.com/news/security-update/",
+          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
+        ],
         "aws_services_involved": []
       },
       {
         "step": 2,
-        "technique_id": "T1213",
-        "technique_name": "Data from Information Repositories",
-        "description": "The attacker accessed and collected customer files containing PII over a multi-day period (September 1\u20135, 2023), including names, addresses, dates of birth, Social Security numbers, driver's license numbers, medical treatment information, and health insurance information.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "an unknown third party accessed our systems from September 1, 2023, through September 5, 2023 and acquired certain files from our systems during that time",
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "Attacker exfiltrated customer information from Sonder.",
+        "tactic_id": "",
+        "evidence_quote": "Theft of customer information",
         "evidence_sources": [
+          "https://blog.sonder.com/news/security-update/",
           "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
         ],
         "aws_services_involved": []
       },
       {
         "step": 3,
-        "technique_id": "T1041",
-        "technique_name": "Exfiltration Over C2 Channel",
-        "description": "Customer PII files were exfiltrated from the victim's systems by the attacker before encryption was triggered.",
-        "tactic_id": "",
-        "evidence_quote": "acquired certain files from our systems during that time",
-        "evidence_sources": [
-          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 4,
-        "technique_id": "T1486",
-        "technique_name": "Data Encrypted for Impact",
-        "description": "The attacker deployed ransomware, encrypting files on the victim's systems. The encryption was discovered on September 5, 2023.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "an unknown, unauthorized third party encrypted some of our files",
-        "evidence_sources": [
-          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 5,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "Following data exfiltration and encryption, the attacker attempted extortion against the victim organization (consistent with double-extortion ransomware methodology).",
+        "description": "Attacker attempted to extort Sonder using the stolen customer data.",
         "tactic_id": "TA0040",
-        "evidence_quote": null,
-        "evidence_sources": [],
+        "evidence_quote": "attempted extortion",
+        "evidence_sources": [
+          "https://blog.sonder.com/news/security-update/",
+          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
+        ],
         "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1190",
-        "target": "T1213",
+        "source": "T1078",
+        "target": "T1041",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Data from Information Repositories",
-        "sources": [
-          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-        ],
-        "evidence_quotes": [
-          "an unknown third party accessed our systems from September 1, 2023, through September 5, 2023 and acquired certain files from our systems during that time"
-        ]
-      },
-      {
-        "source": "T1213",
-        "target": "T1041",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Data from Information Repositories",
+        "source_technique_name": "Valid Accounts",
         "target_technique_name": "Exfiltration Over C2 Channel",
         "sources": [
+          "https://blog.sonder.com/news/security-update/",
           "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
         ],
         "evidence_quotes": [
-          "an unknown third party accessed our systems from September 1, 2023, through September 5, 2023 and acquired certain files from our systems during that time",
-          "acquired certain files from our systems during that time"
+          "Theft of customer information"
         ]
       },
       {
         "source": "T1041",
-        "target": "T1486",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Exfiltration Over C2 Channel",
-        "target_technique_name": "Data Encrypted for Impact",
-        "sources": [
-          "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
-        ],
-        "evidence_quotes": [
-          "acquired certain files from our systems during that time",
-          "an unknown, unauthorized third party encrypted some of our files"
-        ]
-      },
-      {
-        "source": "T1486",
         "target": "T1657",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Data Encrypted for Impact",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Exfiltration Over C2 Channel",
         "target_technique_name": "Financial Theft",
         "sources": [
+          "https://blog.sonder.com/news/security-update/",
           "https://dojmt.gov/wp-content/uploads/Consumer-Notification-Letter-816.pdf"
         ],
         "evidence_quotes": [
-          "an unknown, unauthorized third party encrypted some of our files"
+          "Theft of customer information",
+          "attempted extortion"
         ]
       }
     ]
@@ -258,7 +164,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "sonder-2022-november",
-  "analyzed_at": "2026-04-15T21:08:06.806650+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 14742
+  "analyzed_at": "2026-04-23T19:01:24.325946+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 29219
 }

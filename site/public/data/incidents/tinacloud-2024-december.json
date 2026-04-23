@@ -1,40 +1,29 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "AWS access keys with root permissions were compromised and misused",
+          "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file... served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "Based off CloudTrail logs, there was no evidence of unauthorized access to customer data.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "AWS access keys with root permissions were compromised and misused",
           "validated": true
         }
       ]
@@ -47,7 +36,20 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure.",
+          "evidence_quote": "These keys were exploited to send unauthorized emails... using our Amazon Simple Email Service (SES) infrastructure",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
+          "inferred": false,
+          "evidence_quote": "send unauthorized emails (targeting the general French community, not Tina customers specifically)",
           "validated": true
         }
       ]
@@ -58,76 +60,172 @@
       "step": 1,
       "technique_id": "T1552.001",
       "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "During the CI/CD build process, a GitHub Actions workflow step inadvertently wrote the runner's environment variables \u2014 including AWS access keys with root permissions \u2014 into a JavaScript file. This file was then deployed and publicly served as part of the TinaCloud front-end, exposing the credentials to anyone who inspected the JS bundle.",
-      "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
-      "aws_services_involved": [],
+      "description": "A misconfigured GitHub Actions workflow wrote the runner's environment variables (including AWS access keys) into a JavaScript file that was deployed and served publicly as part of TinaCloud's front-end code.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file",
       "evidence_sources": [
         "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker harvested the exposed AWS access keys from the publicly served JavaScript file and used them to authenticate to the TinaCloud AWS environment with root-level permissions, beginning unauthorized activity on 13th December 2024.",
-      "evidence_quote": "AWS access keys with root permissions were compromised and misused",
-      "aws_services_involved": [
-        "IAM"
-      ],
+      "technique_id": "T1593.003",
+      "technique_name": "Search Open Websites/Domains: Code Repositories",
+      "description": "Attackers harvested the exposed AWS access keys from the publicly served JavaScript file on the TinaCloud front-end.",
+      "aws_services_involved": [],
+      "evidence_quote": "allowing attackers to obtain the access keys directly from the front-end code",
       "evidence_sources": [
         "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c014",
+          "source_file": "link_00.clean.md",
+          "char_start": 2375,
+          "char_end": 2561,
+          "quote": "allowing attackers to obtain the access keys directly from the front-end code"
+        },
+        {
+          "chunk_id": "link_00.md#c030",
+          "source_file": "link_00.md",
+          "char_start": 5477,
+          "char_end": 5663,
+          "quote": "allowing attackers to obtain the access keys directly from the front-end code"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attackers authenticated to AWS using the compromised access keys, which carried root-level permissions.",
+      "event_time": "2024-12-13T16:33:00+11:00",
+      "event_time_precision": "exact",
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "evidence_quote": "AWS access keys with root permissions were compromised and misused",
+      "evidence_sources": [
+        "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 1791,
+          "char_end": 1861,
+          "quote": "AWS access keys with root permissions were compromised and misused"
+        },
+        {
+          "chunk_id": "link_00.md#c026",
+          "source_file": "link_00.md",
+          "char_start": 4893,
+          "char_end": 4963,
+          "quote": "AWS access keys with root permissions were compromised and misused"
+        }
       ],
       "validated": true
     },
     {
-      "step": 3,
+      "step": 4,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Using the compromised root-level AWS access keys, the attacker abused TinaCloud's Amazon SES infrastructure to send unauthorized phishing emails in French to the general French-speaking community, effectively hijacking the company's email-sending resource.",
-      "evidence_quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure.",
+      "description": "Attackers abused the hijacked Amazon SES infrastructure to send unauthorized phishing emails targeting the general French community.",
       "aws_services_involved": [
         "SES"
       ],
+      "evidence_quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure",
       "evidence_sources": [
         "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c003",
+          "source_file": "link_00.clean.md",
+          "char_start": 467,
+          "char_end": 757,
+          "quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 3569,
+          "char_end": 3859,
+          "quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1566",
+      "technique_name": "Phishing",
+      "description": "The unauthorized emails sent through the victim's SES were phishing messages (in French) sent to external recipients.",
+      "aws_services_involved": [
+        "SES"
+      ],
+      "evidence_quote": "A screenshot of one of the phishing emails",
+      "evidence_sources": [
+        "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c004",
+          "source_file": "link_00.clean.md",
+          "char_start": 759,
+          "char_end": 954,
+          "quote": "A screenshot of one of the phishing emails"
+        },
+        {
+          "chunk_id": "link_00.md#c020",
+          "source_file": "link_00.md",
+          "char_start": 3861,
+          "char_end": 4056,
+          "quote": "A screenshot of one of the phishing emails"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "SES",
     "IAM",
-    "CloudTrail",
-    "GitHub Actions"
+    "CloudTrail"
   ],
-  "impact_type": "Phishing / SES Abuse",
-  "confidence_score": 0.95,
+  "impact_type": "LLM / Resource Hijacking",
+  "confidence_score": 0.85,
   "data_exfiltrated": false,
-  "initial_access_vector": "AWS root-level access keys inadvertently embedded in a JavaScript file by a GitHub Actions CI/CD build step, then publicly served as part of the TinaCloud front-end application",
-  "persistence_mechanism": "None identified; the compromised key was revoked as an automated response and all legacy keys were subsequently rotated",
-  "privilege_escalation": "No escalation required \u2014 the exposed credentials already carried root/administrative AWS permissions",
+  "initial_access_vector": "AWS access keys with root permissions were written into a JavaScript file by a GitHub Actions build step and deployed publicly, where attackers harvested them from the TinaCloud front-end code.",
+  "persistence_mechanism": "None established; attackers relied on the long-lived compromised AWS access keys until they were revoked.",
+  "privilege_escalation": "Not required; the leaked AWS access keys already carried root-level permissions.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "During the CI/CD build process, a GitHub Actions workflow step inadvertently wrote the runner's environment variables \u2014 including AWS access keys with root permissions \u2014 into a JavaScript file. This file was then deployed and publicly served as part of the TinaCloud front-end, exposing the credentials to anyone who inspected the JS bundle.",
+        "description": "A misconfigured GitHub Actions workflow wrote the runner's environment variables (including AWS access keys) into a JavaScript file that was deployed and served publicly as part of TinaCloud's front-end code.",
         "tactic_id": "TA0006",
-        "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
-        "evidence_sources": [
-          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 2,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "The attacker harvested the exposed AWS access keys from the publicly served JavaScript file and used them to authenticate to the TinaCloud AWS environment with root-level permissions, beginning unauthorized activity on 13th December 2024.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "AWS access keys with root permissions were compromised and misused",
+        "evidence_quote": "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file",
         "evidence_sources": [
           "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
         ],
@@ -136,12 +234,53 @@
         ]
       },
       {
+        "step": 2,
+        "technique_id": "T1593.003",
+        "technique_name": "Search Open Websites/Domains: Code Repositories",
+        "description": "Attackers harvested the exposed AWS access keys from the publicly served JavaScript file on the TinaCloud front-end.",
+        "tactic_id": "",
+        "evidence_quote": "allowing attackers to obtain the access keys directly from the front-end code",
+        "evidence_sources": [
+          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+        ],
+        "aws_services_involved": []
+      },
+      {
         "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attackers authenticated to AWS using the compromised access keys, which carried root-level permissions.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "AWS access keys with root permissions were compromised and misused",
+        "evidence_sources": [
+          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "STS"
+        ]
+      },
+      {
+        "step": 4,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Using the compromised root-level AWS access keys, the attacker abused TinaCloud's Amazon SES infrastructure to send unauthorized phishing emails in French to the general French-speaking community, effectively hijacking the company's email-sending resource.",
+        "description": "Attackers abused the hijacked Amazon SES infrastructure to send unauthorized phishing emails targeting the general French community.",
         "tactic_id": "TA0040",
-        "evidence_quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure.",
+        "evidence_quote": "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure",
+        "evidence_sources": [
+          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+        ],
+        "aws_services_involved": [
+          "SES"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1566",
+        "technique_name": "Phishing",
+        "description": "The unauthorized emails sent through the victim's SES were phishing messages (in French) sent to external recipients.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "A screenshot of one of the phishing emails",
         "evidence_sources": [
           "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
         ],
@@ -153,24 +292,39 @@
     "edges": [
       {
         "source": "T1552.001",
-        "target": "T1078.004",
+        "target": "T1593.003",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Search Open Websites/Domains: Code Repositories",
+        "sources": [
+          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+        ],
+        "evidence_quotes": [
+          "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file",
+          "allowing attackers to obtain the access keys directly from the front-end code"
+        ]
+      },
+      {
+        "source": "T1593.003",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Search Open Websites/Domains: Code Repositories",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
         ],
         "evidence_quotes": [
-          "a step in the GitHub Actions workflow inadvertently wrote the GitHub Actions Runner's environment variables, including sensitive AWS access keys, to a JavaScript file. The JavaScript file containing the keys was subsequently deployed and served publicly as part of TinaCloud, allowing attackers to obtain the access keys directly from the front-end code.",
+          "allowing attackers to obtain the access keys directly from the front-end code",
           "AWS access keys with root permissions were compromised and misused"
         ]
       },
       {
         "source": "T1078.004",
         "target": "T1496",
-        "source_step": 2,
-        "target_step": 3,
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Resource Hijacking",
         "sources": [
@@ -178,7 +332,22 @@
         ],
         "evidence_quotes": [
           "AWS access keys with root permissions were compromised and misused",
-          "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure."
+          "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure"
+        ]
+      },
+      {
+        "source": "T1496",
+        "target": "T1566",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Resource Hijacking",
+        "target_technique_name": "Phishing",
+        "sources": [
+          "https://tina.io/blog/2024-12-tinacloud-public-disclosure-security-breach"
+        ],
+        "evidence_quotes": [
+          "These keys were exploited to send unauthorized emails (targeting the general French community, not Tina customers specifically) using our Amazon Simple Email Service (SES) infrastructure",
+          "A screenshot of one of the phishing emails"
         ]
       }
     ]
@@ -189,17 +358,16 @@
   },
   "schema_version": "1.0",
   "incident_slug": "tinacloud-2024-december",
-  "analyzed_at": "2026-04-15T21:11:18.138263+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 11985,
+  "analyzed_at": "2026-04-23T18:54:53.510707+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 18202,
   "incident_name": "TinaCloud",
   "incident_date": "2024, December",
   "incident_root_cause": "Credentials leaked in JS file",
-  "impact_type_raw": "Phishing / SES Abuse",
+  "impact_type_raw": "Resource Hijacking (SES abuse for phishing)",
   "aws_services_raw": [
     "Amazon SES",
     "AWS IAM",
-    "AWS CloudTrail",
-    "GitHub Actions"
+    "AWS CloudTrail"
   ]
 }

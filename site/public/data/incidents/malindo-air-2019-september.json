@@ -5,18 +5,12 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078.001",
-          "technique_name": "Valid Accounts: Default Accounts",
+          "technique_id": "T1199",
+          "technique_name": "Trusted Relationship",
           "inferred": false,
-          "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India 'improperly accessed and stole the personal data of our customers.'",
+          "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India \"improperly accessed and stole the personal data of our customers.\"",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
+        },
         {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
@@ -34,7 +28,7 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame for the security incident",
+          "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame",
           "validated": true
         }
       ]
@@ -44,8 +38,8 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
           "evidence_quote": "improperly accessed and stole the personal data of our customers",
           "validated": true
@@ -57,11 +51,11 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1565",
-          "technique_name": "Data Manipulation",
-          "inferred": false,
-          "evidence_quote": "The records \u2014 which contained names, dates of birth, phone numbers, emails, addresses, passport numbers and expiration dates \u2014 were spotted circulating on the dark web",
-          "validated": false
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": true,
+          "evidence_quote": "spotted circulating on the dark web",
+          "validated": true
         }
       ]
     }
@@ -69,42 +63,131 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1078",
-      "technique_name": "Valid Accounts",
-      "description": "Two former employees of third-party e-commerce provider GoQuo (India development center) leveraged their existing or residual access credentials to authenticate to Malindo Air's systems after their employment ended.",
-      "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India 'improperly accessed and stole the personal data of our customers.'",
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "description": "Two former employees of Malindo Air's third-party e-commerce provider GoQuo (at a development center in India) leveraged their trusted third-party access to the airline's customer data environment.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "event_time": "2019-08",
+      "event_time_precision": "month",
+      "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India \"improperly accessed and stole the personal data of our customers.\"",
       "evidence_sources": [
         "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
       ],
-      "aws_services_involved": [],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The former employees accessed cloud-hosted storage (suspected AWS S3 bucket) containing approximately 35 million passenger PII records including names, dates of birth, phone numbers, emails, addresses, passport numbers and expiration dates.",
-      "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame for the security incident",
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "The former GoQuo employees used valid account credentials they retained from their prior employment to authenticate to systems storing Malindo Air / Thai Lion Air passenger data.",
+      "aws_services_involved": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "two former employees of a third-party provider were responsible for a massive breach",
       "evidence_sources": [
         "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
       ],
-      "aws_services_involved": [
-        "S3"
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c005",
+          "source_file": "link_00.clean.md",
+          "char_start": 740,
+          "char_end": 907,
+          "quote": "two former employees of a third-party provider were responsible for a massive breach"
+        },
+        {
+          "chunk_id": "link_00.md#c016",
+          "source_file": "link_00.md",
+          "char_start": 5233,
+          "char_end": 5400,
+          "quote": "two former employees of a third-party provider were responsible for a massive breach"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "The stolen 35 million PII records were exfiltrated and subsequently made available on the dark web, indicating data was transferred out of Malindo Air's environment.",
-      "evidence_quote": "The records \u2026 were spotted circulating on the dark web last month",
-      "evidence_sources": [
-        "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
-      ],
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Accessed passenger PII stored in cloud storage (initially suspected to be an AWS S3 bucket, though AWS confirmed its services were not compromised). Records included names, DOBs, phone numbers, emails, addresses, and passport numbers/expiration dates.",
       "aws_services_involved": [
         "S3"
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame",
+      "evidence_sources": [
+        "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+      ],
+      "ordering_confidence": 0.6,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 1336,
+          "char_end": 1586,
+          "quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame"
+        },
+        {
+          "chunk_id": "link_00.md#c019",
+          "source_file": "link_00.md",
+          "char_start": 5829,
+          "char_end": 6079,
+          "quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Stole approximately 35 million customer PII records belonging to Malindo Air and Thai Lion Air passengers.",
+      "aws_services_involved": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "evidence_quote": "improperly accessed and stole the personal data of our customers",
+      "evidence_sources": [
+        "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c009",
+          "source_file": "link_00.clean.md",
+          "char_start": 1588,
+          "char_end": 1777,
+          "quote": "improperly accessed and stole the personal data of our customers"
+        },
+        {
+          "chunk_id": "link_00.md#c020",
+          "source_file": "link_00.md",
+          "char_start": 6081,
+          "char_end": 6270,
+          "quote": "improperly accessed and stole the personal data of our customers"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Stolen passenger records were leaked/traded on the dark web, monetizing the stolen PII.",
+      "aws_services_involved": [],
+      "event_time": "2019-08",
+      "event_time_precision": "month",
+      "evidence_quote": "spotted circulating on the dark web last month",
+      "evidence_sources": [
+        "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
       "validated": true
     }
   ],
@@ -112,32 +195,46 @@
     "S3"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.55,
-  "initial_access_vector": "Former employees of third-party e-commerce provider GoQuo used their (likely residual/retained) legitimate credentials to improperly access Malindo Air customer data systems after leaving the company.",
+  "confidence_score": 0.5,
   "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Two former employees of Malindo Air's third-party e-commerce provider GoQuo (India development center) abused retained access to improperly access and steal customer PII.",
+  "persistence_mechanism": "Retained valid credentials/access from prior employment at third-party provider GoQuo after termination.",
+  "privilege_escalation": "None identified; insiders already had legitimate access to customer data as part of their prior roles.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
+        "technique_id": "T1199",
+        "technique_name": "Trusted Relationship",
+        "description": "Two former employees of Malindo Air's third-party e-commerce provider GoQuo (at a development center in India) leveraged their trusted third-party access to the airline's customer data environment.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India \"improperly accessed and stole the personal data of our customers.\"",
+        "evidence_sources": [
+          "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 2,
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
-        "description": "Two former employees of third-party e-commerce provider GoQuo (India development center) leveraged their existing or residual access credentials to authenticate to Malindo Air's systems after their employment ended.",
+        "description": "The former GoQuo employees used valid account credentials they retained from their prior employment to authenticate to systems storing Malindo Air / Thai Lion Air passenger data.",
         "tactic_id": "TA0005",
-        "evidence_quote": "two former workers at its e-commerce provider GoQuo in a development center in India 'improperly accessed and stole the personal data of our customers.'",
+        "evidence_quote": "two former employees of a third-party provider were responsible for a massive breach",
         "evidence_sources": [
           "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
         ],
         "aws_services_involved": []
       },
       {
-        "step": 2,
+        "step": 3,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The former employees accessed cloud-hosted storage (suspected AWS S3 bucket) containing approximately 35 million passenger PII records including names, dates of birth, phone numbers, emails, addresses, passport numbers and expiration dates.",
+        "description": "Accessed passenger PII stored in cloud storage (initially suspected to be an AWS S3 bucket, though AWS confirmed its services were not compromised). Records included names, DOBs, phone numbers, emails, addresses, and passport numbers/expiration dates.",
         "tactic_id": "TA0009",
-        "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame for the security incident",
+        "evidence_quote": "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame",
         "evidence_sources": [
           "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
         ],
@@ -146,49 +243,89 @@
         ]
       },
       {
-        "step": 3,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "The stolen 35 million PII records were exfiltrated and subsequently made available on the dark web, indicating data was transferred out of Malindo Air's environment.",
+        "step": 4,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Stole approximately 35 million customer PII records belonging to Malindo Air and Thai Lion Air passengers.",
         "tactic_id": "TA0010",
-        "evidence_quote": "The records \u2026 were spotted circulating on the dark web last month",
+        "evidence_quote": "improperly accessed and stole the personal data of our customers",
         "evidence_sources": [
           "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
         ],
-        "aws_services_involved": [
-          "S3"
-        ]
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Stolen passenger records were leaked/traded on the dark web, monetizing the stolen PII.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "spotted circulating on the dark web last month",
+        "evidence_sources": [
+          "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1078",
-        "target": "T1530",
+        "source": "T1199",
+        "target": "T1078",
         "source_step": 1,
         "target_step": 2,
+        "source_technique_name": "Trusted Relationship",
+        "target_technique_name": "Valid Accounts",
+        "sources": [
+          "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+        ],
+        "evidence_quotes": [
+          "two former workers at its e-commerce provider GoQuo in a development center in India \"improperly accessed and stole the personal data of our customers.\"",
+          "two former employees of a third-party provider were responsible for a massive breach"
+        ]
+      },
+      {
+        "source": "T1078",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Valid Accounts",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
         ],
         "evidence_quotes": [
-          "two former workers at its e-commerce provider GoQuo in a development center in India 'improperly accessed and stole the personal data of our customers.'",
-          "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame for the security incident"
+          "two former employees of a third-party provider were responsible for a massive breach",
+          "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1537",
-        "source_step": 2,
-        "target_step": 3,
+        "target": "T1567",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
         ],
         "evidence_quotes": [
-          "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame for the security incident",
-          "The records \u2026 were spotted circulating on the dark web last month"
+          "Initial reports suggested a misconfigured Amazon Web Services (AWS) S3 bucket may have been to blame",
+          "improperly accessed and stole the personal data of our customers"
+        ]
+      },
+      {
+        "source": "T1567",
+        "target": "T1657",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Exfiltration Over Web Service",
+        "target_technique_name": "Financial Theft",
+        "sources": [
+          "https://www.infosecurity-magazine.com/news/malindo-air-data-breach-was-inside/"
+        ],
+        "evidence_quotes": [
+          "improperly accessed and stole the personal data of our customers",
+          "spotted circulating on the dark web last month"
         ]
       }
     ]
@@ -199,14 +336,14 @@
   },
   "schema_version": "1.0",
   "incident_slug": "malindo-air-2019-september",
-  "analyzed_at": "2026-04-15T21:00:00.341484+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 16087,
+  "analyzed_at": "2026-04-23T18:47:43.474349+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 19820,
   "incident_name": "Malindo Air",
   "incident_date": "2019, September",
   "incident_root_cause": "Former employee insider threat",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
-    "Amazon S3"
+    "S3"
   ]
 }

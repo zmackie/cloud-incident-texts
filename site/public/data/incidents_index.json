@@ -5,6 +5,7 @@
     "technique_ids": [
       "T1078.004",
       "T1530",
+      "T1567",
       "T1485"
     ],
     "aws_services": [
@@ -12,116 +13,112 @@
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "AWS IAM"
+      "S3",
+      "IAM"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Destruction / Data Exfiltration",
-    "initial_access_vector": "Compromised AWS credentials used to authenticate directly to the AWS environment",
+    "impact_type_raw": "Data Destruction",
+    "initial_access_vector": "Compromised AWS access credentials used to access the AWS environment",
     "event_date": "2021, January",
     "data_exfiltrated": true,
-    "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T20:43:26.096742+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:37:11.405468+00:00"
   },
   {
     "slug": "angelone-2025-march",
     "name": "AngelOne",
     "technique_ids": [
-      "T1078",
+      "T1078.004",
       "T1530",
       "T1567"
     ],
     "aws_services": [
-      "IAM",
-      "S3",
       "AWS"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "Amazon Web Services (AWS)"
+      "AWS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Unknown \u2014 likely compromised AWS credentials or misconfiguration attributed to cybersecurity failures on Angel One's part, not an AWS infrastructure hack",
+    "initial_access_vector": "Unknown \u2014 Angel One's AWS resources were compromised, likely via stolen/leaked credentials (company rotated AWS passwords in response). No technical details disclosed.",
     "event_date": "2025, March",
     "data_exfiltrated": true,
     "confidence_score": 0.3,
-    "analyzed_at": "2026-04-15T20:43:25.725623+00:00"
+    "analyzed_at": "2026-04-23T18:37:08.019337+00:00"
   },
   {
     "slug": "animal-jam-2020-november",
     "name": "Animal Jam",
     "technique_ids": [
       "T1078",
-      "T1552.005",
+      "T1552.008",
       "T1078.004",
       "T1530",
-      "T1537"
+      "T1567"
     ],
     "aws_services": [
       "IAM",
-      "S3",
-      "RDS"
+      "EC2"
     ],
     "aws_services_raw": [
       "AWS IAM",
-      "Amazon S3",
-      "AWS RDS"
+      "AWS EC2"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Attacker compromised a WildWorks employee's Slack credentials (via malware or credential re-use) to gain unauthorized access to the corporate Slack workspace",
+    "initial_access_vector": "Compromised WildWorks employee Slack credentials (possibly via malware or password reuse) allowed attacker into the Slack workspace, where a private AWS key was found in a staff channel.",
     "event_date": "2020, November",
     "data_exfiltrated": true,
-    "confidence_score": 0.8,
-    "analyzed_at": "2026-04-15T20:43:36.317532+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:37:20.000149+00:00"
   },
   {
     "slug": "aws-2023-august",
     "name": "AWS",
     "technique_ids": [
       "T1190",
-      "T1609",
+      "T1059",
       "T1552.005",
+      "T1078.004",
       "T1578.002",
       "T1496"
     ],
     "aws_services": [
       "ECS",
       "EC2",
-      "S3",
       "IAM",
+      "S3",
       "GuardDuty",
       "CloudTrail"
     ],
     "aws_services_raw": [
       "Amazon ECS",
       "Amazon EC2",
+      "IAM",
       "Amazon S3",
-      "AWS IAM",
       "Amazon GuardDuty",
       "AWS CloudTrail"
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "Unauthenticated RCE via a web interface unintentionally exposed to the internet by a third-party ECS task definition",
+    "initial_access_vector": "Remote code execution via an unauthenticated web interface unintentionally exposed to the internet by a third-party Amazon ECS task definition.",
     "event_date": "2023, August",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:43:36.672578+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:37:24.641447+00:00"
   },
   {
     "slug": "aws-2023-february",
     "name": "AWS",
     "technique_ids": [
       "T1552.001",
-      "T1552.005",
       "T1078.004",
-      "T1526",
+      "T1087.004",
       "T1619",
       "T1530",
-      "T1485"
+      "T1485",
+      "T1486",
+      "T1657"
     ],
     "aws_services": [
       "S3",
@@ -130,10 +127,10 @@
       "STS",
       "CloudTrail",
       "CloudWatch",
-      "GuardDuty",
       "Athena",
       "Backup",
-      "KMS"
+      "KMS",
+      "GuardDuty"
     ],
     "aws_services_raw": [
       "Amazon S3",
@@ -142,103 +139,97 @@
       "AWS STS",
       "AWS CloudTrail",
       "Amazon CloudWatch",
-      "Amazon GuardDuty",
       "Amazon Athena",
       "AWS Backup",
-      "AWS KMS"
+      "AWS KMS",
+      "Amazon GuardDuty"
     ],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware",
-    "initial_access_vector": "Unintended disclosure of static IAM access keys (most common), or exploitation of an application vulnerability on an EC2 instance to steal STS credentials via IMDSv1 (SSRF/IMDS abuse)",
+    "impact_type_raw": "Ransomware / Data Destruction (targeting Amazon S3)",
+    "initial_access_vector": "Unintended disclosure of static IAM access keys (most common); alternatively, SSRF/application flaw on an EC2 instance using IMDSv1 to retrieve STS session credentials from the attached instance profile.",
     "event_date": "2023, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:41:49.626042+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:37:36.009034+00:00"
   },
   {
     "slug": "aws-cirt-2024-january",
     "name": "AWS CIRT",
     "technique_ids": [
-      "T1552.004",
       "T1199",
+      "T1606.002",
       "T1078.004",
-      "T1484.002",
-      "T1530",
-      "T1537"
+      "T1530"
     ],
     "aws_services": [
       "IAM",
-      "IAM Identity Center",
       "STS",
+      "IAM Identity Center",
       "S3",
       "CloudTrail"
     ],
     "aws_services_raw": [
-      "IAM",
-      "AWS IAM Identity Center",
+      "AWS IAM",
       "AWS STS",
+      "AWS IAM Identity Center",
       "Amazon S3",
       "AWS CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromise of a third-party Identity Provider (IdP) and its signing keys, enabling forged federated authentication assertions (e.g., SAML tokens) to gain access to the target AWS environment.",
+    "initial_access_vector": "Compromise of a third-party identity provider (IdP), allowing the attacker to use federated access into the AWS environment.",
     "event_date": "2024, January",
     "data_exfiltrated": true,
-    "confidence_score": 0.35,
-    "analyzed_at": "2026-04-15T20:44:17.621544+00:00"
+    "confidence_score": 0.2,
+    "analyzed_at": "2026-04-23T18:37:15.213737+00:00"
   },
   {
     "slug": "badshah-2025-april",
     "name": "Badshah",
     "technique_ids": [
-      "T1552.005",
+      "T1090",
       "T1078.004",
       "T1580",
-      "T1562.007",
-      "T1110",
-      "T1537",
+      "T1578",
+      "T1098",
+      "T1530",
       "T1562.008",
-      "T1485",
-      "T1490"
+      "T1070.004",
+      "T1485"
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "S3",
-      "RDS",
-      "EC2",
       "CloudTrail",
+      "S3",
+      "EC2",
+      "RDS",
       "GuardDuty",
       "Security Hub",
       "Config",
+      "IAM Identity Center",
       "Organizations",
-      "VPC",
-      "VPC Security Groups",
-      "IAM Identity Center"
+      "VPC"
     ],
     "aws_services_raw": [
       "IAM",
-      "STS",
-      "S3",
-      "RDS",
-      "EC2",
       "CloudTrail",
+      "S3",
+      "EC2",
+      "RDS",
       "GuardDuty",
       "SecurityHub",
       "AWS Config",
+      "AWS Identity Center",
       "AWS Organizations",
-      "VPC",
-      "EC2 Security Groups",
-      "AWS Identity Center"
+      "VPC"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Exfiltration and Data Destruction",
-    "initial_access_vector": "Leaked/hardcoded IAM access keys with AdministratorAccess, likely obtained from a CI/CD system in a non-production account where credentials were shared among team members",
+    "impact_type_raw": "Data Exfiltration and Destruction",
+    "initial_access_vector": "Leaked/compromised IAM user access keys with AdministratorAccess policy, likely exposed via CI/CD system hosted in a non-production account with lenient controls and shared among team members.",
     "event_date": "2025, April",
     "data_exfiltrated": true,
     "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:44:28.727607+00:00"
+    "analyzed_at": "2026-04-23T18:38:07.820966+00:00"
   },
   {
     "slug": "beyondtrust-2024-december",
@@ -246,9 +237,9 @@
     "technique_ids": [
       "T1190",
       "T1552.005",
-      "T1078.004",
-      "T1098.001",
-      "T1078"
+      "T1550.001",
+      "T1098",
+      "T1078.004"
     ],
     "aws_services": [
       "AWS",
@@ -256,18 +247,17 @@
       "BeyondTrust Remote Support SaaS"
     ],
     "aws_services_raw": [
-      "AWS (BeyondTrust primary account)",
-      "AWS (BeyondTrust Remote Support SaaS account)",
+      "AWS",
       "AWS IAM",
       "BeyondTrust Remote Support SaaS"
     ],
-    "impact_type": "Account Takeover",
-    "impact_type_raw": "Account Takeover / Customer Instance Compromise",
-    "initial_access_vector": "Zero-day vulnerability (CVE-2024-12356) in a third-party application hosted in a BeyondTrust AWS account, exploited to gain access to an internet-facing asset",
+    "impact_type": "Supply Chain",
+    "impact_type_raw": "Customer Instance Compromise / Supply Chain Compromise",
+    "initial_access_vector": "Zero-day vulnerability in a third-party application exposed on an online asset in a BeyondTrust AWS account (later tracked as CVE-2024-12356 / CVE-2024-12686).",
     "event_date": "2024, December",
-    "data_exfiltrated": false,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:44:33.999839+00:00"
+    "data_exfiltrated": true,
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:38:03.731804+00:00"
   },
   {
     "slug": "browserstack-2014-november",
@@ -277,48 +267,49 @@
       "T1552.001",
       "T1136.003",
       "T1578.002",
-      "T1530",
+      "T1578.004",
       "T1562.007",
       "T1213",
       "T1048",
-      "T1071.003"
+      "T1566"
     ],
     "aws_services": [
       "EC2",
       "IAM",
       "EBS",
-      "SES",
-      "RDS",
       "VPC Security Groups",
+      "VPC",
+      "RDS",
+      "SES",
       "CloudTrail"
     ],
     "aws_services_raw": [
       "EC2",
       "IAM",
       "EBS",
-      "SES",
+      "EC2 Security Groups",
+      "VPC",
       "RDS",
-      "VPC Security Groups",
+      "SES",
       "CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Shellshock (CVE-2014-6271) exploitation against an unpatched, inactive prototype EC2 machine exposed to the internet",
+    "initial_access_vector": "Exploitation of the Shellshock (CVE-2014-6271) vulnerability on an unpatched, inactive prototype EC2 machine exposed to the internet.",
     "event_date": "2014, November",
     "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:44:56.648106+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:38:22.181016+00:00"
   },
   {
     "slug": "bybit-safewallet-2025-february",
     "name": "Bybit / Safe{Wallet}",
     "technique_ids": [
-      "T1566",
-      "T1555",
-      "T1580",
       "T1195.002",
+      "T1078.004",
+      "T1578",
       "T1059.007",
-      "T1185",
+      "T1557",
       "T1657"
     ],
     "aws_services": [
@@ -327,17 +318,17 @@
       "CloudFront"
     ],
     "aws_services_raw": [
-      "AWS S3",
+      "Amazon S3",
       "AWS IAM",
-      "AWS CloudFront"
+      "Amazon CloudFront"
     ],
     "impact_type": "Financial Theft",
     "impact_type_raw": "Financial Theft",
-    "initial_access_vector": "Developer workstation compromise (likely spearphishing/social engineering) targeting a Safe{Wallet} developer, yielding AWS credentials with S3 write access to the frontend asset bucket",
+    "initial_access_vector": "Compromise of a Safe{Wallet} developer's workstation, which yielded valid AWS credentials/session with write access to the S3 bucket serving the Safe{Wallet} web application.",
     "event_date": "2025, February",
-    "data_exfiltrated": true,
+    "data_exfiltrated": false,
     "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T20:45:20.962622+00:00"
+    "analyzed_at": "2026-04-23T18:38:11.289202+00:00"
   },
   {
     "slug": "cado-security-and-invictus-incident-response-2023-january",
@@ -345,143 +336,141 @@
     "technique_ids": [
       "T1078.004",
       "T1136.003",
-      "T1651",
-      "T1548.003",
+      "T1021.007",
+      "T1059.004",
       "T1552.005",
       "T1580",
       "T1021.004",
       "T1005",
-      "T1074.001",
+      "T1048",
       "T1537"
     ],
     "aws_services": [
       "IAM",
-      "Management Console",
-      "Systems Manager",
-      "EC2",
-      "S3",
-      "CLI",
-      "VPC Security Groups",
-      "IMDS",
       "CloudTrail",
-      "VPC Flow Logs"
+      "Management Console",
+      "Systems Manager Session Manager",
+      "EC2",
+      "IMDS",
+      "S3",
+      "VPC"
     ],
     "aws_services_raw": [
       "AWS IAM",
-      "AWS Management Console",
-      "AWS Systems Manager (SSM)",
-      "Amazon EC2",
-      "Amazon S3",
-      "AWS CLI",
-      "VPC Security Groups",
-      "EC2 Instance Metadata Service (IMDS)",
       "AWS CloudTrail",
-      "VPC Flow Logs"
+      "AWS Management Console",
+      "AWS Systems Manager (SSM) Session Manager",
+      "Amazon EC2",
+      "Amazon EC2 Instance Metadata Service (IMDS)",
+      "Amazon S3",
+      "Amazon VPC"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised IAM account DevOps1-bpvbp (no MFA) used to log into the AWS Management Console from external IP 185.195.232.111",
+    "initial_access_vector": "Attacker obtained credentials for IAM user DevOps1-bpvbp (no MFA) and logged into the AWS Management Console from IP 185.195.232.111",
     "event_date": "2023, January",
     "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T20:45:44.092431+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:38:38.943725+00:00"
   },
   {
     "slug": "cameo-2020-february",
     "name": "Cameo",
     "technique_ids": [
+      "T1528",
       "T1552.001",
       "T1078.004",
-      "T1619",
-      "T1530",
-      "T1083"
+      "T1530"
     ],
     "aws_services": [
       "S3",
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "AWS IAM"
+      "S3",
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Hardcoded AWS credentials found embedded within the Cameo Android mobile app package (APK), exposed for approximately two years across multiple app versions",
+    "initial_access_vector": "Hard-coded AWS credentials embedded in the Cameo Android mobile app package, extracted via decompilation, granting access to backend S3 buckets.",
     "event_date": "2020, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:45:32.937463+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:38:30.164555+00:00"
   },
   {
     "slug": "capital-one-2019-april",
     "name": "Capital One",
     "technique_ids": [
-      "T1595.001",
-      "T1090.003",
       "T1190",
       "T1552.005",
-      "T1580",
+      "T1078.004",
       "T1619",
       "T1530"
     ],
     "aws_services": [
       "EC2",
-      "S3",
       "IAM",
-      "VPC Security Groups",
+      "S3",
       "WAF",
-      "IMDS"
+      "VPC Security Groups",
+      "IMDS",
+      "CLI",
+      "STS"
     ],
     "aws_services_raw": [
       "EC2",
-      "S3",
       "IAM",
-      "VPC Security Groups",
-      "WAF",
-      "EC2 Instance Metadata Service (IMDS)"
+      "S3",
+      "AWS WAF",
+      "Security Groups",
+      "EC2 Instance Metadata Service (IMDS)",
+      "AWS CLI",
+      "AWS STS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Misconfigured WAF/Security Group exposed a dangerous port to the internet, enabling SSRF-style commands to be executed on the EC2 server",
+    "initial_access_vector": "Misconfigured WAF/firewall allowed SSRF-style command execution against an EC2-hosted server, enabling the attacker to interact with the EC2 Instance Metadata Service.",
     "event_date": "2019, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:46:06.926408+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:38:42.064686+00:00"
   },
   {
     "slug": "checkmarx-2023-june",
     "name": "Checkmarx",
     "technique_ids": [
-      "T1584.001",
+      "T1584.006",
+      "T1608.001",
       "T1195.002",
-      "T1036.005",
-      "T1027",
+      "T1204.002",
       "T1082",
+      "T1033",
+      "T1071.001",
       "T1567.002"
     ],
     "aws_services": [
-      "S3",
-      "npm"
+      "S3"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "npm (Node Package Manager)"
+      "S3"
     ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Credential Theft / Data Exfiltration",
-    "initial_access_vector": "Attacker hijacked an abandoned/deleted S3 bucket previously used by npm package 'bignum' to host pre-built binaries, then replaced the legitimate binary with a malicious one; any developer installing affected bignum versions (0.12.2\u20130.13.0) automatically downloaded the trojanized binary.",
+    "impact_type": "Supply Chain",
+    "impact_type_raw": "Credential Theft / Software Supply Chain Compromise",
+    "initial_access_vector": "Hijacking of an abandoned AWS S3 bucket referenced by the npm package 'bignum' (via node-gyp at install time); the attacker re-registered the globally unique bucket name after the original was deleted and replaced the legitimate install-time binary with a malicious .node binary.",
     "event_date": "2023, June",
     "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:46:10.721167+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:39:07.112433+00:00"
   },
   {
     "slug": "chegg-2018-april",
     "name": "Chegg",
     "technique_ids": [
       "T1078.004",
-      "T1619",
-      "T1530"
+      "T1530",
+      "T1567",
+      "T1110.002"
     ],
     "aws_services": [
       "S3",
@@ -493,11 +482,11 @@
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Former contractor used a broadly shared, single AWS Root Credential (access key) that Chegg distributed to all employees and contractors, with no MFA, no key rotation, and no per-user access controls.",
+    "initial_access_vector": "Former contractor reused a shared AWS Root Credential that provided full administrative access to S3; credentials were never rotated after contractor departure and MFA was not required.",
     "event_date": "2018, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:46:27.600946+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:38:57.809912+00:00"
   },
   {
     "slug": "cisco-2020-december",
@@ -505,33 +494,34 @@
     "technique_ids": [
       "T1078.004",
       "T1059",
-      "T1485"
+      "T1485",
+      "T1531"
     ],
     "aws_services": [
       "EC2",
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon EC2",
+      "EC2",
       "AWS IAM"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Destructive Attack / Service Disruption",
-    "initial_access_vector": "Former employee retained active AWS cloud account credentials after resignation in April 2018; no evidence of credential revocation or access deprovisioning",
+    "impact_type_raw": "Data Destruction / Sabotage",
+    "initial_access_vector": "Former employee used retained/valid AWS credentials five months after resignation to log in to Cisco's AWS environment without authorization.",
     "event_date": "2020,  December",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:46:32.526306+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:39:10.757763+00:00"
   },
   {
     "slug": "clearvector-case-study-2022-august",
     "name": "Clearvector case study",
     "technique_ids": [
-      "T1556.006",
-      "T1550.001",
+      "T1556.007",
       "T1199",
+      "T1550.001",
       "T1078.004",
-      "T1498"
+      "T1499"
     ],
     "aws_services": [
       "IAM Identity Center",
@@ -541,44 +531,37 @@
       "CloudTrail"
     ],
     "aws_services_raw": [
-      "AWS IAM Identity Center",
-      "AWS SSO",
-      "AWS IAM",
-      "AWS STS",
-      "AWS Lambda",
-      "AWS CloudTrail"
+      "IAM Identity Center (AWS SSO)",
+      "IAM",
+      "STS",
+      "Lambda",
+      "CloudTrail"
     ],
     "impact_type": "Data Destruction / Disruption",
     "impact_type_raw": "Denial of Service",
-    "initial_access_vector": "NOBELIUM deployed the MagicWeb backdoor on the victim's on-premises ADFS server, enabling forged SAML assertions that were trusted by AWS IAM Identity Center (SSO), allowing the attacker to authenticate as any valid ADFS-federated AWS user.",
+    "initial_access_vector": "Compromise of on-premises ADFS server with MagicWeb backdoor, enabling authentication as any valid user and pivot into AWS via IAM Identity Center (SAML federation)",
     "event_date": "2022, August",
     "data_exfiltrated": false,
-    "confidence_score": 0.72,
-    "analyzed_at": "2026-04-15T20:47:13.100610+00:00"
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:39:22.189773+00:00"
   },
   {
     "slug": "cloudflare-2023-november",
     "name": "Cloudflare",
     "technique_ids": [
-      "T1589.001",
-      "T1595.002",
       "T1078.004",
-      "T1072",
+      "T1199",
       "T1136.003",
-      "T1505.003",
-      "T1546",
       "T1098",
-      "T1552.001",
-      "T1528",
+      "T1505",
+      "T1087.004",
+      "T1526",
       "T1213.001",
-      "T1213",
-      "T1518",
-      "T1021",
-      "T1550.001",
       "T1213.003",
-      "T1560",
+      "T1021",
+      "T1213",
       "T1219",
-      "T1567"
+      "T1560"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -588,124 +571,122 @@
     "event_date": "2023, November",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:17:39.840524+00:00"
+    "analyzed_at": "2026-04-23T18:39:50.181195+00:00"
   },
   {
     "slug": "code-spaces-2014-june",
     "name": "Code Spaces",
     "technique_ids": [
-      "T1566",
-      "T1078.004",
       "T1498",
-      "T1580",
+      "T1078.004",
+      "T1657",
       "T1136.003",
-      "T1531",
-      "T1485"
+      "T1485",
+      "T1490"
     ],
     "aws_services": [
-      "Management Console",
       "EC2",
       "S3",
       "EBS",
-      "IAM"
+      "AMI",
+      "IAM",
+      "Management Console"
     ],
     "aws_services_raw": [
-      "AWS Management Console",
-      "Amazon EC2",
-      "Amazon S3",
-      "Amazon EBS",
-      "AWS IAM"
+      "EC2",
+      "S3",
+      "EBS",
+      "AMI",
+      "IAM",
+      "AWS Management Console"
     ],
-    "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Destruction",
-    "initial_access_vector": "Compromised AWS Management Console credentials (likely via phishing) used to access the EC2 control panel",
+    "impact_type": "Ransomware / Extortion",
+    "impact_type_raw": "Data Destruction / Extortion",
+    "initial_access_vector": "Attacker gained access to Code Spaces' AWS EC2 control panel using valid console credentials (suspected phishing), coinciding with a DDoS attack.",
     "event_date": "2014, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:47:28.029254+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:39:36.510470+00:00"
   },
   {
     "slug": "coffee-meets-bagel-2023-august",
     "name": "Coffee Meets Bagel",
     "technique_ids": [
-      "T1190",
-      "T1485"
+      "T1078",
+      "T1485",
+      "T1498"
     ],
     "aws_services": [],
     "aws_services_raw": [],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Deletion / Service Disruption",
-    "initial_access_vector": "Unknown \u2014 root cause not publicly disclosed",
+    "impact_type_raw": "Data Destruction / Service Outage",
+    "initial_access_vector": "Unknown - source article returned 404 and root cause was not disclosed",
     "event_date": "2023, August",
     "data_exfiltrated": false,
     "confidence_score": 0.2,
-    "analyzed_at": "2026-04-15T20:47:16.052223+00:00"
+    "analyzed_at": "2026-04-23T19:00:46.466026+00:00"
   },
   {
     "slug": "commuteair-2023-january",
     "name": "CommuteAir",
     "technique_ids": [
-      "T1596.005",
+      "T1596",
       "T1190",
+      "T1083",
       "T1552.001",
+      "T1213.003",
+      "T1550.001",
       "T1580",
-      "T1213",
-      "T1530"
+      "T1530",
+      "T1567"
     ],
     "aws_services": [
       "S3",
       "DynamoDB",
+      "IAM",
+      "EC2",
       "CLI"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "Amazon DynamoDB",
+      "S3",
+      "DynamoDB",
+      "IAM",
+      "EC2",
       "AWS CLI"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Publicly exposed Jenkins CI/CD server discovered via ZoomEye/Shodan, accessible without admin authentication, exposing build workspaces for ~70 jobs",
+    "initial_access_vector": "Publicly exposed Jenkins server discovered via Shodan/ZoomEye, accessible without admin authentication but exposing build workspaces and repositories containing hardcoded credentials.",
     "event_date": "2023, January",
     "data_exfiltrated": true,
     "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:48:07.452186+00:00"
+    "analyzed_at": "2026-04-23T18:40:18.910610+00:00"
   },
   {
     "slug": "crowdstrike-2022-december",
     "name": "Crowdstrike",
     "technique_ids": [
-      "T1566",
-      "T1566.004",
       "T1190",
+      "T1566",
       "T1078",
       "T1059",
-      "T1047",
-      "T1204.002",
-      "T1098.005",
-      "T1133",
-      "T1505",
-      "T1068",
-      "T1548",
-      "T1078.004",
-      "T1550.001",
-      "T1036.005",
-      "T1562.001",
-      "T1090",
-      "T1556.006",
-      "T1621",
-      "T1111",
-      "T1552.005",
-      "T1003",
-      "T1087.002",
-      "T1046",
-      "T1069",
-      "T1213.002",
-      "T1021.004",
-      "T1021.001",
-      "T1119",
-      "T1572",
-      "T1090.003",
+      "T1610",
+      "T1556",
+      "T1136",
       "T1219",
+      "T1068",
+      "T1550",
+      "T1562",
+      "T1552",
+      "T1621",
+      "T1589",
+      "T1087",
+      "T1046",
+      "T1526",
+      "T1021",
+      "T1213",
+      "T1572",
+      "T1090",
       "T1105",
       "T1567"
     ],
@@ -717,47 +698,46 @@
     "event_date": "2022, December",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:19:06.031313+00:00"
+    "analyzed_at": "2026-04-23T18:40:24.230485+00:00"
   },
   {
     "slug": "crowdstrike-2023-august",
     "name": "CrowdStrike",
     "technique_ids": [
       "T1190",
-      "T1053.003",
-      "T1033",
-      "T1580",
+      "T1059",
+      "T1049",
       "T1552.005",
-      "T1105",
-      "T1059.006",
       "T1572",
       "T1021.004"
     ],
     "aws_services": [
       "EC2",
+      "IMDS",
       "IAM",
-      "IMDS"
+      "VPC"
     ],
     "aws_services_raw": [
       "EC2",
+      "IMDS",
       "IAM",
-      "EC2 Instance Metadata Service (IMDS)"
+      "VPC"
     ],
     "impact_type": "Credential Theft",
-    "impact_type_raw": "Credential Harvesting / Attempted Lateral Movement",
-    "initial_access_vector": "Exploitation of vulnerable public-facing PHP web applications on Linux cloud hosts resulting in Remote Code Execution (RCE)",
+    "impact_type_raw": "Account Takeover (attempted credential theft and lateral movement)",
+    "initial_access_vector": "Exploitation of an externally facing web application on a cloud-hosted Windows server.",
     "event_date": "2023, August",
     "data_exfiltrated": false,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:48:30.695263+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:40:19.171947+00:00"
   },
   {
     "slug": "cryptomining-ami-2020-august",
     "name": "Cryptomining AMI",
     "technique_ids": [
-      "T1608.001",
-      "T1195.001",
       "T1525",
+      "T1195.002",
+      "T1204",
       "T1496"
     ],
     "aws_services": [
@@ -766,34 +746,37 @@
     ],
     "aws_services_raw": [
       "EC2",
-      "AMI (Community AMI)"
+      "AMI",
+      "AWS Community AMI"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Victim launched an EC2 instance from a trojanized Community AMI (Windows Server 2008) that had a Monero cryptominer pre-embedded by the attacker at publish time.",
+    "impact_type_raw": "Cryptomining / Resource Hijacking",
+    "initial_access_vector": "Victim launched a trojanized Windows 2008 Server Community AMI that contained a preinstalled Monero cryptominer.",
     "event_date": "2020, August",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:48:21.307565+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:40:22.420560+00:00"
   },
   {
     "slug": "darklab-case-study-2021-july",
     "name": "DarkLab case study",
     "technique_ids": [
+      "T1595.002",
+      "T1593",
       "T1190",
+      "T1059",
       "T1136.003",
-      "T1078.004",
+      "T1535",
       "T1578.002",
-      "T1562.008",
+      "T1070",
       "T1552.001",
-      "T1580",
-      "T1526",
-      "T1595.001",
-      "T1596.005",
-      "T1210",
+      "T1552.004",
+      "T1087.004",
+      "T1619",
+      "T1021",
       "T1530",
-      "T1537",
-      "T1485"
+      "T1485",
+      "T1578.003"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -803,36 +786,36 @@
     "event_date": "2021, July",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:39:08.922961+00:00"
+    "analyzed_at": "2026-04-23T18:40:46.675423+00:00"
   },
   {
     "slug": "darktrace-1-2025-july",
     "name": "Darktrace #1",
     "technique_ids": [
-      "T1078.004",
-      "T1608.001",
+      "T1078",
+      "T1046",
+      "T1105",
       "T1039",
       "T1048.002",
-      "T1046",
       "T1021.001"
     ],
     "aws_services": [
       "EC2",
       "VPC",
-      "S3"
+      "VPN"
     ],
     "aws_services_raw": [
-      "AWS EC2",
-      "AWS VPC",
-      "AWS S3 (implied file storage)"
+      "EC2",
+      "VPC",
+      "VPN"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised credentials used to authenticate via VPN into the customer's AWS Virtual Private Cloud environment",
+    "initial_access_vector": "Previously compromised credentials used to connect to the customer's VPN, gaining access to AWS Private Cloud environment.",
     "event_date": "2025, July",
     "data_exfiltrated": true,
     "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T20:49:23.230783+00:00"
+    "analyzed_at": "2026-04-23T18:41:01.071308+00:00"
   },
   {
     "slug": "darktrace-2-2025-july",
@@ -841,9 +824,11 @@
       "T1190",
       "T1046",
       "T1021.001",
-      "T1021.002",
+      "T1018",
+      "T1039",
       "T1074.002",
-      "T1048",
+      "T1571",
+      "T1041",
       "T1486"
     ],
     "aws_services": [
@@ -855,43 +840,63 @@
       "VPC"
     ],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Data Exfiltration, Ransomware",
-    "initial_access_vector": "Exploitation of a publicly exposed SonicWall SMA 500v EC2 instance configured to allow inbound traffic on any port, targeted by three Vultr VPS C2 endpoints via HTTPS",
+    "impact_type_raw": "Ransomware and Data Exfiltration",
+    "initial_access_vector": "Exploitation of an internet-exposed SonicWall SMA 500v EC2 instance configured to allow inbound traffic on any port; HTTPS connections originated from rare Vultr VPS endpoints.",
     "event_date": "2025, July",
     "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T20:49:34.903314+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:41:19.473097+00:00"
   },
   {
     "slug": "datadog-1-2024-january",
     "name": "Datadog #1",
     "technique_ids": [
       "T1078.004",
-      "T1610",
+      "T1526",
+      "T1087.004",
       "T1136.003",
-      "T1098.001",
-      "T1098.003",
+      "T1580",
       "T1098.004",
+      "T1021.004",
+      "T1619",
+      "T1530",
       "T1535",
       "T1562.007",
-      "T1090",
-      "T1087.004",
-      "T1526",
-      "T1619",
-      "T1580",
-      "T1021.004",
-      "T1530",
+      "T1098.001",
+      "T1610",
       "T1496"
     ],
-    "aws_services": [],
-    "aws_services_raw": [],
-    "impact_type": "Unknown",
-    "impact_type_raw": "",
-    "initial_access_vector": "",
+    "aws_services": [
+      "IAM",
+      "SES",
+      "S3",
+      "KMS",
+      "EC2",
+      "EC2 Instance Connect",
+      "Resource Explorer",
+      "ECS",
+      "Fargate",
+      "CloudTrail"
+    ],
+    "aws_services_raw": [
+      "IAM",
+      "SES",
+      "S3",
+      "KMS",
+      "EC2",
+      "EC2 Instance Connect",
+      "Resource Explorer",
+      "ECS",
+      "Fargate",
+      "CloudTrail"
+    ],
+    "impact_type": "Cryptomining",
+    "impact_type_raw": "Data Exfiltration and Cryptomining (Resource Hijacking)",
+    "initial_access_vector": "Leaked IAM user access key used to authenticate to AWS APIs",
     "event_date": "2024, January",
-    "data_exfiltrated": false,
-    "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:40:38.203754+00:00"
+    "data_exfiltrated": true,
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:41:28.022104+00:00"
   },
   {
     "slug": "datadog-2-2024-january",
@@ -899,6 +904,7 @@
     "technique_ids": [
       "T1078.004",
       "T1610",
+      "T1578.002",
       "T1136.003",
       "T1098.001",
       "T1098.003",
@@ -908,9 +914,9 @@
       "T1087.004",
       "T1526",
       "T1619",
+      "T1580",
       "T1021.004",
       "T1530",
-      "T1537",
       "T1496"
     ],
     "aws_services": [],
@@ -921,38 +927,36 @@
     "event_date": "2024, January",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:20:36.374158+00:00"
+    "analyzed_at": "2026-04-23T18:41:36.229337+00:00"
   },
   {
     "slug": "datadog-2016-july",
     "name": "DataDog",
     "technique_ids": [
-      "T1552.004",
+      "T1552.001",
+      "T1078.004",
       "T1021.004",
-      "T1526",
       "T1530",
       "T1555",
-      "T1078.004"
+      "T1537"
     ],
     "aws_services": [
       "EC2",
       "S3",
-      "IAM",
-      "RDS"
+      "IAM"
     ],
     "aws_services_raw": [
       "EC2",
       "S3",
-      "IAM",
-      "RDS"
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Leaked AWS access key and SSH private key from Datadog's CI/CD automated provisioning and release systems",
+    "initial_access_vector": "Leaked AWS access key and SSH private key from automated provisioning/release (CI/CD) systems used together to access AWS EC2 and S3.",
     "event_date": "2016, July",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:50:18.941091+00:00"
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:41:21.263716+00:00"
   },
   {
     "slug": "datadog-2024-december",
@@ -960,6 +964,7 @@
     "technique_ids": [
       "T1078.004",
       "T1550.001",
+      "T1136.003",
       "T1098.003",
       "T1098.001",
       "T1580"
@@ -967,143 +972,120 @@
     "aws_services": [
       "IAM",
       "STS",
+      "Management Console",
       "SES",
-      "Management Console"
+      "CloudTrail"
     ],
     "aws_services_raw": [
       "IAM",
       "STS",
+      "AWS Console",
       "SES",
-      "AWS Management Console"
+      "CloudTrail"
     ],
     "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "Account Takeover / SES Abuse (Spam/Phishing Enablement)",
-    "initial_access_vector": "Stolen or compromised long-term IAM access key (AKIA) used directly against the AWS API",
+    "impact_type_raw": "Account Takeover / SES Abuse Preparation",
+    "initial_access_vector": "Compromised long-term IAM access key (AKIA) used to authenticate to the victim AWS account.",
     "event_date": "2024, December",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:50:48.428015+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:41:57.822852+00:00"
   },
   {
     "slug": "datadog-2024-june",
     "name": "Datadog",
     "technique_ids": [
       "T1078.004",
-      "T1090.003",
+      "T1090.002",
       "T1580",
       "T1619",
       "T1496"
     ],
     "aws_services": [
-      "IAM",
       "Secrets Manager",
       "S3",
       "S3 Glacier",
-      "Bedrock"
+      "IAM",
+      "Bedrock",
+      "CloudTrail"
     ],
     "aws_services_raw": [
-      "AWS IAM",
       "AWS Secrets Manager",
       "Amazon S3",
-      "Amazon S3 Glacier",
-      "Amazon Bedrock"
+      "S3 Glacier",
+      "AWS IAM",
+      "Amazon Bedrock",
+      "AWS CloudTrail"
     ],
     "impact_type": "LLM / Resource Hijacking",
-    "impact_type_raw": "LLMJacking",
-    "initial_access_vector": "Stolen or leaked long-term AWS IAM access keys (AKIA) used to authenticate directly to victim AWS environments via automated tooling",
+    "impact_type_raw": "LLMJacking / Resource Hijacking",
+    "initial_access_vector": "Likely leaked long-term AWS IAM access keys (AKIA) used to authenticate automated enumeration activity.",
     "event_date": "2024, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T20:50:53.446127+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:41:50.041230+00:00"
   },
   {
     "slug": "datadog-2024-march",
     "name": "Datadog",
     "technique_ids": [
       "T1078.004",
-      "T1526",
       "T1580",
       "T1496",
-      "T1583.001",
-      "T1056.003",
-      "T1567"
+      "T1660"
     ],
     "aws_services": [
       "SNS",
-      "STS",
+      "CloudTrail",
       "IAM",
-      "CloudTrail"
+      "STS"
     ],
     "aws_services_raw": [
-      "AWS SNS",
-      "AWS STS",
-      "AWS IAM",
-      "AWS CloudTrail"
+      "SNS",
+      "CloudTrail",
+      "IAM",
+      "STS"
     ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "AWS SNS SMS Phishing (Smishing)",
-    "initial_access_vector": "Stolen long-term IAM access keys (AKIA prefix) obtained through an unspecified prior credential compromise",
+    "impact_type": "LLM / Resource Hijacking",
+    "impact_type_raw": "Resource Hijacking (AWS SNS SMS smishing / phishing distribution)",
+    "initial_access_vector": "Compromised long-term AWS IAM access keys (AKIA) used from attacker IP 134.209.127.249",
     "event_date": "2024, March",
     "data_exfiltrated": true,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:51:27.623324+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:42:09.525664+00:00"
   },
   {
     "slug": "datadog-2025-march",
     "name": "Datadog",
     "technique_ids": [
       "T1078.004",
-      "T1526",
-      "T1550.001",
       "T1136.003",
       "T1098.001",
+      "T1098.003",
       "T1525",
-      "T1087.004",
+      "T1556.006",
+      "T1578",
       "T1562.008",
-      "T1556.006"
+      "T1526",
+      "T1087.004",
+      "T1550.001"
     ],
-    "aws_services": [
-      "IAM",
-      "STS",
-      "SES",
-      "EC2",
-      "Lambda",
-      "API Gateway",
-      "IAM Identity Center",
-      "Organizations",
-      "IAM Access Analyzer",
-      "Systems Manager",
-      "CloudFormation",
-      "Q Developer"
-    ],
-    "aws_services_raw": [
-      "AWS IAM",
-      "AWS STS",
-      "Amazon SES",
-      "Amazon EC2",
-      "AWS Lambda",
-      "Amazon API Gateway",
-      "AWS IAM Identity Center",
-      "AWS Organizations",
-      "IAM Access Analyzer",
-      "AWS Systems Manager",
-      "AWS CloudFormation",
-      "Amazon Q Developer"
-    ],
-    "impact_type": "Account Takeover",
-    "impact_type_raw": "Account Takeover / Persistence",
-    "initial_access_vector": "Leaked long-term AWS IAM access key (AKIA* prefix) associated with an IAM user in an AWS organization management account",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2025, March",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:22:03.215103+00:00"
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:42:29.919607+00:00"
   },
   {
     "slug": "dataspline-2017-unknown",
     "name": "Dataspline",
     "technique_ids": [
-      "T1195.002",
-      "T1204.003",
+      "T1195.001",
+      "T1610",
       "T1496"
     ],
     "aws_services": [
@@ -1114,35 +1096,34 @@
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Malicious Monero miner embedded in a dependency of a container base image used in the victim's ML ops toolkit, introduced via software supply chain compromise",
+    "initial_access_vector": "Supply chain compromise: a malicious dependency (Monero miner) embedded in the container base image used to build the ML ops toolkit, which was then deployed to a customer's Kubernetes cluster.",
     "event_date": "2017, Unknown",
     "data_exfiltrated": false,
-    "confidence_score": 0.6,
-    "analyzed_at": "2026-04-15T20:51:34.691892+00:00"
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:42:15.313203+00:00"
   },
   {
     "slug": "dnc-hack-by-the-gru-2016-june",
     "name": "DNC Hack by the GRU",
     "technique_ids": [
-      "T1566.002",
       "T1078",
-      "T1190",
-      "T1204",
-      "T1543",
+      "T1059",
       "T1070.001",
-      "T1036",
+      "T1070.004",
       "T1056.001",
-      "T1110",
-      "T1083",
+      "T1566.002",
+      "T1082",
+      "T1021",
       "T1113",
-      "T1114.002",
-      "T1123",
+      "T1114",
       "T1530",
-      "T1571",
-      "T1568",
-      "T1583.001",
-      "T1048.002",
+      "T1213",
+      "T1071",
+      "T1573",
+      "T1584",
+      "T1048",
       "T1537",
+      "T1657",
       "T1565"
     ],
     "aws_services": [],
@@ -1153,7 +1134,7 @@
     "event_date": "2016, June",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:23:21.942139+00:00"
+    "analyzed_at": "2026-04-23T18:42:50.341178+00:00"
   },
   {
     "slug": "drizly-2018",
@@ -1161,79 +1142,6 @@
     "technique_ids": [
       "T1552.001",
       "T1078.004",
-      "T1496"
-    ],
-    "aws_services": [
-      "AWS",
-      "GitHub"
-    ],
-    "aws_services_raw": [
-      "Amazon Web Services (AWS)",
-      "GitHub (third-party platform used for code hosting)"
-    ],
-    "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "AWS cloud account credentials were committed by a Drizly employee to a public GitHub repository, allowing attackers to obtain valid cloud credentials without any exploitation of a vulnerability.",
-    "event_date": "2018",
-    "data_exfiltrated": false,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T20:52:05.407642+00:00"
-  },
-  {
-    "slug": "drizly-2020-july",
-    "name": "Drizly",
-    "technique_ids": [
-      "T1110.004",
-      "T1552.001",
-      "T1078.004",
-      "T1496",
-      "T1580",
-      "T1530"
-    ],
-    "aws_services": [
-      "AWS",
-      "RDS"
-    ],
-    "aws_services_raw": [
-      "AWS",
-      "Amazon RDS",
-      "Amazon Web Services (general cloud)"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Inactive employee GitHub account compromised via reused/credential-stuffed password, which exposed AWS cloud credentials stored in the GitHub repository",
-    "event_date": "2020, July",
-    "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:52:21.594928+00:00"
-  },
-  {
-    "slug": "dropbox-sign-2024-may",
-    "name": "Dropbox Sign",
-    "technique_ids": [
-      "T1528",
-      "T1078.004",
-      "T1580",
-      "T1530"
-    ],
-    "aws_services": [],
-    "aws_services_raw": [],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised access token used to gain entry into the Dropbox Sign automated system configuration tool and its associated back-end service account",
-    "event_date": "2024, May",
-    "data_exfiltrated": true,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T20:52:37.445093+00:00"
-  },
-  {
-    "slug": "dxc-technologies-2017-november",
-    "name": "DXC Technologies",
-    "technique_ids": [
-      "T1552.001",
-      "T1213.003",
-      "T1078.004",
-      "T1578.002",
       "T1496"
     ],
     "aws_services": [
@@ -1246,73 +1154,141 @@
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Private AWS access keys hardcoded in source code and accidentally uploaded to a public GitHub repository by a DXC employee on September 27, 2017",
+    "initial_access_vector": "AWS cloud account login credentials were posted to a public GitHub repository by a Drizly employee and harvested by attackers.",
+    "event_date": "2018",
+    "data_exfiltrated": false,
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:42:33.272345+00:00"
+  },
+  {
+    "slug": "drizly-2020-july",
+    "name": "Drizly",
+    "technique_ids": [
+      "T1078.004",
+      "T1213.003",
+      "T1552.001",
+      "T1530",
+      "T1567"
+    ],
+    "aws_services": [
+      "RDS",
+      "EC2",
+      "IAM"
+    ],
+    "aws_services_raw": [
+      "RDS",
+      "EC2",
+      "IAM"
+    ],
+    "impact_type": "Data Exfiltration",
+    "impact_type_raw": "Data Exfiltration",
+    "initial_access_vector": "Compromise of an inactive employee account via reused password, leading to access to corporate GitHub where AWS/database credentials were stored in source code.",
+    "event_date": "2020, July",
+    "data_exfiltrated": true,
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:42:52.334312+00:00"
+  },
+  {
+    "slug": "dropbox-sign-2024-may",
+    "name": "Dropbox Sign",
+    "technique_ids": [
+      "T1528",
+      "T1078.004",
+      "T1213",
+      "T1567"
+    ],
+    "aws_services": [
+      "Production Environment",
+      "Automated System Configuration Tool",
+      "Customer Database",
+      "Service Account"
+    ],
+    "aws_services_raw": [
+      "Production Environment (Dropbox Sign back-end)",
+      "Automated System Configuration Tool",
+      "Customer Database",
+      "Service Account"
+    ],
+    "impact_type": "Data Exfiltration",
+    "impact_type_raw": "Data Exfiltration",
+    "initial_access_vector": "Compromised access token used to gain entry into a Dropbox Sign automated system configuration tool.",
+    "event_date": "2024, May",
+    "data_exfiltrated": true,
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:43:01.599080+00:00"
+  },
+  {
+    "slug": "dxc-technologies-2017-november",
+    "name": "DXC Technologies",
+    "technique_ids": [
+      "T1552.001",
+      "T1593.003",
+      "T1078.004",
+      "T1496"
+    ],
+    "aws_services": [
+      "EC2",
+      "IAM"
+    ],
+    "aws_services_raw": [
+      "Amazon EC2",
+      "AWS IAM"
+    ],
+    "impact_type": "Cryptomining",
+    "impact_type_raw": "Cryptomining",
+    "initial_access_vector": "AWS private keys hardcoded in source code accidentally committed to a public GitHub repository and harvested by unknown miscreants.",
     "event_date": "2017, November",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:52:41.196167+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:43:01.663471+00:00"
   },
   {
     "slug": "episource-2023-february",
     "name": "Episource",
     "technique_ids": [
-      "T1190",
-      "T1083",
-      "T1530",
-      "T1537",
+      "T1078",
+      "T1567",
       "T1486"
     ],
-    "aws_services": [
-      "AWS",
-      "S3",
-      "EC2"
-    ],
-    "aws_services_raw": [
-      "AWS (general cloud environment)",
-      "AWS S3",
-      "AWS EC2 (inferred)"
-    ],
+    "aws_services": [],
+    "aws_services_raw": [],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware",
-    "initial_access_vector": "Unauthorized access to Episource's AWS/cloud environment; specific vector (e.g., phishing, credential compromise, exploit) not disclosed in available sources",
+    "impact_type_raw": "Ransomware and Data Exfiltration",
+    "initial_access_vector": "Unknown - unauthorized access to computer network; specific vector not disclosed in notification letters",
     "event_date": "2023, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.45,
-    "analyzed_at": "2026-04-15T20:53:02.852856+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:43:11.282631+00:00"
   },
   {
     "slug": "expel-2025-february",
     "name": "Expel",
     "technique_ids": [
       "T1566.004",
-      "T1557",
       "T1078.004",
-      "T1548",
-      "T1526"
+      "T1021.007",
+      "T1548.005",
+      "T1580"
     ],
     "aws_services": [
-      "Okta",
+      "Management Console",
       "IAM",
       "STS",
-      "Management Console",
-      "EC2",
-      "S3"
+      "Okta SSO"
     ],
     "aws_services_raw": [
-      "Okta",
+      "AWS Console",
       "AWS IAM",
       "AWS STS",
-      "AWS Management Console",
-      "Amazon EC2",
-      "Amazon S3"
+      "Okta SSO"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Account Takeover / Attempted Data Exfiltration (Extortion)",
-    "initial_access_vector": "Phishing/smishing campaign using a PhaaS adversary-in-the-middle proxy that impersonated the target organization's Okta login page, capturing credentials and session cookies to bypass MFA",
+    "impact_type_raw": "Account Takeover (attempted data exfiltration/extortion, contained)",
+    "initial_access_vector": "Phishing/smishing campaign by Scattered Spider compromising Okta SSO user credentials",
     "event_date": "2025, February",
     "data_exfiltrated": false,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:53:32.554010+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:43:20.780460+00:00"
   },
   {
     "slug": "expel-case-study-1-2020-april",
@@ -1321,34 +1297,33 @@
       "T1078.004",
       "T1580",
       "T1562.007",
-      "T1526",
-      "T1098",
+      "T1098.001",
       "T1578.002",
       "T1021.004"
     ],
     "aws_services": [
       "IAM",
+      "CloudTrail",
       "EC2",
       "VPC",
       "RDS",
-      "CloudTrail",
       "GuardDuty"
     ],
     "aws_services_raw": [
       "IAM",
+      "CloudTrail",
       "EC2",
       "VPC",
       "RDS",
-      "CloudTrail",
       "GuardDuty"
     ],
     "impact_type": "Account Takeover",
-    "impact_type_raw": "Account Takeover / Unauthorized EC2 Instance Access",
-    "initial_access_vector": "8 IAM user access keys compromised, likely via public code repository (e.g., GitHub) or developer machine credential theft",
+    "impact_type_raw": "Account Takeover / Unauthorized EC2 Access",
+    "initial_access_vector": "Use of 8 compromised IAM user access keys (suspected leaked via public repository/exposed database or lifted from developer machines) authenticated via AWS CLI from suspicious IPs without MFA.",
     "event_date": "2020, April",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:53:47.812844+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:43:50.754072+00:00"
   },
   {
     "slug": "expel-case-study-2-2020-july",
@@ -1356,45 +1331,45 @@
     "technique_ids": [
       "T1078.004",
       "T1580",
-      "T1098.001",
-      "T1562.007",
+      "T1098.004",
       "T1578.002",
+      "T1578",
       "T1021.004",
       "T1059",
-      "T1496",
-      "T1571"
+      "T1571",
+      "T1496"
     ],
     "aws_services": [
       "IAM",
       "EC2",
       "CloudTrail",
       "GuardDuty",
-      "VPC"
+      "VPC Security Groups"
     ],
     "aws_services_raw": [
       "IAM",
       "EC2",
       "CloudTrail",
       "GuardDuty",
-      "VPC"
+      "VPC Security Groups"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Root IAM user access key compromised (exact compromise vector unknown; key was likely scraped and passed to an automated bot)",
+    "impact_type_raw": "Cryptojacking",
+    "initial_access_vector": "Compromised AWS root IAM user access key (source of compromise unknown); used from a cloud hosting provider IP via the AWS Golang SDK.",
     "event_date": "2020, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:53:51.157957+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:43:52.182047+00:00"
   },
   {
     "slug": "expel-case-study-3-2022-april",
     "name": "Expel case study 3",
     "technique_ids": [
       "T1552.001",
-      "T1069.003",
       "T1078.004",
-      "T1136.003",
+      "T1087.004",
       "T1098.001",
+      "T1136.003",
       "T1098.003",
       "T1496"
     ],
@@ -1402,25 +1377,23 @@
       "IAM",
       "CloudTrail",
       "EC2",
-      "Management Console",
-      "CLI",
-      "Service Quotas"
+      "Service Quotas",
+      "Management Console"
     ],
     "aws_services_raw": [
       "IAM",
       "CloudTrail",
       "EC2",
-      "AWS Management Console",
-      "AWS CLI",
-      "Service Quotas"
+      "Service Quotas",
+      "AWS Management Console"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining (prevented)",
-    "initial_access_vector": "Long-term IAM access keys (AKIA) for comp_user2 were exposed in a publicly available code repository and obtained by the attacker",
+    "impact_type_raw": "Cryptojacking (prevented)",
+    "initial_access_vector": "Long-term AWS IAM access keys (AKIA) for user comp_user2 exposed in a publicly available code repository, used by attacker via aws-cli from an Indonesian IP.",
     "event_date": "2022, April",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:54:10.133197+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:44:06.937799+00:00"
   },
   {
     "slug": "expel-case-study-4-2023-january",
@@ -1428,49 +1401,47 @@
     "technique_ids": [
       "T1552.001",
       "T1078.004",
-      "T1580",
       "T1087.004",
-      "T1526",
-      "T1496"
+      "T1580",
+      "T1098"
     ],
     "aws_services": [
       "IAM",
-      "STS",
       "SES",
+      "STS",
       "CloudTrail"
     ],
     "aws_services_raw": [
       "AWS IAM",
+      "AWS SES",
       "AWS STS",
-      "Amazon SES",
       "AWS CloudTrail"
     ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "AWS SES Abuse (Email Spam/Phishing \u2014 prevented)",
-    "initial_access_vector": "Stolen long-term AWS IAM access keys harvested from a publicly exposed Postman server where credentials were stored in project variables",
+    "impact_type": "LLM / Resource Hijacking",
+    "impact_type_raw": "SES abuse attempt (prevented) / Resource Hijacking of email infrastructure",
+    "initial_access_vector": "Stolen long-term AWS IAM access keys harvested from a publicly exposed Postman server where the keys were stored as project variables.",
     "event_date": "2023, January",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:54:39.154695+00:00"
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:44:01.013610+00:00"
   },
   {
     "slug": "eye-care-leaders-2021-december",
     "name": "Eye Care Leaders",
     "technique_ids": [
-      "T1190",
+      "T1078",
       "T1530",
-      "T1537",
       "T1485"
     ],
     "aws_services": [],
     "aws_services_raw": [],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Destruction and Data Exfiltration",
-    "initial_access_vector": "Unknown \u2014 attacker compromised the Eye Care Leaders myCare Integrity cloud-based EHR platform; specific exploitation method not disclosed",
+    "impact_type_raw": "Data Destruction and Potential Data Exfiltration",
+    "initial_access_vector": "Unknown - attacker gained unauthorized access to Eye Care Leaders' cloud-hosted EMR environment",
     "event_date": "2021, December",
     "data_exfiltrated": true,
-    "confidence_score": 0.35,
-    "analyzed_at": "2026-04-15T20:54:28.131549+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:43:48.574242+00:00"
   },
   {
     "slug": "fireeye-m-trends-2021-case-study-2021-april",
@@ -1479,56 +1450,65 @@
       "T1078.004",
       "T1136.003",
       "T1578.002",
-      "T1485"
+      "T1485",
+      "T1490"
     ],
     "aws_services": [
-      "IAM",
       "EC2",
+      "IAM",
       "RDS"
     ],
     "aws_services_raw": [
-      "IAM",
       "EC2",
+      "IAM",
       "RDS"
     ],
     "impact_type": "Data Destruction / Disruption",
     "impact_type_raw": "Data Destruction",
-    "initial_access_vector": "Former employee reused a previously provisioned, never-revoked SSH key to gain unauthorized access to the AWS environment.",
+    "initial_access_vector": "Former employee retained and used a valid SSH key to access AWS resources after offboarding.",
     "event_date": "2021, April",
     "data_exfiltrated": false,
     "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T20:54:35.834262+00:00"
+    "analyzed_at": "2026-04-23T18:44:03.200518+00:00"
   },
   {
     "slug": "first-republic-bank-2020-march",
     "name": "First Republic Bank",
     "technique_ids": [
-      "T1025",
       "T1078.002",
+      "T1133",
       "T1021.004",
       "T1070.002",
-      "T1078.003",
-      "T1489",
+      "T1078",
+      "T1059.004",
       "T1485",
+      "T1529",
+      "T1489",
       "T1531"
     ],
     "aws_services": [
       "EC2",
       "EMR",
-      "GitHub"
+      "IAM",
+      "VPN",
+      "GitHub",
+      "Ansible Tower"
     ],
     "aws_services_raw": [
-      "AWS EC2",
-      "AWS EMR",
-      "GitHub (Enterprise)"
+      "EC2",
+      "EMR",
+      "IAM",
+      "VPN",
+      "GitHub Enterprise",
+      "Ansible Tower"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "System Interruption / Destructive Attack",
-    "initial_access_vector": "Fired employee retained company Macbook and re-authenticated to corporate VPN using still-active credentials and MFA after termination due to incomplete offboarding",
+    "impact_type_raw": "Destruction / System Interruption (Insider Sabotage)",
+    "initial_access_vector": "Terminated cloud engineer's corporate credentials and VPN access were not disabled after firing; he used his still-in-possession company Macbook to VPN back in with MFA.",
     "event_date": "2020, March",
     "data_exfiltrated": false,
     "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:55:01.171175+00:00"
+    "analyzed_at": "2026-04-23T18:44:24.018516+00:00"
   },
   {
     "slug": "flexbooker-2021-december",
@@ -1536,79 +1516,56 @@
     "technique_ids": [
       "T1078.004",
       "T1530",
-      "T1537"
+      "T1567"
     ],
     "aws_services": [
-      "IAM",
-      "S3",
-      "RDS"
+      "AWS",
+      "IAM"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "AWS RDS"
+      "AWS",
+      "AWS IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised AWS account credentials \u2014 exact method (phishing, credential stuffing, exposed keys, etc.) not disclosed in source",
+    "initial_access_vector": "Compromise of a FlexBooker AWS account (method unknown)",
     "event_date": "2021, December",
     "data_exfiltrated": true,
-    "confidence_score": 0.45,
-    "analyzed_at": "2026-04-15T20:54:50.378960+00:00"
-  },
-  {
-    "slug": "google-cloud-threat-horizons-unc4899-case-2025-july",
-    "name": "Google Cloud Threat Horizons UNC4899 Case",
-    "technique_ids": [
-      "T1566.003",
-      "T1204.002",
-      "T1539",
-      "T1550.004",
-      "T1505",
-      "T1657"
-    ],
-    "aws_services": [
-      "S3",
-      "CloudFront"
-    ],
-    "aws_services_raw": [
-      "Amazon S3",
-      "AWS CloudFront"
-    ],
-    "impact_type": "Financial Theft",
-    "impact_type_raw": "Financial Theft / Cryptocurrency Theft",
-    "initial_access_vector": "Social engineering via fake job opportunity lure delivering malware to a cryptocurrency sector employee (DPRK-nexus UNC4899 tradecraft)",
-    "event_date": "2025, July",
-    "data_exfiltrated": false,
-    "confidence_score": 0.62,
-    "analyzed_at": "2026-04-15T21:43:44.610775+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:44:18.090484+00:00"
   },
   {
     "slug": "hpe-aruba-2021-october",
     "name": "HPE Aruba",
     "technique_ids": [
-      "T1552.005",
+      "T1552.001",
       "T1078.004",
-      "T1530"
+      "T1530",
+      "T1567"
     ],
-    "aws_services": [],
-    "aws_services_raw": [],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Unknown exposure of a cloud access key for HPE Aruba Central",
+    "aws_services": [
+      "HPE Aruba Central"
+    ],
+    "aws_services_raw": [
+      "HPE Aruba Central (cloud management platform)"
+    ],
+    "impact_type": "Other",
+    "impact_type_raw": "Data Exposure",
+    "initial_access_vector": "Unknown exposure of an HPE Aruba Central access key, used by an attacker to authenticate as a valid cloud account.",
     "event_date": "2021, October",
     "data_exfiltrated": true,
     "confidence_score": 0.2,
-    "analyzed_at": "2026-04-15T20:55:24.677081+00:00"
+    "analyzed_at": "2026-04-23T18:44:34.667569+00:00"
   },
   {
     "slug": "imperva-2019-october",
     "name": "Imperva",
     "technique_ids": [
       "T1190",
-      "T1552.005",
-      "T1078.004",
+      "T1552.001",
+      "T1550.001",
       "T1580",
+      "T1530",
       "T1537"
     ],
     "aws_services": [
@@ -1617,8 +1574,8 @@
       "IAM",
       "CloudTrail",
       "GuardDuty",
-      "S3",
-      "VPC"
+      "VPC",
+      "S3"
     ],
     "aws_services_raw": [
       "EC2",
@@ -1626,54 +1583,56 @@
       "IAM",
       "CloudTrail",
       "GuardDuty",
-      "S3",
-      "VPC"
+      "VPC",
+      "S3"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Publicly accessible internal EC2 compute instance (no VPN/security group restriction) that contained an AWS administrative API key was compromised by an external attacker",
+    "initial_access_vector": "Compromise of an internet-exposed internal compute instance that stored an AWS administrative API key",
     "event_date": "2019, October",
     "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:55:45.774305+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:44:54.367598+00:00"
   },
   {
     "slug": "imtoken-2018-june",
     "name": "imToken",
     "technique_ids": [
       "T1586.002",
+      "T1098.001",
       "T1078.004",
       "T1530",
-      "T1566.002"
+      "T1537"
     ],
     "aws_services": [
+      "Management Console",
       "IAM",
-      "EC2",
-      "S3"
+      "EC2"
     ],
     "aws_services_raw": [
+      "AWS Management Console",
       "AWS IAM",
-      "Amazon EC2",
-      "Amazon S3"
+      "EC2"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Corporate email account compromise, used to trigger an AWS account password reset via the email-based recovery mechanism",
+    "impact_type_raw": "Data Exfiltration / Account Takeover",
+    "initial_access_vector": "Compromise of imToken corporate email account (root cause under investigation), which was then used to trigger an AWS password reset via email and take over the AWS account hosting the 2.0 Beta servers.",
     "event_date": "2018, June",
     "data_exfiltrated": true,
     "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T20:55:47.624369+00:00"
+    "analyzed_at": "2026-04-23T18:45:01.779351+00:00"
   },
   {
     "slug": "invictus-ir-2023-april",
     "name": "Invictus IR",
     "technique_ids": [
-      "T1552.004",
-      "T1526",
+      "T1552.001",
+      "T1078.004",
       "T1136.003",
-      "T1562.007",
-      "T1537",
-      "T1485"
+      "T1530",
+      "T1490",
+      "T1485",
+      "T1657"
     ],
     "aws_services": [
       "IAM",
@@ -1686,37 +1645,35 @@
       "AWS CloudTrail"
     ],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware (Data Exfiltration and Deletion with Ransom Note)",
-    "initial_access_vector": "Publicly exposed long-term AWS IAM access key discovered via open-source analysis",
+    "impact_type_raw": "Ransomware (Data Exfiltration and Destruction)",
+    "initial_access_vector": "Publicly exposed long-term AWS access key credentials",
     "event_date": "2023, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.62,
-    "analyzed_at": "2026-04-15T20:56:00.165861+00:00"
+    "confidence_score": 0.35,
+    "analyzed_at": "2026-04-23T18:45:09.313334+00:00"
   },
   {
     "slug": "invictus-ir-2024-january",
     "name": "Invictus IR",
     "technique_ids": [
-      "T1552.005",
+      "T1583.001",
+      "T1583.006",
+      "T1585.002",
+      "T1078.004",
       "T1136.003",
       "T1098.001",
       "T1098.003",
-      "T1078.004",
-      "T1548",
-      "T1036.005",
       "T1070",
-      "T1526",
-      "T1578.002",
-      "T1550.001",
-      "T1069.003",
+      "T1036.005",
+      "T1562.001",
       "T1580",
-      "T1530",
       "T1087.004",
+      "T1619",
+      "T1069.003",
       "T1518",
-      "T1548.005",
-      "T1496",
-      "T1566",
-      "T1584.001"
+      "T1526",
+      "T1550.001",
+      "T1496"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -1726,72 +1683,77 @@
     "event_date": "2024, January",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:25:47.998882+00:00"
+    "analyzed_at": "2026-04-23T18:45:40.396812+00:00"
   },
   {
     "slug": "juspay-2021-january",
     "name": "Juspay",
     "technique_ids": [
       "T1078.004",
-      "T1619",
-      "T1530"
+      "T1580",
+      "T1530",
+      "T1537"
     ],
     "aws_services": [
       "IAM",
-      "S3",
-      "RDS"
+      "Access Keys",
+      "EC2"
     ],
     "aws_services_raw": [
       "AWS IAM",
-      "Amazon S3",
-      "AWS RDS"
+      "AWS Access Keys",
+      "EC2"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised old, unrecycled AWS IAM access key used to authenticate directly to the AWS environment",
+    "initial_access_vector": "Compromised old, unrecycled AWS access key used to access a Juspay data store server",
     "event_date": "2021, January",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:56:33.696742+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:45:16.405953+00:00"
   },
   {
     "slug": "jw-player-2019-september",
     "name": "JW Player",
     "technique_ids": [
-      "T1595.002",
+      "T1046",
       "T1190",
       "T1609",
       "T1611",
+      "T1105",
       "T1036.005",
+      "T1071.001",
       "T1496"
     ],
     "aws_services": [
+      "EC2",
       "ELB",
       "VPC Security Groups",
       "CloudTrail",
-      "EC2"
+      "Kubernetes"
     ],
     "aws_services_raw": [
-      "AWS ELB (Elastic Load Balancer)",
-      "AWS Security Groups",
-      "AWS CloudTrail",
-      "AWS EC2"
+      "EC2",
+      "Elastic Load Balancing (ELB)",
+      "VPC Security Groups",
+      "CloudTrail",
+      "Kubernetes (self-managed on EC2)"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Publicly exposed Weave Scope dashboard reachable via an unauthenticated AWS load balancer (security group misconfiguration caused by Kubernetes reverting a manual firewall rule to 0.0.0.0/0), discovered by an automated crawler",
+    "impact_type_raw": "Cryptojacking",
+    "initial_access_vector": "Publicly exposed Weave Scope dashboard (internet-facing ELB with 0.0.0.0/0 security group) with no authentication, abused via its built-in container shell feature.",
     "event_date": "2019, September",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T20:56:53.160694+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:45:51.917306+00:00"
   },
   {
     "slug": "kaspersky-2021-november",
     "name": "Kaspersky",
     "technique_ids": [
-      "T1552.005",
-      "T1608.004",
-      "T1036",
+      "T1528",
+      "T1199",
+      "T1586.002",
       "T1566.002",
       "T1056.003"
     ],
@@ -1800,98 +1762,102 @@
       "AWS"
     ],
     "aws_services_raw": [
-      "Amazon SES (Simple Email Service)",
-      "AWS (general hosting infrastructure for 2050.earth)"
+      "Amazon SES",
+      "AWS"
     ],
     "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "Phishing / Credential Harvesting",
-    "initial_access_vector": "Stolen Amazon SES API token obtained from a third-party contractor who had been issued the token for testing Kaspersky's 2050.earth website",
+    "impact_type_raw": "Phishing / Credential Harvesting (abuse of trusted email infrastructure)",
+    "initial_access_vector": "A legitimate Amazon SES access token issued to a third-party contractor during testing of 2050.earth was stolen and reused by threat actors to send phishing emails from Kaspersky's AWS/SES infrastructure.",
     "event_date": "2021, November",
-    "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:56:59.402694+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:46:01.390648+00:00"
   },
   {
     "slug": "kiln-2025-october",
     "name": "Kiln",
     "technique_ids": [
       "T1078.004",
-      "T1648",
-      "T1552.001",
+      "T1564",
+      "T1552.004",
       "T1550.001",
+      "T1090",
+      "T1609",
       "T1565.001",
-      "T1070",
-      "T1657"
+      "T1657",
+      "T1070"
     ],
     "aws_services": [
+      "AWS",
+      "Google Cloud",
+      "GitHub",
       "GitHub Actions",
-      "IAM",
-      "EKS",
-      "Google Cloud"
+      "Kubernetes"
     ],
     "aws_services_raw": [
+      "AWS",
+      "GCP",
+      "GitHub",
       "GitHub Actions",
-      "AWS IAM",
-      "Amazon EKS",
-      "Google Cloud Platform"
+      "Kubernetes"
     ],
     "impact_type": "Financial Theft",
-    "impact_type_raw": "Cryptocurrency Theft",
-    "initial_access_vector": "Compromised GitHub personal access token belonging to a Kiln infrastructure engineer, obtained through unknown means",
+    "impact_type_raw": "Financial Theft (Cryptocurrency)",
+    "initial_access_vector": "Compromise of a GitHub access token belonging to a Kiln infrastructure engineer (exact compromise method unknown).",
     "event_date": "2025, October",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T20:57:23.886472+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:46:20.468610+00:00"
   },
   {
     "slug": "kiranapro-2025-june",
     "name": "KiranaPro",
     "technique_ids": [
       "T1078.004",
-      "T1098.001",
-      "T1485",
-      "T1489"
+      "T1556.006",
+      "T1531",
+      "T1485"
     ],
     "aws_services": [
-      "EC2",
+      "Root Account",
       "IAM",
-      "GitHub"
+      "EC2"
     ],
     "aws_services_raw": [
-      "Amazon EC2",
+      "AWS Root Account",
       "AWS IAM",
-      "GitHub"
+      "Amazon EC2"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Service Disruption / Data Destruction",
-    "initial_access_vector": "Former employee retained valid cloud credentials (AWS root account and GitHub) after being laid off; credentials were never revoked, enabling direct login without any exploitation of external vulnerabilities.",
+    "impact_type_raw": "Data Destruction / Service Disruption (Insider Sabotage)",
+    "initial_access_vector": "A laid-off (former) employee used retained/valid account credentials to access KiranaPro's AWS and GitHub environments; the company had failed to revoke the ex-employee's access post-layoff.",
     "event_date": "2025, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:57:33.092259+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:46:17.460569+00:00"
   },
   {
     "slug": "kodex-2025-october",
     "name": "Kodex",
     "technique_ids": [
-      "T1036",
-      "T1566",
-      "T1584.001",
+      "T1585",
+      "T1199",
+      "T1565",
       "T1498"
     ],
     "aws_services": [
-      "Route 53"
+      "Route 53 / Domain Registrar"
     ],
     "aws_services_raw": [
-      "AWS Route 53 (Domain Registrar)"
+      "AWS Route 53 / Domain Registrar"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Denial of Service",
-    "initial_access_vector": "Attackers submitted a fraudulent legal order to AWS (Kodex's domain registrar), socially engineering AWS staff into freezing Kodex's domain \u2014 no compromise of Kodex's own systems or credentials occurred.",
+    "impact_type_raw": "Denial of Service (domain freeze outage)",
+    "initial_access_vector": "Social engineering of AWS (as domain registrar) via a fraudulent legal order requesting domain transfer",
     "event_date": "2025, October",
     "data_exfiltrated": false,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T20:57:45.341480+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:46:03.279756+00:00"
   },
   {
     "slug": "kroll-1-2023-april",
@@ -1899,88 +1865,76 @@
     "technique_ids": [
       "T1199",
       "T1078.004",
-      "T1565.001"
+      "T1565.002"
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "Route 53",
-      "CloudTrail"
+      "Route 53"
     ],
     "aws_services_raw": [
-      "IAM",
-      "AWS STS",
-      "Amazon Route 53",
-      "AWS CloudTrail"
+      "IAM (Federated Identity)",
+      "Route 53"
     ],
-    "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "DNS/Email Redirection",
-    "initial_access_vector": "Third-party company with over-permissioned federated access to the client's AWS environment was compromised, allowing the threat actor to pivot into the client environment.",
+    "impact_type": "Account Takeover",
+    "impact_type_raw": "DNS/Email Redirection (Account Takeover)",
+    "initial_access_vector": "Compromise of a third-party company with over-permissioned federated access to the client's AWS environment",
     "event_date": "2023, April",
     "data_exfiltrated": false,
-    "confidence_score": 0.6,
-    "analyzed_at": "2026-04-15T20:57:51.525309+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:46:27.486401+00:00"
   },
   {
     "slug": "kroll-2-2023-april",
     "name": "Kroll #2",
     "technique_ids": [
-      "T1190",
+      "T1078",
       "T1552",
       "T1021",
       "T1078.004",
-      "T1098",
-      "T1526",
-      "T1530",
-      "T1048"
+      "T1133",
+      "T1005",
+      "T1537"
     ],
     "aws_services": [
-      "IAM",
-      "EC2",
-      "S3",
-      "CloudTrail",
-      "VPC",
-      "CloudWatch",
-      "GuardDuty"
+      "AWS",
+      "IAM"
     ],
     "aws_services_raw": [
-      "IAM",
-      "EC2",
-      "S3",
-      "CloudTrail",
-      "VPC",
-      "CloudWatch",
-      "GuardDuty"
+      "AWS",
+      "AWS IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Internal on-premises network compromised; threat actors then laterally moved into the AWS cloud environment using harvested credentials and encryption keys",
+    "initial_access_vector": "Compromise of the client's on-premises internal network, followed by recovery of encryption keys enabling lateral movement into the AWS cloud environment.",
     "event_date": "2023, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.55,
-    "analyzed_at": "2026-04-15T20:58:28.272802+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:46:42.270521+00:00"
   },
   {
     "slug": "la-times-2018-february",
     "name": "LA Times",
     "technique_ids": [
+      "T1593",
       "T1530",
-      "T1195.002",
+      "T1565.001",
+      "T1059.007",
+      "T1027",
       "T1496"
     ],
     "aws_services": [
       "S3"
     ],
     "aws_services_raw": [
-      "Amazon S3"
+      "S3"
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "Publicly misconfigured S3 bucket with global write-access enabled, allowing any unauthenticated party to upload or modify hosted files",
+    "initial_access_vector": "Misconfigured S3 bucket with global write access allowed an unauthenticated third party to modify hosted JavaScript files.",
     "event_date": "2018, February",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T20:58:18.967313+00:00"
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:46:53.051437+00:00"
   },
   {
     "slug": "lacework-2024-june",
@@ -1992,134 +1946,98 @@
     ],
     "aws_services": [
       "IAM",
-      "Bedrock",
-      "SageMaker"
+      "Bedrock"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon Bedrock",
-      "AWS SageMaker"
+      "IAM",
+      "Amazon Bedrock"
     ],
     "impact_type": "LLM / Resource Hijacking",
     "impact_type_raw": "LLMJacking (AI Resource Hijacking)",
-    "initial_access_vector": "Stolen or compromised cloud credentials used to authenticate to the cloud control plane",
+    "initial_access_vector": "Stolen or compromised AWS credentials used to access the victim account.",
     "event_date": "2024, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T20:58:31.976625+00:00"
-  },
-  {
-    "slug": "lastpass-2022-october",
-    "name": "Lastpass",
-    "technique_ids": [
-      "T1591",
-      "T1592",
-      "T1190",
-      "T1203",
-      "T1056.001",
-      "T1078.004",
-      "T1090.003",
-      "T1213",
-      "T1552.001",
-      "T1619",
-      "T1530"
-    ],
-    "aws_services": [
-      "S3",
-      "GuardDuty",
-      "IAM",
-      "KMS"
-    ],
-    "aws_services_raw": [
-      "Amazon S3",
-      "AWS GuardDuty",
-      "AWS IAM",
-      "AWS KMS"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Exploitation of CVE-2020-5741 in unpatched Plex Media Server running on a senior DevSecOps engineer's personal home computer, enabling remote code execution",
-    "event_date": "2022, October",
-    "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T20:59:10.175897+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:46:47.290506+00:00"
   },
   {
     "slug": "lexisnexis-2026-february",
     "name": "LexisNexis",
     "technique_ids": [
       "T1190",
-      "T1611",
-      "T1555",
+      "T1059",
+      "T1555.006",
       "T1580",
-      "T1530",
-      "T1537"
+      "T1213",
+      "T1567"
     ],
     "aws_services": [
       "EC2",
-      "ECS",
+      "Secrets Manager",
       "Redshift",
-      "RDS",
       "VPC",
-      "Secrets Manager"
+      "RDS"
     ],
     "aws_services_raw": [
-      "Amazon EC2",
-      "Amazon ECS",
-      "Amazon Redshift",
-      "Amazon RDS",
-      "Amazon VPC",
-      "AWS Secrets Manager"
+      "EC2",
+      "AWS Secrets Manager",
+      "Redshift",
+      "VPC",
+      "RDS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Exploitation of unpatched React2Shell vulnerability (CVE-2025-55182) in a React container hosted on a LexisNexis AWS instance",
+    "initial_access_vector": "Exploitation of an unpatched React2Shell vulnerability (CVE-2025-55182) in a vulnerable React container running on a LexisNexis AWS instance.",
     "event_date": "2026, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.8,
-    "analyzed_at": "2026-04-15T20:59:12.282335+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:47:12.952111+00:00"
   },
   {
     "slug": "live-auctioneers-2020-july",
     "name": "Live Auctioneers",
     "technique_ids": [
       "T1195.002",
-      "T1213",
-      "T1530"
+      "T1199",
+      "T1530",
+      "T1567"
     ],
     "aws_services": [],
     "aws_services_raw": [],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised third-party software that granted unauthorized access to the Live Auctioneers cloud environment",
+    "initial_access_vector": "Compromise of third-party software that had access to Live Auctioneers' cloud environment (supply chain / trusted relationship).",
     "event_date": "2020, July",
     "data_exfiltrated": true,
-    "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T20:59:16.743374+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:47:13.832570+00:00"
   },
   {
     "slug": "logicgate-2021-april",
     "name": "LogicGate",
     "technique_ids": [
-      "T1078",
+      "T1078.004",
       "T1530",
-      "T1537"
+      "T1486",
+      "T1567"
     ],
     "aws_services": [
       "S3",
-      "IAM"
+      "IAM",
+      "KMS"
     ],
     "aws_services_raw": [
-      "S3",
-      "IAM"
+      "AWS S3",
+      "AWS IAM",
+      "AWS KMS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised AWS credentials used by an unauthorized third party to access LogicGate's S3-hosted Risk Cloud backup environment",
+    "initial_access_vector": "Compromised AWS credentials obtained by an unauthorized third party (method of compromise not disclosed)",
     "event_date": "2021, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T20:59:20.007105+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:47:30.072938+00:00"
   },
   {
     "slug": "lyndacom-2016-december",
@@ -2127,8 +2045,8 @@
     "technique_ids": [
       "T1552.001",
       "T1078.004",
-      "T1619",
       "T1530",
+      "T1567",
       "T1657"
     ],
     "aws_services": [
@@ -2137,109 +2055,101 @@
       "EC2"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "Amazon EC2"
+      "IAM",
+      "S3",
+      "EC2"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration and Extortion",
-    "initial_access_vector": "AWS credentials discovered in a private GitHub repository belonging to Lynda.com employees",
+    "impact_type_raw": "Data Exfiltration / Extortion",
+    "initial_access_vector": "Use of AWS credentials exposed in a private GitHub repository belonging to Lynda.com employees.",
     "event_date": "2016, December",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T20:59:59.106379+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:47:31.693523+00:00"
   },
   {
     "slug": "malindo-air-2019-september",
     "name": "Malindo Air",
     "technique_ids": [
+      "T1199",
       "T1078",
       "T1530",
-      "T1537"
+      "T1567",
+      "T1657"
     ],
     "aws_services": [
       "S3"
     ],
     "aws_services_raw": [
-      "Amazon S3"
+      "S3"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Former employees of third-party e-commerce provider GoQuo used their (likely residual/retained) legitimate credentials to improperly access Malindo Air customer data systems after leaving the company.",
+    "initial_access_vector": "Two former employees of Malindo Air's third-party e-commerce provider GoQuo (India development center) abused retained access to improperly access and steal customer PII.",
     "event_date": "2019, September",
     "data_exfiltrated": true,
-    "confidence_score": 0.55,
-    "analyzed_at": "2026-04-15T21:00:00.341484+00:00"
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:47:43.474349+00:00"
   },
   {
     "slug": "mandiant-2024-april",
     "name": "Mandiant",
     "technique_ids": [
-      "T1566.001",
-      "T1204.002",
-      "T1539",
-      "T1552.001",
       "T1078.004",
+      "T1566.002",
+      "T1204.002",
+      "T1555",
       "T1619",
       "T1530",
       "T1485",
-      "T1486"
+      "T1657"
     ],
     "aws_services": [
       "S3",
       "IAM",
-      "API",
-      "Google Drive"
+      "API"
     ],
     "aws_services_raw": [
       "Amazon S3",
       "AWS IAM",
-      "AWS API",
-      "Google Drive"
+      "AWS API"
     ],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Data Exfiltration and Pseudo-Ransomware (S3 Bucket Deletion + Ransom Note Bucket)",
-    "initial_access_vector": "Spearphishing email disguised as a job offer caused a former AWS Administrator to execute malware on their personal laptop, which stole credentials and cookies synced to a personal Google Drive \u2014 including a pre-existing AWS Administrator access key CSV stored there.",
+    "impact_type_raw": "Data Exfiltration and Ransomware (Data Destruction)",
+    "initial_access_vector": "Phishing email (fake recruiter job offer) delivered malware to an AWS admin's personal laptop, which stole AWS access keys and cookies from the user's Google Drive. Attacker then used the valid long-lived AWS access key to log into the production AWS account ~4 months later.",
     "event_date": "2024, April",
-    "data_exfiltrated": false,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:00:20.108639+00:00"
+    "data_exfiltrated": true,
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:48:14.764614+00:00"
   },
   {
     "slug": "mandiant-insider-threat-scenario-2020-september",
     "name": "Mandiant: Insider Threat Scenario",
     "technique_ids": [
-      "T1078.004",
+      "T1213",
+      "T1110",
+      "T1078",
+      "T1136.001",
+      "T1046",
+      "T1552.001",
       "T1021",
-      "T1136.003",
-      "T1552",
       "T1485"
     ],
     "aws_services": [
-      "IAM",
-      "CodePipeline",
-      "CodeBuild",
-      "RDS",
-      "DynamoDB",
-      "Secrets Manager",
-      "Parameter Store"
+      "CI/CD server",
+      "Production Databases"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "AWS CodePipeline",
-      "AWS CodeBuild",
-      "Amazon RDS",
-      "Amazon DynamoDB",
-      "AWS Secrets Manager",
-      "AWS Systems Manager Parameter Store"
+      "CI/CD server",
+      "Production Databases"
     ],
     "impact_type": "Data Destruction / Disruption",
-    "impact_type_raw": "Data Destruction",
-    "initial_access_vector": "Fired employee reuses valid cloud credentials that were not properly revoked upon termination",
+    "impact_type_raw": "Data Destruction (Insider Threat)",
+    "initial_access_vector": "Fired employee re-used still-valid credentials to log back into a public-facing CI/CD server (access was not terminated immediately after termination).",
     "event_date": "2020, September",
-    "data_exfiltrated": false,
-    "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T21:00:08.639031+00:00"
+    "data_exfiltrated": true,
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:48:13.025065+00:00"
   },
   {
     "slug": "mandiant-m-trends-2020-2020-february",
@@ -2251,77 +2161,55 @@
       "T1048"
     ],
     "aws_services": [
-      "IAM",
       "EC2",
-      "EBS"
+      "EBS",
+      "IAM"
     ],
     "aws_services_raw": [
-      "IAM",
       "EC2",
-      "EBS"
+      "EBS",
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "AWS credentials found in GitHub repository commit history",
+    "initial_access_vector": "AWS credentials leaked in GitHub repository commit history were discovered and reused by the attacker",
     "event_date": "2020, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:00:47.757466+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:48:09.801146+00:00"
   },
   {
     "slug": "mandiant-m-trends-2025-2025-april",
     "name": "Mandiant M-Trends 2025",
     "technique_ids": [
-      "T1078",
-      "T1539",
-      "T1110",
-      "T1133",
-      "T1136",
-      "T1098",
-      "T1027",
-      "T1070",
-      "T1140",
-      "T1578",
-      "T1555",
-      "T1003",
-      "T1552",
-      "T1558",
-      "T1528",
-      "T1056",
-      "T1083",
-      "T1082",
-      "T1069",
-      "T1526",
-      "T1021",
-      "T1080",
-      "T1213",
-      "T1119",
-      "T1071",
-      "T1090",
-      "T1572",
-      "T1537",
-      "T1567",
-      "T1530",
-      "T1486",
-      "T1496"
+      "T1555.003",
+      "T1078.004",
+      "T1496",
+      "T1657"
     ],
-    "aws_services": [],
-    "aws_services_raw": [],
-    "impact_type": "Unknown",
-    "impact_type_raw": "",
-    "initial_access_vector": "",
+    "aws_services": [
+      "IAM",
+      "EC2"
+    ],
+    "aws_services_raw": [
+      "IAM",
+      "EC2"
+    ],
+    "impact_type": "Cryptomining",
+    "impact_type_raw": "Cryptomining / Resource Hijacking / Access Resale",
+    "initial_access_vector": "Stolen credentials and session cookies harvested from RACCOON infostealer logs on victim endpoints, used to log into cloud service accounts (Google Cloud, AWS, Linode).",
     "event_date": "2025, April",
     "data_exfiltrated": false,
-    "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:37:50.102316+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:48:24.801737+00:00"
   },
   {
     "slug": "medibank-2022-october",
     "name": "Medibank",
     "technique_ids": [
       "T1078",
+      "T1213",
       "T1530",
-      "T1537",
       "T1657"
     ],
     "aws_services": [
@@ -2330,85 +2218,82 @@
     "aws_services_raw": [
       "Amazon Redshift"
     ],
-    "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Data Exfiltration / Ransomware Extortion",
-    "initial_access_vector": "Compromised credentials used to authenticate to Medibank's environment, reportedly including access to the Amazon Redshift platform",
+    "impact_type": "Data Exfiltration",
+    "impact_type_raw": "Data Exfiltration / Extortion",
+    "initial_access_vector": "Compromised credentials used to access Medibank's Amazon Redshift data warehouse platform (reportedly exposed due to public access / lax default settings).",
     "event_date": "2022, October",
     "data_exfiltrated": true,
-    "confidence_score": 0.55,
-    "analyzed_at": "2026-04-15T21:00:59.532236+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:48:23.296115+00:00"
   },
   {
     "slug": "mitiga-rsac-1-2023-april",
     "name": "Mitiga (RSAC) #1",
     "technique_ids": [
+      "T1213.003",
       "T1552.001",
       "T1078.004",
-      "T1580"
+      "T1580",
+      "T1531"
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "S3",
-      "CloudTrail"
+      "GitHub",
+      "EC2"
     ],
     "aws_services_raw": [
-      "IAM",
-      "STS",
-      "S3",
-      "CloudTrail"
+      "AWS IAM",
+      "GitHub",
+      "AWS EC2"
     ],
-    "impact_type": "Unauthorized Access",
-    "impact_type_raw": "Reconnaissance / Unauthorized Access",
-    "initial_access_vector": "AWS access keys accidentally exposed in a public GitHub repository after a developer merged the company repository into their personal public repo.",
+    "impact_type": "Credential Theft",
+    "impact_type_raw": "Credential Exposure / Unauthorized AWS Access (contained)",
+    "initial_access_vector": "Developer accidentally merged a company git repository into their personal public GitHub repository, exposing two AWS access keys which a threat actor then used to access AWS.",
     "event_date": "2023, April",
     "data_exfiltrated": false,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T21:01:15.048661+00:00"
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:48:32.052368+00:00"
   },
   {
     "slug": "mitiga-rsac-2-2023-april",
     "name": "Mitiga (RSAC) #2",
     "technique_ids": [
-      "T1552.004",
       "T1078.004",
       "T1580",
-      "T1537"
+      "T1537",
+      "T1530"
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "S3",
       "EC2",
       "AMI",
       "CloudTrail"
     ],
     "aws_services_raw": [
-      "IAM",
-      "STS",
-      "S3",
-      "EC2",
+      "AWS IAM",
+      "AWS EC2",
       "AMI",
       "CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "AWS access keys leaked via accidental public exposure of a company Git repository merged into a developer's personal public GitHub repo; keys were over 2 years old and unrotated",
+    "impact_type_raw": "Data Exfiltration (attempted, minimal impact)",
+    "initial_access_vector": "Compromise of a long-lived AWS access key that had not been rotated for over 2 years; exact root cause of key exposure unknown.",
     "event_date": "2023, April",
-    "data_exfiltrated": true,
-    "confidence_score": 0.75,
-    "analyzed_at": "2026-04-15T21:01:49.924820+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:48:52.779513+00:00"
   },
   {
     "slug": "natures-basket-responsible-disclosure-2020-july",
     "name": "Natures Basket responsible disclosure",
     "technique_ids": [
-      "T1596.003",
+      "T1593.002",
       "T1530",
       "T1552.001",
-      "T1526",
       "T1078.004",
-      "T1136.003"
+      "T1087.004",
+      "T1136.003",
+      "T1580"
     ],
     "aws_services": [
       "S3",
@@ -2424,21 +2309,22 @@
     ],
     "impact_type": "Account Takeover",
     "impact_type_raw": "Account Takeover",
-    "initial_access_vector": "World-readable public S3 bucket ('gnbdevcdn') containing server backend source code with hardcoded AWS root access keys in configuration files, discovered via Google dorking",
+    "initial_access_vector": "Publicly readable S3 bucket ('gnbdevcdn') discovered via Google dorks, containing backend code with hardcoded AWS access keys including root credentials.",
     "event_date": "2020, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:01:47.864472+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:49:06.289020+00:00"
   },
   {
     "slug": "npm-2022-april",
     "name": "npm",
     "technique_ids": [
       "T1528",
-      "T1213",
+      "T1199",
+      "T1213.003",
       "T1552.001",
       "T1078.004",
-      "T1619",
+      "T1580",
       "T1530"
     ],
     "aws_services": [
@@ -2446,247 +2332,221 @@
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "AWS IAM"
+      "S3",
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Stolen third-party OAuth user tokens (Heroku and Travis CI integrations) used to access GitHub.com organizations, including the npm organization's private repositories",
+    "initial_access_vector": "Stolen OAuth user tokens issued to third-party GitHub integrators (Heroku and Travis CI) used to access npm's private GitHub repositories.",
     "event_date": "2022, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:01:59.405990+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:49:14.298949+00:00"
   },
   {
     "slug": "onelogin-2017-may",
     "name": "OneLogin",
     "technique_ids": [
       "T1078.004",
-      "T1651",
+      "T1578.002",
       "T1580",
+      "T1213",
       "T1530"
     ],
     "aws_services": [
-      "IAM",
       "EC2",
-      "RDS",
-      "API"
+      "IAM",
+      "API",
+      "RDS"
     ],
     "aws_services_raw": [
-      "IAM",
       "EC2",
-      "RDS",
-      "AWS API"
+      "AWS IAM",
+      "AWS API",
+      "RDS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Stolen AWS IAM access keys used to authenticate to the AWS API from an intermediate host at a third-party US service provider",
+    "initial_access_vector": "Compromised AWS API keys used from an intermediate host at another US service provider to authenticate to the AWS API.",
     "event_date": "2017, May",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:02:01.985178+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:49:12.939467+00:00"
   },
   {
     "slug": "onus-2021-december",
     "name": "Onus",
     "technique_ids": [
       "T1190",
-      "T1059",
+      "T1059.004",
+      "T1505.003",
+      "T1543",
+      "T1036.005",
       "T1552.001",
-      "T1105",
-      "T1036.004",
-      "T1572",
-      "T1078.004",
+      "T1083",
+      "T1021.004",
       "T1530",
+      "T1213",
+      "T1572",
+      "T1090",
+      "T1105",
+      "T1041",
       "T1485",
       "T1657"
     ],
-    "aws_services": [
-      "S3",
-      "IAM",
-      "RDS"
-    ],
-    "aws_services_raw": [
-      "Amazon S3",
-      "AWS IAM",
-      "Amazon RDS"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Log4Shell (CVE-2021-44228) remote code execution vulnerability exploited in ONUS's Cyclos payment server, between December 11\u201313, 2021",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2021, December",
-    "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:42:01.289391+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:49:34.941279+00:00"
   },
   {
     "slug": "open-exchange-rates-2020-march",
     "name": "Open Exchange Rates",
     "technique_ids": [
       "T1199",
-      "T1552.005",
+      "T1078.004",
       "T1530",
-      "T1537"
+      "T1567"
     ],
     "aws_services": [
-      "IAM",
-      "S3",
-      "RDS"
+      "AWS",
+      "IAM"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "Amazon RDS"
+      "AWS",
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Third-party compromise exposing an AWS access key belonging to Open Exchange Rates",
+    "initial_access_vector": "Third-party compromise exposed an AWS access key belonging to Open Exchange Rates, which the attacker used to access the environment.",
     "event_date": "2020, March",
     "data_exfiltrated": true,
-    "confidence_score": 0.4,
-    "analyzed_at": "2026-04-15T21:02:31.081413+00:00"
+    "confidence_score": 0.2,
+    "analyzed_at": "2026-04-23T18:49:16.277711+00:00"
   },
   {
     "slug": "otelier-2025-january",
     "name": "Otelier",
     "technique_ids": [
-      "T1566",
-      "T1078",
-      "T1213",
+      "T1555",
+      "T1078.004",
       "T1552.001",
       "T1530",
-      "T1657"
+      "T1657",
+      "T1531"
     ],
     "aws_services": [
       "S3",
-      "AWS"
+      "IAM"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "AWS"
+      "S3",
+      "IAM"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Infostealer malware compromised an Otelier employee's device, stealing credentials to the company's Atlassian server (Jira/Confluence/Bitbucket)",
+    "impact_type_raw": "Data Exfiltration and Extortion",
+    "initial_access_vector": "Infostealer malware harvested an employee's Atlassian credentials, which the attackers used to log into Otelier's Atlassian server.",
     "event_date": "2025, January",
     "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:03:03.157623+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:49:45.007418+00:00"
   },
   {
     "slug": "palo-alto-unit-42-2022-december",
     "name": "Palo Alto Unit 42",
     "technique_ids": [
-      "T1190",
-      "T1552.005",
+      "T1078.004",
+      "T1136.003",
+      "T1070.004",
+      "T1070",
+      "T1552.007",
+      "T1552.001",
       "T1087.004",
       "T1069.003",
       "T1526",
-      "T1136.003",
-      "T1496",
-      "T1070"
+      "T1580",
+      "T1619",
+      "T1534",
+      "T1496"
     ],
-    "aws_services": [
-      "Lambda",
-      "IAM",
-      "STS",
-      "S3",
-      "EC2",
-      "VPC",
-      "CloudWatch",
-      "CloudTrail",
-      "EBS",
-      "SES"
-    ],
-    "aws_services_raw": [
-      "AWS Lambda",
-      "AWS IAM",
-      "AWS STS",
-      "Amazon S3",
-      "Amazon EC2",
-      "Amazon VPC",
-      "Amazon CloudWatch",
-      "AWS CloudTrail",
-      "Amazon EBS",
-      "Amazon SES"
-    ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "Phishing / SES Abuse",
-    "initial_access_vector": "Code execution achieved within an AWS Lambda function context, enabling exfiltration of the function's IAM temporary credentials from environment variables (exact exploit vector not specified; application vulnerability or misconfiguration implied)",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2022, December",
-    "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:03:15.016162+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:50:11.867743+00:00"
   },
   {
     "slug": "pctattletale-2024-may",
     "name": "pcTattletale",
     "technique_ids": [
+      "T1593",
       "T1190",
-      "T1552.005",
-      "T1078.004",
-      "T1526",
+      "T1552",
+      "T1087.004",
       "T1530",
-      "T1491.002"
+      "T1491.002",
+      "T1567"
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "S3"
+      "S3",
+      "STS"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "AWS STS",
-      "Amazon S3"
+      "IAM",
+      "S3",
+      "STS"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Unauthenticated SOAP API request to pcTattletale's public-facing device registration endpoint, which returned AWS root account credentials in the response body",
+    "impact_type_raw": "Data Exfiltration and Website Defacement",
+    "initial_access_vector": "Abuse of an unauthenticated SOAP API endpoint (Authenticationv16.php/AddComputer) that returned AWS root access keys in its response, allowing any registrant to obtain the credentials.",
     "event_date": "2024, May",
     "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:03:40.305946+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:50:11.072041+00:00"
   },
   {
     "slug": "pearson-2025-march",
     "name": "Pearson",
     "technique_ids": [
+      "T1083",
       "T1552.001",
-      "T1213",
       "T1078.004",
-      "T1526",
+      "T1213.003",
+      "T1550.001",
       "T1530",
-      "T1537"
+      "T1567"
     ],
     "aws_services": [
-      "AWS",
-      "S3",
-      "Google Cloud",
-      "Snowflake",
-      "Salesforce",
-      "GitLab"
+      "IAM",
+      "S3"
     ],
     "aws_services_raw": [
-      "AWS",
-      "Amazon S3",
-      "Google Cloud",
-      "Snowflake",
-      "Salesforce CRM",
-      "GitLab"
+      "IAM",
+      "S3"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Exposed GitLab Personal Access Token (PAT) found in a publicly accessible .git/config file, granting unauthorized access to internal source code repositories",
+    "initial_access_vector": "Exposed GitLab Personal Access Token (PAT) found in a publicly accessible .git/config file, which granted access to Pearson's developer environment and internal source code.",
     "event_date": "2025, March",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:04:04.780569+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:50:18.127947+00:00"
   },
   {
     "slug": "permiso-2024-october",
     "name": "Permiso",
     "technique_ids": [
-      "T1552.004",
+      "T1552.001",
       "T1078.004",
       "T1526",
       "T1580",
@@ -2695,37 +2555,34 @@
       "T1496"
     ],
     "aws_services": [
-      "IAM",
       "Bedrock",
-      "CloudTrail",
-      "SES",
-      "EC2"
+      "IAM",
+      "CloudTrail"
     ],
     "aws_services_raw": [
+      "Bedrock",
       "IAM",
-      "AWS Bedrock",
-      "CloudTrail",
-      "Amazon SES",
-      "Amazon EC2"
+      "CloudTrail"
     ],
     "impact_type": "LLM / Resource Hijacking",
-    "impact_type_raw": "LLMJacking (AI Resource Hijacking)",
-    "initial_access_vector": "Long-lived AWS IAM access keys (AKIA*) exposed publicly on GitHub, discovered and exploited by attackers within minutes of publication.",
+    "impact_type_raw": "Resource Hijacking (LLMJacking)",
+    "initial_access_vector": "Long-lived AWS access key (AKIA) exposed in a file on GitHub, discovered and used by attackers within minutes to access AWS Bedrock.",
     "event_date": "2024, October",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:04:23.821884+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:50:24.248712+00:00"
   },
   {
     "slug": "permiso-case-study-1-2022-june",
     "name": "Permiso case study 1",
     "technique_ids": [
       "T1190",
-      "T1552.005",
+      "T1552.001",
       "T1078.004",
       "T1619",
-      "T1098.001",
+      "T1098.003",
       "T1136.003",
+      "T1098.001",
       "T1526",
       "T1578.002",
       "T1496"
@@ -2737,10 +2594,10 @@
       "CloudWatch",
       "CloudFront",
       "ELB",
-      "Trusted Advisor",
-      "Compute Optimizer",
-      "AWS Health",
-      "AWS Support"
+      "TrustedAdvisor",
+      "ComputeOptimizer",
+      "Support",
+      "Health"
     ],
     "aws_services_raw": [
       "IAM",
@@ -2748,19 +2605,19 @@
       "EC2",
       "CloudWatch",
       "CloudFront",
-      "Elastic Load Balancing",
-      "Trusted Advisor",
-      "Compute Optimizer",
-      "AWS Health",
-      "AWS Support"
+      "ELB",
+      "TrustedAdvisor",
+      "ComputeOptimizer",
+      "Support",
+      "Health"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "Exploitation of GitLab CVE-2021-22205 to extract AWS Admin-level IAM access keys stored on the GitLab server",
+    "impact_type_raw": "Cryptomining",
+    "initial_access_vector": "Exploitation of Gitlab vulnerability CVE-2021-22205 exposed sensitive data containing an AWS admin access key, which the attacker used to access the victim's AWS environment.",
     "event_date": "2022, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:04:20.857079+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:50:39.278175+00:00"
   },
   {
     "slug": "permiso-case-study-2-2022-december",
@@ -2769,57 +2626,54 @@
       "T1190",
       "T1059.004",
       "T1562.004",
-      "T1580",
-      "T1613",
-      "T1552.005",
-      "T1552.007",
-      "T1552.001",
       "T1070.002",
       "T1070.003",
-      "T1041"
+      "T1222.002",
+      "T1552.005",
+      "T1552.001",
+      "T1552.007",
+      "T1083",
+      "T1613",
+      "T1580",
+      "T1005",
+      "T1105",
+      "T1071.001",
+      "T1041",
+      "T1132.001"
     ],
-    "aws_services": [
-      "EC2",
-      "IAM",
-      "ECS"
-    ],
-    "aws_services_raw": [
-      "EC2",
-      "IAM",
-      "ECS"
-    ],
-    "impact_type": "Credential Theft",
-    "impact_type_raw": "Credential Theft",
-    "initial_access_vector": "Exploitation of publicly facing Jupyter Notebooks and/or Kubernetes instances (IMDSv1-accessible EC2 hosts)",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2022, December",
-    "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:04:56.590923+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:50:55.228736+00:00"
   },
   {
     "slug": "politifact-2017-october",
     "name": "Politifact",
     "technique_ids": [
-      "T1195.002",
+      "T1190",
       "T1059.007",
       "T1496"
     ],
     "aws_services": [],
     "aws_services_raw": [],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Misconfigured cloud server or compromised third-party ad provider used to inject Coinhive script into PolitiFact's website",
+    "impact_type_raw": "Cryptojacking",
+    "initial_access_vector": "Misconfigured cloud computing server, possibly via a third-party ad provider, enabled injection of malicious JavaScript into PolitiFact.com",
     "event_date": "2017, October",
     "data_exfiltrated": false,
-    "confidence_score": 0.6,
-    "analyzed_at": "2026-04-15T21:04:50.959122+00:00"
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:50:50.637949+00:00"
   },
   {
     "slug": "positive-thinking-company-case-study-2022-june",
     "name": "Positive Thinking Company case study",
     "technique_ids": [
-      "T1190",
-      "T1059",
+      "T1078",
       "T1496"
     ],
     "aws_services": [
@@ -2830,120 +2684,120 @@
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "Unknown \u2013 the root cause is listed as unknown; exploit of a public-facing application or misconfiguration on an AWS machine is inferred from the cryptojacking context.",
+    "initial_access_vector": "Unknown - source article content was not available; only the title indicating a cryptojacking incident on an AWS machine is known.",
     "event_date": "2022, June",
     "data_exfiltrated": false,
     "confidence_score": 0.2,
-    "analyzed_at": "2026-04-15T21:05:07.348495+00:00"
+    "analyzed_at": "2026-04-23T18:50:49.546866+00:00"
   },
   {
     "slug": "premint-2022-july",
     "name": "PREMINT",
     "technique_ids": [
-      "T1596",
-      "T1584.001",
-      "T1588.001",
+      "T1580",
       "T1190",
+      "T1195.002",
       "T1059.007",
-      "T1102",
-      "T1185",
-      "T1496"
+      "T1565.002",
+      "T1657"
     ],
     "aws_services": [
       "S3"
     ],
     "aws_services_raw": [
-      "Amazon S3"
+      "S3"
     ],
     "impact_type": "Supply Chain",
-    "impact_type_raw": "NFT Theft (Supply Chain / Web Skimming)",
-    "initial_access_vector": "S3 bucket global write misconfiguration allowed unauthenticated attacker to overwrite PREMINT's publicly hosted JavaScript asset (boomerang.min.js)",
+    "impact_type_raw": "NFT Theft (Software Supply Chain Compromise)",
+    "initial_access_vector": "Misconfigured S3 bucket with global/unauthorized write access allowed attackers to tamper with JS files (boomerang.min.js) served by premint.xyz",
     "event_date": "2022, July",
-    "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:05:38.472903+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:51:13.282887+00:00"
   },
   {
     "slug": "rapid7-1-2024-july",
     "name": "Rapid7 #1",
     "technique_ids": [
-      "T1552.005",
       "T1078.004",
       "T1580",
       "T1136.003",
-      "T1098.001",
-      "T1021",
-      "T1070",
-      "T1496"
+      "T1098.003",
+      "T1583",
+      "T1583.001",
+      "T1496",
+      "T1070"
     ],
     "aws_services": [
-      "S3",
       "IAM",
+      "S3",
       "EC2",
       "SES",
-      "SQS",
       "SNS",
+      "SQS",
       "Service Quotas",
-      "KMS",
+      "CLI",
       "CloudTrail"
     ],
     "aws_services_raw": [
-      "S3",
       "IAM",
+      "S3",
       "EC2",
       "SES",
-      "SQS",
       "SNS",
+      "SQS",
       "Service Quotas",
-      "KMS",
+      "AWS CLI",
       "CloudTrail"
     ],
     "impact_type": "LLM / Resource Hijacking",
-    "impact_type_raw": "Resource Hijacking / Mass Phishing via SES",
-    "initial_access_vector": "Exposed IAM access keys discovered in a public S3 bucket, used via AWS CLI to authenticate into the environment",
+    "impact_type_raw": "Resource Hijacking (SES mass phishing)",
+    "initial_access_vector": "Exposed IAM access keys found in a public S3 bucket, used by attacker via AWS CLI",
     "event_date": "2024, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:05:52.466448+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:51:18.720565+00:00"
   },
   {
     "slug": "rapid7-2-2024-july",
     "name": "Rapid7 #2",
     "technique_ids": [
-      "T1552.005",
       "T1078.004",
       "T1580",
-      "T1098.001",
+      "T1136.003",
       "T1098.003",
-      "T1021.007",
+      "T1583",
+      "T1583.001",
       "T1070",
       "T1496"
     ],
     "aws_services": [
-      "S3",
       "IAM",
-      "EC2",
+      "S3",
       "SES",
-      "SQS",
       "SNS",
-      "Service Quotas"
+      "SQS",
+      "EC2",
+      "Service Quotas",
+      "CloudTrail"
     ],
     "aws_services_raw": [
-      "S3",
       "IAM",
-      "EC2",
+      "S3",
       "SES",
-      "SQS",
       "SNS",
-      "Service Quotas"
+      "SQS",
+      "EC2",
+      "Service Quotas",
+      "CloudTrail"
     ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "SES Abuse / Mass Phishing Campaign",
-    "initial_access_vector": "Plaintext IAM access keys discovered in a publicly accessible S3 bucket",
+    "impact_type": "LLM / Resource Hijacking",
+    "impact_type_raw": "Resource Hijacking (SES Abuse / Mass Phishing)",
+    "initial_access_vector": "Exposed IAM access keys found in a public S3 bucket, used via AWS CLI from an external IP.",
     "event_date": "2024, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T21:06:00.152512+00:00"
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:51:34.623873+00:00"
   },
   {
     "slug": "reddit-2018-june",
@@ -2951,18 +2805,25 @@
     "technique_ids": [
       "T1111",
       "T1078",
-      "T1619",
-      "T1530"
+      "T1580",
+      "T1530",
+      "T1213.003"
     ],
-    "aws_services": [],
-    "aws_services_raw": [],
+    "aws_services": [
+      "Cloud hosting provider",
+      "Source code hosting provider"
+    ],
+    "aws_services_raw": [
+      "Cloud hosting provider (unspecified)",
+      "Source code hosting provider (unspecified)"
+    ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Employee SMS-based 2FA codes were intercepted, allowing the attacker to authenticate to Reddit's cloud and source code hosting provider accounts using compromised employee credentials.",
+    "initial_access_vector": "Compromise of employee accounts at cloud and source code hosting providers via SMS-based 2FA interception",
     "event_date": "2018, June",
     "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:06:05.185198+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:51:40.578489+00:00"
   },
   {
     "slug": "reddoorzcom-2021-september",
@@ -2975,58 +2836,50 @@
     ],
     "aws_services": [
       "IAM",
-      "STS",
-      "S3",
-      "RDS"
+      "RDS",
+      "S3"
     ],
     "aws_services_raw": [
       "IAM",
-      "STS",
-      "S3",
-      "RDS"
+      "RDS",
+      "S3"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "AWS Access Key hardcoded/embedded in a publicly distributed Android APK, discovered and extracted by the attacker",
+    "initial_access_vector": "AWS access key embedded in the RedDoorz Android APK was extracted by an attacker and used to authenticate to the cloud environment.",
     "event_date": "2021, September",
     "data_exfiltrated": true,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:06:25.373570+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:51:30.618657+00:00"
   },
   {
     "slug": "reliaquest-2023-nov",
     "name": "Reliaquest",
     "technique_ids": [
+      "T1566.004",
       "T1078.004",
-      "T1566",
+      "T1204",
       "T1556.007",
-      "T1133",
       "T1219",
-      "T1068",
+      "T1572",
       "T1562.001",
       "T1070",
-      "T1036",
-      "T1090.003",
+      "T1055",
       "T1621",
       "T1556.006",
       "T1555",
       "T1003",
-      "T1528",
       "T1083",
-      "T1087.002",
       "T1087.004",
-      "T1526",
       "T1069.003",
-      "T1021.007",
+      "T1087.002",
+      "T1563.002",
       "T1021.001",
-      "T1550.004",
       "T1021.004",
-      "T1572",
-      "T1102",
-      "T1048",
+      "T1567",
       "T1530",
-      "T1490",
-      "T1486"
+      "T1486",
+      "T1490"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -3036,74 +2889,58 @@
     "event_date": "2023, Nov",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:28:24.285700+00:00"
+    "analyzed_at": "2026-04-23T18:52:14.457593+00:00"
   },
   {
     "slug": "s2w-talon-donjuji-2023-may",
     "name": "S2W Talon \"Donjuji\"",
     "technique_ids": [
-      "T1596.004",
-      "T1190",
-      "T1552.004",
-      "T1526",
+      "T1596.001",
+      "T1552.001",
+      "T1098",
+      "T1087.004",
+      "T1580",
+      "T1550.001",
       "T1619",
-      "T1530"
+      "T1530",
+      "T1567",
+      "T1567.002"
     ],
-    "aws_services": [
-      "IAM",
-      "S3",
-      "Glue",
-      "RDS",
-      "CloudTrail",
-      "CloudWatch",
-      "Cognito"
-    ],
-    "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "AWS Glue",
-      "Amazon RDS",
-      "Amazon CloudTrail",
-      "Amazon CloudWatch",
-      "Amazon Cognito"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Publicly exposed development server with MiniProfiler middleware misconfiguration (pp=env parameter) that leaked AWS IAM credentials and other secrets via environment variable page indexed by Google cache",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2023, May",
-    "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:07:16.779158+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:52:26.190505+00:00"
   },
   {
     "slug": "salesloft-drift-2025-august",
     "name": "Salesloft (Drift)",
     "technique_ids": [
-      "T1195.001",
+      "T1195.002",
       "T1552.001",
+      "T1078.004",
       "T1528",
       "T1550.001",
-      "T1530",
       "T1213",
       "T1567"
     ],
     "aws_services": [
-      "IAM",
-      "S3",
       "AWS"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "AWS (general)"
+      "AWS"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromise of a GitHub repository (software supply chain) by threat actor UNC6395, enabling theft of OAuth tokens and secrets used to access downstream cloud and SaaS environments.",
+    "initial_access_vector": "Supply-chain compromise of a Salesloft GitHub repository by UNC6395, which exposed credentials enabling access to the AWS environment.",
     "event_date": "2025, August",
     "data_exfiltrated": true,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:07:09.017211+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:52:09.108200+00:00"
   },
   {
     "slug": "security-joes-2023-sep",
@@ -3114,26 +2951,24 @@
       "T1136.001"
     ],
     "aws_services": [
-      "EC2",
-      "S3"
+      "EC2"
     ],
     "aws_services_raw": [
-      "EC2",
-      "S3 (MinIO-compatible object storage)"
+      "EC2"
     ],
-    "impact_type": "Account Takeover",
-    "impact_type_raw": "Account Takeover",
-    "initial_access_vector": "Exploitation of a vulnerable MinIO object storage deployment on AWS EC2 using the evil_minio exploit (targeting CVE-2023-28432/CVE-2023-28434)",
+    "impact_type": "Other",
+    "impact_type_raw": "Unknown",
+    "initial_access_vector": "Exploitation of a vulnerable MinIO object storage server deployed on an AWS EC2 instance using the evil_minIO exploit.",
     "event_date": "2023, Sep",
     "data_exfiltrated": false,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:07:06.155658+00:00"
+    "confidence_score": 0.2,
+    "analyzed_at": "2026-04-23T18:52:07.721390+00:00"
   },
   {
     "slug": "sendtech-2021-february",
     "name": "Sendtech",
     "technique_ids": [
-      "T1078",
+      "T1078.004",
       "T1136.003",
       "T1530"
     ],
@@ -3147,11 +2982,11 @@
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised credentials belonging to a current or former employee used to access the AWS environment",
+    "initial_access_vector": "Compromised credentials belonging to a current or former employee",
     "event_date": "2021, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:07:45.042995+00:00"
+    "confidence_score": 0.3,
+    "analyzed_at": "2026-04-23T18:52:13.928164+00:00"
   },
   {
     "slug": "sentinelone-2023-june",
@@ -3161,114 +2996,109 @@
     ],
     "aws_services": [],
     "aws_services_raw": [],
-    "impact_type": "Unauthorized Access",
-    "impact_type_raw": "Remote Code Execution",
-    "initial_access_vector": "Exploitation of CVE-2022-47986, a critical YAML deserialization vulnerability (CVSS 9.8) in IBM Aspera Faspex file transfer software, allowing unauthenticated remote code execution.",
+    "impact_type": "Other",
+    "impact_type_raw": "Unknown",
+    "initial_access_vector": "Exploitation of CVE-2022-47986 (IBM Aspera Faspex pre-auth RCE)",
     "event_date": "2023, June",
     "data_exfiltrated": false,
-    "confidence_score": 0.3,
-    "analyzed_at": "2026-04-15T21:07:45.759038+00:00"
+    "confidence_score": 0.2,
+    "analyzed_at": "2026-04-23T18:52:14.021869+00:00"
   },
   {
     "slug": "sisense-2024-april",
     "name": "Sisense",
     "technique_ids": [
-      "T1195",
+      "T1199",
+      "T1213.003",
       "T1552.001",
-      "T1078",
+      "T1550.001",
       "T1530",
-      "T1537",
-      "T1550.001"
+      "T1567"
     ],
     "aws_services": [
       "S3",
       "IAM"
     ],
     "aws_services_raw": [
-      "AWS S3",
+      "Amazon S3",
       "AWS IAM"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Attackers gained access to Sisense's self-hosted GitLab repository, where hardcoded AWS credentials were discovered in the source code.",
+    "initial_access_vector": "Attackers gained access to Sisense's self-hosted GitLab code repository, where an AWS token/credential had been committed, providing access to Sisense's Amazon S3 buckets.",
     "event_date": "2024, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:08:08.699106+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:52:42.231695+00:00"
   },
   {
     "slug": "sonder-2022-november",
     "name": "Sonder",
     "technique_ids": [
-      "T1190",
-      "T1213",
+      "T1078",
       "T1041",
-      "T1486",
       "T1657"
     ],
     "aws_services": [],
     "aws_services_raw": [],
-    "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware / Data Exfiltration / Extortion",
-    "initial_access_vector": "Unknown \u2014 root cause not disclosed in available sources. Primary source URL (Sonder blog) returned 404; secondary source (Montana DOJ letter) belongs to a different organization (Mulkay Cardiology Consultants) and does not describe the Sonder incident.",
+    "impact_type": "Data Exfiltration",
+    "impact_type_raw": "Data Exfiltration and Extortion",
+    "initial_access_vector": "Unknown - source URLs did not contain relevant incident details (one returned 404, the other was an unrelated Mulkay Cardiology breach notification)",
     "event_date": "2022, November",
     "data_exfiltrated": true,
-    "confidence_score": 0.3,
-    "analyzed_at": "2026-04-15T21:08:06.806650+00:00"
+    "confidence_score": 0.2,
+    "analyzed_at": "2026-04-23T19:01:24.325946+00:00"
   },
   {
     "slug": "stephen-berger-infoguardag-2024-february",
     "name": "Stephen Berger (InfoGuardAG)",
     "technique_ids": [
+      "T1078.004",
       "T1580",
+      "T1619",
       "T1530",
       "T1485",
-      "T1486"
+      "T1657"
     ],
     "aws_services": [
       "S3",
       "SES",
-      "CloudTrail",
-      "IAM"
+      "IAM",
+      "CloudTrail"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "Amazon SES",
-      "AWS CloudTrail",
-      "AWS IAM"
+      "S3",
+      "SES",
+      "IAM",
+      "CloudTrail"
     ],
     "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware (S3 Bucket Deletion + Extortion)",
-    "initial_access_vector": "Unknown \u2014 the root cause of initial credential compromise is not described in the source; the attacker possessed valid AWS credentials (IAM access key) at the time of first observed action on January 18, 2024.",
+    "impact_type_raw": "S3 Ransomware (Data Destruction & Extortion)",
+    "initial_access_vector": "Unknown \u2014 attacker possessed valid AWS credentials (access key) enabling authenticated API actions against SES and S3.",
     "event_date": "2024, February",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:08:10.541844+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:53:03.329903+00:00"
   },
   {
     "slug": "sumo-logic-2023-november",
     "name": "Sumo Logic",
     "technique_ids": [
-      "T1078.004",
-      "T1580"
+      "T1078.004"
     ],
     "aws_services": [
-      "IAM",
-      "S3",
-      "EC2"
+      "AWS"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon S3",
-      "Amazon EC2"
+      "AWS"
     ],
     "impact_type": "Account Takeover",
     "impact_type_raw": "Account Takeover",
-    "initial_access_vector": "Compromised credential used to access a Sumo Logic AWS account, discovered on November 3, 2023.",
+    "initial_access_vector": "Compromised credential used to access a Sumo Logic AWS account",
     "event_date": "2023, November",
     "data_exfiltrated": false,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:08:21.364752+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T19:02:02.313374+00:00"
   },
   {
     "slug": "sygnia-2025-january",
@@ -3276,12 +3106,11 @@
     "technique_ids": [
       "T1566.003",
       "T1204.002",
-      "T1552.001",
+      "T1555",
       "T1550.004",
       "T1078.004",
-      "T1484.002",
       "T1648",
-      "T1106"
+      "T1565"
     ],
     "aws_services": [
       "IAM",
@@ -3293,57 +3122,43 @@
       "AWS IAM",
       "AWS Lambda",
       "Amazon EC2",
-      "AWS Management Console"
+      "AWS Console"
     ],
-    "impact_type": "Unauthorized Access",
-    "impact_type_raw": "Unauthorized Access to Critical Assets",
-    "initial_access_vector": "Social engineering via LinkedIn and WhatsApp; victims executed an infostealer that harvested AWS access keys and session tokens from corporate developer laptops",
+    "impact_type": "Account Takeover",
+    "impact_type_raw": "Account Takeover / Unauthorized Access to Critical Assets",
+    "initial_access_vector": "Social engineering on LinkedIn/WhatsApp by a state-sponsored actor that convinced developers to run infostealer code, harvesting AWS access keys and Entra ID session tokens from corporate laptops.",
     "event_date": "2025, January",
-    "data_exfiltrated": true,
-    "confidence_score": 0.72,
-    "analyzed_at": "2026-04-15T21:09:17.919619+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.6,
+    "analyzed_at": "2026-04-23T18:53:14.691009+00:00"
   },
   {
     "slug": "sysdig-2023-february",
     "name": "Sysdig",
     "technique_ids": [
       "T1190",
+      "T1059.004",
       "T1496",
       "T1552.005",
-      "T1098.001",
+      "T1136.003",
       "T1580",
-      "T1552.007",
+      "T1619",
       "T1530",
-      "T1537",
-      "T1552.001",
+      "T1048",
+      "T1552",
       "T1562.008",
+      "T1552.001",
       "T1550.001"
     ],
-    "aws_services": [
-      "EKS / Self-managed Kubernetes on EC2",
-      "EC2",
-      "IMDS",
-      "Lambda",
-      "S3",
-      "IAM",
-      "CloudTrail"
-    ],
-    "aws_services_raw": [
-      "Amazon EKS / Self-managed Kubernetes on EC2",
-      "Amazon EC2",
-      "EC2 Instance Metadata Service (IMDSv1)",
-      "AWS Lambda",
-      "Amazon S3",
-      "AWS IAM",
-      "AWS CloudTrail"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Exploitation of a vulnerable internet-exposed service running in a self-managed Kubernetes cluster on AWS (T1190)",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2023, February",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:09:30.381454+00:00"
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:53:35.058495+00:00"
   },
   {
     "slug": "sysdig-2023-july",
@@ -3351,23 +3166,24 @@
     "technique_ids": [
       "T1190",
       "T1059.004",
-      "T1610",
-      "T1098.001",
+      "T1609",
       "T1136.003",
+      "T1098.001",
+      "T1098.004",
       "T1078.004",
-      "T1548",
       "T1562.004",
       "T1070.003",
-      "T1070",
+      "T1070.004",
       "T1036.005",
-      "T1599",
+      "T1027",
       "T1552.005",
       "T1552.001",
-      "T1555",
+      "T1555.006",
       "T1580",
       "T1613",
-      "T1087.004",
-      "T1530",
+      "T1071.001",
+      "T1102",
+      "T1105",
       "T1041",
       "T1567",
       "T1496",
@@ -3381,17 +3197,16 @@
     "event_date": "2023, July",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:29:55.368184+00:00"
+    "analyzed_at": "2026-04-23T18:54:01.699899+00:00"
   },
   {
     "slug": "sysdig-2024-march",
     "name": "Sysdig",
     "technique_ids": [
       "T1190",
-      "T1526",
-      "T1578.002",
+      "T1580",
+      "T1535",
       "T1059.004",
-      "T1053.006",
       "T1496"
     ],
     "aws_services": [
@@ -3400,17 +3215,17 @@
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon EC2",
-      "AWS CloudTrail",
-      "AWS IAM"
+      "EC2",
+      "CloudTrail",
+      "IAM"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Exploitation of CVE-2021-3129 (Laravel debug mode RCE) and a WordPress misconfiguration in publicly exposed honeynet web applications, yielding AWS account credentials.",
+    "impact_type_raw": "Cryptomining (Resource Hijacking - Meson CDN bandwidth/storage mining)",
+    "initial_access_vector": "Exploitation of CVE-2021-3129 in an exposed Laravel application and a WordPress misconfiguration on honeynet infrastructure, which yielded AWS credentials/access to the cloud account.",
     "event_date": "2024, March",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:09:30.112794+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:53:40.811986+00:00"
   },
   {
     "slug": "sysdig-2024-may",
@@ -3418,56 +3233,56 @@
     "technique_ids": [
       "T1190",
       "T1552.001",
-      "T1550.001",
       "T1526",
       "T1580",
       "T1562.008",
-      "T1090",
       "T1496"
     ],
     "aws_services": [
       "Bedrock",
-      "IAM",
       "CloudTrail",
       "CloudWatch",
-      "S3"
+      "S3",
+      "IAM"
     ],
     "aws_services_raw": [
       "AWS Bedrock",
-      "AWS IAM",
-      "AWS CloudTrail",
-      "Amazon CloudWatch",
-      "Amazon S3"
+      "CloudTrail",
+      "CloudWatch",
+      "S3",
+      "IAM"
     ],
     "impact_type": "LLM / Resource Hijacking",
-    "impact_type_raw": "LLMJacking (Resource Hijacking / AI Service Abuse)",
-    "initial_access_vector": "Exploitation of CVE-2021-3129, a known deserialization vulnerability in Laravel running on a publicly accessible server",
+    "impact_type_raw": "Resource Hijacking (LLMjacking)",
+    "initial_access_vector": "Exploitation of a publicly exposed Laravel application vulnerable to CVE-2021-3129, from which AWS cloud credentials were stolen.",
     "event_date": "2024, May",
-    "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:10:17.747062+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:53:48.758219+00:00"
   },
   {
     "slug": "sysdig-2025-november",
     "name": "Sysdig",
     "technique_ids": [
-      "T1580",
-      "T1526",
-      "T1552.005",
+      "T1078.004",
       "T1136.003",
       "T1098.001",
-      "T1648",
-      "T1078.004",
-      "T1535",
-      "T1090",
-      "T1562.008",
-      "T1528",
-      "T1550.001",
       "T1548",
+      "T1098.003",
+      "T1535",
+      "T1665",
+      "T1552.001",
+      "T1580",
+      "T1087.004",
+      "T1526",
+      "T1619",
+      "T1538",
+      "T1550.001",
       "T1530",
-      "T1552.004",
-      "T1537",
-      "T1496"
+      "T1555.006",
+      "T1552.007",
+      "T1496",
+      "T1496.004"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -3477,105 +3292,101 @@
     "event_date": "2025, November",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:31:18.655130+00:00"
+    "analyzed_at": "2026-04-23T18:54:14.182110+00:00"
   },
   {
     "slug": "teamtnt-worm-2020-april",
     "name": "TeamTNT Worm",
     "technique_ids": [
-      "T1046",
+      "T1595.001",
       "T1190",
       "T1610",
       "T1562.001",
       "T1552.001",
       "T1552.004",
-      "T1041",
+      "T1048.003",
       "T1098.004",
       "T1014",
-      "T1219",
       "T1070.002",
       "T1021.004",
+      "T1105",
       "T1496"
     ],
     "aws_services": [
-      "CLI",
       "IAM",
       "EC2",
-      "ECS",
-      "EKS"
+      "CLI"
     ],
     "aws_services_raw": [
-      "AWS CLI",
-      "AWS IAM",
-      "Amazon EC2",
-      "Amazon ECS",
-      "Amazon EKS"
+      "IAM",
+      "EC2",
+      "AWS CLI"
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "",
+    "initial_access_vector": "Internet-exposed misconfigured Docker API (and Kubernetes) discovered via masscan scanning.",
     "event_date": "2020, April",
-    "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T21:10:36.809298+00:00"
+    "data_exfiltrated": true,
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:54:20.096156+00:00"
   },
   {
     "slug": "teqtivity-uber-vendor-2022-december",
     "name": "Teqtivity (Uber Vendor)",
     "technique_ids": [
       "T1199",
-      "T1190",
       "T1530",
       "T1537",
-      "T1589"
+      "T1657"
     ],
     "aws_services": [
       "Backup",
-      "S3"
+      "S3",
+      "EC2"
     ],
     "aws_services_raw": [
       "AWS Backup",
-      "Amazon S3"
+      "S3 (inferred)",
+      "EC2 (inferred)"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Unknown \u2014 Teqtivity disclosed unauthorized third-party access to their systems but did not publicly reveal the root cause or specific initial access method used.",
+    "initial_access_vector": "Unknown root cause; unauthorized third-party access to Teqtivity's AWS backup server. Affected downstream customer (Uber) via trusted third-party vendor relationship.",
     "event_date": "2022, December",
     "data_exfiltrated": true,
-    "confidence_score": 0.6,
-    "analyzed_at": "2026-04-15T21:10:27.965560+00:00"
+    "confidence_score": 0.5,
+    "analyzed_at": "2026-04-23T18:54:25.104963+00:00"
   },
   {
     "slug": "tesla-2018-february",
     "name": "Tesla",
     "technique_ids": [
       "T1190",
-      "T1552.001",
-      "T1078.004",
-      "T1496",
-      "T1571",
+      "T1552.007",
+      "T1550.001",
+      "T1609",
+      "T1090.002",
       "T1573.002",
-      "T1090.003"
+      "T1571",
+      "T1496"
     ],
     "aws_services": [
       "EC2",
       "S3",
-      "EKS / Kubernetes",
       "IAM"
     ],
     "aws_services_raw": [
-      "Amazon EC2",
-      "Amazon S3",
-      "Amazon EKS / Kubernetes",
-      "AWS IAM"
+      "EC2",
+      "S3",
+      "IAM"
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptojacking",
-    "initial_access_vector": "Unauthenticated Kubernetes administrative console exposed to the public internet with no password protection",
+    "initial_access_vector": "Unauthenticated access to an internet-exposed Kubernetes administrative console that was not password protected",
     "event_date": "2018, February",
     "data_exfiltrated": false,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:11:15.988013+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:54:44.906467+00:00"
   },
   {
     "slug": "timehop-2018-july",
@@ -3584,95 +3395,89 @@
       "T1078.004",
       "T1580",
       "T1530",
-      "T1528"
+      "T1528",
+      "T1537"
     ],
     "aws_services": [
-      "IAM",
-      "AWS",
-      "RDS",
-      "S3",
-      "Secrets Manager"
+      "Cloud Computing Provider"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "AWS Cloud Environment",
-      "AWS RDS",
-      "AWS S3",
-      "AWS Secrets Manager"
+      "Cloud Computing Provider (unspecified)"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Compromised admin credentials used to authenticate directly to the cloud environment; the targeted account lacked multi-factor authentication enforcement.",
+    "initial_access_vector": "Compromised admin credentials for a cloud account that was not protected by multifactor authentication.",
     "event_date": "2018, July",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:11:14.759211+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:54:42.072110+00:00"
   },
   {
     "slug": "tinacloud-2024-december",
     "name": "TinaCloud",
     "technique_ids": [
       "T1552.001",
+      "T1593.003",
       "T1078.004",
-      "T1496"
+      "T1496",
+      "T1566"
     ],
     "aws_services": [
       "SES",
       "IAM",
-      "CloudTrail",
-      "GitHub Actions"
+      "CloudTrail"
     ],
     "aws_services_raw": [
       "Amazon SES",
       "AWS IAM",
-      "AWS CloudTrail",
-      "GitHub Actions"
+      "AWS CloudTrail"
     ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "Phishing / SES Abuse",
-    "initial_access_vector": "AWS root-level access keys inadvertently embedded in a JavaScript file by a GitHub Actions CI/CD build step, then publicly served as part of the TinaCloud front-end application",
+    "impact_type": "LLM / Resource Hijacking",
+    "impact_type_raw": "Resource Hijacking (SES abuse for phishing)",
+    "initial_access_vector": "AWS access keys with root permissions were written into a JavaScript file by a GitHub Actions build step and deployed publicly, where attackers harvested them from the TinaCloud front-end code.",
     "event_date": "2024, December",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:11:18.138263+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:54:53.510707+00:00"
   },
   {
     "slug": "twilio-2020-july",
     "name": "Twilio",
     "technique_ids": [
-      "T1526",
-      "T1190",
+      "T1595.002",
       "T1090.003",
-      "T1565.001",
-      "T1059.007",
-      "T1185"
+      "T1190",
+      "T1195.002",
+      "T1565.002",
+      "T1189"
     ],
     "aws_services": [
       "S3",
-      "Cloudflare"
+      "IAM"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "CloudFlare CDN"
+      "S3",
+      "IAM (Bucket Policy)"
     ],
     "impact_type": "Supply Chain",
-    "impact_type_raw": "Supply Chain Compromise / Magecart Malvertising",
-    "initial_access_vector": "Publicly writable S3 bucket due to misconfigured bucket policy granting s3:PutObject to Principal '*' on the TaskRouter SDK path",
+    "impact_type_raw": "Supply Chain Compromise / Magecart Malvertising Redirection",
+    "initial_access_vector": "Misconfigured AWS S3 bucket policy that granted s3:PutObject to Principal '*' (anyone on the Internet), allowing an anonymous attacker via TOR to overwrite a hosted JavaScript SDK file.",
     "event_date": "2020, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:11:36.215269+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:55:09.232929+00:00"
   },
   {
     "slug": "uber-2014-may",
     "name": "Uber",
     "technique_ids": [
-      "T1593.003",
       "T1552.001",
-      "T1078.004",
+      "T1596",
       "T1090.003",
-      "T1619",
-      "T1530"
+      "T1078.004",
+      "T1580",
+      "T1530",
+      "T1567"
     ],
     "aws_services": [
       "S3",
@@ -3680,29 +3485,31 @@
       "CloudTrail"
     ],
     "aws_services_raw": [
-      "Amazon S3",
-      "AWS IAM",
-      "AWS CloudTrail"
+      "S3",
+      "IAM",
+      "CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "AWS IAM credentials inadvertently committed to a public GitHub Gist as part of a data analysis script, discovered and harvested by the attacker",
+    "initial_access_vector": "Leaked AWS access key in a public GitHub Gist (Uber data analysis script), discovered by the adversary and used to call the AWS API.",
     "event_date": "2014, May",
     "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:12:19.996086+00:00"
+    "confidence_score": 0.85,
+    "analyzed_at": "2026-04-23T18:55:23.331679+00:00"
   },
   {
     "slug": "uber-2016-october",
     "name": "Uber",
     "technique_ids": [
       "T1589.001",
+      "T1588",
       "T1110.004",
-      "T1078.004",
+      "T1078",
       "T1552.001",
-      "T1526",
-      "T1619",
+      "T1078.004",
+      "T1580",
       "T1530",
+      "T1567",
       "T1657"
     ],
     "aws_services": [
@@ -3716,25 +3523,25 @@
       "AWS CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Credential stuffing attack using a database of 10M+ leaked credentials against GitHub; ~13 valid Uber employee GitHub logins obtained, granting access to private repositories containing hardcoded AWS IAM keys.",
+    "impact_type_raw": "Data Exfiltration / Extortion",
+    "initial_access_vector": "Credential stuffing against GitHub using a purchased credential database yielded ~13 valid Uber engineer logins. AWS access keys (including the unrotated 'genghis' key from 2013) were found in a private Uber GitHub repository and used to access S3.",
     "event_date": "2016, October",
     "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:12:38.866802+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:55:41.708148+00:00"
   },
   {
     "slug": "uber-2022-september",
     "name": "Uber",
     "technique_ids": [
-      "T1566",
+      "T1586.003",
       "T1621",
+      "T1078.004",
       "T1552.001",
-      "T1078",
+      "T1021.007",
       "T1213",
-      "T1530",
-      "T1087",
-      "T1491.001"
+      "T1567",
+      "T1491.002"
     ],
     "aws_services": [
       "S3",
@@ -3745,46 +3552,48 @@
       "AWS IAM"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Account Takeover / Internal Defacement / Data Collection",
-    "initial_access_vector": "Stolen contractor credentials purchased on the dark web (harvested via malware infection on personal device), combined with MFA push bombing to bypass two-factor authentication",
+    "impact_type_raw": "Account Takeover / Data Exfiltration",
+    "initial_access_vector": "Contractor's Uber corporate credentials purchased on the dark web (after personal device malware infection), combined with MFA fatigue/push bombing until the contractor approved a login request.",
     "event_date": "2022, September",
     "data_exfiltrated": true,
-    "confidence_score": 0.72,
-    "analyzed_at": "2026-04-15T21:12:29.316798+00:00"
+    "confidence_score": 0.7,
+    "analyzed_at": "2026-04-23T18:55:41.729922+00:00"
   },
   {
     "slug": "ubiquiti-2021-april",
     "name": "Ubiquiti",
     "technique_ids": [
-      "T1552.001",
+      "T1555.005",
       "T1078.004",
       "T1580",
-      "T1539",
-      "T1136",
+      "T1578.002",
+      "T1552",
       "T1530",
+      "T1213.003",
+      "T1567",
       "T1657"
     ],
     "aws_services": [
       "IAM",
       "S3",
       "EC2",
-      "RDS",
+      "VPC",
       "CloudTrail"
     ],
     "aws_services_raw": [
       "AWS IAM",
-      "Amazon S3",
-      "Amazon EC2",
-      "Amazon RDS",
-      "AWS CloudTrail"
+      "S3",
+      "EC2",
+      "VPC",
+      "CloudTrail"
     ],
     "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Extortion / Data Exfiltration",
-    "initial_access_vector": "Privileged AWS credentials stolen from a Ubiquiti IT employee's LastPass password manager account (alleged insider threat \u2014 former employee)",
+    "impact_type_raw": "Data Exfiltration and Extortion",
+    "initial_access_vector": "Privileged AWS credentials stolen from an IT employee's LastPass password manager (alleged insider threat)",
     "event_date": "2021, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.82,
-    "analyzed_at": "2026-04-15T21:12:36.416541+00:00"
+    "confidence_score": 0.75,
+    "analyzed_at": "2026-04-23T18:55:41.638854+00:00"
   },
   {
     "slug": "unit-42-2023-april",
@@ -3792,54 +3601,60 @@
     "technique_ids": [
       "T1190",
       "T1552.005",
-      "T1651",
-      "T1098.001",
+      "T1078.004",
+      "T1578.002",
+      "T1098.003",
       "T1580",
       "T1552.001",
-      "T1078.004",
-      "T1567",
-      "T1610",
+      "T1213.003",
       "T1496",
       "T1498"
     ],
     "aws_services": [
       "EC2",
-      "IMDS",
       "IAM",
+      "IMDS",
       "CloudFormation",
       "VPC",
       "VPC Security Groups"
     ],
     "aws_services_raw": [
       "EC2",
-      "IMDSv1",
       "IAM",
+      "IMDSv1",
       "CloudFormation",
       "VPC",
       "Security Groups"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptojacking / DDoS Botnet",
-    "initial_access_vector": "SSRF exploit of CVE-2021-40438 against a publicly exposed internal Apache web server (misconfigured security group), combined with IMDSv1 to harvest EC2 instance temporary IAM credentials",
+    "impact_type_raw": "Cryptojacking and Outbound DDoS (Resource Hijacking)",
+    "initial_access_vector": "",
     "event_date": "2023, April",
     "data_exfiltrated": true,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:13:34.952559+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:56:04.789419+00:00"
   },
   {
     "slug": "unit42-2023-august",
     "name": "Unit42",
     "technique_ids": [
       "T1190",
-      "T1552.001",
-      "T1087.004",
-      "T1580",
-      "T1526",
-      "T1578.001",
-      "T1562.007",
-      "T1537",
+      "T1059.004",
+      "T1651",
       "T1578.002",
-      "T1078.004"
+      "T1098.004",
+      "T1078.004",
+      "T1535",
+      "T1578.003",
+      "T1552.001",
+      "T1110",
+      "T1087.004",
+      "T1526",
+      "T1580",
+      "T1538",
+      "T1021.004",
+      "T1537",
+      "T1567"
     ],
     "aws_services": [],
     "aws_services_raw": [],
@@ -3849,84 +3664,78 @@
     "event_date": "2023, August",
     "data_exfiltrated": false,
     "confidence_score": 0.65,
-    "analyzed_at": "2026-04-15T21:32:42.504025+00:00"
+    "analyzed_at": "2026-04-23T18:56:23.524054+00:00"
   },
   {
     "slug": "unit42-2023-oct",
     "name": "Unit42",
     "technique_ids": [
+      "T1593.003",
       "T1552.001",
       "T1078.004",
       "T1580",
-      "T1090.003",
-      "T1562.007",
-      "T1204.003",
+      "T1578.005",
+      "T1578.002",
       "T1059",
       "T1102",
+      "T1027.013",
       "T1496"
     ],
     "aws_services": [
-      "IAM",
       "EC2",
+      "IAM",
       "CloudTrail",
-      "S3",
-      "Lambda",
-      "Lightsail"
+      "VPC",
+      "STS"
     ],
     "aws_services_raw": [
-      "IAM",
-      "EC2",
-      "CloudTrail",
-      "S3",
-      "Lambda",
-      "Lightsail"
+      "Amazon EC2",
+      "AWS IAM",
+      "AWS CloudTrail",
+      "Amazon VPC",
+      "AWS STS"
     ],
     "impact_type": "Cryptomining",
-    "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "AWS IAM credentials exposed in plaintext in a public GitHub repository, discovered by the threat actor via automated real-time scanning of GitHub public repos within 5 minutes of exposure.",
+    "impact_type_raw": "Cryptojacking",
+    "initial_access_vector": "",
     "event_date": "2023, Oct",
     "data_exfiltrated": false,
     "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:13:53.804164+00:00"
+    "analyzed_at": "2026-04-23T18:56:34.455759+00:00"
   },
   {
     "slug": "unit42-2024-august",
     "name": "Unit42",
     "technique_ids": [
-      "T1552.001",
       "T1078.004",
-      "T1069.003",
+      "T1087.004",
+      "T1619",
       "T1580",
       "T1530",
+      "T1567",
       "T1485",
-      "T1059.009",
+      "T1059",
       "T1657"
     ],
     "aws_services": [
       "S3",
       "IAM",
       "CloudTrail",
-      "GuardDuty",
-      "Config",
-      "Security Hub",
       "CLI"
     ],
     "aws_services_raw": [
       "Amazon S3",
       "AWS IAM",
       "AWS CloudTrail",
-      "Amazon GuardDuty",
-      "AWS Config",
-      "AWS Security Hub",
       "AWS CLI"
     ],
     "impact_type": "Data Exfiltration",
     "impact_type_raw": "Data Exfiltration and Extortion",
-    "initial_access_vector": "AWS IAM access key and secret harvested from a sensitive file publicly exposed on the internet",
+    "initial_access_vector": "AWS access keys for an IAM user were exposed in a sensitive file on a public internet repository; Bling Libra harvested and reused these valid credentials to access the AWS account.",
     "event_date": "2024, August",
     "data_exfiltrated": true,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:13:49.564897+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:56:50.047485+00:00"
   },
   {
     "slug": "uran-company-2021-july",
@@ -3935,129 +3744,114 @@
       "T1190",
       "T1552.001",
       "T1078.004",
-      "T1651",
+      "T1578.002",
       "T1496"
     ],
     "aws_services": [
       "EC2",
       "SES",
-      "IAM",
-      "RDS",
-      "S3",
-      "SQS",
-      "EFS",
-      "VPC",
-      "API Gateway",
-      "WAF"
+      "IAM"
     ],
     "aws_services_raw": [
       "EC2",
       "SES",
-      "IAM",
-      "RDS",
-      "S3",
-      "SQS",
-      "EFS",
-      "VPC",
-      "API Gateway",
-      "WAF"
+      "IAM"
     ],
     "impact_type": "Cryptomining",
     "impact_type_raw": "Cryptomining",
-    "initial_access_vector": "Outdated/unpatched Drupal CMS (public-facing web application) exploited to access the application, where a hardcoded AWS API key with maximum privileges was stored and subsequently stolen.",
+    "initial_access_vector": "Compromise of an outdated Drupal site (outside AWS) that contained an AWS API key with maximum privileges, which attackers then used to access the victim's AWS account.",
     "event_date": "2021, July",
     "data_exfiltrated": false,
-    "confidence_score": 0.85,
-    "analyzed_at": "2026-04-15T21:14:16.160655+00:00"
+    "confidence_score": 0.8,
+    "analyzed_at": "2026-04-23T18:56:32.289890+00:00"
   },
   {
     "slug": "voova-2019-march",
     "name": "Voova",
     "technique_ids": [
       "T1078.004",
+      "T1531",
       "T1485"
     ],
     "aws_services": [
-      "IAM",
-      "EC2"
+      "EC2",
+      "IAM"
     ],
     "aws_services_raw": [
-      "AWS IAM",
-      "Amazon EC2"
+      "AWS EC2",
+      "AWS IAM"
     ],
     "impact_type": "Data Destruction / Disruption",
     "impact_type_raw": "Data Destruction",
-    "initial_access_vector": "Former employee retained or stole valid AWS credentials after being terminated (sacked), then used those credentials to log into the organization's AWS environment.",
+    "initial_access_vector": "Former employee used stolen/retained AWS login credentials belonging to a former colleague to access the ex-employer's AWS environment.",
     "event_date": "2019, March",
     "data_exfiltrated": false,
-    "confidence_score": 0.5,
-    "analyzed_at": "2026-04-15T21:14:15.191484+00:00"
+    "confidence_score": 0.4,
+    "analyzed_at": "2026-04-23T18:56:27.495416+00:00"
   },
   {
     "slug": "wiz-2024-december",
     "name": "Wiz",
     "technique_ids": [
       "T1078.004",
-      "T1090.003",
-      "T1496.002",
+      "T1580",
       "T1136.003",
-      "T1098.001"
+      "T1098.001",
+      "T1098.003",
+      "T1098",
+      "T1496"
     ],
     "aws_services": [
       "IAM",
       "Bedrock",
-      "CloudTrail"
+      "CloudTrail",
+      "Organizations",
+      "Management Console"
     ],
     "aws_services_raw": [
       "IAM",
-      "Amazon Bedrock",
-      "AWS CloudTrail"
+      "Bedrock",
+      "CloudTrail",
+      "AWS Organizations (SCPs)",
+      "AWS Management Console"
     ],
     "impact_type": "LLM / Resource Hijacking",
-    "impact_type_raw": "LLMJacking",
-    "initial_access_vector": "Stolen/compromised IAM user long-term access keys (AKIA) used to authenticate to victim AWS accounts",
+    "impact_type_raw": "LLMJacking (Resource Hijacking)",
+    "initial_access_vector": "Compromised IAM user access keys (AKIA) used from Proton VPN IP addresses to access AWS account",
     "event_date": "2024, December",
     "data_exfiltrated": false,
-    "confidence_score": 0.92,
-    "analyzed_at": "2026-04-15T21:14:52.054465+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:57:15.777298+00:00"
   },
   {
     "slug": "wiz-2024-september",
     "name": "Wiz",
     "technique_ids": [
+      "T1585.001",
       "T1566",
       "T1204.002",
       "T1539",
+      "T1550.004",
       "T1021.001",
-      "T1552.005",
-      "T1580",
+      "T1552.001",
+      "T1078.004",
+      "T1526",
       "T1530",
-      "T1505",
-      "T1070.002",
-      "T1562.007",
-      "T1133"
+      "T1213",
+      "T1059",
+      "T1070.004",
+      "T1562.008",
+      "T1048"
     ],
-    "aws_services": [
-      "S3",
-      "RDS",
-      "EC2",
-      "VPC",
-      "IAM"
-    ],
-    "aws_services_raw": [
-      "Amazon S3",
-      "Amazon RDS",
-      "Amazon EC2",
-      "Amazon VPC",
-      "AWS IAM"
-    ],
-    "impact_type": "Data Exfiltration",
-    "impact_type_raw": "Data Exfiltration",
-    "initial_access_vector": "Social media phishing campaign targeting IT/security employees; malicious payload executed on an unmanaged personal home computer lacking EDR",
+    "aws_services": [],
+    "aws_services_raw": [],
+    "impact_type": "Unknown",
+    "impact_type_raw": "",
+    "initial_access_vector": "",
     "event_date": "2024, September",
-    "data_exfiltrated": true,
-    "confidence_score": 0.9,
-    "analyzed_at": "2026-04-15T21:34:08.394370+00:00"
+    "data_exfiltrated": false,
+    "confidence_score": 0.65,
+    "analyzed_at": "2026-04-23T18:57:33.904927+00:00"
   },
   {
     "slug": "wiz-2025-september",
@@ -4069,59 +3863,73 @@
       "T1098.003",
       "T1583.001",
       "T1584.001",
-      "T1598"
+      "T1585.002",
+      "T1566.002"
     ],
     "aws_services": [
+      "SES",
       "IAM",
       "STS",
-      "SES",
-      "AWS Support"
+      "AWS Support",
+      "CloudTrail"
     ],
     "aws_services_raw": [
-      "IAM",
-      "STS",
-      "SES",
-      "AWS Support"
+      "Amazon SES",
+      "AWS IAM",
+      "AWS STS",
+      "AWS Support",
+      "AWS CloudTrail"
     ],
-    "impact_type": "Phishing / SES Abuse",
-    "impact_type_raw": "SES Abuse for Phishing / Credential Theft",
-    "initial_access_vector": "Stolen/compromised AWS IAM access keys, likely obtained through accidental public exposure in code repositories or theft from a developer workstation",
+    "impact_type": "LLM / Resource Hijacking",
+    "impact_type_raw": "SES abuse for phishing / Resource Hijacking",
+    "initial_access_vector": "Compromised/leaked AWS access key with SES permissions (exact theft vector unknown; likely public exposure in code repo or developer workstation theft)",
     "event_date": "2025, September",
     "data_exfiltrated": false,
-    "confidence_score": 0.95,
-    "analyzed_at": "2026-04-15T21:15:31.145826+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:57:40.046827+00:00"
   },
   {
     "slug": "yotam-meitar-wiz-2024-june",
     "name": "Yotam Meitar (Wiz)",
     "technique_ids": [
+      "T1595.002",
       "T1190",
-      "T1552.007",
-      "T1611",
-      "T1528",
+      "T1552.005",
+      "T1555.006",
+      "T1550.001",
       "T1078.004",
       "T1530",
-      "T1537",
-      "T1485"
+      "T1567",
+      "T1657"
     ],
     "aws_services": [
-      "EKS",
+      "EC2",
       "S3",
       "IAM",
-      "STS"
+      "Secrets Manager",
+      "STS",
+      "CloudTrail",
+      "EKS/Kubernetes",
+      "VPC Security Groups",
+      "AMI"
     ],
     "aws_services_raw": [
-      "Amazon EKS",
-      "Amazon S3",
-      "AWS IAM",
-      "AWS STS"
+      "EC2",
+      "S3",
+      "IAM",
+      "Secrets Manager",
+      "STS",
+      "CloudTrail",
+      "EKS/Kubernetes",
+      "Security Groups",
+      "AMI"
     ],
-    "impact_type": "Ransomware / Extortion",
-    "impact_type_raw": "Ransomware / Data Exfiltration",
-    "initial_access_vector": "Exploitation of a vulnerable public-facing application running in a Kubernetes Pod (Amazon EKS)",
+    "impact_type": "Data Exfiltration",
+    "impact_type_raw": "Data Exfiltration and Ransom (extortion without encryption)",
+    "initial_access_vector": "Exploitation of a known vulnerability in a Kubernetes-deployed application unintentionally exposed to the internet via a misconfigured Security Group.",
     "event_date": "2024, June",
     "data_exfiltrated": true,
-    "confidence_score": 0.6,
-    "analyzed_at": "2026-04-15T21:15:17.350388+00:00"
+    "confidence_score": 0.9,
+    "analyzed_at": "2026-04-23T18:57:43.219029+00:00"
   }
 ]

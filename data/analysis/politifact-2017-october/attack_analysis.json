@@ -5,12 +5,11 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1195.002",
-          "technique_name": "Compromise Software Supply Chain",
-          "subtechnique_id": "T1195.002",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
           "inferred": true,
-          "evidence_quote": "The issue may be related to a third-party ad provider",
-          "validated": false
+          "evidence_quote": "Misconfigured cloud computing server",
+          "validated": true
         }
       ]
     },
@@ -23,7 +22,7 @@
           "technique_name": "Command and Scripting Interpreter: JavaScript",
           "subtechnique_id": "T1059.007",
           "inferred": false,
-          "evidence_quote": "In some cases, turning off JavaScript or using an ad-blocker could help thwart the code",
+          "evidence_quote": "turning off JavaScript or using an ad-blocker could help thwart the code",
           "validated": false
         }
       ]
@@ -35,9 +34,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously, basically bringing any visitor's computer to a processing halt",
+          "evidence_quote": "hooking visitors' computers into a virtual currency mining operation",
           "validated": true
         }
       ]
@@ -46,56 +44,109 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1195.002",
-      "technique_name": "Compromise Software Supply Chain",
-      "description": "Attacker gained foothold on PolitiFact's website, likely through a misconfigured cloud server or a compromised third-party ad provider, injecting malicious Coinhive JavaScript into the site's served content.",
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker gained access to PolitiFact's website via a misconfigured cloud computing server, possibly through a third-party ad provider.",
       "evidence_quote": "The issue may be related to a third-party ad provider",
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
       ],
-      "aws_services_involved": [],
-      "validated": false
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 370,
+          "char_end": 3036,
+          "quote": "The issue may be related to a third-party ad provider"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 2666,
+          "quote": "The issue may be related to a third-party ad provider"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1059.007",
       "technique_name": "Command and Scripting Interpreter: JavaScript",
-      "description": "Malicious Coinhive JavaScript code was embedded into PolitiFact's website pages, executing automatically in visitors' browsers upon page load.",
-      "evidence_quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity",
+      "description": "Attacker injected Coin Hive JavaScript code into the PolitiFact website, programmed to run multiple instances simultaneously.",
+      "evidence_quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 370,
+          "char_end": 3036,
+          "quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 2666,
+          "quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 3,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Multiple simultaneous instances of Coinhive were run against visitors' browsers, hijacking their CPU resources to mine Monero cryptocurrency without knowledge or consent.",
-      "evidence_quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously, basically bringing any visitor's computer to a processing halt",
+      "description": "Coin Hive script hijacked CPU resources of site visitors to mine Monero cryptocurrency, maxing out their CPUs.",
+      "evidence_quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 370,
+          "char_end": 3036,
+          "quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 2666,
+          "quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [],
-  "impact_type": "Cryptomining",
-  "confidence_score": 0.6,
-  "initial_access_vector": "Misconfigured cloud server or compromised third-party ad provider used to inject Coinhive script into PolitiFact's website",
-  "persistence_mechanism": "Coinhive JavaScript embedded in website pages, executing on every visitor session until removed",
+  "impact_type": "Cryptojacking",
+  "confidence_score": 0.5,
   "data_exfiltrated": false,
-  "privilege_escalation": null,
+  "initial_access_vector": "Misconfigured cloud computing server, possibly via a third-party ad provider, enabled injection of malicious JavaScript into PolitiFact.com",
+  "persistence_mechanism": "Malicious Coin Hive JavaScript embedded in site content until discovered and removed",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1195.002",
-        "technique_name": "Compromise Software Supply Chain",
-        "description": "Attacker gained foothold on PolitiFact's website, likely through a misconfigured cloud server or a compromised third-party ad provider, injecting malicious Coinhive JavaScript into the site's served content.",
-        "tactic_id": "",
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker gained access to PolitiFact's website via a misconfigured cloud computing server, possibly through a third-party ad provider.",
+        "tactic_id": "TA0001",
         "evidence_quote": "The issue may be related to a third-party ad provider",
         "evidence_sources": [
           "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
@@ -106,9 +157,9 @@
         "step": 2,
         "technique_id": "T1059.007",
         "technique_name": "Command and Scripting Interpreter: JavaScript",
-        "description": "Malicious Coinhive JavaScript code was embedded into PolitiFact's website pages, executing automatically in visitors' browsers upon page load.",
+        "description": "Attacker injected Coin Hive JavaScript code into the PolitiFact website, programmed to run multiple instances simultaneously.",
         "tactic_id": "",
-        "evidence_quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity",
+        "evidence_quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously",
         "evidence_sources": [
           "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
         ],
@@ -118,9 +169,9 @@
         "step": 3,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Multiple simultaneous instances of Coinhive were run against visitors' browsers, hijacking their CPU resources to mine Monero cryptocurrency without knowledge or consent.",
+        "description": "Coin Hive script hijacked CPU resources of site visitors to mine Monero cryptocurrency, maxing out their CPUs.",
         "tactic_id": "TA0040",
-        "evidence_quote": "somebody has programmed the site to run multiple versions of Coin Hive simultaneously, basically bringing any visitor's computer to a processing halt",
+        "evidence_quote": "visiting Politifact.com caused his computer's CPU to run at its maximum capacity",
         "evidence_sources": [
           "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
         ],
@@ -129,18 +180,18 @@
     ],
     "edges": [
       {
-        "source": "T1195.002",
+        "source": "T1190",
         "target": "T1059.007",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Compromise Software Supply Chain",
+        "source_technique_name": "Exploit Public-Facing Application",
         "target_technique_name": "Command and Scripting Interpreter: JavaScript",
         "sources": [
           "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
         ],
         "evidence_quotes": [
           "The issue may be related to a third-party ad provider",
-          "visiting Politifact.com caused his computer's CPU to run at its maximum capacity"
+          "somebody has programmed the site to run multiple versions of Coin Hive simultaneously"
         ]
       },
       {
@@ -154,8 +205,8 @@
           "https://web.archive.org/web/20200806102838/https://www.washingtonpost.com/news/the-switch/wp/2017/10/13/hackers-have-turned-politifacts-website-into-a-trap-for-your-pc/"
         ],
         "evidence_quotes": [
-          "visiting Politifact.com caused his computer's CPU to run at its maximum capacity",
-          "somebody has programmed the site to run multiple versions of Coin Hive simultaneously, basically bringing any visitor's computer to a processing halt"
+          "somebody has programmed the site to run multiple versions of Coin Hive simultaneously",
+          "visiting Politifact.com caused his computer's CPU to run at its maximum capacity"
         ]
       }
     ]
@@ -166,7 +217,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "politifact-2017-october",
-  "analyzed_at": "2026-04-15T21:04:50.959122+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 3061
+  "analyzed_at": "2026-04-23T18:50:50.637949+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 6133
 }

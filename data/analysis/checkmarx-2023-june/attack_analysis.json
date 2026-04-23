@@ -8,8 +8,9 @@
           "technique_id": "T1195.002",
           "technique_name": "Compromise Software Supply Chain",
           "inferred": false,
-          "evidence_quote": "attackers poisoned the NPM package 'bignum' by hijacking the S3 bucket serving binaries necessary for its function and replacing them with malicious ones",
-          "validated": false
+          "evidence_quote": "Consequently, whenever bignum was downloaded or re-installed, the users unknowingly downloaded the malicious binary file, placed by the attacker.",
+          "validated": false,
+          "subtechnique_id": "T1195.002"
         }
       ]
     },
@@ -21,41 +22,30 @@
           "technique_id": "T1584.001",
           "technique_name": "Acquire Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "When the bucket is deleted, the name becomes available again... This abnormality allowed the attacker to reroute the pointer toward the taken-over bucket.",
-          "validated": false
+          "evidence_quote": "When the bucket is deleted, the name becomes available again... an unidentified attacker noticed the sudden abandonment of a once-active AWS bucket. Recognizing an opportunity, the attacker seized the abandoned bucket.",
+          "validated": false,
+          "subtechnique_id": "T1584.001"
         }
       ]
     },
     {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1059.007",
-          "technique_name": "Command and Scripting Interpreter: JavaScript",
+          "technique_id": "T1036.005",
+          "technique_name": "Match Legitimate Resource Name or Location",
           "inferred": false,
-          "evidence_quote": "The malicious .node file \u2014 essentially a C/C++ compiled binary \u2014 can be invoked within JavaScript applications, bridging JavaScript and native C/C++ libraries.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "the binary file harvested data via functions like getpwd and getuid, extracting environmental data",
-          "validated": true
+          "evidence_quote": "This counterfeit .node binary mimicked the functions of the original file. It carried out the usual and expected activities of the package.",
+          "validated": true,
+          "subtechnique_id": "T1036.005"
         },
         {
-          "technique_id": "T1552.007",
-          "technique_name": "Unsecured Credentials: Container API",
+          "technique_id": "T1027",
+          "technique_name": "Obfuscated Files or Information",
           "inferred": false,
-          "evidence_quote": "Malicious binaries steal the user id's, passwords, local machine environment variables, and local host name",
-          "validated": true
+          "evidence_quote": "Starting with an endless list of byte additions to registries, comparisons, and data movements that initially seemed pointless... a URL was constructed by individually reversing the string parts. Scanning the file using virus total did not yield any results.",
+          "validated": false
         }
       ]
     },
@@ -67,7 +57,7 @@
           "technique_id": "T1082",
           "technique_name": "System Information Discovery",
           "inferred": false,
-          "evidence_quote": "Malicious binaries steal the user id's, passwords, local machine environment variables, and local host name",
+          "evidence_quote": "the binary file harvested data via functions like getpwd and getuid, extracting environmental data... Malicious binaries steal the user id's, passwords, local machine environment variables, and local host name",
           "validated": true
         }
       ]
@@ -77,38 +67,12 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1048.003",
-          "technique_name": "Exfiltration Over Alternative Protocol: Exfiltration Over Unencrypted Non-C2 Protocol",
-          "inferred": false,
-          "evidence_quote": "It then created a TCP socket for IPv4 communication and covertly sent the collected data as a user-agent of a 'GET' request.",
-          "validated": false
-        },
-        {
           "technique_id": "T1567.002",
           "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
           "inferred": false,
-          "evidence_quote": "exfiltrates the stolen data to the hijacked bucket",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1027",
-          "technique_name": "Obfuscated Files or Information",
-          "inferred": false,
-          "evidence_quote": "Starting with an endless list of byte additions to registries, comparisons, and data movements that initially seemed pointless... a URL was constructed by individually reversing the string parts.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1036.005",
-          "technique_name": "Masquerading: Match Legitimate Name or Location",
-          "inferred": false,
-          "evidence_quote": "This counterfeit .node binary mimicked the functions of the original file. It carried out the usual and expected activities of the package.",
-          "validated": true
+          "evidence_quote": "It then created a TCP socket for IPv4 communication and covertly sent the collected data as a user-agent of a 'GET' request... exfiltrates the stolen data to the hijacked bucket.",
+          "validated": false,
+          "subtechnique_id": "T1567.002"
         }
       ]
     }
@@ -126,7 +90,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0003"
     },
     {
       "step": 2,
@@ -141,7 +106,8 @@
         "Amazon S3",
         "npm"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -153,7 +119,8 @@
         "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -165,7 +132,8 @@
         "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -177,7 +145,8 @@
         "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -191,7 +160,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [
@@ -211,7 +181,7 @@
         "technique_id": "T1584.001",
         "technique_name": "Acquire Infrastructure: Domains",
         "description": "The attacker identified that the S3 bucket previously used by npm package 'bignum' (versions 0.12.2\u20130.13.0) to host pre-built binaries had been deleted, making its globally unique name available again. The attacker re-registered the abandoned S3 bucket, effectively hijacking it.",
-        "tactic_id": "",
+        "tactic_id": "TA0003",
         "evidence_quote": "When the bucket is deleted, the name becomes available again... an unidentified attacker noticed the sudden abandonment of a once-active AWS bucket. Recognizing an opportunity, the attacker seized the abandoned bucket.",
         "evidence_sources": [
           "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
@@ -225,7 +195,7 @@
         "technique_id": "T1195.002",
         "technique_name": "Compromise Software Supply Chain",
         "description": "The attacker placed a malicious pre-compiled .node binary (C/C++) in the hijacked S3 bucket, replacing the legitimate binary that 'bignum' package versions downloaded at install time via node-gyp. Any developer installing the affected bignum versions would automatically download the trojanized binary.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "Consequently, whenever bignum was downloaded or re-installed, the users unknowingly downloaded the malicious binary file, placed by the attacker.",
         "evidence_sources": [
           "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
@@ -252,7 +222,7 @@
         "technique_id": "T1027",
         "technique_name": "Obfuscated Files or Information",
         "description": "The malicious payload within the binary was heavily obfuscated using byte-level register operations and reversed string construction to conceal its C2 URL, evading antivirus detection (VirusTotal returned no results).",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "Starting with an endless list of byte additions to registries, comparisons, and data movements that initially seemed pointless... a URL was constructed by individually reversing the string parts. Scanning the file using virus total did not yield any results.",
         "evidence_sources": [
           "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"
@@ -276,7 +246,7 @@
         "technique_id": "T1567.002",
         "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
         "description": "The binary created a TCP socket and exfiltrated the stolen credentials and system data to the attacker-controlled hijacked S3 bucket by embedding the data covertly in the User-Agent header of an HTTP GET request.",
-        "tactic_id": "",
+        "tactic_id": "TA0010",
         "evidence_quote": "It then created a TCP socket for IPv4 communication and covertly sent the collected data as a user-agent of a 'GET' request... exfiltrates the stolen data to the hijacked bucket.",
         "evidence_sources": [
           "https://checkmarx.com/blog/hijacking-s3-buckets-new-attack-technique-exploited-in-the-wild-by-supply-chain-attackers/"

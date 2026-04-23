@@ -477,16 +477,23 @@ function techniqueToTactic(
   incident: any,
   techniques: Record<string, any>,
 ): string {
-  // Prefer the explicit tactic the analysis already attached to this technique
-  // inside tactics_used[].techniques[]; fall back to the ATT&CK meta.
+  // The per-step tactic_id reflects what the attacker was doing at this step.
+  // That's the only trustworthy signal for multi-tactic techniques like
+  // T1078.004 (valid under TA0001/TA0003/TA0004/TA0005) — falling back to
+  // tactic_ids[0] silently mislabels many steps.
+  if (step.tactic_id) return step.tactic_id;
+  // Fallback: if tactics_used has this technique under exactly one tactic,
+  // use that. If it's under multiple tactics (ambiguous), or none, return "".
+  const hits: string[] = [];
   for (const t of (incident.tactics_used || [])) {
     for (const tech of (t.techniques || [])) {
-      if (tech.technique_id === step.technique_id) return t.tactic_id;
+      if (tech.technique_id === step.technique_id && !hits.includes(t.tactic_id)) {
+        hits.push(t.tactic_id);
+      }
     }
   }
-  const meta = techniques[step.technique_id];
-  const ids = meta?.tactic_ids;
-  return (ids && ids.length) ? ids[0] : "";
+  if (hits.length === 1) return hits[0];
+  return "";
 }
 
 function inferredForTechnique(

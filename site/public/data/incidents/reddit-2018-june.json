@@ -7,7 +7,6 @@
         {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
           "validated": true
@@ -21,18 +20,9 @@
         {
           "technique_id": "T1111",
           "technique_name": "Multi-Factor Authentication Interception",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the main attack was via SMS intercept... SMS-based authentication is not nearly as secure as we would hope",
+          "evidence_quote": "the main attack was via SMS intercept. We point this out to encourage everyone here to move to token-based 2FA.",
           "validated": false
-        },
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
-          "inferred": true,
-          "evidence_quote": "we have taken steps since the event to further lock down and rotate all production secrets and API keys",
-          "validated": true
         }
       ]
     },
@@ -43,8 +33,7 @@
         {
           "technique_id": "T1619",
           "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "the attacker had read access to our storage systems, other data was accessed such as Reddit source code, internal logs, configuration files and other employee workspace files",
           "validated": true
         }
@@ -57,23 +46,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data... Logs containing the email digests we sent between June 3 and June 17, 2018",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the attacker had read access to our storage systems... A complete copy of an old database backup containing very early Reddit user data",
+          "evidence_quote": "A complete copy of an old database backup containing very early Reddit user data -- from the site's launch in 2005 through May 2007... Logs containing the email digests we sent between June 3 and June 17, 2018.",
           "validated": true
         }
       ]
@@ -90,7 +64,8 @@
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -102,7 +77,8 @@
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -114,7 +90,8 @@
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -126,7 +103,8 @@
       "evidence_sources": [
         "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [],
@@ -143,7 +121,7 @@
         "technique_id": "T1111",
         "technique_name": "Multi-Factor Authentication Interception",
         "description": "The attacker intercepted SMS-based 2FA codes sent to Reddit employees, bypassing the MFA protection on their cloud and source code hosting provider accounts.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "the main attack was via SMS intercept. We point this out to encourage everyone here to move to token-based 2FA.",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"
@@ -155,7 +133,7 @@
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
         "description": "Using intercepted SMS 2FA codes combined with employee credentials, the attacker successfully authenticated to Reddit's cloud and source code hosting providers as legitimate employees.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "an attacker compromised a few of our employees' accounts with our cloud and source code hosting providers",
         "evidence_sources": [
           "https://www.reddit.com/r/announcements/comments/93qnm5/we_had_a_security_incident_heres_what_you_need_to/"

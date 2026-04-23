@@ -5,40 +5,25 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
+          "technique_id": "T1195.002",
+          "technique_name": "Compromise Software Supply Chain",
+          "inferred": false,
+          "evidence_quote": "an unauthorised third party had taken advantage of the sloppy cloud security, and meddled with a Javascript file. In this way, Coinhive cryptomining code was added to an LA Times website",
+          "validated": false,
+          "subtechnique_id": "T1195.002"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": false,
           "evidence_quote": "an Amazon AWS S3 bucket belonging to the LA Times had been left wide open, granting global write-access to anyone who fancied dropping their code on the server",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505.004",
-          "technique_name": "Server Software Component: IIS Components",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "an unauthorised third party had taken advantage of the sloppy cloud security, and meddled with a Javascript file",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1027",
-          "technique_name": "Obfuscated Files or Information",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the miner was throttled to reduce the impact on visitors' CPUs and make it harder for users to spot that something was awry",
-          "validated": false
         }
       ]
     },
@@ -49,9 +34,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "Coinhive cryptomining code was added to an LA Times website called 'The Homicide Report'",
+          "evidence_quote": "the miner was throttled to reduce the impact on visitors' CPUs and make it harder for users to spot that something was awry. Perhaps this is how the attack appears to have gone unnoticed since February 9th",
           "validated": true
         }
       ]
@@ -70,7 +54,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 2,
@@ -84,7 +69,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -96,7 +82,8 @@
         "https://web.archive.org/web/20210413201832/https://www.tripwire.com/state-of-security/security-data-protection/la-times-website-cryptojacking-attack/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -129,7 +116,7 @@
         "technique_id": "T1195.002",
         "technique_name": "Compromise Software Supply Chain",
         "description": "Attacker wrote malicious Coinhive cryptomining JavaScript into a JS file hosted in the S3 bucket, which was then served to all visitors of the LA Times Homicide Report website.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "an unauthorised third party had taken advantage of the sloppy cloud security, and meddled with a Javascript file. In this way, Coinhive cryptomining code was added to an LA Times website",
         "evidence_sources": [
           "https://web.archive.org/web/20210413201832/https://www.tripwire.com/state-of-security/security-data-protection/la-times-website-cryptojacking-attack/"

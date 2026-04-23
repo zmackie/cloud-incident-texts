@@ -8,7 +8,7 @@
           "technique_id": "T1591",
           "technique_name": "Gather Victim Org Information",
           "inferred": false,
-          "evidence_quote": "Through the threat actor's likely rigorous scanning and enumeration phase, they came to the conclusion that attacking a DevSecOps home computer would be their best bet at gaining access to LastPass data. The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
+          "evidence_quote": "The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
           "validated": false
         },
         {
@@ -47,22 +47,16 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1056.001",
-          "technique_name": "Input Capture: Keylogging",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "With this exploit, the threat actor was able to install a keylogger on the engineer's computer. Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-          "validated": true
+          "evidence_quote": "an unidentified person or group had stolen the engineer's credentials to access this environment",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -74,41 +68,31 @@
           "technique_id": "T1090.003",
           "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
-          "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment.",
-          "validated": false
+          "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer.",
+          "validated": false,
+          "subtechnique_id": "T1090.003"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1056.001",
+          "technique_name": "Input Capture: Keylogging",
+          "inferred": false,
+          "evidence_quote": "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
+          "validated": false,
+          "subtechnique_id": "T1056.001"
         },
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "allowed them to impersonate the software engineer",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the threat actor accessed a shared cloud storage environment powered by AWS... By the time LastPass was alerted of this, the threat actor had already extracted customer and vault data.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": "Rather than attempting to steal lower-level credentials and escalating privileges, gaining access to a DevSecOps engineer's credentials would allow for immediate access to the data they were looking for.",
-          "validated": true
+          "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -122,45 +106,25 @@
           "inferred": false,
           "evidence_quote": "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets.",
           "validated": true
-        },
-        {
-          "technique_id": "T1083",
-          "technique_name": "File and Directory Discovery",
-          "inferred": true,
-          "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
-          "validated": false
         }
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
-          "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data.",
-          "validated": true
-        },
         {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
           "inferred": false,
-          "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
+          "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment... some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
+        },
         {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "inferred": true,
-          "evidence_quote": "Most of the highly sensitive customer data is compromised, excluding the master passwords of users.",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data. Most of the highly sensitive customer data is compromised.",
           "validated": true
         }
       ]
@@ -177,7 +141,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -189,7 +154,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 3,
@@ -201,7 +167,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 4,
@@ -213,7 +180,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 5,
@@ -226,7 +194,8 @@
         "https://arxiv.org/pdf/2502.04287",
         "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 6,
@@ -240,7 +209,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 7,
@@ -252,7 +222,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -267,7 +238,8 @@
         "https://arxiv.org/pdf/2502.04287",
         "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 9,
@@ -280,7 +252,8 @@
         "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 10,
@@ -295,7 +268,8 @@
       "evidence_sources": [
         "https://arxiv.org/pdf/2502.04287"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 11,
@@ -311,7 +285,8 @@
         "https://arxiv.org/pdf/2502.04287",
         "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [
@@ -333,7 +308,7 @@
         "technique_id": "T1591",
         "technique_name": "Gather Victim Org Information",
         "description": "Threat actor conducted reconnaissance to identify high-value targets within LastPass, determining that four senior DevSecOps engineers had privileged access to the corporate vault containing decryption keys.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287"
@@ -345,7 +320,7 @@
         "technique_id": "T1592",
         "technique_name": "Gather Victim Host Information",
         "description": "Attacker identified that a targeted DevSecOps engineer was running a vulnerable, unpatched version of Plex Media Server (CVE-2020-5741) on their personal home computer.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it.",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287"
@@ -369,7 +344,7 @@
         "technique_id": "T1203",
         "technique_name": "Exploitation for Client Execution",
         "description": "Remote code execution via the Plex vulnerability was used to install a keylogger on the engineer's personal/corporate machine.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device.",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287"
@@ -381,7 +356,7 @@
         "technique_id": "T1056.001",
         "technique_name": "Input Capture: Keylogging",
         "description": "The installed keylogger captured the DevSecOps engineer's master password as it was typed, even after MFA was satisfied, compromising cloud vault credentials.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287",
@@ -394,7 +369,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the stolen credentials, the attacker authenticated to LastPass's cloud-based development environment as the compromised engineer, bypassing MFA.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0003",
         "evidence_quote": "an unidentified person or group had stolen the engineer's credentials to access this environment",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287"
@@ -408,7 +383,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "The attacker used a third-party VPN service to mask their origin and bypass intrusion detection systems while impersonating the engineer in the cloud environment.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer.",
         "evidence_sources": [
           "https://arxiv.org/pdf/2502.04287"

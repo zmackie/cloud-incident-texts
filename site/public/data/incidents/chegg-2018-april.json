@@ -1,73 +1,21 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "AWS access key that provided full administrative privileges over all data in the S3 databases ('AWS Root Credentials')",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "failed to require employees and third-party contractors that access the S3 databases to use distinct access keys, instead permitting employees and contractors to use a single AWS access key",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
         {
           "technique_id": "T1619",
           "technique_name": "Cloud Storage Object Discovery",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
@@ -92,7 +40,8 @@
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -106,7 +55,8 @@
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -120,7 +70,8 @@
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [
@@ -140,7 +91,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Former contractor leveraged a widely shared AWS Root Credential \u2014 the same single key distributed to all employees and contractors \u2014 to authenticate to Chegg's AWS environment. No MFA was required and the key had never been rotated.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
         "evidence_sources": [
           "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"

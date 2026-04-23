@@ -7,45 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "It was penetrated using the shellshock vulnerability, and since it was no longer in active use, it did not have the appropriate patch installed.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files (DB password in config file)",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
           "validated": true
         }
       ]
@@ -56,11 +19,11 @@
       "techniques": [
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "subtechnique_id": "T1136.003",
+          "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "Once the hacker gained access to the keys, he created an IAM user, and generated a key-pair.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -70,53 +33,33 @@
       "techniques": [
         {
           "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "subtechnique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
           "inferred": false,
           "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
+          "validated": true,
+          "subtechnique_id": "T1578.002"
+        },
         {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1021.007",
-          "technique_name": "Remote Services: Cloud Services",
-          "subtechnique_id": "T1021.007",
-          "inferred": true,
-          "evidence_quote": "He was then able to run an instance inside our AWS account using these credentials, and mount one of our backup disks.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565.001",
-          "technique_name": "Data Manipulation: Stored Data Manipulation",
-          "subtechnique_id": null,
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
           "inferred": false,
           "evidence_quote": "He also whitelisted his IP on our database security group, which is the AWS firewall.",
-          "validated": false
+          "validated": true,
+          "subtechnique_id": "T1562.007"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "The old prototype machine had our AWS API access key and secret key. Once the hacker gained access to the keys...",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -127,7 +70,6 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "mount one of our backup disks. This backup was of one of our component services, used for production environment, and contained a config file with our database password.",
           "validated": true
@@ -135,23 +77,8 @@
         {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "He began to copy one of our tables, which contained partial user information, including email IDs, hashed passwords, and last tested URL.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1048",
-          "technique_name": "Exfiltration Over Alternative Protocol",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the hacker had been able to retrieve only a portion of the data",
           "validated": true
         }
       ]
@@ -162,11 +89,24 @@
       "techniques": [
         {
           "technique_id": "T1071.003",
-          "technique_name": "Application Layer Protocol: Mail Protocols",
-          "subtechnique_id": "T1071.003",
+          "technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
           "inferred": false,
           "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1071.003"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol",
+          "inferred": false,
+          "evidence_quote": "His copy operation locked the database table, which raised alerts on our monitoring system. On receiving the alerts, we checked the logs, saw an unrecognized IP, and blocked it right away. In that time, the hacker had been able to retrieve only a portion of the data.",
+          "validated": true
         }
       ]
     }
@@ -184,7 +124,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -199,7 +140,8 @@
         "IAM",
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -213,7 +155,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 4,
@@ -228,7 +171,8 @@
         "EC2",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -243,7 +187,8 @@
         "EC2",
         "EBS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -257,7 +202,8 @@
       "aws_services_involved": [
         "EBS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 7,
@@ -273,7 +219,8 @@
         "VPC Security Groups",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 8,
@@ -287,7 +234,8 @@
       "aws_services_involved": [
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 9,
@@ -301,7 +249,8 @@
       "aws_services_involved": [
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 10,
@@ -315,7 +264,8 @@
       "aws_services_involved": [
         "SES"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     }
   ],
   "aws_services": [
@@ -471,7 +421,7 @@
         "technique_id": "T1071.003",
         "technique_name": "Application Layer Protocol: Mail Protocols (SES Abuse)",
         "description": "Using the exfiltrated email addresses and SES credentials found during the intrusion, the attacker sent a fraudulent email to approximately 5,000 BrowserStack users claiming the service was shutting down.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "using this data and the SES credentials, he was able to send an email to some of our users.",
         "evidence_sources": [
           "http://archive.today/rsmmS"

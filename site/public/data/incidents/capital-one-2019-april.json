@@ -7,9 +7,10 @@
         {
           "technique_id": "T1595.001",
           "technique_name": "Active Scanning: Scanning IP Blocks",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1595.001"
         }
       ]
     },
@@ -35,7 +36,8 @@
           "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
           "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         }
       ]
     },
@@ -45,30 +47,11 @@
       "techniques": [
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
-          "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... This command retrieves the current IAM temporary credentials from the role from the EC2 instance metadata.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098.003",
-          "technique_name": "Account Manipulation: Additional Cloud Roles",
-          "inferred": true,
-          "evidence_quote": "If the compromised server did not have access to the private S3 buckets, but did have permissions to list and attach IAM policies, the attacker could have used these capabilities to essentially go shopping for a set of credentials",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role that, in turn, enabled access to certain of Capital One's folders",
-          "validated": true
+          "evidence_quote": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/... the first command, when executed, obtained the security credentials for an account known as ***-WAF-Role",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -80,7 +63,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "Other useful commands for such a fishing expedition include: aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles",
+          "evidence_quote": "aws iam list-roles, aws iam list-policies, aws iam list-instance-profiles... These do what it says on the tin \u2014 enumerate the catalogue of available IAM resources an attacker might want to use once they have shell on an EC2 instance.",
           "validated": true
         },
         {
@@ -93,27 +76,14 @@
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism",
-          "inferred": true,
-          "evidence_quote": "IAM permissions can effectively 'jump' to private resources in your environment... aws ec2 replace-iam-instance-profile-association",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space",
+          "evidence_quote": "the third command (the 'Sync Command'), when executed, used the ***-WAF-Role to extract or copy data from those folders or buckets in Capital One's storage space for which the ***-WAF-Role account had the requisite permissions.",
           "validated": true
         }
       ]
@@ -133,7 +103,8 @@
         "VPC Security Groups",
         "WAF"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -145,7 +116,8 @@
         "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 3,
@@ -161,7 +133,8 @@
         "WAF",
         "VPC Security Groups"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 4,
@@ -177,7 +150,8 @@
         "IMDS",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 5,
@@ -192,7 +166,8 @@
         "IAM",
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -207,7 +182,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 7,
@@ -222,7 +198,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [
@@ -246,7 +223,7 @@
         "technique_id": "T1595.001",
         "technique_name": "Active Scanning: Scanning IP Blocks",
         "description": "Attacker used Tor and IPredator to anonymize their identity while scanning Capital One's AWS environment, discovering a misconfigured firewall/Security Group with a dangerous port exposed to the internet.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "through those services, discovered a misconfigured firewall in the Capital One AWS environment",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"
@@ -261,7 +238,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "Attacker routed all attack traffic through Tor combined with IPredator VPN to obfuscate their true origin and identity throughout the attack.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "the attacker used Tor and IPredator in combination to obfuscate her identity",
         "evidence_sources": [
           "https://cloudsecurityalliance.org/blog/2019/08/09/a-technical-analysis-of-the-capital-one-cloud-misconfiguration-breach"

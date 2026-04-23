@@ -1,15 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "threat actors compromised Pearson's developer environment in January 2025 through an exposed GitLab Personal Access Token (PAT) found in a public .git/config file",
-          "validated": true
+          "evidence_quote": "threat actor reportedly used these credentials to steal terabytes of data from the company's internal network and cloud infrastructure, including AWS, Google Cloud, and various cloud-based database services such as Snowflake and Salesforce CRM",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -19,17 +20,24 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "the exposed token allowed the threat actors to access the company's source code, which contained further hard-coded credentials and authentication tokens for cloud platforms",
-          "validated": true
-        },
+          "evidence_quote": "threat actors compromised Pearson's developer environment in January 2025 through an exposed GitLab Personal Access Token (PAT) found in a public .git/config file",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": true,
-          "evidence_quote": "source code, which contained further hard-coded credentials and authentication tokens for cloud platforms",
-          "validated": false
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "including AWS, Google Cloud, and various cloud-based database services such as Snowflake and Salesforce CRM",
+          "validated": true
         }
       ]
     },
@@ -38,10 +46,17 @@
       "tactic_name": "Collection",
       "techniques": [
         {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "the exposed token allowed the threat actors to access the company's source code, which contained further hard-coded credentials and authentication tokens for cloud platforms",
+          "validated": true
+        },
+        {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "threat actor reportedly used these credentials to steal terabytes of data from the company's internal network and cloud infrastructure, including AWS, Google Cloud, and various cloud-based database services such as Snowflake and Salesforce CRM",
+          "evidence_quote": "steal terabytes of data from the company's internal network and cloud infrastructure... This stolen data allegedly contains customer information, financials, support tickets, and source code, with millions of people impacted.",
           "validated": true
         }
       ]
@@ -53,34 +68,8 @@
         {
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "steal terabytes of data from the company's internal network and cloud infrastructure",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": true,
-          "evidence_quote": "including AWS, Google Cloud, and various cloud-based database services such as Snowflake and Salesforce CRM",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
           "inferred": false,
-          "evidence_quote": "threat actor reportedly used these credentials to steal terabytes of data from the company's internal network and cloud infrastructure",
+          "evidence_quote": "Over the following months, the threat actor reportedly used these credentials to steal terabytes of data from the company's internal network and cloud infrastructure",
           "validated": true
         }
       ]
@@ -97,7 +86,8 @@
         "https://www.bleepingcomputer.com/news/security/education-giant-pearson-hit-by-cyberattack-exposing-customer-data/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -109,7 +99,8 @@
         "https://www.bleepingcomputer.com/news/security/education-giant-pearson-hit-by-cyberattack-exposing-customer-data/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 3,
@@ -123,7 +114,8 @@
       "aws_services_involved": [
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 4,
@@ -137,7 +129,8 @@
       "aws_services_involved": [
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -152,7 +145,8 @@
         "AWS",
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -166,7 +160,8 @@
       "aws_services_involved": [
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [
@@ -214,7 +209,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker leveraged the hard-coded cloud credentials found in source code to authenticate to AWS, Google Cloud, Snowflake, and Salesforce CRM as a legitimate user.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0003",
         "evidence_quote": "threat actor reportedly used these credentials to steal terabytes of data from the company's internal network and cloud infrastructure, including AWS, Google Cloud, and various cloud-based database services such as Snowflake and Salesforce CRM",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/education-giant-pearson-hit-by-cyberattack-exposing-customer-data/"

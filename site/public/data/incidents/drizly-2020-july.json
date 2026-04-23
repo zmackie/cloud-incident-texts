@@ -1,55 +1,24 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "a hacker breached an employee account, got access to Drizly's corporate GitHub login information",
-          "validated": true
-        },
-        {
-          "technique_id": "T1586.003",
-          "technique_name": "Compromise Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "Inactive GitHub account compromised via reused password",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1110.004",
+          "technique_name": "Credential Stuffing",
           "inferred": false,
-          "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance",
-          "validated": true
+          "evidence_quote": "Inactive GitHub account compromised via reused password",
+          "validated": true,
+          "subtechnique_id": "T1110.004"
         },
         {
-          "technique_id": "T1110.004",
-          "technique_name": "Brute Force: Credential Stuffing",
-          "inferred": true,
-          "evidence_quote": "Inactive GitHub account compromised via reused password",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "hacked into the company's database, and then stole customers' information",
-          "validated": true
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Drizly stored login credentials on GitHub contrary to the platform's own guidance and well-publicized security incidents involving GitHub",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -60,15 +29,15 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
-          "evidence_quote": "got access to Drizly's corporate GitHub login information, hacked into the company's database",
+          "inferred": false,
+          "evidence_quote": "hacked into the company's database, and then stole customers' information",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
@@ -104,7 +73,8 @@
         "https://archive.ph/p21Vk"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -119,7 +89,8 @@
         "GitHub",
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -133,7 +104,8 @@
       "aws_services_involved": [
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -147,7 +119,8 @@
       "aws_services_involved": [
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 5,
@@ -162,7 +135,8 @@
         "AWS",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -177,7 +151,8 @@
         "AWS",
         "RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [
@@ -224,7 +199,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker used the harvested AWS/corporate credentials to authenticate to Drizly's cloud environment hosted on Amazon Web Services.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "a hacker breached an employee account, got access to Drizly's corporate GitHub login information, hacked into the company's database",
         "evidence_sources": [
           "https://archive.ph/p21Vk"

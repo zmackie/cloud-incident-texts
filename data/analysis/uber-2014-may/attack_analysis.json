@@ -1,16 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
+          "technique_id": "T1593.003",
+          "technique_name": "Search Open Websites/Domains: Code Repositories",
           "inferred": false,
-          "evidence_quote": "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
-          "validated": true
+          "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach, the court filings show, and remained there for months.",
+          "validated": false,
+          "subtechnique_id": "T1593.003"
         }
       ]
     },
@@ -20,39 +20,11 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... to exfiltrate several objects containing database prunes held in an S3 bucket.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses.",
-          "validated": true
+          "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -63,10 +35,37 @@
         {
           "technique_id": "T1090.003",
           "technique_name": "Proxy: Multi-hop Proxy",
-          "subtechnique_id": "T1090.003",
           "inferred": false,
-          "evidence_quote": "The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
-          "validated": false
+          "evidence_quote": "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
+          "validated": false,
+          "subtechnique_id": "T1090.003"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "The hazardous gist was discovered and found to be an Uber data analysis script containing AWS key material.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
+          "inferred": false,
+          "evidence_quote": "They succeeded in finding several AWS credentials and loaded them into a tool called S3 Browser. From here, the adversary discovered hourly encrypted backups.",
+          "validated": true
         }
       ]
     },
@@ -75,26 +74,11 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "A database prune redacts production data and generates datasets for local development... This pruning process was incomplete at removing sensitive data, putting customer data at risk.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1593.003",
-          "technique_name": "Search Open Websites/Domains: Code Repositories",
-          "subtechnique_id": "T1593.003",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach.",
-          "validated": false
+          "evidence_quote": "pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket on 2014-05-12. These S3 objects contained about 50,000 records, including names and driver's licenses.",
+          "validated": true
         }
       ]
     }
@@ -111,7 +95,8 @@
         "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -125,7 +110,8 @@
       "aws_services_involved": [
         "AWS IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -140,7 +126,8 @@
         "AWS IAM",
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 4,
@@ -153,7 +140,8 @@
         "https://www.reuters.com/article/uk-uber-tech-lyft-hacking-exclusive/exclusive-in-lawsuit-over-hacking-uber-probes-ip-address-assigned-to-lyft-exec-sources-idUKKCN0S20D020151008"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -167,7 +155,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -181,7 +170,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     }
   ],
   "aws_services": [
@@ -202,7 +192,7 @@
         "technique_id": "T1593.003",
         "technique_name": "Search Open Websites/Domains: Code Repositories",
         "description": "The attacker discovered an Uber data analysis script (GitHub Gist) that had been inadvertently published publicly on GitHub in March 2014, containing AWS IAM key material.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "A copy of the key was inadvertently posted by Uber on one of its public pages on the code development platform GitHub in March of 2014, prior to the breach, the court filings show, and remained there for months.",
         "evidence_sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",
@@ -229,7 +219,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker used the stolen AWS credentials to authenticate to the AWS API, accessing Uber's cloud environment without authorization.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "An adversary discovered an Uber credential that was leaked in a GitHub Gist... pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects containing database prunes held in an S3 bucket.",
         "evidence_sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9"
@@ -244,7 +234,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "The attacker pivoted from a Comcast IP address (used to discover the credentials) to a Scandinavian VPN service to anonymize the actual exfiltration activity and avoid attribution.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "Uber believes the adversary was on a Comcast IP address, which pivoted to use a Scandinavian IP address behind a VPN to exfiltrate several objects... The two sources said that the address from which the hack was launched is associated with a virtual private network service... known for vigorously protecting the privacy of its users.",
         "evidence_sources": [
           "https://magoo.medium.com/a-blameless-post-mortem-of-usa-v-joseph-sullivan-a137162f7fc9",

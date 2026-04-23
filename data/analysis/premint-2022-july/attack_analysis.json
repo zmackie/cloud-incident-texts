@@ -1,118 +1,14 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "inferred": false,
-          "evidence_quote": "we suspect that there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505.004",
-          "technique_name": "Server Software Component: IIS Components",
-          "inferred": true,
-          "evidence_quote": "This file was injected by hackers with a script that loads another attack script file hosted on a fake domain owned by the hackers",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1534",
-          "technique_name": "Internal Spearphishing",
-          "inferred": true,
-          "evidence_quote": "the website loads the following JS resource file... This file was injected by hackers with a script",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "inferred": false,
-          "evidence_quote": "resulting in the theft of some users' NFTs",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1185",
-          "technique_name": "Browser Session Hijacking",
-          "inferred": false,
-          "evidence_quote": "tricking users into signing the authorization operation setApprovalForAll(address,bool). After obtaining the authorization, the attacker stole users' NFTs and other assets",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1102",
-          "technique_name": "Web Service",
-          "inferred": false,
-          "evidence_quote": "loads another attack script file hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0043",
       "tactic_name": "Reconnaissance",
       "techniques": [
         {
           "technique_id": "T1596",
           "technique_name": "Search Open Technical Databases",
-          "inferred": true,
-          "evidence_quote": "there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
+          "inferred": false,
+          "evidence_quote": "we suspect that there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
           "validated": false
         }
       ]
@@ -125,15 +21,30 @@
           "technique_id": "T1584.001",
           "technique_name": "Compromise Infrastructure: Domains",
           "inferred": false,
-          "evidence_quote": "hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
-          "validated": false
+          "evidence_quote": "attack script file hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
+          "validated": false,
+          "subtechnique_id": "T1584.001"
         },
         {
           "technique_id": "T1588.001",
           "technique_name": "Obtain Capabilities: Malware",
           "inferred": false,
-          "evidence_quote": "loads another attack script file hosted on a fake domain... cdn.min.js?v=1658050292559. This script contained interactions to deceive users into granting authorization",
-          "validated": false
+          "evidence_quote": "cdn.min.js?v=1658050292559. This script contained interactions to deceive users into granting authorization",
+          "validated": false,
+          "subtechnique_id": "T1588.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "inferred": false,
+          "evidence_quote": "misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will, thus tampering with the JS resource files",
+          "validated": true
         }
       ]
     },
@@ -145,8 +56,48 @@
           "technique_id": "T1059.007",
           "technique_name": "Command and Scripting Interpreter: JavaScript",
           "inferred": false,
-          "evidence_quote": "injecting malicious JS scripts. When users performed regular operations, the malicious code was executed",
+          "evidence_quote": "This file was injected by hackers with a script that loads another attack script file hosted on a fake domain owned by the hackers",
+          "validated": false,
+          "subtechnique_id": "T1059.007"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1185",
+          "technique_name": "Browser Session Hijacking",
+          "inferred": false,
+          "evidence_quote": "this script was triggered, replacing the original verification signature with a transaction that authorized the attacker to transfer users' high-value NFTs",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_id": "T1102",
+          "technique_name": "Web Service",
+          "inferred": false,
+          "evidence_quote": "the website loads the following JS resource file https://s3-redwood-labs.premint.xyz/theme/js/boomerang.min.js ... loads another attack script file hosted on a fake domain",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "After obtaining the authorization, the attacker stole users' NFTs and other assets",
+          "validated": true
         }
       ]
     }
@@ -164,7 +115,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0043"
     },
     {
       "step": 2,
@@ -176,7 +128,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 3,
@@ -188,7 +141,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0042"
     },
     {
       "step": 4,
@@ -202,7 +156,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 5,
@@ -216,7 +171,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 6,
@@ -228,7 +184,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     },
     {
       "step": 7,
@@ -240,7 +197,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0009"
     },
     {
       "step": 8,
@@ -252,7 +210,8 @@
         "https://www.chaincatcher.com/en/article/2076680"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -271,7 +230,7 @@
         "technique_id": "T1596",
         "technique_name": "Search Open Technical Databases",
         "description": "Attacker discovered that PREMINT's S3 bucket (s3-redwood-labs.premint.xyz) was publicly misconfigured, allowing unauthenticated list, read, and write access.",
-        "tactic_id": "",
+        "tactic_id": "TA0043",
         "evidence_quote": "we suspect that there was a misconfiguration in S3, leading to unauthorized access to the Bucket, allowing attackers to list, read, or write to the S3 bucket at will",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"
@@ -285,7 +244,7 @@
         "technique_id": "T1584.001",
         "technique_name": "Compromise Infrastructure: Domains",
         "description": "Attacker registered a typosquatting domain (s3-redwood-labs-premint-xyz.com) mimicking the legitimate S3 subdomain to host the secondary malicious payload.",
-        "tactic_id": "",
+        "tactic_id": "TA0042",
         "evidence_quote": "attack script file hosted on a fake domain owned by the hackers (s3-redwood-labs-premint-xyz.com)",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"
@@ -297,7 +256,7 @@
         "technique_id": "T1588.001",
         "technique_name": "Obtain Capabilities: Malware",
         "description": "Attacker prepared and hosted a malicious JavaScript payload (cdn.min.js) on their attacker-controlled domain, designed to replace wallet signature requests with setApprovalForAll NFT authorization transactions.",
-        "tactic_id": "",
+        "tactic_id": "TA0042",
         "evidence_quote": "cdn.min.js?v=1658050292559. This script contained interactions to deceive users into granting authorization",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"
@@ -323,7 +282,7 @@
         "technique_id": "T1059.007",
         "technique_name": "Command and Scripting Interpreter: JavaScript",
         "description": "Attacker injected a malicious loader snippet into the legitimate boomerang.min.js file hosted in the S3 bucket, which dynamically fetches and executes the attacker's secondary script from the typosquatted domain.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "This file was injected by hackers with a script that loads another attack script file hosted on a fake domain owned by the hackers",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"
@@ -337,7 +296,7 @@
         "technique_id": "T1102",
         "technique_name": "Web Service",
         "description": "When users visited the legitimate premint.xyz website, their browsers loaded the tampered boomerang.min.js, which in turn fetched the attack script from the attacker-controlled C2 domain (s3-redwood-labs-premint-xyz.com/cdn.min.js).",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "the website loads the following JS resource file https://s3-redwood-labs.premint.xyz/theme/js/boomerang.min.js ... loads another attack script file hosted on a fake domain",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"
@@ -349,7 +308,7 @@
         "technique_id": "T1185",
         "technique_name": "Browser Session Hijacking",
         "description": "The attacker's injected script intercepted users' normal wallet-signing flow during PREMINT's 'Verify your wallet ownership' step, silently replacing the benign message signature request with a malicious setApprovalForAll on-chain transaction.",
-        "tactic_id": "",
+        "tactic_id": "TA0009",
         "evidence_quote": "this script was triggered, replacing the original verification signature with a transaction that authorized the attacker to transfer users' high-value NFTs",
         "evidence_sources": [
           "https://www.chaincatcher.com/en/article/2076680"

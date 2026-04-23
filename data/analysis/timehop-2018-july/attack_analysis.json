@@ -1,27 +1,14 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker first accessed Timehop's cloud environment in December \u2014 using compromised admin credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1556.006",
-          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
           "inferred": false,
-          "evidence_quote": "the attacker was able to compromise Timehop's cloud computing environment by targeting an account that had not been protected by multifactor authentication",
+          "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
           "validated": true
         }
       ]
@@ -46,41 +33,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number that was attached to their account breached",
-          "validated": true
-        },
-        {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
           "inferred": false,
-          "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "it is a high likelihood that they will soon appear [on the Dark Web]",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "using compromised admin credentials...targeting an account that had not been protected by multifactor authentication",
+          "evidence_quote": "compromised the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number...breached in the attack",
           "validated": true
         }
       ]
@@ -99,7 +53,8 @@
       "aws_services_involved": [
         "AWS IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -113,7 +68,8 @@
       "aws_services_involved": [
         "AWS Cloud Environment"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -128,7 +84,8 @@
         "AWS RDS",
         "AWS S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 4,
@@ -142,7 +99,8 @@
       "aws_services_involved": [
         "AWS Secrets Manager"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     }
   ],
   "aws_services": [
@@ -165,7 +123,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker obtained and used compromised admin credentials (lacking MFA) to gain initial access to Timehop's cloud environment in December 2017.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the attacker first accessed Timehop's cloud environment in December \u2014 using compromised admin credentials",
         "evidence_sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"

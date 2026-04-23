@@ -1,16 +1,24 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1578.001",
+          "technique_name": "Create Snapshot",
           "inferred": false,
-          "evidence_quote": "Credentials stolen from GitHub repository commit history",
-          "subtechnique_id": "T1552.001",
-          "validated": true
+          "evidence_quote": "Takes snapshot of EBS volumes",
+          "validated": true,
+          "subtechnique_id": "T1578.001"
+        },
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "creates EC2 instances",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
         }
       ]
     },
@@ -20,39 +28,11 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Credentials stolen from GitHub repository commit history",
-          "subtechnique_id": "T1552.001",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "inferred": false,
-          "evidence_quote": "creates EC2 instances",
-          "subtechnique_id": "T1578.002",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1578.001",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Snapshot",
-          "inferred": false,
-          "evidence_quote": "Takes snapshot of EBS volumes",
-          "subtechnique_id": "T1578.001",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -65,22 +45,7 @@
           "technique_name": "Exfiltration Over Alternative Protocol",
           "inferred": false,
           "evidence_quote": "exfiltrates data over SSH",
-          "subtechnique_id": null,
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565",
-          "technique_name": "Data Manipulation",
-          "inferred": true,
-          "evidence_quote": "Stolen EBS volumes",
-          "subtechnique_id": null,
-          "validated": false
         }
       ]
     }
@@ -98,7 +63,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -113,7 +79,8 @@
         "EC2",
         "EBS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 3,
@@ -128,7 +95,8 @@
         "EC2",
         "EBS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -142,7 +110,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [

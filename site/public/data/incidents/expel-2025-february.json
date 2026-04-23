@@ -6,44 +6,11 @@
       "techniques": [
         {
           "technique_id": "T1566.004",
-          "technique_name": "Phishing: Spearphishing via Service (SMS/Smishing)",
+          "technique_name": "Phishing: Spearphishing via Service (Smishing / PhaaS AiTM)",
           "inferred": false,
           "evidence_quote": "During a 2024 phishing/smishing campaign, Expel confirmed Scattered Spider actors accessed multiple applications via compromised user accounts while using Okta SSO.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1189",
-          "technique_name": "Drive-by Compromise (AiTM PhaaS proxy)",
-          "inferred": false,
-          "evidence_quote": "PhaaS platforms work by creating a webpage that can proxy information to and from the legitimate login domain. This type of proxying is classified as an adversary-in-the-middle (AiTM) tactic, since it allows an attacker to intercept traffic.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1557",
-          "technique_name": "Adversary-in-the-Middle (AiTM Session Cookie Theft)",
-          "inferred": false,
-          "evidence_quote": "The proxying page intercepts session cookies, which can then be used by an attacker to access the account and bypass MFA.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1111",
-          "technique_name": "Multi-Factor Authentication Interception",
-          "inferred": false,
-          "evidence_quote": "So if the real login page requests an MFA token or a one-time pass (OTP), the fake one will request this information too.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1539",
-          "technique_name": "Steal Web Session Cookie",
-          "inferred": false,
-          "evidence_quote": "The proxying page intercepts session cookies, which can then be used by an attacker to access the account and bypass MFA.",
-          "validated": true
+          "validated": false,
+          "subtechnique_id": "T1566.004"
         }
       ]
     },
@@ -53,10 +20,23 @@
       "techniques": [
         {
           "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism (Assume AWS Role)",
+          "technique_name": "Abuse Elevation Control Mechanism",
           "inferred": false,
           "evidence_quote": "One compromised account was then used to authenticate access to the organization's AWS console and assume an engineering role.",
           "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1557",
+          "technique_name": "Adversary-in-the-Middle (Session Cookie Hijacking to Bypass MFA)",
+          "inferred": false,
+          "evidence_quote": "The proxying page intercepts session cookies, which can then be used by an attacker to access the account and bypass MFA.",
+          "validated": false
         }
       ]
     },
@@ -68,46 +48,7 @@
           "technique_id": "T1526",
           "technique_name": "Cloud Service Discovery",
           "inferred": false,
-          "evidence_quote": "The attacker attempted AWS discovery before being locked out of the account.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1098.005",
-          "technique_name": "Account Manipulation: Device Registration",
-          "inferred": true,
-          "evidence_quote": "In many situations, attackers will attempt to add MFA devices to maintain an account connection even after the session has ended.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "Scattered Spider has adapted its tactics to include data theft from cloud storage objects. Some individuals in the group have also shifted their primary goal to exfiltration-based extortion.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
-          "inferred": true,
-          "evidence_quote": "Scattered Spider has adapted its tactics to include data theft from cloud storage objects. Some individuals in the group have also shifted their primary goal to exfiltration-based extortion.",
+          "evidence_quote": "The attacker attempted AWS discovery before being locked out of the account. A key portion of Scattered Spider's campaigns involve gathering intelligence and data.",
           "validated": true
         }
       ]
@@ -124,7 +65,8 @@
         "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -136,7 +78,8 @@
         "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -150,7 +93,8 @@
       "aws_services_involved": [
         "Okta"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -165,7 +109,8 @@
         "IAM",
         "Management Console"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 5,
@@ -180,7 +125,8 @@
         "IAM",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 6,
@@ -196,7 +142,8 @@
         "EC2",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     }
   ],
   "aws_services": [
@@ -220,7 +167,7 @@
         "technique_id": "T1566.004",
         "technique_name": "Phishing: Spearphishing via Service (Smishing / PhaaS AiTM)",
         "description": "Scattered Spider (The Com) actors launched a phishing/smishing campaign targeting employees. A PhaaS platform deployed an adversary-in-the-middle proxy page that impersonated the organization's legitimate Okta login portal, capturing credentials, MFA/OTP tokens, and session cookies in real time.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "During a 2024 phishing/smishing campaign, Expel confirmed Scattered Spider actors accessed multiple applications via compromised user accounts while using Okta SSO.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
@@ -232,7 +179,7 @@
         "technique_id": "T1557",
         "technique_name": "Adversary-in-the-Middle (Session Cookie Hijacking to Bypass MFA)",
         "description": "The PhaaS proxy page intercepted the victim's Okta session cookies after successful authentication, allowing the attacker to replay the authenticated session and bypass MFA entirely without needing the victim's password or OTP again.",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "The proxying page intercepts session cookies, which can then be used by an attacker to access the account and bypass MFA.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
@@ -244,7 +191,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the stolen Okta session cookies, the attacker authenticated to multiple SSO-connected applications as the legitimate compromised user, effectively having valid cloud identity access across the organization's application estate.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Scattered Spider actors accessed multiple applications via compromised user accounts while using Okta SSO.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"
@@ -258,7 +205,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker pivoted from the compromised Okta identity to authenticate into the organization's AWS Management Console, leveraging the SSO trust relationship between Okta and AWS.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "One compromised account was then used to authenticate access to the organization's AWS console and assume an engineering role.",
         "evidence_sources": [
           "https://expel.com/wp-content/uploads/2025/01/Expel-Annual-Threat-Report-2025-013025.pdf"

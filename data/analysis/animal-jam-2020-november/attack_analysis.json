@@ -1,52 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "an unauthorized user gained access to the WildWorks' Slack workspace through compromised WildWorks user credentials",
-          "validated": true
-        },
-        {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "This may have been the result of malware or the re-use of credentials previously exposed.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.005",
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "a staff Slack channel was compromised by malicious people who discovered a private AWS key",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": true,
-          "evidence_quote": "a staff Slack channel was compromised by malicious people who discovered a private AWS key",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         }
       ]
     },
@@ -57,9 +21,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "a database of account names was accessed as a result of the break-in",
+          "evidence_quote": "a database of account names was accessed as a result of the break-in. The database theft most likely occurred in the same October 10-12, 2020 time window.",
           "validated": true
         }
       ]
@@ -71,23 +34,8 @@
         {
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "information from the compromised AWS server being posted on stolen data bazaar raidforums[.]com",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "all relevant systems were altered and secured against further intrusion",
           "validated": true
         }
       ]
@@ -104,7 +52,8 @@
         "https://web.archive.org/web/20210122070047/https://www.theregister.com/2020/11/12/animal_jam_breached/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -118,7 +67,8 @@
       "aws_services_involved": [
         "AWS IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -133,7 +83,8 @@
         "AWS IAM",
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -148,7 +99,8 @@
         "Amazon S3",
         "AWS RDS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 5,
@@ -160,7 +112,8 @@
         "https://web.archive.org/web/20210122070047/https://www.theregister.com/2020/11/12/animal_jam_breached/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [
@@ -181,7 +134,7 @@
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
         "description": "Attacker obtained WildWorks employee Slack credentials, likely via malware or credential re-use from a prior breach, and used them to access the corporate Slack workspace.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "an unauthorized user gained access to the WildWorks' Slack workspace through compromised WildWorks user credentials. This may have been the result of malware or the re-use of credentials previously exposed.",
         "evidence_sources": [
           "https://web.archive.org/web/20210122070047/https://www.theregister.com/2020/11/12/animal_jam_breached/"
@@ -207,7 +160,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker leveraged the stolen AWS private key to authenticate to the vendor's AWS infrastructure and gain cloud-level access.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "a staff Slack channel was compromised by malicious people who discovered a private AWS key",
         "evidence_sources": [
           "https://web.archive.org/web/20210122070047/https://www.theregister.com/2020/11/12/animal_jam_breached/"

@@ -8,15 +8,17 @@
           "technique_id": "T1566.001",
           "technique_name": "Phishing: Spearphishing Attachment",
           "inferred": false,
-          "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop. Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
-          "validated": false
+          "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop",
+          "validated": false,
+          "subtechnique_id": "T1566.001"
         },
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1078.004",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -29,7 +31,8 @@
           "technique_name": "User Execution: Malicious File",
           "inferred": false,
           "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1204.002"
         }
       ]
     },
@@ -41,22 +44,16 @@
           "technique_id": "T1539",
           "technique_name": "Steal Web Session Cookie",
           "inferred": false,
-          "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
+          "evidence_quote": "stole credentials and cookies stored on Google drive. 4 months [after] Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
           "validated": true
         },
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Creates test AWS access key and assigns Administrator role. Downloads csv with access key details and stores in local drive",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": true,
-          "evidence_quote": "stole credentials and cookies stored on Google drive",
-          "validated": false
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -68,14 +65,14 @@
           "technique_id": "T1619",
           "technique_name": "Cloud Storage Object Discovery",
           "inferred": false,
-          "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
+          "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account. Attacker makes ~2000 requests to AWS API",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
           "technique_id": "T1530",
@@ -94,14 +91,14 @@
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
           "inferred": false,
-          "evidence_quote": "2. Delete all S3 Buckets 3. Then, created a 'Ransomware' S3 Bucket",
+          "evidence_quote": "2. Delete all S3 Buckets",
           "validated": true
         },
         {
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact",
-          "inferred": true,
-          "evidence_quote": "created a 'Ransomware' S3 Bucket",
+          "inferred": false,
+          "evidence_quote": "3. Then, created a 'Ransomware' S3 Bucket",
           "validated": true
         }
       ]
@@ -118,7 +115,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -130,7 +128,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 3,
@@ -144,7 +143,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -159,7 +159,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 5,
@@ -173,7 +174,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 6,
@@ -188,7 +190,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 7,
@@ -203,7 +206,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 8,
@@ -217,7 +221,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 9,
@@ -231,7 +236,8 @@
       "evidence_sources": [
         "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -252,7 +258,7 @@
         "technique_id": "T1566.001",
         "technique_name": "Phishing: Spearphishing Attachment",
         "description": "AWS Administrator (a former employee) received a spearphishing email disguised as a job offer from a recruiter and downloaded the malicious attachment on their personal laptop.",
-        "tactic_id": "",
+        "tactic_id": "TA0001",
         "evidence_quote": "AWS Administrator is in search for a new job. Receives a job offer via Email from a recruiter. Downloads job offer on personal laptop",
         "evidence_sources": [
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -264,7 +270,7 @@
         "technique_id": "T1204.002",
         "technique_name": "User Execution: Malicious File",
         "description": "The administrator opened the malicious job offer document on their personal laptop, which executed malware that stole credentials and browser cookies stored locally and synced to Google Drive.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "Opening job offer on laptop executed malware, stole credentials and cookies stored on Google drive",
         "evidence_sources": [
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"
@@ -305,7 +311,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the stolen AWS Administrator access key (long-lived credential), the attacker authenticated directly to the AWS production account without any additional authentication challenge.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "Attacker logs into AWS and executes ListBuckets commands across production AWS account",
         "evidence_sources": [
           "https://assets.swoogo.com/uploads/3783545-66183eb421ec0.pdf"

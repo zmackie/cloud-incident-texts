@@ -14,19 +14,6 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0005",
       "tactic_name": "Defense Evasion",
       "techniques": [
@@ -40,6 +27,34 @@
       ]
     },
     {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "in that repository was a token or credential that gave the bad guys access to Sisense's Amazon S3 buckets in the cloud",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Application Access Token",
+          "inferred": false,
+          "evidence_quote": "it may be possible for attackers to re-use those access tokens to authenticate as the victim without ever having to present valid credentials",
+          "validated": true,
+          "subtechnique_id": "T1550.001"
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0009",
       "tactic_name": "Collection",
       "techniques": [
@@ -47,7 +62,7 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
+          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
           "validated": true
         }
       ]
@@ -60,20 +75,7 @@
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
           "inferred": false,
-          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data, which apparently included millions of access tokens, email account passwords, and even SSL certificates",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": true,
-          "evidence_quote": "access tokens are essentially text files on your computer that allow you to stay logged in for extended periods of time \u2014 sometimes indefinitely. And depending on which service we're talking about, it may be possible for attackers to re-use those access tokens to authenticate as the victim",
+          "evidence_quote": "the attackers used the S3 access to copy and exfiltrate several terabytes worth of Sisense customer data",
           "validated": true
         }
       ]
@@ -90,7 +92,8 @@
         "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -105,7 +108,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -120,7 +124,8 @@
         "S3",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -134,7 +139,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 5,
@@ -148,7 +154,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 6,
@@ -160,7 +167,8 @@
         "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     }
   ],
   "aws_services": [
@@ -250,7 +258,7 @@
         "technique_id": "T1550.001",
         "technique_name": "Application Access Token",
         "description": "With millions of stolen customer access tokens in hand, attackers gained the capability to authenticate to downstream third-party services as Sisense customers without needing passwords, enabling further downstream compromise.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "it may be possible for attackers to re-use those access tokens to authenticate as the victim without ever having to present valid credentials",
         "evidence_sources": [
           "https://krebsonsecurity.com/2024/04/why-cisa-is-warning-cisos-about-a-breach-at-sisense/"

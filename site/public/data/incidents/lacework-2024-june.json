@@ -1,28 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "Root Cause: Stolen or compromised credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "Escalation Vectors: Create new console user",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -32,10 +20,11 @@
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "Escalation Vectors: Create new console user",
-          "validated": true
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "Root Cause: Stolen or compromised credentials",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -66,7 +55,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 2,
@@ -80,7 +70,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 3,
@@ -95,7 +86,8 @@
         "Bedrock",
         "SageMaker"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -116,7 +108,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker used stolen or compromised cloud credentials to gain initial access to the victim's cloud environment.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "Root Cause: Stolen or compromised credentials",
         "evidence_sources": [
           "https://www.lacework.com/blog/detecting-ai-resource-hijacking-with-composite-alerts"

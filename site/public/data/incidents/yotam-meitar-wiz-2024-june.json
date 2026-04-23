@@ -20,16 +20,17 @@
         {
           "technique_id": "T1611",
           "technique_name": "Escape to Host",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access",
           "validated": true
         },
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
           "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -39,28 +40,16 @@
       "techniques": [
         {
           "technique_id": "T1552.007",
-          "technique_name": "Unsecured Credentials: Container API",
+          "technique_name": "Container API",
           "inferred": false,
           "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.007"
         },
         {
           "technique_id": "T1528",
           "technique_name": "Steal Application Access Token",
           "inferred": false,
-          "evidence_quote": "uncovering expert impersonation of a unique identity provider",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1556.006",
-          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
-          "inferred": true,
           "evidence_quote": "uncovering expert impersonation of a unique identity provider",
           "validated": true
         }
@@ -86,8 +75,8 @@
         {
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+          "inferred": false,
+          "evidence_quote": "compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
           "validated": true
         }
       ]
@@ -99,13 +88,6 @@
         {
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
-          "inferred": true,
-          "evidence_quote": "most cloud ransom attack attacks follow a more straightforward playbook: compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
-          "validated": true
-        },
-        {
-          "technique_id": "T1486",
-          "technique_name": "Data Encrypted for Impact",
           "inferred": false,
           "evidence_quote": "S3 data exfiltration and 'Ransomware'",
           "validated": true
@@ -126,7 +108,8 @@
       "aws_services_involved": [
         "EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -140,7 +123,8 @@
       "aws_services_involved": [
         "EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -154,7 +138,8 @@
       "aws_services_involved": [
         "EKS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 4,
@@ -169,7 +154,8 @@
         "IAM",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 5,
@@ -184,7 +170,8 @@
         "IAM",
         "STS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 6,
@@ -198,7 +185,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 7,
@@ -212,7 +200,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 8,
@@ -226,7 +215,8 @@
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -305,7 +295,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker used the stolen IDP credentials and impersonated identity to authenticate to AWS as a valid cloud account, achieving full administrative access to the AWS environment.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"

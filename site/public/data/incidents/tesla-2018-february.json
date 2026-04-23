@@ -14,28 +14,16 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "one of the console's 'pods,' or storage containers, included login credentials for a broader Tesla Amazon Web Services cloud environment.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0004",
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "one of the console's 'pods,' or storage containers, included login credentials for a broader Tesla Amazon Web Services cloud environment. This allowed them to burrow deeper.",
-          "validated": true
+          "evidence_quote": "This allowed them to burrow deeper, deploying scripts to establish their cryptojacking operation.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -44,10 +32,10 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_id": "T1571",
+          "technique_name": "Non-Standard Port",
           "inferred": false,
-          "evidence_quote": "the mining server also used a proxy server as an intermediary to mask it and make it less traceable.",
+          "evidence_quote": "The mining malware also communicated with the attacker's server on an unusual IP port, making it less likely that a port scanner would detect it as malicious.",
           "validated": false
         },
         {
@@ -55,34 +43,30 @@
           "technique_name": "Encrypted Channel: Asymmetric Cryptography",
           "inferred": false,
           "evidence_quote": "The attack communications all happened over SSL web encryption to hide their content from security-monitoring tools.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1573.002"
         },
         {
-          "technique_id": "T1571",
-          "technique_name": "Non-Standard Port",
+          "technique_id": "T1090.003",
+          "technique_name": "Proxy: Multi-hop Proxy",
           "inferred": false,
-          "evidence_quote": "The mining malware also communicated with the attacker's server on an unusual IP port, making it less likely that a port scanner would detect it as malicious.",
-          "validated": false
+          "evidence_quote": "the mining server also used a proxy server as an intermediary to mask it and make it less traceable. RedLock says the attackers obtained free proxying services and the SSL certificate from the internet infrastructure firm Cloudflare.",
+          "validated": false,
+          "subtechnique_id": "T1090.003"
         }
       ]
     },
     {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "RedLock says the attackers obtained free proxying services and the SSL certificate from the internet infrastructure firm Cloudflare.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1102",
-          "technique_name": "Web Service",
-          "inferred": true,
-          "evidence_quote": "The attackers were running their own mining server, making it less likely that it would land on malware-scanner black lists.",
-          "validated": false
+          "evidence_quote": "one of the console's 'pods,' or storage containers, included login credentials for a broader Tesla Amazon Web Services cloud environment.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -94,20 +78,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "some of Tesla's Amazon Web Services cloud infrastructure was running mining malware in a far-reaching and well-hidden cryptojacking campaign... deploying scripts to establish their cryptojacking operation, which was built on the popular Stratum bitcoin mining protocol.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "Tesla's compromised cloud platform also contained an S3 bucket that seemed to house sensitive proprietary data, like vehicle and mapping information and other instrument telemetry.",
+          "evidence_quote": "deploying scripts to establish their cryptojacking operation, which was built on the popular Stratum bitcoin mining protocol.",
           "validated": true
         }
       ]
@@ -126,7 +97,8 @@
       "aws_services_involved": [
         "EKS / Kubernetes"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -141,7 +113,8 @@
         "Kubernetes",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -156,7 +129,8 @@
         "IAM",
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 4,
@@ -170,7 +144,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 5,
@@ -184,7 +159,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 6,
@@ -198,7 +174,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 7,
@@ -210,7 +187,8 @@
         "https://www.wired.com/story/cryptojacking-tesla-amazon-cloud/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     }
   ],
   "aws_services": [
@@ -261,7 +239,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Using the harvested AWS credentials, attackers authenticated into Tesla's broader AWS environment to gain elevated cloud access.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0004",
         "evidence_quote": "This allowed them to burrow deeper, deploying scripts to establish their cryptojacking operation.",
         "evidence_sources": [
           "https://www.wired.com/story/cryptojacking-tesla-amazon-cloud/"
@@ -290,7 +268,7 @@
         "technique_id": "T1571",
         "technique_name": "Non-Standard Port",
         "description": "The mining malware communicated with the attacker's C2 server on a non-standard port to evade port-scanner detection.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "The mining malware also communicated with the attacker's server on an unusual IP port, making it less likely that a port scanner would detect it as malicious.",
         "evidence_sources": [
           "https://www.wired.com/story/cryptojacking-tesla-amazon-cloud/"
@@ -304,7 +282,7 @@
         "technique_id": "T1573.002",
         "technique_name": "Encrypted Channel: Asymmetric Cryptography",
         "description": "All C2 communications were tunneled over SSL to hide content from security monitoring tools, with the SSL certificate obtained via Cloudflare.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "The attack communications all happened over SSL web encryption to hide their content from security-monitoring tools.",
         "evidence_sources": [
           "https://www.wired.com/story/cryptojacking-tesla-amazon-cloud/"
@@ -318,7 +296,7 @@
         "technique_id": "T1090.003",
         "technique_name": "Proxy: Multi-hop Proxy",
         "description": "Attackers routed C2 traffic through a Cloudflare-based proxy server to mask the true location of their mining server and make it less traceable.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "the mining server also used a proxy server as an intermediary to mask it and make it less traceable. RedLock says the attackers obtained free proxying services and the SSL certificate from the internet infrastructure firm Cloudflare.",
         "evidence_sources": [
           "https://www.wired.com/story/cryptojacking-tesla-amazon-cloud/"

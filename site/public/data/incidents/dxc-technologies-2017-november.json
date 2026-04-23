@@ -1,80 +1,44 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. DXC's own monitoring tool, Cloud Checker, indicated most of the VMs were stood up within 24 hours of the unwitting publication of the keys.",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0006",
       "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams",
-          "validated": true
+          "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams and with the project architect.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Valid Accounts via Exposed Credentials: Credentials In Files (Public Code Repository)",
+          "technique_id": "T1213.003",
+          "technique_name": "Code Repositories",
           "inferred": false,
-          "evidence_quote": "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the private keys were used to start 244 AWS virtual machines",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "cryptographic keys that allowed access to DXC procured Amazon Web Services resources",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "The code was in the public space for less than 24 hours before DXC realised it was unsecured and removed",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1204",
-          "technique_name": "User Execution / Attacker-Initiated Cloud Resource Provisioning",
-          "inferred": false,
-          "evidence_quote": "the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k",
-          "validated": true
+          "evidence_quote": "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it.",
+          "validated": true,
+          "subtechnique_id": "T1213.003"
         }
       ]
     },
@@ -86,7 +50,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799).",
+          "evidence_quote": "Miscreants racked up a $64,000 bill on DXC Technologies' tab... Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799).",
           "validated": true
         }
       ]
@@ -103,7 +67,8 @@
         "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -115,7 +80,8 @@
         "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 3,
@@ -129,7 +95,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 4,
@@ -143,7 +110,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -157,7 +125,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -201,7 +170,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Threat actors used the exfiltrated AWS private keys to authenticate to DXC's AWS environment as a legitimate account, gaining full access to the cloud environment without needing to exploit any vulnerability.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "the private keys were used to start 244 AWS virtual machines",
         "evidence_sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"

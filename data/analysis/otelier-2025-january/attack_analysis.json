@@ -5,11 +5,17 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
+          "inferred": false,
+          "evidence_quote": "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
+          "validated": true
+        },
+        {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login. These credentials were stolen through information-stealing malware",
+          "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login.",
           "validated": true
         }
       ]
@@ -19,20 +25,12 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "These credentials were stolen through information-stealing malware, which has become the bane of corporate networks over the past few years.",
-          "validated": true
-        },
-        {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "subtechnique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
           "inferred": false,
-          "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
-          "validated": true
+          "evidence_quote": "which contained further credentials to the company's S3 buckets.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -43,7 +41,6 @@
         {
           "technique_id": "T1213",
           "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "The threat actors say they used these credentials to scrape tickets and other data, which contained further credentials to the company's S3 buckets.",
           "validated": true
@@ -51,23 +48,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier",
+          "evidence_quote": "the hackers claimed to have downloaded 7.8TB of data from the company's Amazon cloud storage, including millions of documents belonging to Marriott that were in S3 buckets managed by Otelier.",
           "validated": true
         }
       ]
@@ -79,7 +61,6 @@
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "The threat actor says they attempted to extort Marriott, thinking the S3 buckets belonged to them, and left ransom notes requesting payment in cryptocurrency not to leak the data.",
           "validated": true
@@ -98,7 +79,8 @@
         "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -110,7 +92,8 @@
         "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -122,7 +105,8 @@
         "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 4,
@@ -136,7 +120,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 5,
@@ -151,7 +136,8 @@
         "Amazon S3",
         "AWS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 6,
@@ -165,7 +151,8 @@
       "aws_services_involved": [
         "Amazon S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -197,7 +184,7 @@
         "technique_id": "T1078",
         "technique_name": "Valid Accounts",
         "description": "The threat actors used the stolen employee credentials to authenticate to Otelier's Atlassian server (Jira/Confluence/Bitbucket), gaining legitimate access to internal systems.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "threat actors behind the Otelier breach told BleepingComputer that they initially hacked the company's Atlassian server using an employee's login.",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/otelier-data-breach-exposes-info-hotel-reservations-of-millions/"

@@ -1,28 +1,30 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "publicly exposed Postman server with access key credentials stored in the project's variables",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_name": "Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys.",
-          "validated": true
+          "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84.",
+          "validated": true,
+          "subtechnique_id": "T1078.004"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "Using patterns observed in the affected IAM account names, we came across a publicly exposed Postman server with access key credentials stored in the project's variables.",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -39,22 +41,17 @@
         },
         {
           "technique_id": "T1087.004",
-          "technique_name": "Account Discovery: Cloud Account",
+          "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "we saw three API calls: (two) list users, and one GetSendQuota",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
+          "evidence_quote": "we saw three API calls: (two) list users, and one GetSendQuota (our threat hunting team will tell us why this is important). All were denied and all came from the same access key, but different user agents.",
+          "validated": true,
+          "subtechnique_id": "T1087.004"
+        },
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": null,
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "Most of that user's activity was Amazon SES-related (around 95%)... GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account.'",
           "validated": true
         }
       ]
@@ -66,15 +63,8 @@
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
-          "inferred": true,
-          "evidence_quote": "GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account'",
-          "validated": true
-        },
-        {
-          "technique_id": "T1498",
-          "technique_name": "Network Denial of Service",
-          "inferred": true,
-          "evidence_quote": "UpdateAccountSendingEnabled... 'enables or disables email sending across your entire Amazon SES account in the current AWS region'",
+          "inferred": false,
+          "evidence_quote": "'UpdateAccountSendingEnabled,' specifically, seemed interesting, as it was called several times (but not excessively, and it seemed to toggle a useful service on or off). Documentation indicated that it 'enables or disables email sending across your entire Amazon SES account in the current AWS region.'",
           "validated": true
         }
       ]
@@ -93,7 +83,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 2,
@@ -108,7 +99,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 3,
@@ -122,7 +114,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -136,7 +129,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -150,7 +144,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -164,7 +159,8 @@
       "evidence_sources": [
         "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "aws_services": [
@@ -200,7 +196,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker authenticated to the AWS environment using the stolen long-term IAM access keys from a Kali Linux host at an anomalous IP address belonging to a non-major hosting provider.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0001",
         "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"

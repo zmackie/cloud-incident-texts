@@ -1,76 +1,9 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
       "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": false,
-          "evidence_quote": "The threat actor infiltrated the victim's environments using valid test credentials stolen from public S3 buckets.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "They enumerated resources across multiple AWS services, including: Secrets Manager, Systems Manager (SSM), S3, Lambda, Elastic Compute Cloud (EC2), Elastic Container Service (ECS), Organizations, Relational Database Service (RDS), CloudWatch, Key Management Service (KMS).",
-          "validated": true
-        },
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "The Bedrock enumeration included: ListAgents, ListKnowledgeBases, GetKnowledgeBase, ListFoundationModels, ListCustomModels, GetModelInvocationLoggingConfiguration, ListInferenceProfiles, ListProvisionedModelThroughputs, ListModelInvocationJobs.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1648",
-          "technique_name": "Serverless Execution",
-          "inferred": false,
-          "evidence_quote": "The threat actor pivoted to privilege escalation through Lambda function code injection. They replaced the code of an existing Lambda function named EC2-init three times.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Using the admin user frick, they created a new user backdoor-admin and attached the AdministratorAccess policy.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "The threat actor then created a new user, backdoor-admin, and attached the AdministratorAccess policy to it.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "Four of the five compromised IAM users already existed in the victim's account; the threat actor took over them by creating new access keys.",
-          "validated": true
-        },
         {
           "technique_id": "T1648",
           "technique_name": "Serverless Execution",
@@ -81,67 +14,36 @@
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_id": "T1136.003",
+          "technique_name": "Cloud Account",
           "inferred": false,
-          "evidence_quote": "The threat actor assumed six different IAM roles across 14 different sessions. Additionally, they gained access to five IAM users, resulting in a total of 19 unique AWS principals involved in the attack.",
-          "validated": true
+          "evidence_quote": "The threat actor then created a new user, backdoor-admin, and attached the AdministratorAccess policy to it.",
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         },
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Additional Cloud Credentials",
+          "inferred": false,
+          "evidence_quote": "Four of the five compromised IAM users already existed in the victim's account; the threat actor took over them by creating new access keys.",
+          "validated": true,
+          "subtechnique_id": "T1098.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
         {
           "technique_id": "T1548",
           "technique_name": "Abuse Elevation Control Mechanism",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "The threat actor made several attempts to assume multiple roles, including cross-account roles... attempted to assume OrganizationAccountAccessRole in the management account.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
-          "evidence_quote": "Using their newly created admin user, the threat actor collected data across multiple services: Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager, CloudWatch logs, Lambda function source code, Internal data from S3 buckets, CloudTrail events.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": false,
-          "evidence_quote": "Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "The Lambda function proceeds by retrieving instance details and uploading data to a victim's S3 bucket.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "inferred": false,
-          "evidence_quote": "They successfully launched a p4d.24xlarge instance ($32.77/hour, or roughly $23,600/month if left running)... the threat actor invoked multiple AI models: Claude Sonnet 4, Claude Opus 4, Claude 3.5 Sonnet, Claude 3 Haiku, DeepSeek R1, Llama 4 Scout, Amazon Nova Premier, Amazon Titan Image Generator, Cohere Embed v3.",
           "validated": true
         }
       ]
@@ -165,18 +67,12 @@
           "validated": false
         },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "They distributed operations across 19 different principals, which increased their chances of maintaining access. In some cases, they assumed a role only to assume another role, a concept known as role chaining.",
-          "validated": true
-        },
-        {
           "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "technique_name": "Disable or Modify Cloud Logs",
           "inferred": false,
           "evidence_quote": "After verifying that logging was disabled, the threat actor invoked multiple AI models... This check has been observed in previous LLMjacking attacks.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1562.008"
         }
       ]
     },
@@ -186,16 +82,98 @@
       "techniques": [
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "The threat actor infiltrated the victim's environments using valid test credentials stolen from public S3 buckets.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         },
         {
           "technique_id": "T1528",
           "technique_name": "Steal Application Access Token",
           "inferred": false,
           "evidence_quote": "The malicious Lambda function returns the new admin keys in the function's response output, allowing the threat actor to read them directly from the invocation result.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.004",
+          "technique_name": "Unsecured Credentials: Private Keys",
+          "inferred": false,
+          "evidence_quote": "Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager",
+          "validated": false,
+          "subtechnique_id": "T1552.004"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "They enumerated resources across multiple AWS services, including: Secrets Manager, Systems Manager (SSM), S3, Lambda, Elastic Compute Cloud (EC2), Elastic Container Service (ECS), Organizations, Relational Database Service (RDS), CloudWatch, Key Management Service (KMS).",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "The Bedrock enumeration included: ListAgents, ListKnowledgeBases, GetKnowledgeBase, ListFoundationModels, ListCustomModels, GetModelInvocationLoggingConfiguration, ListInferenceProfiles, ListProvisionedModelThroughputs, ListModelInvocationJobs.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1550.001",
+          "technique_name": "Application Access Token",
+          "inferred": false,
+          "evidence_quote": "The threat actor assumed six different IAM roles across 14 different sessions. Additionally, they gained access to five IAM users, resulting in a total of 19 unique AWS principals involved in the attack.",
+          "validated": true,
+          "subtechnique_id": "T1550.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "Using their newly created admin user, the threat actor collected data across multiple services: Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager, CloudWatch logs, Lambda function source code, Internal data from S3 buckets, CloudTrail events.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": false,
+          "evidence_quote": "The Lambda function proceeds by retrieving instance details and uploading data to a victim's S3 bucket.",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "They successfully launched a p4d.24xlarge instance ($32.77/hour, or roughly $23,600/month if left running)... the threat actor invoked multiple AI models: Claude Sonnet 4, Claude Opus 4, Claude 3.5 Sonnet, Claude 3 Haiku, DeepSeek R1, Llama 4 Scout, Amazon Nova Premier, Amazon Titan Image Generator, Cohere Embed v3.",
           "validated": true
         }
       ]
@@ -212,7 +190,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 2,
@@ -224,7 +203,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -236,7 +216,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 4,
@@ -248,7 +229,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 5,
@@ -260,7 +242,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 6,
@@ -272,7 +255,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 7,
@@ -284,7 +268,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 8,
@@ -296,7 +281,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 9,
@@ -308,7 +294,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -320,7 +307,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -332,7 +320,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 12,
@@ -344,7 +333,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0008"
     },
     {
       "step": 13,
@@ -356,7 +346,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0004"
     },
     {
       "step": 14,
@@ -368,7 +359,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0009"
     },
     {
       "step": 15,
@@ -380,7 +372,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0006"
     },
     {
       "step": 16,
@@ -392,7 +385,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0010"
     },
     {
       "step": 17,
@@ -404,7 +398,8 @@
         "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
       ],
       "aws_services_involved": [],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     }
   ],
   "confidence_score": 0.65,
@@ -487,7 +482,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Valid Accounts: Cloud Accounts observed during Privilege Escalation: Using the admin user frick, they created a new user backdoor-admin and attached the AdministratorAccess policy.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "Using the admin user frick, they created a new user backdoor-admin and attached the AdministratorAccess policy.",
         "evidence_sources": [
           "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
@@ -511,7 +506,7 @@
         "technique_id": "T1090",
         "technique_name": "Proxy",
         "description": "Proxy observed during Defense Evasion: They used an IP rotator tool to change the source IP address for each request, bypassing security measures that rely on correlating operations from the same IP address.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "They used an IP rotator tool to change the source IP address for each request, bypassing security measures that rely on correlating operations from the same IP address.",
         "evidence_sources": [
           "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
@@ -547,7 +542,7 @@
         "technique_id": "T1550.001",
         "technique_name": "Application Access Token",
         "description": "Use Alternate Authentication Material: Application Access Token observed during Lateral Movement: The threat actor assumed six different IAM roles across 14 different sessions. Additionally, they gained access to five IAM users, resulting in a total of 19 unique AWS principals involved in the attack.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0008",
         "evidence_quote": "The threat actor assumed six different IAM roles across 14 different sessions. Additionally, they gained access to five IAM users, resulting in a total of 19 unique AWS principals involved in the attack.",
         "evidence_sources": [
           "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"
@@ -583,7 +578,7 @@
         "technique_id": "T1552.004",
         "technique_name": "Unsecured Credentials: Private Keys",
         "description": "Unsecured Credentials: Private Keys observed during Collection: Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager",
-        "tactic_id": "",
+        "tactic_id": "TA0006",
         "evidence_quote": "Secrets from Secrets Manager, SSM parameters from EC2 Systems Manager",
         "evidence_sources": [
           "https://sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes/"

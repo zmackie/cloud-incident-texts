@@ -7,75 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "inferred": true,
-          "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations or poor cloud security posture management",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": false,
-          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": false,
-          "evidence_quote": "the attacker started an enumeration on different services in different regions. This technique is much noisier as the attacker is trying to learn the architecture of the targeted account",
-          "validated": true
-        },
-        {
-          "technique_id": "T1069.003",
-          "technique_name": "Permission Groups Discovery: Cloud Groups",
-          "inferred": false,
-          "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
-          "validated": true
-        },
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... SES Enumeration...",
-          "validated": true
-        },
-        {
-          "technique_id": "T1087.004",
-          "technique_name": "Account Discovery: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
-          "inferred": false,
-          "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
+          "evidence_quote": "this attack could occur from different attack paths \u2013 including application vulnerabilities or zero-day exploits such as Log4Shell \u2013 not only from misconfigurations",
           "validated": true
         }
       ]
@@ -86,10 +19,11 @@
       "techniques": [
         {
           "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
+          "technique_name": "Cloud Account",
           "inferred": false,
           "evidence_quote": "the attacker tried (unsuccessfully) to create a new user by executing the CreateUser command.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1136.003"
         }
       ]
     },
@@ -103,38 +37,48 @@
           "inferred": false,
           "evidence_quote": "the attacker tried to hide some of his activities by deleting the SES identity by executing the DeleteIdentity command.",
           "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Cloud Instance Metadata API",
+          "inferred": false,
+          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN).",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1087.004",
+          "technique_name": "Cloud Account",
+          "inferred": false,
+          "evidence_quote": "The attack started with the GetCallerIdentity command. This command is equivalent to whoami, as it provides information about the entity the credentials are associated with.",
+          "validated": true,
+          "subtechnique_id": "T1087.004"
         },
         {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
+          "technique_id": "T1069.003",
+          "technique_name": "Cloud Groups",
           "inferred": false,
-          "evidence_quote": "the threat actor was able to steal the Lambda's credentials, allowing the attacker to impersonate it... The attacker was using the stolen credentials to impersonate and execute API calls on behalf of the Lambda function",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
+          "evidence_quote": "The IAM enumeration included two API calls, which were denied due to lack of permissions: ListAttachedRolePolicies, ListRolePolicies",
+          "validated": true,
+          "subtechnique_id": "T1069.003"
+        },
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "Storage Enumeration: ListBuckets, GetBucketCors, GetBucketInventoryConfiguration... GetBucketPolicy, GetBucketTagging",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
-          "inferred": true,
-          "evidence_quote": "An attacker was able to exfiltrate the Lambda's environment variables and export them into their attacking machine",
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "the attacker started an enumeration on different services in different regions... Some of the main services and API calls that were executed were: Storage Enumeration... EC2 Enumeration... Network Enumeration... Logging Enumeration... Backup Enumeration... SES Enumeration...",
           "validated": true
         }
       ]
@@ -147,7 +91,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
+          "evidence_quote": "the attacker was able to successfully enumerate SES. Therefore, the attacker launched a phishing attack by abusing the cloud email service, which included executing commands such as VerifyEmailIdentity and UpdateAccountSendingEnabled.",
           "validated": true
         }
       ]
@@ -166,7 +110,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -181,7 +126,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 3,
@@ -195,7 +141,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 4,
@@ -209,7 +156,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -229,7 +177,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -243,7 +192,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 7,
@@ -257,7 +207,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 8,
@@ -271,7 +222,8 @@
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     }
   ],
   "aws_services": [

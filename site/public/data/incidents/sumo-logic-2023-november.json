@@ -1,41 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
         {
           "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
+          "technique_name": "Cloud Accounts",
+          "inferred": false,
           "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": "We have identified the potentially exposed credentials and have added extra security measures to further protect our systems.",
-          "validated": true
+          "validated": true,
+          "subtechnique_id": "T1078.004"
         }
       ]
     },
@@ -46,7 +21,7 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "Immediately upon detection we locked down the exposed infrastructure and rotated every potentially exposed credential for our infrastructure out of an abundance of caution.",
           "validated": true
         }
@@ -66,7 +41,8 @@
       "aws_services_involved": [
         "IAM"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 2,
@@ -81,7 +57,8 @@
         "IAM",
         "S3"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     }
   ],
   "aws_services": [
@@ -102,7 +79,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "The attacker obtained or otherwise compromised a credential associated with Sumo Logic's AWS account, enabling them to authenticate as a legitimate cloud identity.",
-        "tactic_id": "TA0005",
+        "tactic_id": "TA0003",
         "evidence_quote": "The activity identified used a compromised credential to access a Sumo Logic AWS account.",
         "evidence_sources": [
           "https://www.sumologic.com/solutions/security/response-center"

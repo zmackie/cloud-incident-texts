@@ -1,20 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s to mine Monero.",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0002",
       "tactic_name": "Execution",
       "techniques": [
@@ -22,16 +8,7 @@
           "technique_id": "T1059",
           "technique_name": "Command and Scripting Interpreter",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "For reference, below are the MITRE ATT&CK Enterprise and Cloud Tactics observed during Expel's response: Execution | Scripting",
-          "validated": true
-        },
-        {
-          "technique_id": "T1204",
-          "technique_name": "User Execution",
-          "inferred": true,
-          "subtechnique_id": null,
-          "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot).",
+          "evidence_quote": "This was also the first time we'd observed a bot written in the AWS Golang software development kit (SDK).",
           "validated": true
         }
       ]
@@ -41,20 +18,34 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1098.001",
+          "technique_name": "Additional Cloud Credentials",
           "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "For reference, below are the MITRE ATT&CK Enterprise and Cloud Tactics observed: Persistence | Valid Accounts, Redundant Access",
-          "validated": true
+          "evidence_quote": "EC2 SSH access keys were generated for the root access key from a suspicious source IP address using the AWS Golang SDK... This was the first time we saw an attacker bring their own SSH key pairs that were uniquely named.",
+          "validated": true,
+          "subtechnique_id": "T1098.001"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1562.007",
+          "technique_name": "Disable or Modify Cloud Firewall",
+          "inferred": false,
+          "evidence_quote": "created new security groups likely to allow inbound access from the Internet... an ingress rule was created in the bot automation to allow SSH from the Internet.",
+          "validated": true,
+          "subtechnique_id": "T1562.007"
         },
         {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": true,
-          "subtechnique_id": null,
-          "evidence_quote": "The root access key was used to access the AWS environment from a cloud hosting environment using the AWS Golang SDK. It was then used to create SSH keys, spin up EC2 instances via the RunInstances API call and created new security groups likely to allow inbound access from the Internet.",
-          "validated": true
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero... spin up EC2 instances via the RunInstances API call.",
+          "validated": true,
+          "subtechnique_id": "T1578.002"
         }
       ]
     },
@@ -66,22 +57,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment and spin up ten (10) c5.4xlarge EC2s.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "subtechnique_id": "T1078.004",
-          "evidence_quote": "The root AWS access key was potentially compromised.",
+          "evidence_quote": "The root access key was used to access the AWS environment... Ruxie pulled up API calls made by the principal (interesting in this context is mostly anything that isn't Get*, List*, Describe* and Head*).",
           "validated": true
         }
       ]
@@ -93,10 +69,10 @@
         {
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
-          "inferred": true,
-          "subtechnique_id": "T1021.004",
+          "inferred": false,
           "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
-          "validated": false
+          "validated": false,
+          "subtechnique_id": "T1021.004"
         }
       ]
     },
@@ -108,8 +84,7 @@
           "technique_id": "T1571",
           "technique_name": "Non-Standard Port",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
+          "evidence_quote": "monerohash[.]com on TCP port 7777",
           "validated": false
         }
       ]
@@ -122,8 +97,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "subtechnique_id": null,
-          "evidence_quote": "spin up ten (10) c5.4xlarge EC2s to mine Monero.",
+          "evidence_quote": "AWS GuardDuty alerts for an EC2 instance communicating with a cryptocurrency server (monerohash[.]com on TCP port 7777).",
           "validated": true
         }
       ]
@@ -143,7 +117,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": ""
     },
     {
       "step": 2,
@@ -159,7 +134,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0007"
     },
     {
       "step": 3,
@@ -174,7 +150,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0003"
     },
     {
       "step": 4,
@@ -189,7 +166,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 5,
@@ -204,7 +182,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0005"
     },
     {
       "step": 6,
@@ -218,7 +197,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0008"
     },
     {
       "step": 7,
@@ -232,7 +212,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0002"
     },
     {
       "step": 8,
@@ -246,7 +227,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": true
+      "validated": true,
+      "tactic_id": "TA0040"
     },
     {
       "step": 9,
@@ -260,7 +242,8 @@
       "evidence_sources": [
         "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
       ],
-      "validated": false
+      "validated": false,
+      "tactic_id": "TA0011"
     }
   ],
   "aws_services": [
@@ -283,7 +266,7 @@
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
         "description": "Attacker obtained and leveraged a compromised root IAM user access key to authenticate to the AWS environment from a cloud hosting provider IP using the AWS Golang SDK.",
-        "tactic_id": "TA0005",
+        "tactic_id": "",
         "evidence_quote": "The attacker compromised the root IAM user access key and used it to enumerate the environment.",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
@@ -359,7 +342,7 @@
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
         "description": "Attacker SSHed into the newly spun-up EC2 instances using the imported SSH key pairs to install CoinMiner malware.",
-        "tactic_id": "",
+        "tactic_id": "TA0008",
         "evidence_quote": "The CoinMiner was likely installed via SSH remote access (as a part of the bot). We didn't have local EC2 visibility to confirm, but an ingress rule was created in the bot automation to allow SSH from the Internet.",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"
@@ -401,7 +384,7 @@
         "technique_id": "T1571",
         "technique_name": "Non-Standard Port",
         "description": "Miner C2 communications used TCP port 7777 (non-standard) to connect to the monerohash[.]com mining pool, evading standard port-based detection.",
-        "tactic_id": "",
+        "tactic_id": "TA0011",
         "evidence_quote": "monerohash[.]com on TCP port 7777",
         "evidence_sources": [
           "https://web.archive.org/web/20210128055101/https://expel.io/blog/behind-the-scenes-expel-soc-alert-aws/"

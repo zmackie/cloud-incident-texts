@@ -5,11 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "the attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+          "evidence_quote": "attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee, and gained root administrator access to all Ubiquiti AWS accounts",
           "validated": true
         }
       ]
@@ -19,11 +18,17 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
+          "technique_id": "T1555.005",
+          "technique_name": "Credentials from Password Stores: Password Managers",
+          "inferred": false,
+          "evidence_quote": "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+          "validated": false
+        },
+        {
           "technique_id": "T1552",
           "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "the attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+          "evidence_quote": "all user database credentials, and secrets required to forge single sign-on (SSO) cookies",
           "validated": true
         }
       ]
@@ -33,33 +38,10 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1136",
-          "technique_name": "Create Account",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases",
-          "validated": true
-        },
-        {
-          "technique_id": "T1539",
-          "technique_name": "Steal Web Session Cookie",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "They were able to get cryptographic secrets for single sign-on cookies and remote access",
+          "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts",
           "validated": true
         }
       ]
@@ -71,9 +53,41 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases",
+          "evidence_quote": "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021",
+          "technique_name": "Remote Services",
+          "inferred": true,
+          "evidence_quote": "created Linux instances with networking connectivity to said databases",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "created Linux instances with networking connectivity to said databases",
+          "validated": true
+        },
+        {
+          "technique_id": "T1606.001",
+          "technique_name": "Forge Web Credentials: Web Cookies",
+          "inferred": false,
+          "evidence_quote": "secrets required to forge single sign-on (SSO) cookies",
           "validated": true
         }
       ]
@@ -85,9 +99,15 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials",
+          "inferred": false,
+          "evidence_quote": "all S3 data buckets, all application logs, all databases",
+          "validated": true
+        },
+        {
+          "technique_id": "T1213.003",
+          "technique_name": "Data from Information Repositories: Code Repositories",
+          "inferred": false,
+          "evidence_quote": "full source code control contents",
           "validated": true
         }
       ]
@@ -99,7 +119,6 @@
         {
           "technique_id": "T1567",
           "technique_name": "Exfiltration Over Web Service",
-          "subtechnique_id": null,
           "inferred": true,
           "evidence_quote": "full source code control contents, and signing keys exfiltration",
           "validated": true
@@ -113,9 +132,8 @@
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "The attacker, who unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials",
+          "evidence_quote": "attempted to extort the company by threatening to release stolen source code and specific IT credentials",
           "validated": true
         }
       ]
@@ -124,123 +142,320 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.001",
-      "technique_name": "Credentials In Files \u2014 Password Manager",
-      "description": "The attacker (alleged insider / former IT employee) obtained privileged AWS credentials stored in a Ubiquiti IT employee's LastPass password manager account, providing the initial foothold.",
-      "evidence_quote": "the attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+      "technique_id": "T1555.005",
+      "technique_name": "Credentials from Password Stores: Password Managers",
+      "description": "Attacker obtained privileged AWS credentials from the LastPass account of a Ubiquiti IT employee.",
+      "aws_services_involved": [],
+      "evidence_quote": "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Using the harvested credentials, the attacker authenticated to Ubiquiti's AWS environment as a privileged/root administrator, gaining access to all AWS accounts.",
-      "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials, and secrets required to forge single sign-on (SSO) cookies",
+      "description": "Using the stolen credentials, attacker authenticated to Ubiquiti's AWS environment and obtained root administrator access to all AWS accounts.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [
-        "AWS IAM",
-        "AWS Console"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "gained root administrator access to all Ubiquiti AWS accounts"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "gained root administrator access to all Ubiquiti AWS accounts"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "With root-level access, the attacker enumerated Ubiquiti's full cloud footprint, identifying S3 buckets, application logs, databases, and credentials stored within the environment.",
-      "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases",
+      "description": "Attacker enumerated AWS resources including S3 buckets, databases, and application logs.",
+      "aws_services_involved": [
+        "S3",
+        "EC2",
+        "RDS"
+      ],
+      "evidence_quote": "all S3 data buckets, all application logs, all databases",
+      "ordering_confidence": 0.6,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [
-        "Amazon S3",
-        "Amazon RDS",
-        "AWS CloudTrail"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "all S3 data buckets, all application logs, all databases"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "all S3 data buckets, all application logs, all databases"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1539",
-      "technique_name": "Steal Web Session Cookie",
-      "description": "The attacker exfiltrated cryptographic secrets used to forge SSO cookies, enabling the ability to remotely authenticate to Ubiquiti cloud-managed devices globally without credentials.",
-      "evidence_quote": "They were able to get cryptographic secrets for single sign-on cookies and remote access",
+      "technique_id": "T1578.002",
+      "technique_name": "Create Cloud Instance",
+      "description": "Attacker created Linux EC2 instances with network connectivity to internal databases to pivot and access data.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC"
+      ],
+      "evidence_quote": "created Linux instances with networking connectivity to said databases",
+      "ordering_confidence": 0.85,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "created Linux instances with networking connectivity to said databases"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "created Linux instances with networking connectivity to said databases"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1136",
-      "technique_name": "Create Account",
-      "description": "The attacker provisioned Linux compute instances with direct network connectivity to Ubiquiti's databases, establishing persistent access infrastructure within the AWS environment.",
-      "evidence_quote": "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases",
+      "technique_id": "T1552",
+      "technique_name": "Unsecured Credentials",
+      "description": "Attacker harvested cryptographic secrets for SSO cookies, remote access, signing keys, and user database credentials.",
+      "aws_services_involved": [
+        "S3",
+        "Secrets Manager"
+      ],
+      "evidence_quote": "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [
-        "Amazon EC2"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "The attacker accessed and collected data from S3 buckets, application logs, databases, user database credentials, source code repositories, and signing keys.",
-      "evidence_quote": "full source code control contents, and signing keys exfiltration",
+      "description": "Attacker accessed S3 buckets, databases, and application logs.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "all S3 data buckets, all application logs, all databases",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
-      "aws_services_involved": [
-        "Amazon S3",
-        "Amazon RDS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "all S3 data buckets, all application logs, all databases"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "all S3 data buckets, all application logs, all databases"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1657",
-      "technique_name": "Financial Theft (Extortion)",
-      "description": "After exfiltrating source code and IT credentials, the attacker attempted to extort Ubiquiti by threatening to publicly release the stolen materials unless paid.",
-      "evidence_quote": "The attacker, who unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials",
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Attacker accessed the full contents of source code control systems.",
+      "aws_services_involved": [],
+      "evidence_quote": "full source code control contents",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "full source code control contents"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "full source code control contents"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Attacker exfiltrated source code and signing keys from Ubiquiti's cloud environment.",
       "aws_services_involved": [],
+      "evidence_quote": "full source code control contents, and signing keys exfiltration",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "full source code control contents, and signing keys exfiltration"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "full source code control contents, and signing keys exfiltration"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Attacker attempted to extort Ubiquiti by threatening to release stolen source code and IT credentials.",
+      "aws_services_involved": [],
+      "evidence_quote": "unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials",
+      "ordering_confidence": 0.95,
+      "event_time": "2021-01",
+      "event_time_precision": "month",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 319,
+          "char_end": 6251,
+          "quote": "unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 5932,
+          "quote": "unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials"
+        }
+      ],
       "validated": true
     }
   ],
   "aws_services": [
     "AWS IAM",
-    "Amazon S3",
-    "Amazon EC2",
-    "Amazon RDS",
-    "AWS CloudTrail"
+    "S3",
+    "EC2",
+    "VPC",
+    "CloudTrail"
   ],
-  "impact_type": "Extortion / Data Exfiltration",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Privileged AWS credentials stolen from a Ubiquiti IT employee's LastPass password manager account (alleged insider threat \u2014 former employee)",
-  "persistence_mechanism": "Creation of Linux EC2 instances with direct network connectivity to internal databases; possession of SSO cookie-forging secrets enabling persistent re-authentication",
-  "privilege_escalation": "Credentials stored in LastPass already conferred root administrator access to all AWS accounts \u2014 no lateral escalation step required; immediate root-level access upon authentication",
+  "impact_type": "Data Exfiltration and Extortion",
+  "confidence_score": 0.75,
   "data_exfiltrated": true,
+  "initial_access_vector": "Privileged AWS credentials stolen from an IT employee's LastPass password manager (alleged insider threat)",
+  "persistence_mechanism": "Root administrator access to all AWS accounts plus forged SSO cookies using stolen signing secrets",
+  "privilege_escalation": "Stolen credentials already held root/administrative privileges in AWS",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "The attacker (alleged insider / former IT employee) obtained privileged AWS credentials stored in a Ubiquiti IT employee's LastPass password manager account, providing the initial foothold.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "the attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+        "technique_id": "T1555.005",
+        "technique_name": "Credentials from Password Stores: Password Managers",
+        "description": "Attacker obtained privileged AWS credentials from the LastPass account of a Ubiquiti IT employee.",
+        "tactic_id": "",
+        "evidence_quote": "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
@@ -250,81 +465,107 @@
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Using the harvested credentials, the attacker authenticated to Ubiquiti's AWS environment as a privileged/root administrator, gaining access to all AWS accounts.",
+        "description": "Using the stolen credentials, attacker authenticated to Ubiquiti's AWS environment and obtained root administrator access to all AWS accounts.",
         "tactic_id": "TA0005",
-        "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials, and secrets required to forge single sign-on (SSO) cookies",
+        "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "aws_services_involved": [
-          "AWS IAM",
-          "AWS Console"
+          "AWS IAM"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "With root-level access, the attacker enumerated Ubiquiti's full cloud footprint, identifying S3 buckets, application logs, databases, and credentials stored within the environment.",
+        "description": "Attacker enumerated AWS resources including S3 buckets, databases, and application logs.",
         "tactic_id": "TA0007",
-        "evidence_quote": "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases",
+        "evidence_quote": "all S3 data buckets, all application logs, all databases",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon RDS",
-          "AWS CloudTrail"
+          "S3",
+          "EC2",
+          "RDS"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1539",
-        "technique_name": "Steal Web Session Cookie",
-        "description": "The attacker exfiltrated cryptographic secrets used to forge SSO cookies, enabling the ability to remotely authenticate to Ubiquiti cloud-managed devices globally without credentials.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "They were able to get cryptographic secrets for single sign-on cookies and remote access",
-        "evidence_sources": [
-          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 5,
-        "technique_id": "T1136",
-        "technique_name": "Create Account",
-        "description": "The attacker provisioned Linux compute instances with direct network connectivity to Ubiquiti's databases, establishing persistent access infrastructure within the AWS environment.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases",
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Attacker created Linux EC2 instances with network connectivity to internal databases to pivot and access data.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "created Linux instances with networking connectivity to said databases",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "aws_services_involved": [
-          "Amazon EC2"
+          "EC2",
+          "VPC"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1552",
+        "technique_name": "Unsecured Credentials",
+        "description": "Attacker harvested cryptographic secrets for SSO cookies, remote access, signing keys, and user database credentials.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+        ],
+        "aws_services_involved": [
+          "S3",
+          "Secrets Manager"
         ]
       },
       {
         "step": 6,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker accessed and collected data from S3 buckets, application logs, databases, user database credentials, source code repositories, and signing keys.",
+        "description": "Attacker accessed S3 buckets, databases, and application logs.",
         "tactic_id": "TA0009",
-        "evidence_quote": "full source code control contents, and signing keys exfiltration",
+        "evidence_quote": "all S3 data buckets, all application logs, all databases",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon RDS"
+          "S3"
         ]
       },
       {
         "step": 7,
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Attacker accessed the full contents of source code control systems.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "full source code control contents",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Attacker exfiltrated source code and signing keys from Ubiquiti's cloud environment.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "full source code control contents, and signing keys exfiltration",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "After exfiltrating source code and IT credentials, the attacker attempted to extort Ubiquiti by threatening to publicly release the stolen materials unless paid.",
+        "description": "Attacker attempted to extort Ubiquiti by threatening to release stolen source code and IT credentials.",
         "tactic_id": "TA0040",
-        "evidence_quote": "The attacker, who unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials",
+        "evidence_quote": "unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials",
         "evidence_sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
@@ -333,18 +574,18 @@
     ],
     "edges": [
       {
-        "source": "T1552.001",
+        "source": "T1555.005",
         "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Credentials In Files",
+        "source_technique_name": "Credentials from Password Stores: Password Managers",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
-          "the attacker(s) had access to privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
-          "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials, and secrets required to forge single sign-on (SSO) cookies"
+          "privileged credentials that were previously stored in the LastPass account of a Ubiquiti IT employee",
+          "gained root administrator access to all Ubiquiti AWS accounts"
         ]
       },
       {
@@ -358,68 +599,98 @@
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
-          "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases, all user database credentials, and secrets required to forge single sign-on (SSO) cookies",
-          "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases"
+          "gained root administrator access to all Ubiquiti AWS accounts",
+          "all S3 data buckets, all application logs, all databases"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1539",
+        "target": "T1578.002",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Steal Web Session Cookie",
+        "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
-          "gained root administrator access to all Ubiquiti AWS accounts, including all S3 data buckets, all application logs, all databases",
-          "They were able to get cryptographic secrets for single sign-on cookies and remote access"
+          "all S3 data buckets, all application logs, all databases",
+          "created Linux instances with networking connectivity to said databases"
         ]
       },
       {
-        "source": "T1539",
-        "target": "T1136",
+        "source": "T1578.002",
+        "target": "T1552",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Steal Web Session Cookie",
-        "target_technique_name": "Create Account",
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Unsecured Credentials",
         "sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
-          "They were able to get cryptographic secrets for single sign-on cookies and remote access",
-          "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases"
+          "created Linux instances with networking connectivity to said databases",
+          "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys"
         ]
       },
       {
-        "source": "T1136",
+        "source": "T1552",
         "target": "T1530",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Create Account",
+        "source_technique_name": "Unsecured Credentials",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
-          "the attacker targeted the credentials to the databases, and created Linux instances with networking connectivity to said databases",
-          "full source code control contents, and signing keys exfiltration"
+          "cryptographic secrets for single sign-on cookies and remote access, full source code control contents, and signing keys",
+          "all S3 data buckets, all application logs, all databases"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1657",
+        "target": "T1213.003",
         "source_step": 6,
         "target_step": 7,
         "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Code Repositories",
+        "sources": [
+          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+        ],
+        "evidence_quotes": [
+          "all S3 data buckets, all application logs, all databases",
+          "full source code control contents"
+        ]
+      },
+      {
+        "source": "T1213.003",
+        "target": "T1567",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Code Repositories",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
+        ],
+        "evidence_quotes": [
+          "full source code control contents",
+          "full source code control contents, and signing keys exfiltration"
+        ]
+      },
+      {
+        "source": "T1567",
+        "target": "T1657",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Exfiltration Over Web Service",
         "target_technique_name": "Financial Theft",
         "sources": [
           "https://web.archive.org/web/20210731152054/https://krebsonsecurity.com/2021/04/ubiquiti-all-but-confirms-breach-response-iniquity/"
         ],
         "evidence_quotes": [
           "full source code control contents, and signing keys exfiltration",
-          "The attacker, who unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials"
+          "unsuccessfully attempted to extort the company by threatening to release stolen source code and specific IT credentials"
         ]
       }
     ]
@@ -430,7 +701,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "ubiquiti-2021-april",
-  "analyzed_at": "2026-04-15T21:12:36.416541+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 6371
+  "analyzed_at": "2026-04-23T18:55:41.638854+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 12658
 }

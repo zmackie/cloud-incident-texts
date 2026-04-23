@@ -8,14 +8,36 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability allowed attackers to send HTTP requests to hosts behind the firewall.",
+          "evidence_quote": "the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability allowed attackers to send HTTP requests to hosts behind the firewall.",
           "validated": true
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
         {
           "technique_id": "T1552.005",
+          "subtechnique_id": "T1552.005",
           "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
           "inferred": false,
           "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "subtechnique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "inferred": false,
+          "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories",
+          "validated": true
+        },
+        {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "inferred": true,
+          "evidence_quote": "exfiltrate temporary credentials associated with the VM instance",
           "validated": true
         }
       ]
@@ -25,17 +47,10 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1651",
-          "technique_name": "Cloud Administration Command",
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter",
           "inferred": false,
           "evidence_quote": "The obtained cloud credentials enabled the threat actor to use control plane APIs to carry out the rest of the attack.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1610",
-          "technique_name": "Deploy Container",
-          "inferred": false,
-          "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
           "validated": true
         }
       ]
@@ -45,10 +60,19 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1098.001",
-          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "technique_id": "T1098.003",
+          "subtechnique_id": "T1098.003",
+          "technique_name": "Account Manipulation: Additional Cloud Roles",
           "inferred": false,
           "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
+          "validated": true
+        },
+        {
+          "technique_id": "T1136.003",
+          "subtechnique_id": "T1136.003",
+          "technique_name": "Create Account: Cloud Account",
+          "inferred": true,
+          "evidence_quote": "created a backdoor IAM role that allowed access from an attacker-controlled account",
           "validated": true
         }
       ]
@@ -58,14 +82,8 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials in Files",
-          "inferred": false,
-          "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
+          "subtechnique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
           "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
@@ -80,7 +98,7 @@
         {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
+          "inferred": false,
           "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
           "validated": true
         }
@@ -92,22 +110,10 @@
       "techniques": [
         {
           "technique_id": "T1550.001",
+          "subtechnique_id": "T1550.001",
           "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": false,
-          "evidence_quote": "Control plane \u2192 data plane: The threat actor enumerated and viewed all the VM instances' user data. A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "The threat actor cloned all the repositories in the company's GitHub organization.",
+          "evidence_quote": "The obtained cloud credentials enabled the threat actor to use control plane APIs",
           "validated": true
         }
       ]
@@ -117,8 +123,9 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1567",
-          "technique_name": "Exfiltration Over Web Service",
+          "technique_id": "T1213.003",
+          "subtechnique_id": "T1213.003",
+          "technique_name": "Data from Information Repositories: Code Repositories",
           "inferred": false,
           "evidence_quote": "The threat actor cloned all the repositories in the company's GitHub organization.",
           "validated": true
@@ -129,6 +136,14 @@
       "tactic_id": "TA0040",
       "tactic_name": "Impact",
       "techniques": [
+        {
+          "technique_id": "T1578.002",
+          "subtechnique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
+          "validated": true
+        },
         {
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
@@ -151,175 +166,215 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "An internal web server was accidentally exposed to the internet due to a misconfigured security group during a migration. The attacker identified it and confirmed it was vulnerable to CVE-2021-40438, an Apache HTTPD SSRF vulnerability.",
-      "evidence_quote": "An internal web server was accidentally made public due to a misconfigured security group setting during a migration process. The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
+      "description": "Threat actor discovered an internal web server that was exposed to the internet due to a misconfigured security group, and exploited CVE-2021-40438 (SSRF) on it.",
       "aws_services_involved": [
         "EC2",
         "VPC Security Groups"
       ],
+      "evidence_quote": "An internal web server was accidentally made public due to a misconfigured security group setting... the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1552.005",
       "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "Leveraging the SSRF vulnerability against the IMDSv1 endpoint, the attacker sent crafted HTTP requests to the EC2 instance metadata service and exfiltrated the temporary IAM credentials associated with the instance's role.",
-      "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
+      "description": "Used the SSRF vulnerability combined with IMDSv1 to exfiltrate temporary IAM credentials from the EC2 instance metadata service.",
       "aws_services_involved": [
         "EC2",
         "IMDS",
         "IAM"
       ],
+      "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1651",
-      "technique_name": "Cloud Administration Command",
-      "description": "Using the stolen temporary IAM credentials, the attacker called AWS control-plane APIs to begin operating within the environment.",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Used the stolen temporary IAM credentials to authenticate to AWS control plane APIs.",
+      "aws_services_involved": [
+        "IAM",
+        "APIs"
+      ],
       "evidence_quote": "The obtained cloud credentials enabled the threat actor to use control plane APIs to carry out the rest of the attack.",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "API"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "The attacker created a backdoor IAM role that trusted an attacker-controlled AWS account, establishing persistent cross-account access.",
-      "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "The attacker enumerated all VM instances and inspected their user data to discover hard-coded credentials stored in instance configurations.",
-      "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials in Files",
-      "description": "A hard-coded GitHub credential found in an EC2 instance's user data granted the attacker access to all of the company's source code repositories. A further hard-coded cloud access key in a CI/CD script was also recovered.",
-      "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "validated": true
-    },
-    {
-      "step": 7,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "A cloud access key found hard-coded in a CI/CD automation script granted the attacker administrator-level permissions, completing privilege escalation to full cloud administrator.",
-      "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 8,
-      "technique_id": "T1567",
-      "technique_name": "Exfiltration Over Web Service",
-      "description": "The attacker cloned all repositories in the company's GitHub organization, exfiltrating all source code.",
-      "evidence_quote": "The threat actor cloned all the repositories in the company's GitHub organization.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 9,
-      "technique_id": "T1610",
-      "technique_name": "Deploy Container",
-      "description": "Using administrator-level credentials and CloudFormation, the attacker deployed hundreds of GPU-based VM instances across multiple regions to conduct large-scale cryptomining.",
-      "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Deployed attacker-controlled cloud resources (VPC, subnets, firewalls, VM instances) via CloudFormation to support cryptojacking operations.",
       "aws_services_involved": [
         "CloudFormation",
         "EC2",
         "VPC"
       ],
+      "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Created a backdoor IAM role allowing access from an attacker-controlled AWS account to maintain persistence.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Enumerated all VM instances and viewed their user data to search for sensitive information and credentials.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Found a hard-coded GitHub credential in an EC2 instance's user data, enabling access to the company's source code repositories.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Cloned all repositories in the company's GitHub organization and scanned them for additional credentials.",
+      "aws_services_involved": [],
+      "evidence_quote": "The threat actor cloned all the repositories and scanned for more credentials.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Discovered and used a hard-coded AWS access key from a CI/CD automation script granting administrator permissions, escalating privileges in the AWS account.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 10,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Hundreds of GPU-based EC2 instances were used for large-scale cryptomining, costing the victim $12,000 per day.",
-      "evidence_quote": "The threat actor deployed hundreds of GPU-based VM instances, costing the company $12,000 daily.",
-      "evidence_sources": [
-        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-      ],
+      "description": "Deployed hundreds of GPU-based EC2 instances for cryptomining, costing the victim $12,000/day.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "The threat actor deployed hundreds of GPU-based VM instances, costing the company $12,000 daily.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 11,
       "technique_id": "T1498",
       "technique_name": "Network Denial of Service",
-      "description": "Botnet malware was deployed on the compromised EC2 instances, which were then used to launch outbound DDoS attacks from the victim's cloud network.",
+      "description": "Deployed botnet malware on compromised hosts and launched outbound DDoS attacks from the victim's cloud network.",
+      "aws_services_involved": [
+        "EC2"
+      ],
       "evidence_quote": "The threat actor deployed botnet malware on the compromised hosts and launched DDoS attacks from the company's network.",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "EC2",
-    "IMDS",
     "IAM",
+    "IMDS",
     "CloudFormation",
     "VPC",
     "VPC Security Groups"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.95,
-  "initial_access_vector": "SSRF exploit of CVE-2021-40438 against a publicly exposed internal Apache web server (misconfigured security group), combined with IMDSv1 to harvest EC2 instance temporary IAM credentials",
-  "persistence_mechanism": "Backdoor IAM role created to allow cross-account access from an attacker-controlled AWS account",
-  "privilege_escalation": "Hard-coded cloud access key discovered in a CI/CD automation script within cloned source code repositories granted administrator-level IAM permissions",
+  "confidence_score": 0.9,
   "data_exfiltrated": true,
   "attack_chain_graph": {
     "nodes": [
@@ -327,9 +382,9 @@
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "An internal web server was accidentally exposed to the internet due to a misconfigured security group during a migration. The attacker identified it and confirmed it was vulnerable to CVE-2021-40438, an Apache HTTPD SSRF vulnerability.",
+        "description": "Threat actor discovered an internal web server that was exposed to the internet due to a misconfigured security group, and exploited CVE-2021-40438 (SSRF) on it.",
         "tactic_id": "TA0001",
-        "evidence_quote": "An internal web server was accidentally made public due to a misconfigured security group setting during a migration process. The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438.",
+        "evidence_quote": "An internal web server was accidentally made public due to a misconfigured security group setting... the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability",
         "evidence_sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
@@ -342,7 +397,7 @@
         "step": 2,
         "technique_id": "T1552.005",
         "technique_name": "Cloud Instance Metadata API",
-        "description": "Leveraging the SSRF vulnerability against the IMDSv1 endpoint, the attacker sent crafted HTTP requests to the EC2 instance metadata service and exfiltrated the temporary IAM credentials associated with the instance's role.",
+        "description": "Used the SSRF vulnerability combined with IMDSv1 to exfiltrate temporary IAM credentials from the EC2 instance metadata service.",
         "tactic_id": "TA0006",
         "evidence_quote": "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance.",
         "evidence_sources": [
@@ -356,92 +411,24 @@
       },
       {
         "step": 3,
-        "technique_id": "T1651",
-        "technique_name": "Cloud Administration Command",
-        "description": "Using the stolen temporary IAM credentials, the attacker called AWS control-plane APIs to begin operating within the environment.",
-        "tactic_id": "TA0002",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Used the stolen temporary IAM credentials to authenticate to AWS control plane APIs.",
+        "tactic_id": "TA0005",
         "evidence_quote": "The obtained cloud credentials enabled the threat actor to use control plane APIs to carry out the rest of the attack.",
         "evidence_sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "aws_services_involved": [
           "IAM",
-          "API"
+          "APIs"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "The attacker created a backdoor IAM role that trusted an attacker-controlled AWS account, establishing persistent cross-account access.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
-        "evidence_sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "aws_services_involved": [
-          "IAM"
-        ]
-      },
-      {
-        "step": 5,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "The attacker enumerated all VM instances and inspected their user data to discover hard-coded credentials stored in instance configurations.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
-        "evidence_sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "aws_services_involved": [
-          "EC2"
-        ]
-      },
-      {
-        "step": 6,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "A hard-coded GitHub credential found in an EC2 instance's user data granted the attacker access to all of the company's source code repositories. A further hard-coded cloud access key in a CI/CD script was also recovered.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
-        "evidence_sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "aws_services_involved": [
-          "EC2"
-        ]
-      },
-      {
-        "step": 7,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "A cloud access key found hard-coded in a CI/CD automation script granted the attacker administrator-level permissions, completing privilege escalation to full cloud administrator.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
-        "evidence_sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "aws_services_involved": [
-          "IAM"
-        ]
-      },
-      {
-        "step": 8,
-        "technique_id": "T1567",
-        "technique_name": "Exfiltration Over Web Service",
-        "description": "The attacker cloned all repositories in the company's GitHub organization, exfiltrating all source code.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "The threat actor cloned all the repositories in the company's GitHub organization.",
-        "evidence_sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 9,
-        "technique_id": "T1610",
-        "technique_name": "Deploy Container",
-        "description": "Using administrator-level credentials and CloudFormation, the attacker deployed hundreds of GPU-based VM instances across multiple regions to conduct large-scale cryptomining.",
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Deployed attacker-controlled cloud resources (VPC, subnets, firewalls, VM instances) via CloudFormation to support cryptojacking operations.",
         "tactic_id": "TA0005",
         "evidence_quote": "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
         "evidence_sources": [
@@ -454,10 +441,78 @@
         ]
       },
       {
+        "step": 5,
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Created a backdoor IAM role allowing access from an attacker-controlled AWS account to maintain persistence.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account.",
+        "evidence_sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Enumerated all VM instances and viewed their user data to search for sensitive information and credentials.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "The threat actor enumerated and viewed all the VM instances' user data.",
+        "evidence_sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Found a hard-coded GitHub credential in an EC2 instance's user data, enabling access to the company's source code repositories.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
+        "evidence_sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Cloned all repositories in the company's GitHub organization and scanned them for additional credentials.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The threat actor cloned all the repositories and scanned for more credentials.",
+        "evidence_sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Discovered and used a hard-coded AWS access key from a CI/CD automation script granting administrator permissions, escalating privileges in the AWS account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
+        "evidence_sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
         "step": 10,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Hundreds of GPU-based EC2 instances were used for large-scale cryptomining, costing the victim $12,000 per day.",
+        "description": "Deployed hundreds of GPU-based EC2 instances for cryptomining, costing the victim $12,000/day.",
         "tactic_id": "TA0040",
         "evidence_quote": "The threat actor deployed hundreds of GPU-based VM instances, costing the company $12,000 daily.",
         "evidence_sources": [
@@ -471,15 +526,14 @@
         "step": 11,
         "technique_id": "T1498",
         "technique_name": "Network Denial of Service",
-        "description": "Botnet malware was deployed on the compromised EC2 instances, which were then used to launch outbound DDoS attacks from the victim's cloud network.",
+        "description": "Deployed botnet malware on compromised hosts and launched outbound DDoS attacks from the victim's cloud network.",
         "tactic_id": "TA0040",
         "evidence_quote": "The threat actor deployed botnet malware on the compromised hosts and launched DDoS attacks from the company's network.",
         "evidence_sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC"
+          "EC2"
         ]
       }
     ],
@@ -495,17 +549,17 @@
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "evidence_quotes": [
-          "An internal web server was accidentally made public due to a misconfigured security group setting during a migration process. The threat actor found the exposed host and confirmed the web server was vulnerable to CVE-2021-40438.",
+          "An internal web server was accidentally made public due to a misconfigured security group setting... the web server was vulnerable to CVE-2021-40438. This Server Side Request Forgery (SSRF) vulnerability",
           "Coupled with the usage of outdated Instance Metadata Service Version 1 (IMDSv1), the SSRF vulnerability allowed the threat actor to exfiltrate temporary credentials associated with the VM instance."
         ]
       },
       {
         "source": "T1552.005",
-        "target": "T1651",
+        "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Instance Metadata API",
-        "target_technique_name": "Cloud Administration Command",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
@@ -515,26 +569,41 @@
         ]
       },
       {
-        "source": "T1651",
-        "target": "T1098.001",
+        "source": "T1078.004",
+        "target": "T1578.002",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Cloud Administration Command",
-        "target_technique_name": "Additional Cloud Credentials",
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "evidence_quotes": [
           "The obtained cloud credentials enabled the threat actor to use control plane APIs to carry out the rest of the attack.",
+          "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances)."
+        ]
+      },
+      {
+        "source": "T1578.002",
+        "target": "T1098.003",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Create Cloud Instance",
+        "target_technique_name": "Additional Cloud Roles",
+        "sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "evidence_quotes": [
+          "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
           "The threat actor created a backdoor IAM role that allowed access from an attacker-controlled account."
         ]
       },
       {
-        "source": "T1098.001",
+        "source": "T1098.003",
         "target": "T1580",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Additional Cloud Credentials",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Additional Cloud Roles",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
@@ -547,8 +616,8 @@
       {
         "source": "T1580",
         "target": "T1552.001",
-        "source_step": 5,
-        "target_step": 6,
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Credentials In Files",
         "sources": [
@@ -561,61 +630,46 @@
       },
       {
         "source": "T1552.001",
-        "target": "T1078.004",
-        "source_step": 6,
-        "target_step": 7,
+        "target": "T1213.003",
+        "source_step": 7,
+        "target_step": 8,
         "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Cloud Accounts",
+        "target_technique_name": "Code Repositories",
         "sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "evidence_quotes": [
           "A hard-coded GitHub credential in one VM instance's user data allowed the threat actor to access the source code repositories for the entire company.",
+          "The threat actor cloned all the repositories and scanned for more credentials."
+        ]
+      },
+      {
+        "source": "T1213.003",
+        "target": "T1078.004",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Code Repositories",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
+        ],
+        "evidence_quotes": [
+          "The threat actor cloned all the repositories and scanned for more credentials.",
           "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission."
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1567",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Exfiltration Over Web Service",
-        "sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "evidence_quotes": [
-          "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
-          "The threat actor cloned all the repositories in the company's GitHub organization."
-        ]
-      },
-      {
-        "source": "T1567",
-        "target": "T1610",
-        "source_step": 8,
-        "target_step": 9,
-        "source_technique_name": "Exfiltration Over Web Service",
-        "target_technique_name": "Deploy Container",
-        "sources": [
-          "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
-        ],
-        "evidence_quotes": [
-          "The threat actor cloned all the repositories in the company's GitHub organization.",
-          "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances)."
-        ]
-      },
-      {
-        "source": "T1610",
         "target": "T1496",
         "source_step": 9,
         "target_step": 10,
-        "source_technique_name": "Deploy Container",
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://www.paloaltonetworks.com/content/dam/pan/en_US/assets/pdf/reports/unit42-cloud-threat-report-volume7.pdf"
         ],
         "evidence_quotes": [
-          "The threat actor used infrastructure as code (IaC) service CloudFormation to deploy resources needed for performing cryptojacking (e.g., VPC, subnet, firewalls, and VM instances).",
+          "A cloud access key hard-coded in a CI/CD automation script granted the attacker administrator permission.",
           "The threat actor deployed hundreds of GPU-based VM instances, costing the company $12,000 daily."
         ]
       },
@@ -642,17 +696,17 @@
   },
   "schema_version": "1.0",
   "incident_slug": "unit-42-2023-april",
-  "analyzed_at": "2026-04-15T21:13:34.952559+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 66250,
+  "analyzed_at": "2026-04-23T18:56:04.789419+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 129434,
   "incident_name": "Unit 42",
   "incident_date": "2023, April",
   "incident_root_cause": "SSRF via known CVE and IMDSv1",
-  "impact_type_raw": "Cryptojacking / DDoS Botnet",
+  "impact_type_raw": "Cryptojacking and Outbound DDoS (Resource Hijacking)",
   "aws_services_raw": [
     "EC2",
-    "IMDSv1",
     "IAM",
+    "IMDSv1",
     "CloudFormation",
     "VPC",
     "Security Groups"

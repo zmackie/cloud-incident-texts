@@ -1,353 +1,357 @@
 {
-  "tactics_used": [
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1591",
-          "technique_name": "Gather Victim Org Information",
-          "inferred": false,
-          "evidence_quote": "Through the threat actor's likely rigorous scanning and enumeration phase, they came to the conclusion that attacking a DevSecOps home computer would be their best bet at gaining access to LastPass data. The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1592",
-          "technique_name": "Gather Victim Host Information",
-          "inferred": false,
-          "evidence_quote": "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "inferred": false,
-          "evidence_quote": "the software engineer whose corporate laptop was compromised was using an outdated version of the 'Plex Media Server software'. This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1203",
-          "technique_name": "Exploitation for Client Execution",
-          "inferred": false,
-          "evidence_quote": "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1056.001",
-          "technique_name": "Input Capture: Keylogging",
-          "inferred": false,
-          "evidence_quote": "With this exploit, the threat actor was able to install a keylogger on the engineer's computer. Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
-          "inferred": false,
-          "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment.",
-          "validated": false
-        },
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": false,
-          "evidence_quote": "allowed them to impersonate the software engineer",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the threat actor accessed a shared cloud storage environment powered by AWS... By the time LastPass was alerted of this, the threat actor had already extracted customer and vault data.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "inferred": true,
-          "evidence_quote": "Rather than attempting to steal lower-level credentials and escalating privileges, gaining access to a DevSecOps engineer's credentials would allow for immediate access to the data they were looking for.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "inferred": false,
-          "evidence_quote": "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1083",
-          "technique_name": "File and Directory Discovery",
-          "inferred": true,
-          "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
-          "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "inferred": false,
-          "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "inferred": true,
-          "evidence_quote": "Most of the highly sensitive customer data is compromised, excluding the master passwords of users.",
-          "validated": true
-        }
-      ]
-    }
-  ],
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1591",
-      "technique_name": "Gather Victim Org Information",
-      "description": "Threat actor conducted reconnaissance to identify high-value targets within LastPass, determining that four senior DevSecOps engineers had privileged access to the corporate vault containing decryption keys.",
-      "evidence_quote": "The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
-      "aws_services_involved": [],
+      "technique_id": "T1590",
+      "technique_name": "Gather Victim Network Information",
+      "description": "Threat actor conducted scanning and reconnaissance of LastPass infrastructure, identifying four DevSecOps engineers with access to decryption keys as optimal targets.",
+      "event_time": "2022-08",
+      "event_time_precision": "month",
+      "evidence_quote": "Through the threat actor's likely rigorous scanning and enumeration phase, they came to the conclusion that attacking a DevSecOps home computer would be their best bet",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
       "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1592",
-      "technique_name": "Gather Victim Host Information",
-      "description": "Attacker identified that a targeted DevSecOps engineer was running a vulnerable, unpatched version of Plex Media Server (CVE-2020-5741) on their personal home computer.",
-      "evidence_quote": "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it.",
-      "aws_services_involved": [],
+      "technique_id": "T1592.002",
+      "technique_name": "Gather Victim Host Information: Software",
+      "description": "Attacker identified that a DevSecOps engineer's home computer ran a vulnerable version of Plex Media Server (CVE-2020-5741).",
+      "evidence_quote": "third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 3,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited CVE-2020-5741 in the unpatched Plex Media Server running on the DevSecOps engineer's home computer to achieve remote code execution.",
-      "evidence_quote": "the software engineer whose corporate laptop was compromised was using an outdated version of the 'Plex Media Server software'. This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit.",
-      "aws_services_involved": [],
+      "description": "Exploited CVE-2020-5741 in Plex Media Server on the engineer's home computer to achieve remote code execution.",
+      "event_time": "2022-08-08",
+      "event_time_precision": "day",
+      "evidence_quote": "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_02.clean.md#c046",
+          "source_file": "link_02.clean.md",
+          "char_start": 28270,
+          "char_end": 30576,
+          "quote": "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit"
+        },
+        {
+          "chunk_id": "link_02.md#c045",
+          "source_file": "link_02.md",
+          "char_start": 28150,
+          "char_end": 30456,
+          "quote": "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit"
+        }
       ],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1203",
-      "technique_name": "Exploitation for Client Execution",
-      "description": "Remote code execution via the Plex vulnerability was used to install a keylogger on the engineer's personal/corporate machine.",
-      "evidence_quote": "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device.",
-      "aws_services_involved": [],
+      "technique_id": "T1056.001",
+      "technique_name": "Input Capture: Keylogging",
+      "description": "Installed a keylogger on the DevSecOps engineer's home computer to capture credentials.",
+      "event_time": "2022-08-08",
+      "event_time_precision": "day",
+      "evidence_quote": "the threat actor was able to install a keylogger on the engineer's computer",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
       "validated": false
     },
     {
       "step": 5,
-      "technique_id": "T1056.001",
-      "technique_name": "Input Capture: Keylogging",
-      "description": "The installed keylogger captured the DevSecOps engineer's master password as it was typed, even after MFA was satisfied, compromising cloud vault credentials.",
-      "evidence_quote": "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
-      "aws_services_involved": [],
+      "technique_id": "T1111",
+      "technique_name": "Multi-Factor Authentication Interception",
+      "description": "Captured the engineer's master password after MFA authentication via the keylogger, enabling access to the corporate vault.",
+      "evidence_quote": "they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
-        "https://arxiv.org/pdf/2502.04287",
-        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Using the stolen credentials, the attacker authenticated to LastPass's cloud-based development environment as the compromised engineer, bypassing MFA.",
-      "evidence_quote": "an unidentified person or group had stolen the engineer's credentials to access this environment",
-      "aws_services_involved": [
-        "AWS"
-      ],
+      "technique_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "description": "Using stolen master password, accessed the encrypted corporate (LastPass) vault to retrieve additional credentials and decryption keys.",
+      "evidence_quote": "With the DevSecOps engineer's credentials secured, access to the encrypted corporate vault was easy",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "The attacker used a third-party VPN service to mask their origin and bypass intrusion detection systems while impersonating the engineer in the cloud environment.",
-      "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer.",
-      "aws_services_involved": [],
+      "technique_id": "T1572",
+      "technique_name": "Protocol Tunneling",
+      "description": "Used a third-party VPN service to mask origin and impersonate the engineer, bypassing intrusion detection.",
+      "evidence_quote": "bypass intrusion detection systems thanks to the use of a third-party VPN service",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_02.clean.md#c031",
+          "source_file": "link_02.clean.md",
+          "char_start": 13830,
+          "char_end": 15514,
+          "quote": "bypass intrusion detection systems thanks to the use of a third-party VPN service"
+        },
+        {
+          "chunk_id": "link_02.md#c030",
+          "source_file": "link_02.md",
+          "char_start": 13710,
+          "char_end": 15394,
+          "quote": "bypass intrusion detection systems thanks to the use of a third-party VPN service"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 8,
-      "technique_id": "T1213",
-      "technique_name": "Data from Information Repositories",
-      "description": "From the development environment, the attacker exfiltrated fourteen source code repositories, including cleartext embedded credentials, digital certificates, API keys, and encrypted production credentials.",
-      "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment... some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-      "aws_services_involved": [
-        "AWS"
-      ],
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Logged into the cloud-based development environment impersonating the software engineer using stolen IAM credentials.",
+      "event_time": "2022-08-12",
+      "event_time_precision": "day",
+      "evidence_quote": "allowed them to impersonate the software engineer",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
-        "https://arxiv.org/pdf/2502.04287",
-        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_02.clean.md#c031",
+          "source_file": "link_02.clean.md",
+          "char_start": 13830,
+          "char_end": 15514,
+          "quote": "allowed them to impersonate the software engineer"
+        },
+        {
+          "chunk_id": "link_02.md#c030",
+          "source_file": "link_02.md",
+          "char_start": 13710,
+          "char_end": 15394,
+          "quote": "allowed them to impersonate the software engineer"
+        }
       ],
       "validated": true
     },
     {
       "step": 9,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attacker harvested cleartext embedded credentials and API keys found within the exfiltrated source code repositories, enabling further lateral movement toward production infrastructure.",
-      "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-      "aws_services_involved": [],
+      "technique_id": "T1213.003",
+      "technique_name": "Data from Information Repositories: Code Repositories",
+      "description": "Exfiltrated fourteen source code repositories from the cloud-based development environment containing cleartext embedded credentials, digital certificates, and encrypted production credentials.",
+      "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 10,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Using credentials obtained from the development environment, the attacker conducted enumeration of LastPass AWS S3 storage buckets to identify valuable backup and production data targets.",
-      "evidence_quote": "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets.",
-      "aws_services_involved": [
-        "Amazon S3",
-        "AWS"
-      ],
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Harvested cleartext embedded credentials and encrypted credentials used for production backup capabilities from stolen source code.",
+      "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup",
+      "ordering_confidence": 0.85,
       "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
         "https://arxiv.org/pdf/2502.04287"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 11,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attacker copied five BLOB database shards and then accessed a third-party cloud storage service containing archived backups of LastPass production data, exfiltrating encrypted password vaults, MFA database backups, and broad customer PII.",
-      "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data. Most of the highly sensitive customer data is compromised.",
-      "aws_services_involved": [
-        "Amazon S3",
-        "AWS GuardDuty"
-      ],
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Second incident: attacker leveraged stolen data to target another senior DevOps engineer and obtain AWS credentials/decryption keys for production backups.",
+      "event_time": "2022-08-12",
+      "event_time_precision": "day",
+      "evidence_quote": "The second incident against Lastpass occurs (8/12/2022-10/26/2022)",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
-        "https://arxiv.org/pdf/2502.04287",
-        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_02.clean.md#c017",
+          "source_file": "link_02.clean.md",
+          "char_start": 11184,
+          "char_end": 11258,
+          "quote": "The second incident against Lastpass occurs (8/12/2022-10/26/2022)"
+        },
+        {
+          "chunk_id": "link_02.md#c016",
+          "source_file": "link_02.md",
+          "char_start": 11064,
+          "char_end": 11138,
+          "quote": "The second incident against Lastpass occurs (8/12/2022-10/26/2022)"
+        }
       ],
       "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Engaged in new reconnaissance and enumeration of LastPass AWS S3 storage buckets.",
+      "event_time": "2022-10-26",
+      "event_time_precision": "day",
+      "evidence_quote": "engaged in a new series of reconnaissance, enumeration, and exfiltration activities, which involved LastPass' AWS S3 storage buckets",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Accessed AWS S3 buckets and third-party cloud storage containing archived backups of LastPass production data, including customer vault backups and customer PII.",
+      "event_time": "2022-09-08",
+      "event_time_precision": "day",
+      "evidence_quote": "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_02.clean.md#c026",
+          "source_file": "link_02.clean.md",
+          "char_start": 12850,
+          "char_end": 13117,
+          "quote": "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data"
+        },
+        {
+          "chunk_id": "link_02.md#c025",
+          "source_file": "link_02.md",
+          "char_start": 12730,
+          "char_end": 12997,
+          "quote": "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1567.002",
+      "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
+      "description": "Exfiltrated five binary large object (BLOB) database shards and encrypted customer vault backups plus an encryption key.",
+      "event_time": "2022-09-08",
+      "event_time_precision": "day",
+      "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began.",
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+        "https://arxiv.org/pdf/2502.04287"
+      ],
+      "evidence_chunks": [],
+      "validated": false
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "AWS GuardDuty",
+    "AWS S3",
     "AWS IAM",
+    "AWS GuardDuty",
     "AWS KMS"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.9,
-  "initial_access_vector": "Exploitation of CVE-2020-5741 in unpatched Plex Media Server running on a senior DevSecOps engineer's personal home computer, enabling remote code execution",
-  "persistence_mechanism": "Attacker used stolen valid cloud credentials (captured via keylogger) with VPN masking to repeatedly access AWS-based development and production environments over multiple months, using compromised IAM user credentials to maintain persistent access",
-  "privilege_escalation": "Attacker directly targeted a senior DevSecOps engineer who already held privileged access to the corporate vault and decryption keys, bypassing the need for traditional privilege escalation. Credentials harvested from source code repositories then enabled access to production/backup infrastructure.",
+  "confidence_score": 0.85,
   "data_exfiltrated": true,
+  "initial_access_vector": "Exploited CVE-2020-5741 in outdated Plex Media Server on a senior DevSecOps engineer's home computer to achieve RCE, install a keylogger, and capture corporate vault master password post-MFA.",
+  "persistence_mechanism": "Impersonated valid DevSecOps engineer account via stolen IAM credentials and routed traffic through a third-party VPN to blend in with legitimate activity until credentials were reset.",
+  "privilege_escalation": "Targeted one of only four DevSecOps engineers with direct access to the corporate vault containing decryption keys, bypassing the need to escalate privileges; in second incident, obtained decryption keys from compromised engineer to decrypt production backups.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1591",
-        "technique_name": "Gather Victim Org Information",
-        "description": "Threat actor conducted reconnaissance to identify high-value targets within LastPass, determining that four senior DevSecOps engineers had privileged access to the corporate vault containing decryption keys.",
+        "technique_id": "T1590",
+        "technique_name": "Gather Victim Network Information",
+        "description": "Threat actor conducted scanning and reconnaissance of LastPass infrastructure, identifying four DevSecOps engineers with access to decryption keys as optimal targets.",
         "tactic_id": "",
-        "evidence_quote": "The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
+        "evidence_quote": "Through the threat actor's likely rigorous scanning and enumeration phase, they came to the conclusion that attacking a DevSecOps home computer would be their best bet",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
       },
       {
         "step": 2,
-        "technique_id": "T1592",
-        "technique_name": "Gather Victim Host Information",
-        "description": "Attacker identified that a targeted DevSecOps engineer was running a vulnerable, unpatched version of Plex Media Server (CVE-2020-5741) on their personal home computer.",
+        "technique_id": "T1592.002",
+        "technique_name": "Gather Victim Host Information: Software",
+        "description": "Attacker identified that a DevSecOps engineer's home computer ran a vulnerable version of Plex Media Server (CVE-2020-5741).",
         "tactic_id": "",
-        "evidence_quote": "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it.",
+        "evidence_quote": "third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
@@ -356,88 +360,95 @@
         "step": 3,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited CVE-2020-5741 in the unpatched Plex Media Server running on the DevSecOps engineer's home computer to achieve remote code execution.",
+        "description": "Exploited CVE-2020-5741 in Plex Media Server on the engineer's home computer to achieve remote code execution.",
         "tactic_id": "TA0001",
-        "evidence_quote": "the software engineer whose corporate laptop was compromised was using an outdated version of the 'Plex Media Server software'. This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit.",
+        "evidence_quote": "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
       },
       {
         "step": 4,
-        "technique_id": "T1203",
-        "technique_name": "Exploitation for Client Execution",
-        "description": "Remote code execution via the Plex vulnerability was used to install a keylogger on the engineer's personal/corporate machine.",
+        "technique_id": "T1056.001",
+        "technique_name": "Input Capture: Keylogging",
+        "description": "Installed a keylogger on the DevSecOps engineer's home computer to capture credentials.",
         "tactic_id": "",
-        "evidence_quote": "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device.",
+        "evidence_quote": "the threat actor was able to install a keylogger on the engineer's computer",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
       },
       {
         "step": 5,
-        "technique_id": "T1056.001",
-        "technique_name": "Input Capture: Keylogging",
-        "description": "The installed keylogger captured the DevSecOps engineer's master password as it was typed, even after MFA was satisfied, compromising cloud vault credentials.",
+        "technique_id": "T1111",
+        "technique_name": "Multi-Factor Authentication Interception",
+        "description": "Captured the engineer's master password after MFA authentication via the keylogger, enabling access to the corporate vault.",
         "tactic_id": "",
-        "evidence_quote": "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
+        "evidence_quote": "they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication",
         "evidence_sources": [
-          "https://arxiv.org/pdf/2502.04287",
-          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
       },
       {
         "step": 6,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Using the stolen credentials, the attacker authenticated to LastPass's cloud-based development environment as the compromised engineer, bypassing MFA.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "an unidentified person or group had stolen the engineer's credentials to access this environment",
+        "technique_id": "T1555",
+        "technique_name": "Credentials from Password Stores",
+        "description": "Using stolen master password, accessed the encrypted corporate (LastPass) vault to retrieve additional credentials and decryption keys.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "With the DevSecOps engineer's credentials secured, access to the encrypted corporate vault was easy",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
-        "aws_services_involved": [
-          "AWS"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 7,
-        "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "The attacker used a third-party VPN service to mask their origin and bypass intrusion detection systems while impersonating the engineer in the cloud environment.",
+        "technique_id": "T1572",
+        "technique_name": "Protocol Tunneling",
+        "description": "Used a third-party VPN service to mask origin and impersonate the engineer, bypassing intrusion detection.",
         "tactic_id": "",
-        "evidence_quote": "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer.",
+        "evidence_quote": "bypass intrusion detection systems thanks to the use of a third-party VPN service",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
         "aws_services_involved": []
       },
       {
         "step": 8,
-        "technique_id": "T1213",
-        "technique_name": "Data from Information Repositories",
-        "description": "From the development environment, the attacker exfiltrated fourteen source code repositories, including cleartext embedded credentials, digital certificates, API keys, and encrypted production credentials.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment... some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Logged into the cloud-based development environment impersonating the software engineer using stolen IAM credentials.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "allowed them to impersonate the software engineer",
         "evidence_sources": [
-          "https://arxiv.org/pdf/2502.04287",
-          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
         ],
-        "aws_services_involved": [
-          "AWS"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 9,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "Attacker harvested cleartext embedded credentials and API keys found within the exfiltrated source code repositories, enabling further lateral movement toward production infrastructure.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
+        "technique_id": "T1213.003",
+        "technique_name": "Code Repositories",
+        "description": "Exfiltrated fourteen source code repositories from the cloud-based development environment containing cleartext embedded credentials, digital certificates, and encrypted production credentials.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
@@ -445,191 +456,282 @@
       },
       {
         "step": 10,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "Using credentials obtained from the development environment, the attacker conducted enumeration of LastPass AWS S3 storage buckets to identify valuable backup and production data targets.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets.",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Harvested cleartext embedded credentials and encrypted credentials used for production backup capabilities from stolen source code.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup",
         "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
           "https://arxiv.org/pdf/2502.04287"
         ],
-        "aws_services_involved": [
-          "Amazon S3",
-          "AWS"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 11,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Second incident: attacker leveraged stolen data to target another senior DevOps engineer and obtain AWS credentials/decryption keys for production backups.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "The second incident against Lastpass occurs (8/12/2022-10/26/2022)",
+        "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Engaged in new reconnaissance and enumeration of LastPass AWS S3 storage buckets.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "engaged in a new series of reconnaissance, enumeration, and exfiltration activities, which involved LastPass' AWS S3 storage buckets",
+        "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Attacker copied five BLOB database shards and then accessed a third-party cloud storage service containing archived backups of LastPass production data, exfiltrating encrypted password vaults, MFA database backups, and broad customer PII.",
+        "description": "Accessed AWS S3 buckets and third-party cloud storage containing archived backups of LastPass production data, including customer vault backups and customer PII.",
         "tactic_id": "TA0009",
-        "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data. Most of the highly sensitive customer data is compromised.",
+        "evidence_quote": "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data",
         "evidence_sources": [
-          "https://arxiv.org/pdf/2502.04287",
-          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
         ],
-        "aws_services_involved": [
-          "Amazon S3",
-          "AWS GuardDuty"
-        ]
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1567.002",
+        "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
+        "description": "Exfiltrated five binary large object (BLOB) database shards and encrypted customer vault backups plus an encryption key.",
+        "tactic_id": "",
+        "evidence_quote": "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began.",
+        "evidence_sources": [
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack",
+          "https://arxiv.org/pdf/2502.04287"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1591",
-        "target": "T1592",
+        "source": "T1590",
+        "target": "T1592.002",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Gather Victim Org Information",
-        "target_technique_name": "Gather Victim Host Information",
+        "source_technique_name": "Gather Victim Network Information",
+        "target_technique_name": "Gather Victim Host Information: Software",
         "sources": [
-          "https://arxiv.org/pdf/2502.04287"
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "The threat actor found that there were four DevSecOps engineers who had access to the corporate vault containing decryption keys.",
-          "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it."
+          "Through the threat actor's likely rigorous scanning and enumeration phase, they came to the conclusion that attacking a DevSecOps home computer would be their best bet",
+          "third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability"
         ]
       },
       {
-        "source": "T1592",
+        "source": "T1592.002",
         "target": "T1190",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Gather Victim Host Information",
+        "source_technique_name": "Gather Victim Host Information: Software",
         "target_technique_name": "Exploit Public-Facing Application",
         "sources": [
-          "https://arxiv.org/pdf/2502.04287"
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "the threat actor found that third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability; once exploited, they would be able to remotely execute code on it.",
-          "the software engineer whose corporate laptop was compromised was using an outdated version of the 'Plex Media Server software'. This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit."
+          "third-party media software running on a DevSecOps engineer's home computer had a fatal vulnerability",
+          "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit"
         ]
       },
       {
         "source": "T1190",
-        "target": "T1203",
+        "target": "T1056.001",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Exploitation for Client Execution",
-        "sources": [
-          "https://arxiv.org/pdf/2502.04287"
-        ],
-        "evidence_quotes": [
-          "the software engineer whose corporate laptop was compromised was using an outdated version of the 'Plex Media Server software'. This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit.",
-          "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device."
-        ]
-      },
-      {
-        "source": "T1203",
-        "target": "T1056.001",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Exploitation for Client Execution",
         "target_technique_name": "Input Capture: Keylogging",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "The vulnerabilities in a third-party media app on the engineer's computer allowed for remote code execution, which enabled the attacker to install a keylogger on their device.",
-          "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication."
+          "This version of the Plex Media Server software had a known vulnerability, CVE-2020-5741, that the threat actor was able to exploit",
+          "the threat actor was able to install a keylogger on the engineer's computer"
         ]
       },
       {
         "source": "T1056.001",
-        "target": "T1078.004",
+        "target": "T1111",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Input Capture: Keylogging",
+        "target_technique_name": "Multi-Factor Authentication Interception",
+        "sources": [
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        ],
+        "evidence_quotes": [
+          "the threat actor was able to install a keylogger on the engineer's computer",
+          "they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication"
+        ]
+      },
+      {
+        "source": "T1111",
+        "target": "T1555",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Input Capture: Keylogging",
+        "source_technique_name": "Multi-Factor Authentication Interception",
+        "target_technique_name": "Credentials from Password Stores",
+        "sources": [
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        ],
+        "evidence_quotes": [
+          "they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication",
+          "With the DevSecOps engineer's credentials secured, access to the encrypted corporate vault was easy"
+        ]
+      },
+      {
+        "source": "T1555",
+        "target": "T1572",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Credentials from Password Stores",
+        "target_technique_name": "Protocol Tunneling",
+        "sources": [
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        ],
+        "evidence_quotes": [
+          "With the DevSecOps engineer's credentials secured, access to the encrypted corporate vault was easy",
+          "bypass intrusion detection systems thanks to the use of a third-party VPN service"
+        ]
+      },
+      {
+        "source": "T1572",
+        "target": "T1078.004",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Protocol Tunneling",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "Using the keylogger, they were able to capture the engineer's master password as it was entered after logging in with multifactor authentication.",
-          "an unidentified person or group had stolen the engineer's credentials to access this environment"
+          "bypass intrusion detection systems thanks to the use of a third-party VPN service",
+          "allowed them to impersonate the software engineer"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1090.003",
-        "source_step": 6,
-        "target_step": 7,
+        "target": "T1213.003",
+        "source_step": 8,
+        "target_step": 9,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Proxy: Multi-hop Proxy",
-        "sources": [
-          "https://arxiv.org/pdf/2502.04287"
-        ],
-        "evidence_quotes": [
-          "an unidentified person or group had stolen the engineer's credentials to access this environment",
-          "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer."
-        ]
-      },
-      {
-        "source": "T1090.003",
-        "target": "T1213",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Proxy: Multi-hop Proxy",
-        "target_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Code Repositories",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "the threat actor was able to keep their identity unknown and bypass intrusion detection systems thanks to the use of a third-party VPN service. This hid the origin of their activity when accessing the cloud-based development environment and allowed them to impersonate the software engineer.",
-          "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment... some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup."
+          "allowed them to impersonate the software engineer",
+          "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment"
         ]
       },
       {
-        "source": "T1213",
+        "source": "T1213.003",
         "target": "T1552.001",
-        "source_step": 8,
-        "target_step": 9,
-        "source_technique_name": "Data from Information Repositories",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Code Repositories",
         "target_technique_name": "Credentials In Files",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment... some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-          "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup."
+          "the threat actor exfiltrated fourteen code repositories from the cloud-based development environment",
+          "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup"
         ]
       },
       {
         "source": "T1552.001",
-        "target": "T1619",
-        "source_step": 9,
-        "target_step": 10,
+        "target": "T1078.004",
+        "source_step": 10,
+        "target_step": 11,
         "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup.",
-          "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets."
+          "some of these source code repositories included cleartext embedded credentials, stored digital certificates related to our development environments, and some encrypted credentials used for production capabilities such as backup",
+          "The second incident against Lastpass occurs (8/12/2022-10/26/2022)"
         ]
       },
       {
-        "source": "T1619",
+        "source": "T1078.004",
+        "target": "T1580",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        ],
+        "evidence_quotes": [
+          "The second incident against Lastpass occurs (8/12/2022-10/26/2022)",
+          "engaged in a new series of reconnaissance, enumeration, and exfiltration activities, which involved LastPass' AWS S3 storage buckets"
+        ]
+      },
+      {
+        "source": "T1580",
         "target": "T1530",
-        "source_step": 10,
-        "target_step": 11,
-        "source_technique_name": "Cloud Storage Object Discovery",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://arxiv.org/pdf/2502.04287",
           "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
         ],
         "evidence_quotes": [
-          "The threat 'engaged in a new series of reconnaissance, enumeration, and exfiltration activities,' which involved LastPass' AWS S3 storage buckets.",
-          "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began... LastPass announced that the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data. Most of the highly sensitive customer data is compromised."
+          "engaged in a new series of reconnaissance, enumeration, and exfiltration activities, which involved LastPass' AWS S3 storage buckets",
+          "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1567.002",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
+        "sources": [
+          "https://arxiv.org/pdf/2502.04287",
+          "https://support.lastpass.com/help/incident-2-additional-details-of-the-attack"
+        ],
+        "evidence_quotes": [
+          "the threat gained access to a third-party cloud-based storage service used to store archived backups of LastPass production data",
+          "The threat used their access to start copying 'five binary large objects database shards'. The exfiltration of the database backups began."
         ]
       }
     ]
@@ -640,7 +742,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "lastpass-2022-october",
-  "analyzed_at": "2026-04-15T20:59:10.175897+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 39932
+  "analyzed_at": "2026-04-23T18:47:34.719809+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 79322
 }

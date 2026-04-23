@@ -5,17 +5,10 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
-          "inferred": true,
-          "evidence_quote": "unauthorized access to our systems by a malicious third party",
-          "validated": true
-        },
-        {
           "technique_id": "T1199",
           "technique_name": "Trusted Relationship",
-          "inferred": false,
-          "evidence_quote": "Uber suffers new data breach after attack on vendor...Uber referred us to a Teqtivity data breach notification...which explains that a threat actor gained access to a Teqtivity AWS backup server that stores data for its customers.",
+          "inferred": true,
+          "evidence_quote": "Uber has shared that threat actors stole its data in a recent breach on Teqtivity, which it uses for asset management and tracking services.",
           "validated": true
         }
       ]
@@ -28,7 +21,7 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": false,
-          "evidence_quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers.",
+          "evidence_quote": "a threat actor gained access to a Teqtivity AWS backup server that stores data for its customers.",
           "validated": true
         }
       ]
@@ -51,24 +44,11 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1565",
-          "technique_name": "Data Manipulation",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
           "inferred": true,
-          "evidence_quote": null,
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1589",
-          "technique_name": "Gather Victim Identity Information",
-          "inferred": false,
-          "evidence_quote": "One of the documents seen by BleepingComputer includes email addresses and Windows Active Directory information for over 77,000 Uber employees.",
-          "validated": false
+          "evidence_quote": "began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum known for publishing data breaches.",
+          "validated": true
         }
       ]
     }
@@ -78,142 +58,197 @@
       "step": 1,
       "technique_id": "T1199",
       "technique_name": "Trusted Relationship",
-      "description": "Attacker targeted Teqtivity, a trusted third-party IT asset management vendor used by Uber, to gain indirect access to Uber's data without directly compromising Uber's own infrastructure.",
-      "evidence_quote": "We believe these files are related to an incident at a third-party vendor and are unrelated to our security incident in September.",
-      "evidence_sources": [
-        "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
+      "description": "Threat actor gained unauthorized access to Teqtivity's systems, a trusted third-party vendor providing asset management services to Uber and other customers.",
+      "aws_services_involved": [
+        "AWS"
       ],
-      "aws_services_involved": [],
+      "evidence_quote": "customer data that was compromised due to unauthorized access to our systems by a malicious third party",
+      "evidence_sources": [
+        "https://www.teqtivity.com/breach-notification-statement"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 292,
+          "char_end": 561,
+          "quote": "customer data that was compromised due to unauthorized access to our systems by a malicious third party"
+        },
+        {
+          "chunk_id": "link_00.md#c023",
+          "source_file": "link_00.md",
+          "char_start": 8250,
+          "char_end": 8519,
+          "quote": "customer data that was compromised due to unauthorized access to our systems by a malicious third party"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker gained unauthorized access to Teqtivity's systems through an unknown initial access vector (root cause undisclosed); compromise of the Teqtivity environment preceded access to the AWS backup server.",
-      "evidence_quote": "unauthorized access to our systems by a malicious third party",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed a Teqtivity AWS backup server containing code and customer data files including device information and user information.",
+      "aws_services_involved": [
+        "AWS",
+        "EC2/S3 backup"
+      ],
+      "evidence_quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers.",
       "evidence_sources": [
         "https://www.teqtivity.com/breach-notification-statement"
       ],
-      "aws_services_involved": [],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 292,
+          "char_end": 561,
+          "quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers."
+        },
+        {
+          "chunk_id": "link_00.md#c023",
+          "source_file": "link_00.md",
+          "char_start": 8250,
+          "char_end": 8519,
+          "quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attacker accessed Teqtivity's AWS backup server, which housed source code and customer data files including device and user information for Teqtivity customers such as Uber.",
-      "evidence_quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers.",
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Attacker exfiltrated source code, IT asset management reports, data destruction reports, Windows domain login names, and email addresses for over 77,000 Uber employees.",
+      "aws_services_involved": [
+        "AWS"
+      ],
+      "evidence_quote": "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses",
       "evidence_sources": [
-        "https://www.teqtivity.com/breach-notification-statement",
         "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
       ],
-      "aws_services_involved": [
-        "AWS Backup",
-        "Amazon S3"
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c014",
+          "source_file": "link_01.clean.md",
+          "char_start": 2348,
+          "char_end": 2566,
+          "quote": "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses"
+        },
+        {
+          "chunk_id": "link_01.md#c038",
+          "source_file": "link_01.md",
+          "char_start": 14463,
+          "char_end": 14681,
+          "quote": "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Attacker exfiltrated stolen data including source code archives, IT asset management reports, Windows domain login names, email addresses, and corporate information from the AWS backup server.",
-      "evidence_quote": "BleepingComputer has been told that the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses, and other corporate information.",
-      "evidence_sources": [
-        "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
-      ],
-      "aws_services_involved": [
-        "AWS Backup"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1589",
-      "technique_name": "Gather Victim Identity Information",
-      "description": "Attacker published the stolen data on a public hacking forum under the alias 'UberLeaks', leaking email addresses and Windows Active Directory information for over 77,000 Uber employees, enabling future targeted phishing attacks.",
-      "evidence_quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum...One of the documents seen by BleepingComputer includes email addresses and Windows Active Directory information for over 77,000 Uber employees.",
-      "evidence_sources": [
-        "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
-      ],
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Threat actor 'UberLeaks' publicly leaked the stolen Uber/Uber Eats/Teqtivity data on a hacking forum known for data breaches.",
       "aws_services_involved": [],
-      "validated": false
+      "evidence_quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum",
+      "evidence_sources": [
+        "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c009",
+          "source_file": "link_01.clean.md",
+          "char_start": 1190,
+          "char_end": 1368,
+          "quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum"
+        },
+        {
+          "chunk_id": "link_01.md#c032",
+          "source_file": "link_01.md",
+          "char_start": 13009,
+          "char_end": 13187,
+          "quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     }
   ],
   "aws_services": [
     "AWS Backup",
-    "Amazon S3"
+    "S3 (inferred)",
+    "EC2 (inferred)"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.6,
+  "confidence_score": 0.5,
   "data_exfiltrated": true,
-  "initial_access_vector": "Unknown \u2014 Teqtivity disclosed unauthorized third-party access to their systems but did not publicly reveal the root cause or specific initial access method used.",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Unknown root cause; unauthorized third-party access to Teqtivity's AWS backup server. Affected downstream customer (Uber) via trusted third-party vendor relationship.",
+  "persistence_mechanism": "Not described",
+  "privilege_escalation": "Not described",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1199",
         "technique_name": "Trusted Relationship",
-        "description": "Attacker targeted Teqtivity, a trusted third-party IT asset management vendor used by Uber, to gain indirect access to Uber's data without directly compromising Uber's own infrastructure.",
+        "description": "Threat actor gained unauthorized access to Teqtivity's systems, a trusted third-party vendor providing asset management services to Uber and other customers.",
         "tactic_id": "TA0001",
-        "evidence_quote": "We believe these files are related to an incident at a third-party vendor and are unrelated to our security incident in September.",
-        "evidence_sources": [
-          "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 2,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker gained unauthorized access to Teqtivity's systems through an unknown initial access vector (root cause undisclosed); compromise of the Teqtivity environment preceded access to the AWS backup server.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "unauthorized access to our systems by a malicious third party",
+        "evidence_quote": "customer data that was compromised due to unauthorized access to our systems by a malicious third party",
         "evidence_sources": [
           "https://www.teqtivity.com/breach-notification-statement"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "AWS"
+        ]
       },
       {
-        "step": 3,
+        "step": 2,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Attacker accessed Teqtivity's AWS backup server, which housed source code and customer data files including device and user information for Teqtivity customers such as Uber.",
+        "description": "Attacker accessed a Teqtivity AWS backup server containing code and customer data files including device information and user information.",
         "tactic_id": "TA0009",
         "evidence_quote": "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers.",
         "evidence_sources": [
-          "https://www.teqtivity.com/breach-notification-statement",
+          "https://www.teqtivity.com/breach-notification-statement"
+        ],
+        "aws_services_involved": [
+          "AWS",
+          "EC2/S3 backup"
+        ]
+      },
+      {
+        "step": 3,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Attacker exfiltrated source code, IT asset management reports, data destruction reports, Windows domain login names, and email addresses for over 77,000 Uber employees.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses",
+        "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
         ],
         "aws_services_involved": [
-          "AWS Backup",
-          "Amazon S3"
+          "AWS"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Attacker exfiltrated stolen data including source code archives, IT asset management reports, Windows domain login names, email addresses, and corporate information from the AWS backup server.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "BleepingComputer has been told that the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses, and other corporate information.",
-        "evidence_sources": [
-          "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
-        ],
-        "aws_services_involved": [
-          "AWS Backup"
-        ]
-      },
-      {
-        "step": 5,
-        "technique_id": "T1589",
-        "technique_name": "Gather Victim Identity Information",
-        "description": "Attacker published the stolen data on a public hacking forum under the alias 'UberLeaks', leaking email addresses and Windows Active Directory information for over 77,000 Uber employees, enabling future targeted phishing attacks.",
-        "tactic_id": "",
-        "evidence_quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum...One of the documents seen by BleepingComputer includes email addresses and Windows Active Directory information for over 77,000 Uber employees.",
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Threat actor 'UberLeaks' publicly leaked the stolen Uber/Uber Eats/Teqtivity data on a hacking forum known for data breaches.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum",
         "evidence_sources": [
           "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
         ],
@@ -223,41 +258,24 @@
     "edges": [
       {
         "source": "T1199",
-        "target": "T1190",
+        "target": "T1530",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Trusted Relationship",
-        "target_technique_name": "Exploit Public-Facing Application",
-        "sources": [
-          "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/",
-          "https://www.teqtivity.com/breach-notification-statement"
-        ],
-        "evidence_quotes": [
-          "We believe these files are related to an incident at a third-party vendor and are unrelated to our security incident in September.",
-          "unauthorized access to our systems by a malicious third party"
-        ]
-      },
-      {
-        "source": "T1190",
-        "target": "T1530",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Exploit Public-Facing Application",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
-          "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/",
           "https://www.teqtivity.com/breach-notification-statement"
         ],
         "evidence_quotes": [
-          "unauthorized access to our systems by a malicious third party",
+          "customer data that was compromised due to unauthorized access to our systems by a malicious third party",
           "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers."
         ]
       },
       {
         "source": "T1530",
         "target": "T1537",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Data from Cloud Storage",
         "target_technique_name": "Transfer Data to Cloud Account",
         "sources": [
@@ -266,22 +284,22 @@
         ],
         "evidence_quotes": [
           "The third party was able to gain access to our Teqtivity AWS backup server that housed Teqtivity code and data files related to Teqtivity customers.",
-          "BleepingComputer has been told that the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses, and other corporate information."
+          "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses"
         ]
       },
       {
         "source": "T1537",
-        "target": "T1589",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1657",
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Transfer Data to Cloud Account",
-        "target_technique_name": "Gather Victim Identity Information",
+        "target_technique_name": "Financial Theft",
         "sources": [
           "https://www.bleepingcomputer.com/news/security/uber-suffers-new-data-breach-after-attack-on-vendor-info-leaked-online/"
         ],
         "evidence_quotes": [
-          "BleepingComputer has been told that the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses, and other corporate information.",
-          "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum...One of the documents seen by BleepingComputer includes email addresses and Windows Active Directory information for over 77,000 Uber employees."
+          "the newly leaked data consists of source code, IT asset management reports, data destruction reports, Windows domain login names and email addresses",
+          "a threat actor named 'UberLeaks' began leaking data they claimed was stolen from Uber and Uber Eats on a hacking forum"
         ]
       }
     ]
@@ -292,7 +310,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "teqtivity-uber-vendor-2022-december",
-  "analyzed_at": "2026-04-15T21:10:27.965560+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 43608
+  "analyzed_at": "2026-04-23T18:54:25.104963+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 51697
 }

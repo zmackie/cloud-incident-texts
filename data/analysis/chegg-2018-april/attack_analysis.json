@@ -7,34 +7,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
           "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "AWS access key that provided full administrative privileges over all data in the S3 databases ('AWS Root Credentials')",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
           "validated": true
         }
       ]
@@ -44,23 +19,23 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
           "inferred": true,
-          "evidence_quote": "failed to require employees and third-party contractors that access the S3 databases to use distinct access keys, instead permitting employees and contractors to use a single AWS access key",
+          "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "inferred": true,
-          "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "exfiltrated a database containing personal information of approximately 40 million users",
           "validated": true
         }
       ]
@@ -70,9 +45,9 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": false,
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
           "evidence_quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform",
           "validated": true
         }
@@ -84,43 +59,117 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Former contractor leveraged a widely shared AWS Root Credential \u2014 the same single key distributed to all employees and contractors \u2014 to authenticate to Chegg's AWS environment. No MFA was required and the key had never been rotated.",
-      "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
+      "description": "A former contractor used a shared AWS Root Credential (which had not been rotated after their departure) to authenticate to Chegg's AWS environment.",
+      "event_time": "2018-04",
+      "event_time_precision": "month",
       "aws_services_involved": [
-        "AWS IAM"
+        "AWS IAM",
+        "AWS Root Account"
       ],
+      "evidence_quote": "In or around April 2018, a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential.",
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1619",
-      "technique_name": "Cloud Storage Object Discovery",
-      "description": "Using the root credential with full administrative privileges, the former contractor identified and located the S3 bucket(s) containing the sensitive user database of approximately 40 million records.",
-      "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Using the root credential's full administrative privileges, the contractor accessed an S3 bucket containing personal information of approximately 40 million users.",
+      "event_time": "2018-04",
+      "event_time_precision": "month",
       "aws_services_involved": [
         "Amazon S3"
       ],
+      "evidence_quote": "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users",
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c025",
+          "source_file": "link_00.clean.md",
+          "char_start": 6036,
+          "char_end": 7509,
+          "quote": "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users"
+        },
+        {
+          "chunk_id": "link_00.md#c026",
+          "source_file": "link_00.md",
+          "char_start": 6079,
+          "char_end": 7552,
+          "quote": "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The former contractor exfiltrated the entire user database from the S3 bucket, including ~40 million users' email addresses, names, passwords (MD5-hashed), and sensitive scholarship search data (religion, sexual orientation, disability status, etc.) stored in plain text.",
-      "evidence_quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform",
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "The contractor exfiltrated the S3 user database containing names, email addresses, passwords (MD5-hashed), dates of birth, and Scholarship Search Data.",
+      "event_time": "2018-04",
+      "event_time_precision": "month",
       "aws_services_involved": [
         "Amazon S3"
       ],
+      "evidence_quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform",
       "evidence_sources": [
         "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c025",
+          "source_file": "link_00.clean.md",
+          "char_start": 6036,
+          "char_end": 7509,
+          "quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform"
+        },
+        {
+          "chunk_id": "link_00.md#c026",
+          "source_file": "link_00.md",
+          "char_start": 6079,
+          "char_end": 7552,
+          "quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform"
+        }
+      ],
       "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1110.002",
+      "technique_name": "Brute Force: Password Cracking",
+      "description": "Threat actors later cracked the weak MD5 password hashes; approximately 25 million plaintext passwords appeared in an online forum in September 2018.",
+      "event_time": "2018-09",
+      "event_time_precision": "month",
+      "aws_services_involved": [],
+      "evidence_quote": "approximately 25 million of the exfiltrated passwords in plain text, meaning the threat actors had cracked the hash for those passwords",
+      "evidence_sources": [
+        "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c026",
+          "source_file": "link_00.clean.md",
+          "char_start": 7512,
+          "char_end": 7980,
+          "quote": "approximately 25 million of the exfiltrated passwords in plain text, meaning the threat actors had cracked the hash for those passwords"
+        },
+        {
+          "chunk_id": "link_00.md#c027",
+          "source_file": "link_00.md",
+          "char_start": 7555,
+          "char_end": 8023,
+          "quote": "approximately 25 million of the exfiltrated passwords in plain text, meaning the threat actors had cracked the hash for those passwords"
+        }
+      ],
+      "validated": false
     }
   ],
   "aws_services": [
@@ -128,34 +177,35 @@
     "AWS IAM"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.92,
-  "initial_access_vector": "Former contractor used a broadly shared, single AWS Root Credential (access key) that Chegg distributed to all employees and contractors, with no MFA, no key rotation, and no per-user access controls.",
-  "persistence_mechanism": "Not applicable \u2014 the shared root credential itself served as permanent standing access; no additional persistence mechanism was needed or described.",
-  "privilege_escalation": "No escalation required \u2014 the shared credential already carried full administrative (root) privileges over all S3 data: \"a single AWS access key that provided full administrative privileges over all data in the S3 databases.\"",
+  "confidence_score": 0.8,
   "data_exfiltrated": true,
+  "initial_access_vector": "Former contractor reused a shared AWS Root Credential that provided full administrative access to S3; credentials were never rotated after contractor departure and MFA was not required.",
+  "persistence_mechanism": "Not required - shared, non-rotated AWS root access key continued to work after the contractor's engagement ended.",
+  "privilege_escalation": "None needed - the shared credential was the AWS root user with full administrative privileges over all S3 data.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Former contractor leveraged a widely shared AWS Root Credential \u2014 the same single key distributed to all employees and contractors \u2014 to authenticate to Chegg's AWS environment. No MFA was required and the key had never been rotated.",
+        "description": "A former contractor used a shared AWS Root Credential (which had not been rotated after their departure) to authenticate to Chegg's AWS environment.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
+        "evidence_quote": "In or around April 2018, a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential.",
         "evidence_sources": [
           "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "AWS IAM",
+          "AWS Root Account"
         ]
       },
       {
         "step": 2,
-        "technique_id": "T1619",
-        "technique_name": "Cloud Storage Object Discovery",
-        "description": "Using the root credential with full administrative privileges, the former contractor identified and located the S3 bucket(s) containing the sensitive user database of approximately 40 million records.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Using the root credential's full administrative privileges, the contractor accessed an S3 bucket containing personal information of approximately 40 million users.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users",
         "evidence_sources": [
           "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
         ],
@@ -165,10 +215,10 @@
       },
       {
         "step": 3,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "The former contractor exfiltrated the entire user database from the S3 bucket, including ~40 million users' email addresses, names, passwords (MD5-hashed), and sensitive scholarship search data (religion, sexual orientation, disability status, etc.) stored in plain text.",
-        "tactic_id": "TA0009",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "The contractor exfiltrated the S3 user database containing names, email addresses, passwords (MD5-hashed), dates of birth, and Scholarship Search Data.",
+        "tactic_id": "TA0010",
         "evidence_quote": "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform",
         "evidence_sources": [
           "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
@@ -176,37 +226,64 @@
         "aws_services_involved": [
           "Amazon S3"
         ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1110.002",
+        "technique_name": "Brute Force: Password Cracking",
+        "description": "Threat actors later cracked the weak MD5 password hashes; approximately 25 million plaintext passwords appeared in an online forum in September 2018.",
+        "tactic_id": "",
+        "evidence_quote": "approximately 25 million of the exfiltrated passwords in plain text, meaning the threat actors had cracked the hash for those passwords",
+        "evidence_sources": [
+          "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
       {
         "source": "T1078.004",
-        "target": "T1619",
+        "target": "T1530",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Storage Object Discovery",
-        "sources": [
-          "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
-        ],
-        "evidence_quotes": [
-          "Chegg shared the AWS Root Credentials among its employees and even outside contractors",
-          "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential"
-        ]
-      },
-      {
-        "source": "T1619",
-        "target": "T1530",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Cloud Storage Object Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
         ],
         "evidence_quotes": [
-          "a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential",
+          "In or around April 2018, a former contractor accessed one of Chegg's S3 databases using an AWS Root Credential.",
+          "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users"
+        ]
+      },
+      {
+        "source": "T1530",
+        "target": "T1567",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+        ],
+        "evidence_quotes": [
+          "Using the AWS Root Credentials, the former contractor exfiltrated a database containing personal information of approximately 40 million users",
           "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform"
+        ]
+      },
+      {
+        "source": "T1567",
+        "target": "T1110.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Exfiltration Over Web Service",
+        "target_technique_name": "Brute Force: Password Cracking",
+        "sources": [
+          "https://www.ftc.gov/system/files/ftc_gov/pdf/2023151-Chegg-Complaint.pdf"
+        ],
+        "evidence_quotes": [
+          "the former contractor exfiltrated a database containing personal information of approximately 40 million users of the Chegg platform",
+          "approximately 25 million of the exfiltrated passwords in plain text, meaning the threat actors had cracked the hash for those passwords"
         ]
       }
     ]
@@ -217,7 +294,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "chegg-2018-april",
-  "analyzed_at": "2026-04-15T20:46:27.600946+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 15637
+  "analyzed_at": "2026-04-23T18:38:57.809912+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 30933
 }

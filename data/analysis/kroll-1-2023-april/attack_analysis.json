@@ -1,4 +1,14 @@
 {
+  "confidence_score": 0.4,
+  "data_exfiltrated": false,
+  "impact_type": "DNS/Email Redirection (Account Takeover)",
+  "initial_access_vector": "Compromise of a third-party company with over-permissioned federated access to the client's AWS environment",
+  "persistence_mechanism": "Leveraging the compromised federated user account of the third party",
+  "privilege_escalation": "None explicit \u2014 third party already had over-permissioned access that exceeded intended scope",
+  "aws_services": [
+    "IAM (Federated Identity)",
+    "Route 53"
+  ],
   "tactics_used": [
     {
       "tactic_id": "TA0001",
@@ -8,20 +18,21 @@
           "technique_id": "T1199",
           "technique_name": "Trusted Relationship",
           "inferred": false,
-          "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access which meant that misuse of the account allowed for broader access than intended or needed.",
+          "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access.",
+          "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment",
           "validated": true
         }
       ]
@@ -31,10 +42,11 @@
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": true,
-          "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access.",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "leveraged by the threat actor in order to move to the other environment and start leveraging access",
           "validated": true
         }
       ]
@@ -44,11 +56,19 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1565.001",
-          "technique_name": "Data Manipulation: Stored Data Manipulation",
-          "inferred": false,
-          "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email.",
+          "technique_id": "T1565.002",
+          "technique_name": "Data Manipulation: Transmitted Data Manipulation",
+          "subtechnique_id": "T1565.002",
+          "inferred": true,
+          "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email",
           "validated": false
+        },
+        {
+          "technique_id": "T1491",
+          "technique_name": "Defacement",
+          "inferred": true,
+          "evidence_quote": "changing the domain name system to redirect the client organization's website",
+          "validated": true
         }
       ]
     }
@@ -58,67 +78,96 @@
       "step": 1,
       "technique_id": "T1199",
       "technique_name": "Trusted Relationship",
-      "description": "A third-party company with federated access to the client's AWS environment was compromised by the threat actor, providing an initial foothold via the trusted partner relationship.",
-      "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access which meant that misuse of the account allowed for broader access than intended or needed.",
+      "description": "Threat actor compromised a third-party company that had federated, over-permissioned access to the client's AWS environment.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access",
       "evidence_sources": [
         "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c020",
+          "source_file": "link_00.clean.md",
+          "char_start": 6854,
+          "char_end": 7481,
+          "quote": "a company working with our client organization was compromised. This third party had over-permissioned access"
+        },
+        {
+          "chunk_id": "link_00.md#c032",
+          "source_file": "link_00.md",
+          "char_start": 9288,
+          "char_end": 9915,
+          "quote": "a company working with our client organization was compromised. This third party had over-permissioned access"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The threat actor leveraged the compromised third party's over-permissioned federated user account to authenticate into the client's AWS environment and gain broader access than intended.",
-      "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access.",
+      "description": "Attacker leveraged the compromised federated user account to access the client's AWS environment with broader permissions than intended.",
       "aws_services_involved": [
-        "IAM",
-        "AWS STS"
+        "IAM"
       ],
+      "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access",
       "evidence_sources": [
         "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c020",
+          "source_file": "link_00.clean.md",
+          "char_start": 6854,
+          "char_end": 7481,
+          "quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access"
+        },
+        {
+          "chunk_id": "link_00.md#c032",
+          "source_file": "link_00.md",
+          "char_start": 9288,
+          "char_end": 9915,
+          "quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1565.001",
-      "technique_name": "Data Manipulation: Stored Data Manipulation",
-      "description": "Using the federated account's excessive permissions, the attacker modified DNS records to redirect the client organization's website and email traffic.",
-      "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email.",
+      "technique_id": "T1565.002",
+      "technique_name": "Data Manipulation: Transmitted Data Manipulation",
+      "description": "Attacker modified DNS records to redirect the client organization's website and email traffic.",
       "aws_services_involved": [
-        "Amazon Route 53"
+        "Route 53"
       ],
+      "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email",
       "evidence_sources": [
         "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     }
   ],
-  "aws_services": [
-    "IAM",
-    "AWS STS",
-    "Amazon Route 53",
-    "AWS CloudTrail"
-  ],
-  "impact_type": "DNS/Email Redirection",
-  "confidence_score": 0.6,
-  "initial_access_vector": "Third-party company with over-permissioned federated access to the client's AWS environment was compromised, allowing the threat actor to pivot into the client environment.",
-  "persistence_mechanism": null,
-  "privilege_escalation": "Over-permissioned federated IAM account used by the third party provided broader access than needed, effectively granting the attacker elevated privileges without explicit escalation.",
-  "data_exfiltrated": false,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1199",
         "technique_name": "Trusted Relationship",
-        "description": "A third-party company with federated access to the client's AWS environment was compromised by the threat actor, providing an initial foothold via the trusted partner relationship.",
+        "description": "Threat actor compromised a third-party company that had federated, over-permissioned access to the client's AWS environment.",
         "tactic_id": "TA0001",
-        "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access which meant that misuse of the account allowed for broader access than intended or needed.",
+        "evidence_quote": "a company working with our client organization was compromised. This third party had over-permissioned access",
         "evidence_sources": [
           "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
         ],
@@ -130,29 +179,28 @@
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The threat actor leveraged the compromised third party's over-permissioned federated user account to authenticate into the client's AWS environment and gain broader access than intended.",
+        "description": "Attacker leveraged the compromised federated user account to access the client's AWS environment with broader permissions than intended.",
         "tactic_id": "TA0005",
-        "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access.",
+        "evidence_quote": "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access",
         "evidence_sources": [
           "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
         ],
         "aws_services_involved": [
-          "IAM",
-          "AWS STS"
+          "IAM"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1565.001",
-        "technique_name": "Data Manipulation: Stored Data Manipulation",
-        "description": "Using the federated account's excessive permissions, the attacker modified DNS records to redirect the client organization's website and email traffic.",
+        "technique_id": "T1565.002",
+        "technique_name": "Data Manipulation: Transmitted Data Manipulation",
+        "description": "Attacker modified DNS records to redirect the client organization's website and email traffic.",
         "tactic_id": "",
-        "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email.",
+        "evidence_quote": "They affected changing the domain name system to redirect the client organization's website and email",
         "evidence_sources": [
           "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
         ],
         "aws_services_involved": [
-          "Amazon Route 53"
+          "Route 53"
         ]
       }
     ],
@@ -168,23 +216,23 @@
           "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
         ],
         "evidence_quotes": [
-          "a company working with our client organization was compromised. This third party had over-permissioned access which meant that misuse of the account allowed for broader access than intended or needed.",
-          "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access."
+          "a company working with our client organization was compromised. This third party had over-permissioned access",
+          "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1565.001",
+        "target": "T1565.002",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Data Manipulation: Stored Data Manipulation",
+        "target_technique_name": "Data Manipulation: Transmitted Data Manipulation",
         "sources": [
           "https://www.kroll.com/en/insights/publications/cyber/effective-aws-incident-response"
         ],
         "evidence_quotes": [
-          "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access.",
-          "They affected changing the domain name system to redirect the client organization's website and email."
+          "the federated user account was leveraged by the threat actor in order to move to the other environment and start leveraging access",
+          "They affected changing the domain name system to redirect the client organization's website and email"
         ]
       }
     ]
@@ -195,7 +243,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "kroll-1-2023-april",
-  "analyzed_at": "2026-04-15T20:57:51.525309+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 20382
+  "analyzed_at": "2026-04-23T18:46:27.486401+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 33571
 }

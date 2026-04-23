@@ -14,19 +14,6 @@
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1556.006",
-          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
-          "inferred": false,
-          "evidence_quote": "the attacker was able to compromise Timehop's cloud computing environment by targeting an account that had not been protected by multifactor authentication",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0007",
       "tactic_name": "Discovery",
       "techniques": [
@@ -40,6 +27,32 @@
       ]
     },
     {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "targeting an account that had not been protected by multifactor authentication",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1528",
+          "technique_name": "Steal Application Access Token",
+          "inferred": false,
+          "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
+          "validated": true
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0009",
       "tactic_name": "Collection",
       "techniques": [
@@ -47,14 +60,7 @@
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
           "inferred": true,
-          "evidence_quote": "the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number that was attached to their account breached",
-          "validated": true
-        },
-        {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
-          "inferred": false,
-          "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
+          "evidence_quote": "personal data (names and emails) of 21 million users",
           "validated": true
         }
       ]
@@ -67,20 +73,7 @@
           "technique_id": "T1537",
           "technique_name": "Transfer Data to Cloud Account",
           "inferred": true,
-          "evidence_quote": "it is a high likelihood that they will soon appear [on the Dark Web]",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "using compromised admin credentials...targeting an account that had not been protected by multifactor authentication",
+          "evidence_quote": "millions of people's data had been breached",
           "validated": true
         }
       ]
@@ -91,131 +84,257 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker obtained and used compromised admin credentials (lacking MFA) to gain initial access to Timehop's cloud environment in December 2017.",
+      "description": "Attacker accessed Timehop's cloud computing environment using compromised admin credentials for an account that was not protected by multifactor authentication.",
+      "event_time": "2017-12",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "Cloud Computing Provider"
+      ],
       "evidence_quote": "the attacker first accessed Timehop's cloud environment in December \u2014 using compromised admin credentials",
       "evidence_sources": [
         "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker conducted reconnaissance across Timehop's cloud environment over multiple sessions: a few days in December 2017, one day in March 2018, and one day in June 2018, mapping out the infrastructure before the main attack.",
+      "description": "Attacker conducted reconnaissance of the cloud environment over several days in December, and additional single days in March and June.",
+      "event_time": null,
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "Cloud Computing Provider"
+      ],
       "evidence_quote": "apparently conducting reconnaissance for a few days that month, and again for another day in March and one in June",
       "evidence_sources": [
         "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
       ],
-      "aws_services_involved": [
-        "AWS Cloud Environment"
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c005",
+          "source_file": "link_00.clean.md",
+          "char_start": 1114,
+          "char_end": 1515,
+          "quote": "apparently conducting reconnaissance for a few days that month, and again for another day in March and one in June"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 7725,
+          "char_end": 8126,
+          "quote": "apparently conducting reconnaissance for a few days that month, and again for another day in March and one in June"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "On July 4, 2018, the attacker accessed Timehop's cloud-hosted user database and exfiltrated the personal data (names, emails, phone numbers) of 21 million users.",
-      "evidence_quote": "compromised the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number...breached in the attack",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker maintained persistent access to the environment via the compromised non-MFA cloud admin account across multiple months.",
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "aws_services_involved": [
+        "Cloud Computing Provider"
+      ],
+      "evidence_quote": "targeting an account that had not been protected by multifactor authentication",
       "evidence_sources": [
         "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
       ],
-      "aws_services_involved": [
-        "AWS RDS",
-        "AWS S3"
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c013",
+          "source_file": "link_00.clean.md",
+          "char_start": 3336,
+          "char_end": 3550,
+          "quote": "targeting an account that had not been protected by multifactor authentication"
+        },
+        {
+          "chunk_id": "link_00.md#c032",
+          "source_file": "link_00.md",
+          "char_start": 10890,
+          "char_end": 11104,
+          "quote": "targeting an account that had not been protected by multifactor authentication"
+        }
       ],
       "validated": true
     },
     {
       "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "On July 4 during the US holiday, attacker launched the attack and accessed user data (names, emails, phone numbers) stored in the cloud environment.",
+      "event_time": "2018-07-04T02:04:00-04:00",
+      "event_time_precision": "exact",
+      "aws_services_involved": [
+        "Cloud Computing Provider"
+      ],
+      "evidence_quote": "launch the attack on July 4, during a US holiday",
+      "evidence_sources": [
+        "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c005",
+          "source_file": "link_00.clean.md",
+          "char_start": 1114,
+          "char_end": 1515,
+          "quote": "launch the attack on July 4, during a US holiday"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 7725,
+          "char_end": 8126,
+          "quote": "launch the attack on July 4, during a US holiday"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 5,
       "technique_id": "T1528",
       "technique_name": "Steal Application Access Token",
-      "description": "During the same July 4 attack window, the attacker stole OAuth tokens (social media API keys) that granted access to users' social media profiles on platforms like Twitter, Facebook, and Instagram.",
+      "description": "Attacker compromised social media OAuth tokens/keys that allowed Timehop to read users' social media content.",
+      "event_time": "2018-07-04",
+      "event_time_precision": "day",
+      "aws_services_involved": [],
       "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
       "evidence_sources": [
         "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
       ],
-      "aws_services_involved": [
-        "AWS Secrets Manager"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 1941,
+          "char_end": 2165,
+          "quote": "the keys that allow it to read and show users their social media content were compromised"
+        },
+        {
+          "chunk_id": "link_00.md#c024",
+          "source_file": "link_00.md",
+          "char_start": 8552,
+          "char_end": 8776,
+          "quote": "the keys that allow it to read and show users their social media content were compromised"
+        }
       ],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "description": "Attacker exfiltrated the personal data of 21 million users before Timehop shut down the attack 2 hours 19 minutes later.",
+      "event_time": "2018-07-04",
+      "event_time_precision": "day",
+      "aws_services_involved": [],
+      "evidence_quote": "not before millions of people's data had been breached",
+      "evidence_sources": [
+        "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [],
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS IAM",
-    "AWS Cloud Environment",
-    "AWS RDS",
-    "AWS S3",
-    "AWS Secrets Manager"
+    "Cloud Computing Provider (unspecified)"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Compromised admin credentials used to authenticate directly to the cloud environment; the targeted account lacked multi-factor authentication enforcement.",
-  "persistence_mechanism": "Repeated low-profile access sessions over multiple months (December 2017, March 2018, June 2018) using the same compromised admin credentials before executing the main attack on July 4, 2018.",
-  "privilege_escalation": "Not explicitly described; attacker already held admin-level credentials from initial compromise, granting broad cloud environment access without needing further escalation.",
+  "confidence_score": 0.7,
   "data_exfiltrated": true,
+  "initial_access_vector": "Compromised admin credentials for a cloud account that was not protected by multifactor authentication.",
+  "persistence_mechanism": "Continued use of the valid compromised cloud admin credentials across several months (December, March, June, July) without MFA enforcement.",
+  "privilege_escalation": "Not required \u2014 compromised credentials were already admin-level.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker obtained and used compromised admin credentials (lacking MFA) to gain initial access to Timehop's cloud environment in December 2017.",
+        "description": "Attacker accessed Timehop's cloud computing environment using compromised admin credentials for an account that was not protected by multifactor authentication.",
         "tactic_id": "TA0005",
         "evidence_quote": "the attacker first accessed Timehop's cloud environment in December \u2014 using compromised admin credentials",
         "evidence_sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
         "aws_services_involved": [
-          "AWS IAM"
+          "Cloud Computing Provider"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker conducted reconnaissance across Timehop's cloud environment over multiple sessions: a few days in December 2017, one day in March 2018, and one day in June 2018, mapping out the infrastructure before the main attack.",
+        "description": "Attacker conducted reconnaissance of the cloud environment over several days in December, and additional single days in March and June.",
         "tactic_id": "TA0007",
         "evidence_quote": "apparently conducting reconnaissance for a few days that month, and again for another day in March and one in June",
         "evidence_sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
         "aws_services_involved": [
-          "AWS Cloud Environment"
+          "Cloud Computing Provider"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "On July 4, 2018, the attacker accessed Timehop's cloud-hosted user database and exfiltrated the personal data (names, emails, phone numbers) of 21 million users.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "compromised the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number...breached in the attack",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker maintained persistent access to the environment via the compromised non-MFA cloud admin account across multiple months.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "targeting an account that had not been protected by multifactor authentication",
         "evidence_sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
         "aws_services_involved": [
-          "AWS RDS",
-          "AWS S3"
+          "Cloud Computing Provider"
         ]
       },
       {
         "step": 4,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "On July 4 during the US holiday, attacker launched the attack and accessed user data (names, emails, phone numbers) stored in the cloud environment.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "launch the attack on July 4, during a US holiday",
+        "evidence_sources": [
+          "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+        ],
+        "aws_services_involved": [
+          "Cloud Computing Provider"
+        ]
+      },
+      {
+        "step": 5,
         "technique_id": "T1528",
         "technique_name": "Steal Application Access Token",
-        "description": "During the same July 4 attack window, the attacker stole OAuth tokens (social media API keys) that granted access to users' social media profiles on platforms like Twitter, Facebook, and Instagram.",
+        "description": "Attacker compromised social media OAuth tokens/keys that allowed Timehop to read users' social media content.",
         "tactic_id": "TA0006",
         "evidence_quote": "the keys that allow it to read and show users their social media content were compromised",
         "evidence_sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
-        "aws_services_involved": [
-          "AWS Secrets Manager"
-        ]
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1537",
+        "technique_name": "Transfer Data to Cloud Account",
+        "description": "Attacker exfiltrated the personal data of 21 million users before Timehop shut down the attack 2 hours 19 minutes later.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "not before millions of people's data had been breached",
+        "evidence_sources": [
+          "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
@@ -236,32 +355,62 @@
       },
       {
         "source": "T1580",
-        "target": "T1530",
+        "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
         "evidence_quotes": [
           "apparently conducting reconnaissance for a few days that month, and again for another day in March and one in June",
-          "compromised the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number...breached in the attack"
+          "targeting an account that had not been protected by multifactor authentication"
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Data from Cloud Storage",
+        "sources": [
+          "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+        ],
+        "evidence_quotes": [
+          "targeting an account that had not been protected by multifactor authentication",
+          "launch the attack on July 4, during a US holiday"
         ]
       },
       {
         "source": "T1530",
         "target": "T1528",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Data from Cloud Storage",
         "target_technique_name": "Steal Application Access Token",
         "sources": [
           "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
         ],
         "evidence_quotes": [
-          "compromised the personal data (names and emails) of 21 million users...Around a fifth of the affected users \u2014 or 4.7M \u2014 have also had a phone number...breached in the attack",
+          "launch the attack on July 4, during a US holiday",
           "the keys that allow it to read and show users their social media content were compromised"
+        ]
+      },
+      {
+        "source": "T1528",
+        "target": "T1537",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Steal Application Access Token",
+        "target_technique_name": "Transfer Data to Cloud Account",
+        "sources": [
+          "https://techcrunch.com/2018/07/09/timehop-discloses-july-4-data-breach-affecting-21-million/"
+        ],
+        "evidence_quotes": [
+          "the keys that allow it to read and show users their social media content were compromised",
+          "not before millions of people's data had been breached"
         ]
       }
     ]
@@ -272,7 +421,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "timehop-2018-july",
-  "analyzed_at": "2026-04-15T21:11:14.759211+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 24695
+  "analyzed_at": "2026-04-23T18:54:42.072110+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 33653
 }

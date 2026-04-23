@@ -5,10 +5,11 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
+          "evidence_quote": "The attacker used a long-term access key to gain initial access.",
           "validated": true
         }
       ]
@@ -18,10 +19,11 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1069.003",
-          "technique_name": "Permission Groups Discovery: Cloud Groups",
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "subtechnique_id": "T1087.004",
           "inferred": false,
-          "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
+          "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)",
           "validated": true
         }
       ]
@@ -33,15 +35,17 @@
         {
           "technique_id": "T1098.001",
           "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "subtechnique_id": "T1098.001",
           "inferred": false,
-          "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user.",
+          "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded)",
           "validated": true
         },
         {
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
+          "subtechnique_id": "T1136.003",
           "inferred": false,
-          "evidence_quote": "the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users with accompanying long-term access keys",
+          "evidence_quote": "create two new IAM users with accompanying long-term access keys",
           "validated": true
         }
       ]
@@ -51,30 +55,25 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker issued an API call to UpdateLoginProfile to change the AWS console password for the arn:aws:iam::123456789012:user/comp_user1 account. Authenticated into the AWS console using the arn:aws:iam::123456789012:user/comp_user1 account.",
-          "validated": true
-        },
-        {
           "technique_id": "T1098.003",
           "technique_name": "Account Manipulation: Additional Cloud Roles",
+          "subtechnique_id": "T1098.003",
           "inferred": false,
-          "evidence_quote": "AttachUserPolicy attaches a specified policy to a specified user... the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
+          "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
+          "inferred": true,
+          "evidence_quote": "our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
           "validated": true
         }
       ]
@@ -87,7 +86,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": true,
-          "evidence_quote": "It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining.",
+          "evidence_quote": "this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining",
           "validated": true
         }
       ]
@@ -98,132 +97,195 @@
       "step": 1,
       "technique_id": "T1552.001",
       "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attacker discovered long-term IAM access keys (AKIA...) for comp_user2 in a publicly available code repository, obtaining credentials without any exploitation.",
-      "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-      ],
+      "description": "Attacker obtained long-term AWS access keys for IAM user comp_user2 from a publicly available code repository.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1069.003",
-      "technique_name": "Permission Groups Discovery: Cloud Groups",
-      "description": "Using the stolen comp_user2 access keys via the AWS CLI, the attacker called ListUsers to enumerate IAM users in the account, identifying comp_user1 as a target.",
-      "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker used compromised long-term access keys for comp_user2 to authenticate to AWS via aws-cli.",
+      "aws_services_involved": [
+        "IAM",
+        "CloudTrail"
+      ],
+      "evidence_quote": "The attacker used a long-term access key to gain initial access.",
       "evidence_sources": [
         "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "CLI"
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 850,
+          "char_end": 1329,
+          "quote": "The attacker used a long-term access key to gain initial access."
+        },
+        {
+          "chunk_id": "link_00.md#c043",
+          "source_file": "link_00.md",
+          "char_start": 13230,
+          "char_end": 13709,
+          "quote": "The attacker used a long-term access key to gain initial access."
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker called UpdateLoginProfile via the CLI to set/change the AWS console password for comp_user1 (succeeded), enabling console login for an account that may not have had one. The same call for comp_user2 failed.",
-      "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded) and one for the arn:aws:iam::123456789012:user/comp_user2 IAM user (failed with the NoSuchEntityException reason).",
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Attacker ran ListUsers API call from aws-cli to enumerate IAM users in the account, discovering comp_user1.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)",
       "evidence_sources": [
         "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "CLI"
-      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker authenticated to the AWS Management Console as comp_user1 from an IP address in Indonesia, with no MFA, using the password set in the previous step.",
-      "evidence_quote": "The authentication originated from Indonesia... CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Attacker called UpdateLoginProfile to set a console password for comp_user1 (succeeded) and comp_user2 (failed with NoSuchEntityException).",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded)",
       "evidence_sources": [
         "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "Management Console",
-        "CloudTrail"
-      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Immediately after console login, the attacker called CreateUser twice to create two new backdoor IAM user accounts (created_user1 and created_user2).",
-      "evidence_quote": "Immediately following the authentication to the AWS console, the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker logged into the AWS Management Console as comp_user1 from Indonesia without MFA.",
+      "aws_services_involved": [
+        "IAM",
+        "CloudTrail"
+      ],
+      "evidence_quote": "CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
       "evidence_sources": [
         "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
       ],
-      "aws_services_involved": [
-        "IAM"
-      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "The attacker called CreateAccessKey for the newly created IAM users, generating long-term access keys (AKIA...) to enable persistent programmatic access independent of the console session.",
-      "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user... create two new IAM users with accompanying long-term access keys",
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-      ],
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker called CreateUser to create two new IAM users (created_user1 and created_user2) as a persistence foothold.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "create two new IAM users with accompanying long-term access keys",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c041",
+          "source_file": "link_00.clean.md",
+          "char_start": 9102,
+          "char_end": 9631,
+          "quote": "create two new IAM users with accompanying long-term access keys"
+        },
+        {
+          "chunk_id": "link_00.md#c078",
+          "source_file": "link_00.md",
+          "char_start": 21482,
+          "char_end": 22011,
+          "quote": "create two new IAM users with accompanying long-term access keys"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1098.003",
-      "technique_name": "Account Manipulation: Additional Cloud Roles",
-      "description": "The attacker called AttachUserPolicy to attach the AWS-managed AdministratorAccess policy to one of the newly created IAM users, granting full administrative privileges.",
-      "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-      ],
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Attacker issued CreateAccessKey and CreateLoginProfile for the newly created users to establish both programmatic and console access.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+      ],
+      "ordering_confidence": 0.85,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
-      "technique_id": "T1098.001",
-      "technique_name": "Account Manipulation: Additional Cloud Credentials",
-      "description": "The attacker also called CreateLoginProfile for one of the new IAM users to set a console password, further entrenching console access persistence.",
-      "evidence_quote": "attached a policy that allowed one of the new users to create and change their AWS console password",
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-      ],
+      "technique_id": "T1098.003",
+      "technique_name": "Account Manipulation: Additional Cloud Roles",
+      "description": "Attacker called AttachUserPolicy to attach the AdministratorAccess managed policy to one of the newly created users, escalating privileges.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 9,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Using one of the newly created IAM users, the attacker called RequestServiceQuotaIncrease to raise the EC2 instance quota in preparation for launching large EC2 instances for cryptocurrency mining. Expel intervened before mining began.",
+      "description": "Attacker used a newly created IAM user to call RequestServiceQuotaIncrease to raise the EC2 quota, in apparent preparation for spinning up large EC2 instances for cryptocurrency mining. Activity was stopped before mining occurred.",
+      "aws_services_involved": [
+        "EC2",
+        "Service Quotas"
+      ],
       "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API in order to increase the EC2 quota. It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining.",
       "evidence_sources": [
         "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "Service Quotas",
-        "IAM"
-      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
@@ -231,25 +293,24 @@
     "IAM",
     "CloudTrail",
     "EC2",
-    "Management Console",
-    "CLI",
-    "Service Quotas"
+    "Service Quotas",
+    "Management Console"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Long-term IAM access keys (AKIA) for comp_user2 were exposed in a publicly available code repository and obtained by the attacker",
-  "persistence_mechanism": "Attacker created two new IAM users (created_user1, created_user2) with long-term access keys and console passwords; one user had AdministratorAccess policy attached",
-  "privilege_escalation": "AttachUserPolicy API call used to attach the AWS-managed AdministratorAccess policy to a newly created IAM user, escalating from limited comp_user2 privileges to full admin",
+  "confidence_score": 0.9,
   "data_exfiltrated": false,
+  "initial_access_vector": "Long-term AWS IAM access keys (AKIA) for user comp_user2 exposed in a publicly available code repository, used by attacker via aws-cli from an Indonesian IP.",
+  "persistence_mechanism": "Attacker created two new IAM users with long-term access keys and console login profiles, and changed the console password of existing IAM user comp_user1 via UpdateLoginProfile.",
+  "privilege_escalation": "AttachUserPolicy used to attach the AWS managed AdministratorAccess policy to a newly created IAM user.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "Attacker discovered long-term IAM access keys (AKIA...) for comp_user2 in a publicly available code repository, obtaining credentials without any exploitation.",
+        "description": "Attacker obtained long-term AWS access keys for IAM user comp_user2 from a publicly available code repository.",
         "tactic_id": "TA0006",
-        "evidence_quote": "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
+        "evidence_quote": "our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
@@ -259,57 +320,26 @@
       },
       {
         "step": 2,
-        "technique_id": "T1069.003",
-        "technique_name": "Cloud Groups",
-        "description": "Using the stolen comp_user2 access keys via the AWS CLI, the attacker called ListUsers to enumerate IAM users in the account, identifying comp_user1 as a target.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
-        "evidence_sources": [
-          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "CLI"
-        ]
-      },
-      {
-        "step": 3,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker called UpdateLoginProfile via the CLI to set/change the AWS console password for comp_user1 (succeeded), enabling console login for an account that may not have had one. The same call for comp_user2 failed.",
+        "description": "Attacker used compromised long-term access keys for comp_user2 to authenticate to AWS via aws-cli.",
         "tactic_id": "TA0005",
-        "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded) and one for the arn:aws:iam::123456789012:user/comp_user2 IAM user (failed with the NoSuchEntityException reason).",
+        "evidence_quote": "The attacker used a long-term access key to gain initial access.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "aws_services_involved": [
           "IAM",
-          "CLI"
-        ]
-      },
-      {
-        "step": 4,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Attacker authenticated to the AWS Management Console as comp_user1 from an IP address in Indonesia, with no MFA, using the password set in the previous step.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "The authentication originated from Indonesia... CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
-        "evidence_sources": [
-          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "Management Console",
           "CloudTrail"
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1136.003",
+        "step": 3,
+        "technique_id": "T1087.004",
         "technique_name": "Cloud Account",
-        "description": "Immediately after console login, the attacker called CreateUser twice to create two new backdoor IAM user accounts (created_user1 and created_user2).",
-        "tactic_id": "TA0003",
-        "evidence_quote": "Immediately following the authentication to the AWS console, the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users",
+        "description": "Attacker ran ListUsers API call from aws-cli to enumerate IAM users in the account, discovering comp_user1.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
@@ -318,12 +348,41 @@
         ]
       },
       {
-        "step": 6,
+        "step": 4,
         "technique_id": "T1098.001",
         "technique_name": "Additional Cloud Credentials",
-        "description": "The attacker called CreateAccessKey for the newly created IAM users, generating long-term access keys (AKIA...) to enable persistent programmatic access independent of the console session.",
+        "description": "Attacker called UpdateLoginProfile to set a console password for comp_user1 (succeeded) and comp_user2 (failed with NoSuchEntityException).",
         "tactic_id": "TA0003",
-        "evidence_quote": "The CreateAccessKey API call creates a new long-term access key for a specific user... create two new IAM users with accompanying long-term access keys",
+        "evidence_quote": "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded)",
+        "evidence_sources": [
+          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+        ],
+        "aws_services_involved": [
+          "IAM"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker logged into the AWS Management Console as comp_user1 from Indonesia without MFA.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
+        "evidence_sources": [
+          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1136.003",
+        "technique_name": "Cloud Account",
+        "description": "Attacker called CreateUser to create two new IAM users (created_user1 and created_user2) as a persistence foothold.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "create two new IAM users with accompanying long-term access keys",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
@@ -333,11 +392,11 @@
       },
       {
         "step": 7,
-        "technique_id": "T1098.003",
-        "technique_name": "Additional Cloud Roles",
-        "description": "The attacker called AttachUserPolicy to attach the AWS-managed AdministratorAccess policy to one of the newly created IAM users, granting full administrative privileges.",
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Attacker issued CreateAccessKey and CreateLoginProfile for the newly created users to establish both programmatic and console access.",
         "tactic_id": "TA0003",
-        "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
+        "evidence_quote": "CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
@@ -347,11 +406,11 @@
       },
       {
         "step": 8,
-        "technique_id": "T1098.001",
-        "technique_name": "Additional Cloud Credentials",
-        "description": "The attacker also called CreateLoginProfile for one of the new IAM users to set a console password, further entrenching console access persistence.",
+        "technique_id": "T1098.003",
+        "technique_name": "Additional Cloud Roles",
+        "description": "Attacker called AttachUserPolicy to attach the AdministratorAccess managed policy to one of the newly created users, escalating privileges.",
         "tactic_id": "TA0003",
-        "evidence_quote": "attached a policy that allowed one of the new users to create and change their AWS console password",
+        "evidence_quote": "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
@@ -363,7 +422,7 @@
         "step": 9,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Using one of the newly created IAM users, the attacker called RequestServiceQuotaIncrease to raise the EC2 instance quota in preparation for launching large EC2 instances for cryptocurrency mining. Expel intervened before mining began.",
+        "description": "Attacker used a newly created IAM user to call RequestServiceQuotaIncrease to raise the EC2 quota, in apparent preparation for spinning up large EC2 instances for cryptocurrency mining. Activity was stopped before mining occurred.",
         "tactic_id": "TA0040",
         "evidence_quote": "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API in order to increase the EC2 quota. It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining.",
         "evidence_sources": [
@@ -371,114 +430,128 @@
         ],
         "aws_services_involved": [
           "EC2",
-          "Service Quotas",
-          "IAM"
+          "Service Quotas"
         ]
       }
     ],
     "edges": [
       {
         "source": "T1552.001",
-        "target": "T1069.003",
+        "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Cloud Groups",
-        "sources": [
-          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-        ],
-        "evidence_quotes": [
-          "It's our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
-          "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)."
-        ]
-      },
-      {
-        "source": "T1069.003",
-        "target": "T1078.004",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Cloud Groups",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "evidence_quotes": [
-          "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli).",
-          "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded) and one for the arn:aws:iam::123456789012:user/comp_user2 IAM user (failed with the NoSuchEntityException reason)."
+          "our working theory that the AWS access keys for the arn:aws:iam::123456789012:user/comp_user2 account were discovered by the attacker in a publicly available code repository.",
+          "The attacker used a long-term access key to gain initial access."
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1136.003",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1087.004",
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "evidence_quotes": [
-          "The authentication originated from Indonesia... CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
-          "Immediately following the authentication to the AWS console, the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users"
+          "The attacker used a long-term access key to gain initial access.",
+          "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)"
         ]
       },
       {
-        "source": "T1136.003",
+        "source": "T1087.004",
         "target": "T1098.001",
-        "source_step": 5,
-        "target_step": 6,
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Account",
         "target_technique_name": "Additional Cloud Credentials",
         "sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "evidence_quotes": [
-          "Immediately following the authentication to the AWS console, the attacker issued the following API calls: CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile. This allowed the attacker to create two new IAM users",
-          "The CreateAccessKey API call creates a new long-term access key for a specific user... create two new IAM users with accompanying long-term access keys"
+          "the attacker first issued a ListUsers API call using the arn:aws:iam::123456789012:user/comp_user2 IAM user from the AWS command line interface (aws-cli)",
+          "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded)"
+        ]
+      },
+      {
+        "source": "T1098.001",
+        "target": "T1078.004",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Additional Cloud Credentials",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+        ],
+        "evidence_quotes": [
+          "the attacker issued two calls to the UpdateLoginProfile API; one for the arn:aws:iam::123456789012:user/comp_user1 IAM user (succeeded)",
+          "CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1136.003",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Account",
+        "sources": [
+          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+        ],
+        "evidence_quotes": [
+          "CloudTrail logs recorded a ConsoleLogin from the arn:aws:iam::123456789012:user/comp_user1 account.",
+          "create two new IAM users with accompanying long-term access keys"
+        ]
+      },
+      {
+        "source": "T1136.003",
+        "target": "T1098.001",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Cloud Account",
+        "target_technique_name": "Additional Cloud Credentials",
+        "sources": [
+          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
+        ],
+        "evidence_quotes": [
+          "create two new IAM users with accompanying long-term access keys",
+          "CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile"
         ]
       },
       {
         "source": "T1098.001",
         "target": "T1098.003",
-        "source_step": 6,
-        "target_step": 7,
+        "source_step": 7,
+        "target_step": 8,
         "source_technique_name": "Additional Cloud Credentials",
         "target_technique_name": "Additional Cloud Roles",
         "sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "evidence_quotes": [
-          "The CreateAccessKey API call creates a new long-term access key for a specific user... create two new IAM users with accompanying long-term access keys",
+          "CreateUser, CreateAccessKey, AttachUserPolicy, CreateLoginProfile",
           "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS."
         ]
       },
       {
         "source": "T1098.003",
-        "target": "T1098.001",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Additional Cloud Roles",
-        "target_technique_name": "Additional Cloud Credentials",
-        "sources": [
-          "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
-        ],
-        "evidence_quotes": [
-          "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
-          "attached a policy that allowed one of the new users to create and change their AWS console password"
-        ]
-      },
-      {
-        "source": "T1098.001",
         "target": "T1496",
         "source_step": 8,
         "target_step": 9,
-        "source_technique_name": "Additional Cloud Credentials",
+        "source_technique_name": "Additional Cloud Roles",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://expel.com/blog/incident-report-from-cli-to-console-chasing-an-attacker-in-aws/"
         ],
         "evidence_quotes": [
-          "attached a policy that allowed one of the new users to create and change their AWS console password",
+          "the attacker issued an AttachUserPolicy API call to attach an AdministratorAccess policy to the newly created IAM user \u2014 allowing the attacker to elevate their privileges in AWS.",
           "the attacker used one of the newly created IAM users to make a call to the RequestServiceQuotaIncrease API in order to increase the EC2 quota. It's our opinion that this action was taken in preparation for starting multiple large EC2 instances for cryptocurrency mining."
         ]
       }
@@ -490,19 +563,18 @@
   },
   "schema_version": "1.0",
   "incident_slug": "expel-case-study-3-2022-april",
-  "analyzed_at": "2026-04-15T20:54:10.133197+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 34771,
+  "analyzed_at": "2026-04-23T18:44:06.937799+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 45628,
   "incident_name": "Expel case study 3",
   "incident_date": "2022, April",
   "incident_root_cause": "Credentials in publicly available code repository",
-  "impact_type_raw": "Cryptomining (prevented)",
+  "impact_type_raw": "Cryptojacking (prevented)",
   "aws_services_raw": [
     "IAM",
     "CloudTrail",
     "EC2",
-    "AWS Management Console",
-    "AWS CLI",
-    "Service Quotas"
+    "Service Quotas",
+    "AWS Management Console"
   ]
 }

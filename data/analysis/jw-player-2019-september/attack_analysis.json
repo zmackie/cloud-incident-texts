@@ -1,19 +1,6 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
-      "techniques": [
-        {
-          "technique_id": "T1595.002",
-          "technique_name": "Active Scanning: Vulnerability Scanning",
-          "inferred": true,
-          "evidence_quote": "The load balancer URL was not shared and access to the Weave Scope dashboard was discovered by an automated crawler.",
-          "validated": false
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
@@ -21,7 +8,7 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication... one Weave Scope feature, in particular, was abused... Launch a command line.",
+          "evidence_quote": "the Weave Scope load balancer security group was public facing and exposed to the world",
           "validated": true
         }
       ]
@@ -34,15 +21,8 @@
           "technique_id": "T1609",
           "technique_name": "Container Administration Command",
           "inferred": false,
-          "evidence_quote": "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container.",
+          "evidence_quote": "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container",
           "validated": true
-        },
-        {
-          "technique_id": "T1059.004",
-          "technique_name": "Command and Scripting Interpreter: Unix Shell",
-          "inferred": false,
-          "evidence_quote": "I created a simple bash script to run in the background to show that it can run on the host machine as root.",
-          "validated": false
         }
       ]
     },
@@ -54,7 +34,7 @@
           "technique_id": "T1611",
           "technique_name": "Escape to Host",
           "inferred": false,
-          "evidence_quote": "An exposed load balancer along with our specific Kubernetes cluster configuration allowed arbitrary code to break out of the container and run on the host instance... the weave-scope container is running with the --privileged flag... Files on the root file system were mounted onto the container... Containers are run as the root user.",
+          "evidence_quote": "allowed arbitrary code to break out of the container and run on the host instance",
           "validated": true
         }
       ]
@@ -66,8 +46,16 @@
         {
           "technique_id": "T1036.005",
           "technique_name": "Masquerading: Match Legitimate Name or Location",
+          "subtechnique_id": "T1036.005",
           "inferred": false,
-          "evidence_quote": "the 'gcc' binary was actually a cryptocurrency miner with the filename gcc.",
+          "evidence_quote": "the \"gcc\" binary was actually a cryptocurrency miner with the filename gcc",
+          "validated": true
+        },
+        {
+          "technique_id": "T1611",
+          "technique_name": "Escape to Host",
+          "inferred": false,
+          "evidence_quote": "break out of the container and run on the host instance",
           "validated": true
         }
       ]
@@ -77,23 +65,24 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1613",
-          "technique_name": "Container and Resource Discovery",
-          "inferred": true,
-          "evidence_quote": "Simulating the attacker, a scope-agent container would be ideal to run commands on due to having elevated privileges.",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery",
+          "inferred": false,
+          "evidence_quote": "access to the Weave Scope dashboard was discovered by an automated crawler",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
       "techniques": [
         {
-          "technique_id": "T1210",
-          "technique_name": "Exploitation of Remote Services",
+          "technique_id": "T1071.001",
+          "technique_name": "Application Layer Protocol: Web Protocols",
+          "subtechnique_id": "T1071.001",
           "inferred": true,
-          "evidence_quote": "If applied to all Weave scope-agent containers, the miner can be executed on all instances since scope-agent is running on each instance to gather metrics.",
+          "evidence_quote": "an outbound connection to a mining pool",
           "validated": false
         }
       ]
@@ -106,7 +95,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "A gcc process ran at 100% CPU utilisation... an outbound connection to a mining pool further confirmed my suspicions... XMRig led to a GitHub repository for a Monero miner.",
+          "evidence_quote": "its only function is to mine Monero",
           "validated": true
         }
       ]
@@ -115,188 +104,394 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1595.002",
-      "technique_name": "Active Scanning: Vulnerability Scanning",
-      "description": "An automated crawler discovered the publicly exposed Weave Scope load balancer URL, identifying it as an unauthenticated target.",
-      "evidence_quote": "The load balancer URL was not shared and access to the Weave Scope dashboard was discovered by an automated crawler.",
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "Automated crawler discovered the publicly exposed Weave Scope dashboard load balancer on the internet.",
       "aws_services_involved": [
-        "AWS ELB (Elastic Load Balancer)",
-        "AWS Security Groups"
+        "Elastic Load Balancing",
+        "EC2"
       ],
+      "evidence_quote": "access to the Weave Scope dashboard was discovered by an automated crawler",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
-      "validated": false
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "access to the Weave Scope dashboard was discovered by an automated crawler"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "access to the Weave Scope dashboard was discovered by an automated crawler"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "The attacker accessed the Weave Scope dashboard over the public load balancer without any authentication, abusing the built-in 'Launch a command line' feature to gain an interactive shell into a running container.",
-      "evidence_quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication... one Weave Scope feature, in particular, was abused... Launch a command line.",
-      "aws_services_involved": [
-        "AWS ELB (Elastic Load Balancer)"
+      "description": "Attacker accessed the unauthenticated, internet-exposed Weave Scope dashboard via the public load balancer (security group allowed 0.0.0.0/0 on port 80).",
+      "aws_services_invoked": [
+        "Elastic Load Balancing",
+        "EC2",
+        "VPC Security Groups"
       ],
+      "aws_services_involved": [
+        "Elastic Load Balancing",
+        "EC2"
+      ],
+      "evidence_quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1609",
       "technique_name": "Container Administration Command",
-      "description": "Using Weave Scope's built-in terminal feature, the attacker launched an interactive shell session inside a privileged scope-agent container to execute commands.",
-      "evidence_quote": "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container... Simulating the attacker, a scope-agent container would be ideal to run commands on due to having elevated privileges.",
-      "aws_services_involved": [],
+      "description": "Used Weave Scope's built-in 'Launch a command line' feature to obtain an interactive shell inside the scope-agent container running with --privileged.",
+      "aws_services_involved": [
+        "EKS/Kubernetes on EC2"
+      ],
+      "evidence_quote": "the terminal prompt icon presents a user with an interactive shell to the container",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "the terminal prompt icon presents a user with an interactive shell to the container"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "the terminal prompt icon presents a user with an interactive shell to the container"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1611",
       "technique_name": "Escape to Host",
-      "description": "The attacker exploited the privileged container configuration (--privileged flag, host filesystem mount, root user) to break out of the container and execute code directly on the underlying Kubernetes node's host OS.",
-      "evidence_quote": "the weave-scope container is running with the --privileged flag... Files on the root file system were mounted onto the container... Containers are run as the root user... allowed arbitrary code to break out of the container and run on the host instance.",
-      "aws_services_involved": [],
+      "description": "Leveraged the privileged scope-agent container with host filesystem mounts to break out of the container onto the underlying Kubernetes host as root.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "allowed arbitrary code to break out of the container and run on the host instance",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "allowed arbitrary code to break out of the container and run on the host instance"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "allowed arbitrary code to break out of the container and run on the host instance"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1036.005",
-      "technique_name": "Masquerading: Match Legitimate Name or Location",
-      "description": "The XMRig Monero miner binary was renamed 'gcc' to masquerade as the legitimate GNU C Compiler and was placed in the host machine's root directory to evade detection.",
-      "evidence_quote": "the 'gcc' binary was actually a cryptocurrency miner with the filename gcc... the binary was running from the host machine's root directory and not from a container.",
-      "aws_services_involved": [],
+      "technique_id": "T1105",
+      "technique_name": "Ingress Tool Transfer",
+      "description": "Dropped the XMRig Monero miner binary to the host's root filesystem, renamed as 'gcc'.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "the binary was running from the host machine\u2019s root directory",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
-      "validated": true
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "The XMRig miner, deployed across all nodes in the development and staging clusters, ran at 100% CPU on one core per node, mining Monero (XMR) and sending results to a remote mining pool.",
-      "evidence_quote": "A gcc process ran at 100% CPU utilisation... an outbound connection to a mining pool further confirmed my suspicions... XMRig led to a GitHub repository for a Monero miner... This process was found to be running across every machine in the development and staging clusters.",
-      "aws_services_involved": [],
+      "technique_id": "T1036.005",
+      "technique_name": "Masquerading: Match Legitimate Name or Location",
+      "description": "Renamed the XMRig miner binary to 'gcc' to blend in with legitimate compiler process names.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "the \"gcc\" binary was actually a cryptocurrency miner with the filename gcc",
+      "ordering_confidence": 0.85,
       "evidence_sources": [
         "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1071.001",
+      "technique_name": "Application Layer Protocol",
+      "description": "Miner established outbound connection to a Monero mining pool for C2/work distribution.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC"
+      ],
+      "evidence_quote": "an outbound connection to a mining pool further confirmed my suspicions",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "an outbound connection to a mining pool further confirmed my suspicions"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "an outbound connection to a mining pool further confirmed my suspicions"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 8,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "XMRig ran at 100% CPU on one core of every node across the development and staging Kubernetes clusters, mining Monero.",
+      "aws_services_involved": [
+        "EC2",
+        "EKS/Kubernetes on EC2"
+      ],
+      "evidence_quote": "having 100% CPU usage on one core on each of our Kubernetes instances in our development and staging environments",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 348,
+          "char_end": 14056,
+          "quote": "having 100% CPU usage on one core on each of our Kubernetes instances in our development and staging environments"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 13854,
+          "quote": "having 100% CPU usage on one core on each of our Kubernetes instances in our development and staging environments"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS ELB (Elastic Load Balancer)",
-    "AWS Security Groups",
-    "AWS CloudTrail",
-    "AWS EC2"
+    "EC2",
+    "Elastic Load Balancing (ELB)",
+    "VPC Security Groups",
+    "CloudTrail",
+    "Kubernetes (self-managed on EC2)"
   ],
-  "impact_type": "Cryptomining",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Publicly exposed Weave Scope dashboard reachable via an unauthenticated AWS load balancer (security group misconfiguration caused by Kubernetes reverting a manual firewall rule to 0.0.0.0/0), discovered by an automated crawler",
-  "persistence_mechanism": "Miner deployed via Weave Scope's interactive shell across all scope-agent containers on every node; no explicit persistence mechanism described beyond automated re-execution from the host root directory",
-  "privilege_escalation": "Container escape via privileged container (--privileged flag), host filesystem mount, and root user execution within the scope-agent container, allowing code to run directly on the underlying Kubernetes node as root",
+  "impact_type": "Cryptojacking",
+  "initial_access_vector": "Publicly exposed Weave Scope dashboard (internet-facing ELB with 0.0.0.0/0 security group) with no authentication, abused via its built-in container shell feature.",
+  "persistence_mechanism": "None established beyond running miner in privileged scope-agent containers (which re-spawned via DaemonSet across nodes). No persistence mechanism explicitly installed.",
+  "privilege_escalation": "Container escape from privileged Weave scope-agent container (running with --privileged, host filesystem mounted, running as root) to underlying Kubernetes host.",
   "data_exfiltrated": false,
+  "confidence_score": 0.9,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1595.002",
-        "technique_name": "Active Scanning: Vulnerability Scanning",
-        "description": "An automated crawler discovered the publicly exposed Weave Scope load balancer URL, identifying it as an unauthenticated target.",
-        "tactic_id": "",
-        "evidence_quote": "The load balancer URL was not shared and access to the Weave Scope dashboard was discovered by an automated crawler.",
+        "technique_id": "T1046",
+        "technique_name": "Network Service Discovery",
+        "description": "Automated crawler discovered the publicly exposed Weave Scope dashboard load balancer on the internet.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "access to the Weave Scope dashboard was discovered by an automated crawler",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "aws_services_involved": [
-          "AWS ELB (Elastic Load Balancer)",
-          "AWS Security Groups"
+          "Elastic Load Balancing",
+          "EC2"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "The attacker accessed the Weave Scope dashboard over the public load balancer without any authentication, abusing the built-in 'Launch a command line' feature to gain an interactive shell into a running container.",
+        "description": "Attacker accessed the unauthenticated, internet-exposed Weave Scope dashboard via the public load balancer (security group allowed 0.0.0.0/0 on port 80).",
         "tactic_id": "TA0001",
-        "evidence_quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication... one Weave Scope feature, in particular, was abused... Launch a command line.",
+        "evidence_quote": "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "aws_services_involved": [
-          "AWS ELB (Elastic Load Balancer)"
+          "Elastic Load Balancing",
+          "EC2"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1609",
         "technique_name": "Container Administration Command",
-        "description": "Using Weave Scope's built-in terminal feature, the attacker launched an interactive shell session inside a privileged scope-agent container to execute commands.",
+        "description": "Used Weave Scope's built-in 'Launch a command line' feature to obtain an interactive shell inside the scope-agent container running with --privileged.",
         "tactic_id": "TA0002",
-        "evidence_quote": "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container... Simulating the attacker, a scope-agent container would be ideal to run commands on due to having elevated privileges.",
+        "evidence_quote": "the terminal prompt icon presents a user with an interactive shell to the container",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "EKS/Kubernetes on EC2"
+        ]
       },
       {
         "step": 4,
         "technique_id": "T1611",
         "technique_name": "Escape to Host",
-        "description": "The attacker exploited the privileged container configuration (--privileged flag, host filesystem mount, root user) to break out of the container and execute code directly on the underlying Kubernetes node's host OS.",
+        "description": "Leveraged the privileged scope-agent container with host filesystem mounts to break out of the container onto the underlying Kubernetes host as root.",
         "tactic_id": "TA0004",
-        "evidence_quote": "the weave-scope container is running with the --privileged flag... Files on the root file system were mounted onto the container... Containers are run as the root user... allowed arbitrary code to break out of the container and run on the host instance.",
+        "evidence_quote": "allowed arbitrary code to break out of the container and run on the host instance",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "EC2"
+        ]
       },
       {
         "step": 5,
-        "technique_id": "T1036.005",
-        "technique_name": "Match Legitimate Resource Name or Location",
-        "description": "The XMRig Monero miner binary was renamed 'gcc' to masquerade as the legitimate GNU C Compiler and was placed in the host machine's root directory to evade detection.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "the 'gcc' binary was actually a cryptocurrency miner with the filename gcc... the binary was running from the host machine's root directory and not from a container.",
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "description": "Dropped the XMRig Monero miner binary to the host's root filesystem, renamed as 'gcc'.",
+        "tactic_id": "",
+        "evidence_quote": "the binary was running from the host machine\u2019s root directory",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "EC2"
+        ]
       },
       {
         "step": 6,
-        "technique_id": "T1496",
-        "technique_name": "Resource Hijacking",
-        "description": "The XMRig miner, deployed across all nodes in the development and staging clusters, ran at 100% CPU on one core per node, mining Monero (XMR) and sending results to a remote mining pool.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "A gcc process ran at 100% CPU utilisation... an outbound connection to a mining pool further confirmed my suspicions... XMRig led to a GitHub repository for a Monero miner... This process was found to be running across every machine in the development and staging clusters.",
+        "technique_id": "T1036.005",
+        "technique_name": "Match Legitimate Resource Name or Location",
+        "description": "Renamed the XMRig miner binary to 'gcc' to blend in with legitimate compiler process names.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the \"gcc\" binary was actually a cryptocurrency miner with the filename gcc",
         "evidence_sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1071.001",
+        "technique_name": "Application Layer Protocol",
+        "description": "Miner established outbound connection to a Monero mining pool for C2/work distribution.",
+        "tactic_id": "",
+        "evidence_quote": "an outbound connection to a mining pool further confirmed my suspicions",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "VPC"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1496",
+        "technique_name": "Resource Hijacking",
+        "description": "XMRig ran at 100% CPU on one core of every node across the development and staging Kubernetes clusters, mining Monero.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "having 100% CPU usage on one core on each of our Kubernetes instances in our development and staging environments",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+        ],
+        "aws_services_involved": [
+          "EC2",
+          "EKS/Kubernetes on EC2"
+        ]
       }
     ],
     "edges": [
       {
-        "source": "T1595.002",
+        "source": "T1046",
         "target": "T1190",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Active Scanning: Vulnerability Scanning",
+        "source_technique_name": "Network Service Discovery",
         "target_technique_name": "Exploit Public-Facing Application",
         "sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "evidence_quotes": [
-          "The load balancer URL was not shared and access to the Weave Scope dashboard was discovered by an automated crawler.",
-          "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication... one Weave Scope feature, in particular, was abused... Launch a command line."
+          "access to the Weave Scope dashboard was discovered by an automated crawler",
+          "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication"
         ]
       },
       {
@@ -310,8 +505,8 @@
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "evidence_quotes": [
-          "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication... one Weave Scope feature, in particular, was abused... Launch a command line.",
-          "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container... Simulating the attacker, a scope-agent container would be ideal to run commands on due to having elevated privileges."
+          "Anyone with our load balancer URL can access the Weave Scope dashboard without any authentication",
+          "the terminal prompt icon presents a user with an interactive shell to the container"
         ]
       },
       {
@@ -325,38 +520,68 @@
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "evidence_quotes": [
-          "In the GUI, the terminal prompt icon presents a user with an interactive shell to the container... Simulating the attacker, a scope-agent container would be ideal to run commands on due to having elevated privileges.",
-          "the weave-scope container is running with the --privileged flag... Files on the root file system were mounted onto the container... Containers are run as the root user... allowed arbitrary code to break out of the container and run on the host instance."
+          "the terminal prompt icon presents a user with an interactive shell to the container",
+          "allowed arbitrary code to break out of the container and run on the host instance"
         ]
       },
       {
         "source": "T1611",
-        "target": "T1036.005",
+        "target": "T1105",
         "source_step": 4,
         "target_step": 5,
         "source_technique_name": "Escape to Host",
+        "target_technique_name": "Ingress Tool Transfer",
+        "sources": [
+          "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+        ],
+        "evidence_quotes": [
+          "allowed arbitrary code to break out of the container and run on the host instance",
+          "the binary was running from the host machine\u2019s root directory"
+        ]
+      },
+      {
+        "source": "T1105",
+        "target": "T1036.005",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Ingress Tool Transfer",
         "target_technique_name": "Match Legitimate Resource Name or Location",
         "sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "evidence_quotes": [
-          "the weave-scope container is running with the --privileged flag... Files on the root file system were mounted onto the container... Containers are run as the root user... allowed arbitrary code to break out of the container and run on the host instance.",
-          "the 'gcc' binary was actually a cryptocurrency miner with the filename gcc... the binary was running from the host machine's root directory and not from a container."
+          "the binary was running from the host machine\u2019s root directory",
+          "the \"gcc\" binary was actually a cryptocurrency miner with the filename gcc"
         ]
       },
       {
         "source": "T1036.005",
-        "target": "T1496",
-        "source_step": 5,
-        "target_step": 6,
+        "target": "T1071.001",
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Match Legitimate Resource Name or Location",
+        "target_technique_name": "Application Layer Protocol",
+        "sources": [
+          "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
+        ],
+        "evidence_quotes": [
+          "the \"gcc\" binary was actually a cryptocurrency miner with the filename gcc",
+          "an outbound connection to a mining pool further confirmed my suspicions"
+        ]
+      },
+      {
+        "source": "T1071.001",
+        "target": "T1496",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Application Layer Protocol",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://web.archive.org/web/20210828044334/https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205"
         ],
         "evidence_quotes": [
-          "the 'gcc' binary was actually a cryptocurrency miner with the filename gcc... the binary was running from the host machine's root directory and not from a container.",
-          "A gcc process ran at 100% CPU utilisation... an outbound connection to a mining pool further confirmed my suspicions... XMRig led to a GitHub repository for a Monero miner... This process was found to be running across every machine in the development and staging clusters."
+          "an outbound connection to a mining pool further confirmed my suspicions",
+          "having 100% CPU usage on one core on each of our Kubernetes instances in our development and staging environments"
         ]
       }
     ]
@@ -367,7 +592,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "jw-player-2019-september",
-  "analyzed_at": "2026-04-15T20:56:53.160694+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 14254
+  "analyzed_at": "2026-04-23T18:45:51.917306+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 28346
 }

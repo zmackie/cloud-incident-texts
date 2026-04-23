@@ -7,9 +7,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess).",
           "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess)",
           "validated": true
         }
       ]
@@ -19,20 +19,27 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "subtechnique_id": "T1562.008",
           "inferred": false,
-          "evidence_quote": "Used VPN IP addresses to hide their origin",
-          "subtechnique_id": "T1090.003",
+          "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
+          "validated": true
+        },
+        {
+          "technique_id": "T1070.004",
+          "technique_name": "Indicator Removal: File Deletion",
+          "subtechnique_id": "T1070.004",
+          "inferred": false,
+          "evidence_quote": "deleted logs from the CloudTrail bucket",
           "validated": false
         },
         {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "technique_id": "T1090",
+          "technique_name": "Proxy",
           "inferred": false,
-          "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
-          "subtechnique_id": "T1562.008",
-          "validated": true
+          "evidence_quote": "Used VPN IP addresses to hide their origin",
+          "validated": false
         }
       ]
     },
@@ -50,15 +57,14 @@
       ]
     },
     {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "the attacker had access to nearly everything and can laterally move from staging to production account",
-          "subtechnique_id": "T1078.004",
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
+          "inferred": false,
+          "evidence_quote": "Reset master RDS database passwords for access",
           "validated": true
         }
       ]
@@ -68,8 +74,8 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1110",
-          "technique_name": "Brute Force / Credential Manipulation",
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
           "inferred": false,
           "evidence_quote": "Reset master RDS database passwords for access",
           "validated": true
@@ -77,14 +83,40 @@
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
+          "technique_id": "T1578",
+          "technique_name": "Modify Cloud Compute Infrastructure",
+          "inferred": false,
+          "evidence_quote": "Modified database security groups to allow ingress from their VPN IPs",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
           "inferred": true,
-          "evidence_quote": "Reset master RDS database passwords for access",
+          "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
           "validated": true
         }
       ]
@@ -101,37 +133,18 @@
           "validated": true
         },
         {
-          "technique_id": "T1490",
-          "technique_name": "Inhibit System Recovery",
-          "inferred": false,
-          "evidence_quote": "Critical resources and backups deleted",
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal",
+          "inferred": true,
+          "evidence_quote": "Reset master RDS database passwords for access",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
+        },
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": true,
+          "evidence_quote": "production disrupted for a week",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
-          "inferred": false,
-          "evidence_quote": "VirusTotal and Abuse.ch listed them as known C&C servers",
-          "validated": false
         }
       ]
     }
@@ -139,186 +152,330 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API / Hardcoded Credentials",
-      "description": "Attacker obtained leaked/hardcoded IAM access keys for an IAM user with AdministratorAccess. Keys were shared among team members and used in a CI/CD system hosted in a non-production account with lenient access controls, providing the likely leak vector.",
-      "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess). IAM credentials for applications were shared among team members.",
+      "technique_id": "T1090",
+      "technique_name": "Proxy",
+      "description": "Attacker routed operations through VPN IP addresses to obfuscate origin (later found on VirusTotal/Abuse.ch as known C&C servers).",
+      "aws_services_involved": [],
+      "evidence_quote": "Used VPN IP addresses to hide their origin",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://badshah.io/case-studies/saas-aws-breach/"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Used VPN IP addresses to hide their origin"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Used VPN IP addresses to hide their origin"
+        }
       ],
-      "validated": true
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 2,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker used the stolen IAM access keys to authenticate to the AWS environment with AdministratorAccess, routing through VPN IPs to obscure their origin.",
-      "evidence_quote": "Used VPN IP addresses to hide their origin",
+      "description": "Attacker gained initial access to AWS using leaked IAM user access keys with AdministratorAccess policy attached.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess)",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://badshah.io/case-studies/saas-aws-breach/"
       ],
-      "aws_services_involved": [
-        "IAM",
-        "STS"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker ran custom scripts to enumerate all AWS resources across all regions, mapping the full attack surface including staging and production accounts.",
-      "evidence_quote": "Used custom scripts to enumerate all resources across all regions",
-      "evidence_sources": [
-        "https://badshah.io/case-studies/saas-aws-breach/"
-      ],
+      "description": "Used custom scripts to enumerate all AWS resources across all regions.",
       "aws_services_involved": [
         "EC2",
         "RDS",
-        "S3",
-        "IAM"
+        "S3"
       ],
+      "evidence_quote": "Used custom scripts to enumerate all resources across all regions",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://badshah.io/case-studies/saas-aws-breach/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Used custom scripts to enumerate all resources across all regions"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Used custom scripts to enumerate all resources across all regions"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts (Lateral Movement to Production)",
-      "description": "Attacker leveraged the same or discovered credentials to move laterally from the staging account into the production account, which was also the AWS Organization management account.",
-      "evidence_quote": "the attacker had access to nearly everything and can laterally move from staging to production account",
-      "evidence_sources": [
-        "https://badshah.io/case-studies/saas-aws-breach/"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "AWS Organizations"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1562.007",
-      "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
-      "description": "Attacker modified RDS database security groups to allow inbound traffic from their own VPN IP addresses, enabling direct database access.",
-      "evidence_quote": "Modified database security groups to allow ingress from their VPN IPs",
-      "evidence_sources": [
-        "https://badshah.io/case-studies/saas-aws-breach/"
-      ],
+      "technique_id": "T1578",
+      "technique_name": "Modify Cloud Compute Infrastructure",
+      "description": "Modified RDS security groups to allow ingress from attacker-controlled VPN IPs.",
       "aws_services_involved": [
         "EC2 Security Groups",
         "RDS"
       ],
+      "evidence_quote": "Modified database security groups to allow ingress from their VPN IPs",
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://badshah.io/case-studies/saas-aws-breach/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Modified database security groups to allow ingress from their VPN IPs"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Modified database security groups to allow ingress from their VPN IPs"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation",
+      "description": "Reset RDS master database passwords to gain database access.",
+      "aws_services_involved": [
+        "RDS"
+      ],
+      "evidence_quote": "Reset master RDS database passwords for access",
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://badshah.io/case-studies/saas-aws-breach/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Reset master RDS database passwords for access"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Reset master RDS database passwords for access"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1110",
-      "technique_name": "Brute Force / Credential Manipulation (RDS Password Reset)",
-      "description": "Attacker reset the master RDS database password using their administrator IAM privileges to gain direct database access.",
-      "evidence_quote": "Reset master RDS database passwords for access",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Exfiltrated S3 bucket contents using the AWS CLI `s3 sync` command.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
+      "ordering_confidence": 0.85,
       "evidence_sources": [
         "https://badshah.io/case-studies/saas-aws-breach/"
       ],
-      "aws_services_involved": [
-        "RDS"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Exfiltrated S3 bucket content using S3 Sync command"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Exfiltrated S3 bucket content using S3 Sync command"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Attacker used the AWS CLI 'S3 Sync' command to exfiltrate the contents of S3 buckets to an attacker-controlled destination.",
-      "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
+      "technique_id": "T1562.008",
+      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+      "description": "Stopped CloudTrail logging to evade detection.",
+      "aws_services_involved": [
+        "CloudTrail"
+      ],
+      "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://badshah.io/case-studies/saas-aws-breach/"
       ],
-      "aws_services_involved": [
-        "S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
-      "technique_id": "T1562.008",
-      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-      "description": "Attacker stopped the CloudTrail service and deleted the CloudTrail logs stored in the S3 bucket within the same production account, covering their tracks.",
-      "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
-      "evidence_sources": [
-        "https://badshah.io/case-studies/saas-aws-breach/"
-      ],
+      "technique_id": "T1070.004",
+      "technique_name": "Indicator Removal: File Deletion",
+      "description": "Deleted CloudTrail logs from the S3 bucket hosting trails in the production account.",
       "aws_services_involved": [
         "CloudTrail",
         "S3"
       ],
-      "validated": true
+      "evidence_quote": "deleted logs from the CloudTrail bucket",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://badshah.io/case-studies/saas-aws-breach/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "deleted logs from the CloudTrail bucket"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "deleted logs from the CloudTrail bucket"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 9,
       "technique_id": "T1485",
       "technique_name": "Data Destruction",
-      "description": "Attacker disabled Deletion Protection on EC2 instances, RDS databases, and other resources, then deleted them along with backups, causing a week-long production outage.",
+      "description": "Disabled Deletion Protection on EC2, RDS and other resources, then deleted the resources and backups.",
+      "aws_services_involved": [
+        "EC2",
+        "RDS"
+      ],
       "evidence_quote": "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://badshah.io/case-studies/saas-aws-breach/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "RDS",
-        "S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c015",
+          "source_file": "link_00.clean.md",
+          "char_start": 3028,
+          "char_end": 3506,
+          "quote": "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources"
+        },
+        {
+          "chunk_id": "link_00.md#c021",
+          "source_file": "link_00.md",
+          "char_start": 3782,
+          "char_end": 4260,
+          "quote": "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources"
+        }
       ],
-      "validated": true
-    },
-    {
-      "step": 10,
-      "technique_id": "T1490",
-      "technique_name": "Inhibit System Recovery",
-      "description": "Attacker deleted critical backups, preventing the company from recovering to a clean state and forcing full rebuild of infrastructure in a new AWS account.",
-      "evidence_quote": "Critical resources and backups deleted",
-      "evidence_sources": [
-        "https://badshah.io/case-studies/saas-aws-breach/"
-      ],
-      "aws_services_involved": [
-        "EC2",
-        "RDS",
-        "S3"
-      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "IAM",
-    "STS",
-    "S3",
-    "RDS",
-    "EC2",
     "CloudTrail",
+    "S3",
+    "EC2",
+    "RDS",
     "GuardDuty",
     "SecurityHub",
     "AWS Config",
+    "AWS Identity Center",
     "AWS Organizations",
-    "VPC",
-    "EC2 Security Groups",
-    "AWS Identity Center"
+    "VPC"
   ],
-  "impact_type": "Data Exfiltration and Data Destruction",
+  "impact_type": "Data Exfiltration and Destruction",
   "confidence_score": 0.85,
   "data_exfiltrated": true,
-  "initial_access_vector": "Leaked/hardcoded IAM access keys with AdministratorAccess, likely obtained from a CI/CD system in a non-production account where credentials were shared among team members",
-  "persistence_mechanism": "Not explicitly described; attacker maintained access via valid AdministratorAccess IAM credentials and reset RDS master passwords to maintain database access",
-  "privilege_escalation": "No escalation required \u2014 stolen IAM user already had AdministratorAccess policy attached",
+  "initial_access_vector": "Leaked/compromised IAM user access keys with AdministratorAccess policy, likely exposed via CI/CD system hosted in a non-production account with lenient controls and shared among team members.",
+  "persistence_mechanism": "Continued use of the valid leaked IAM access keys with AdministratorAccess; resetting of RDS master passwords to retain database access.",
+  "privilege_escalation": "Not required \u2014 compromised IAM user already had AdministratorAccess policy attached.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "Attacker obtained leaked/hardcoded IAM access keys for an IAM user with AdministratorAccess. Keys were shared among team members and used in a CI/CD system hosted in a non-production account with lenient access controls, providing the likely leak vector.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess). IAM credentials for applications were shared among team members.",
+        "technique_id": "T1090",
+        "technique_name": "Proxy",
+        "description": "Attacker routed operations through VPN IP addresses to obfuscate origin (later found on VirusTotal/Abuse.ch as known C&C servers).",
+        "tactic_id": "",
+        "evidence_quote": "Used VPN IP addresses to hide their origin",
+        "evidence_sources": [
+          "https://badshah.io/case-studies/saas-aws-breach/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 2,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker gained initial access to AWS using leaked IAM user access keys with AdministratorAccess policy attached.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess)",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
@@ -327,25 +484,10 @@
         ]
       },
       {
-        "step": 2,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Attacker used the stolen IAM access keys to authenticate to the AWS environment with AdministratorAccess, routing through VPN IPs to obscure their origin.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Used VPN IP addresses to hide their origin",
-        "evidence_sources": [
-          "https://badshah.io/case-studies/saas-aws-breach/"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "STS"
-        ]
-      },
-      {
         "step": 3,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker ran custom scripts to enumerate all AWS resources across all regions, mapping the full attack surface including staging and production accounts.",
+        "description": "Used custom scripts to enumerate all AWS resources across all regions.",
         "tactic_id": "TA0007",
         "evidence_quote": "Used custom scripts to enumerate all resources across all regions",
         "evidence_sources": [
@@ -354,30 +496,14 @@
         "aws_services_involved": [
           "EC2",
           "RDS",
-          "S3",
-          "IAM"
+          "S3"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Attacker leveraged the same or discovered credentials to move laterally from the staging account into the production account, which was also the AWS Organization management account.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "the attacker had access to nearly everything and can laterally move from staging to production account",
-        "evidence_sources": [
-          "https://badshah.io/case-studies/saas-aws-breach/"
-        ],
-        "aws_services_involved": [
-          "IAM",
-          "AWS Organizations"
-        ]
-      },
-      {
-        "step": 5,
-        "technique_id": "T1562.007",
-        "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "Attacker modified RDS database security groups to allow inbound traffic from their own VPN IP addresses, enabling direct database access.",
+        "technique_id": "T1578",
+        "technique_name": "Modify Cloud Compute Infrastructure",
+        "description": "Modified RDS security groups to allow ingress from attacker-controlled VPN IPs.",
         "tactic_id": "TA0005",
         "evidence_quote": "Modified database security groups to allow ingress from their VPN IPs",
         "evidence_sources": [
@@ -389,11 +515,11 @@
         ]
       },
       {
-        "step": 6,
-        "technique_id": "T1110",
-        "technique_name": "Brute Force",
-        "description": "Attacker reset the master RDS database password using their administrator IAM privileges to gain direct database access.",
-        "tactic_id": "TA0006",
+        "step": 5,
+        "technique_id": "T1098",
+        "technique_name": "Account Manipulation",
+        "description": "Reset RDS master database passwords to gain database access.",
+        "tactic_id": "TA0003",
         "evidence_quote": "Reset master RDS database passwords for access",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
@@ -403,11 +529,11 @@
         ]
       },
       {
-        "step": 7,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Attacker used the AWS CLI 'S3 Sync' command to exfiltrate the contents of S3 buckets to an attacker-controlled destination.",
-        "tactic_id": "TA0010",
+        "step": 6,
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Exfiltrated S3 bucket contents using the AWS CLI `s3 sync` command.",
+        "tactic_id": "TA0009",
         "evidence_quote": "Exfiltrated S3 bucket content using S3 Sync command",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
@@ -417,12 +543,26 @@
         ]
       },
       {
-        "step": 8,
+        "step": 7,
         "technique_id": "T1562.008",
         "technique_name": "Disable or Modify Cloud Logs",
-        "description": "Attacker stopped the CloudTrail service and deleted the CloudTrail logs stored in the S3 bucket within the same production account, covering their tracks.",
+        "description": "Stopped CloudTrail logging to evade detection.",
         "tactic_id": "TA0005",
         "evidence_quote": "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
+        "evidence_sources": [
+          "https://badshah.io/case-studies/saas-aws-breach/"
+        ],
+        "aws_services_involved": [
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 8,
+        "technique_id": "T1070.004",
+        "technique_name": "Indicator Removal: File Deletion",
+        "description": "Deleted CloudTrail logs from the S3 bucket hosting trails in the production account.",
+        "tactic_id": "",
+        "evidence_quote": "deleted logs from the CloudTrail bucket",
         "evidence_sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
@@ -435,7 +575,7 @@
         "step": 9,
         "technique_id": "T1485",
         "technique_name": "Data Destruction",
-        "description": "Attacker disabled Deletion Protection on EC2 instances, RDS databases, and other resources, then deleted them along with backups, causing a week-long production outage.",
+        "description": "Disabled Deletion Protection on EC2, RDS and other resources, then deleted the resources and backups.",
         "tactic_id": "TA0040",
         "evidence_quote": "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources",
         "evidence_sources": [
@@ -443,41 +583,24 @@
         ],
         "aws_services_involved": [
           "EC2",
-          "RDS",
-          "S3"
-        ]
-      },
-      {
-        "step": 10,
-        "technique_id": "T1490",
-        "technique_name": "Inhibit System Recovery",
-        "description": "Attacker deleted critical backups, preventing the company from recovering to a clean state and forcing full rebuild of infrastructure in a new AWS account.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "Critical resources and backups deleted",
-        "evidence_sources": [
-          "https://badshah.io/case-studies/saas-aws-breach/"
-        ],
-        "aws_services_involved": [
-          "EC2",
-          "RDS",
-          "S3"
+          "RDS"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1552.005",
+        "source": "T1090",
         "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Proxy",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
         "evidence_quotes": [
-          "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess). IAM credentials for applications were shared among team members.",
-          "Used VPN IP addresses to hide their origin"
+          "Used VPN IP addresses to hide their origin",
+          "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess)"
         ]
       },
       {
@@ -491,47 +614,32 @@
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
         "evidence_quotes": [
-          "Used VPN IP addresses to hide their origin",
+          "Leaked access keys belonging to IAM user with excessive IAM permissions (AdministratorAccess)",
           "Used custom scripts to enumerate all resources across all regions"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1078.004",
+        "target": "T1578",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Cloud Accounts",
+        "target_technique_name": "Modify Cloud Compute Infrastructure",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
         "evidence_quotes": [
           "Used custom scripts to enumerate all resources across all regions",
-          "the attacker had access to nearly everything and can laterally move from staging to production account"
-        ]
-      },
-      {
-        "source": "T1078.004",
-        "target": "T1562.007",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Disable or Modify Cloud Firewall",
-        "sources": [
-          "https://badshah.io/case-studies/saas-aws-breach/"
-        ],
-        "evidence_quotes": [
-          "the attacker had access to nearly everything and can laterally move from staging to production account",
           "Modified database security groups to allow ingress from their VPN IPs"
         ]
       },
       {
-        "source": "T1562.007",
-        "target": "T1110",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Disable or Modify Cloud Firewall",
-        "target_technique_name": "Brute Force",
+        "source": "T1578",
+        "target": "T1098",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Modify Cloud Compute Infrastructure",
+        "target_technique_name": "Account Manipulation",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
@@ -541,12 +649,12 @@
         ]
       },
       {
-        "source": "T1110",
-        "target": "T1537",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Brute Force",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "source": "T1098",
+        "target": "T1530",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Account Manipulation",
+        "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
@@ -556,11 +664,11 @@
         ]
       },
       {
-        "source": "T1537",
+        "source": "T1530",
         "target": "T1562.008",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Transfer Data to Cloud Account",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Data from Cloud Storage",
         "target_technique_name": "Disable or Modify Cloud Logs",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
@@ -572,32 +680,32 @@
       },
       {
         "source": "T1562.008",
-        "target": "T1485",
-        "source_step": 8,
-        "target_step": 9,
+        "target": "T1070.004",
+        "source_step": 7,
+        "target_step": 8,
         "source_technique_name": "Disable or Modify Cloud Logs",
-        "target_technique_name": "Data Destruction",
+        "target_technique_name": "Indicator Removal: File Deletion",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
         "evidence_quotes": [
           "Stopped CloudTrail and deleted logs from the CloudTrail bucket",
-          "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources"
+          "deleted logs from the CloudTrail bucket"
         ]
       },
       {
-        "source": "T1485",
-        "target": "T1490",
-        "source_step": 9,
-        "target_step": 10,
-        "source_technique_name": "Data Destruction",
-        "target_technique_name": "Inhibit System Recovery",
+        "source": "T1070.004",
+        "target": "T1485",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Indicator Removal: File Deletion",
+        "target_technique_name": "Data Destruction",
         "sources": [
           "https://badshah.io/case-studies/saas-aws-breach/"
         ],
         "evidence_quotes": [
-          "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources",
-          "Critical resources and backups deleted"
+          "deleted logs from the CloudTrail bucket",
+          "Found Deletion Protection on resources (EC2, RDS, etc), turned off the setting and then deleted the resources"
         ]
       }
     ]
@@ -608,7 +716,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "badshah-2025-april",
-  "analyzed_at": "2026-04-15T20:44:28.727607+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 10878
+  "analyzed_at": "2026-04-23T18:38:07.820966+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 19751
 }

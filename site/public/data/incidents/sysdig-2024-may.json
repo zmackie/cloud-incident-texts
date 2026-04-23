@@ -18,10 +18,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
+          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
+          "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials",
           "validated": true
         }
       ]
@@ -31,17 +32,24 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "inferred": false,
-          "evidence_quote": "They cleverly tested the boundaries of their access without immediately triggering alarms... It confirmed not only the existence of access to the LLMs but also that these services were active.",
-          "validated": true
-        },
-        {
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "the attackers called 'InvokeModel' only in the supported regions... AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions.",
+          "evidence_quote": "they intentionally set the max_tokens_to_sample parameter to -1 ... It confirmed not only the existence of access to the LLMs but also that these services were active",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "a broader script that was able to check credentials for ten different AI services in order to determine which were useful",
+          "validated": true
+        },
+        {
+          "technique_id": "T1538",
+          "technique_name": "Cloud Service Dashboard",
+          "inferred": true,
+          "evidence_quote": null,
           "validated": true
         }
       ]
@@ -51,30 +59,11 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1562.008",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "technique_id": "T1562",
+          "technique_name": "Impair Defenses",
+          "subtechnique_id": "T1562.008",
           "inferred": false,
           "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1535",
-          "technique_name": "Unused/Unsupported Cloud Regions",
-          "inferred": false,
-          "evidence_quote": "the attackers called 'InvokeModel' only in the supported regions.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550.001",
-          "technique_name": "Use Alternate Authentication Material: Application Access Token",
-          "inferred": false,
-          "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
           "validated": true
         }
       ]
@@ -87,21 +76,8 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Attacks against LLM-based Artificial Intelligence (AI) systems... attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill.",
+          "evidence_quote": "the cost to the victim can be over $46,000 per day",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_id": "T1090",
-          "technique_name": "Proxy",
-          "inferred": false,
-          "evidence_quote": "Sysdig researchers discovered evidence of a reverse proxy for LLMs being used to provide access to the compromised accounts... a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models.",
-          "validated": false
         }
       ]
     }
@@ -111,134 +87,162 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Attackers exploited CVE-2021-3129, a known deserialization vulnerability in Laravel, on a publicly accessible server to gain initial foothold on the target system.",
-      "evidence_quote": "The credentials were obtained from a popular target, a system running a vulnerable version of Laravel (CVE-2021-3129).",
+      "description": "Attackers exploited a vulnerable Laravel instance (CVE-2021-3129) to gain initial access to the target system.",
       "aws_services_involved": [],
+      "evidence_quote": "The credentials were obtained from a popular target, a system running a vulnerable version of Laravel (CVE-2021-3129).",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1552.001",
       "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "After gaining access to the compromised Laravel host, attackers extracted cloud credentials stored in cleartext (e.g., in application config or environment files).",
-      "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
-      "aws_services_involved": [],
+      "description": "Attackers exfiltrated cloud credentials stored on the compromised Laravel system.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c004",
+          "source_file": "link_00.clean.md",
+          "char_start": 1013,
+          "char_end": 1395,
+          "quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment"
+        },
+        {
+          "chunk_id": "link_00.md#c047",
+          "source_file": "link_00.md",
+          "char_start": 11205,
+          "char_end": 11587,
+          "quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1550.001",
-      "technique_name": "Use Alternate Authentication Material: Application Access Token",
-      "description": "Attackers used the stolen IAM access key credentials to authenticate to the AWS cloud environment and begin interacting with cloud services.",
-      "evidence_quote": "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers.",
+      "technique_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "description": "Attackers ran a key-checking script (keychecker) against the stolen credentials to enumerate which of ten AI/LLM services (AWS Bedrock, Anthropic, OpenAI, Azure, GCP Vertex, etc.) they provided access to.",
       "aws_services_involved": [
-        "IAM"
+        "Bedrock"
       ],
+      "evidence_quote": "a broader script that was able to check credentials for ten different AI services in order to determine which were useful for their purposes",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Attackers called InvokeModel with max_tokens_to_sample=-1 across all AWS Bedrock-supported regions to probe whether LLM services were enabled and accessible, distinguishing between ValidationException (enabled) and AccessDenied (restricted).",
-      "evidence_quote": "They sent a legitimate request but specified 'max_tokens_to_sample' to be -1. This is an invalid error which causes the 'ValidationException' error, but it is useful information for the attacker to have because it tells them the credentials have access to the LLMs and they have been enabled.",
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attackers called Bedrock InvokeModel with max_tokens_to_sample=-1 to probe, via the ValidationException vs AccessDenied response, whether the stolen credentials had Bedrock model access enabled.",
       "aws_services_involved": [
         "Bedrock",
         "CloudTrail"
       ],
+      "evidence_quote": "they intentionally set the max_tokens_to_sample parameter to -1 ... It confirmed not only the existence of access to the LLMs but also that these services were active, as indicated by the resulting ValidationException",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attackers systematically probed all AWS Bedrock-supported regions (us-east-1, us-west-2, ap-southeast-1, ap-northeast-1, eu-central-1, eu-west-3, us-gov-west-1) to enumerate available models by region.",
-      "evidence_quote": "AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions.",
-      "aws_services_involved": [
-        "Bedrock"
-      ],
-      "evidence_sources": [
-        "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
       "technique_id": "T1562.008",
       "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-      "description": "Attackers called GetModelInvocationLoggingConfiguration to query whether S3 and CloudWatch logging was enabled on AWS Bedrock, with intent to avoid using credentials where detailed prompt/response logging was active.",
-      "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts... OAI Reverse Proxy states it will not use any AWS key that has logging enabled for the sake of 'privacy.'",
+      "description": "Attackers called GetModelInvocationLoggingConfiguration to determine whether Bedrock model invocation logging to CloudWatch/S3 was enabled, in order to avoid using credentials whose usage would be logged (OAI Reverse Proxy intentionally avoids keys with logging enabled).",
       "aws_services_involved": [
         "Bedrock",
         "CloudWatch",
         "S3"
       ],
+      "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 0.85,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c009",
+          "source_file": "link_00.clean.md",
+          "char_start": 2338,
+          "char_end": 2769,
+          "quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts."
+        },
+        {
+          "chunk_id": "link_00.md#c052",
+          "source_file": "link_00.md",
+          "char_start": 12530,
+          "char_end": 12961,
+          "quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
-      "step": 7,
-      "technique_id": "T1090",
-      "technique_name": "Proxy",
-      "description": "Attackers routed LLM queries through an OAI Reverse Proxy to centrally manage access to the pool of compromised cloud credentials without directly exposing them, enabling resale of LLM access to other cybercriminals.",
-      "evidence_quote": "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials.",
-      "aws_services_involved": [
-        "Bedrock"
-      ],
-      "evidence_sources": [
-        "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-      ],
-      "validated": false
-    },
-    {
-      "step": 8,
+      "step": 6,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Attackers abused the compromised cloud credentials to invoke Claude (v2/v3) LLM models via AWS Bedrock at scale across multiple regions, consuming victim-paid LLM quota (up to $46,000/day) while selling the access to other threat actors.",
-      "evidence_quote": "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill... the cost to the victim can be over $46,000 per day.",
+      "description": "Attackers abused access to hosted LLM models (Anthropic Claude v2/v3 via AWS Bedrock) through an OAI Reverse Proxy to sell LLM access to other cybercriminals, racking up potentially $46,000+/day in consumption costs for the victim (LLMjacking).",
       "aws_services_involved": [
         "Bedrock"
       ],
+      "evidence_quote": "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill ... the cost to the victim can be over $46,000 per day",
       "evidence_sources": [
         "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "Bedrock",
-    "IAM",
     "CloudTrail",
     "CloudWatch",
-    "S3"
+    "S3",
+    "IAM"
   ],
   "impact_type": "LLM / Resource Hijacking",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Exploitation of CVE-2021-3129, a known deserialization vulnerability in Laravel running on a publicly accessible server",
-  "persistence_mechanism": "Use of stolen long-lived IAM access key credentials routed through an OAI Reverse Proxy, enabling continued access without re-exploitation",
-  "privilege_escalation": "Not observed; attacker leveraged permissions already attached to the stolen IAM credentials (no escalation step documented)",
-  "data_exfiltrated": true,
+  "confidence_score": 0.9,
+  "data_exfiltrated": false,
+  "initial_access_vector": "Exploitation of a publicly exposed Laravel application vulnerable to CVE-2021-3129, from which AWS cloud credentials were stolen.",
+  "persistence_mechanism": "Continued use of stolen long-term IAM user access keys; no new persistence mechanisms were described.",
+  "privilege_escalation": "None observed; attackers leveraged the existing permissions of the stolen IAM credentials (including Bedrock InvokeModel).",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attackers exploited CVE-2021-3129, a known deserialization vulnerability in Laravel, on a publicly accessible server to gain initial foothold on the target system.",
+        "description": "Attackers exploited a vulnerable Laravel instance (CVE-2021-3129) to gain initial access to the target system.",
         "tactic_id": "TA0001",
         "evidence_quote": "The credentials were obtained from a popular target, a system running a vulnerable version of Laravel (CVE-2021-3129).",
         "evidence_sources": [
@@ -250,21 +254,9 @@
         "step": 2,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "After gaining access to the compromised Laravel host, attackers extracted cloud credentials stored in cleartext (e.g., in application config or environment files).",
+        "description": "Attackers exfiltrated cloud credentials stored on the compromised Laravel system.",
         "tactic_id": "TA0006",
-        "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
-        "evidence_sources": [
-          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-        ],
-        "aws_services_involved": []
-      },
-      {
-        "step": 3,
-        "technique_id": "T1550.001",
-        "technique_name": "Application Access Token",
-        "description": "Attackers used the stolen IAM access key credentials to authenticate to the AWS cloud environment and begin interacting with cloud services.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers.",
+        "evidence_quote": "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
@@ -273,12 +265,26 @@
         ]
       },
       {
-        "step": 4,
+        "step": 3,
         "technique_id": "T1526",
         "technique_name": "Cloud Service Discovery",
-        "description": "Attackers called InvokeModel with max_tokens_to_sample=-1 across all AWS Bedrock-supported regions to probe whether LLM services were enabled and accessible, distinguishing between ValidationException (enabled) and AccessDenied (restricted).",
+        "description": "Attackers ran a key-checking script (keychecker) against the stolen credentials to enumerate which of ten AI/LLM services (AWS Bedrock, Anthropic, OpenAI, Azure, GCP Vertex, etc.) they provided access to.",
         "tactic_id": "TA0007",
-        "evidence_quote": "They sent a legitimate request but specified 'max_tokens_to_sample' to be -1. This is an invalid error which causes the 'ValidationException' error, but it is useful information for the attacker to have because it tells them the credentials have access to the LLMs and they have been enabled.",
+        "evidence_quote": "a broader script that was able to check credentials for ten different AI services in order to determine which were useful for their purposes",
+        "evidence_sources": [
+          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
+        ],
+        "aws_services_involved": [
+          "Bedrock"
+        ]
+      },
+      {
+        "step": 4,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attackers called Bedrock InvokeModel with max_tokens_to_sample=-1 to probe, via the ValidationException vs AccessDenied response, whether the stolen credentials had Bedrock model access enabled.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "they intentionally set the max_tokens_to_sample parameter to -1 ... It confirmed not only the existence of access to the LLMs but also that these services were active, as indicated by the resulting ValidationException",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
@@ -289,25 +295,11 @@
       },
       {
         "step": 5,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attackers systematically probed all AWS Bedrock-supported regions (us-east-1, us-west-2, ap-southeast-1, ap-northeast-1, eu-central-1, eu-west-3, us-gov-west-1) to enumerate available models by region.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions.",
-        "evidence_sources": [
-          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-        ],
-        "aws_services_involved": [
-          "Bedrock"
-        ]
-      },
-      {
-        "step": 6,
         "technique_id": "T1562.008",
         "technique_name": "Disable or Modify Cloud Logs",
-        "description": "Attackers called GetModelInvocationLoggingConfiguration to query whether S3 and CloudWatch logging was enabled on AWS Bedrock, with intent to avoid using credentials where detailed prompt/response logging was active.",
+        "description": "Attackers called GetModelInvocationLoggingConfiguration to determine whether Bedrock model invocation logging to CloudWatch/S3 was enabled, in order to avoid using credentials whose usage would be logged (OAI Reverse Proxy intentionally avoids keys with logging enabled).",
         "tactic_id": "TA0005",
-        "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts... OAI Reverse Proxy states it will not use any AWS key that has logging enabled for the sake of 'privacy.'",
+        "evidence_quote": "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
@@ -318,26 +310,12 @@
         ]
       },
       {
-        "step": 7,
-        "technique_id": "T1090",
-        "technique_name": "Proxy",
-        "description": "Attackers routed LLM queries through an OAI Reverse Proxy to centrally manage access to the pool of compromised cloud credentials without directly exposing them, enabling resale of LLM access to other cybercriminals.",
-        "tactic_id": "",
-        "evidence_quote": "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials.",
-        "evidence_sources": [
-          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-        ],
-        "aws_services_involved": [
-          "Bedrock"
-        ]
-      },
-      {
-        "step": 8,
+        "step": 6,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Attackers abused the compromised cloud credentials to invoke Claude (v2/v3) LLM models via AWS Bedrock at scale across multiple regions, consuming victim-paid LLM quota (up to $46,000/day) while selling the access to other threat actors.",
+        "description": "Attackers abused access to hosted LLM models (Anthropic Claude v2/v3 via AWS Bedrock) through an OAI Reverse Proxy to sell LLM access to other cybercriminals, racking up potentially $46,000+/day in consumption costs for the victim (LLMjacking).",
         "tactic_id": "TA0040",
-        "evidence_quote": "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill... the cost to the victim can be over $46,000 per day.",
+        "evidence_quote": "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill ... the cost to the victim can be over $46,000 per day",
         "evidence_sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
@@ -359,97 +337,67 @@
         ],
         "evidence_quotes": [
           "The credentials were obtained from a popular target, a system running a vulnerable version of Laravel (CVE-2021-3129).",
-          "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment."
+          "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment"
         ]
       },
       {
         "source": "T1552.001",
-        "target": "T1550.001",
+        "target": "T1526",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Application Access Token",
-        "sources": [
-          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-        ],
-        "evidence_quotes": [
-          "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment.",
-          "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers."
-        ]
-      },
-      {
-        "source": "T1550.001",
-        "target": "T1526",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Application Access Token",
         "target_technique_name": "Cloud Service Discovery",
         "sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "evidence_quotes": [
-          "they exfiltrated cloud credentials and gained access to the cloud environment, where they attempted to access local LLM models hosted by cloud providers.",
-          "They sent a legitimate request but specified 'max_tokens_to_sample' to be -1. This is an invalid error which causes the 'ValidationException' error, but it is useful information for the attacker to have because it tells them the credentials have access to the LLMs and they have been enabled."
+          "Once initial access was obtained, they exfiltrated cloud credentials and gained access to the cloud environment",
+          "a broader script that was able to check credentials for ten different AI services in order to determine which were useful for their purposes"
         ]
       },
       {
         "source": "T1526",
         "target": "T1580",
-        "source_step": 4,
-        "target_step": 5,
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Service Discovery",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "evidence_quotes": [
-          "They sent a legitimate request but specified 'max_tokens_to_sample' to be -1. This is an invalid error which causes the 'ValidationException' error, but it is useful information for the attacker to have because it tells them the credentials have access to the LLMs and they have been enabled.",
-          "AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions."
+          "a broader script that was able to check credentials for ten different AI services in order to determine which were useful for their purposes",
+          "they intentionally set the max_tokens_to_sample parameter to -1 ... It confirmed not only the existence of access to the LLMs but also that these services were active, as indicated by the resulting ValidationException"
         ]
       },
       {
         "source": "T1580",
         "target": "T1562.008",
-        "source_step": 5,
-        "target_step": 6,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Disable or Modify Cloud Logs",
         "sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "evidence_quotes": [
-          "AWS Bedrock is not supported in all regions so the attackers called 'InvokeModel' only in the supported regions.",
-          "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts... OAI Reverse Proxy states it will not use any AWS key that has logging enabled for the sake of 'privacy.'"
+          "they intentionally set the max_tokens_to_sample parameter to -1 ... It confirmed not only the existence of access to the LLMs but also that these services were active, as indicated by the resulting ValidationException",
+          "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts."
         ]
       },
       {
         "source": "T1562.008",
-        "target": "T1090",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Disable or Modify Cloud Logs",
-        "target_technique_name": "Proxy",
-        "sources": [
-          "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
-        ],
-        "evidence_quotes": [
-          "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts... OAI Reverse Proxy states it will not use any AWS key that has logging enabled for the sake of 'privacy.'",
-          "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials."
-        ]
-      },
-      {
-        "source": "T1090",
         "target": "T1496",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Proxy",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Disable or Modify Cloud Logs",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/"
         ],
         "evidence_quotes": [
-          "a user-agent that matches OAI Reverse Proxy was seen attempting to use LLM models... Using software such as this would allow an attacker to centrally manage access to multiple LLM accounts while not exposing the underlying credentials.",
-          "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill... the cost to the victim can be over $46,000 per day."
+          "logging settings are also queried where possible. This is done to avoid detection when using the compromised credentials to run their prompts.",
+          "attackers intend to sell LLM access to other cybercriminals while the cloud account owner pays the bill ... the cost to the victim can be over $46,000 per day"
         ]
       }
     ]
@@ -460,18 +408,18 @@
   },
   "schema_version": "1.0",
   "incident_slug": "sysdig-2024-may",
-  "analyzed_at": "2026-04-15T21:10:17.747062+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 31330,
+  "analyzed_at": "2026-04-23T18:53:48.758219+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 50453,
   "incident_name": "Sysdig",
   "incident_date": "2024, May",
   "incident_root_cause": "Exploited known vulnerable Laravel (CVE-2021-3129)",
-  "impact_type_raw": "LLMJacking (Resource Hijacking / AI Service Abuse)",
+  "impact_type_raw": "Resource Hijacking (LLMjacking)",
   "aws_services_raw": [
     "AWS Bedrock",
-    "AWS IAM",
-    "AWS CloudTrail",
-    "Amazon CloudWatch",
-    "Amazon S3"
+    "CloudTrail",
+    "CloudWatch",
+    "S3",
+    "IAM"
   ]
 }

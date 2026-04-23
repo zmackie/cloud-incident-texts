@@ -8,20 +8,20 @@
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+          "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys.",
+          "evidence_quote": "used them to access the AWS API from an intermediate host",
           "validated": true
         }
       ]
@@ -34,7 +34,7 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+          "evidence_quote": "the actor created several instances in our infrastructure to do reconnaissance",
           "validated": true
         }
       ]
@@ -44,36 +44,36 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1535",
-          "technique_name": "Unused/Unsupported Cloud Regions",
-          "inferred": true,
-          "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1651",
-          "technique_name": "Cloud Administration Command",
+          "technique_id": "T1578.002",
+          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
           "inferred": false,
-          "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+          "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
           "inferred": true,
-          "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+          "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "access database tables that contain information about users, apps, and various types of keys",
           "validated": true
         }
       ]
@@ -84,95 +84,206 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The threat actor obtained a set of AWS access keys belonging to OneLogin, enabling authenticated API access to OneLogin's AWS environment.",
-      "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
+      "description": "Threat actor obtained a set of AWS keys and used them to authenticate to the AWS API from an intermediate host at another smaller US service provider.",
+      "event_time": "2017-05-31T02:00:00-08:00",
+      "event_time_precision": "exact",
       "aws_services_involved": [
-        "IAM"
+        "AWS IAM",
+        "AWS API"
       ],
+      "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
       "evidence_sources": [
         "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 272,
+          "char_end": 4245,
+          "quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3973,
+          "quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US"
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1651",
-      "technique_name": "Cloud Administration Command",
-      "description": "Using the stolen AWS keys, the actor called AWS APIs from an intermediate host (a third-party service provider) to interact with OneLogin's cloud infrastructure, launching EC2 instances.",
-      "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Through the AWS API, the actor created several EC2 instances in OneLogin's infrastructure.",
       "aws_services_involved": [
         "EC2",
         "AWS API"
       ],
+      "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure",
       "evidence_sources": [
         "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 272,
+          "char_end": 4245,
+          "quote": "Through the AWS API, the actor created several instances in our infrastructure"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3973,
+          "quote": "Through the AWS API, the actor created several instances in our infrastructure"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "The attacker created several EC2 instances within OneLogin's infrastructure to conduct reconnaissance of the environment.",
-      "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+      "description": "Used the created instances to perform reconnaissance of the AWS environment.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "created several instances in our infrastructure to do reconnaissance",
       "evidence_sources": [
         "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
       ],
+      "ordering_confidence": 1.0,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 272,
+          "char_end": 4245,
+          "quote": "created several instances in our infrastructure to do reconnaissance"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3973,
+          "quote": "created several instances in our infrastructure to do reconnaissance"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The threat actor accessed OneLogin database tables containing sensitive information about users, applications, and cryptographic keys. The actor may also have obtained the ability to decrypt encrypted data at rest.",
-      "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Accessed database tables containing information about users, apps, and various types of keys (some data encrypted at rest).",
       "aws_services_involved": [
         "RDS"
       ],
+      "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys",
       "evidence_sources": [
         "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 272,
+          "char_end": 4245,
+          "quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3973,
+          "quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Potential exfiltration of database contents; OneLogin could not rule out that the actor also obtained the ability to decrypt encrypted data.",
+      "event_time": "2017-05-31T09:00:00-08:00",
+      "event_time_precision": "exact",
+      "aws_services_involved": [
+        "RDS"
+      ],
+      "evidence_quote": "at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data",
+      "evidence_sources": [
+        "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 272,
+          "char_end": 4245,
+          "quote": "at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3973,
+          "quote": "at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
     "EC2",
-    "RDS",
-    "AWS API"
+    "AWS IAM",
+    "AWS API",
+    "RDS"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Stolen AWS IAM access keys used to authenticate to the AWS API from an intermediate host at a third-party US service provider",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "confidence_score": 0.7,
   "data_exfiltrated": true,
+  "initial_access_vector": "Compromised AWS API keys used from an intermediate host at another US service provider to authenticate to the AWS API.",
+  "persistence_mechanism": "None explicitly described; attacker spun up EC2 instances using valid AWS keys but session was cut short by OneLogin revoking keys and terminating instances.",
+  "privilege_escalation": "No explicit privilege escalation described; the stolen AWS keys already provided sufficient privileges to create EC2 instances and access databases.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The threat actor obtained a set of AWS access keys belonging to OneLogin, enabling authenticated API access to OneLogin's AWS environment.",
+        "description": "Threat actor obtained a set of AWS keys and used them to authenticate to the AWS API from an intermediate host at another smaller US service provider.",
         "tactic_id": "TA0005",
         "evidence_quote": "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
         "evidence_sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
         "aws_services_involved": [
-          "IAM"
+          "AWS IAM",
+          "AWS API"
         ]
       },
       {
         "step": 2,
-        "technique_id": "T1651",
-        "technique_name": "Cloud Administration Command",
-        "description": "Using the stolen AWS keys, the actor called AWS APIs from an intermediate host (a third-party service provider) to interact with OneLogin's cloud infrastructure, launching EC2 instances.",
-        "tactic_id": "TA0002",
-        "evidence_quote": "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Through the AWS API, the actor created several EC2 instances in OneLogin's infrastructure.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure",
         "evidence_sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
@@ -185,9 +296,9 @@
         "step": 3,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "The attacker created several EC2 instances within OneLogin's infrastructure to conduct reconnaissance of the environment.",
+        "description": "Used the created instances to perform reconnaissance of the AWS environment.",
         "tactic_id": "TA0007",
-        "evidence_quote": "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
+        "evidence_quote": "created several instances in our infrastructure to do reconnaissance",
         "evidence_sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
@@ -197,11 +308,25 @@
       },
       {
         "step": 4,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Accessed database tables containing information about users, apps, and various types of keys (some data encrypted at rest).",
+        "tactic_id": "TA0009",
+        "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "aws_services_involved": [
+          "RDS"
+        ]
+      },
+      {
+        "step": 5,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The threat actor accessed OneLogin database tables containing sensitive information about users, applications, and cryptographic keys. The actor may also have obtained the ability to decrypt encrypted data at rest.",
+        "description": "Potential exfiltration of database contents; OneLogin could not rule out that the actor also obtained the ability to decrypt encrypted data.",
         "tactic_id": "TA0009",
-        "evidence_quote": "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data.",
+        "evidence_quote": "at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data",
         "evidence_sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
@@ -213,47 +338,62 @@
     "edges": [
       {
         "source": "T1078.004",
-        "target": "T1651",
+        "target": "T1578.002",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Administration Command",
+        "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
         "evidence_quotes": [
           "a threat actor obtained access to a set of AWS keys and used them to access the AWS API from an intermediate host with another, smaller service provider in the US",
-          "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST."
+          "Through the AWS API, the actor created several instances in our infrastructure"
         ]
       },
       {
-        "source": "T1651",
+        "source": "T1578.002",
         "target": "T1580",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Cloud Administration Command",
+        "source_technique_name": "Create Cloud Instance",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
         "evidence_quotes": [
-          "used them to access the AWS API from an intermediate host with another, smaller service provider in the US. Evidence shows the attack started on May 31, 2017 around 2 am PST.",
-          "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance."
+          "Through the AWS API, the actor created several instances in our infrastructure",
+          "created several instances in our infrastructure to do reconnaissance"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1530",
+        "target": "T1213",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
+        ],
+        "evidence_quotes": [
+          "created several instances in our infrastructure to do reconnaissance",
+          "The threat actor was able to access database tables that contain information about users, apps, and various types of keys"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1530",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Data from Information Repositories",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://web.archive.org/web/20210620180614/https://www.onelogin.com/blog/may-31-2017-security-incident"
         ],
         "evidence_quotes": [
-          "Through the AWS API, the actor created several instances in our infrastructure to do reconnaissance.",
-          "The threat actor was able to access database tables that contain information about users, apps, and various types of keys. While we encrypt certain sensitive data at rest, at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data."
+          "The threat actor was able to access database tables that contain information about users, apps, and various types of keys",
+          "at this time we cannot rule out the possibility that the threat actor also obtained the ability to decrypt data"
         ]
       }
     ]
@@ -264,7 +404,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "onelogin-2017-may",
-  "analyzed_at": "2026-04-15T21:02:01.985178+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 4308
+  "analyzed_at": "2026-04-23T18:49:12.939467+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 8589
 }

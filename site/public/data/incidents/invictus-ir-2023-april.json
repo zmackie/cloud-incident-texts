@@ -1,15 +1,171 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker obtained a publicly exposed long-term AWS access key (credentials leaked publicly).",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "event_time": "2023-04",
+      "event_time_precision": "month",
+      "evidence_quote": "a specific access key was used which was publicly exposed",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c032",
+          "source_file": "link_00.clean.md",
+          "char_start": 6301,
+          "char_end": 6593,
+          "quote": "a specific access key was used which was publicly exposed"
+        }
+      ],
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker authenticated to AWS using the exposed long-term access key.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1136.003",
+      "technique_name": "Create Account: Cloud Account",
+      "description": "Attacker created a new IAM user (CreateUser) to establish persistence and escalate access.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "ordering_confidence": 0.85,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker accessed and exfiltrated data from S3 buckets.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1490",
+      "technique_name": "Inhibit System Recovery",
+      "description": "Attacker disabled S3 bucket versioning to prevent recovery of deleted data.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "you could disable versioning on a bucket once enabled",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c027",
+          "source_file": "link_00.clean.md",
+          "char_start": 5287,
+          "char_end": 5369,
+          "quote": "you could disable versioning on a bucket once enabled"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker deleted S3 objects and left a ransom note demanding payment.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "ordering_confidence": 0.85,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Attacker left a ransom note demanding payment for the exfiltrated and deleted data.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_quote": null,
+      "evidence_sources": [
+        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "IAM",
+    "S3",
+    "CloudTrail"
+  ],
+  "confidence_score": 0.35,
+  "data_exfiltrated": true,
+  "impact_type": "Ransomware / Extortion",
+  "initial_access_vector": "Publicly exposed long-term AWS access key credentials",
+  "persistence_mechanism": "Creation of new IAM user via CreateUser API call",
+  "privilege_escalation": "Creation of new IAM user (CreateUser) leveraging permissions of compromised access key",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "exposed long-term credentials / a specific access key was used which was publicly exposed",
-          "validated": false
+          "evidence_quote": "a specific access key was used which was publicly exposed",
+          "validated": true
         }
       ]
     },
@@ -18,23 +174,11 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.004",
-          "technique_name": "Unsecured Credentials: Private Keys",
-          "inferred": false,
-          "evidence_quote": "open-source analysis we were able to determine that a specific access key was used which was publicly exposed",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "subtechnique_id": "T1552.001",
           "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "a specific access key was used which was publicly exposed",
           "validated": true
         }
       ]
@@ -46,6 +190,7 @@
         {
           "technique_id": "T1136.003",
           "technique_name": "Create Account: Cloud Account",
+          "subtechnique_id": "T1136.003",
           "inferred": false,
           "evidence_quote": "Escalation Vectors: CreateUser",
           "validated": true
@@ -57,10 +202,37 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1136.003",
-          "technique_name": "Create Account: Cloud Account",
-          "inferred": false,
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
           "evidence_quote": "Escalation Vectors: CreateUser",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "data exfiltration and deletion with ransom note",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account",
+          "inferred": true,
+          "evidence_quote": "data exfiltration",
           "validated": true
         }
       ]
@@ -77,155 +249,31 @@
           "validated": true
         },
         {
-          "technique_id": "T1486",
-          "technique_name": "Data Encrypted for Impact",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery",
           "inferred": true,
-          "evidence_quote": "ransomware in the cloud",
+          "evidence_quote": "disable versioning on a bucket",
           "validated": true
         },
         {
-          "technique_id": "T1489",
-          "technique_name": "Service Stop",
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "inferred": true,
-          "evidence_quote": "data exfiltration and deletion with ransom note",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1562.007",
-          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-          "inferred": true,
-          "evidence_quote": "I didn't think you could disable versioning on a bucket once enabled",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": false,
+          "evidence_quote": "ransom note",
           "validated": true
         }
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1552.004",
-      "technique_name": "Unsecured Credentials: Private Keys",
-      "description": "Attacker obtained a publicly exposed long-term AWS IAM access key through open-source analysis (e.g., GitHub, public repository, or similar public exposure).",
-      "evidence_quote": "open-source analysis we were able to determine that a specific access key was used which was publicly exposed",
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": false
-    },
-    {
-      "step": 2,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Attacker used the compromised access key to enumerate AWS services and resources, including S3 buckets, to identify targets for exfiltration and destruction.",
-      "evidence_quote": null,
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "Attacker created a new IAM user via CreateUser API call to establish persistence and escalate privileges within the AWS environment.",
-      "evidence_quote": "Escalation Vectors: CreateUser",
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "IAM"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1562.007",
-      "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
-      "description": "Attacker disabled S3 bucket versioning to prevent object recovery before exfiltration and deletion, undermining defensive mechanisms.",
-      "evidence_quote": "I didn't think you could disable versioning on a bucket once enabled",
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "Attacker exfiltrated data from S3 buckets prior to deletion, consistent with double-extortion ransomware tactics.",
-      "evidence_quote": "data exfiltration and deletion with ransom note",
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Attacker deleted data from S3 buckets and left a ransom note, completing the ransomware-style attack in the cloud.",
-      "evidence_quote": "data exfiltration and deletion with ransom note",
-      "evidence_sources": [
-        "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "IAM",
-    "S3",
-    "CloudTrail"
-  ],
-  "impact_type": "Ransomware / Extortion",
-  "confidence_score": 0.62,
-  "data_exfiltrated": true,
-  "initial_access_vector": "Publicly exposed long-term AWS IAM access key discovered via open-source analysis",
-  "persistence_mechanism": "CreateUser IAM API call to create a new cloud account for continued access",
-  "privilege_escalation": "New IAM user created via CreateUser, likely with elevated permissions attached",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.004",
-        "technique_name": "Unsecured Credentials: Private Keys",
-        "description": "Attacker obtained a publicly exposed long-term AWS IAM access key through open-source analysis (e.g., GitHub, public repository, or similar public exposure).",
-        "tactic_id": "",
-        "evidence_quote": "open-source analysis we were able to determine that a specific access key was used which was publicly exposed",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Attacker obtained a publicly exposed long-term AWS access key (credentials leaked publicly).",
+        "tactic_id": "TA0006",
+        "evidence_quote": "a specific access key was used which was publicly exposed",
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
@@ -235,26 +283,25 @@
       },
       {
         "step": 2,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Attacker used the compromised access key to enumerate AWS services and resources, including S3 buckets, to identify targets for exfiltration and destruction.",
-        "tactic_id": "TA0007",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker authenticated to AWS using the exposed long-term access key.",
+        "tactic_id": "TA0005",
         "evidence_quote": null,
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
         "aws_services_involved": [
-          "IAM",
-          "S3"
+          "IAM"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1136.003",
         "technique_name": "Cloud Account",
-        "description": "Attacker created a new IAM user via CreateUser API call to establish persistence and escalate privileges within the AWS environment.",
+        "description": "Attacker created a new IAM user (CreateUser) to establish persistence and escalate access.",
         "tactic_id": "TA0003",
-        "evidence_quote": "Escalation Vectors: CreateUser",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
@@ -264,11 +311,11 @@
       },
       {
         "step": 4,
-        "technique_id": "T1562.007",
-        "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "Attacker disabled S3 bucket versioning to prevent object recovery before exfiltration and deletion, undermining defensive mechanisms.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "I didn't think you could disable versioning on a bucket once enabled",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed and exfiltrated data from S3 buckets.",
+        "tactic_id": "TA0009",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
@@ -278,11 +325,11 @@
       },
       {
         "step": 5,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "Attacker exfiltrated data from S3 buckets prior to deletion, consistent with double-extortion ransomware tactics.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "data exfiltration and deletion with ransom note",
+        "technique_id": "T1490",
+        "technique_name": "Inhibit System Recovery",
+        "description": "Attacker disabled S3 bucket versioning to prevent recovery of deleted data.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "you could disable versioning on a bucket once enabled",
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
@@ -294,9 +341,23 @@
         "step": 6,
         "technique_id": "T1485",
         "technique_name": "Data Destruction",
-        "description": "Attacker deleted data from S3 buckets and left a ransom note, completing the ransomware-style attack in the cloud.",
+        "description": "Attacker deleted S3 objects and left a ransom note demanding payment.",
         "tactic_id": "TA0040",
-        "evidence_quote": "data exfiltration and deletion with ransom note",
+        "evidence_quote": null,
+        "evidence_sources": [
+          "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Attacker left a ransom note demanding payment for the exfiltrated and deleted data.",
+        "tactic_id": "TA0040",
+        "evidence_quote": null,
         "evidence_sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
@@ -307,77 +368,82 @@
     ],
     "edges": [
       {
-        "source": "T1552.004",
-        "target": "T1526",
+        "source": "T1552.001",
+        "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Unsecured Credentials: Private Keys",
-        "target_technique_name": "Cloud Service Discovery",
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
         "evidence_quotes": [
-          "open-source analysis we were able to determine that a specific access key was used which was publicly exposed"
+          "a specific access key was used which was publicly exposed"
         ]
       },
       {
-        "source": "T1526",
+        "source": "T1078.004",
         "target": "T1136.003",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Cloud Service Discovery",
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
-        "evidence_quotes": [
-          "Escalation Vectors: CreateUser"
-        ]
+        "evidence_quotes": []
       },
       {
         "source": "T1136.003",
-        "target": "T1562.007",
+        "target": "T1530",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Account",
-        "target_technique_name": "Disable or Modify Cloud Firewall",
+        "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
-        "evidence_quotes": [
-          "Escalation Vectors: CreateUser",
-          "I didn't think you could disable versioning on a bucket once enabled"
-        ]
+        "evidence_quotes": []
       },
       {
-        "source": "T1562.007",
-        "target": "T1537",
+        "source": "T1530",
+        "target": "T1490",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Disable or Modify Cloud Firewall",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Inhibit System Recovery",
         "sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
         "evidence_quotes": [
-          "I didn't think you could disable versioning on a bucket once enabled",
-          "data exfiltration and deletion with ransom note"
+          "you could disable versioning on a bucket once enabled"
         ]
       },
       {
-        "source": "T1537",
+        "source": "T1490",
         "target": "T1485",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Transfer Data to Cloud Account",
+        "source_technique_name": "Inhibit System Recovery",
         "target_technique_name": "Data Destruction",
         "sources": [
           "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
         ],
         "evidence_quotes": [
-          "data exfiltration and deletion with ransom note",
-          "data exfiltration and deletion with ransom note"
+          "you could disable versioning on a bucket once enabled"
         ]
+      },
+      {
+        "source": "T1485",
+        "target": "T1657",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Data Destruction",
+        "target_technique_name": "Financial Theft",
+        "sources": [
+          "https://invictus-ir.medium.com/ransomware-in-the-cloud-7f14805bbe82"
+        ],
+        "evidence_quotes": []
       }
     ]
   },
@@ -387,13 +453,13 @@
   },
   "schema_version": "1.0",
   "incident_slug": "invictus-ir-2023-april",
-  "analyzed_at": "2026-04-15T20:56:00.165861+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 30471,
+  "analyzed_at": "2026-04-23T18:45:09.313334+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 15661,
   "incident_name": "Invictus IR",
   "incident_date": "2023, April",
   "incident_root_cause": "exposed long-term credentials",
-  "impact_type_raw": "Ransomware (Data Exfiltration and Deletion with Ransom Note)",
+  "impact_type_raw": "Ransomware (Data Exfiltration and Destruction)",
   "aws_services_raw": [
     "AWS IAM",
     "Amazon S3",

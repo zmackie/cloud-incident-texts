@@ -5,20 +5,11 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1566",
-          "technique_name": "Phishing",
-          "subtechnique_id": "T1566.003",
+          "technique_id": "T1566.003",
+          "technique_name": "Phishing: Spearphishing via Service",
           "inferred": false,
-          "evidence_quote": "the identity-based attack began with social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms. This group posed as professionals seeking technical advice from a select few of the targeted organization's key development staff.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users.",
-          "validated": true
+          "evidence_quote": "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms",
+          "validated": false
         }
       ]
     },
@@ -27,12 +18,11 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1204",
-          "technique_name": "User Execution",
-          "subtechnique_id": "T1204.002",
+          "technique_id": "T1204.002",
+          "technique_name": "User Execution: Malicious File",
           "inferred": false,
-          "evidence_quote": "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops, used regularly for software development, this code harvested the desired access keys and credentials from their devices.",
-          "validated": true
+          "evidence_quote": "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops",
+          "validated": false
         }
       ]
     },
@@ -41,27 +31,24 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1539",
-          "technique_name": "Steal Web Session Cookie",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "The attackers gained access to the organization's Microsoft 365 tenant and authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA).",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials",
-          "subtechnique_id": "T1552.001",
-          "inferred": false,
-          "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment.",
-          "validated": true
-        },
-        {
           "technique_id": "T1555",
           "technique_name": "Credentials from Password Stores",
-          "subtechnique_id": null,
+          "inferred": false,
+          "evidence_quote": "this code harvested the desired access keys and credentials from their devices",
+          "validated": true
+        },
+        {
+          "technique_id": "T1539",
+          "technique_name": "Steal Web Session Cookie",
+          "inferred": false,
+          "evidence_quote": "authenticated against Entra ID using captured session tokens",
+          "validated": true
+        },
+        {
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": true,
-          "evidence_quote": "this code harvested the desired access keys and credentials from their devices the attackers were looking for.",
+          "evidence_quote": "AWS access keys were discovered on the compromised devices",
           "validated": true
         }
       ]
@@ -71,33 +58,17 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1550",
-          "technique_name": "Use Alternate Authentication Material",
-          "subtechnique_id": "T1550.004",
+          "technique_id": "T1550.004",
+          "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
           "inferred": false,
-          "evidence_quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA), but also circumvented other security controls that were in place.",
+          "evidence_quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)",
           "validated": true
         },
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "Each step seemed legitimate within the instance's permissions and was expected in the day-to-day operations of this organization.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550",
-          "technique_name": "Use Alternate Authentication Material",
-          "subtechnique_id": "T1550.001",
-          "inferred": false,
-          "evidence_quote": "leveraging compromised service accounts and SSO trust relationships to move laterally",
+          "technique_id": "T1621",
+          "technique_name": "Multi-Factor Authentication Request Generation",
+          "inferred": true,
+          "evidence_quote": "bypassed multi-factor authentication (MFA)",
           "validated": true
         }
       ]
@@ -107,62 +78,37 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1548",
-          "technique_name": "Abuse Elevation Control Mechanism",
-          "subtechnique_id": null,
+          "technique_id": "T1648",
+          "technique_name": "Serverless Execution",
           "inferred": false,
-          "evidence_quote": "they discovered an interesting weakness in the victim environment by modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "attackers systemically chaining minor permission gaps together to achieve sufficient privilege escalation",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1525",
-          "technique_name": "Implant Internal Image",
-          "subtechnique_id": null,
-          "inferred": true,
           "evidence_quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking",
+          "technique_id": "T1648",
+          "technique_name": "Serverless Execution",
+          "inferred": false,
+          "evidence_quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
+          "technique_id": "T1565",
+          "technique_name": "Data Manipulation",
           "inferred": true,
           "evidence_quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking",
-          "validated": true
+          "validated": false
         }
       ]
     }
@@ -171,110 +117,226 @@
     {
       "step": 1,
       "technique_id": "T1566.003",
-      "technique_name": "Spearphishing via Service",
-      "description": "State-sponsored threat actors posed as professionals on LinkedIn and WhatsApp, socially engineering key development staff to solicit technical advice and establish trust.",
-      "evidence_quote": "the identity-based attack began with social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms. This group posed as professionals seeking technical advice from a select few of the targeted organization's key development staff.",
+      "technique_name": "Phishing: Spearphishing via Service",
+      "description": "State-sponsored threat group used LinkedIn and WhatsApp to social engineer key development staff by posing as professionals seeking technical advice.",
+      "aws_services_involved": [],
+      "evidence_quote": "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2573,
+          "char_end": 3221,
+          "quote": "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms"
+        },
+        {
+          "chunk_id": "link_00.md#c044",
+          "source_file": "link_00.md",
+          "char_start": 14484,
+          "char_end": 15132,
+          "quote": "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
       "step": 2,
       "technique_id": "T1204.002",
-      "technique_name": "Malicious File",
-      "description": "Victims were convinced to download and execute malicious code (infostealer) disguised as harmless content onto their corporate developer laptops.",
-      "evidence_quote": "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops, used regularly for software development, this code harvested the desired access keys and credentials from their devices.",
+      "technique_name": "User Execution: Malicious File",
+      "description": "Developers were convinced to download and run seemingly harmless code on their corporate laptops.",
+      "aws_services_involved": [],
+      "evidence_quote": "convincing these employees to download [what seemed to be harmless] code to their corporate laptops",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2573,
+          "char_end": 3221,
+          "quote": "convincing these employees to download [what seemed to be harmless] code to their corporate laptops"
+        },
+        {
+          "chunk_id": "link_00.md#c044",
+          "source_file": "link_00.md",
+          "char_start": 14484,
+          "char_end": 15132,
+          "quote": "convincing these employees to download [what seemed to be harmless] code to their corporate laptops"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
       "step": 3,
-      "technique_id": "T1552.001",
-      "technique_name": "Credentials In Files",
-      "description": "The infostealer harvested AWS access keys, session tokens, and other credentials stored on the developer machines.",
-      "evidence_quote": "this code harvested the desired access keys and credentials from their devices the attackers were looking for. AWS access keys were discovered on the compromised devices as well.",
+      "technique_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "description": "The malicious code (infostealer) harvested access keys, session tokens, and credentials from the compromised devices.",
+      "aws_services_involved": [],
+      "evidence_quote": "this code harvested the desired access keys and credentials from their devices",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2573,
+          "char_end": 3221,
+          "quote": "this code harvested the desired access keys and credentials from their devices"
+        },
+        {
+          "chunk_id": "link_00.md#c044",
+          "source_file": "link_00.md",
+          "char_start": 14484,
+          "char_end": 15132,
+          "quote": "this code harvested the desired access keys and credentials from their devices"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1550.004",
-      "technique_name": "Web Session Cookie",
-      "description": "Attackers authenticated to Microsoft 365 and Entra ID using captured session tokens, bypassing MFA and other security controls.",
-      "evidence_quote": "The attackers gained access to the organization's Microsoft 365 tenant and authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA), but also circumvented other security controls that were in place.",
+      "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+      "description": "Attackers authenticated against Microsoft Entra ID using captured session tokens, bypassing MFA to access the M365 tenant.",
+      "aws_services_involved": [],
+      "evidence_quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c009",
+          "source_file": "link_00.clean.md",
+          "char_start": 3223,
+          "char_end": 3694,
+          "quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)"
+        },
+        {
+          "chunk_id": "link_00.md#c045",
+          "source_file": "link_00.md",
+          "char_start": 15134,
+          "char_end": 15605,
+          "quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 5,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attackers used stolen AWS access keys to authenticate directly via API and via the AWS web console through compromised Entra ID SSO, gaining dual-path access to the AWS environment.",
-      "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users.",
+      "description": "Attackers used harvested AWS access keys for direct API access and used compromised Entra ID users to reach the AWS web console.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS Console"
+      ],
+      "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [
-        "AWS IAM",
-        "AWS Management Console"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c009",
+          "source_file": "link_00.clean.md",
+          "char_start": 3223,
+          "char_end": 3694,
+          "quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users"
+        },
+        {
+          "chunk_id": "link_00.md#c045",
+          "source_file": "link_00.md",
+          "char_start": 15134,
+          "char_end": 15605,
+          "quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1484.002",
-      "technique_name": "Trust Modification",
-      "description": "Attackers chained minor IAM permission gaps, leveraging misconfigured IAM policies and SSO trust relationships to escalate privileges and pivot between cloud environments.",
-      "evidence_quote": "attackers systemically chaining minor permission gaps together to achieve sufficient privilege escalation and in turn leveraging compromised service accounts and SSO trust relationships to move laterally.",
-      "evidence_sources": [
-        "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
-      ],
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
-      "validated": false
-    },
-    {
-      "step": 7,
       "technique_id": "T1648",
       "technique_name": "Serverless Execution",
-      "description": "Attackers modified an existing Lambda function to execute arbitrary code on previously inaccessible EC2 instances, using the Lambda's existing permissions as a privilege escalation path.",
-      "evidence_quote": "they discovered an interesting weakness in the victim environment by modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances. Each step seemed legitimate within the instance's permissions and was expected in the day-to-day operations of this organization.",
-      "evidence_sources": [
-        "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
-      ],
+      "description": "Attackers modified a Lambda function that had the ability to execute code on previously inaccessible EC2 instances, achieving privilege escalation and lateral movement.",
       "aws_services_involved": [
         "AWS Lambda",
         "Amazon EC2"
       ],
-      "validated": true
-    },
-    {
-      "step": 8,
-      "technique_id": "T1106",
-      "technique_name": "Native API",
-      "description": "Using the foothold on EC2 instances gained via the modified Lambda, attackers crafted fraudulent API calls to access critical assets within the environment.",
-      "evidence_quote": "helping the threat actor gain control over these instances and in turn craft fraudulent API calls that finally gave them access to the critical assets they were seeking.",
+      "evidence_quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances",
       "evidence_sources": [
         "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
       ],
-      "aws_services_involved": [
-        "Amazon EC2",
-        "AWS IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 3696,
+          "char_end": 4273,
+          "quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances"
+        },
+        {
+          "chunk_id": "link_00.md#c046",
+          "source_file": "link_00.md",
+          "char_start": 15607,
+          "char_end": 16184,
+          "quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1565",
+      "technique_name": "Data Manipulation",
+      "description": "Using control over the EC2 instances, attackers crafted fraudulent API calls that provided access to the targeted critical assets.",
+      "aws_services_involved": [
+        "Amazon EC2"
+      ],
+      "evidence_quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking",
+      "evidence_sources": [
+        "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 3696,
+          "char_end": 4273,
+          "quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking"
+        },
+        {
+          "chunk_id": "link_00.md#c046",
+          "source_file": "link_00.md",
+          "char_start": 15607,
+          "char_end": 16184,
+          "quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     }
   ],
@@ -282,23 +344,23 @@
     "AWS IAM",
     "AWS Lambda",
     "Amazon EC2",
-    "AWS Management Console"
+    "AWS Console"
   ],
-  "impact_type": "Unauthorized Access to Critical Assets",
-  "confidence_score": 0.72,
-  "initial_access_vector": "Social engineering via LinkedIn and WhatsApp; victims executed an infostealer that harvested AWS access keys and session tokens from corporate developer laptops",
-  "persistence_mechanism": "Modification of an existing AWS Lambda function to execute attacker-controlled code on EC2 instances",
-  "privilege_escalation": "Chained IAM permission gaps and modified a Lambda function with permissions to execute code on EC2 instances, effectively jumping from lower-privilege cloud identities to EC2-level access",
-  "data_exfiltrated": true,
+  "impact_type": "Account Takeover / Unauthorized Access to Critical Assets",
+  "confidence_score": 0.6,
+  "data_exfiltrated": false,
+  "initial_access_vector": "Social engineering on LinkedIn/WhatsApp by a state-sponsored actor that convinced developers to run infostealer code, harvesting AWS access keys and Entra ID session tokens from corporate laptops.",
+  "persistence_mechanism": "Use of stolen long-term AWS access keys and captured Entra ID session tokens for continued access.",
+  "privilege_escalation": "Modification of a Lambda function whose execution role could run code on previously inaccessible EC2 instances, letting the attacker pivot from limited AWS access to control of sensitive EC2 workloads.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1566.003",
-        "technique_name": "Spearphishing via Service",
-        "description": "State-sponsored threat actors posed as professionals on LinkedIn and WhatsApp, socially engineering key development staff to solicit technical advice and establish trust.",
+        "technique_name": "Phishing: Spearphishing via Service",
+        "description": "State-sponsored threat group used LinkedIn and WhatsApp to social engineer key development staff by posing as professionals seeking technical advice.",
         "tactic_id": "",
-        "evidence_quote": "the identity-based attack began with social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms. This group posed as professionals seeking technical advice from a select few of the targeted organization's key development staff.",
+        "evidence_quote": "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
@@ -307,10 +369,10 @@
       {
         "step": 2,
         "technique_id": "T1204.002",
-        "technique_name": "Malicious File",
-        "description": "Victims were convinced to download and execute malicious code (infostealer) disguised as harmless content onto their corporate developer laptops.",
+        "technique_name": "User Execution: Malicious File",
+        "description": "Developers were convinced to download and run seemingly harmless code on their corporate laptops.",
         "tactic_id": "",
-        "evidence_quote": "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops, used regularly for software development, this code harvested the desired access keys and credentials from their devices.",
+        "evidence_quote": "convincing these employees to download [what seemed to be harmless] code to their corporate laptops",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
@@ -318,25 +380,23 @@
       },
       {
         "step": 3,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "The infostealer harvested AWS access keys, session tokens, and other credentials stored on the developer machines.",
+        "technique_id": "T1555",
+        "technique_name": "Credentials from Password Stores",
+        "description": "The malicious code (infostealer) harvested access keys, session tokens, and credentials from the compromised devices.",
         "tactic_id": "TA0006",
-        "evidence_quote": "this code harvested the desired access keys and credentials from their devices the attackers were looking for. AWS access keys were discovered on the compromised devices as well.",
+        "evidence_quote": "this code harvested the desired access keys and credentials from their devices",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
-        "aws_services_involved": [
-          "AWS IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 4,
         "technique_id": "T1550.004",
         "technique_name": "Web Session Cookie",
-        "description": "Attackers authenticated to Microsoft 365 and Entra ID using captured session tokens, bypassing MFA and other security controls.",
+        "description": "Attackers authenticated against Microsoft Entra ID using captured session tokens, bypassing MFA to access the M365 tenant.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The attackers gained access to the organization's Microsoft 365 tenant and authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA), but also circumvented other security controls that were in place.",
+        "evidence_quote": "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
@@ -346,38 +406,24 @@
         "step": 5,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attackers used stolen AWS access keys to authenticate directly via API and via the AWS web console through compromised Entra ID SSO, gaining dual-path access to the AWS environment.",
+        "description": "Attackers used harvested AWS access keys for direct API access and used compromised Entra ID users to reach the AWS web console.",
         "tactic_id": "TA0005",
-        "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users.",
+        "evidence_quote": "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "aws_services_involved": [
           "AWS IAM",
-          "AWS Management Console"
+          "AWS Console"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1484.002",
-        "technique_name": "Trust Modification",
-        "description": "Attackers chained minor IAM permission gaps, leveraging misconfigured IAM policies and SSO trust relationships to escalate privileges and pivot between cloud environments.",
-        "tactic_id": "",
-        "evidence_quote": "attackers systemically chaining minor permission gaps together to achieve sufficient privilege escalation and in turn leveraging compromised service accounts and SSO trust relationships to move laterally.",
-        "evidence_sources": [
-          "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
-        ],
-        "aws_services_involved": [
-          "AWS IAM"
-        ]
-      },
-      {
-        "step": 7,
         "technique_id": "T1648",
         "technique_name": "Serverless Execution",
-        "description": "Attackers modified an existing Lambda function to execute arbitrary code on previously inaccessible EC2 instances, using the Lambda's existing permissions as a privilege escalation path.",
+        "description": "Attackers modified a Lambda function that had the ability to execute code on previously inaccessible EC2 instances, achieving privilege escalation and lateral movement.",
         "tactic_id": "TA0002",
-        "evidence_quote": "they discovered an interesting weakness in the victim environment by modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances. Each step seemed legitimate within the instance's permissions and was expected in the day-to-day operations of this organization.",
+        "evidence_quote": "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
@@ -387,18 +433,17 @@
         ]
       },
       {
-        "step": 8,
-        "technique_id": "T1106",
-        "technique_name": "Native API",
-        "description": "Using the foothold on EC2 instances gained via the modified Lambda, attackers crafted fraudulent API calls to access critical assets within the environment.",
+        "step": 7,
+        "technique_id": "T1565",
+        "technique_name": "Data Manipulation",
+        "description": "Using control over the EC2 instances, attackers crafted fraudulent API calls that provided access to the targeted critical assets.",
         "tactic_id": "",
-        "evidence_quote": "helping the threat actor gain control over these instances and in turn craft fraudulent API calls that finally gave them access to the critical assets they were seeking.",
+        "evidence_quote": "craft fraudulent API calls that finally gave them access to the critical assets they were seeking",
         "evidence_sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "aws_services_involved": [
-          "Amazon EC2",
-          "AWS IAM"
+          "Amazon EC2"
         ]
       }
     ],
@@ -408,44 +453,44 @@
         "target": "T1204.002",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Spearphishing via Service",
-        "target_technique_name": "Malicious File",
+        "source_technique_name": "Phishing: Spearphishing via Service",
+        "target_technique_name": "User Execution: Malicious File",
         "sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "the identity-based attack began with social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms. This group posed as professionals seeking technical advice from a select few of the targeted organization's key development staff.",
-          "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops, used regularly for software development, this code harvested the desired access keys and credentials from their devices."
+          "social engineering tactics deployed by a state-sponsored threat group, through the popular LinkedIn and WhatsApp platforms",
+          "convincing these employees to download [what seemed to be harmless] code to their corporate laptops"
         ]
       },
       {
         "source": "T1204.002",
-        "target": "T1552.001",
+        "target": "T1555",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Malicious File",
-        "target_technique_name": "Credentials In Files",
+        "source_technique_name": "User Execution: Malicious File",
+        "target_technique_name": "Credentials from Password Stores",
         "sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "After convincing these employees to download [what seemed to be harmless] code to their corporate laptops, used regularly for software development, this code harvested the desired access keys and credentials from their devices.",
-          "this code harvested the desired access keys and credentials from their devices the attackers were looking for. AWS access keys were discovered on the compromised devices as well."
+          "convincing these employees to download [what seemed to be harmless] code to their corporate laptops",
+          "this code harvested the desired access keys and credentials from their devices"
         ]
       },
       {
-        "source": "T1552.001",
+        "source": "T1555",
         "target": "T1550.004",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Credentials In Files",
+        "source_technique_name": "Credentials from Password Stores",
         "target_technique_name": "Web Session Cookie",
         "sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "this code harvested the desired access keys and credentials from their devices the attackers were looking for. AWS access keys were discovered on the compromised devices as well.",
-          "The attackers gained access to the organization's Microsoft 365 tenant and authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA), but also circumvented other security controls that were in place."
+          "this code harvested the desired access keys and credentials from their devices",
+          "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)"
         ]
       },
       {
@@ -459,53 +504,38 @@
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "The attackers gained access to the organization's Microsoft 365 tenant and authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA), but also circumvented other security controls that were in place.",
-          "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users."
+          "authenticated against Entra ID using captured session tokens. This technique not only bypassed multi-factor authentication (MFA)",
+          "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1484.002",
+        "target": "T1648",
         "source_step": 5,
         "target_step": 6,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Trust Modification",
-        "sources": [
-          "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
-        ],
-        "evidence_quotes": [
-          "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users.",
-          "attackers systemically chaining minor permission gaps together to achieve sufficient privilege escalation and in turn leveraging compromised service accounts and SSO trust relationships to move laterally."
-        ]
-      },
-      {
-        "source": "T1484.002",
-        "target": "T1648",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Trust Modification",
         "target_technique_name": "Serverless Execution",
         "sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "attackers systemically chaining minor permission gaps together to achieve sufficient privilege escalation and in turn leveraging compromised service accounts and SSO trust relationships to move laterally.",
-          "they discovered an interesting weakness in the victim environment by modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances. Each step seemed legitimate within the instance's permissions and was expected in the day-to-day operations of this organization."
+          "AWS access keys were discovered on the compromised devices as well, giving the attackers two ways into the AWS environment\u2014through direct API access and the web console via compromised Entra ID users",
+          "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances"
         ]
       },
       {
         "source": "T1648",
-        "target": "T1106",
-        "source_step": 7,
-        "target_step": 8,
+        "target": "T1565",
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Serverless Execution",
-        "target_technique_name": "Native API",
+        "target_technique_name": "Data Manipulation",
         "sources": [
           "https://www.sygnia.co/blog/sygnia-2025-field-report-identity-based-attacks/"
         ],
         "evidence_quotes": [
-          "they discovered an interesting weakness in the victim environment by modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances. Each step seemed legitimate within the instance's permissions and was expected in the day-to-day operations of this organization.",
-          "helping the threat actor gain control over these instances and in turn craft fraudulent API calls that finally gave them access to the critical assets they were seeking."
+          "modifying a Lambda function that had the ability to execute code on several previously inaccessible EC2 instances",
+          "craft fraudulent API calls that finally gave them access to the critical assets they were seeking"
         ]
       }
     ]
@@ -516,7 +546,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "sygnia-2025-january",
-  "analyzed_at": "2026-04-15T21:09:17.919619+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 24543
+  "analyzed_at": "2026-04-23T18:53:14.691009+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 32151
 }

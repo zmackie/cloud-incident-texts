@@ -1,13 +1,25 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1593",
+          "technique_name": "Search Open Websites/Domains",
+          "inferred": true,
+          "evidence_quote": "this took a total of 15 minutes from reading the techcrunch article",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account",
           "validated": true
@@ -19,33 +31,10 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1552.005",
-          "technique_name": "Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials",
           "inferred": false,
-          "evidence_quote": "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account, which grants access to the spyware's operations",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Credentials In Files",
-          "subtechnique_id": "T1552.001",
-          "inferred": true,
           "evidence_quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "\"Arn\": \"arn:aws:iam::684495459427:root\" } what ?????",
           "validated": true
         }
       ]
@@ -55,11 +44,11 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
-          "subtechnique_id": null,
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "subtechnique_id": "T1087.004",
           "inferred": false,
-          "evidence_quote": "# aws sts get-caller-identity { \"UserId\": \"684495459427\", \"Account\": \"684495459427\", \"Arn\": \"arn:aws:iam::684495459427:root\" }",
+          "evidence_quote": "# aws sts get-caller-identity { \"UserId\": \"684495459427\", ... \"Arn\": \"arn:aws:iam::684495459427:root\" }",
           "validated": true
         }
       ]
@@ -71,9 +60,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "enjoy the loot: pctattle.tar.gz manufacture.tar.gz pctattletaleapidev.tar pctattle_app.sql.gz pctattletaleapi.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
+          "evidence_quote": "anyway, enjoy the loot: pctattle.tar.gz ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
           "validated": true
         }
       ]
@@ -84,18 +72,17 @@
       "techniques": [
         {
           "technique_id": "T1491.002",
-          "technique_name": "Web Defacement: External Defacement",
+          "technique_name": "Defacement: External Defacement",
           "subtechnique_id": "T1491.002",
           "inferred": false,
-          "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday, claiming to have hacked the servers containing pcTattletale's operations.",
+          "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday ... briefly had links containing files from its servers",
           "validated": true
         },
         {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "pcTattletale's website briefly had links containing files from its servers, which appeared to include some victims' stolen data",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": false,
+          "evidence_quote": "internal data published to its own website",
           "validated": true
         }
       ]
@@ -104,107 +91,211 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "The attacker sent a crafted unauthenticated SOAP request to pcTattletale's public-facing authentication endpoint (Authenticationv16.php/AddComputer), registering a fake device without running any spyware client. The server responded with sensitive data including AWS credentials embedded in the SOAP response.",
-      "evidence_quote": "first, lets try to register without actually running the spyware... res = requests.post(url, headers=headers, data=soap_request)",
+      "technique_id": "T1593",
+      "technique_name": "Search Open Websites/Domains",
+      "description": "Attacker read the TechCrunch article about pcTattletale vulnerability and decided to probe the service.",
+      "aws_services_involved": [],
+      "event_time": "2024-05",
+      "event_time_precision": "month",
+      "evidence_quote": "this took a total of 15 minutes from reading the techcrunch article",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
         "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
       ],
-      "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c002",
+          "source_file": "link_01.clean.md",
+          "char_start": 161,
+          "char_end": 4609,
+          "quote": "this took a total of 15 minutes from reading the techcrunch article"
+        },
+        {
+          "chunk_id": "link_01.md#c001",
+          "source_file": "link_01.md",
+          "char_start": 0,
+          "char_end": 4448,
+          "quote": "this took a total of 15 minutes from reading the techcrunch article"
+        }
+      ],
+      "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1552.005",
-      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-      "description": "The SOAP API response from pcTattletale's server returned plaintext AWS Access Key ID and Secret Access Key (root account credentials) directly in the XML body, exposing the full AWS root account.",
-      "evidence_quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>",
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker invoked the pcTattletale SOAP AddComputer endpoint to register a fake computer without running the spyware, tricking the backend into issuing credentials.",
+      "aws_services_involved": [],
+      "evidence_quote": "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
         "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
       ],
-      "aws_services_involved": [
-        "IAM"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used the exfiltrated AWS root account credentials to authenticate to AWS. Verification via 'aws sts get-caller-identity' confirmed access as the root account (IAM ARN ending in ':root') of account 684495459427.",
-      "evidence_quote": "# aws sts get-caller-identity { \"UserId\": \"684495459427\", \"Account\": \"684495459427\", \"Arn\": \"arn:aws:iam::684495459427:root\" } what ?????",
-      "evidence_sources": [
-        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
-      ],
+      "technique_id": "T1552",
+      "technique_name": "Unsecured Credentials",
+      "description": "The AddComputer SOAP response returned AWS access key ID and secret access key embedded in the XML body.",
       "aws_services_involved": [
-        "STS",
         "IAM"
       ],
+      "evidence_quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c002",
+          "source_file": "link_01.clean.md",
+          "char_start": 161,
+          "char_end": 4609,
+          "quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>"
+        },
+        {
+          "chunk_id": "link_01.md#c001",
+          "source_file": "link_01.md",
+          "char_start": 0,
+          "char_end": 4448,
+          "quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "With root-level AWS access, the attacker enumerated cloud resources and identified S3 buckets and other storage assets belonging to pcTattletale's infrastructure, including production, dev, and static asset buckets.",
-      "evidence_quote": "enjoy the loot: pctattle.tar.gz ... pctattletaleapiprod31.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Attacker ran aws sts get-caller-identity and discovered the credentials belonged to the AWS account root user.",
+      "aws_services_involved": [
+        "STS",
+        "IAM"
+      ],
+      "evidence_quote": "\"Arn\": \"arn:aws:iam::684495459427:root\"",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
         "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
       ],
-      "aws_services_involved": [
-        "S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c002",
+          "source_file": "link_01.clean.md",
+          "char_start": 161,
+          "char_end": 4609,
+          "quote": "\"Arn\": \"arn:aws:iam::684495459427:root\""
+        },
+        {
+          "chunk_id": "link_01.md#c001",
+          "source_file": "link_01.md",
+          "char_start": 0,
+          "char_end": 4448,
+          "quote": "\"Arn\": \"arn:aws:iam::684495459427:root\""
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "The attacker downloaded the full contents of multiple S3 buckets, including spyware victim data (screenshots), application code, databases, and logs, bundling them as tar/gz archives.",
-      "evidence_quote": "enjoy the loot: pctattle.tar.gz manufacture.tar.gz pctattletaleapidev.tar pctattle_app.sql.gz pctattletaleapi.tar WhizPress.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
-      "evidence_sources": [
-        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
-      ],
+      "description": "Using root AWS credentials, attacker accessed and downloaded contents of multiple S3 buckets containing application data, database dumps, and victim screenshots.",
       "aws_services_involved": [
         "S3"
       ],
+      "evidence_quote": "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_01.clean.md#c002",
+          "source_file": "link_01.clean.md",
+          "char_start": 161,
+          "char_end": 4609,
+          "quote": "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar"
+        },
+        {
+          "chunk_id": "link_01.md#c001",
+          "source_file": "link_01.md",
+          "char_start": 0,
+          "char_end": 4448,
+          "quote": "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1491.002",
       "technique_name": "Defacement: External Defacement",
-      "description": "The attacker defaced pcTattletale's public-facing website, posting a message claiming responsibility for the breach and embedding links to the exfiltrated data files, publicly publishing victim data.",
-      "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday, claiming to have hacked the servers containing pcTattletale's operations. The spyware maker's website briefly had links containing files from its servers, which appeared to include some victims' stolen data.",
-      "evidence_sources": [
-        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/"
-      ],
+      "description": "Attacker defaced pcTattletale's public website, posting a message claiming responsibility and links to the stolen archives.",
       "aws_services_involved": [],
+      "event_time": "2024-05-24",
+      "event_time_precision": "day",
+      "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Attacker published links to the stolen data archives (tar/sql.gz files) on pcTattletale's own defaced website, making victim data publicly available.",
+      "aws_services_involved": [],
+      "evidence_quote": "briefly had links containing files from its servers, which appeared to include some victims' stolen data",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+        "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
     "IAM",
-    "STS",
-    "S3"
+    "S3",
+    "STS"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.95,
-  "initial_access_vector": "Unauthenticated SOAP API request to pcTattletale's public-facing device registration endpoint, which returned AWS root account credentials in the response body",
+  "confidence_score": 0.9,
   "data_exfiltrated": true,
-  "persistence_mechanism": "None identified; the attacker used valid root AWS credentials \u2014 no separate persistence mechanism was needed or described",
-  "privilege_escalation": "AWS root account credentials were returned directly by the vulnerable API; no further escalation was required \u2014 the attacker obtained the highest possible privilege level immediately",
+  "initial_access_vector": "Abuse of an unauthenticated SOAP API endpoint (Authenticationv16.php/AddComputer) that returned AWS root access keys in its response, allowing any registrant to obtain the credentials.",
+  "persistence_mechanism": "None described; attacker used long-lived root AWS access keys returned by the API.",
+  "privilege_escalation": "Not required \u2014 the API directly returned AWS root account credentials (arn:aws:iam::684495459427:root).",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "The attacker sent a crafted unauthenticated SOAP request to pcTattletale's public-facing authentication endpoint (Authenticationv16.php/AddComputer), registering a fake device without running any spyware client. The server responded with sensitive data including AWS credentials embedded in the SOAP response.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "first, lets try to register without actually running the spyware... res = requests.post(url, headers=headers, data=soap_request)",
+        "technique_id": "T1593",
+        "technique_name": "Search Open Websites/Domains",
+        "description": "Attacker read the TechCrunch article about pcTattletale vulnerability and decided to probe the service.",
+        "tactic_id": "",
+        "evidence_quote": "this took a total of 15 minutes from reading the techcrunch article",
         "evidence_sources": [
           "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
@@ -213,12 +304,26 @@
       },
       {
         "step": 2,
-        "technique_id": "T1552.005",
-        "technique_name": "Cloud Instance Metadata API",
-        "description": "The SOAP API response from pcTattletale's server returned plaintext AWS Access Key ID and Secret Access Key (root account credentials) directly in the XML body, exposing the full AWS root account.",
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker invoked the pcTattletale SOAP AddComputer endpoint to register a fake computer without running the spyware, tricking the backend into issuing credentials.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account",
+        "evidence_sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 3,
+        "technique_id": "T1552",
+        "technique_name": "Unsecured Credentials",
+        "description": "The AddComputer SOAP response returned AWS access key ID and secret access key embedded in the XML body.",
         "tactic_id": "TA0006",
         "evidence_quote": "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>",
         "evidence_sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "aws_services_involved": [
@@ -226,13 +331,14 @@
         ]
       },
       {
-        "step": 3,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "The attacker used the exfiltrated AWS root account credentials to authenticate to AWS. Verification via 'aws sts get-caller-identity' confirmed access as the root account (IAM ARN ending in ':root') of account 684495459427.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "# aws sts get-caller-identity { \"UserId\": \"684495459427\", \"Account\": \"684495459427\", \"Arn\": \"arn:aws:iam::684495459427:root\" } what ?????",
+        "step": 4,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Attacker ran aws sts get-caller-identity and discovered the credentials belonged to the AWS account root user.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "\"Arn\": \"arn:aws:iam::684495459427:root\"",
         "evidence_sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "aws_services_involved": [
@@ -241,27 +347,14 @@
         ]
       },
       {
-        "step": 4,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "With root-level AWS access, the attacker enumerated cloud resources and identified S3 buckets and other storage assets belonging to pcTattletale's infrastructure, including production, dev, and static asset buckets.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "enjoy the loot: pctattle.tar.gz ... pctattletaleapiprod31.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
-        "evidence_sources": [
-          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
-        ],
-        "aws_services_involved": [
-          "S3"
-        ]
-      },
-      {
         "step": 5,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker downloaded the full contents of multiple S3 buckets, including spyware victim data (screenshots), application code, databases, and logs, bundling them as tar/gz archives.",
+        "description": "Using root AWS credentials, attacker accessed and downloaded contents of multiple S3 buckets containing application data, database dumps, and victim screenshots.",
         "tactic_id": "TA0009",
-        "evidence_quote": "enjoy the loot: pctattle.tar.gz manufacture.tar.gz pctattletaleapidev.tar pctattle_app.sql.gz pctattletaleapi.tar WhizPress.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
+        "evidence_quote": "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
         "evidence_sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "aws_services_involved": [
@@ -272,75 +365,92 @@
         "step": 6,
         "technique_id": "T1491.002",
         "technique_name": "External Defacement",
-        "description": "The attacker defaced pcTattletale's public-facing website, posting a message claiming responsibility for the breach and embedding links to the exfiltrated data files, publicly publishing victim data.",
+        "description": "Attacker defaced pcTattletale's public website, posting a message claiming responsibility and links to the stolen archives.",
         "tactic_id": "TA0040",
-        "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday, claiming to have hacked the servers containing pcTattletale's operations. The spyware maker's website briefly had links containing files from its servers, which appeared to include some victims' stolen data.",
+        "evidence_quote": "The hacker posted a message on pcTattletale's website late Friday",
         "evidence_sources": [
-          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/"
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Attacker published links to the stolen data archives (tar/sql.gz files) on pcTattletale's own defaced website, making victim data publicly available.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "briefly had links containing files from its servers, which appeared to include some victims' stolen data",
+        "evidence_sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1190",
-        "target": "T1552.005",
+        "source": "T1593",
+        "target": "T1190",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Cloud Instance Metadata API",
+        "source_technique_name": "Search Open Websites/Domains",
+        "target_technique_name": "Exploit Public-Facing Application",
         "sources": [
           "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "evidence_quotes": [
-          "first, lets try to register without actually running the spyware... res = requests.post(url, headers=headers, data=soap_request)",
+          "this took a total of 15 minutes from reading the techcrunch article",
+          "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account"
+        ]
+      },
+      {
+        "source": "T1190",
+        "target": "T1552",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Unsecured Credentials",
+        "sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+        ],
+        "evidence_quotes": [
+          "pcTattletale's servers could be tricked into turning over the private keys for its Amazon Web Services account",
           "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>"
         ]
       },
       {
-        "source": "T1552.005",
-        "target": "T1078.004",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Cloud Instance Metadata API",
-        "target_technique_name": "Cloud Accounts",
+        "source": "T1552",
+        "target": "T1087.004",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Unsecured Credentials",
+        "target_technique_name": "Cloud Account",
         "sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "evidence_quotes": [
           "<AWS xsi:type=\"xsd:string\"> AKIAJ5GXARBIPSAU6L6Q </AWS> <AWSS xsi:type=\"xsd:string\"> +o9n9tYnwfokFZE2SmZ1FWvuAHeveH6w6AFQEBGx </AWSS>",
-          "# aws sts get-caller-identity { \"UserId\": \"684495459427\", \"Account\": \"684495459427\", \"Arn\": \"arn:aws:iam::684495459427:root\" } what ?????"
+          "\"Arn\": \"arn:aws:iam::684495459427:root\""
         ]
       },
       {
-        "source": "T1078.004",
-        "target": "T1526",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Service Discovery",
-        "sources": [
-          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
-        ],
-        "evidence_quotes": [
-          "# aws sts get-caller-identity { \"UserId\": \"684495459427\", \"Account\": \"684495459427\", \"Arn\": \"arn:aws:iam::684495459427:root\" } what ?????",
-          "enjoy the loot: pctattle.tar.gz ... pctattletaleapiprod31.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar"
-        ]
-      },
-      {
-        "source": "T1526",
+        "source": "T1087.004",
         "target": "T1530",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Cloud Service Discovery",
+        "source_technique_name": "Cloud Account",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "evidence_quotes": [
-          "enjoy the loot: pctattle.tar.gz ... pctattletaleapiprod31.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
-          "enjoy the loot: pctattle.tar.gz manufacture.tar.gz pctattletaleapidev.tar pctattle_app.sql.gz pctattletaleapi.tar WhizPress.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar"
+          "\"Arn\": \"arn:aws:iam::684495459427:root\"",
+          "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar"
         ]
       },
       {
@@ -355,8 +465,24 @@
           "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
         ],
         "evidence_quotes": [
-          "enjoy the loot: pctattle.tar.gz manufacture.tar.gz pctattletaleapidev.tar pctattle_app.sql.gz pctattletaleapi.tar WhizPress.tar ... pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
-          "The hacker posted a message on pcTattletale's website late Friday, claiming to have hacked the servers containing pcTattletale's operations. The spyware maker's website briefly had links containing files from its servers, which appeared to include some victims' stolen data."
+          "pcttlivereaderprod-bucket-xp252tf4ezzo.tar pctts3logs.tar",
+          "The hacker posted a message on pcTattletale's website late Friday"
+        ]
+      },
+      {
+        "source": "T1491.002",
+        "target": "T1567",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "External Defacement",
+        "target_technique_name": "Exfiltration Over Web Service",
+        "sources": [
+          "https://techcrunch.com/2024/05/25/spyware-app-pctattletale-was-hacked-and-its-website-defaced/",
+          "https://web.archive.org/web/20240525013915/https://www.pctattletale.com/"
+        ],
+        "evidence_quotes": [
+          "The hacker posted a message on pcTattletale's website late Friday",
+          "briefly had links containing files from its servers, which appeared to include some victims' stolen data"
         ]
       }
     ]
@@ -367,16 +493,16 @@
   },
   "schema_version": "1.0",
   "incident_slug": "pctattletale-2024-may",
-  "analyzed_at": "2026-04-15T21:03:40.305946+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 22874,
+  "analyzed_at": "2026-04-23T18:50:11.072041+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 32812,
   "incident_name": "pcTattletale",
   "incident_date": "2024, May",
   "incident_root_cause": "Application vulnerability disclosed `root` AWS keys",
-  "impact_type_raw": "Data Exfiltration",
+  "impact_type_raw": "Data Exfiltration and Website Defacement",
   "aws_services_raw": [
-    "AWS IAM",
-    "AWS STS",
-    "Amazon S3"
+    "IAM",
+    "S3",
+    "STS"
   ]
 }

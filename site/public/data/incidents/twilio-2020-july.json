@@ -1,30 +1,28 @@
 {
   "tactics_used": [
     {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1595.002",
+          "technique_name": "Vulnerability Scanning",
+          "inferred": true,
+          "evidence_quote": "large and well-known campaign to find and exploit open AWS S3 buckets on the Internet",
+          "validated": false
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Due to a misconfiguration in the S3 bucket that was hosting the library, a bad actor was able to inject code",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505",
-          "technique_name": "Server Software Component",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-          "validated": false
         }
       ]
     },
@@ -34,47 +32,25 @@
       "techniques": [
         {
           "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
+          "technique_name": "Multi-hop Proxy",
           "subtechnique_id": "T1090.003",
           "inferred": false,
           "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
           "validated": false
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
         {
-          "technique_id": "T1565.001",
-          "technique_name": "Stored Data Manipulation",
-          "subtechnique_id": null,
+          "technique_id": "T1195.002",
+          "technique_name": "Compromise Software Supply Chain",
+          "subtechnique_id": "T1195.002",
           "inferred": false,
-          "evidence_quote": "a bad actor was able to inject code that made the user's browser load an extraneous URL",
+          "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1185",
-          "technique_name": "Browser Session Hijacking",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently.",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1119",
-          "technique_name": "Automated Collection",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "This script also specifically attempts to gather data about the size of the user's touchscreen and uses events that are targeted at mobile devices.",
-          "validated": true
         }
       ]
     },
@@ -83,25 +59,18 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "we believe that this attack was designed to serve malicious advertising to users on mobile devices",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_id": "T1608.004",
-          "technique_name": "Stage Capabilities: Drive-by Target",
-          "subtechnique_id": "T1608.004",
+          "technique_id": "T1565.002",
+          "technique_name": "Transmitted Data Manipulation",
+          "subtechnique_id": "T1565.002",
           "inferred": false,
-          "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
+          "evidence_quote": "a bad actor was able to inject code that made the user's browser load an extraneous URL that has been associated with the Magecart group of attacks",
+          "validated": false
+        },
+        {
+          "technique_id": "T1189",
+          "technique_name": "Drive-by Compromise",
+          "inferred": false,
+          "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button",
           "validated": false
         }
       ]
@@ -110,105 +79,206 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Attacker scanned the internet for publicly writable AWS S3 buckets as part of a broad opportunistic campaign targeting open S3 buckets.",
-      "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
-      ],
+      "technique_id": "T1595.002",
+      "technique_name": "Vulnerability Scanning",
+      "description": "Attacker opportunistically scanned the Internet for misconfigured/publicly writable AWS S3 buckets as part of a large-scale Magecart-associated campaign.",
       "aws_services_involved": [
         "S3"
       ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited a misconfigured S3 bucket policy granting s3:PutObject to Principal '*' (public internet), allowing unauthenticated write access to the TaskRouter SDK path.",
-      "evidence_quote": "We had not properly configured the access policy for one of our AWS S3 buckets... that meant that anybody on the Internet could read and write to that specific path.",
+      "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
-      "aws_services_involved": [
-        "S3"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 276,
+          "char_end": 8132,
+          "quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 7856,
+          "quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet"
+        }
       ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "Attacker used the TOR anonymizing network to obscure their identity when uploading the malicious file to the S3 bucket.",
-      "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
-      "step": 4,
-      "technique_id": "T1565.001",
-      "technique_name": "Stored Data Manipulation",
-      "description": "Attacker overwrote the legitimate taskrouter.min.js (v1.20) in the S3 bucket with a maliciously modified version containing injected Magecart JavaScript code.",
-      "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
+      "step": 2,
+      "technique_id": "T1090.003",
+      "technique_name": "Multi-hop Proxy",
+      "description": "Attacker used the TOR anonymizing network to connect to the S3 bucket to obscure their origin.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
+      "event_time": "2020-07-19T20:12:00Z",
+      "event_time_precision": "exact",
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 3,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attacker abused the S3 bucket's misconfigured policy (AllowPublicRead with s3:PutObject for Principal '*') to write to the taskrouter/* path.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "anybody on the Internet could read and write to that specific path",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 276,
+          "char_end": 8132,
+          "quote": "anybody on the Internet could read and write to that specific path"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 7856,
+          "quote": "anybody on the Internet could read and write to that specific path"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1195.002",
+      "technique_name": "Compromise Software Supply Chain",
+      "description": "Attacker uploaded a modified (trojanized) version of taskrouter.min.js v1.20 into the S3 bucket used to serve the Twilio-hosted JavaScript SDK from twiliocdn.com.",
       "aws_services_involved": [
         "S3",
-        "Cloudflare"
+        "CloudFront/CDN"
+      ],
+      "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT",
+      "event_time": "2020-07-19T20:12:00Z",
+      "event_time_precision": "exact",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 276,
+          "char_end": 8132,
+          "quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 7856,
+          "quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT"
+        }
       ],
       "validated": false
     },
     {
       "step": 5,
-      "technique_id": "T1059.007",
-      "technique_name": "Command and Scripting Interpreter: JavaScript",
-      "description": "The injected JavaScript set a tracking cookie (jqueryapi1oad) in victims' browsers and beaconed to an attacker-controlled URL, then loaded a secondary malicious script from a .tk domain targeting mobile device users.",
-      "evidence_quote": "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content.",
+      "technique_id": "T1565.002",
+      "technique_name": "Transmitted Data Manipulation",
+      "description": "The modified SDK was then distributed via Twilio's CloudFlare CDN and cached in user browsers, causing manipulated content to be delivered to downstream customers.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 276,
+          "char_end": 8132,
+          "quote": "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 7856,
+          "quote": "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1185",
-      "technique_name": "Browser Session Hijacking",
-      "description": "The second-stage Magecart script redirected mobile users to malicious advertising sites, suppressed browser back-button navigation, and opened transparent new targets \u2014 consistent with malvertising and potential data harvesting.",
-      "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently. This script also specifically attempts to gather data about the size of the user's touchscreen.",
+      "technique_id": "T1189",
+      "technique_name": "Drive-by Compromise",
+      "description": "The injected JavaScript set a 'jqueryapi1oad' cookie, fetched a remote URL (gold.platinumus.top), and redirected victims' browsers (primarily mobile users) to malvertising/Magecart-associated sites, preventing back-button use and opening new targets transparently.",
+      "aws_services_involved": [],
+      "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 276,
+          "char_end": 8132,
+          "quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 7856,
+          "quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     }
   ],
   "aws_services": [
     "S3",
-    "Cloudflare"
+    "IAM"
   ],
   "impact_type": "Supply Chain",
-  "confidence_score": 0.92,
-  "initial_access_vector": "Publicly writable S3 bucket due to misconfigured bucket policy granting s3:PutObject to Principal '*' on the TaskRouter SDK path",
-  "persistence_mechanism": "Malicious JavaScript injected into the hosted SDK file served via CDN; cached by browsers and CDN for up to 24 hours after remediation",
-  "privilege_escalation": "None \u2014 no privilege escalation required; public s3:PutObject permission was sufficient to overwrite the file",
+  "initial_access_vector": "Misconfigured AWS S3 bucket policy that granted s3:PutObject to Principal '*' (anyone on the Internet), allowing an anonymous attacker via TOR to overwrite a hosted JavaScript SDK file.",
+  "persistence_mechanism": "None established; attacker relied on continued existence of the permissive S3 bucket policy. Modified JS remained cached on CDN/browsers for up to 24 hours post-remediation.",
+  "privilege_escalation": "None required; bucket policy already allowed public write to the target path.",
   "data_exfiltrated": false,
+  "confidence_score": 0.9,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Attacker scanned the internet for publicly writable AWS S3 buckets as part of a broad opportunistic campaign targeting open S3 buckets.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
+        "technique_id": "T1595.002",
+        "technique_name": "Vulnerability Scanning",
+        "description": "Attacker opportunistically scanned the Internet for misconfigured/publicly writable AWS S3 buckets as part of a large-scale Magecart-associated campaign.",
+        "tactic_id": "",
+        "evidence_quote": "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
@@ -218,23 +288,9 @@
       },
       {
         "step": 2,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited a misconfigured S3 bucket policy granting s3:PutObject to Principal '*' (public internet), allowing unauthenticated write access to the TaskRouter SDK path.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "We had not properly configured the access policy for one of our AWS S3 buckets... that meant that anybody on the Internet could read and write to that specific path.",
-        "evidence_sources": [
-          "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
-        ],
-        "aws_services_involved": [
-          "S3"
-        ]
-      },
-      {
-        "step": 3,
         "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "Attacker used the TOR anonymizing network to obscure their identity when uploading the malicious file to the S3 bucket.",
+        "technique_name": "Multi-hop Proxy",
+        "description": "Attacker used the TOR anonymizing network to connect to the S3 bucket to obscure their origin.",
         "tactic_id": "",
         "evidence_quote": "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
         "evidence_sources": [
@@ -245,39 +301,55 @@
         ]
       },
       {
+        "step": 3,
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attacker abused the S3 bucket's misconfigured policy (AllowPublicRead with s3:PutObject for Principal '*') to write to the taskrouter/* path.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "anybody on the Internet could read and write to that specific path",
+        "evidence_sources": [
+          "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
+        ],
+        "aws_services_involved": [
+          "S3"
+        ]
+      },
+      {
         "step": 4,
-        "technique_id": "T1565.001",
-        "technique_name": "Stored Data Manipulation",
-        "description": "Attacker overwrote the legitimate taskrouter.min.js (v1.20) in the S3 bucket with a maliciously modified version containing injected Magecart JavaScript code.",
+        "technique_id": "T1195.002",
+        "technique_name": "Compromise Software Supply Chain",
+        "description": "Attacker uploaded a modified (trojanized) version of taskrouter.min.js v1.20 into the S3 bucket used to serve the Twilio-hosted JavaScript SDK from twiliocdn.com.",
         "tactic_id": "",
-        "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
+        "evidence_quote": "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
         "aws_services_involved": [
           "S3",
-          "Cloudflare"
+          "CloudFront/CDN"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1059.007",
-        "technique_name": "Command and Scripting Interpreter: JavaScript",
-        "description": "The injected JavaScript set a tracking cookie (jqueryapi1oad) in victims' browsers and beaconed to an attacker-controlled URL, then loaded a secondary malicious script from a .tk domain targeting mobile device users.",
+        "technique_id": "T1565.002",
+        "technique_name": "Transmitted Data Manipulation",
+        "description": "The modified SDK was then distributed via Twilio's CloudFlare CDN and cached in user browsers, causing manipulated content to be delivered to downstream customers.",
         "tactic_id": "",
-        "evidence_quote": "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content.",
+        "evidence_quote": "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "S3"
+        ]
       },
       {
         "step": 6,
-        "technique_id": "T1185",
-        "technique_name": "Browser Session Hijacking",
-        "description": "The second-stage Magecart script redirected mobile users to malicious advertising sites, suppressed browser back-button navigation, and opened transparent new targets \u2014 consistent with malvertising and potential data harvesting.",
+        "technique_id": "T1189",
+        "technique_name": "Drive-by Compromise",
+        "description": "The injected JavaScript set a 'jqueryapi1oad' cookie, fetched a remote URL (gold.platinumus.top), and redirected victims' browsers (primarily mobile users) to malvertising/Magecart-associated sites, preventing back-button use and opening new targets transparently.",
         "tactic_id": "",
-        "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently. This script also specifically attempts to gather data about the size of the user's touchscreen.",
+        "evidence_quote": "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently",
         "evidence_sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
@@ -286,78 +358,78 @@
     ],
     "edges": [
       {
-        "source": "T1526",
-        "target": "T1190",
+        "source": "T1595.002",
+        "target": "T1090.003",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Service Discovery",
-        "target_technique_name": "Exploit Public-Facing Application",
+        "source_technique_name": "Vulnerability Scanning",
+        "target_technique_name": "Multi-hop Proxy",
         "sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
         "evidence_quotes": [
-          "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet for financial gain",
-          "We had not properly configured the access policy for one of our AWS S3 buckets... that meant that anybody on the Internet could read and write to that specific path."
-        ]
-      },
-      {
-        "source": "T1190",
-        "target": "T1090.003",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Proxy: Multi-hop Proxy",
-        "sources": [
-          "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
-        ],
-        "evidence_quotes": [
-          "We had not properly configured the access policy for one of our AWS S3 buckets... that meant that anybody on the Internet could read and write to that specific path.",
+          "this attack appears to be opportunistic and related to a large and well-known campaign to find and exploit open AWS S3 buckets on the Internet",
           "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path"
         ]
       },
       {
         "source": "T1090.003",
-        "target": "T1565.001",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Proxy: Multi-hop Proxy",
-        "target_technique_name": "Stored Data Manipulation",
+        "target": "T1190",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Multi-hop Proxy",
+        "target_technique_name": "Exploit Public-Facing Application",
         "sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
         "evidence_quotes": [
           "someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-          "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path"
+          "anybody on the Internet could read and write to that specific path"
         ]
       },
       {
-        "source": "T1565.001",
-        "target": "T1059.007",
+        "source": "T1190",
+        "target": "T1195.002",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Compromise Software Supply Chain",
+        "sources": [
+          "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
+        ],
+        "evidence_quotes": [
+          "anybody on the Internet could read and write to that specific path",
+          "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT"
+        ]
+      },
+      {
+        "source": "T1195.002",
+        "target": "T1565.002",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Stored Data Manipulation",
-        "target_technique_name": "Command and Scripting Interpreter: JavaScript",
+        "source_technique_name": "Compromise Software Supply Chain",
+        "target_technique_name": "Transmitted Data Manipulation",
         "sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
         "evidence_quotes": [
-          "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT... someone using the TOR anonymizing network put a modified version of taskrouter.min.js into that path",
-          "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content."
+          "A modified version of the TaskRouter JS SDK was uploaded to our site at 1:12 PM PDT",
+          "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours"
         ]
       },
       {
-        "source": "T1059.007",
-        "target": "T1185",
+        "source": "T1565.002",
+        "target": "T1189",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Command and Scripting Interpreter: JavaScript",
-        "target_technique_name": "Browser Session Hijacking",
+        "source_technique_name": "Transmitted Data Manipulation",
+        "target_technique_name": "Drive-by Compromise",
         "sources": [
           "https://web.archive.org/web/20210813010417/https://www.twilio.com/blog/incident-report-taskrouter-js-sdk-july-2020"
         ],
         "evidence_quotes": [
-          "The script that the attacker added sets this cookie in the browser and then makes a request to a URL embedded in the script. (hxxps://gold[.]platinumus[.]top/track/awswrite?q=dmn). That request returns a page with another URL as its only content.",
-          "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently. This script also specifically attempts to gather data about the size of the user's touchscreen."
+          "The modified version may have been available on our CDN or cached by user browsers for up to 24 hours",
+          "The script returned by the dot-tk URL redirects the user to some other sites, attempts to prevent the user from using their browser back button, and opens new targets transparently"
         ]
       }
     ]
@@ -368,15 +440,15 @@
   },
   "schema_version": "1.0",
   "incident_slug": "twilio-2020-july",
-  "analyzed_at": "2026-04-15T21:11:36.215269+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 8161,
+  "analyzed_at": "2026-04-23T18:55:09.232929+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 16329,
   "incident_name": "Twilio",
   "incident_date": "2020, July",
   "incident_root_cause": "S3 global write access",
-  "impact_type_raw": "Supply Chain Compromise / Magecart Malvertising",
+  "impact_type_raw": "Supply Chain Compromise / Magecart Malvertising Redirection",
   "aws_services_raw": [
-    "Amazon S3",
-    "CloudFlare CDN"
+    "S3",
+    "IAM (Bucket Policy)"
   ]
 }

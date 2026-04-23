@@ -7,67 +7,9 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "These are authenticated API calls with valid IAM user access keys... the attacker had access to a total of eight different IAM user access keys",
           "subtechnique_id": "T1078.004",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "the attacker had access to a total of eight different IAM user access keys, and was active from two different IPs",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        },
-        {
-          "technique_id": "T1098",
-          "technique_name": "Account Manipulation",
-          "inferred": false,
-          "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance.",
-          "subtechnique_id": null,
-          "validated": true
-        },
-        {
-          "technique_id": "T1556",
-          "technique_name": "Modify Authentication Process",
-          "inferred": true,
-          "evidence_quote": "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script",
-          "subtechnique_id": null,
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "as soon as the attacker identified a key with considerable permissions",
-          "subtechnique_id": "T1078.004",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "These are authenticated API calls with valid IAM user access keys",
-          "subtechnique_id": "T1078.004",
+          "evidence_quote": "authenticated API calls with valid IAM user access keys",
           "validated": true
         }
       ]
@@ -80,24 +22,65 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment",
-          "subtechnique_id": null,
+          "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access... A subsequent DescribeInstances call identified available EC2 instances",
           "validated": true
         },
         {
           "technique_id": "T1087.004",
           "technique_name": "Account Discovery: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "Mitre ATT&CK Cloud Tactics observed... Discovery | Account Discovery",
           "subtechnique_id": "T1087.004",
+          "inferred": true,
+          "evidence_quote": "Discovery | Account Discovery",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098.001",
+          "technique_name": "Account Manipulation: Additional Cloud Credentials",
+          "subtechnique_id": "T1098.001",
+          "inferred": false,
+          "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance",
           "validated": true
         },
         {
-          "technique_id": "T1526",
-          "technique_name": "Cloud Service Discovery",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user",
-          "subtechnique_id": null,
+          "evidence_quote": "Persistence | Valid Accounts, Redundant Access",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Privilege Escalation | Valid Accounts",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": false,
+          "evidence_quote": "Defensive Evasion | Valid Accounts",
           "validated": true
         }
       ]
@@ -109,23 +92,23 @@
         {
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH",
-          "inferred": false,
-          "evidence_quote": "this series of actions resulted in command line access to the targeted EC2 instance",
           "subtechnique_id": "T1021.004",
+          "inferred": true,
+          "evidence_quote": "this series of actions resulted in command line access to the targeted EC2 instance",
           "validated": false
         }
       ]
     },
     {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+          "technique_id": "T1562.007",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+          "subtechnique_id": "T1562.007",
           "inferred": false,
-          "evidence_quote": "the attacker turned it on via a RunInstances call",
-          "subtechnique_id": "T1578.002",
+          "evidence_quote": "the attacker \"backdoored\" all of the security groups... This allowed for any TCP/IP access into the victim's environment.",
           "validated": true
         }
       ]
@@ -136,171 +119,275 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker obtained 8 compromised IAM user access keys, likely sourced from a public repository (e.g., GitHub) or developer machines. These keys provided authenticated API access without requiring console login.",
-      "evidence_quote": "Expel was able to identify that they had access to a total of eight different IAM user access keys, and was active from two different IPs.",
+      "description": "Attacker obtained and used 8 compromised IAM user access keys (suspected to have been found in a public repo or lifted from developer machines) to authenticate to AWS via the CLI from two suspicious IPs.",
+      "aws_services_involved": [
+        "IAM",
+        "CloudTrail"
+      ],
+      "evidence_quote": "they had access to a total of eight different IAM user access keys, and was active from two different IPs",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 227,
+          "char_end": 12345,
+          "quote": "they had access to a total of eight different IAM user access keys, and was active from two different IPs"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12118,
+          "quote": "they had access to a total of eight different IAM user access keys, and was active from two different IPs"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1580",
       "technique_name": "Cloud Infrastructure Discovery",
-      "description": "The attacker called DescribeSecurityGroups to enumerate existing security groups and understand the network firewall posture of the victim's AWS environment.",
-      "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment. Once these groups were enumerated...",
+      "description": "Attacker called DescribeSecurityGroups to enumerate the victim's security group configuration and application tier access.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1562.007",
       "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
-      "description": "The attacker used a script similar to aws_pwn's backdoor_all_security_group to issue 344 AuthorizeSecurityGroupIngress API calls, adding permissive ingress rules (including ports 5432/postgresql and 1253) to all security groups, exposing EC2, RDS, and other services to the internet.",
-      "evidence_quote": "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script. This allowed for any TCP/IP access into the victim's environment.",
+      "description": "Attacker 'backdoored' all security groups (similar to aws_pwn's backdoor_all_security_group) via hundreds of AuthorizeSecurityGroupIngress calls, including rules for TCP/5432 (PostgreSQL) and 1253, exposing EC2/RDS instances to the internet.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC",
+        "RDS"
+      ],
+      "evidence_quote": "the attacker \"backdoored\" all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script... 344 calls to the AuthorizeSecurityGroupIngress API",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "VPC"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "The attacker called DescribeInstances to enumerate available EC2 instances accessible to the compromised IAM user, identifying a specific target instance.",
-      "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user.",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
-      ],
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker called DescribeInstances to enumerate available EC2 instances accessible to the compromised IAM user.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 227,
+          "char_end": 12345,
+          "quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12118,
+          "quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1098",
-      "technique_name": "Account Manipulation",
-      "description": "The attacker called CreateKeyPair to generate a new SSH key pair, establishing a credential that would grant them SSH access to the target EC2 instance.",
-      "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance.",
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials",
+      "description": "Attacker used CreateKeyPair/ImportKeyPair to create a new SSH key pair associated with an existing EC2 instance, enabling future SSH access.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 227,
+          "char_end": 12345,
+          "quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12118,
+          "quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 6,
       "technique_id": "T1578.002",
       "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "The target EC2 instance was not running at the time, so the attacker started it via a RunInstances API call to bring it online for access.",
-      "evidence_quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call.",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
-      ],
+      "description": "Attacker issued a RunInstances call to start the targeted EC2 instance, which was not running at the time.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 227,
+          "char_end": 12345,
+          "quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12118,
+          "quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
       "technique_id": "T1021.004",
       "technique_name": "Remote Services: SSH",
-      "description": "Using the newly created SSH key pair and the backdoored security group rules allowing inbound access, the attacker gained command-line access to the EC2 instance.",
-      "evidence_quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance, at which point visibility can be a challenge without additional OS logging or security products.",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
-      ],
+      "description": "Using the newly backdoored security group ingress and the attacker-created SSH key pair, the adversary gained command-line (SSH) access to the targeted EC2 instance.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 227,
+          "char_end": 12345,
+          "quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 12118,
+          "quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     }
   ],
   "aws_services": [
     "IAM",
+    "CloudTrail",
     "EC2",
     "VPC",
     "RDS",
-    "CloudTrail",
     "GuardDuty"
   ],
-  "impact_type": "Account Takeover / Unauthorized EC2 Instance Access",
-  "confidence_score": 0.92,
-  "initial_access_vector": "8 IAM user access keys compromised, likely via public code repository (e.g., GitHub) or developer machine credential theft",
-  "persistence_mechanism": "Attacker created a new SSH key pair (CreateKeyPair) for an EC2 instance and backdoored all security groups with permissive ingress rules, maintaining persistent network and instance access",
-  "privilege_escalation": "Attacker iterated across 8 IAM access keys to identify the one with the most permissive EC2 permissions, effectively selecting the highest-privilege credential available",
+  "impact_type": "Account Takeover / Unauthorized EC2 Access",
+  "confidence_score": 0.85,
   "data_exfiltrated": false,
+  "initial_access_vector": "Use of 8 compromised IAM user access keys (suspected leaked via public repository/exposed database or lifted from developer machines) authenticated via AWS CLI from suspicious IPs without MFA.",
+  "persistence_mechanism": "Creation of a new EC2 SSH key pair (CreateKeyPair) associated with an existing instance, plus ongoing use of multiple valid IAM access keys (redundant access).",
+  "privilege_escalation": "No true privilege escalation; attacker leveraged an over-permissioned IAM user key with broad EC2 permissions (Valid Accounts).",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "The attacker obtained 8 compromised IAM user access keys, likely sourced from a public repository (e.g., GitHub) or developer machines. These keys provided authenticated API access without requiring console login.",
+        "description": "Attacker obtained and used 8 compromised IAM user access keys (suspected to have been found in a public repo or lifted from developer machines) to authenticate to AWS via the CLI from two suspicious IPs.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Expel was able to identify that they had access to a total of eight different IAM user access keys, and was active from two different IPs.",
+        "evidence_quote": "they had access to a total of eight different IAM user access keys, and was active from two different IPs",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "aws_services_involved": [
-          "IAM"
+          "IAM",
+          "CloudTrail"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "The attacker called DescribeSecurityGroups to enumerate existing security groups and understand the network firewall posture of the victim's AWS environment.",
+        "description": "Attacker called DescribeSecurityGroups to enumerate the victim's security group configuration and application tier access.",
         "tactic_id": "TA0007",
-        "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment. Once these groups were enumerated...",
+        "evidence_quote": "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "aws_services_involved": [
-          "EC2",
-          "VPC"
+          "EC2"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1562.007",
         "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "The attacker used a script similar to aws_pwn's backdoor_all_security_group to issue 344 AuthorizeSecurityGroupIngress API calls, adding permissive ingress rules (including ports 5432/postgresql and 1253) to all security groups, exposing EC2, RDS, and other services to the internet.",
+        "description": "Attacker 'backdoored' all security groups (similar to aws_pwn's backdoor_all_security_group) via hundreds of AuthorizeSecurityGroupIngress calls, including rules for TCP/5432 (PostgreSQL) and 1253, exposing EC2/RDS instances to the internet.",
         "tactic_id": "TA0005",
-        "evidence_quote": "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script. This allowed for any TCP/IP access into the victim's environment.",
+        "evidence_quote": "the attacker \"backdoored\" all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script... 344 calls to the AuthorizeSecurityGroupIngress API",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "aws_services_involved": [
           "EC2",
-          "VPC"
+          "VPC",
+          "RDS"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "The attacker called DescribeInstances to enumerate available EC2 instances accessible to the compromised IAM user, identifying a specific target instance.",
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker called DescribeInstances to enumerate available EC2 instances accessible to the compromised IAM user.",
         "tactic_id": "TA0007",
-        "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user.",
+        "evidence_quote": "A subsequent DescribeInstances call identified available EC2 instances to the IAM user",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
@@ -310,26 +397,25 @@
       },
       {
         "step": 5,
-        "technique_id": "T1098",
-        "technique_name": "Account Manipulation",
-        "description": "The attacker called CreateKeyPair to generate a new SSH key pair, establishing a credential that would grant them SSH access to the target EC2 instance.",
+        "technique_id": "T1098.001",
+        "technique_name": "Additional Cloud Credentials",
+        "description": "Attacker used CreateKeyPair/ImportKeyPair to create a new SSH key pair associated with an existing EC2 instance, enabling future SSH access.",
         "tactic_id": "TA0003",
-        "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance.",
+        "evidence_quote": "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "aws_services_involved": [
-          "EC2",
-          "IAM"
+          "EC2"
         ]
       },
       {
         "step": 6,
         "technique_id": "T1578.002",
         "technique_name": "Create Cloud Instance",
-        "description": "The target EC2 instance was not running at the time, so the attacker started it via a RunInstances API call to bring it online for access.",
+        "description": "Attacker issued a RunInstances call to start the targeted EC2 instance, which was not running at the time.",
         "tactic_id": "TA0005",
-        "evidence_quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call.",
+        "evidence_quote": "This instance was not running at the time so the attacker turned it on via a RunInstances call",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
@@ -341,9 +427,9 @@
         "step": 7,
         "technique_id": "T1021.004",
         "technique_name": "Remote Services: SSH",
-        "description": "Using the newly created SSH key pair and the backdoored security group rules allowing inbound access, the attacker gained command-line access to the EC2 instance.",
+        "description": "Using the newly backdoored security group ingress and the attacker-created SSH key pair, the adversary gained command-line (SSH) access to the targeted EC2 instance.",
         "tactic_id": "",
-        "evidence_quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance, at which point visibility can be a challenge without additional OS logging or security products.",
+        "evidence_quote": "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance",
         "evidence_sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
@@ -364,8 +450,8 @@
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "Expel was able to identify that they had access to a total of eight different IAM user access keys, and was active from two different IPs.",
-          "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment. Once these groups were enumerated..."
+          "they had access to a total of eight different IAM user access keys, and was active from two different IPs",
+          "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment"
         ]
       },
       {
@@ -379,53 +465,53 @@
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment. Once these groups were enumerated...",
-          "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script. This allowed for any TCP/IP access into the victim's environment."
+          "DescribeSecurityGroups was called to determine the level of application tier access (firewall access) into the victim's AWS environment",
+          "the attacker \"backdoored\" all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script... 344 calls to the AuthorizeSecurityGroupIngress API"
         ]
       },
       {
         "source": "T1562.007",
-        "target": "T1526",
+        "target": "T1580",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Disable or Modify Cloud Firewall",
-        "target_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "the attacker 'backdoored' all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script. This allowed for any TCP/IP access into the victim's environment.",
-          "A subsequent DescribeInstances call identified available EC2 instances to the IAM user."
+          "the attacker \"backdoored\" all of the security groups with a utility similar to aws_pwn's backdoor_all_security_group script... 344 calls to the AuthorizeSecurityGroupIngress API",
+          "A subsequent DescribeInstances call identified available EC2 instances to the IAM user"
         ]
       },
       {
-        "source": "T1526",
-        "target": "T1098",
+        "source": "T1580",
+        "target": "T1098.001",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Cloud Service Discovery",
-        "target_technique_name": "Account Manipulation",
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Additional Cloud Credentials",
         "sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "A subsequent DescribeInstances call identified available EC2 instances to the IAM user.",
-          "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance."
+          "A subsequent DescribeInstances call identified available EC2 instances to the IAM user",
+          "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance"
         ]
       },
       {
-        "source": "T1098",
+        "source": "T1098.001",
         "target": "T1578.002",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Account Manipulation",
+        "source_technique_name": "Additional Cloud Credentials",
         "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance.",
-          "This instance was not running at the time so the attacker turned it on via a RunInstances call."
+          "The attacker then created a SSH key pair (our initial lead alert for CreateKeyPair) for an existing EC2 instance",
+          "This instance was not running at the time so the attacker turned it on via a RunInstances call"
         ]
       },
       {
@@ -439,8 +525,8 @@
           "https://web.archive.org/web/20210226132628/https://expel.io/blog/finding-evil-in-aws/"
         ],
         "evidence_quotes": [
-          "This instance was not running at the time so the attacker turned it on via a RunInstances call.",
-          "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance, at which point visibility can be a challenge without additional OS logging or security products."
+          "This instance was not running at the time so the attacker turned it on via a RunInstances call",
+          "Ultimately, this series of actions resulted in command line access to the targeted EC2 instance"
         ]
       }
     ]
@@ -451,7 +537,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "expel-case-study-1-2020-april",
-  "analyzed_at": "2026-04-15T20:53:47.812844+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 12464
+  "analyzed_at": "2026-04-23T18:43:50.754072+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 24845
 }

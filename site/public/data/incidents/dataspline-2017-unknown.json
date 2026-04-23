@@ -5,8 +5,9 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1195.002",
-          "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
+          "technique_id": "T1195.001",
+          "technique_name": "Compromise Software Dependencies and Development Tools",
+          "subtechnique_id": "T1195.001",
           "inferred": false,
           "evidence_quote": "a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment",
           "validated": false
@@ -18,10 +19,10 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1204.003",
-          "technique_name": "User Execution: Malicious Image",
-          "inferred": false,
-          "evidence_quote": "a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment",
+          "technique_id": "T1610",
+          "technique_name": "Deploy Container",
+          "inferred": true,
+          "evidence_quote": "while building an ML ops toolkit on Kubernetes... our cluster became victim to a crypto-jacking attack",
           "validated": true
         }
       ]
@@ -34,7 +35,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "our cluster became victim to a crypto-jacking attack... a Monero miner... racked up a massive cloud bill",
+          "evidence_quote": "our cluster became victim to a crypto-jacking attack",
           "validated": true
         }
       ]
@@ -43,27 +44,67 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1195.002",
-      "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
-      "description": "A threat actor embedded a Monero cryptominer as malware within a dependency pulled in by the victim's container base image. This poisoned dependency was unknowingly included in the ML ops toolkit being built on Kubernetes.",
+      "technique_id": "T1195.001",
+      "technique_name": "Compromise Software Dependencies and Development Tools",
+      "description": "A malicious dependency containing a Monero miner was included in the container base image used by the ML ops toolkit.",
+      "aws_services_involved": [
+        "Kubernetes"
+      ],
+      "event_time": "2017",
+      "event_time_precision": "year",
       "evidence_quote": "a dependency in our container base image contained malware (a Monero miner)",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 420,
+          "char_end": 3874,
+          "quote": "a dependency in our container base image contained malware (a Monero miner)"
+        },
+        {
+          "chunk_id": "link_00.md#c010",
+          "source_file": "link_00.md",
+          "char_start": 2880,
+          "char_end": 6334,
+          "quote": "a dependency in our container base image contained malware (a Monero miner)"
+        }
+      ],
       "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1204.003",
-      "technique_name": "User Execution: Malicious Image",
-      "description": "The victim team deployed their containerized ML ops toolkit on a Kubernetes cluster during a fintech customer pilot. This caused the malicious container image (containing the poisoned dependency) to be instantiated and executed in the customer's environment.",
-      "evidence_quote": "During a pilot with a fintech customer, our cluster became victim to a crypto-jacking attack... a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment",
+      "technique_id": "T1610",
+      "technique_name": "Deploy Container",
+      "description": "The compromised container image was deployed into the customer's Kubernetes cluster during a fintech pilot, triggering the malware.",
+      "aws_services_involved": [
+        "Kubernetes"
+      ],
+      "event_time": "2017",
+      "event_time_precision": "year",
+      "evidence_quote": "triggered inside the customer's environment",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
       ],
-      "aws_services_involved": [
-        "Kubernetes"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 420,
+          "char_end": 3874,
+          "quote": "triggered inside the customer's environment"
+        },
+        {
+          "chunk_id": "link_00.md#c010",
+          "source_file": "link_00.md",
+          "char_start": 2880,
+          "char_end": 6334,
+          "quote": "triggered inside the customer's environment"
+        }
       ],
       "validated": true
     },
@@ -71,14 +112,18 @@
       "step": 3,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "Once the malicious container executed, the embedded Monero miner activated and consumed cloud compute resources for cryptocurrency mining, resulting in a massive cloud bill for the startup.",
-      "evidence_quote": "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill as a tiny startup",
-      "evidence_sources": [
-        "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
-      ],
+      "description": "The Monero miner executed inside the Kubernetes cluster, consuming compute resources and racking up a massive cloud bill (cryptojacking).",
       "aws_services_involved": [
         "Kubernetes"
       ],
+      "event_time": "2017",
+      "event_time_precision": "year",
+      "evidence_quote": "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
+      ],
+      "evidence_chunks": [],
       "validated": true
     }
   ],
@@ -86,32 +131,34 @@
     "Kubernetes"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.6,
+  "confidence_score": 0.5,
   "data_exfiltrated": false,
-  "initial_access_vector": "Malicious Monero miner embedded in a dependency of a container base image used in the victim's ML ops toolkit, introduced via software supply chain compromise",
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Supply chain compromise: a malicious dependency (Monero miner) embedded in the container base image used to build the ML ops toolkit, which was then deployed to a customer's Kubernetes cluster.",
+  "persistence_mechanism": "Persistence via the malicious dependency baked into the container base image; would re-execute whenever the container was deployed.",
+  "privilege_escalation": "None described",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1195.002",
-        "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
-        "description": "A threat actor embedded a Monero cryptominer as malware within a dependency pulled in by the victim's container base image. This poisoned dependency was unknowingly included in the ML ops toolkit being built on Kubernetes.",
+        "technique_id": "T1195.001",
+        "technique_name": "Compromise Software Dependencies and Development Tools",
+        "description": "A malicious dependency containing a Monero miner was included in the container base image used by the ML ops toolkit.",
         "tactic_id": "",
         "evidence_quote": "a dependency in our container base image contained malware (a Monero miner)",
         "evidence_sources": [
           "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "Kubernetes"
+        ]
       },
       {
         "step": 2,
-        "technique_id": "T1204.003",
-        "technique_name": "Malicious Image",
-        "description": "The victim team deployed their containerized ML ops toolkit on a Kubernetes cluster during a fintech customer pilot. This caused the malicious container image (containing the poisoned dependency) to be instantiated and executed in the customer's environment.",
-        "tactic_id": "TA0002",
-        "evidence_quote": "During a pilot with a fintech customer, our cluster became victim to a crypto-jacking attack... a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment",
+        "technique_id": "T1610",
+        "technique_name": "Deploy Container",
+        "description": "The compromised container image was deployed into the customer's Kubernetes cluster during a fintech pilot, triggering the malware.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "triggered inside the customer's environment",
         "evidence_sources": [
           "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
         ],
@@ -123,9 +170,9 @@
         "step": 3,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Once the malicious container executed, the embedded Monero miner activated and consumed cloud compute resources for cryptocurrency mining, resulting in a massive cloud bill for the startup.",
+        "description": "The Monero miner executed inside the Kubernetes cluster, consuming compute resources and racking up a massive cloud bill (cryptojacking).",
         "tactic_id": "TA0040",
-        "evidence_quote": "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill as a tiny startup",
+        "evidence_quote": "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill",
         "evidence_sources": [
           "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
         ],
@@ -136,33 +183,33 @@
     ],
     "edges": [
       {
-        "source": "T1195.002",
-        "target": "T1204.003",
+        "source": "T1195.001",
+        "target": "T1610",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
-        "target_technique_name": "Malicious Image",
+        "source_technique_name": "Compromise Software Dependencies and Development Tools",
+        "target_technique_name": "Deploy Container",
         "sources": [
           "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
         ],
         "evidence_quotes": [
           "a dependency in our container base image contained malware (a Monero miner)",
-          "During a pilot with a fintech customer, our cluster became victim to a crypto-jacking attack... a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment"
+          "triggered inside the customer's environment"
         ]
       },
       {
-        "source": "T1204.003",
+        "source": "T1610",
         "target": "T1496",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Malicious Image",
+        "source_technique_name": "Deploy Container",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://www.linkedin.com/feed/update/urn:li:activity:7219713829528563712"
         ],
         "evidence_quotes": [
-          "During a pilot with a fintech customer, our cluster became victim to a crypto-jacking attack... a dependency in our container base image contained malware (a Monero miner) which triggered inside the customer's environment",
-          "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill as a tiny startup"
+          "triggered inside the customer's environment",
+          "our cluster became victim to a crypto-jacking attack... racked up a massive cloud bill"
         ]
       }
     ]
@@ -173,9 +220,9 @@
   },
   "schema_version": "1.0",
   "incident_slug": "dataspline-2017-unknown",
-  "analyzed_at": "2026-04-15T20:51:34.691892+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 16896,
+  "analyzed_at": "2026-04-23T18:42:15.313203+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 20805,
   "incident_name": "Dataspline",
   "incident_date": "2017, Unknown",
   "incident_root_cause": "Monero miner in container base image dependency",

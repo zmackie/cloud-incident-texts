@@ -8,27 +8,14 @@
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
           "inferred": false,
-          "evidence_quote": "The threat actor was observed leveraging likely previously compromised credential to access several AWS instances within customer's Private Cloud environment",
+          "evidence_quote": "leveraging likely previously compromised credential to access several AWS instances",
           "validated": true
         },
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
-          "evidence_quote": "leveraging likely previously compromised credential to access several AWS instances within customer's Private Cloud environment",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
         {
           "technique_id": "T1133",
           "technique_name": "External Remote Services",
           "inferred": false,
-          "evidence_quote": "The earliest signs of attack observed by Darktrace involved the use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment.",
+          "evidence_quote": "use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment",
           "validated": true
         }
       ]
@@ -41,22 +28,22 @@
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery",
           "inferred": false,
-          "evidence_quote": "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network",
+          "evidence_quote": "continued to conduct network scans using the Nmap tool",
           "validated": true
-        },
-        {
-          "technique_id": "T1135",
-          "technique_name": "Network Share Discovery",
-          "inferred": false,
-          "evidence_quote": "around 5 GB of data downloaded from an AWS file server",
-          "validated": false
         },
         {
           "technique_id": "T1049",
           "technique_name": "System Network Connections Discovery",
           "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "performed internal reconnaissance activities",
           "validated": true
+        },
+        {
+          "technique_id": "T1135",
+          "technique_name": "Network Share Discovery",
+          "inferred": true,
+          "evidence_quote": "SMB Enumeration",
+          "validated": false
         }
       ]
     },
@@ -67,13 +54,15 @@
         {
           "technique_id": "T1021.001",
           "technique_name": "Remote Services: Remote Desktop Protocol",
+          "subtechnique_id": "T1021.001",
           "inferred": false,
-          "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices",
+          "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance",
           "validated": false
         },
         {
           "technique_id": "T1021.002",
           "technique_name": "Remote Services: SMB/Windows Admin Shares",
+          "subtechnique_id": "T1021.002",
           "inferred": false,
           "evidence_quote": "Device / SMB Lateral Movement",
           "validated": false
@@ -88,14 +77,33 @@
           "technique_id": "T1039",
           "technique_name": "Data from Network Shared Drive",
           "inferred": false,
-          "evidence_quote": "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
+          "evidence_quote": "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
           "validated": false
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
         {
-          "technique_id": "T1074.002",
-          "technique_name": "Data Staged: Remote Data Staging",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts",
+          "inferred": false,
+          "evidence_quote": "leveraging likely previously compromised credential",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter",
           "inferred": true,
-          "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip'",
+          "evidence_quote": "staged the Rclone tool ... a command-line program",
           "validated": true
         }
       ]
@@ -108,14 +116,14 @@
           "technique_id": "T1572",
           "technique_name": "Protocol Tunneling",
           "inferred": false,
-          "evidence_quote": "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)",
+          "evidence_quote": "SSH connections with the Rclone SSH client",
           "validated": false
         },
         {
-          "technique_id": "T1102",
-          "technique_name": "Web Service",
+          "technique_id": "T1071.004",
+          "technique_name": "Application Layer Protocol: DNS",
+          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": null,
           "validated": false
         }
       ]
@@ -127,22 +135,18 @@
         {
           "technique_id": "T1048.002",
           "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+          "subtechnique_id": "T1048.002",
           "inferred": false,
-          "evidence_quote": "The PKI instance continued to make repeated SSH connections attempts to transfer data to this external destination... suggesting the threat actor was exfiltrating the gathered data using the Rclone utility",
+          "evidence_quote": "the threat actor was exfiltrating the gathered data using the Rclone utility ... SSH connections",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
+        },
         {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration to Cloud Storage",
+          "subtechnique_id": "T1567.002",
           "inferred": true,
-          "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers",
-          "validated": true
+          "evidence_quote": "Rclone ... to sync files and directories to and from different cloud storage providers",
+          "validated": false
         }
       ]
     }
@@ -150,334 +154,411 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Threat actor used two previously compromised credentials to authenticate to the customer's VPN and gain access to their AWS Virtual Private Cloud environment.",
-      "evidence_quote": "The earliest signs of attack observed by Darktrace involved the use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment.",
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "Threat actor used previously compromised credentials to authenticate to the customer's VPN environment, gaining access to the AWS Private Cloud.",
       "aws_services_involved": [
-        "AWS VPC",
-        "AWS EC2"
+        "VPN",
+        "EC2"
       ],
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "evidence_quote": "use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1608.001",
-      "technique_name": "Stage Capabilities: Upload Malware",
-      "description": "Once inside, the attacker staged the Rclone tool (rclone-v1.69.0-windows-amd64.zip) onto a PKI-associated AWS EC2 instance under ProgramData, preparing it for use in data exfiltration.",
-      "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers, to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service.",
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "Performed internal reconnaissance of AWS environment, later using Nmap from a domain controller instance and a newly joined device.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "threat actor performed internal reconnaissance activities",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c034",
+          "source_file": "link_00.clean.md",
+          "char_start": 7901,
+          "char_end": 8246,
+          "quote": "threat actor performed internal reconnaissance activities"
+        },
+        {
+          "chunk_id": "link_00.md#c081",
+          "source_file": "link_00.md",
+          "char_start": 24435,
+          "char_end": 24780,
+          "quote": "threat actor performed internal reconnaissance activities"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1039",
-      "technique_name": "Data from Network Shared Drive",
-      "description": "The attacker accessed and downloaded multiple finance and investment-related files hosted on an AWS file server instance, gathering data prior to exfiltration.",
-      "evidence_quote": "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files. This likely represented data gathering prior to exfiltration.",
+      "technique_id": "T1105",
+      "technique_name": "Ingress Tool Transfer",
+      "description": "Staged the Rclone tool (rclone-v1.69.0-windows-amd64.zip) on an AWS EC2 instance associated with a PKI service.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "staged the Rclone tool \"ProgramData\\rclone-v1.69.0-windows-amd64.zip\" ... to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 4,
-      "technique_id": "T1048.002",
-      "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-      "description": "The PKI EC2 instance used the Rclone SSH client (SSH-2.0-rclone/v1.69.0) to initiate repeated SSH connections to a RockHoster VPS endpoint (193.242.184[.]178), exfiltrating the gathered data over SSH.",
-      "evidence_quote": "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178), suggesting the threat actor was exfiltrating the gathered data using the Rclone utility they had previously installed.",
+      "technique_id": "T1039",
+      "technique_name": "Data from Network Shared Drive",
+      "description": "Accessed and downloaded multiple finance and investment-related files from an AWS file server instance.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c035",
+          "source_file": "link_00.clean.md",
+          "char_start": 8248,
+          "char_end": 8473,
+          "quote": "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files"
+        },
+        {
+          "chunk_id": "link_00.md#c082",
+          "source_file": "link_00.md",
+          "char_start": 24782,
+          "char_end": 25007,
+          "quote": "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 5,
-      "technique_id": "T1046",
-      "technique_name": "Network Service Discovery",
-      "description": "After initial exfiltration was blocked by Darktrace's Autonomous Response, the attacker continued reconnaissance by conducting network scans using Nmap from both an AWS domain controller instance and a newly joined device.",
-      "evidence_quote": "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network.",
+      "technique_id": "T1048.002",
+      "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "description": "PKI EC2 instance initiated SSH connections using Rclone SSH client to RockHoster VPS endpoint 193.242.184[.]178 to exfiltrate collected data.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "PKI-related EC2 instance started making SSH connections with the Rclone SSH client \"SSH-2.0-rclone/v1.69.0\" to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": true
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1039",
-      "technique_name": "Data from Network Shared Drive",
-      "description": "Following the scan, the attacker downloaded approximately 5 GB of additional data from an AWS file server as part of continued internal data gathering.",
-      "evidence_quote": "further internal data gathering activities, with around 5 GB of data downloaded from an AWS file server.",
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "After initial exfil blocked, continued scanning using Nmap from a separate AWS domain controller instance and newly joined device; downloaded ~5GB more from file server.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
-      "validated": false
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c039",
+          "source_file": "link_00.clean.md",
+          "char_start": 9435,
+          "char_end": 9772,
+          "quote": "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device"
+        },
+        {
+          "chunk_id": "link_00.md#c086",
+          "source_file": "link_00.md",
+          "char_start": 25969,
+          "char_end": 26306,
+          "quote": "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     },
     {
       "step": 7,
       "technique_id": "T1021.001",
       "technique_name": "Remote Services: Remote Desktop Protocol",
-      "description": "The threat actor made unusual internal RDP connections to an AWS printer instance in an attempt to pivot to other devices and strengthen their foothold, likely in response to being blocked by Autonomous Response.",
-      "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices, likely in response to being hindered by Autonomous Response actions.",
+      "description": "Lateral movement via unusual internal RDP connections to an AWS printer EC2 instance to pivot and strengthen foothold.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to ... pivot to other devices",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 8,
       "technique_id": "T1048.002",
       "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-      "description": "After connections to the original exfiltration endpoint were blocked, the attacker pivoted to use the AWS printer instance to initiate SSH communication with an alternative Host Department VPS endpoint (67.217.57[.]252), previously associated with Akira ransomware SSH-based exfiltration.",
-      "evidence_quote": "Darktrace subsequently observed the AWS printer instance initiating SSH communication with a rare external endpoint associated with the web hosting and VPS provider Host Department (67.217.57[.]252), suggesting that the threat actor was attempting to exfiltrate data to an alternative endpoint after connections to the original destination had been blocked.",
+      "description": "AWS printer instance initiated SSH to alternative endpoint 67.217.57[.]252 (Host Department VPS, previously linked to Akira ransomware) after original destination blocked.",
       "aws_services_involved": [
-        "AWS EC2"
+        "EC2"
       ],
+      "evidence_quote": "AWS printer instance initiating SSH communication with a rare external endpoint ... (67.217.57[.]252)",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     }
   ],
   "aws_services": [
-    "AWS EC2",
-    "AWS VPC",
-    "AWS S3 (implied file storage)"
+    "EC2",
+    "VPC",
+    "VPN"
   ],
   "impact_type": "Data Exfiltration",
   "confidence_score": 0.9,
-  "initial_access_vector": "Compromised credentials used to authenticate via VPN into the customer's AWS Virtual Private Cloud environment",
-  "persistence_mechanism": "Continued access maintained via lateral RDP movement to additional EC2 instances; fallback exfiltration endpoints used when initial C2 was blocked",
-  "privilege_escalation": "Not explicitly described; attacker likely already had sufficient access via compromised credentials",
   "data_exfiltrated": true,
+  "initial_access_vector": "Previously compromised credentials used to connect to the customer's VPN, gaining access to AWS Private Cloud environment.",
+  "persistence_mechanism": "Continued use of valid VPN credentials; lateral RDP pivoting to alternative hosts after containment.",
+  "privilege_escalation": "Not explicitly described",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Threat actor used two previously compromised credentials to authenticate to the customer's VPN and gain access to their AWS Virtual Private Cloud environment.",
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Threat actor used previously compromised credentials to authenticate to the customer's VPN environment, gaining access to the AWS Private Cloud.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The earliest signs of attack observed by Darktrace involved the use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment.",
+        "evidence_quote": "use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS VPC",
-          "AWS EC2"
+          "VPN",
+          "EC2"
         ]
       },
       {
         "step": 2,
-        "technique_id": "T1608.001",
-        "technique_name": "Stage Capabilities: Upload Malware",
-        "description": "Once inside, the attacker staged the Rclone tool (rclone-v1.69.0-windows-amd64.zip) onto a PKI-associated AWS EC2 instance under ProgramData, preparing it for use in data exfiltration.",
-        "tactic_id": "",
-        "evidence_quote": "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers, to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service.",
+        "technique_id": "T1046",
+        "technique_name": "Network Service Discovery",
+        "description": "Performed internal reconnaissance of AWS environment, later using Nmap from a domain controller instance and a newly joined device.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "threat actor performed internal reconnaissance activities",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1039",
-        "technique_name": "Data from Network Shared Drive",
-        "description": "The attacker accessed and downloaded multiple finance and investment-related files hosted on an AWS file server instance, gathering data prior to exfiltration.",
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "description": "Staged the Rclone tool (rclone-v1.69.0-windows-amd64.zip) on an AWS EC2 instance associated with a PKI service.",
         "tactic_id": "",
-        "evidence_quote": "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files. This likely represented data gathering prior to exfiltration.",
+        "evidence_quote": "staged the Rclone tool \"ProgramData\\rclone-v1.69.0-windows-amd64.zip\" ... to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1048.002",
-        "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-        "description": "The PKI EC2 instance used the Rclone SSH client (SSH-2.0-rclone/v1.69.0) to initiate repeated SSH connections to a RockHoster VPS endpoint (193.242.184[.]178), exfiltrating the gathered data over SSH.",
+        "technique_id": "T1039",
+        "technique_name": "Data from Network Shared Drive",
+        "description": "Accessed and downloaded multiple finance and investment-related files from an AWS file server instance.",
         "tactic_id": "",
-        "evidence_quote": "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178), suggesting the threat actor was exfiltrating the gathered data using the Rclone utility they had previously installed.",
+        "evidence_quote": "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1046",
-        "technique_name": "Network Service Discovery",
-        "description": "After initial exfiltration was blocked by Darktrace's Autonomous Response, the attacker continued reconnaissance by conducting network scans using Nmap from both an AWS domain controller instance and a newly joined device.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network.",
+        "technique_id": "T1048.002",
+        "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+        "description": "PKI EC2 instance initiated SSH connections using Rclone SSH client to RockHoster VPS endpoint 193.242.184[.]178 to exfiltrate collected data.",
+        "tactic_id": "",
+        "evidence_quote": "PKI-related EC2 instance started making SSH connections with the Rclone SSH client \"SSH-2.0-rclone/v1.69.0\" to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1039",
-        "technique_name": "Data from Network Shared Drive",
-        "description": "Following the scan, the attacker downloaded approximately 5 GB of additional data from an AWS file server as part of continued internal data gathering.",
-        "tactic_id": "",
-        "evidence_quote": "further internal data gathering activities, with around 5 GB of data downloaded from an AWS file server.",
+        "technique_id": "T1046",
+        "technique_name": "Network Service Discovery",
+        "description": "After initial exfil blocked, continued scanning using Nmap from a separate AWS domain controller instance and newly joined device; downloaded ~5GB more from file server.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 7,
         "technique_id": "T1021.001",
         "technique_name": "Remote Services: Remote Desktop Protocol",
-        "description": "The threat actor made unusual internal RDP connections to an AWS printer instance in an attempt to pivot to other devices and strengthen their foothold, likely in response to being blocked by Autonomous Response.",
+        "description": "Lateral movement via unusual internal RDP connections to an AWS printer EC2 instance to pivot and strengthen foothold.",
         "tactic_id": "",
-        "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices, likely in response to being hindered by Autonomous Response actions.",
+        "evidence_quote": "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to ... pivot to other devices",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       },
       {
         "step": 8,
         "technique_id": "T1048.002",
         "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-        "description": "After connections to the original exfiltration endpoint were blocked, the attacker pivoted to use the AWS printer instance to initiate SSH communication with an alternative Host Department VPS endpoint (67.217.57[.]252), previously associated with Akira ransomware SSH-based exfiltration.",
+        "description": "AWS printer instance initiated SSH to alternative endpoint 67.217.57[.]252 (Host Department VPS, previously linked to Akira ransomware) after original destination blocked.",
         "tactic_id": "",
-        "evidence_quote": "Darktrace subsequently observed the AWS printer instance initiating SSH communication with a rare external endpoint associated with the web hosting and VPS provider Host Department (67.217.57[.]252), suggesting that the threat actor was attempting to exfiltrate data to an alternative endpoint after connections to the original destination had been blocked.",
+        "evidence_quote": "AWS printer instance initiating SSH communication with a rare external endpoint ... (67.217.57[.]252)",
         "evidence_sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "aws_services_involved": [
-          "AWS EC2"
+          "EC2"
         ]
       }
     ],
     "edges": [
       {
-        "source": "T1078.004",
-        "target": "T1608.001",
+        "source": "T1078",
+        "target": "T1046",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Stage Capabilities: Upload Malware",
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Network Service Discovery",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "The earliest signs of attack observed by Darktrace involved the use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment.",
-          "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers, to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service."
+          "use of two likely compromised credentials to connect to the customer's Virtual Private Network (VPN) environment",
+          "threat actor performed internal reconnaissance activities"
         ]
       },
       {
-        "source": "T1608.001",
-        "target": "T1039",
+        "source": "T1046",
+        "target": "T1105",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Stage Capabilities: Upload Malware",
+        "source_technique_name": "Network Service Discovery",
+        "target_technique_name": "Ingress Tool Transfer",
+        "sources": [
+          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
+        ],
+        "evidence_quotes": [
+          "threat actor performed internal reconnaissance activities",
+          "staged the Rclone tool \"ProgramData\\rclone-v1.69.0-windows-amd64.zip\" ... to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service"
+        ]
+      },
+      {
+        "source": "T1105",
+        "target": "T1039",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Ingress Tool Transfer",
         "target_technique_name": "Data from Network Shared Drive",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "staged the Rclone tool 'ProgramData\\rclone-v1.69.0-windows-amd64.zip', a command-line program to sync files and directories to and from different cloud storage providers, to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service.",
-          "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files. This likely represented data gathering prior to exfiltration."
+          "staged the Rclone tool \"ProgramData\\rclone-v1.69.0-windows-amd64.zip\" ... to an AWS instance whose hostname is associated with a public key infrastructure (PKI) service",
+          "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files"
         ]
       },
       {
         "source": "T1039",
         "target": "T1048.002",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Data from Network Shared Drive",
         "target_technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "the threat actor was further observed accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files. This likely represented data gathering prior to exfiltration.",
-          "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178), suggesting the threat actor was exfiltrating the gathered data using the Rclone utility they had previously installed."
+          "accessing and downloading multiple files hosted on an AWS file server instance, notably finance and investment-related files",
+          "PKI-related EC2 instance started making SSH connections with the Rclone SSH client \"SSH-2.0-rclone/v1.69.0\" to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)"
         ]
       },
       {
         "source": "T1048.002",
         "target": "T1046",
-        "source_step": 4,
-        "target_step": 5,
+        "source_step": 5,
+        "target_step": 6,
         "source_technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
         "target_technique_name": "Network Service Discovery",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "the PKI-related EC2 instance started making SSH connections with the Rclone SSH client 'SSH-2.0-rclone/v1.69.0' to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178), suggesting the threat actor was exfiltrating the gathered data using the Rclone utility they had previously installed.",
-          "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network."
+          "PKI-related EC2 instance started making SSH connections with the Rclone SSH client \"SSH-2.0-rclone/v1.69.0\" to a RockHoster Virtual Private Server (VPS) endpoint (193.242.184[.]178)",
+          "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device"
         ]
       },
       {
         "source": "T1046",
-        "target": "T1039",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Network Service Discovery",
-        "target_technique_name": "Data from Network Shared Drive",
-        "sources": [
-          "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
-        ],
-        "evidence_quotes": [
-          "the threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device on the network.",
-          "further internal data gathering activities, with around 5 GB of data downloaded from an AWS file server."
-        ]
-      },
-      {
-        "source": "T1039",
         "target": "T1021.001",
         "source_step": 6,
         "target_step": 7,
-        "source_technique_name": "Data from Network Shared Drive",
+        "source_technique_name": "Network Service Discovery",
         "target_technique_name": "Remote Services: Remote Desktop Protocol",
         "sources": [
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "further internal data gathering activities, with around 5 GB of data downloaded from an AWS file server.",
-          "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices, likely in response to being hindered by Autonomous Response actions."
+          "threat actor continued to conduct network scans using the Nmap tool, operating from both a separate AWS domain controller instance and a newly joined device",
+          "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to ... pivot to other devices"
         ]
       },
       {
@@ -491,8 +572,8 @@
           "https://www.darktrace.com/blog/defending-the-cloud-stopping-cyber-threats-in-azure-and-aws-with-darktrace"
         ],
         "evidence_quotes": [
-          "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to strengthen their foothold within the environment and/or attempting to pivot to other devices, likely in response to being hindered by Autonomous Response actions.",
-          "Darktrace subsequently observed the AWS printer instance initiating SSH communication with a rare external endpoint associated with the web hosting and VPS provider Host Department (67.217.57[.]252), suggesting that the threat actor was attempting to exfiltrate data to an alternative endpoint after connections to the original destination had been blocked."
+          "Unusual internal RDP connections to a likely AWS printer instance indicated that the threat actor was looking to ... pivot to other devices",
+          "AWS printer instance initiating SSH communication with a rare external endpoint ... (67.217.57[.]252)"
         ]
       }
     ]
@@ -503,7 +584,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "darktrace-1-2025-july",
-  "analyzed_at": "2026-04-15T20:49:23.230783+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 72875
+  "analyzed_at": "2026-04-23T18:41:01.071308+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 95597
 }

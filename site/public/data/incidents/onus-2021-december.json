@@ -7,9 +7,8 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS and left backdoors behind",
+          "evidence_quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
           "validated": true
         }
       ]
@@ -19,19 +18,11 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "The history command also showed that the attackers' commands were successfully executed.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1203",
-          "technique_name": "Exploitation for Client Execution",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Log4Shell payloads were used to establish connections to the server 45.147.230.219 (0x2d93e6db) at port 82",
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "subtechnique_id": "T1059.004",
+          "inferred": true,
+          "evidence_quote": "The history command also showed that the attackers' commands were successfully executed",
           "validated": false
         }
       ]
@@ -44,22 +35,15 @@
           "technique_id": "T1505.003",
           "technique_name": "Server Software Component: Web Shell",
           "subtechnique_id": "T1505.003",
-          "inferred": false,
-          "evidence_quote": "the attackers downloaded and ran a backdoor on the server. This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
+          "inferred": true,
+          "evidence_quote": "left backdoors behind",
           "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
+        },
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": false,
-          "evidence_quote": "this file contains AWS credentials. The most serious mistake of ONUS is that ONUS granted the AmazonS3FullAccess permission to the access key",
+          "technique_id": "T1543",
+          "technique_name": "Create or Modify System Process",
+          "inferred": true,
+          "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
           "validated": true
         }
       ]
@@ -69,28 +53,12 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1036.004",
-          "technique_name": "Masquerading: Masquerade Task or Service",
-          "subtechnique_id": "T1036.004",
+          "technique_id": "T1036.005",
+          "technique_name": "Masquerading: Match Legitimate Name or Location",
+          "subtechnique_id": "T1036.005",
           "inferred": false,
           "evidence_quote": "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
-          "validated": false
-        },
-        {
-          "technique_id": "T1572",
-          "technique_name": "Protocol Tunneling",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
-          "validated": false
-        },
-        {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
-          "subtechnique_id": "T1090.003",
-          "inferred": false,
-          "evidence_quote": "The attackers' method of concealing their identities was relatively sophisticated. The IP addresses we have collected appear to be from VPN service providers.",
-          "validated": false
+          "validated": true
         }
       ]
     },
@@ -103,15 +71,7 @@
           "technique_name": "Unsecured Credentials: Credentials In Files",
           "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "subtechnique_id": "T1552.005",
-          "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials",
           "validated": true
         }
       ]
@@ -123,17 +83,42 @@
         {
           "technique_id": "T1083",
           "technique_name": "File and Directory Discovery",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "They managed to forward the content of the stdout/stderr to the destination server 45.147.230.219",
+          "inferred": true,
+          "evidence_quote": "Reading files",
           "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_id": "T1021.004",
+          "technique_name": "Remote Services: SSH",
+          "subtechnique_id": "T1021.004",
+          "inferred": true,
+          "evidence_quote": "tunnel connecting the C&C server and the compromised server via SSH protocol",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "the attackers could access the ONUS database to get user information",
+          "validated": true
         },
         {
-          "technique_id": "T1619",
-          "technique_name": "Cloud Storage Object Discovery",
-          "subtechnique_id": null,
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
           "inferred": true,
-          "evidence_quote": "we narrowed down the scope of the investigation by identifying services that interacted with those buckets",
+          "evidence_quote": "backup SQL files. As a consequence, the attackers could access the ONUS database",
           "validated": true
         }
       ]
@@ -145,17 +130,22 @@
         {
           "technique_id": "T1572",
           "technique_name": "Protocol Tunneling",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "it created a SSH connection with the credentials as follows: host: 45.147.230.219, port: 81",
+          "evidence_quote": "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
           "validated": false
         },
         {
-          "technique_id": "T1008",
-          "technique_name": "Fallback Channels",
-          "subtechnique_id": null,
+          "technique_id": "T1090",
+          "technique_name": "Proxy",
           "inferred": false,
           "evidence_quote": "SOCKS connection used as a backup when SSH is down",
+          "validated": false
+        },
+        {
+          "technique_id": "T1105",
+          "technique_name": "Ingress Tool Transfer",
+          "inferred": false,
+          "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
           "validated": false
         }
       ]
@@ -165,20 +155,11 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
-          "subtechnique_id": null,
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel",
           "inferred": true,
-          "evidence_quote": "the user data in the AWS S3 had been deleted",
-          "validated": true
-        },
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "the attackers could access the ONUS database to get user information",
-          "validated": true
+          "evidence_quote": "the backdoor continuously sent stdout/stderr data to the C&C server",
+          "validated": false
         }
       ]
     },
@@ -189,15 +170,13 @@
         {
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "When ONUS confirmed that the user data in the AWS S3 had been deleted",
+          "evidence_quote": "the user data in the AWS S3 had been deleted",
           "validated": true
         },
         {
           "technique_id": "T1657",
           "technique_name": "Financial Theft",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram",
           "validated": true
@@ -210,151 +189,434 @@
       "step": 1,
       "technique_id": "T1190",
       "technique_name": "Exploit Public-Facing Application",
-      "description": "Attackers exploited the Log4Shell (CVE-2021-44228) vulnerability in ONUS's Cyclos payment server between Dec 11\u201313, triggering outbound JNDI/LDAP connections to attacker-controlled server 45.147.230.219:82.",
-      "evidence_quote": "Log4Shell payloads were used to establish connections to the server 45.147.230.219 (0x2d93e6db) at port 82",
+      "description": "Exploit Public-Facing Application observed during Initial Access: the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
+      "evidence_quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2183,
+          "char_end": 2362,
+          "quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS"
+        },
+        {
+          "chunk_id": "link_00.md#c015",
+          "source_file": "link_00.md",
+          "char_start": 4134,
+          "char_end": 4313,
+          "quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1059",
-      "technique_name": "Command and Scripting Interpreter",
-      "description": "Attackers achieved remote code execution on the Cyclos server and ran arbitrary OS commands, with stdout/stderr forwarded back to their C2 server.",
-      "evidence_quote": "The history command also showed that the attackers' commands were successfully executed. They managed to forward the content of the stdout/stderr to the destination server 45.147.230.219",
+      "technique_id": "T1059.004",
+      "technique_name": "Command and Scripting Interpreter: Unix Shell",
+      "description": "Command and Scripting Interpreter: Unix Shell observed during Execution: The history command also showed that the attackers' commands were successfully executed",
+      "evidence_quote": "The history command also showed that the attackers' commands were successfully executed",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
       "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attackers read the cyclos.properties configuration file, which contained AWS access keys (with AmazonS3FullAccess) as well as database hostname, username, and password.",
-      "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials... Also on these servers, ONUS had a script to periodically back up the database to S3 which contained the database hostname and username/password",
-      "evidence_sources": [
-        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1105",
-      "technique_name": "Ingress Tool Transfer",
-      "description": "Attackers downloaded and deployed a custom Golang backdoor named 'kworker' onto the compromised Cyclos server.",
-      "evidence_quote": "the attackers downloaded and ran a backdoor on the server. This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
-      "evidence_sources": [
-        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
-      ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
       "validated": false
     },
     {
+      "step": 3,
+      "technique_id": "T1505.003",
+      "technique_name": "Server Software Component: Web Shell",
+      "description": "Server Software Component: Web Shell observed during Persistence: left backdoors behind",
+      "evidence_quote": "left backdoors behind",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c008",
+          "source_file": "link_00.clean.md",
+          "char_start": 2183,
+          "char_end": 2362,
+          "quote": "left backdoors behind"
+        },
+        {
+          "chunk_id": "link_00.md#c015",
+          "source_file": "link_00.md",
+          "char_start": 4134,
+          "char_end": 4313,
+          "quote": "left backdoors behind"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 4,
+      "technique_id": "T1543",
+      "technique_name": "Create or Modify System Process",
+      "description": "Create or Modify System Process observed during Persistence: the attackers downloaded and ran a backdoor on the server",
+      "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 5745,
+          "char_end": 6133,
+          "quote": "the attackers downloaded and ran a backdoor on the server"
+        },
+        {
+          "chunk_id": "link_00.md#c026",
+          "source_file": "link_00.md",
+          "char_start": 7696,
+          "char_end": 8084,
+          "quote": "the attackers downloaded and ran a backdoor on the server"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
       "step": 5,
-      "technique_id": "T1036.004",
-      "technique_name": "Masquerading: Masquerade Task or Service",
-      "description": "The backdoor was named 'kworker' to masquerade as a legitimate Linux kernel worker process, evading casual inspection.",
+      "technique_id": "T1036.005",
+      "technique_name": "Masquerading: Match Legitimate Name or Location",
+      "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
       "evidence_quote": "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
     },
     {
       "step": 6,
-      "technique_id": "T1572",
-      "technique_name": "Protocol Tunneling",
-      "description": "The kworker backdoor established a persistent SSH tunnel to C2 server 45.147.230.219:81, with a SOCKS5 proxy as a fallback channel, enabling ongoing interactive access.",
-      "evidence_quote": "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)... SOCKS connection used as a backup when SSH is down",
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The reason why they read cyclos.properties is that this file contains AWS credentials",
+      "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
       "aws_services_involved": [],
-      "validated": false
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
     },
     {
       "step": 7,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Using the harvested AWS access keys (with AmazonS3FullAccess), attackers authenticated to AWS and gained full control over ONUS's S3 buckets.",
-      "evidence_quote": "ONUS granted the AmazonS3FullAccess permission to the access key which allowed attackers to compromise and easily delete all of the S3 buckets",
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "description": "File and Directory Discovery observed during Discovery: Reading files",
+      "evidence_quote": "Reading files",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
-      "aws_services_involved": [
-        "S3",
-        "IAM"
-      ],
-      "validated": true
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 8,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "Attackers accessed ONUS's S3 buckets and database (using credentials from the backup script) to exfiltrate ~2 million users' EKYC data, personal information, and password hashes.",
-      "evidence_quote": "the attackers could access the ONUS database to get user information... 2 million ONUS users' information including EKYC data, personal information, and password hash was leaked",
+      "technique_id": "T1021.004",
+      "technique_name": "Remote Services: SSH",
+      "description": "Remote Services: SSH observed during Lateral Movement: tunnel connecting the C&C server and the compromised server via SSH protocol",
+      "evidence_quote": "tunnel connecting the C&C server and the compromised server via SSH protocol",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
-      "aws_services_involved": [
-        "S3",
-        "RDS"
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c021",
+          "source_file": "link_00.clean.md",
+          "char_start": 6234,
+          "char_end": 6447,
+          "quote": "tunnel connecting the C&C server and the compromised server via SSH protocol"
+        },
+        {
+          "chunk_id": "link_00.md#c028",
+          "source_file": "link_00.md",
+          "char_start": 8185,
+          "char_end": 8398,
+          "quote": "tunnel connecting the C&C server and the compromised server via SSH protocol"
+        }
       ],
-      "validated": true
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
     },
     {
       "step": 9,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Attackers deleted user data stored in AWS S3 buckets, likely to increase leverage for their ransom demand.",
-      "evidence_quote": "When ONUS confirmed that the user data in the AWS S3 had been deleted, we immediately planned and executed incident responses",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Data from Cloud Storage observed during Collection: the attackers could access the ONUS database to get user information",
+      "evidence_quote": "the attackers could access the ONUS database to get user information",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
-      "aws_services_involved": [
-        "S3"
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 5411,
+          "char_end": 5743,
+          "quote": "the attackers could access the ONUS database to get user information"
+        },
+        {
+          "chunk_id": "link_00.md#c025",
+          "source_file": "link_00.md",
+          "char_start": 7362,
+          "char_end": 7694,
+          "quote": "the attackers could access the ONUS database to get user information"
+        }
       ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     },
     {
       "step": 10,
-      "technique_id": "T1657",
-      "technique_name": "Financial Theft",
-      "description": "Attackers sent a $5M USD ransom demand to ONUS via Telegram, threatening to publish the stolen data. ONUS rejected the demand, after which attackers posted data on a hacking forum.",
-      "evidence_quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram. ONUS rejected the request",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Data from Information Repositories observed during Collection: backup SQL files. As a consequence, the attackers could access the ONUS database",
+      "evidence_quote": "backup SQL files. As a consequence, the attackers could access the ONUS database",
       "evidence_sources": [
         "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
       ],
       "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 5411,
+          "char_end": 5743,
+          "quote": "backup SQL files. As a consequence, the attackers could access the ONUS database"
+        },
+        {
+          "chunk_id": "link_00.md#c025",
+          "source_file": "link_00.md",
+          "char_start": 7362,
+          "char_end": 7694,
+          "quote": "backup SQL files. As a consequence, the attackers could access the ONUS database"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1572",
+      "technique_name": "Protocol Tunneling",
+      "description": "Protocol Tunneling observed during Command and Control: used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
+      "evidence_quote": "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c021",
+          "source_file": "link_00.clean.md",
+          "char_start": 6234,
+          "char_end": 6447,
+          "quote": "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)"
+        },
+        {
+          "chunk_id": "link_00.md#c028",
+          "source_file": "link_00.md",
+          "char_start": 8185,
+          "char_end": 8398,
+          "quote": "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 12,
+      "technique_id": "T1090",
+      "technique_name": "Proxy",
+      "description": "Proxy observed during Command and Control: SOCKS connection used as a backup when SSH is down",
+      "evidence_quote": "SOCKS connection used as a backup when SSH is down",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c024",
+          "source_file": "link_00.clean.md",
+          "char_start": 6599,
+          "char_end": 6826,
+          "quote": "SOCKS connection used as a backup when SSH is down"
+        },
+        {
+          "chunk_id": "link_00.md#c031",
+          "source_file": "link_00.md",
+          "char_start": 8550,
+          "char_end": 8777,
+          "quote": "SOCKS connection used as a backup when SSH is down"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 13,
+      "technique_id": "T1105",
+      "technique_name": "Ingress Tool Transfer",
+      "description": "Ingress Tool Transfer observed during Command and Control: the attackers downloaded and ran a backdoor on the server",
+      "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c019",
+          "source_file": "link_00.clean.md",
+          "char_start": 5745,
+          "char_end": 6133,
+          "quote": "the attackers downloaded and ran a backdoor on the server"
+        },
+        {
+          "chunk_id": "link_00.md#c026",
+          "source_file": "link_00.md",
+          "char_start": 7696,
+          "char_end": 8084,
+          "quote": "the attackers downloaded and ran a backdoor on the server"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 14,
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "description": "Exfiltration Over C2 Channel observed during Exfiltration: the backdoor continuously sent stdout/stderr data to the C&C server",
+      "evidence_quote": "the backdoor continuously sent stdout/stderr data to the C&C server",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.45,
+      "validated": false
+    },
+    {
+      "step": 15,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Data Destruction observed during Impact: the user data in the AWS S3 had been deleted",
+      "evidence_quote": "the user data in the AWS S3 had been deleted",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 2648,
+          "char_end": 3082,
+          "quote": "the user data in the AWS S3 had been deleted"
+        },
+        {
+          "chunk_id": "link_00.md#c017",
+          "source_file": "link_00.md",
+          "char_start": 4599,
+          "char_end": 5033,
+          "quote": "the user data in the AWS S3 had been deleted"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Financial Theft observed during Impact: the attackers sent a ransom request of $5M USD to ONUS via Telegram",
+      "evidence_quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram",
+      "evidence_sources": [
+        "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+      ],
+      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c011",
+          "source_file": "link_00.clean.md",
+          "char_start": 3084,
+          "char_end": 3458,
+          "quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram"
+        },
+        {
+          "chunk_id": "link_00.md#c018",
+          "source_file": "link_00.md",
+          "char_start": 5035,
+          "char_end": 5409,
+          "quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "ordering_confidence": 0.75,
       "validated": true
     }
   ],
-  "aws_services": [
-    "S3",
-    "IAM",
-    "RDS"
-  ],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.95,
-  "data_exfiltrated": true,
-  "initial_access_vector": "Log4Shell (CVE-2021-44228) remote code execution vulnerability exploited in ONUS's Cyclos payment server, between December 11\u201313, 2021",
+  "confidence_score": 0.65,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attackers exploited the Log4Shell (CVE-2021-44228) vulnerability in ONUS's Cyclos payment server between Dec 11\u201313, triggering outbound JNDI/LDAP connections to attacker-controlled server 45.147.230.219:82.",
+        "description": "Exploit Public-Facing Application observed during Initial Access: the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
         "tactic_id": "TA0001",
-        "evidence_quote": "Log4Shell payloads were used to establish connections to the server 45.147.230.219 (0x2d93e6db) at port 82",
+        "evidence_quote": "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
@@ -362,11 +624,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1059",
-        "technique_name": "Command and Scripting Interpreter",
-        "description": "Attackers achieved remote code execution on the Cyclos server and ran arbitrary OS commands, with stdout/stderr forwarded back to their C2 server.",
-        "tactic_id": "TA0002",
-        "evidence_quote": "The history command also showed that the attackers' commands were successfully executed. They managed to forward the content of the stdout/stderr to the destination server 45.147.230.219",
+        "technique_id": "T1059.004",
+        "technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "description": "Command and Scripting Interpreter: Unix Shell observed during Execution: The history command also showed that the attackers' commands were successfully executed",
+        "tactic_id": "",
+        "evidence_quote": "The history command also showed that the attackers' commands were successfully executed",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
@@ -374,25 +636,23 @@
       },
       {
         "step": 3,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "Attackers read the cyclos.properties configuration file, which contained AWS access keys (with AmazonS3FullAccess) as well as database hostname, username, and password.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials... Also on these servers, ONUS had a script to periodically back up the database to S3 which contained the database hostname and username/password",
+        "technique_id": "T1505.003",
+        "technique_name": "Server Software Component: Web Shell",
+        "description": "Server Software Component: Web Shell observed during Persistence: left backdoors behind",
+        "tactic_id": "",
+        "evidence_quote": "left backdoors behind",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
-        "aws_services_involved": [
-          "S3"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 4,
-        "technique_id": "T1105",
-        "technique_name": "Ingress Tool Transfer",
-        "description": "Attackers downloaded and deployed a custom Golang backdoor named 'kworker' onto the compromised Cyclos server.",
-        "tactic_id": "",
-        "evidence_quote": "the attackers downloaded and ran a backdoor on the server. This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
+        "technique_id": "T1543",
+        "technique_name": "Create or Modify System Process",
+        "description": "Create or Modify System Process observed during Persistence: the attackers downloaded and ran a backdoor on the server",
+        "tactic_id": "TA0003",
+        "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
@@ -400,10 +660,10 @@
       },
       {
         "step": 5,
-        "technique_id": "T1036.004",
-        "technique_name": "Masquerading: Masquerade Task or Service",
-        "description": "The backdoor was named 'kworker' to masquerade as a legitimate Linux kernel worker process, evading casual inspection.",
-        "tactic_id": "",
+        "technique_id": "T1036.005",
+        "technique_name": "Match Legitimate Resource Name or Location",
+        "description": "Masquerading: Match Legitimate Name or Location observed during Defense Evasion: This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
+        "tactic_id": "TA0005",
         "evidence_quote": "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
@@ -412,11 +672,11 @@
       },
       {
         "step": 6,
-        "technique_id": "T1572",
-        "technique_name": "Protocol Tunneling",
-        "description": "The kworker backdoor established a persistent SSH tunnel to C2 server 45.147.230.219:81, with a SOCKS5 proxy as a fallback channel, enabling ongoing interactive access.",
-        "tactic_id": "",
-        "evidence_quote": "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)... SOCKS connection used as a backup when SSH is down",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Unsecured Credentials: Credentials In Files observed during Credential Access: The reason why they read cyclos.properties is that this file contains AWS credentials",
+        "tactic_id": "TA0006",
+        "evidence_quote": "The reason why they read cyclos.properties is that this file contains AWS credentials",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
@@ -424,55 +684,119 @@
       },
       {
         "step": 7,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Using the harvested AWS access keys (with AmazonS3FullAccess), attackers authenticated to AWS and gained full control over ONUS's S3 buckets.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "ONUS granted the AmazonS3FullAccess permission to the access key which allowed attackers to compromise and easily delete all of the S3 buckets",
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "description": "File and Directory Discovery observed during Discovery: Reading files",
+        "tactic_id": "",
+        "evidence_quote": "Reading files",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
-        "aws_services_involved": [
-          "S3",
-          "IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 8,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "Attackers accessed ONUS's S3 buckets and database (using credentials from the backup script) to exfiltrate ~2 million users' EKYC data, personal information, and password hashes.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "the attackers could access the ONUS database to get user information... 2 million ONUS users' information including EKYC data, personal information, and password hash was leaked",
+        "technique_id": "T1021.004",
+        "technique_name": "Remote Services: SSH",
+        "description": "Remote Services: SSH observed during Lateral Movement: tunnel connecting the C&C server and the compromised server via SSH protocol",
+        "tactic_id": "",
+        "evidence_quote": "tunnel connecting the C&C server and the compromised server via SSH protocol",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
-        "aws_services_involved": [
-          "S3",
-          "RDS"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 9,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "Attackers deleted user data stored in AWS S3 buckets, likely to increase leverage for their ransom demand.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "When ONUS confirmed that the user data in the AWS S3 had been deleted, we immediately planned and executed incident responses",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Data from Cloud Storage observed during Collection: the attackers could access the ONUS database to get user information",
+        "tactic_id": "TA0009",
+        "evidence_quote": "the attackers could access the ONUS database to get user information",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
-        "aws_services_involved": [
-          "S3"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 10,
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Data from Information Repositories observed during Collection: backup SQL files. As a consequence, the attackers could access the ONUS database",
+        "tactic_id": "TA0009",
+        "evidence_quote": "backup SQL files. As a consequence, the attackers could access the ONUS database",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 11,
+        "technique_id": "T1572",
+        "technique_name": "Protocol Tunneling",
+        "description": "Protocol Tunneling observed during Command and Control: used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
+        "tactic_id": "",
+        "evidence_quote": "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 12,
+        "technique_id": "T1090",
+        "technique_name": "Proxy",
+        "description": "Proxy observed during Command and Control: SOCKS connection used as a backup when SSH is down",
+        "tactic_id": "",
+        "evidence_quote": "SOCKS connection used as a backup when SSH is down",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 13,
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "description": "Ingress Tool Transfer observed during Command and Control: the attackers downloaded and ran a backdoor on the server",
+        "tactic_id": "",
+        "evidence_quote": "the attackers downloaded and ran a backdoor on the server",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 14,
+        "technique_id": "T1041",
+        "technique_name": "Exfiltration Over C2 Channel",
+        "description": "Exfiltration Over C2 Channel observed during Exfiltration: the backdoor continuously sent stdout/stderr data to the C&C server",
+        "tactic_id": "",
+        "evidence_quote": "the backdoor continuously sent stdout/stderr data to the C&C server",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 15,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Data Destruction observed during Impact: the user data in the AWS S3 had been deleted",
+        "tactic_id": "TA0040",
+        "evidence_quote": "the user data in the AWS S3 had been deleted",
+        "evidence_sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 16,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "Attackers sent a $5M USD ransom demand to ONUS via Telegram, threatening to publish the stolen data. ONUS rejected the demand, after which attackers posted data on a hacking forum.",
+        "description": "Financial Theft observed during Impact: the attackers sent a ransom request of $5M USD to ONUS via Telegram",
         "tactic_id": "TA0040",
-        "evidence_quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram. ONUS rejected the request",
+        "evidence_quote": "the attackers sent a ransom request of $5M USD to ONUS via Telegram",
         "evidence_sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
@@ -482,137 +806,227 @@
     "edges": [
       {
         "source": "T1190",
-        "target": "T1059",
+        "target": "T1059.004",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Command and Scripting Interpreter",
+        "target_technique_name": "Command and Scripting Interpreter: Unix Shell",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "Log4Shell payloads were used to establish connections to the server 45.147.230.219 (0x2d93e6db) at port 82",
-          "The history command also showed that the attackers' commands were successfully executed. They managed to forward the content of the stdout/stderr to the destination server 45.147.230.219"
+          "the attackers exploited the Log4Shell vulnerability on a Cyclos server of ONUS",
+          "The history command also showed that the attackers' commands were successfully executed"
         ]
       },
       {
-        "source": "T1059",
-        "target": "T1552.001",
+        "source": "T1059.004",
+        "target": "T1505.003",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Command and Scripting Interpreter",
+        "source_technique_name": "Command and Scripting Interpreter: Unix Shell",
+        "target_technique_name": "Server Software Component: Web Shell",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "The history command also showed that the attackers' commands were successfully executed",
+          "left backdoors behind"
+        ]
+      },
+      {
+        "source": "T1505.003",
+        "target": "T1543",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Server Software Component: Web Shell",
+        "target_technique_name": "Create or Modify System Process",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "left backdoors behind",
+          "the attackers downloaded and ran a backdoor on the server"
+        ]
+      },
+      {
+        "source": "T1543",
+        "target": "T1036.005",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Create or Modify System Process",
+        "target_technique_name": "Match Legitimate Resource Name or Location",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "the attackers downloaded and ran a backdoor on the server",
+          "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service"
+        ]
+      },
+      {
+        "source": "T1036.005",
+        "target": "T1552.001",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Match Legitimate Resource Name or Location",
         "target_technique_name": "Credentials In Files",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "The history command also showed that the attackers' commands were successfully executed. They managed to forward the content of the stdout/stderr to the destination server 45.147.230.219",
-          "The reason why they read cyclos.properties is that this file contains AWS credentials... Also on these servers, ONUS had a script to periodically back up the database to S3 which contained the database hostname and username/password"
+          "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
+          "The reason why they read cyclos.properties is that this file contains AWS credentials"
         ]
       },
       {
         "source": "T1552.001",
-        "target": "T1105",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Ingress Tool Transfer",
-        "sources": [
-          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
-        ],
-        "evidence_quotes": [
-          "The reason why they read cyclos.properties is that this file contains AWS credentials... Also on these servers, ONUS had a script to periodically back up the database to S3 which contained the database hostname and username/password",
-          "the attackers downloaded and ran a backdoor on the server. This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service"
-        ]
-      },
-      {
-        "source": "T1105",
-        "target": "T1036.004",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Ingress Tool Transfer",
-        "target_technique_name": "Masquerading: Masquerade Task or Service",
-        "sources": [
-          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
-        ],
-        "evidence_quotes": [
-          "the attackers downloaded and ran a backdoor on the server. This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
-          "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service"
-        ]
-      },
-      {
-        "source": "T1036.004",
-        "target": "T1572",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Masquerading: Masquerade Task or Service",
-        "target_technique_name": "Protocol Tunneling",
-        "sources": [
-          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
-        ],
-        "evidence_quotes": [
-          "This backdoor was named kworker for the purpose of disguising as the Linux operating system's kworker service",
-          "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)... SOCKS connection used as a backup when SSH is down"
-        ]
-      },
-      {
-        "source": "T1572",
-        "target": "T1078.004",
+        "target": "T1083",
         "source_step": 6,
         "target_step": 7,
-        "source_technique_name": "Protocol Tunneling",
-        "target_technique_name": "Cloud Accounts",
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "File and Directory Discovery",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "It was used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)... SOCKS connection used as a backup when SSH is down",
-          "ONUS granted the AmazonS3FullAccess permission to the access key which allowed attackers to compromise and easily delete all of the S3 buckets"
+          "The reason why they read cyclos.properties is that this file contains AWS credentials",
+          "Reading files"
         ]
       },
       {
-        "source": "T1078.004",
-        "target": "T1530",
+        "source": "T1083",
+        "target": "T1021.004",
         "source_step": 7,
         "target_step": 8,
-        "source_technique_name": "Cloud Accounts",
+        "source_technique_name": "File and Directory Discovery",
+        "target_technique_name": "Remote Services: SSH",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "Reading files",
+          "tunnel connecting the C&C server and the compromised server via SSH protocol"
+        ]
+      },
+      {
+        "source": "T1021.004",
+        "target": "T1530",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Remote Services: SSH",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "ONUS granted the AmazonS3FullAccess permission to the access key which allowed attackers to compromise and easily delete all of the S3 buckets",
-          "the attackers could access the ONUS database to get user information... 2 million ONUS users' information including EKYC data, personal information, and password hash was leaked"
+          "tunnel connecting the C&C server and the compromised server via SSH protocol",
+          "the attackers could access the ONUS database to get user information"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1485",
-        "source_step": 8,
-        "target_step": 9,
+        "target": "T1213",
+        "source_step": 9,
+        "target_step": 10,
         "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Data from Information Repositories",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "the attackers could access the ONUS database to get user information",
+          "backup SQL files. As a consequence, the attackers could access the ONUS database"
+        ]
+      },
+      {
+        "source": "T1213",
+        "target": "T1572",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Protocol Tunneling",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "backup SQL files. As a consequence, the attackers could access the ONUS database",
+          "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)"
+        ]
+      },
+      {
+        "source": "T1572",
+        "target": "T1090",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Protocol Tunneling",
+        "target_technique_name": "Proxy",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "used as a tunnel connecting the C&C server and the compromised server via SSH protocol (a wise way to avoid detection!)",
+          "SOCKS connection used as a backup when SSH is down"
+        ]
+      },
+      {
+        "source": "T1090",
+        "target": "T1105",
+        "source_step": 12,
+        "target_step": 13,
+        "source_technique_name": "Proxy",
+        "target_technique_name": "Ingress Tool Transfer",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "SOCKS connection used as a backup when SSH is down",
+          "the attackers downloaded and ran a backdoor on the server"
+        ]
+      },
+      {
+        "source": "T1105",
+        "target": "T1041",
+        "source_step": 13,
+        "target_step": 14,
+        "source_technique_name": "Ingress Tool Transfer",
+        "target_technique_name": "Exfiltration Over C2 Channel",
+        "sources": [
+          "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
+        ],
+        "evidence_quotes": [
+          "the attackers downloaded and ran a backdoor on the server",
+          "the backdoor continuously sent stdout/stderr data to the C&C server"
+        ]
+      },
+      {
+        "source": "T1041",
+        "target": "T1485",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Exfiltration Over C2 Channel",
         "target_technique_name": "Data Destruction",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "the attackers could access the ONUS database to get user information... 2 million ONUS users' information including EKYC data, personal information, and password hash was leaked",
-          "When ONUS confirmed that the user data in the AWS S3 had been deleted, we immediately planned and executed incident responses"
+          "the backdoor continuously sent stdout/stderr data to the C&C server",
+          "the user data in the AWS S3 had been deleted"
         ]
       },
       {
         "source": "T1485",
         "target": "T1657",
-        "source_step": 9,
-        "target_step": 10,
+        "source_step": 15,
+        "target_step": 16,
         "source_technique_name": "Data Destruction",
         "target_technique_name": "Financial Theft",
         "sources": [
           "https://cystack.net/research/the-attack-on-onus-a-real-life-case-of-the-log4shell-vulnerability"
         ],
         "evidence_quotes": [
-          "When ONUS confirmed that the user data in the AWS S3 had been deleted, we immediately planned and executed incident responses",
-          "the attackers sent a ransom request of $5M USD to ONUS via Telegram. ONUS rejected the request"
+          "the user data in the AWS S3 had been deleted",
+          "the attackers sent a ransom request of $5M USD to ONUS via Telegram"
         ]
       }
     ]
@@ -623,16 +1037,14 @@
   },
   "schema_version": "1.0",
   "incident_slug": "onus-2021-december",
-  "analyzed_at": "2026-04-15T21:42:01.289391+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 15627,
+  "analyzed_at": "2026-04-23T18:49:34.941279+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 24640,
   "incident_name": "Onus",
   "incident_date": "2021, December",
   "incident_root_cause": "Log4Shell vulnerability in Cyclos server",
-  "impact_type_raw": "Data Exfiltration",
-  "aws_services_raw": [
-    "Amazon S3",
-    "AWS IAM",
-    "Amazon RDS"
-  ]
+  "impact_type": "Unknown",
+  "impact_type_raw": "",
+  "aws_services": [],
+  "aws_services_raw": []
 }

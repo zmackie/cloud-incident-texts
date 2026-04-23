@@ -1,35 +1,16 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams",
-          "validated": true
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Valid Accounts via Exposed Credentials: Credentials In Files (Public Code Repository)",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": false,
-          "evidence_quote": "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it",
+          "evidence_quote": "cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
+        },
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
@@ -40,41 +21,15 @@
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1593.003",
+          "technique_name": "Search Open Websites/Domains: Code Repositories",
           "inferred": true,
-          "evidence_quote": "cryptographic keys that allowed access to DXC procured Amazon Web Services resources",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0005",
-      "tactic_name": "Defense Evasion",
-      "techniques": [
-        {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": true,
-          "evidence_quote": "The code was in the public space for less than 24 hours before DXC realised it was unsecured and removed",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1204",
-          "technique_name": "User Execution / Attacker-Initiated Cloud Resource Provisioning",
-          "inferred": false,
-          "evidence_quote": "the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k",
-          "validated": true
+          "evidence_quote": "the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it",
+          "validated": false
         }
       ]
     },
@@ -86,7 +41,7 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": false,
-          "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799).",
+          "evidence_quote": "the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k",
           "validated": true
         }
       ]
@@ -97,100 +52,166 @@
       "step": 1,
       "technique_id": "T1552.001",
       "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "A DXC technician hardcoded private AWS access keys directly into source code that was being shared across multiple teams and with a project architect, creating an insecure credential artifact.",
-      "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams and with the project architect.",
+      "description": "A DXC technical team member hardcoded AWS cryptographic keys (secure variables) into code being shared among multiple teams.",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work",
+      "event_time": "2017-09",
+      "event_time_precision": "month",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 388,
+          "char_end": 3855,
+          "quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3467,
+          "quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work"
+        }
+      ],
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1213.003",
-      "technique_name": "Data from Code Repositories (Public GitHub Exposure)",
-      "description": "On September 27, the technician uploaded the code containing the hardcoded AWS keys to a personal public GitHub repository, inadvertently exposing the credentials to the internet. Unknown threat actors discovered and harvested the keys.",
-      "evidence_quote": "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it.",
+      "technique_id": "T1593.003",
+      "technique_name": "Search Open Websites/Domains: Code Repositories",
+      "description": "On September 27, the employee uploaded the code containing hardcoded AWS keys to a personal public GitHub repository, where unknown miscreants discovered the exposed credentials.",
+      "aws_services_involved": [],
+      "evidence_quote": "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository",
+      "event_time": "2017-09-27",
+      "event_time_precision": "day",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
       ],
-      "aws_services_involved": [],
-      "validated": true
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 388,
+          "char_end": 3855,
+          "quote": "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3467,
+          "quote": "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository"
+        }
+      ],
+      "validated": false
     },
     {
       "step": 3,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Threat actors used the exfiltrated AWS private keys to authenticate to DXC's AWS environment as a legitimate account, gaining full access to the cloud environment without needing to exploit any vulnerability.",
-      "evidence_quote": "the private keys were used to start 244 AWS virtual machines",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
-      ],
+      "description": "Attackers used the exposed private AWS keys to authenticate to DXC's AWS account.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "the private keys were used to start 244 AWS virtual machines",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 388,
+          "char_end": 3855,
+          "quote": "the private keys were used to start 244 AWS virtual machines"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3467,
+          "quote": "the private keys were used to start 244 AWS virtual machines"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "Using the stolen credentials, attackers provisioned 244 EC2 virtual machines \u2014 most within 24 hours of the key publication \u2014 to create the infrastructure needed for cryptomining operations.",
-      "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. DXC's own monitoring tool, Cloud Checker, indicated most of the VMs were stood up within 24 hours of the unwitting publication of the keys.",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
-      ],
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
       "technique_id": "T1496",
       "technique_name": "Resource Hijacking",
-      "description": "The 244 provisioned EC2 instances were used for cryptomining, consuming DXC's cloud compute resources and resulting in a $64,000 (\u00a348,799) AWS bill over four days.",
-      "evidence_quote": "Miscreants racked up a $64,000 bill on DXC Technologies' tab... Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799).",
-      "evidence_sources": [
-        "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
-      ],
+      "description": "Over four days attackers spun up 244 EC2 virtual machines (most within 24 hours of key publication) to run cryptomining workloads, racking up a $64,000 AWS bill.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 388,
+          "char_end": 3855,
+          "quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 0,
+          "char_end": 3467,
+          "quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
-    "EC2"
+    "EC2",
+    "IAM"
   ],
   "impact_type": "Cryptomining",
-  "confidence_score": 0.92,
-  "initial_access_vector": "Private AWS access keys hardcoded in source code and accidentally uploaded to a public GitHub repository by a DXC employee on September 27, 2017",
-  "persistence_mechanism": "Attackers used the stolen long-lived AWS IAM credentials (valid cloud account keys) continuously over a four-day period before DXC rotated/recycled the keys",
-  "privilege_escalation": "No privilege escalation was required; the exposed keys directly granted sufficient permissions to provision EC2 instances at scale",
+  "confidence_score": 0.9,
   "data_exfiltrated": false,
+  "initial_access_vector": "AWS private keys hardcoded in source code accidentally committed to a public GitHub repository and harvested by unknown miscreants.",
+  "persistence_mechanism": "None observed; exposure window was under 24 hours before the repo was removed and keys rotated.",
+  "privilege_escalation": "None required; the leaked AWS keys already had privileges sufficient to launch EC2 instances.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "A DXC technician hardcoded private AWS access keys directly into source code that was being shared across multiple teams and with a project architect, creating an insecure credential artifact.",
+        "description": "A DXC technical team member hardcoded AWS cryptographic keys (secure variables) into code being shared among multiple teams.",
         "tactic_id": "TA0006",
-        "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams and with the project architect.",
+        "evidence_quote": "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work",
         "evidence_sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
-        "aws_services_involved": []
+        "aws_services_involved": [
+          "IAM"
+        ]
       },
       {
         "step": 2,
-        "technique_id": "T1213.003",
-        "technique_name": "Code Repositories",
-        "description": "On September 27, the technician uploaded the code containing the hardcoded AWS keys to a personal public GitHub repository, inadvertently exposing the credentials to the internet. Unknown threat actors discovered and harvested the keys.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it.",
+        "technique_id": "T1593.003",
+        "technique_name": "Search Open Websites/Domains: Code Repositories",
+        "description": "On September 27, the employee uploaded the code containing hardcoded AWS keys to a personal public GitHub repository, where unknown miscreants discovered the exposed credentials.",
+        "tactic_id": "",
+        "evidence_quote": "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository",
         "evidence_sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
@@ -200,7 +221,7 @@
         "step": 3,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Threat actors used the exfiltrated AWS private keys to authenticate to DXC's AWS environment as a legitimate account, gaining full access to the cloud environment without needing to exploit any vulnerability.",
+        "description": "Attackers used the exposed private AWS keys to authenticate to DXC's AWS account.",
         "tactic_id": "TA0005",
         "evidence_quote": "the private keys were used to start 244 AWS virtual machines",
         "evidence_sources": [
@@ -212,25 +233,11 @@
       },
       {
         "step": 4,
-        "technique_id": "T1578.002",
-        "technique_name": "Create Cloud Instance",
-        "description": "Using the stolen credentials, attackers provisioned 244 EC2 virtual machines \u2014 most within 24 hours of the key publication \u2014 to create the infrastructure needed for cryptomining operations.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. DXC's own monitoring tool, Cloud Checker, indicated most of the VMs were stood up within 24 hours of the unwitting publication of the keys.",
-        "evidence_sources": [
-          "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
-        ],
-        "aws_services_involved": [
-          "EC2"
-        ]
-      },
-      {
-        "step": 5,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "The 244 provisioned EC2 instances were used for cryptomining, consuming DXC's cloud compute resources and resulting in a $64,000 (\u00a348,799) AWS bill over four days.",
+        "description": "Over four days attackers spun up 244 EC2 virtual machines (most within 24 hours of key publication) to run cryptomining workloads, racking up a $64,000 AWS bill.",
         "tactic_id": "TA0040",
-        "evidence_quote": "Miscreants racked up a $64,000 bill on DXC Technologies' tab... Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799).",
+        "evidence_quote": "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k",
         "evidence_sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
@@ -242,62 +249,47 @@
     "edges": [
       {
         "source": "T1552.001",
-        "target": "T1213.003",
+        "target": "T1593.003",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Credentials In Files",
-        "target_technique_name": "Code Repositories",
+        "target_technique_name": "Search Open Websites/Domains: Code Repositories",
         "sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
         "evidence_quotes": [
-          "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work being shared between multiple teams and with the project architect.",
-          "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it."
+          "Various secure variables (cryptographic keys that allowed access to DXC procured Amazon Web Services resources) were hardcoded into a piece of work",
+          "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository"
         ]
       },
       {
-        "source": "T1213.003",
+        "source": "T1593.003",
         "target": "T1078.004",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Code Repositories",
+        "source_technique_name": "Search Open Websites/Domains: Code Repositories",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
         "evidence_quotes": [
-          "a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository that allowed individuals as yet unknown to access and use it.",
+          "on September 27, a member of the technical team created a personal space on the public Github, and the code was loaded to this unsecured repository",
           "the private keys were used to start 244 AWS virtual machines"
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1578.002",
+        "target": "T1496",
         "source_step": 3,
         "target_step": 4,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Create Cloud Instance",
-        "sources": [
-          "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
-        ],
-        "evidence_quotes": [
-          "the private keys were used to start 244 AWS virtual machines",
-          "Over a period of four days, the private keys were used to start 244 AWS virtual machines. DXC's own monitoring tool, Cloud Checker, indicated most of the VMs were stood up within 24 hours of the unwitting publication of the keys."
-        ]
-      },
-      {
-        "source": "T1578.002",
-        "target": "T1496",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Create Cloud Instance",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://web.archive.org/web/20210228215919/https://www.theregister.com/2017/11/14/dxc_github_aws_keys_leaked/"
         ],
         "evidence_quotes": [
-          "Over a period of four days, the private keys were used to start 244 AWS virtual machines. DXC's own monitoring tool, Cloud Checker, indicated most of the VMs were stood up within 24 hours of the unwitting publication of the keys.",
-          "Miscreants racked up a $64,000 bill on DXC Technologies' tab... Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k (\u00a348,799)."
+          "the private keys were used to start 244 AWS virtual machines",
+          "Over a period of four days, the private keys were used to start 244 AWS virtual machines. The cost incurred was $64k"
         ]
       }
     ]
@@ -308,15 +300,15 @@
   },
   "schema_version": "1.0",
   "incident_slug": "dxc-technologies-2017-november",
-  "analyzed_at": "2026-04-15T20:52:41.196167+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 3817,
+  "analyzed_at": "2026-04-23T18:43:01.663471+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 7708,
   "incident_name": "DXC Technologies",
   "incident_date": "2017, November",
   "incident_root_cause": "Private AWS key exposed via GitHub",
   "impact_type_raw": "Cryptomining",
   "aws_services_raw": [
-    "AWS IAM",
-    "Amazon EC2"
+    "Amazon EC2",
+    "AWS IAM"
   ]
 }

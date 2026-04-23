@@ -1,4 +1,121 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1195.002",
+      "technique_name": "Compromise Software Supply Chain",
+      "description": "Attackers compromised a Safe{Wallet} developer's machine, gaining a foothold in the software supply chain used by Safe{Wallet}.",
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "aws_services_involved": [],
+      "evidence_quote": "Compromised developer machine",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Using credentials/session from the compromised developer workstation, attackers obtained valid AWS access to the Safe{Wallet} environment, including write permissions to the S3 bucket hosting the web application.",
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "IAM",
+        "S3"
+      ],
+      "evidence_quote": "Malicious JavaScript via S3 bucket write access",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1578",
+      "technique_name": "Modify Cloud Compute Infrastructure",
+      "description": "Attackers leveraged S3 write access to modify the production web application assets hosted from the Safe{Wallet} S3 bucket.",
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "Malicious JavaScript via S3 bucket write access",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1059.007",
+      "technique_name": "Command and Scripting Interpreter: JavaScript",
+      "description": "Attackers injected malicious JavaScript into the Safe{Wallet} web app served from S3, which executed in the browsers of Safe{Wallet} users (including Bybit signers) to manipulate transaction data shown/signed.",
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "aws_services_involved": [
+        "S3",
+        "CloudFront"
+      ],
+      "evidence_quote": "Malicious JavaScript via S3 bucket write access",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 5,
+      "technique_id": "T1557",
+      "technique_name": "Adversary-in-the-Middle",
+      "description": "The injected JavaScript acted as an adversary-in-the-middle in the Safe{Wallet} UI, altering the transaction presented to Bybit's multisig signers so they unknowingly approved an attacker-controlled transaction.",
+      "event_time": "2025-02",
+      "event_time_precision": "month",
+      "aws_services_involved": [],
+      "evidence_quote": "Malicious JavaScript via S3 bucket write access",
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 6,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "The fraudulent signed transaction transferred approximately $1.5 billion in cryptocurrency from Bybit's cold wallet to attacker-controlled addresses.",
+      "event_time": "2025-02-21",
+      "event_time_precision": "day",
+      "aws_services_involved": [],
+      "evidence_quote": "$1.5 Billion dollars stolen",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "S3",
+    "IAM",
+    "CloudFront"
+  ],
+  "confidence_score": 0.4,
+  "data_exfiltrated": false,
+  "impact_type": "Financial Theft",
+  "initial_access_vector": "Compromise of a Safe{Wallet} developer's workstation, which yielded valid AWS credentials/session with write access to the S3 bucket serving the Safe{Wallet} web application.",
+  "persistence_mechanism": "Malicious JavaScript persisted in the Safe{Wallet} production S3 bucket, served to users until the target transaction was signed.",
+  "privilege_escalation": "Not required \u2014 developer already possessed S3 write privileges to the production bucket.",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
@@ -6,16 +123,17 @@
       "techniques": [
         {
           "technique_id": "T1195.002",
-          "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
+          "technique_name": "Compromise Software Supply Chain",
           "inferred": false,
-          "evidence_quote": "Compromised developer machine led to malicious JavaScript being injected into the Safe{Wallet} supply chain",
+          "evidence_quote": "Compromised developer machine",
           "validated": false
         },
         {
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
           "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "Malicious JavaScript via S3 bucket write access",
           "validated": true
         }
       ]
@@ -27,6 +145,7 @@
         {
           "technique_id": "T1059.007",
           "technique_name": "Command and Scripting Interpreter: JavaScript",
+          "subtechnique_id": "T1059.007",
           "inferred": false,
           "evidence_quote": "Malicious JavaScript via S3 bucket write access",
           "validated": false
@@ -38,69 +157,23 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1505",
-          "technique_name": "Server Software Component",
+          "technique_id": "T1554",
+          "technique_name": "Compromise Host Software Binary",
           "inferred": true,
-          "evidence_quote": "Malicious JavaScript injected into Safe{Wallet} frontend served to users",
+          "evidence_quote": "Malicious JavaScript via S3 bucket write access",
           "validated": false
         }
       ]
     },
     {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
+          "technique_id": "T1578",
+          "technique_name": "Modify Cloud Compute Infrastructure",
           "inferred": true,
-          "evidence_quote": "Developer machine compromise yielded credentials enabling S3 bucket write access",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.005",
-          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
-          "inferred": true,
-          "evidence_quote": null,
-          "validated": true
-        },
-        {
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores",
-          "inferred": true,
-          "evidence_quote": "Compromised developer machine \u2014 credentials/secrets harvested to enable S3 write",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
-      "techniques": [
-        {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
-          "inferred": true,
-          "evidence_quote": "Attacker identified and targeted the Safe{Wallet} S3 bucket hosting frontend assets",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1021",
-          "technique_name": "Remote Services",
-          "inferred": true,
-          "evidence_quote": "Pivot from compromised developer machine to AWS S3 environment",
+          "evidence_quote": "S3 bucket write access",
           "validated": true
         }
       ]
@@ -110,10 +183,10 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1185",
-          "technique_name": "Browser Session Hijacking",
-          "inferred": false,
-          "evidence_quote": "Malicious JavaScript intercepted transaction signing data in the Bybit web frontend",
+          "technique_id": "T1557",
+          "technique_name": "Adversary-in-the-Middle",
+          "inferred": true,
+          "evidence_quote": "Malicious JavaScript via S3 bucket write access",
           "validated": false
         }
       ]
@@ -130,137 +203,17 @@
           "validated": true
         }
       ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1041",
-          "technique_name": "Exfiltration Over C2 Channel",
-          "inferred": true,
-          "evidence_quote": "Malicious JavaScript exfiltrated signing data/transaction details to attacker-controlled infrastructure",
-          "validated": false
-        }
-      ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1566",
-      "technique_name": "Phishing",
-      "description": "Threat actor compromised a Safe{Wallet} developer's machine, likely via spearphishing or social engineering, establishing an initial foothold on the developer endpoint.",
-      "evidence_quote": "Root Cause: Compromised developer machine",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1555",
-      "technique_name": "Credentials from Password Stores",
-      "description": "With access to the developer machine, the attacker harvested AWS credentials (access keys, session tokens, or stored secrets) that had write permissions to the Safe{Wallet} S3 bucket hosting frontend JavaScript assets.",
-      "evidence_quote": "Compromised developer machine ... Malicious JavaScript via S3 bucket write access",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Using the harvested developer credentials, the attacker enumerated the AWS environment to identify the specific S3 bucket serving Safe{Wallet} frontend JavaScript to end-users.",
-      "evidence_quote": "Malicious JavaScript via S3 bucket write access",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1195.002",
-      "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
-      "description": "The attacker wrote malicious JavaScript to the Safe{Wallet} S3 bucket, poisoning the frontend JavaScript bundle served to all users of the Safe{Wallet} web application, including Bybit's operators.",
-      "evidence_quote": "Escalation Vectors: Malicious JavaScript via S3 bucket write access",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [
-        "S3",
-        "CloudFront"
-      ],
-      "validated": false
-    },
-    {
-      "step": 5,
-      "technique_id": "T1059.007",
-      "technique_name": "Command and Scripting Interpreter: JavaScript",
-      "description": "The malicious JavaScript executed in the browsers of Bybit signers when they loaded the Safe{Wallet} interface, enabling the attacker to intercept and manipulate transaction signing operations in real time.",
-      "evidence_quote": "Malicious JavaScript via S3 bucket write access ... $1.5 Billion dollars stolen",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": false
-    },
-    {
-      "step": 6,
-      "technique_id": "T1185",
-      "technique_name": "Browser Session Hijacking",
-      "description": "The injected JavaScript silently manipulated transaction parameters (destination address and amounts) presented to Bybit signers during the signing ceremony, causing signers to unknowingly approve a fraudulent transaction transferring ~$1.5B in assets to attacker-controlled wallets.",
-      "evidence_quote": "Impact: $1.5 Billion dollars stolen",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 7,
-      "technique_id": "T1657",
-      "technique_name": "Financial Theft",
-      "description": "With the manipulated transaction signed and broadcast by legitimate Bybit signers, approximately $1.5 billion in cryptocurrency was transferred to wallets controlled by the threat actor (attributed to Lazarus Group / DPRK).",
-      "evidence_quote": "Impact: $1.5 Billion dollars stolen",
-      "evidence_sources": [
-        "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "S3",
-    "IAM",
-    "CloudFront"
-  ],
-  "impact_type": "Financial Theft",
-  "confidence_score": 0.4,
-  "initial_access_vector": "Developer workstation compromise (likely spearphishing/social engineering) targeting a Safe{Wallet} developer, yielding AWS credentials with S3 write access to the frontend asset bucket",
-  "persistence_mechanism": "Malicious JavaScript persisted in the Safe{Wallet} S3 bucket, executing in every user's browser session until detected and remediated",
-  "privilege_escalation": "Harvested developer AWS credentials granted direct S3 write access to production frontend bucket, requiring no additional privilege escalation within AWS",
-  "data_exfiltrated": true,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1566",
-        "technique_name": "Phishing",
-        "description": "Threat actor compromised a Safe{Wallet} developer's machine, likely via spearphishing or social engineering, establishing an initial foothold on the developer endpoint.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "Root Cause: Compromised developer machine",
+        "technique_id": "T1195.002",
+        "technique_name": "Compromise Software Supply Chain",
+        "description": "Attackers compromised a Safe{Wallet} developer's machine, gaining a foothold in the software supply chain used by Safe{Wallet}.",
+        "tactic_id": "",
+        "evidence_quote": "Compromised developer machine",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
@@ -268,11 +221,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1555",
-        "technique_name": "Credentials from Password Stores",
-        "description": "With access to the developer machine, the attacker harvested AWS credentials (access keys, session tokens, or stored secrets) that had write permissions to the Safe{Wallet} S3 bucket hosting frontend JavaScript assets.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Compromised developer machine ... Malicious JavaScript via S3 bucket write access",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Using credentials/session from the compromised developer workstation, attackers obtained valid AWS access to the Safe{Wallet} environment, including write permissions to the S3 bucket hosting the web application.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Malicious JavaScript via S3 bucket write access",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
@@ -283,10 +236,10 @@
       },
       {
         "step": 3,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Using the harvested developer credentials, the attacker enumerated the AWS environment to identify the specific S3 bucket serving Safe{Wallet} frontend JavaScript to end-users.",
-        "tactic_id": "TA0007",
+        "technique_id": "T1578",
+        "technique_name": "Modify Cloud Compute Infrastructure",
+        "description": "Attackers leveraged S3 write access to modify the production web application assets hosted from the Safe{Wallet} S3 bucket.",
+        "tactic_id": "TA0005",
         "evidence_quote": "Malicious JavaScript via S3 bucket write access",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
@@ -297,11 +250,11 @@
       },
       {
         "step": 4,
-        "technique_id": "T1195.002",
-        "technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
-        "description": "The attacker wrote malicious JavaScript to the Safe{Wallet} S3 bucket, poisoning the frontend JavaScript bundle served to all users of the Safe{Wallet} web application, including Bybit's operators.",
+        "technique_id": "T1059.007",
+        "technique_name": "Command and Scripting Interpreter: JavaScript",
+        "description": "Attackers injected malicious JavaScript into the Safe{Wallet} web app served from S3, which executed in the browsers of Safe{Wallet} users (including Bybit signers) to manipulate transaction data shown/signed.",
         "tactic_id": "",
-        "evidence_quote": "Escalation Vectors: Malicious JavaScript via S3 bucket write access",
+        "evidence_quote": "Malicious JavaScript via S3 bucket write access",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
@@ -312,37 +265,23 @@
       },
       {
         "step": 5,
-        "technique_id": "T1059.007",
-        "technique_name": "Command and Scripting Interpreter: JavaScript",
-        "description": "The malicious JavaScript executed in the browsers of Bybit signers when they loaded the Safe{Wallet} interface, enabling the attacker to intercept and manipulate transaction signing operations in real time.",
+        "technique_id": "T1557",
+        "technique_name": "Adversary-in-the-Middle",
+        "description": "The injected JavaScript acted as an adversary-in-the-middle in the Safe{Wallet} UI, altering the transaction presented to Bybit's multisig signers so they unknowingly approved an attacker-controlled transaction.",
         "tactic_id": "",
-        "evidence_quote": "Malicious JavaScript via S3 bucket write access ... $1.5 Billion dollars stolen",
-        "evidence_sources": [
-          "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-        ],
-        "aws_services_involved": [
-          "S3"
-        ]
-      },
-      {
-        "step": 6,
-        "technique_id": "T1185",
-        "technique_name": "Browser Session Hijacking",
-        "description": "The injected JavaScript silently manipulated transaction parameters (destination address and amounts) presented to Bybit signers during the signing ceremony, causing signers to unknowingly approve a fraudulent transaction transferring ~$1.5B in assets to attacker-controlled wallets.",
-        "tactic_id": "",
-        "evidence_quote": "Impact: $1.5 Billion dollars stolen",
+        "evidence_quote": "Malicious JavaScript via S3 bucket write access",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "aws_services_involved": []
       },
       {
-        "step": 7,
+        "step": 6,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "With the manipulated transaction signed and broadcast by legitimate Bybit signers, approximately $1.5 billion in cryptocurrency was transferred to wallets controlled by the threat actor (attributed to Lazarus Group / DPRK).",
+        "description": "The fraudulent signed transaction transferred approximately $1.5 billion in cryptocurrency from Bybit's cold wallet to attacker-controlled addresses.",
         "tactic_id": "TA0040",
-        "evidence_quote": "Impact: $1.5 Billion dollars stolen",
+        "evidence_quote": "$1.5 Billion dollars stolen",
         "evidence_sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
@@ -351,93 +290,78 @@
     ],
     "edges": [
       {
-        "source": "T1566",
-        "target": "T1555",
+        "source": "T1195.002",
+        "target": "T1078.004",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Phishing",
-        "target_technique_name": "Credentials from Password Stores",
+        "source_technique_name": "Compromise Software Supply Chain",
+        "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "evidence_quotes": [
-          "Root Cause: Compromised developer machine",
-          "Compromised developer machine ... Malicious JavaScript via S3 bucket write access"
-        ]
-      },
-      {
-        "source": "T1555",
-        "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Credentials from Password Stores",
-        "target_technique_name": "Cloud Infrastructure Discovery",
-        "sources": [
-          "https://docsend.com/view/s/rmdi832mpt8u93s7#"
-        ],
-        "evidence_quotes": [
-          "Compromised developer machine ... Malicious JavaScript via S3 bucket write access",
+          "Compromised developer machine",
           "Malicious JavaScript via S3 bucket write access"
         ]
       },
       {
-        "source": "T1580",
-        "target": "T1195.002",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
+        "source": "T1078.004",
+        "target": "T1578",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Modify Cloud Compute Infrastructure",
         "sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "evidence_quotes": [
           "Malicious JavaScript via S3 bucket write access",
-          "Escalation Vectors: Malicious JavaScript via S3 bucket write access"
+          "Malicious JavaScript via S3 bucket write access"
         ]
       },
       {
-        "source": "T1195.002",
+        "source": "T1578",
         "target": "T1059.007",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Supply Chain Compromise: Compromise Software Supply Chain",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Modify Cloud Compute Infrastructure",
         "target_technique_name": "Command and Scripting Interpreter: JavaScript",
         "sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "evidence_quotes": [
-          "Escalation Vectors: Malicious JavaScript via S3 bucket write access",
-          "Malicious JavaScript via S3 bucket write access ... $1.5 Billion dollars stolen"
+          "Malicious JavaScript via S3 bucket write access",
+          "Malicious JavaScript via S3 bucket write access"
         ]
       },
       {
         "source": "T1059.007",
-        "target": "T1185",
-        "source_step": 5,
-        "target_step": 6,
+        "target": "T1557",
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Command and Scripting Interpreter: JavaScript",
-        "target_technique_name": "Browser Session Hijacking",
+        "target_technique_name": "Adversary-in-the-Middle",
         "sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "evidence_quotes": [
-          "Malicious JavaScript via S3 bucket write access ... $1.5 Billion dollars stolen",
-          "Impact: $1.5 Billion dollars stolen"
+          "Malicious JavaScript via S3 bucket write access",
+          "Malicious JavaScript via S3 bucket write access"
         ]
       },
       {
-        "source": "T1185",
+        "source": "T1557",
         "target": "T1657",
-        "source_step": 6,
-        "target_step": 7,
-        "source_technique_name": "Browser Session Hijacking",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Adversary-in-the-Middle",
         "target_technique_name": "Financial Theft",
         "sources": [
           "https://docsend.com/view/s/rmdi832mpt8u93s7#"
         ],
         "evidence_quotes": [
-          "Impact: $1.5 Billion dollars stolen",
-          "Impact: $1.5 Billion dollars stolen"
+          "Malicious JavaScript via S3 bucket write access",
+          "$1.5 Billion dollars stolen"
         ]
       }
     ]
@@ -448,16 +372,16 @@
   },
   "schema_version": "1.0",
   "incident_slug": "bybit-safewallet-2025-february",
-  "analyzed_at": "2026-04-15T20:45:20.962622+00:00",
-  "model": "claude-sonnet-4-6",
+  "analyzed_at": "2026-04-23T18:38:11.289202+00:00",
+  "model": "claude-opus-4-7",
   "source_chars": 292,
   "incident_name": "Bybit / Safe{Wallet}",
   "incident_date": "2025, February",
   "incident_root_cause": "Compromised developer machine",
   "impact_type_raw": "Financial Theft",
   "aws_services_raw": [
-    "AWS S3",
+    "Amazon S3",
     "AWS IAM",
-    "AWS CloudFront"
+    "Amazon CloudFront"
   ]
 }

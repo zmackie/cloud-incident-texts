@@ -1,8 +1,8 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0043",
-      "tactic_name": "Reconnaissance",
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
       "techniques": [
         {
           "technique_id": "T1580",
@@ -10,31 +10,12 @@
           "inferred": false,
           "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "T1001",
-      "tactic_name": "Discovery",
-      "techniques": [
+        },
         {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
+          "technique_id": "T1619",
+          "technique_name": "Cloud Storage Object Discovery",
           "inferred": false,
-          "evidence_quote": "GetBucketVersioning, GetBucketReplication, GetBucketObjectLockConfiguration, GetBucketLogging, GetBucketRequestPayment, GetAccelerateConfiguration",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "inferred": true,
-          "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
+          "evidence_quote": "GetBucketVersioning ... GetBucketReplication ... GetBucketObjectLockConfiguration ... GetBucketLogging ... GetBucketRequestPayment ... GetAccelerateConfiguration",
           "validated": true
         }
       ]
@@ -44,10 +25,17 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": false,
+          "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
+          "validated": true
+        },
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "Your files are downloaded and backed up on our servers",
+          "evidence_quote": "before allegedly downloading the data",
           "validated": true
         }
       ]
@@ -60,22 +48,35 @@
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
           "inferred": false,
-          "evidence_quote": "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note",
+          "evidence_quote": "the attacker utilized the command DeleteBucket to erase all buckets",
+          "validated": true
+        },
+        {
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": false,
+          "evidence_quote": "Send us 0.2 Bitcoin (BTC) to our Bitcoin addresses",
           "validated": true
         },
         {
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact",
-          "inferred": false,
-          "evidence_quote": "Send us 0.2 Bitcoin (BTC) to our Bitcoin addresses... To recover your lost files and avoid leaking it",
-          "subtechnique_id": null,
+          "inferred": true,
+          "evidence_quote": "left a ransom note ... To recover your lost files and avoid leaking it",
           "validated": true
-        },
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
         {
-          "technique_id": "T1491",
-          "technique_name": "Defacement",
-          "inferred": false,
-          "evidence_quote": "the attacker left a ransom note",
+          "technique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "subtechnique_id": "T1078.004",
+          "inferred": true,
+          "evidence_quote": "an attacker had deleted several AWS S3 buckets",
           "validated": true
         }
       ]
@@ -84,183 +85,301 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "On January 18, 2024, the attacker ran GetSendQuota against AWS SES and ListBuckets against S3 to enumerate available resources and understand the attack surface.",
-      "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker obtained valid AWS credentials (root cause unknown) and authenticated to the victim's AWS account.",
+      "event_time": "2024-01-18",
+      "event_time_precision": "day",
       "aws_services_involved": [
-        "Amazon S3",
-        "Amazon SES"
+        "IAM"
       ],
+      "evidence_quote": "We traced the initial actions of the attacker back to January 18, 2024",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c012",
+          "source_file": "link_00.clean.md",
+          "char_start": 2469,
+          "char_end": 2680,
+          "quote": "We traced the initial actions of the attacker back to January 18, 2024"
+        },
+        {
+          "chunk_id": "link_00.md#c012",
+          "source_file": "link_00.md",
+          "char_start": 2673,
+          "char_end": 2884,
+          "quote": "We traced the initial actions of the attacker back to January 18, 2024"
+        }
       ],
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery \u2014 Bucket Configuration Enumeration",
-      "description": "Before deleting buckets on February 5, 2024, the attacker queried detailed bucket configuration APIs to check whether versioning, replication, object lock, logging, and other recovery mechanisms were enabled \u2014 confirming that deletion would be unrecoverable.",
-      "evidence_quote": "GetBucketVersioning (versioning was not enabled), GetBucketReplication, GetBucketObjectLockConfiguration, GetBucketLogging, GetBucketRequestPayment, GetAccelerateConfiguration",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker enumerated SES quota and S3 buckets using GetSendQuota and ListBuckets API calls.",
+      "event_time": "2024-01-18",
+      "event_time_precision": "day",
       "aws_services_involved": [
-        "Amazon S3"
+        "SES",
+        "S3",
+        "CloudTrail"
       ],
+      "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
       ],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The attacker downloaded approximately 2 GB of data from the S3 buckets prior to deletion, to be used as leverage in the ransom demand.",
-      "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Attacker enumerated bucket configuration (versioning, replication, object lock, logging, request payment, accelerate configuration) prior to deletion.",
+      "event_time": "2024-02-05",
+      "event_time_precision": "day",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3",
+        "CloudTrail"
       ],
+      "evidence_quote": "Before the deletion of the buckets, the following commands were recorded in the CloudTrail logs: GetBucketVersioning ... GetBucketReplication ... GetBucketObjectLockConfiguration ...",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
       ],
+      "evidence_chunks": [],
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "On February 5, 2024, the attacker called DeleteBucket to destroy all S3 buckets, permanently eliminating the victim's data and making recovery impossible.",
-      "evidence_quote": "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note",
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attacker downloaded approximately 2 GB of data from the S3 buckets prior to deletion.",
+      "event_time": "2024-02-05",
+      "event_time_precision": "day",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3"
       ],
+      "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
+      "ordering_confidence": 0.7,
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c054",
+          "source_file": "link_00.clean.md",
+          "char_start": 11147,
+          "char_end": 11609,
+          "quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket"
+        },
+        {
+          "chunk_id": "link_00.md#c054",
+          "source_file": "link_00.md",
+          "char_start": 11351,
+          "char_end": 11813,
+          "quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket"
+        }
       ],
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1486",
-      "technique_name": "Data Encrypted for Impact (Ransom Note & Fraudulent Recovery Binary)",
-      "description": "The attacker deposited a ransom note and a fraudulent 'recovery' binary (recoveryAKIAZ5ESTHWPHSNVAXZ7.tgz) in place of the deleted buckets. The binary is a scam that only reads a local aws.txt file to simulate recovery activity with no actual network calls, designed to coerce the victim into paying 0.2 BTC.",
-      "evidence_quote": "The whole 'recovery' binary is just a neat trick the attackers use to trick the victims into paying the ransom... not a single domain is contacted, nor was a network connection done",
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Attacker issued DeleteBucket API calls to erase all S3 buckets (which had no versioning enabled).",
+      "event_time": "2024-02-05",
+      "event_time_precision": "day",
       "aws_services_involved": [
-        "Amazon S3"
+        "S3",
+        "CloudTrail"
       ],
+      "evidence_quote": "On February 5th 2024, the attacker utilized the command DeleteBucket to erase all buckets",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://dfir.ch/posts/aws_ransomware/"
       ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Attacker left a ransom note demanding 0.2 BTC and a fake 'recovery' binary (red herring) to coerce payment.",
+      "event_time": "2024-02-05",
+      "event_time_precision": "day",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "Send us 0.2 Bitcoin (BTC) to our Bitcoin addresses ... Your files are downloaded and backed up on our servers.",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://dfir.ch/posts/aws_ransomware/"
+      ],
+      "evidence_chunks": [],
       "validated": true
     }
   ],
   "aws_services": [
-    "Amazon S3",
-    "Amazon SES",
-    "AWS CloudTrail",
-    "AWS IAM"
+    "S3",
+    "SES",
+    "IAM",
+    "CloudTrail"
   ],
-  "impact_type": "Ransomware (S3 Bucket Deletion + Extortion)",
-  "confidence_score": 0.82,
-  "initial_access_vector": "Unknown \u2014 the root cause of initial credential compromise is not described in the source; the attacker possessed valid AWS credentials (IAM access key) at the time of first observed action on January 18, 2024.",
+  "impact_type": "S3 Ransomware (Data Destruction & Extortion)",
+  "confidence_score": 0.8,
   "data_exfiltrated": true,
-  "persistence_mechanism": "None observed in the source text.",
-  "privilege_escalation": "None observed in the source text.",
+  "initial_access_vector": "Unknown \u2014 attacker possessed valid AWS credentials (access key) enabling authenticated API actions against SES and S3.",
+  "persistence_mechanism": "Not described.",
+  "privilege_escalation": "Not described.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "On January 18, 2024, the attacker ran GetSendQuota against AWS SES and ListBuckets against S3 to enumerate available resources and understand the attack surface.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker obtained valid AWS credentials (root cause unknown) and authenticated to the victim's AWS account.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "We traced the initial actions of the attacker back to January 18, 2024",
         "evidence_sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3",
-          "Amazon SES"
+          "IAM"
         ]
       },
       {
         "step": 2,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Before deleting buckets on February 5, 2024, the attacker queried detailed bucket configuration APIs to check whether versioning, replication, object lock, logging, and other recovery mechanisms were enabled \u2014 confirming that deletion would be unrecoverable.",
+        "description": "Attacker enumerated SES quota and S3 buckets using GetSendQuota and ListBuckets API calls.",
         "tactic_id": "TA0007",
-        "evidence_quote": "GetBucketVersioning (versioning was not enabled), GetBucketReplication, GetBucketObjectLockConfiguration, GetBucketLogging, GetBucketRequestPayment, GetAccelerateConfiguration",
+        "evidence_quote": "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
         "evidence_sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "SES",
+          "S3",
+          "CloudTrail"
         ]
       },
       {
         "step": 3,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Attacker enumerated bucket configuration (versioning, replication, object lock, logging, request payment, accelerate configuration) prior to deletion.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Before the deletion of the buckets, the following commands were recorded in the CloudTrail logs: GetBucketVersioning ... GetBucketReplication ... GetBucketObjectLockConfiguration ...",
+        "evidence_sources": [
+          "https://dfir.ch/posts/aws_ransomware/"
+        ],
+        "aws_services_involved": [
+          "S3",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 4,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker downloaded approximately 2 GB of data from the S3 buckets prior to deletion, to be used as leverage in the ransom demand.",
+        "description": "Attacker downloaded approximately 2 GB of data from the S3 buckets prior to deletion.",
         "tactic_id": "TA0009",
         "evidence_quote": "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
         "evidence_sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
-        ]
-      },
-      {
-        "step": 4,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "On February 5, 2024, the attacker called DeleteBucket to destroy all S3 buckets, permanently eliminating the victim's data and making recovery impossible.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note",
-        "evidence_sources": [
-          "https://dfir.ch/posts/aws_ransomware/"
-        ],
-        "aws_services_involved": [
-          "Amazon S3"
+          "S3"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1486",
-        "technique_name": "Data Encrypted for Impact",
-        "description": "The attacker deposited a ransom note and a fraudulent 'recovery' binary (recoveryAKIAZ5ESTHWPHSNVAXZ7.tgz) in place of the deleted buckets. The binary is a scam that only reads a local aws.txt file to simulate recovery activity with no actual network calls, designed to coerce the victim into paying 0.2 BTC.",
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Attacker issued DeleteBucket API calls to erase all S3 buckets (which had no versioning enabled).",
         "tactic_id": "TA0040",
-        "evidence_quote": "The whole 'recovery' binary is just a neat trick the attackers use to trick the victims into paying the ransom... not a single domain is contacted, nor was a network connection done",
+        "evidence_quote": "On February 5th 2024, the attacker utilized the command DeleteBucket to erase all buckets",
         "evidence_sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "aws_services_involved": [
-          "Amazon S3"
+          "S3",
+          "CloudTrail"
+        ]
+      },
+      {
+        "step": 6,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Attacker left a ransom note demanding 0.2 BTC and a fake 'recovery' binary (red herring) to coerce payment.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "Send us 0.2 Bitcoin (BTC) to our Bitcoin addresses ... Your files are downloaded and backed up on our servers.",
+        "evidence_sources": [
+          "https://dfir.ch/posts/aws_ransomware/"
+        ],
+        "aws_services_involved": [
+          "S3"
         ]
       }
     ],
     "edges": [
       {
+        "source": "T1078.004",
+        "target": "T1580",
+        "source_step": 1,
+        "target_step": 2,
+        "source_technique_name": "Cloud Accounts",
+        "target_technique_name": "Cloud Infrastructure Discovery",
+        "sources": [
+          "https://dfir.ch/posts/aws_ransomware/"
+        ],
+        "evidence_quotes": [
+          "We traced the initial actions of the attacker back to January 18, 2024",
+          "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets"
+        ]
+      },
+      {
         "source": "T1580",
-        "target": "T1530",
+        "target": "T1619",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://dfir.ch/posts/aws_ransomware/"
+        ],
+        "evidence_quotes": [
+          "they executed two standard reconnaissance commands against the AWS Simple Email Solution (SES) and Amazon Simple Storage Service (S3): GetSendQuota, ListBuckets",
+          "Before the deletion of the buckets, the following commands were recorded in the CloudTrail logs: GetBucketVersioning ... GetBucketReplication ... GetBucketObjectLockConfiguration ..."
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1530",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Cloud Storage Object Discovery",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "evidence_quotes": [
-          "GetBucketVersioning (versioning was not enabled), GetBucketReplication, GetBucketObjectLockConfiguration, GetBucketLogging, GetBucketRequestPayment, GetAccelerateConfiguration",
+          "Before the deletion of the buckets, the following commands were recorded in the CloudTrail logs: GetBucketVersioning ... GetBucketReplication ... GetBucketObjectLockConfiguration ...",
           "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket"
         ]
       },
       {
         "source": "T1530",
         "target": "T1485",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 4,
+        "target_step": 5,
         "source_technique_name": "Data from Cloud Storage",
         "target_technique_name": "Data Destruction",
         "sources": [
@@ -268,22 +387,22 @@
         ],
         "evidence_quotes": [
           "the attackers most likely stole solely 2 GB of data, compared to the over 1 TB of data available on the bucket",
-          "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note"
+          "On February 5th 2024, the attacker utilized the command DeleteBucket to erase all buckets"
         ]
       },
       {
         "source": "T1485",
-        "target": "T1486",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1657",
+        "source_step": 5,
+        "target_step": 6,
         "source_technique_name": "Data Destruction",
-        "target_technique_name": "Data Encrypted for Impact",
+        "target_technique_name": "Financial Theft",
         "sources": [
           "https://dfir.ch/posts/aws_ransomware/"
         ],
         "evidence_quotes": [
-          "the attacker utilized the command DeleteBucket to erase all buckets, leaving behind the previously mentioned ransom note",
-          "The whole 'recovery' binary is just a neat trick the attackers use to trick the victims into paying the ransom... not a single domain is contacted, nor was a network connection done"
+          "On February 5th 2024, the attacker utilized the command DeleteBucket to erase all buckets",
+          "Send us 0.2 Bitcoin (BTC) to our Bitcoin addresses ... Your files are downloaded and backed up on our servers."
         ]
       }
     ]
@@ -294,7 +413,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "stephen-berger-infoguardag-2024-february",
-  "analyzed_at": "2026-04-15T21:08:10.541844+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 12528
+  "analyzed_at": "2026-04-23T18:53:03.329903+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 24173
 }

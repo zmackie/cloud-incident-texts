@@ -7,9 +7,8 @@
         {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
-          "inferred": false,
+          "inferred": true,
           "evidence_quote": "a threat actor compromised one of the company's Amazon Web Services (AWS) accounts",
-          "subtechnique_id": "T1078.004",
           "validated": true
         }
       ]
@@ -21,9 +20,8 @@
         {
           "technique_id": "T1530",
           "technique_name": "Data from Cloud Storage",
-          "inferred": false,
+          "inferred": true,
           "evidence_quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure",
-          "subtechnique_id": null,
           "validated": true
         }
       ]
@@ -33,26 +31,11 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
           "evidence_quote": "data that was eventually leaked online on a forum dedicated to trading hacked data",
-          "subtechnique_id": null,
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565",
-          "technique_name": "Data Manipulation",
-          "inferred": true,
-          "evidence_quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure, data that was eventually leaked online",
-          "subtechnique_id": null,
-          "validated": false
         }
       ]
     }
@@ -62,13 +45,32 @@
       "step": 1,
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Threat actor compromised one of FlexBooker's AWS accounts, gaining unauthorized access to their cloud environment. The exact method of compromise is unknown.",
+      "description": "Threat actor compromised a FlexBooker AWS account by unknown means",
+      "aws_services_involved": [
+        "IAM"
+      ],
+      "event_time": "2021-12",
+      "event_time_precision": "month",
       "evidence_quote": "a threat actor compromised one of the company's Amazon Web Services (AWS) accounts",
       "evidence_sources": [
         "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c005",
+          "source_file": "link_00.clean.md",
+          "char_start": 649,
+          "char_end": 834,
+          "quote": "a threat actor compromised one of the company's Amazon Web Services (AWS) accounts"
+        },
+        {
+          "chunk_id": "link_00.md#c011",
+          "source_file": "link_00.md",
+          "char_start": 1494,
+          "char_end": 1679,
+          "quote": "a threat actor compromised one of the company's Amazon Web Services (AWS) accounts"
+        }
       ],
       "validated": true
     },
@@ -76,50 +78,84 @@
       "step": 2,
       "technique_id": "T1530",
       "technique_name": "Data from Cloud Storage",
-      "description": "Using the compromised AWS account, the threat actor collected 9.5 million records from FlexBooker's AWS infrastructure, including names, email addresses, phone numbers, password hashes, and partial credit card data.",
+      "description": "Attacker used compromised AWS account to collect 9.5 million records from FlexBooker's AWS infrastructure",
+      "aws_services_involved": [
+        "AWS"
+      ],
+      "event_time": "2021-12",
+      "event_time_precision": "month",
       "evidence_quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure",
       "evidence_sources": [
         "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
       ],
-      "aws_services_involved": [
-        "S3",
-        "RDS"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 836,
+          "char_end": 1023,
+          "quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure"
+        },
+        {
+          "chunk_id": "link_00.md#c012",
+          "source_file": "link_00.md",
+          "char_start": 1681,
+          "char_end": 1868,
+          "quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure"
+        }
       ],
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "The exfiltrated data containing 3.7 million unique user records was transferred out of the AWS environment and subsequently published on a data-trading forum.",
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Stolen records were leaked online on a forum dedicated to trading hacked data",
+      "aws_services_involved": [],
+      "event_time": "2021-12",
+      "event_time_precision": "month",
       "evidence_quote": "data that was eventually leaked online on a forum dedicated to trading hacked data",
       "evidence_sources": [
         "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
       ],
-      "aws_services_involved": [
-        "AWS"
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 836,
+          "char_end": 1023,
+          "quote": "data that was eventually leaked online on a forum dedicated to trading hacked data"
+        },
+        {
+          "chunk_id": "link_00.md#c012",
+          "source_file": "link_00.md",
+          "char_start": 1681,
+          "char_end": 1868,
+          "quote": "data that was eventually leaked online on a forum dedicated to trading hacked data"
+        }
       ],
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
-    "S3",
-    "RDS"
+    "AWS",
+    "IAM"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.45,
-  "initial_access_vector": "Compromised AWS account credentials \u2014 exact method (phishing, credential stuffing, exposed keys, etc.) not disclosed in source",
+  "confidence_score": 0.4,
   "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
+  "initial_access_vector": "Compromise of a FlexBooker AWS account (method unknown)",
+  "persistence_mechanism": "Unknown",
+  "privilege_escalation": "Unknown",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Threat actor compromised one of FlexBooker's AWS accounts, gaining unauthorized access to their cloud environment. The exact method of compromise is unknown.",
+        "description": "Threat actor compromised a FlexBooker AWS account by unknown means",
         "tactic_id": "TA0005",
         "evidence_quote": "a threat actor compromised one of the company's Amazon Web Services (AWS) accounts",
         "evidence_sources": [
@@ -133,30 +169,27 @@
         "step": 2,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "Using the compromised AWS account, the threat actor collected 9.5 million records from FlexBooker's AWS infrastructure, including names, email addresses, phone numbers, password hashes, and partial credit card data.",
+        "description": "Attacker used compromised AWS account to collect 9.5 million records from FlexBooker's AWS infrastructure",
         "tactic_id": "TA0009",
         "evidence_quote": "The threat actor used the account to collect 9.5 million records from the company's AWS infrastructure",
         "evidence_sources": [
           "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
         ],
         "aws_services_involved": [
-          "S3",
-          "RDS"
+          "AWS"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "The exfiltrated data containing 3.7 million unique user records was transferred out of the AWS environment and subsequently published on a data-trading forum.",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Stolen records were leaked online on a forum dedicated to trading hacked data",
         "tactic_id": "TA0010",
         "evidence_quote": "data that was eventually leaked online on a forum dedicated to trading hacked data",
         "evidence_sources": [
           "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
         ],
-        "aws_services_involved": [
-          "AWS"
-        ]
+        "aws_services_involved": []
       }
     ],
     "edges": [
@@ -177,11 +210,11 @@
       },
       {
         "source": "T1530",
-        "target": "T1537",
+        "target": "T1567",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://therecord.media/booking-management-platform-flexbooker-leaks-3-7-million-user-records/"
         ],
@@ -198,16 +231,15 @@
   },
   "schema_version": "1.0",
   "incident_slug": "flexbooker-2021-december",
-  "analyzed_at": "2026-04-15T20:54:50.378960+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 9756,
+  "analyzed_at": "2026-04-23T18:44:18.090484+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 12521,
   "incident_name": "Flexbooker",
   "incident_date": "2021, December",
   "incident_root_cause": "Unknown",
   "impact_type_raw": "Data Exfiltration",
   "aws_services_raw": [
-    "AWS IAM",
-    "Amazon S3",
-    "AWS RDS"
+    "AWS",
+    "AWS IAM"
   ]
 }

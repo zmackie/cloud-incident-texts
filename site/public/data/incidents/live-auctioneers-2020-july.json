@@ -1,49 +1,93 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1195.002",
+      "technique_name": "Compromise Software Supply Chain",
+      "description": "Attackers compromised a third-party software used by Live Auctioneers, which granted access to the cloud environment.",
+      "event_time": "2020-06-19",
+      "event_time_precision": "day",
+      "evidence_quote": "Compromised third party software granting access to cloud environment",
+      "ordering_confidence": 0.9,
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.atg.wa.gov/live-auctioneers/"
+      ],
+      "evidence_chunks": [],
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "description": "Via the compromised third-party software, attackers leveraged the trusted integration to gain access to Live Auctioneers' cloud environment.",
+      "event_time": "2020-06-19",
+      "event_time_precision": "day",
+      "evidence_quote": "Compromised third party software granting access to cloud environment",
+      "ordering_confidence": 0.8,
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.atg.wa.gov/live-auctioneers/"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage",
+      "description": "Attackers accessed the user database containing names, email addresses, and MD5-hashed passwords/security question answers.",
+      "event_time": "2020-07-11",
+      "event_time_precision": "day",
+      "evidence_quote": "User database, including MD5 hashed credentials",
+      "ordering_confidence": 0.7,
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.atg.wa.gov/live-auctioneers/"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "User database records were exfiltrated from the cloud environment.",
+      "event_time": "2020-07-11",
+      "event_time_precision": "day",
+      "evidence_quote": "Information Compromised: Name; Email Address and Password/Security Question Answers",
+      "ordering_confidence": 0.5,
+      "aws_services_involved": [],
+      "evidence_sources": [
+        "https://www.atg.wa.gov/live-auctioneers/"
+      ],
+      "evidence_chunks": [],
+      "validated": true
+    }
+  ],
+  "aws_services": [],
+  "confidence_score": 0.3,
+  "data_exfiltrated": true,
+  "impact_type": "Data Exfiltration",
+  "initial_access_vector": "Compromise of third-party software that had access to Live Auctioneers' cloud environment (supply chain / trusted relationship).",
+  "persistence_mechanism": "Continued access via the compromised third-party software integration (implied; not explicitly described).",
+  "privilege_escalation": "None described",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1195",
-          "technique_name": "Supply Chain Compromise",
+          "technique_id": "T1195.002",
+          "technique_name": "Compromise Software Supply Chain",
           "subtechnique_id": "T1195.002",
           "inferred": false,
           "evidence_quote": "Compromised third party software granting access to cloud environment",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "User database, including MD5 hashed credentials",
-          "validated": true
+          "validated": false
         },
         {
-          "technique_id": "T1212",
-          "technique_name": "Exploitation for Credential Access",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "Email Address and Password/Security Question Answers",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
-          "subtechnique_id": null,
+          "technique_id": "T1199",
+          "technique_name": "Trusted Relationship",
           "inferred": true,
           "evidence_quote": "Compromised third party software granting access to cloud environment",
           "validated": true
@@ -55,9 +99,34 @@
       "tactic_name": "Collection",
       "techniques": [
         {
-          "technique_id": "T1213",
-          "technique_name": "Data from Information Repositories",
-          "subtechnique_id": null,
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "User database, including MD5 hashed credentials",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "Information Compromised: Name; Email Address and Password/Security Question Answers",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores",
           "inferred": true,
           "evidence_quote": "User database, including MD5 hashed credentials",
           "validated": true
@@ -65,58 +134,13 @@
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1195.002",
-      "technique_name": "Compromise Software Supply Chain",
-      "description": "Attackers compromised a third-party software component used by Live Auctioneers, which granted them access to Live Auctioneers' cloud environment. The breach window spans June 19 to July 11, 2020.",
-      "evidence_quote": "Compromised third party software granting access to cloud environment",
-      "evidence_sources": [
-        "https://www.atg.wa.gov/live-auctioneers/"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 2,
-      "technique_id": "T1213",
-      "technique_name": "Data from Information Repositories",
-      "description": "Using the access gained via the compromised third-party software, the attacker accessed the Live Auctioneers user database containing names, email addresses, passwords (MD5 hashed), and security question answers.",
-      "evidence_quote": "User database, including MD5 hashed credentials",
-      "evidence_sources": [
-        "https://www.atg.wa.gov/live-auctioneers/"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "The attacker exfiltrated user PII and credential data from the cloud environment, affecting at least 38,523 Washington state residents. Data included names, email addresses, passwords/security question answers.",
-      "evidence_quote": "Information Compromised: Name; Email Address and Password/Security Question Answers; Other \u2014 Number of Washingtonians Affected: 38523",
-      "evidence_sources": [
-        "https://www.atg.wa.gov/live-auctioneers/"
-      ],
-      "aws_services_involved": [],
-      "validated": true
-    }
-  ],
-  "aws_services": [],
-  "impact_type": "Data Exfiltration",
-  "confidence_score": 0.4,
-  "initial_access_vector": "Compromised third-party software that granted unauthorized access to the Live Auctioneers cloud environment",
-  "data_exfiltrated": true,
-  "persistence_mechanism": null,
-  "privilege_escalation": null,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1195.002",
         "technique_name": "Compromise Software Supply Chain",
-        "description": "Attackers compromised a third-party software component used by Live Auctioneers, which granted them access to Live Auctioneers' cloud environment. The breach window spans June 19 to July 11, 2020.",
+        "description": "Attackers compromised a third-party software used by Live Auctioneers, which granted access to the cloud environment.",
         "tactic_id": "",
         "evidence_quote": "Compromised third party software granting access to cloud environment",
         "evidence_sources": [
@@ -126,11 +150,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1213",
-        "technique_name": "Data from Information Repositories",
-        "description": "Using the access gained via the compromised third-party software, the attacker accessed the Live Auctioneers user database containing names, email addresses, passwords (MD5 hashed), and security question answers.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "User database, including MD5 hashed credentials",
+        "technique_id": "T1199",
+        "technique_name": "Trusted Relationship",
+        "description": "Via the compromised third-party software, attackers leveraged the trusted integration to gain access to Live Auctioneers' cloud environment.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "Compromised third party software granting access to cloud environment",
         "evidence_sources": [
           "https://www.atg.wa.gov/live-auctioneers/"
         ],
@@ -140,9 +164,21 @@
         "step": 3,
         "technique_id": "T1530",
         "technique_name": "Data from Cloud Storage",
-        "description": "The attacker exfiltrated user PII and credential data from the cloud environment, affecting at least 38,523 Washington state residents. Data included names, email addresses, passwords/security question answers.",
+        "description": "Attackers accessed the user database containing names, email addresses, and MD5-hashed passwords/security question answers.",
         "tactic_id": "TA0009",
-        "evidence_quote": "Information Compromised: Name; Email Address and Password/Security Question Answers; Other \u2014 Number of Washingtonians Affected: 38523",
+        "evidence_quote": "User database, including MD5 hashed credentials",
+        "evidence_sources": [
+          "https://www.atg.wa.gov/live-auctioneers/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 4,
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "User database records were exfiltrated from the cloud environment.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "Information Compromised: Name; Email Address and Password/Security Question Answers",
         "evidence_sources": [
           "https://www.atg.wa.gov/live-auctioneers/"
         ],
@@ -152,11 +188,26 @@
     "edges": [
       {
         "source": "T1195.002",
-        "target": "T1213",
+        "target": "T1199",
         "source_step": 1,
         "target_step": 2,
         "source_technique_name": "Compromise Software Supply Chain",
-        "target_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Trusted Relationship",
+        "sources": [
+          "https://www.atg.wa.gov/live-auctioneers/"
+        ],
+        "evidence_quotes": [
+          "Compromised third party software granting access to cloud environment",
+          "Compromised third party software granting access to cloud environment"
+        ]
+      },
+      {
+        "source": "T1199",
+        "target": "T1530",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Trusted Relationship",
+        "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.atg.wa.gov/live-auctioneers/"
         ],
@@ -166,18 +217,18 @@
         ]
       },
       {
-        "source": "T1213",
-        "target": "T1530",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Data from Information Repositories",
-        "target_technique_name": "Data from Cloud Storage",
+        "source": "T1530",
+        "target": "T1567",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Data from Cloud Storage",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://www.atg.wa.gov/live-auctioneers/"
         ],
         "evidence_quotes": [
           "User database, including MD5 hashed credentials",
-          "Information Compromised: Name; Email Address and Password/Security Question Answers; Other \u2014 Number of Washingtonians Affected: 38523"
+          "Information Compromised: Name; Email Address and Password/Security Question Answers"
         ]
       }
     ]
@@ -188,9 +239,9 @@
   },
   "schema_version": "1.0",
   "incident_slug": "live-auctioneers-2020-july",
-  "analyzed_at": "2026-04-15T20:59:16.743374+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 18019,
+  "analyzed_at": "2026-04-23T18:47:13.832570+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 18738,
   "incident_name": "Live Auctioneers",
   "incident_date": "2020, July",
   "incident_root_cause": "Compromised third party software granting access to cloud environment",

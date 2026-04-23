@@ -1,4 +1,70 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attackers exploited a vulnerable version of MinIO object storage service running on an AWS EC2 instance using the evil_minIO exploit.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "Exploited a vulnerable version of MinIO on an AWS EC2 instance via evil_minIO",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 2,
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "Performed network reconnaissance from the compromised host to identify additional targets.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC"
+      ],
+      "evidence_quote": "Network reconnaissance",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1136.001",
+      "technique_name": "Create Account: Local Account",
+      "description": "Created Windows local accounts for persistence/escalation.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "create windows accounts",
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    }
+  ],
+  "aws_services": [
+    "EC2"
+  ],
+  "confidence_score": 0.2,
+  "data_exfiltrated": false,
+  "impact_type": "Unknown",
+  "initial_access_vector": "Exploitation of a vulnerable MinIO object storage server deployed on an AWS EC2 instance using the evil_minIO exploit.",
+  "persistence_mechanism": "Creation of Windows local accounts on the compromised host.",
+  "privilege_escalation": "Creation of Windows accounts to gain/extend privileges on the host.",
   "tactics_used": [
     {
       "tactic_id": "TA0001",
@@ -7,7 +73,6 @@
         {
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Exploited a vulnerable version of MinIO on an AWS EC2 instance via evil_minIO",
           "validated": true
@@ -21,7 +86,6 @@
         {
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery",
-          "subtechnique_id": null,
           "inferred": false,
           "evidence_quote": "Network reconnaissance",
           "validated": true
@@ -33,8 +97,8 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_id": "T1136",
-          "technique_name": "Create Account",
+          "technique_id": "T1136.001",
+          "technique_name": "Create Account: Local Account",
           "subtechnique_id": "T1136.001",
           "inferred": false,
           "evidence_quote": "create windows accounts",
@@ -47,8 +111,8 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1136",
-          "technique_name": "Create Account",
+          "technique_id": "T1136.001",
+          "technique_name": "Create Account: Local Account",
           "subtechnique_id": "T1136.001",
           "inferred": true,
           "evidence_quote": "create windows accounts",
@@ -57,67 +121,13 @@
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited a known vulnerability in a publicly exposed, unpatched MinIO instance (via the evil_minio exploit tool/technique, targeting CVE-2023-28432 / CVE-2023-28434) running on an AWS EC2 instance to gain initial code execution.",
-      "evidence_quote": "Exploited a vulnerable version of MinIO on an AWS EC2 instance via evil_minIO",
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "evidence_sources": [
-        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
-      ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1046",
-      "technique_name": "Network Service Discovery",
-      "description": "Following initial compromise, the attacker performed network reconnaissance to identify additional hosts and services within the cloud environment.",
-      "evidence_quote": "Network reconnaissance",
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "evidence_sources": [
-        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1136.001",
-      "technique_name": "Create Account: Local Account",
-      "description": "The attacker created Windows local accounts on the compromised EC2 instance to establish persistence and potentially escalate privileges.",
-      "evidence_quote": "create windows accounts",
-      "aws_services_involved": [
-        "EC2"
-      ],
-      "evidence_sources": [
-        "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "EC2",
-    "S3 (MinIO-compatible object storage)"
-  ],
-  "impact_type": "Account Takeover",
-  "confidence_score": 0.5,
-  "initial_access_vector": "Exploitation of a vulnerable MinIO object storage deployment on AWS EC2 using the evil_minio exploit (targeting CVE-2023-28432/CVE-2023-28434)",
-  "persistence_mechanism": "Creation of local Windows accounts on the compromised EC2 instance",
-  "privilege_escalation": "Implied via local Windows account creation, enabling attacker-controlled privileged access",
-  "data_exfiltrated": false,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1190",
         "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited a known vulnerability in a publicly exposed, unpatched MinIO instance (via the evil_minio exploit tool/technique, targeting CVE-2023-28432 / CVE-2023-28434) running on an AWS EC2 instance to gain initial code execution.",
+        "description": "Attackers exploited a vulnerable version of MinIO object storage service running on an AWS EC2 instance using the evil_minIO exploit.",
         "tactic_id": "TA0001",
         "evidence_quote": "Exploited a vulnerable version of MinIO on an AWS EC2 instance via evil_minIO",
         "evidence_sources": [
@@ -131,21 +141,22 @@
         "step": 2,
         "technique_id": "T1046",
         "technique_name": "Network Service Discovery",
-        "description": "Following initial compromise, the attacker performed network reconnaissance to identify additional hosts and services within the cloud environment.",
+        "description": "Performed network reconnaissance from the compromised host to identify additional targets.",
         "tactic_id": "TA0007",
         "evidence_quote": "Network reconnaissance",
         "evidence_sources": [
           "https://www.securityjoes.com/post/new-attack-vector-in-the-cloud-attackers-caught-exploiting-object-storage-services"
         ],
         "aws_services_involved": [
-          "EC2"
+          "EC2",
+          "VPC"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1136.001",
         "technique_name": "Local Account",
-        "description": "The attacker created Windows local accounts on the compromised EC2 instance to establish persistence and potentially escalate privileges.",
+        "description": "Created Windows local accounts for persistence/escalation.",
         "tactic_id": "TA0003",
         "evidence_quote": "create windows accounts",
         "evidence_sources": [
@@ -195,7 +206,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "security-joes-2023-sep",
-  "analyzed_at": "2026-04-15T21:07:06.155658+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 3829
+  "analyzed_at": "2026-04-23T18:52:07.721390+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 7309
 }

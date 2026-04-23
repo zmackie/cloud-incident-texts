@@ -6,10 +6,9 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Credentials stolen from GitHub repository commit history",
-          "subtechnique_id": "T1552.001",
           "validated": true
         }
       ]
@@ -20,24 +19,9 @@
       "techniques": [
         {
           "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
+          "technique_name": "Credentials In Files",
           "inferred": false,
           "evidence_quote": "Credentials stolen from GitHub repository commit history",
-          "subtechnique_id": "T1552.001",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1578.002",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-          "inferred": false,
-          "evidence_quote": "creates EC2 instances",
-          "subtechnique_id": "T1578.002",
           "validated": true
         }
       ]
@@ -47,11 +31,30 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
+          "technique_id": "T1578.002",
+          "technique_name": "Create Cloud Instance",
+          "inferred": false,
+          "evidence_quote": "creates EC2 instances",
+          "validated": true
+        },
+        {
           "technique_id": "T1578.001",
-          "technique_name": "Modify Cloud Compute Infrastructure: Create Snapshot",
+          "technique_name": "Create Snapshot",
           "inferred": false,
           "evidence_quote": "Takes snapshot of EBS volumes",
-          "subtechnique_id": "T1578.001",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1530",
+          "technique_name": "Data from Cloud Storage",
+          "inferred": true,
+          "evidence_quote": "Stolen EBS volumes",
           "validated": true
         }
       ]
@@ -65,22 +68,7 @@
           "technique_name": "Exfiltration Over Alternative Protocol",
           "inferred": false,
           "evidence_quote": "exfiltrates data over SSH",
-          "subtechnique_id": null,
           "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1565",
-          "technique_name": "Data Manipulation",
-          "inferred": true,
-          "evidence_quote": "Stolen EBS volumes",
-          "subtechnique_id": null,
-          "validated": false
         }
       ]
     }
@@ -89,80 +77,95 @@
     {
       "step": 1,
       "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attacker discovers and steals AWS credentials that were accidentally committed to a public or accessible GitHub repository's commit history.",
-      "evidence_quote": "Credentials stolen from GitHub repository commit history",
-      "evidence_sources": [
-        "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
-      ],
+      "technique_name": "Credentials In Files",
+      "description": "Attacker harvested AWS credentials from a public GitHub repository's commit history",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "Credentials stolen from GitHub repository commit history",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 2,
       "technique_id": "T1578.001",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Snapshot",
-      "description": "Using the stolen credentials, the attacker enumerates and takes EBS volume snapshots to capture persistent disk data without modifying live instances.",
+      "technique_name": "Create Snapshot",
+      "description": "Attacker used the stolen credentials to create snapshots of EBS volumes",
+      "aws_services_involved": [
+        "EBS",
+        "EC2"
+      ],
       "evidence_quote": "Takes snapshot of EBS volumes",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "EBS"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
       "technique_id": "T1578.002",
-      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
-      "description": "Attacker creates new EC2 instances, likely attaching the snapshots as volumes to access the stolen data and establish a pivot/exfiltration point.",
+      "technique_name": "Create Cloud Instance",
+      "description": "Attacker created new EC2 instances, likely to attach snapshot volumes for access",
+      "aws_services_involved": [
+        "EC2"
+      ],
       "evidence_quote": "creates EC2 instances",
+      "ordering_confidence": 0.8,
       "evidence_sources": [
         "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "EBS"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
       "technique_id": "T1048",
       "technique_name": "Exfiltration Over Alternative Protocol",
-      "description": "Attacker exfiltrates data from the newly created EC2 instances over SSH to an external destination.",
-      "evidence_quote": "exfiltrates data over SSH",
-      "evidence_sources": [
-        "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
-      ],
+      "description": "Attacker exfiltrated data from the attacker-controlled EC2 instance over SSH",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "exfiltrates data over SSH",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
     "EC2",
-    "EBS"
+    "EBS",
+    "IAM"
   ],
   "impact_type": "Data Exfiltration",
-  "confidence_score": 0.5,
-  "initial_access_vector": "AWS credentials found in GitHub repository commit history",
-  "persistence_mechanism": "Attacker-created EC2 instances launched from stolen credentials",
-  "privilege_escalation": "None explicitly described; stolen credentials likely already had sufficient EC2/EBS permissions",
+  "confidence_score": 0.4,
   "data_exfiltrated": true,
+  "initial_access_vector": "AWS credentials leaked in GitHub repository commit history were discovered and reused by the attacker",
+  "persistence_mechanism": "None explicitly described; stolen IAM credentials provided ongoing access",
+  "privilege_escalation": "Not described; stolen credentials appear to have had sufficient privileges for EBS/EC2 actions",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "Attacker discovers and steals AWS credentials that were accidentally committed to a public or accessible GitHub repository's commit history.",
+        "description": "Attacker harvested AWS credentials from a public GitHub repository's commit history",
         "tactic_id": "TA0006",
         "evidence_quote": "Credentials stolen from GitHub repository commit history",
         "evidence_sources": [
@@ -176,37 +179,36 @@
         "step": 2,
         "technique_id": "T1578.001",
         "technique_name": "Create Snapshot",
-        "description": "Using the stolen credentials, the attacker enumerates and takes EBS volume snapshots to capture persistent disk data without modifying live instances.",
+        "description": "Attacker used the stolen credentials to create snapshots of EBS volumes",
         "tactic_id": "TA0005",
         "evidence_quote": "Takes snapshot of EBS volumes",
         "evidence_sources": [
           "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
         ],
         "aws_services_involved": [
-          "EC2",
-          "EBS"
+          "EBS",
+          "EC2"
         ]
       },
       {
         "step": 3,
         "technique_id": "T1578.002",
         "technique_name": "Create Cloud Instance",
-        "description": "Attacker creates new EC2 instances, likely attaching the snapshots as volumes to access the stolen data and establish a pivot/exfiltration point.",
+        "description": "Attacker created new EC2 instances, likely to attach snapshot volumes for access",
         "tactic_id": "TA0005",
         "evidence_quote": "creates EC2 instances",
         "evidence_sources": [
           "https://web.archive.org/https://www.mandiant.com/sites/default/files/2021-09/mtrends-2020.pdf"
         ],
         "aws_services_involved": [
-          "EC2",
-          "EBS"
+          "EC2"
         ]
       },
       {
         "step": 4,
         "technique_id": "T1048",
         "technique_name": "Exfiltration Over Alternative Protocol",
-        "description": "Attacker exfiltrates data from the newly created EC2 instances over SSH to an external destination.",
+        "description": "Attacker exfiltrated data from the attacker-controlled EC2 instance over SSH",
         "tactic_id": "TA0010",
         "evidence_quote": "exfiltrates data over SSH",
         "evidence_sources": [
@@ -271,7 +273,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "mandiant-m-trends-2020-2020-february",
-  "analyzed_at": "2026-04-15T21:00:47.757466+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 770
+  "analyzed_at": "2026-04-23T18:48:09.801146+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 1174
 }

@@ -1,203 +1,430 @@
 {
-  "tactics_used": [
-    {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
-      "techniques": [
-        {
-          "technique_id": "T1566.003",
-          "technique_name": "Phishing: Spearphishing via Service",
-          "subtechnique_id": "T1566.003",
-          "inferred": false,
-          "evidence_quote": "Malware via job opportunity premise \u2014 attacker lured victim through a fake job opportunity to deliver malware",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_id": "T1204.002",
-          "technique_name": "User Execution: Malicious File",
-          "subtechnique_id": "T1204.002",
-          "inferred": true,
-          "evidence_quote": "Malware via job opportunity premise",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1539",
-          "technique_name": "Steal Web Session Cookie",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Session cookie theft",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0008",
-      "tactic_name": "Lateral Movement",
-      "techniques": [
-        {
-          "technique_id": "T1550.004",
-          "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
-          "subtechnique_id": "T1550.004",
-          "inferred": false,
-          "evidence_quote": "Session cookie theft \u2014 stolen cookies used to authenticate to cloud services",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1505",
-          "technique_name": "Server Software Component",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "CloudFront & S3 JS modification \u2014 attacker modified JavaScript served via CloudFront and S3",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
-      "techniques": [
-        {
-          "technique_id": "T1185",
-          "technique_name": "Browser Session Hijacking",
-          "subtechnique_id": null,
-          "inferred": true,
-          "evidence_quote": "CloudFront & S3 JS modification",
-          "validated": false
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1657",
-          "technique_name": "Financial Theft",
-          "subtechnique_id": null,
-          "inferred": false,
-          "evidence_quote": "Cryptocurrency theft",
-          "validated": true
-        }
-      ]
-    }
+  "aws_services": [
+    "AWS IAM",
+    "AWS STS",
+    "AWS CLI",
+    "Amazon S3",
+    "Amazon CloudFront",
+    "Amazon EKS",
+    "Kubernetes API"
   ],
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1566.003",
-      "technique_name": "Phishing: Spearphishing via Service",
-      "description": "UNC4899 contacted the victim under the guise of a job opportunity \u2014 a social engineering lure used to deliver malware. This is consistent with the 'job opportunity premise' used by DPRK-linked threat actors to target cryptocurrency sector employees.",
-      "evidence_quote": "Malware via job opportunity premise",
+      "technique_id": "T1593.001",
+      "technique_name": "Social Media (Reconnaissance)",
+      "description": "UNC4899 identified and approached target employee via LinkedIn under the guise of a freelance software development job opportunity.",
+      "evidence_quote": "UNC4899 targeted victim employees in both organizations by introducing themselves over social media, one over Telegram while in the other incident over LinkedIn.",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1204.002",
-      "technique_name": "User Execution: Malicious File",
-      "description": "The victim executed a malicious file delivered as part of the fake job opportunity, resulting in malware infection on the endpoint.",
-      "evidence_quote": "Malware via job opportunity premise",
+      "technique_id": "T1566.003",
+      "technique_name": "Phishing: Spearphishing via Service",
+      "description": "Attacker engaged the victim via social media messaging with a fake job opportunity pretext to deliver malware.",
+      "evidence_quote": "Social engineering for a fake job opportunity (T1566.002, T1078.004, T1656, T1598)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 3,
-      "technique_id": "T1539",
-      "technique_name": "Steal Web Session Cookie",
-      "description": "The malware harvested web session cookies from the victim's browser, enabling the attacker to hijack authenticated cloud sessions without needing credentials.",
-      "evidence_quote": "Session cookie theft",
+      "technique_id": "T1204.003",
+      "technique_name": "User Execution: Malicious Image",
+      "description": "Victim was tricked into downloading and executing a malicious Docker container/image on their workstation.",
+      "evidence_quote": "Download and execution of malicious Docker container (T1610, T1204.003, T1036)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.95,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
-      "aws_services_involved": [],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1550.004",
-      "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
-      "description": "The attacker replayed the stolen session cookies to authenticate to cloud services (likely AWS/GCP) as the victim, bypassing MFA and password controls.",
-      "evidence_quote": "Session cookie theft",
+      "technique_id": "T1610",
+      "technique_name": "Deploy Container",
+      "description": "Malicious Docker container was deployed on the victim's workstation, configured in privileged mode.",
+      "evidence_quote": "Docker configuration on privilege mode (T1547 / T1548)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
-      "aws_services_involved": [
-        "AWS CloudFront",
-        "Amazon S3"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1505",
-      "technique_name": "Server Software Component",
-      "description": "Using the hijacked cloud session, the attacker modified JavaScript files stored in Amazon S3 and distributed via CloudFront CDN. This constitutes supply-chain-style tampering of web content served to end users \u2014 likely cryptocurrency platform users.",
-      "evidence_quote": "CloudFront & S3 JS modification",
+      "technique_id": "T1105",
+      "technique_name": "Ingress Tool Transfer",
+      "description": "Additional payloads (GLASSCANNON downloader, MAZEWIRE backdoor) were downloaded onto the victim's host.",
+      "evidence_quote": "Download and execution of additional payloads onto the victim's host (T1204.002, 1204.003, T1105)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
-      "aws_services_involved": [
-        "Amazon S3",
-        "AWS CloudFront"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 6,
-      "technique_id": "T1657",
-      "technique_name": "Financial Theft",
-      "description": "The tampered JavaScript executed in victims' browsers (users of the targeted crypto platform), redirecting or intercepting cryptocurrency transactions resulting in direct theft of cryptocurrency assets.",
-      "evidence_quote": "Cryptocurrency theft",
+      "technique_id": "T1059.006",
+      "technique_name": "Command and Scripting Interpreter: Python",
+      "description": "GLASSCANNON malicious Python script downloader executed on the victim host.",
+      "evidence_quote": "MAZEWIRE (T1543.002) / GLASS-CANNON (T1059.006)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.85,
       "evidence_sources": [
         "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 7,
+      "technique_id": "T1543.002",
+      "technique_name": "Create or Modify System Process: Systemd Service",
+      "description": "MAZEWIRE backdoor established persistence on the victim's workstation.",
+      "evidence_quote": "MAZEWIRE (T1543.002)",
       "aws_services_involved": [],
+      "ordering_confidence": 0.8,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 8,
+      "technique_id": "T1071.001",
+      "technique_name": "Application Layer Protocol: Web Protocols",
+      "description": "GLASSCANNON and Mythic C2 communicated with actor-controlled C2 over web protocols; MAZEWIRE used proxying.",
+      "evidence_quote": "MAZEWIRE (T1090) / GLASSCANNON (T1071.001) / Mythic C2 (T1573/T1071.001)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 9,
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "description": "Attacker enumerated files and folders on the victim workstation, including credential files.",
+      "evidence_quote": "Enumeration of files, folders, including credentials (AWS long-term access key) from victim's workstation (T1592, T1589.001, T1083, T1552.001)",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Retrieved AWS long-term access keys from the AWS credential file stored on the victim's host.",
+      "evidence_quote": "long-term access keys retrieved from an AWS credential file found in the victim's host",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
+    },
+    {
+      "step": 11,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Used stolen AWS long-term access keys to remotely interact with AWS CLI, though access was limited by IAM policies requiring STS/MFA.",
+      "evidence_quote": "UNC4899 initially used long-term access keys retrieved from an AWS credential file found in the victim's host to remotely interact with AWS CLI.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS CLI"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 12,
+      "technique_id": "T1539",
+      "technique_name": "Steal Web Session Cookie",
+      "description": "Blocked by IAM/MFA policies, UNC4899 exfiltrated the user's STS session cookies from the workstation.",
+      "evidence_quote": "evidence indicates that UNC4899 likely resorted to exfiltrating the user's session cookies instead.",
+      "aws_services_involved": [
+        "AWS STS"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 13,
+      "technique_id": "T1550.004",
+      "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+      "description": "Used stolen STS session cookies to authenticate to AWS, bypassing MFA restrictions.",
+      "evidence_quote": "Used stolen STS session cookies to access AWS environment bypassing MFA restrictions (T1539, T1078.004)",
+      "aws_services_involved": [
+        "AWS STS",
+        "AWS IAM"
+      ],
+      "ordering_confidence": 0.98,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 14,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Enumerated AWS resources and configurations including CloudFront distributions and S3 buckets.",
+      "evidence_quote": "Enumeration of AWS resources, configuration, etc. (T1580, T1526, T1619)",
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon CloudFront"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 15,
+      "technique_id": "T1619",
+      "technique_name": "Cloud Storage Object Discovery",
+      "description": "Identified S3 bucket objects (JavaScript files) relevant to cryptocurrency functionality.",
+      "evidence_quote": "identified relevant CloudFront configurations and S3 buckets to target",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 16,
+      "technique_id": "T1613",
+      "technique_name": "Container and Resource Discovery",
+      "description": "Enumerated the EKS environment via Kubernetes API.",
+      "evidence_quote": "Enumeration of EKS environment via Kubernetes API (T1613)",
+      "aws_services_involved": [
+        "Amazon EKS",
+        "Kubernetes API"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 17,
+      "technique_id": "T1550.004",
+      "technique_name": "Use Alternate Authentication Material: Web Session Cookie",
+      "description": "Used stolen session cookies to laterally move across production and development AWS environments, and to access Slack workspace.",
+      "evidence_quote": "Used stolen STS session cookies to gain access across production and development AWS environments (T1550.004)",
+      "aws_services_involved": [
+        "AWS STS"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 18,
+      "technique_id": "T1609",
+      "technique_name": "Container Administration Command",
+      "description": "Executed remote code on EKS pods via the Kubernetes API.",
+      "evidence_quote": "Remote code execution on EKS pods via Kubernetes API (T1509.009, T1609)",
+      "aws_services_involved": [
+        "Amazon EKS",
+        "Kubernetes API"
+      ],
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 19,
+      "technique_id": "T1098.005",
+      "technique_name": "Account Manipulation: Device Registration",
+      "description": "Attempted registration of attacker-controlled MFA devices (blocked by policy requiring existing MFA for enrollment).",
+      "evidence_quote": "Registration of MFA devices (T1098.005)",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 20,
+      "technique_id": "T1565.001",
+      "technique_name": "Data Manipulation: Stored Data Manipulation",
+      "description": "Uploaded and replaced existing JavaScript files in target S3 with malicious versions designed to manipulate cryptocurrency functions.",
+      "evidence_quote": "Uploaded malicious version of JavaScript files on target S3 (T1195.001 / 1565.001)",
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon CloudFront"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 21,
+      "technique_id": "T1195.001",
+      "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+      "description": "Malicious JS served via CloudFront/S3 compromised the cryptocurrency application supply chain, triggering a fraudulent transaction from the target wallet.",
+      "evidence_quote": "designed to manipulate cryptocurrency functions and trigger a transaction with the cryptocurrency wallet of a target organization",
+      "aws_services_involved": [
+        "Amazon S3",
+        "Amazon CloudFront"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 22,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Successfully stole several million dollars worth of cryptocurrency.",
+      "evidence_quote": "UNC4899 successfully stole several million dollars worth of cryptocurrency",
+      "aws_services_involved": [],
+      "ordering_confidence": 0.98,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 23,
+      "technique_id": "T1070.004",
+      "technique_name": "Indicator Removal: File Deletion",
+      "description": "Cleanup: restored benign JavaScript files, logged out of Slack, deleted backdoor from victim workstation.",
+      "evidence_quote": "Cleanup (restored benign version of the JavaScript files, logged out of Slack, deleted backdoor from victim workstation) (T1070, T1070.004, T1070.009)",
+      "aws_services_involved": [
+        "Amazon S3"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     }
   ],
-  "aws_services": [
-    "Amazon S3",
-    "AWS CloudFront"
-  ],
-  "impact_type": "Financial Theft / Cryptocurrency Theft",
-  "confidence_score": 0.62,
-  "initial_access_vector": "Social engineering via fake job opportunity lure delivering malware to a cryptocurrency sector employee (DPRK-nexus UNC4899 tradecraft)",
-  "persistence_mechanism": "Modification of JavaScript files in Amazon S3/CloudFront to maintain malicious code execution in victim browsers persistently across sessions",
-  "privilege_escalation": "Session cookie replay used to inherit victim's existing cloud IAM permissions without needing to escalate \u2014 attacker operated at the privilege level of the compromised user",
-  "data_exfiltrated": false,
+  "confidence_score": 0.85,
+  "data_exfiltrated": true,
+  "impact_type": "Cryptocurrency Theft (Financial Theft)",
+  "initial_access_vector": "Social engineering on LinkedIn posing as a freelance software development job opportunity, convincing the victim to execute a malicious Docker container on their workstation, leading to GLASSCANNON/MAZEWIRE malware deployment.",
+  "persistence_mechanism": "MAZEWIRE backdoor installed as systemd service on victim workstation; continuous renewal of stolen STS session cookies from the victim's workstation after expiration.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1566.003",
-        "technique_name": "Phishing: Spearphishing via Service",
-        "description": "UNC4899 contacted the victim under the guise of a job opportunity \u2014 a social engineering lure used to deliver malware. This is consistent with the 'job opportunity premise' used by DPRK-linked threat actors to target cryptocurrency sector employees.",
+        "technique_id": "T1593.001",
+        "technique_name": "Social Media (Reconnaissance)",
+        "description": "UNC4899 identified and approached target employee via LinkedIn under the guise of a freelance software development job opportunity.",
         "tactic_id": "",
-        "evidence_quote": "Malware via job opportunity premise",
+        "evidence_quote": "UNC4899 targeted victim employees in both organizations by introducing themselves over social media, one over Telegram while in the other incident over LinkedIn.",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
@@ -205,11 +432,11 @@
       },
       {
         "step": 2,
-        "technique_id": "T1204.002",
-        "technique_name": "User Execution: Malicious File",
-        "description": "The victim executed a malicious file delivered as part of the fake job opportunity, resulting in malware infection on the endpoint.",
+        "technique_id": "T1566.003",
+        "technique_name": "Phishing: Spearphishing via Service",
+        "description": "Attacker engaged the victim via social media messaging with a fake job opportunity pretext to deliver malware.",
         "tactic_id": "",
-        "evidence_quote": "Malware via job opportunity premise",
+        "evidence_quote": "Social engineering for a fake job opportunity (T1566.002, T1078.004, T1656, T1598)",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
@@ -217,11 +444,11 @@
       },
       {
         "step": 3,
-        "technique_id": "T1539",
-        "technique_name": "Steal Web Session Cookie",
-        "description": "The malware harvested web session cookies from the victim's browser, enabling the attacker to hijack authenticated cloud sessions without needing credentials.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Session cookie theft",
+        "technique_id": "T1204.003",
+        "technique_name": "Malicious Image",
+        "description": "Victim was tricked into downloading and executing a malicious Docker container/image on their workstation.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "Download and execution of malicious Docker container (T1610, T1204.003, T1036)",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
@@ -229,121 +456,607 @@
       },
       {
         "step": 4,
-        "technique_id": "T1550.004",
-        "technique_name": "Web Session Cookie",
-        "description": "The attacker replayed the stolen session cookies to authenticate to cloud services (likely AWS/GCP) as the victim, bypassing MFA and password controls.",
+        "technique_id": "T1610",
+        "technique_name": "Deploy Container",
+        "description": "Malicious Docker container was deployed on the victim's workstation, configured in privileged mode.",
         "tactic_id": "TA0005",
-        "evidence_quote": "Session cookie theft",
+        "evidence_quote": "Docker configuration on privilege mode (T1547 / T1548)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 5,
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "description": "Additional payloads (GLASSCANNON downloader, MAZEWIRE backdoor) were downloaded onto the victim's host.",
+        "tactic_id": "",
+        "evidence_quote": "Download and execution of additional payloads onto the victim's host (T1204.002, 1204.003, T1105)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1059.006",
+        "technique_name": "Command and Scripting Interpreter: Python",
+        "description": "GLASSCANNON malicious Python script downloader executed on the victim host.",
+        "tactic_id": "",
+        "evidence_quote": "MAZEWIRE (T1543.002) / GLASS-CANNON (T1059.006)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1543.002",
+        "technique_name": "Create or Modify System Process: Systemd Service",
+        "description": "MAZEWIRE backdoor established persistence on the victim's workstation.",
+        "tactic_id": "",
+        "evidence_quote": "MAZEWIRE (T1543.002)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1071.001",
+        "technique_name": "Application Layer Protocol: Web Protocols",
+        "description": "GLASSCANNON and Mythic C2 communicated with actor-controlled C2 over web protocols; MAZEWIRE used proxying.",
+        "tactic_id": "",
+        "evidence_quote": "MAZEWIRE (T1090) / GLASSCANNON (T1071.001) / Mythic C2 (T1573/T1071.001)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 9,
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "description": "Attacker enumerated files and folders on the victim workstation, including credential files.",
+        "tactic_id": "",
+        "evidence_quote": "Enumeration of files, folders, including credentials (AWS long-term access key) from victim's workstation (T1592, T1589.001, T1083, T1552.001)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 10,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Retrieved AWS long-term access keys from the AWS credential file stored on the victim's host.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "long-term access keys retrieved from an AWS credential file found in the victim's host",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "aws_services_involved": [
-          "AWS CloudFront",
-          "Amazon S3"
+          "AWS IAM"
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1505",
-        "technique_name": "Server Software Component",
-        "description": "Using the hijacked cloud session, the attacker modified JavaScript files stored in Amazon S3 and distributed via CloudFront CDN. This constitutes supply-chain-style tampering of web content served to end users \u2014 likely cryptocurrency platform users.",
-        "tactic_id": "",
-        "evidence_quote": "CloudFront & S3 JS modification",
+        "step": 11,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Used stolen AWS long-term access keys to remotely interact with AWS CLI, though access was limited by IAM policies requiring STS/MFA.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "UNC4899 initially used long-term access keys retrieved from an AWS credential file found in the victim's host to remotely interact with AWS CLI.",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS IAM",
+          "AWS CLI"
+        ]
+      },
+      {
+        "step": 12,
+        "technique_id": "T1539",
+        "technique_name": "Steal Web Session Cookie",
+        "description": "Blocked by IAM/MFA policies, UNC4899 exfiltrated the user's STS session cookies from the workstation.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "evidence indicates that UNC4899 likely resorted to exfiltrating the user's session cookies instead.",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS STS"
+        ]
+      },
+      {
+        "step": 13,
+        "technique_id": "T1550.004",
+        "technique_name": "Web Session Cookie",
+        "description": "Used stolen STS session cookies to authenticate to AWS, bypassing MFA restrictions.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Used stolen STS session cookies to access AWS environment bypassing MFA restrictions (T1539, T1078.004)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS STS",
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 14,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Enumerated AWS resources and configurations including CloudFront distributions and S3 buckets.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Enumeration of AWS resources, configuration, etc. (T1580, T1526, T1619)",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "aws_services_involved": [
           "Amazon S3",
-          "AWS CloudFront"
+          "Amazon CloudFront"
         ]
       },
       {
-        "step": 6,
+        "step": 15,
+        "technique_id": "T1619",
+        "technique_name": "Cloud Storage Object Discovery",
+        "description": "Identified S3 bucket objects (JavaScript files) relevant to cryptocurrency functionality.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "identified relevant CloudFront configurations and S3 buckets to target",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
+      },
+      {
+        "step": 16,
+        "technique_id": "T1613",
+        "technique_name": "Container and Resource Discovery",
+        "description": "Enumerated the EKS environment via Kubernetes API.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "Enumeration of EKS environment via Kubernetes API (T1613)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon EKS",
+          "Kubernetes API"
+        ]
+      },
+      {
+        "step": 17,
+        "technique_id": "T1550.004",
+        "technique_name": "Web Session Cookie",
+        "description": "Used stolen session cookies to laterally move across production and development AWS environments, and to access Slack workspace.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "Used stolen STS session cookies to gain access across production and development AWS environments (T1550.004)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS STS"
+        ]
+      },
+      {
+        "step": 18,
+        "technique_id": "T1609",
+        "technique_name": "Container Administration Command",
+        "description": "Executed remote code on EKS pods via the Kubernetes API.",
+        "tactic_id": "TA0002",
+        "evidence_quote": "Remote code execution on EKS pods via Kubernetes API (T1509.009, T1609)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon EKS",
+          "Kubernetes API"
+        ]
+      },
+      {
+        "step": 19,
+        "technique_id": "T1098.005",
+        "technique_name": "Account Manipulation: Device Registration",
+        "description": "Attempted registration of attacker-controlled MFA devices (blocked by policy requiring existing MFA for enrollment).",
+        "tactic_id": "",
+        "evidence_quote": "Registration of MFA devices (T1098.005)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
+        ]
+      },
+      {
+        "step": 20,
+        "technique_id": "T1565.001",
+        "technique_name": "Data Manipulation: Stored Data Manipulation",
+        "description": "Uploaded and replaced existing JavaScript files in target S3 with malicious versions designed to manipulate cryptocurrency functions.",
+        "tactic_id": "",
+        "evidence_quote": "Uploaded malicious version of JavaScript files on target S3 (T1195.001 / 1565.001)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon CloudFront"
+        ]
+      },
+      {
+        "step": 21,
+        "technique_id": "T1195.001",
+        "technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "description": "Malicious JS served via CloudFront/S3 compromised the cryptocurrency application supply chain, triggering a fraudulent transaction from the target wallet.",
+        "tactic_id": "",
+        "evidence_quote": "designed to manipulate cryptocurrency functions and trigger a transaction with the cryptocurrency wallet of a target organization",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3",
+          "Amazon CloudFront"
+        ]
+      },
+      {
+        "step": 22,
         "technique_id": "T1657",
         "technique_name": "Financial Theft",
-        "description": "The tampered JavaScript executed in victims' browsers (users of the targeted crypto platform), redirecting or intercepting cryptocurrency transactions resulting in direct theft of cryptocurrency assets.",
+        "description": "Successfully stole several million dollars worth of cryptocurrency.",
         "tactic_id": "TA0040",
-        "evidence_quote": "Cryptocurrency theft",
+        "evidence_quote": "UNC4899 successfully stole several million dollars worth of cryptocurrency",
         "evidence_sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "aws_services_involved": []
+      },
+      {
+        "step": 23,
+        "technique_id": "T1070.004",
+        "technique_name": "Indicator Removal: File Deletion",
+        "description": "Cleanup: restored benign JavaScript files, logged out of Slack, deleted backdoor from victim workstation.",
+        "tactic_id": "",
+        "evidence_quote": "Cleanup (restored benign version of the JavaScript files, logged out of Slack, deleted backdoor from victim workstation) (T1070, T1070.004, T1070.009)",
+        "evidence_sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "aws_services_involved": [
+          "Amazon S3"
+        ]
       }
     ],
     "edges": [
       {
-        "source": "T1566.003",
-        "target": "T1204.002",
+        "source": "T1593.001",
+        "target": "T1566.003",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Phishing: Spearphishing via Service",
-        "target_technique_name": "User Execution: Malicious File",
+        "source_technique_name": "Social Media (Reconnaissance)",
+        "target_technique_name": "Phishing: Spearphishing via Service",
         "sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "evidence_quotes": [
-          "Malware via job opportunity premise",
-          "Malware via job opportunity premise"
+          "UNC4899 targeted victim employees in both organizations by introducing themselves over social media, one over Telegram while in the other incident over LinkedIn.",
+          "Social engineering for a fake job opportunity (T1566.002, T1078.004, T1656, T1598)"
         ]
       },
       {
-        "source": "T1204.002",
-        "target": "T1539",
+        "source": "T1566.003",
+        "target": "T1204.003",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "User Execution: Malicious File",
+        "source_technique_name": "Phishing: Spearphishing via Service",
+        "target_technique_name": "Malicious Image",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Social engineering for a fake job opportunity (T1566.002, T1078.004, T1656, T1598)",
+          "Download and execution of malicious Docker container (T1610, T1204.003, T1036)"
+        ]
+      },
+      {
+        "source": "T1204.003",
+        "target": "T1610",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Malicious Image",
+        "target_technique_name": "Deploy Container",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Download and execution of malicious Docker container (T1610, T1204.003, T1036)",
+          "Docker configuration on privilege mode (T1547 / T1548)"
+        ]
+      },
+      {
+        "source": "T1610",
+        "target": "T1105",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Deploy Container",
+        "target_technique_name": "Ingress Tool Transfer",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Docker configuration on privilege mode (T1547 / T1548)",
+          "Download and execution of additional payloads onto the victim's host (T1204.002, 1204.003, T1105)"
+        ]
+      },
+      {
+        "source": "T1105",
+        "target": "T1059.006",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Ingress Tool Transfer",
+        "target_technique_name": "Command and Scripting Interpreter: Python",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Download and execution of additional payloads onto the victim's host (T1204.002, 1204.003, T1105)",
+          "MAZEWIRE (T1543.002) / GLASS-CANNON (T1059.006)"
+        ]
+      },
+      {
+        "source": "T1059.006",
+        "target": "T1543.002",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Command and Scripting Interpreter: Python",
+        "target_technique_name": "Create or Modify System Process: Systemd Service",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "MAZEWIRE (T1543.002) / GLASS-CANNON (T1059.006)",
+          "MAZEWIRE (T1543.002)"
+        ]
+      },
+      {
+        "source": "T1543.002",
+        "target": "T1071.001",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Create or Modify System Process: Systemd Service",
+        "target_technique_name": "Application Layer Protocol: Web Protocols",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "MAZEWIRE (T1543.002)",
+          "MAZEWIRE (T1090) / GLASSCANNON (T1071.001) / Mythic C2 (T1573/T1071.001)"
+        ]
+      },
+      {
+        "source": "T1071.001",
+        "target": "T1083",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Application Layer Protocol: Web Protocols",
+        "target_technique_name": "File and Directory Discovery",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "MAZEWIRE (T1090) / GLASSCANNON (T1071.001) / Mythic C2 (T1573/T1071.001)",
+          "Enumeration of files, folders, including credentials (AWS long-term access key) from victim's workstation (T1592, T1589.001, T1083, T1552.001)"
+        ]
+      },
+      {
+        "source": "T1083",
+        "target": "T1552.001",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "File and Directory Discovery",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Enumeration of files, folders, including credentials (AWS long-term access key) from victim's workstation (T1592, T1589.001, T1083, T1552.001)",
+          "long-term access keys retrieved from an AWS credential file found in the victim's host"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 10,
+        "target_step": 11,
+        "source_technique_name": "Credentials In Files",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "long-term access keys retrieved from an AWS credential file found in the victim's host",
+          "UNC4899 initially used long-term access keys retrieved from an AWS credential file found in the victim's host to remotely interact with AWS CLI."
+        ]
+      },
+      {
+        "source": "T1078.004",
+        "target": "T1539",
+        "source_step": 11,
+        "target_step": 12,
+        "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Steal Web Session Cookie",
         "sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "evidence_quotes": [
-          "Malware via job opportunity premise",
-          "Session cookie theft"
+          "UNC4899 initially used long-term access keys retrieved from an AWS credential file found in the victim's host to remotely interact with AWS CLI.",
+          "evidence indicates that UNC4899 likely resorted to exfiltrating the user's session cookies instead."
         ]
       },
       {
         "source": "T1539",
         "target": "T1550.004",
-        "source_step": 3,
-        "target_step": 4,
+        "source_step": 12,
+        "target_step": 13,
         "source_technique_name": "Steal Web Session Cookie",
         "target_technique_name": "Web Session Cookie",
         "sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "evidence_quotes": [
-          "Session cookie theft",
-          "Session cookie theft"
+          "evidence indicates that UNC4899 likely resorted to exfiltrating the user's session cookies instead.",
+          "Used stolen STS session cookies to access AWS environment bypassing MFA restrictions (T1539, T1078.004)"
         ]
       },
       {
         "source": "T1550.004",
-        "target": "T1505",
-        "source_step": 4,
-        "target_step": 5,
+        "target": "T1580",
+        "source_step": 13,
+        "target_step": 14,
         "source_technique_name": "Web Session Cookie",
-        "target_technique_name": "Server Software Component",
+        "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "evidence_quotes": [
-          "Session cookie theft",
-          "CloudFront & S3 JS modification"
+          "Used stolen STS session cookies to access AWS environment bypassing MFA restrictions (T1539, T1078.004)",
+          "Enumeration of AWS resources, configuration, etc. (T1580, T1526, T1619)"
         ]
       },
       {
-        "source": "T1505",
+        "source": "T1580",
+        "target": "T1619",
+        "source_step": 14,
+        "target_step": 15,
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Cloud Storage Object Discovery",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Enumeration of AWS resources, configuration, etc. (T1580, T1526, T1619)",
+          "identified relevant CloudFront configurations and S3 buckets to target"
+        ]
+      },
+      {
+        "source": "T1619",
+        "target": "T1613",
+        "source_step": 15,
+        "target_step": 16,
+        "source_technique_name": "Cloud Storage Object Discovery",
+        "target_technique_name": "Container and Resource Discovery",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "identified relevant CloudFront configurations and S3 buckets to target",
+          "Enumeration of EKS environment via Kubernetes API (T1613)"
+        ]
+      },
+      {
+        "source": "T1613",
+        "target": "T1550.004",
+        "source_step": 16,
+        "target_step": 17,
+        "source_technique_name": "Container and Resource Discovery",
+        "target_technique_name": "Web Session Cookie",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Enumeration of EKS environment via Kubernetes API (T1613)",
+          "Used stolen STS session cookies to gain access across production and development AWS environments (T1550.004)"
+        ]
+      },
+      {
+        "source": "T1550.004",
+        "target": "T1609",
+        "source_step": 17,
+        "target_step": 18,
+        "source_technique_name": "Web Session Cookie",
+        "target_technique_name": "Container Administration Command",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Used stolen STS session cookies to gain access across production and development AWS environments (T1550.004)",
+          "Remote code execution on EKS pods via Kubernetes API (T1509.009, T1609)"
+        ]
+      },
+      {
+        "source": "T1609",
+        "target": "T1098.005",
+        "source_step": 18,
+        "target_step": 19,
+        "source_technique_name": "Container Administration Command",
+        "target_technique_name": "Account Manipulation: Device Registration",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Remote code execution on EKS pods via Kubernetes API (T1509.009, T1609)",
+          "Registration of MFA devices (T1098.005)"
+        ]
+      },
+      {
+        "source": "T1098.005",
+        "target": "T1565.001",
+        "source_step": 19,
+        "target_step": 20,
+        "source_technique_name": "Account Manipulation: Device Registration",
+        "target_technique_name": "Data Manipulation: Stored Data Manipulation",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Registration of MFA devices (T1098.005)",
+          "Uploaded malicious version of JavaScript files on target S3 (T1195.001 / 1565.001)"
+        ]
+      },
+      {
+        "source": "T1565.001",
+        "target": "T1195.001",
+        "source_step": 20,
+        "target_step": 21,
+        "source_technique_name": "Data Manipulation: Stored Data Manipulation",
+        "target_technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "Uploaded malicious version of JavaScript files on target S3 (T1195.001 / 1565.001)",
+          "designed to manipulate cryptocurrency functions and trigger a transaction with the cryptocurrency wallet of a target organization"
+        ]
+      },
+      {
+        "source": "T1195.001",
         "target": "T1657",
-        "source_step": 5,
-        "target_step": 6,
-        "source_technique_name": "Server Software Component",
+        "source_step": 21,
+        "target_step": 22,
+        "source_technique_name": "Supply Chain Compromise: Compromise Software Dependencies and Development Tools",
         "target_technique_name": "Financial Theft",
         "sources": [
           "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
         ],
         "evidence_quotes": [
-          "CloudFront & S3 JS modification",
-          "Cryptocurrency theft"
+          "designed to manipulate cryptocurrency functions and trigger a transaction with the cryptocurrency wallet of a target organization",
+          "UNC4899 successfully stole several million dollars worth of cryptocurrency"
+        ]
+      },
+      {
+        "source": "T1657",
+        "target": "T1070.004",
+        "source_step": 22,
+        "target_step": 23,
+        "source_technique_name": "Financial Theft",
+        "target_technique_name": "Indicator Removal: File Deletion",
+        "sources": [
+          "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h22025.pdf"
+        ],
+        "evidence_quotes": [
+          "UNC4899 successfully stole several million dollars worth of cryptocurrency",
+          "Cleanup (restored benign version of the JavaScript files, logged out of Slack, deleted backdoor from victim workstation) (T1070, T1070.004, T1070.009)"
         ]
       }
     ]
@@ -354,7 +1067,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "google-cloud-threat-horizons-unc4899-case-2025-july",
-  "analyzed_at": "2026-04-15T21:43:44.610775+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 379
+  "analyzed_at": "2026-04-23T18:59:43.355772+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 103853
 }

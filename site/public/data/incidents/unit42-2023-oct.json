@@ -1,28 +1,38 @@
 {
   "tactics_used": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_id": "T1552.001",
+          "technique_id": "T1552",
+          "subtechnique_id": "T1552.001",
           "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": false,
-          "evidence_quote": "The threat actor appears to have used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials.",
+          "evidence_quote": "a threat actor monitoring for and using exposed AWS keys for cryptomining operations",
+          "validated": true
+        },
+        {
+          "technique_id": "T1078",
+          "subtechnique_id": "T1078.004",
+          "technique_name": "Valid Accounts: Cloud Accounts",
+          "inferred": false,
+          "evidence_quote": "the threat actor associated with the campaign was able to create multiple AWS Elastic Compute (EC2) instances",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0001",
-      "tactic_name": "Initial Access",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
       "techniques": [
         {
-          "technique_id": "T1078.004",
-          "technique_name": "Valid Accounts: Cloud Accounts",
+          "technique_id": "T1593",
+          "subtechnique_id": "T1593.003",
+          "technique_name": "Search Open Websites/Domains: Code Repositories",
           "inferred": false,
-          "evidence_quote": "We found a threat actor monitoring for and using exposed AWS keys for cryptomining operations.",
-          "validated": true
+          "evidence_quote": "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials",
+          "validated": false
         }
       ]
     },
@@ -34,7 +44,14 @@
           "technique_id": "T1580",
           "technique_name": "Cloud Infrastructure Discovery",
           "inferred": false,
-          "evidence_quote": "the actors began their reconnaissance operations using the AWS API DescribeRegions... the threat actor starts by performing an AWS account reconnaissance operation [DescribeAccountAttributes, DescribeInstanceTypeOfferings, DescribeInstanceTypes]",
+          "evidence_quote": "the actors began their reconnaissance operations using the AWS API DescribeRegions",
+          "validated": true
+        },
+        {
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery",
+          "inferred": false,
+          "evidence_quote": "DescribeAccountAttributes, DescribeInstanceTypeOfferings, DescribeInstanceTypes",
           "validated": true
         }
       ]
@@ -44,31 +61,41 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1535",
-          "technique_name": "Unused/Unsupported Cloud Regions",
+          "technique_id": "T1578",
+          "subtechnique_id": "T1578.005",
+          "technique_name": "Modify Cloud Compute Infrastructure: Modify Cloud Compute Configurations",
           "inferred": false,
-          "evidence_quote": "threat actors running instances across different regions... generating a total of more than 400 API calls and taking only seven minutes",
+          "evidence_quote": "the threat actor creates AWS security groups ... before finally launching multiple EC2 instances",
           "validated": true
         },
         {
-          "technique_id": "T1090.003",
-          "technique_name": "Proxy: Multi-hop Proxy",
-          "inferred": false,
-          "evidence_quote": "The data we collected shows indications that the actor's automation operation is behind a VPN.",
-          "validated": false
+          "technique_id": "T1562",
+          "subtechnique_id": "T1562.008",
+          "technique_name": "Impair Defenses: Disable or Modify Cloud Logs",
+          "inferred": true,
+          "evidence_quote": "the actor's automation operation is behind a VPN",
+          "validated": true
+        },
+        {
+          "technique_id": "T1535",
+          "technique_name": "Unused/Unsupported Cloud Regions",
+          "inferred": true,
+          "evidence_quote": "launching multiple EC2 instances per region across any accessible AWS region",
+          "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1053",
-          "technique_name": "Scheduled Task/Job",
-          "inferred": true,
-          "evidence_quote": "The downloaded payload was stored encrypted and then decrypted upon download... We also identified reports of submissions to VirusTotal with the same hash and using the same naming convention for persistence (\"appworker\")",
-          "validated": true
+          "technique_id": "T1027",
+          "subtechnique_id": "T1027.013",
+          "technique_name": "Obfuscated Files or Information: Encrypted/Encoded File",
+          "inferred": false,
+          "evidence_quote": "The downloaded payload was stored encrypted and then decrypted upon download",
+          "validated": false
         }
       ]
     },
@@ -80,27 +107,14 @@
           "technique_id": "T1059",
           "technique_name": "Command and Scripting Interpreter",
           "inferred": false,
-          "evidence_quote": "The threat actor used this mechanism to automate the EC2 instance configuration and perform the desired actions... the mining automation operation displayed the user data automatically during the miner's configuration of the EC2 upon start-up.",
+          "evidence_quote": "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration",
           "validated": true
         },
         {
-          "technique_id": "T1204.003",
-          "technique_name": "User Execution: Malicious Image",
-          "inferred": false,
-          "evidence_quote": "The type of Amazon Machine Images (AMI) the threat actor used was also distinctive. The identified images were private and they were not listed in the AWS Marketplace.",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0040",
-      "tactic_name": "Impact",
-      "techniques": [
-        {
-          "technique_id": "T1496",
-          "technique_name": "Resource Hijacking",
-          "inferred": false,
-          "evidence_quote": "the threat actor associated with the campaign was able to create multiple AWS Elastic Compute (EC2) instances that they used for wide-ranging and long-lasting cryptojacking operations",
+          "technique_id": "T1648",
+          "technique_name": "Serverless Execution",
+          "inferred": true,
+          "evidence_quote": "RunInstance API ... parameter for accepting AWS Cloud-Init scripts",
           "validated": true
         }
       ]
@@ -113,8 +127,35 @@
           "technique_id": "T1102",
           "technique_name": "Web Service",
           "inferred": false,
-          "evidence_quote": "The payload was stored in Google Drive... The downloaded payload was stored encrypted and then decrypted upon download",
+          "evidence_quote": "the payload was stored in Google Drive",
           "validated": false
+        },
+        {
+          "technique_id": "T1105",
+          "technique_name": "Ingress Tool Transfer",
+          "inferred": false,
+          "evidence_quote": "The downloaded payload was stored encrypted and then decrypted upon download",
+          "validated": false
+        },
+        {
+          "technique_id": "T1572",
+          "technique_name": "Protocol Tunneling",
+          "inferred": true,
+          "evidence_quote": "the actor's automation operation is behind a VPN",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_id": "T1496",
+          "technique_name": "Resource Hijacking",
+          "inferred": false,
+          "evidence_quote": "cryptojacking operations ... The threat actors used large-format cloud virtual machines ... specifically c5a.24xlarge AWS instances",
+          "validated": true
         }
       ]
     }
@@ -122,167 +163,322 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Threat actor used automated tools to continuously clone public GitHub repositories in real time and scan for exposed AWS IAM credentials written in cleartext.",
-      "evidence_quote": "The threat actor appears to have used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials.",
+      "technique_id": "T1593.003",
+      "technique_name": "Search Open Websites/Domains: Code Repositories",
+      "description": "Threat actor uses automated tools to continually clone public GitHub repositories and scan for exposed AWS IAM credentials in cleartext.",
+      "aws_services_involved": [],
+      "evidence_quote": "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
       ],
-      "aws_services_involved": [
-        "IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c010",
+          "source_file": "link_00.clean.md",
+          "char_start": 2811,
+          "char_end": 3243,
+          "quote": "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials"
+        },
+        {
+          "chunk_id": "link_00.md#c059",
+          "source_file": "link_00.md",
+          "char_start": 19671,
+          "char_end": 20103,
+          "quote": "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials"
+        }
       ],
-      "validated": true
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
     },
     {
       "step": 2,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Actor obtained and began using exposed AWS IAM credentials within five minutes of their initial exposure on GitHub, authenticating to the victim's AWS environment.",
-      "evidence_quote": "We found that the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub.",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Actor harvests the exposed AWS IAM access keys from GitHub commit/file within five minutes of exposure.",
       "aws_services_involved": [
         "IAM"
       ],
+      "evidence_quote": "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c006",
+          "source_file": "link_00.clean.md",
+          "char_start": 1389,
+          "char_end": 1714,
+          "quote": "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub"
+        },
+        {
+          "chunk_id": "link_00.md#c055",
+          "source_file": "link_00.md",
+          "char_start": 18249,
+          "char_end": 18574,
+          "quote": "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Actor performed automated AWS account reconnaissance using API calls including DescribeRegions, DescribeAccountAttributes, DescribeInstanceTypeOfferings, and DescribeInstanceTypes to enumerate available regions and instance types.",
-      "evidence_quote": "the actors began their reconnaissance operations using the AWS API DescribeRegions... the threat actor starts by performing an AWS account reconnaissance operation",
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Actor authenticates to AWS using the stolen IAM access keys, operating through a VPN to obscure identity.",
+      "aws_services_involved": [
+        "IAM",
+        "STS"
+      ],
+      "evidence_quote": "the actor's automation operation is behind a VPN",
+      "ordering_confidence": 0.9,
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
       ],
-      "aws_services_involved": [
-        "EC2",
-        "CloudTrail"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1090.003",
-      "technique_name": "Proxy: Multi-hop Proxy",
-      "description": "Actor conducted all operations from behind a VPN to obscure their identity and origin while launching automated attacks against AWS environments.",
-      "evidence_quote": "The data we collected shows indications that the actor's automation operation is behind a VPN. They repeated the same operations across multiple regions, generating a total of more than 400 API calls and taking only seven minutes.",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
-      "aws_services_involved": [],
-      "validated": false
-    },
-    {
-      "step": 5,
-      "technique_id": "T1562.007",
-      "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
-      "description": "Threat actor created and modified AWS security groups before launching EC2 instances to configure network access rules supporting the mining operation.",
-      "evidence_quote": "the threat actor creates AWS security groups (as shown in Figure 4) before finally launching multiple EC2 instances per region across any accessible AWS region.",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Actor performs AWS reconnaissance starting with DescribeRegions, DescribeAccountAttributes, DescribeInstanceTypes, DescribeInstanceTypeOfferings to enumerate account and available regions.",
       "aws_services_involved": [
-        "EC2"
+        "EC2",
+        "CloudTrail"
+      ],
+      "event_time": "2023-08-XXT13:34:15",
+      "event_time_precision": "exact",
+      "evidence_quote": "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c036",
+          "source_file": "link_00.clean.md",
+          "char_start": 12973,
+          "char_end": 13450,
+          "quote": "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions"
+        },
+        {
+          "chunk_id": "link_00.md#c085",
+          "source_file": "link_00.md",
+          "char_start": 29833,
+          "char_end": 30310,
+          "quote": "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions"
+        }
       ],
       "validated": true
     },
     {
-      "step": 6,
-      "technique_id": "T1204.003",
-      "technique_name": "User Execution: Malicious Image",
-      "description": "Actor used private, custom Amazon Machine Images (AMIs) not listed in the AWS Marketplace to launch EC2 instances, ensuring a pre-configured mining environment.",
-      "evidence_quote": "The type of Amazon Machine Images (AMI) the threat actor used was also distinctive. The identified images were private and they were not listed in the AWS Marketplace.",
+      "step": 5,
+      "technique_id": "T1578.005",
+      "technique_name": "Modify Cloud Compute Infrastructure: Modify Cloud Compute Configurations",
+      "description": "Actor creates/modifies AWS security groups to prepare for launching EC2 instances.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC"
+      ],
+      "evidence_quote": "the threat actor creates AWS security groups ... before finally launching multiple EC2 instances per region",
+      "ordering_confidence": 1.0,
       "evidence_sources": [
         "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
       ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1578.002",
+      "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+      "description": "Actor uses RunInstances API to launch multiple large-format c5a.24xlarge EC2 instances across multiple regions using private AMIs, more than 400 API calls in seven minutes.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c051",
+          "source_file": "link_00.clean.md",
+          "char_start": 16755,
+          "char_end": 17083,
+          "quote": "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API"
+        },
+        {
+          "chunk_id": "link_00.md#c100",
+          "source_file": "link_00.md",
+          "char_start": 33615,
+          "char_end": 33943,
+          "quote": "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 7,
       "technique_id": "T1059",
       "technique_name": "Command and Scripting Interpreter",
-      "description": "Actor leveraged EC2 user data (Cloud-Init scripts) executed at instance startup to automate configuration of the mining environment on each launched EC2 instance.",
-      "evidence_quote": "The threat actor used this mechanism to automate the EC2 instance configuration and perform the desired actions... the mining automation operation displayed the user data automatically during the miner's configuration of the EC2 upon start-up.",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
+      "description": "Actor supplies Cloud-Init user data script to the RunInstances call so the EC2 instance auto-configures and fetches the mining payload at startup.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c051",
+          "source_file": "link_00.clean.md",
+          "char_start": 16755,
+          "char_end": 17083,
+          "quote": "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration"
+        },
+        {
+          "chunk_id": "link_00.md#c100",
+          "source_file": "link_00.md",
+          "char_start": 33615,
+          "char_end": 33943,
+          "quote": "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     },
     {
       "step": 8,
       "technique_id": "T1102",
       "technique_name": "Web Service",
-      "description": "The mining payload (Monero miner binary 'appworker') was stored encrypted on Google Drive and downloaded and decrypted at runtime during EC2 instance startup via the Cloud-Init script.",
-      "evidence_quote": "the payload was stored in Google Drive... The downloaded payload was stored encrypted and then decrypted upon download",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
+      "description": "Instance downloads encrypted mining payload from a Google Drive URL (anonymous trusted web service used to deliver payload).",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c055",
+          "source_file": "link_00.clean.md",
+          "char_start": 17610,
+          "char_end": 17882,
+          "quote": "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 34470,
+          "char_end": 34742,
+          "quote": "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": false
     },
     {
       "step": 9,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Actor launched multiple large EC2 instances (c5a.24xlarge) across multiple AWS regions to mine Monero cryptocurrency, with 474 unique miners observed over ~5 weeks connecting to the SupportXMR mining pool.",
-      "evidence_quote": "the threat actor associated with the campaign was able to create multiple AWS Elastic Compute (EC2) instances that they used for wide-ranging and long-lasting cryptojacking operations... 474 unique miners appeared between Aug. 30, 2023, and Oct. 6, 2023.",
-      "evidence_sources": [
-        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-      ],
+      "technique_id": "T1027.013",
+      "technique_name": "Obfuscated Files or Information: Encrypted/Encoded File",
+      "description": "Downloaded payload is stored encrypted and decrypted on the instance prior to execution to evade detection.",
       "aws_services_involved": [
         "EC2"
       ],
+      "evidence_quote": "The downloaded payload was stored encrypted and then decrypted upon download",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c055",
+          "source_file": "link_00.clean.md",
+          "char_start": 17610,
+          "char_end": 17882,
+          "quote": "The downloaded payload was stored encrypted and then decrypted upon download"
+        },
+        {
+          "chunk_id": "link_00.md#c104",
+          "source_file": "link_00.md",
+          "char_start": 34470,
+          "char_end": 34742,
+          "quote": "The downloaded payload was stored encrypted and then decrypted upon download"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 10,
+      "technique_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "description": "Monero (XMR) miner 'appworker' runs on the EC2 instances, connecting to the SupportXMR pool (pool.supportxmr.com:443) to mine cryptocurrency at the victim's expense.",
+      "aws_services_involved": [
+        "EC2"
+      ],
+      "evidence_quote": "474 unique miners that were potentially actor-controlled Amazon EC2 instances ... mining pool that the threat actor used for this operation was the SupportXMR mining pool",
+      "ordering_confidence": 1.0,
+      "evidence_sources": [
+        "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
       "validated": true
     }
   ],
   "aws_services": [
-    "IAM",
     "EC2",
+    "IAM",
     "CloudTrail",
-    "S3",
-    "Lambda",
-    "Lightsail"
+    "VPC",
+    "STS"
   ],
   "impact_type": "Cryptomining",
   "confidence_score": 0.95,
   "data_exfiltrated": false,
-  "initial_access_vector": "AWS IAM credentials exposed in plaintext in a public GitHub repository, discovered by the threat actor via automated real-time scanning of GitHub public repos within 5 minutes of exposure.",
-  "persistence_mechanism": "Mining binary named 'appworker' installed on EC2 instances via Cloud-Init user data scripts at launch; private custom AMIs used for persistent, pre-configured mining environments.",
-  "privilege_escalation": "No privilege escalation observed; actor leveraged already over-permissive IAM credentials that granted direct EC2 and IAM access.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1552.001",
-        "technique_name": "Credentials In Files",
-        "description": "Threat actor used automated tools to continuously clone public GitHub repositories in real time and scan for exposed AWS IAM credentials written in cleartext.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "The threat actor appears to have used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials.",
+        "technique_id": "T1593.003",
+        "technique_name": "Search Open Websites/Domains: Code Repositories",
+        "description": "Threat actor uses automated tools to continually clone public GitHub repositories and scan for exposed AWS IAM credentials in cleartext.",
+        "tactic_id": "",
+        "evidence_quote": "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
-        "aws_services_involved": [
-          "IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 2,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "Actor obtained and began using exposed AWS IAM credentials within five minutes of their initial exposure on GitHub, authenticating to the victim's AWS environment.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "We found that the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub.",
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Actor harvests the exposed AWS IAM access keys from GitHub commit/file within five minutes of exposure.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -292,11 +488,26 @@
       },
       {
         "step": 3,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Actor authenticates to AWS using the stolen IAM access keys, operating through a VPN to obscure identity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the actor's automation operation is behind a VPN",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+        ],
+        "aws_services_involved": [
+          "IAM",
+          "STS"
+        ]
+      },
+      {
+        "step": 4,
         "technique_id": "T1580",
         "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Actor performed automated AWS account reconnaissance using API calls including DescribeRegions, DescribeAccountAttributes, DescribeInstanceTypeOfferings, and DescribeInstanceTypes to enumerate available regions and instance types.",
+        "description": "Actor performs AWS reconnaissance starting with DescribeRegions, DescribeAccountAttributes, DescribeInstanceTypes, DescribeInstanceTypeOfferings to enumerate account and available regions.",
         "tactic_id": "TA0007",
-        "evidence_quote": "the actors began their reconnaissance operations using the AWS API DescribeRegions... the threat actor starts by performing an AWS account reconnaissance operation",
+        "evidence_quote": "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -306,38 +517,27 @@
         ]
       },
       {
-        "step": 4,
-        "technique_id": "T1090.003",
-        "technique_name": "Proxy: Multi-hop Proxy",
-        "description": "Actor conducted all operations from behind a VPN to obscure their identity and origin while launching automated attacks against AWS environments.",
-        "tactic_id": "",
-        "evidence_quote": "The data we collected shows indications that the actor's automation operation is behind a VPN. They repeated the same operations across multiple regions, generating a total of more than 400 API calls and taking only seven minutes.",
-        "evidence_sources": [
-          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-        ],
-        "aws_services_involved": []
-      },
-      {
         "step": 5,
-        "technique_id": "T1562.007",
-        "technique_name": "Disable or Modify Cloud Firewall",
-        "description": "Threat actor created and modified AWS security groups before launching EC2 instances to configure network access rules supporting the mining operation.",
+        "technique_id": "T1578.005",
+        "technique_name": "Modify Cloud Compute Configurations",
+        "description": "Actor creates/modifies AWS security groups to prepare for launching EC2 instances.",
         "tactic_id": "TA0005",
-        "evidence_quote": "the threat actor creates AWS security groups (as shown in Figure 4) before finally launching multiple EC2 instances per region across any accessible AWS region.",
+        "evidence_quote": "the threat actor creates AWS security groups ... before finally launching multiple EC2 instances per region",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "aws_services_involved": [
-          "EC2"
+          "EC2",
+          "VPC"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1204.003",
-        "technique_name": "Malicious Image",
-        "description": "Actor used private, custom Amazon Machine Images (AMIs) not listed in the AWS Marketplace to launch EC2 instances, ensuring a pre-configured mining environment.",
-        "tactic_id": "TA0002",
-        "evidence_quote": "The type of Amazon Machine Images (AMI) the threat actor used was also distinctive. The identified images were private and they were not listed in the AWS Marketplace.",
+        "technique_id": "T1578.002",
+        "technique_name": "Create Cloud Instance",
+        "description": "Actor uses RunInstances API to launch multiple large-format c5a.24xlarge EC2 instances across multiple regions using private AMIs, more than 400 API calls in seven minutes.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -349,9 +549,9 @@
         "step": 7,
         "technique_id": "T1059",
         "technique_name": "Command and Scripting Interpreter",
-        "description": "Actor leveraged EC2 user data (Cloud-Init scripts) executed at instance startup to automate configuration of the mining environment on each launched EC2 instance.",
+        "description": "Actor supplies Cloud-Init user data script to the RunInstances call so the EC2 instance auto-configures and fetches the mining payload at startup.",
         "tactic_id": "TA0002",
-        "evidence_quote": "The threat actor used this mechanism to automate the EC2 instance configuration and perform the desired actions... the mining automation operation displayed the user data automatically during the miner's configuration of the EC2 upon start-up.",
+        "evidence_quote": "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -363,9 +563,9 @@
         "step": 8,
         "technique_id": "T1102",
         "technique_name": "Web Service",
-        "description": "The mining payload (Monero miner binary 'appworker') was stored encrypted on Google Drive and downloaded and decrypted at runtime during EC2 instance startup via the Cloud-Init script.",
+        "description": "Instance downloads encrypted mining payload from a Google Drive URL (anonymous trusted web service used to deliver payload).",
         "tactic_id": "",
-        "evidence_quote": "the payload was stored in Google Drive... The downloaded payload was stored encrypted and then decrypted upon download",
+        "evidence_quote": "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -375,11 +575,25 @@
       },
       {
         "step": 9,
+        "technique_id": "T1027.013",
+        "technique_name": "Obfuscated Files or Information: Encrypted/Encoded File",
+        "description": "Downloaded payload is stored encrypted and decrypted on the instance prior to execution to evade detection.",
+        "tactic_id": "",
+        "evidence_quote": "The downloaded payload was stored encrypted and then decrypted upon download",
+        "evidence_sources": [
+          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+        ],
+        "aws_services_involved": [
+          "EC2"
+        ]
+      },
+      {
+        "step": 10,
         "technique_id": "T1496",
         "technique_name": "Resource Hijacking",
-        "description": "Actor launched multiple large EC2 instances (c5a.24xlarge) across multiple AWS regions to mine Monero cryptocurrency, with 474 unique miners observed over ~5 weeks connecting to the SupportXMR mining pool.",
+        "description": "Monero (XMR) miner 'appworker' runs on the EC2 instances, connecting to the SupportXMR pool (pool.supportxmr.com:443) to mine cryptocurrency at the victim's expense.",
         "tactic_id": "TA0040",
-        "evidence_quote": "the threat actor associated with the campaign was able to create multiple AWS Elastic Compute (EC2) instances that they used for wide-ranging and long-lasting cryptojacking operations... 474 unique miners appeared between Aug. 30, 2023, and Oct. 6, 2023.",
+        "evidence_quote": "474 unique miners that were potentially actor-controlled Amazon EC2 instances ... mining pool that the threat actor used for this operation was the SupportXMR mining pool",
         "evidence_sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
@@ -390,93 +604,93 @@
     ],
     "edges": [
       {
-        "source": "T1552.001",
-        "target": "T1078.004",
+        "source": "T1593.003",
+        "target": "T1552.001",
         "source_step": 1,
         "target_step": 2,
+        "source_technique_name": "Search Open Websites/Domains: Code Repositories",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+        ],
+        "evidence_quotes": [
+          "used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials",
+          "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1078.004",
+        "source_step": 2,
+        "target_step": 3,
         "source_technique_name": "Credentials In Files",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "The threat actor appears to have used automated tools to continually clone public GitHub repositories and scan for exposed Amazon Web Services (AWS) IAM credentials.",
-          "We found that the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub."
+          "the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub",
+          "the actor's automation operation is behind a VPN"
         ]
       },
       {
         "source": "T1078.004",
         "target": "T1580",
-        "source_step": 2,
-        "target_step": 3,
+        "source_step": 3,
+        "target_step": 4,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "We found that the actor was able to detect and use the exposed IAM credentials within five minutes of their initial exposure on GitHub.",
-          "the actors began their reconnaissance operations using the AWS API DescribeRegions... the threat actor starts by performing an AWS account reconnaissance operation"
+          "the actor's automation operation is behind a VPN",
+          "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions"
         ]
       },
       {
         "source": "T1580",
-        "target": "T1090.003",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Infrastructure Discovery",
-        "target_technique_name": "Proxy: Multi-hop Proxy",
-        "sources": [
-          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
-        ],
-        "evidence_quotes": [
-          "the actors began their reconnaissance operations using the AWS API DescribeRegions... the threat actor starts by performing an AWS account reconnaissance operation",
-          "The data we collected shows indications that the actor's automation operation is behind a VPN. They repeated the same operations across multiple regions, generating a total of more than 400 API calls and taking only seven minutes."
-        ]
-      },
-      {
-        "source": "T1090.003",
-        "target": "T1562.007",
+        "target": "T1578.005",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Proxy: Multi-hop Proxy",
-        "target_technique_name": "Disable or Modify Cloud Firewall",
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Modify Cloud Compute Configurations",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "The data we collected shows indications that the actor's automation operation is behind a VPN. They repeated the same operations across multiple regions, generating a total of more than 400 API calls and taking only seven minutes.",
-          "the threat actor creates AWS security groups (as shown in Figure 4) before finally launching multiple EC2 instances per region across any accessible AWS region."
+          "at 13:34:15, the actors began their reconnaissance operations using the AWS API DescribeRegions",
+          "the threat actor creates AWS security groups ... before finally launching multiple EC2 instances per region"
         ]
       },
       {
-        "source": "T1562.007",
-        "target": "T1204.003",
+        "source": "T1578.005",
+        "target": "T1578.002",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Disable or Modify Cloud Firewall",
-        "target_technique_name": "Malicious Image",
+        "source_technique_name": "Modify Cloud Compute Configurations",
+        "target_technique_name": "Create Cloud Instance",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "the threat actor creates AWS security groups (as shown in Figure 4) before finally launching multiple EC2 instances per region across any accessible AWS region.",
-          "The type of Amazon Machine Images (AMI) the threat actor used was also distinctive. The identified images were private and they were not listed in the AWS Marketplace."
+          "the threat actor creates AWS security groups ... before finally launching multiple EC2 instances per region",
+          "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API"
         ]
       },
       {
-        "source": "T1204.003",
+        "source": "T1578.002",
         "target": "T1059",
         "source_step": 6,
         "target_step": 7,
-        "source_technique_name": "Malicious Image",
+        "source_technique_name": "Create Cloud Instance",
         "target_technique_name": "Command and Scripting Interpreter",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "The type of Amazon Machine Images (AMI) the threat actor used was also distinctive. The identified images were private and they were not listed in the AWS Marketplace.",
-          "The threat actor used this mechanism to automate the EC2 instance configuration and perform the desired actions... the mining automation operation displayed the user data automatically during the miner's configuration of the EC2 upon start-up."
+          "To instantiate Amazon EC2 instances, the threat actor used the RunInstance API",
+          "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration"
         ]
       },
       {
@@ -490,23 +704,38 @@
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "The threat actor used this mechanism to automate the EC2 instance configuration and perform the desired actions... the mining automation operation displayed the user data automatically during the miner's configuration of the EC2 upon start-up.",
-          "the payload was stored in Google Drive... The downloaded payload was stored encrypted and then decrypted upon download"
+          "The Cloud-Init scripts are executed during the instance startup process. The threat actor used this mechanism to automate the EC2 instance configuration",
+          "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design"
         ]
       },
       {
         "source": "T1102",
-        "target": "T1496",
+        "target": "T1027.013",
         "source_step": 8,
         "target_step": 9,
         "source_technique_name": "Web Service",
+        "target_technique_name": "Obfuscated Files or Information: Encrypted/Encoded File",
+        "sources": [
+          "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
+        ],
+        "evidence_quotes": [
+          "the payload was stored in Google Drive. Note that Google Drive URLs are anonymous by design",
+          "The downloaded payload was stored encrypted and then decrypted upon download"
+        ]
+      },
+      {
+        "source": "T1027.013",
+        "target": "T1496",
+        "source_step": 9,
+        "target_step": 10,
+        "source_technique_name": "Obfuscated Files or Information: Encrypted/Encoded File",
         "target_technique_name": "Resource Hijacking",
         "sources": [
           "https://unit42.paloaltonetworks.com/malicious-operations-of-exposed-iam-keys-cryptojacking/"
         ],
         "evidence_quotes": [
-          "the payload was stored in Google Drive... The downloaded payload was stored encrypted and then decrypted upon download",
-          "the threat actor associated with the campaign was able to create multiple AWS Elastic Compute (EC2) instances that they used for wide-ranging and long-lasting cryptojacking operations... 474 unique miners appeared between Aug. 30, 2023, and Oct. 6, 2023."
+          "The downloaded payload was stored encrypted and then decrypted upon download",
+          "474 unique miners that were potentially actor-controlled Amazon EC2 instances ... mining pool that the threat actor used for this operation was the SupportXMR mining pool"
         ]
       }
     ]
@@ -517,19 +746,18 @@
   },
   "schema_version": "1.0",
   "incident_slug": "unit42-2023-oct",
-  "analyzed_at": "2026-04-15T21:13:53.804164+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 89513,
+  "analyzed_at": "2026-04-23T18:56:34.455759+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 123442,
   "incident_name": "Unit42",
   "incident_date": "2023, Oct",
   "incident_root_cause": "Credentials exposed on GitHub",
-  "impact_type_raw": "Cryptomining",
+  "impact_type_raw": "Cryptojacking",
   "aws_services_raw": [
-    "IAM",
-    "EC2",
-    "CloudTrail",
-    "S3",
-    "Lambda",
-    "Lightsail"
+    "Amazon EC2",
+    "AWS IAM",
+    "AWS CloudTrail",
+    "Amazon VPC",
+    "AWS STS"
   ]
 }

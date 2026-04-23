@@ -1,18 +1,188 @@
 {
-  "tactics_used": [
+  "aws_services": [
+    "AWS IAM",
+    "AWS SES",
+    "AWS STS",
+    "AWS CloudTrail"
+  ],
+  "attack_chain": [
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
-      "techniques": [
-        {
-          "technique_id": "T1552.001",
-          "technique_name": "Unsecured Credentials: Credentials In Files",
-          "inferred": false,
-          "evidence_quote": "publicly exposed Postman server with access key credentials stored in the project's variables",
-          "validated": true
-        }
-      ]
+      "step": 1,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Attacker harvested long-term AWS access keys from a publicly exposed Postman server where credentials were stored in the project's variables.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": "we came across a publicly exposed Postman server with access key credentials stored in the project's variables",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.9,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
     },
+    {
+      "step": 2,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker authenticated to AWS using stolen long-term IAM access keys from a non-customary hosting-provider IP with a Kali Linux aws-cli user agent.",
+      "aws_services_involved": [
+        "AWS IAM",
+        "AWS STS"
+      ],
+      "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys.",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.95,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 3876,
+          "char_end": 4550,
+          "quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys."
+        },
+        {
+          "chunk_id": "link_00.md#c055",
+          "source_file": "link_00.md",
+          "char_start": 16368,
+          "char_end": 17042,
+          "quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys."
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Attacker issued IAM ListUsers API calls (denied) to enumerate accounts in the environment.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": "Here we saw three API calls: (two) list users, and one GetSendQuota ... All were denied",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1087.004",
+      "technique_name": "Account Discovery: Cloud Account",
+      "description": "Attacker ran GetCallerIdentity (whoami-equivalent) with multiple access keys from the same source IP to determine the identity/privileges of each stolen key.",
+      "aws_services_invoked": [
+        "AWS STS"
+      ],
+      "aws_services_involved": [
+        "AWS STS"
+      ],
+      "evidence_quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.8,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c033",
+          "source_file": "link_00.clean.md",
+          "char_start": 8365,
+          "char_end": 8829,
+          "quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP"
+        },
+        {
+          "chunk_id": "link_00.md#c070",
+          "source_file": "link_00.md",
+          "char_start": 20857,
+          "char_end": 21321,
+          "quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "description": "Attacker called SES GetSendQuota to retrieve sending limits for the Amazon SES account, reconnaissance for email-abuse capability.",
+      "aws_services_involved": [
+        "AWS SES"
+      ],
+      "evidence_quote": "GetSendQuota was an Amazon email service feature that \"provides the sending limits for the Amazon SES account.\"",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.7,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation",
+      "description": "Attacker called UpdateAccountSendingEnabled multiple times to toggle SES email sending on/off across the AWS account/region \u2014 preparing SES for abuse (e.g., spam/phishing).",
+      "aws_services_involved": [
+        "AWS SES"
+      ],
+      "evidence_quote": "\"UpdateAccountSendingEnabled,\" specifically, seemed interesting ... enables or disables email sending across your entire Amazon SES account",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.6,
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker leveraged seven additional compromised IAM accounts/access keys in parallel, repeating the same reconnaissance and SES-related activity.",
+      "aws_services_involved": [
+        "AWS IAM"
+      ],
+      "evidence_quote": "the attacker was attempting to use seven different access keys and accounts",
+      "evidence_sources": [
+        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+      ],
+      "ordering_confidence": 0.6,
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c018",
+          "source_file": "link_00.clean.md",
+          "char_start": 3876,
+          "char_end": 4550,
+          "quote": "the attacker was attempting to use seven different access keys and accounts"
+        },
+        {
+          "chunk_id": "link_00.md#c055",
+          "source_file": "link_00.md",
+          "char_start": 16368,
+          "char_end": 17042,
+          "quote": "the attacker was attempting to use seven different access keys and accounts"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    }
+  ],
+  "tactics_used": [
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
@@ -27,34 +197,47 @@
       ]
     },
     {
-      "tactic_id": "TA0007",
-      "tactic_name": "Discovery",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_id": "T1580",
-          "technique_name": "Cloud Infrastructure Discovery",
+          "technique_id": "T1552.001",
+          "technique_name": "Unsecured Credentials: Credentials In Files",
           "inferred": false,
-          "evidence_quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP. GetCallerIdentity is similar to the bash command whoami and gives the attacker information about where they have landed.",
-          "validated": true
-        },
-        {
-          "technique_id": "T1087.004",
-          "technique_name": "Account Discovery: Cloud Account",
-          "inferred": false,
-          "evidence_quote": "we saw three API calls: (two) list users, and one GetSendQuota",
+          "evidence_quote": "a publicly exposed Postman server with access key credentials stored in the project's variables",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0009",
-      "tactic_name": "Collection",
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
       "techniques": [
         {
-          "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
+          "technique_id": "T1087.004",
+          "technique_name": "Account Discovery: Cloud Account",
+          "inferred": false,
+          "evidence_quote": "three API calls: (two) list users ... GetCallerIdentity using multiple access keys",
+          "validated": true
+        },
+        {
+          "technique_id": "T1580",
+          "technique_name": "Cloud Infrastructure Discovery",
+          "inferred": false,
+          "evidence_quote": "GetSendQuota ... provides the sending limits for the Amazon SES account",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation",
           "inferred": true,
-          "evidence_quote": null,
+          "evidence_quote": "UpdateAccountSendingEnabled ... enables or disables email sending across your entire Amazon SES account",
           "validated": true
         }
       ]
@@ -67,127 +250,27 @@
           "technique_id": "T1496",
           "technique_name": "Resource Hijacking",
           "inferred": true,
-          "evidence_quote": "GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account'",
-          "validated": true
-        },
-        {
-          "technique_id": "T1498",
-          "technique_name": "Network Denial of Service",
-          "inferred": true,
-          "evidence_quote": "UpdateAccountSendingEnabled... 'enables or disables email sending across your entire Amazon SES account in the current AWS region'",
+          "evidence_quote": "This attacker's focus on email infrastructure was noteworthy",
           "validated": true
         }
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1552.001",
-      "technique_name": "Unsecured Credentials: Credentials In Files",
-      "description": "Attacker discovered publicly exposed Postman server containing AWS long-term access key credentials stored in the project's variables, harvesting credentials for multiple IAM accounts (seven keys total).",
-      "evidence_quote": "Using patterns observed in the affected IAM account names, we came across a publicly exposed Postman server with access key credentials stored in the project's variables.",
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "Attacker authenticated to the AWS environment using the stolen long-term IAM access keys from a Kali Linux host at an anomalous IP address belonging to a non-major hosting provider.",
-      "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84.",
-      "aws_services_involved": [
-        "AWS IAM",
-        "AWS CloudTrail"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1580",
-      "technique_name": "Cloud Infrastructure Discovery",
-      "description": "Attacker called GetCallerIdentity across multiple access keys from the same source IP to identify the privileges and identity context associated with each stolen key \u2014 analogous to running 'whoami' in a cloud environment.",
-      "evidence_quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP. GetCallerIdentity is similar to the bash command whoami and gives the attacker information about where they have landed.",
-      "aws_services_involved": [
-        "AWS STS"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1087.004",
-      "technique_name": "Account Discovery: Cloud Account",
-      "description": "Attacker executed ListUsers API calls (observed twice) to enumerate IAM accounts within the environment, all of which were denied.",
-      "evidence_quote": "we saw three API calls: (two) list users, and one GetSendQuota (our threat hunting team will tell us why this is important). All were denied and all came from the same access key, but different user agents.",
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1526",
-      "technique_name": "Cloud Service Discovery",
-      "description": "Attacker called GetSendQuota to determine the sending limits on the AWS SES account, probing email infrastructure capability before attempting abuse. ~95% of the compromised key's activity was Amazon SES-related.",
-      "evidence_quote": "Most of that user's activity was Amazon SES-related (around 95%)... GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account.'",
-      "aws_services_involved": [
-        "Amazon SES"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1496",
-      "technique_name": "Resource Hijacking",
-      "description": "Attacker repeatedly called UpdateAccountSendingEnabled to toggle the SES email sending capability on/off across the account, indicating preparation to abuse SES for spam/phishing campaigns (prevented by Expel remediation).",
-      "evidence_quote": "'UpdateAccountSendingEnabled,' specifically, seemed interesting, as it was called several times (but not excessively, and it seemed to toggle a useful service on or off). Documentation indicated that it 'enables or disables email sending across your entire Amazon SES account in the current AWS region.'",
-      "aws_services_involved": [
-        "Amazon SES"
-      ],
-      "evidence_sources": [
-        "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-      ],
-      "validated": true
-    }
-  ],
-  "aws_services": [
-    "AWS IAM",
-    "AWS STS",
-    "Amazon SES",
-    "AWS CloudTrail"
-  ],
-  "impact_type": "AWS SES Abuse (Email Spam/Phishing \u2014 prevented)",
-  "confidence_score": 0.85,
-  "initial_access_vector": "Stolen long-term AWS IAM access keys harvested from a publicly exposed Postman server where credentials were stored in project variables",
-  "persistence_mechanism": "Seven IAM accounts and their associated long-term access keys were actively used; no additional persistence mechanism (e.g., new key creation, role assumption) was explicitly described beyond leveraging the pre-existing keys",
-  "privilege_escalation": "No privilege escalation described; attacker operated within the permissions already granted to the stolen IAM accounts",
+  "impact_type": "SES abuse attempt (prevented) / Resource Hijacking of email infrastructure",
+  "confidence_score": 0.75,
   "data_exfiltrated": false,
+  "initial_access_vector": "Stolen long-term AWS IAM access keys harvested from a publicly exposed Postman server where the keys were stored as project variables.",
+  "persistence_mechanism": "Continued use of valid long-term IAM access keys (and 7 additional compromised keys) for access; toggling of SES account-level sending via UpdateAccountSendingEnabled.",
+  "privilege_escalation": "None observed; attacker relied on permissions already granted to the stolen IAM keys (many enumeration calls were denied).",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
         "technique_id": "T1552.001",
         "technique_name": "Credentials In Files",
-        "description": "Attacker discovered publicly exposed Postman server containing AWS long-term access key credentials stored in the project's variables, harvesting credentials for multiple IAM accounts (seven keys total).",
+        "description": "Attacker harvested long-term AWS access keys from a publicly exposed Postman server where credentials were stored in the project's variables.",
         "tactic_id": "TA0006",
-        "evidence_quote": "Using patterns observed in the affected IAM account names, we came across a publicly exposed Postman server with access key credentials stored in the project's variables.",
+        "evidence_quote": "we came across a publicly exposed Postman server with access key credentials stored in the project's variables",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
@@ -199,38 +282,24 @@
         "step": 2,
         "technique_id": "T1078.004",
         "technique_name": "Cloud Accounts",
-        "description": "Attacker authenticated to the AWS environment using the stolen long-term IAM access keys from a Kali Linux host at an anomalous IP address belonging to a non-major hosting provider.",
+        "description": "Attacker authenticated to AWS using stolen long-term IAM access keys from a non-customary hosting-provider IP with a Kali Linux aws-cli user agent.",
         "tactic_id": "TA0005",
-        "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84.",
+        "evidence_quote": "The attacker gained access to the customer environment through the use of stolen long-term access keys.",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "aws_services_involved": [
           "AWS IAM",
-          "AWS CloudTrail"
-        ]
-      },
-      {
-        "step": 3,
-        "technique_id": "T1580",
-        "technique_name": "Cloud Infrastructure Discovery",
-        "description": "Attacker called GetCallerIdentity across multiple access keys from the same source IP to identify the privileges and identity context associated with each stolen key \u2014 analogous to running 'whoami' in a cloud environment.",
-        "tactic_id": "TA0007",
-        "evidence_quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP. GetCallerIdentity is similar to the bash command whoami and gives the attacker information about where they have landed.",
-        "evidence_sources": [
-          "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-        ],
-        "aws_services_involved": [
           "AWS STS"
         ]
       },
       {
-        "step": 4,
+        "step": 3,
         "technique_id": "T1087.004",
         "technique_name": "Cloud Account",
-        "description": "Attacker executed ListUsers API calls (observed twice) to enumerate IAM accounts within the environment, all of which were denied.",
+        "description": "Attacker issued IAM ListUsers API calls (denied) to enumerate accounts in the environment.",
         "tactic_id": "TA0007",
-        "evidence_quote": "we saw three API calls: (two) list users, and one GetSendQuota (our threat hunting team will tell us why this is important). All were denied and all came from the same access key, but different user agents.",
+        "evidence_quote": "Here we saw three API calls: (two) list users, and one GetSendQuota ... All were denied",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
@@ -239,31 +308,59 @@
         ]
       },
       {
-        "step": 5,
-        "technique_id": "T1526",
-        "technique_name": "Cloud Service Discovery",
-        "description": "Attacker called GetSendQuota to determine the sending limits on the AWS SES account, probing email infrastructure capability before attempting abuse. ~95% of the compromised key's activity was Amazon SES-related.",
+        "step": 4,
+        "technique_id": "T1087.004",
+        "technique_name": "Cloud Account",
+        "description": "Attacker ran GetCallerIdentity (whoami-equivalent) with multiple access keys from the same source IP to determine the identity/privileges of each stolen key.",
         "tactic_id": "TA0007",
-        "evidence_quote": "Most of that user's activity was Amazon SES-related (around 95%)... GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account.'",
+        "evidence_quote": "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "aws_services_involved": [
-          "Amazon SES"
+          "AWS STS"
+        ]
+      },
+      {
+        "step": 5,
+        "technique_id": "T1580",
+        "technique_name": "Cloud Infrastructure Discovery",
+        "description": "Attacker called SES GetSendQuota to retrieve sending limits for the Amazon SES account, reconnaissance for email-abuse capability.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "GetSendQuota was an Amazon email service feature that \"provides the sending limits for the Amazon SES account.\"",
+        "evidence_sources": [
+          "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+        ],
+        "aws_services_involved": [
+          "AWS SES"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1496",
-        "technique_name": "Resource Hijacking",
-        "description": "Attacker repeatedly called UpdateAccountSendingEnabled to toggle the SES email sending capability on/off across the account, indicating preparation to abuse SES for spam/phishing campaigns (prevented by Expel remediation).",
-        "tactic_id": "TA0040",
-        "evidence_quote": "'UpdateAccountSendingEnabled,' specifically, seemed interesting, as it was called several times (but not excessively, and it seemed to toggle a useful service on or off). Documentation indicated that it 'enables or disables email sending across your entire Amazon SES account in the current AWS region.'",
+        "technique_id": "T1098",
+        "technique_name": "Account Manipulation",
+        "description": "Attacker called UpdateAccountSendingEnabled multiple times to toggle SES email sending on/off across the AWS account/region \u2014 preparing SES for abuse (e.g., spam/phishing).",
+        "tactic_id": "TA0003",
+        "evidence_quote": "\"UpdateAccountSendingEnabled,\" specifically, seemed interesting ... enables or disables email sending across your entire Amazon SES account",
         "evidence_sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "aws_services_involved": [
-          "Amazon SES"
+          "AWS SES"
+        ]
+      },
+      {
+        "step": 7,
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker leveraged seven additional compromised IAM accounts/access keys in parallel, repeating the same reconnaissance and SES-related activity.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "the attacker was attempting to use seven different access keys and accounts",
+        "evidence_sources": [
+          "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+        ],
+        "aws_services_involved": [
+          "AWS IAM"
         ]
       }
     ],
@@ -279,68 +376,68 @@
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "evidence_quotes": [
-          "Using patterns observed in the affected IAM account names, we came across a publicly exposed Postman server with access key credentials stored in the project's variables.",
-          "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84."
+          "we came across a publicly exposed Postman server with access key credentials stored in the project's variables",
+          "The attacker gained access to the customer environment through the use of stolen long-term access keys."
         ]
       },
       {
         "source": "T1078.004",
-        "target": "T1580",
+        "target": "T1087.004",
         "source_step": 2,
         "target_step": 3,
         "source_technique_name": "Cloud Accounts",
-        "target_technique_name": "Cloud Infrastructure Discovery",
-        "sources": [
-          "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
-        ],
-        "evidence_quotes": [
-          "The attacker gained access to the customer environment through the use of stolen long-term access keys... the user agent in question revealed that it was more specifically aws-cli/1.22.34 Python/3.9.11 Linux/5.15.0-kali3-amd64 botocore/1.27.84.",
-          "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP. GetCallerIdentity is similar to the bash command whoami and gives the attacker information about where they have landed."
-        ]
-      },
-      {
-        "source": "T1580",
-        "target": "T1087.004",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Infrastructure Discovery",
         "target_technique_name": "Cloud Account",
         "sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "evidence_quotes": [
-          "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP. GetCallerIdentity is similar to the bash command whoami and gives the attacker information about where they have landed.",
-          "we saw three API calls: (two) list users, and one GetSendQuota (our threat hunting team will tell us why this is important). All were denied and all came from the same access key, but different user agents."
+          "The attacker gained access to the customer environment through the use of stolen long-term access keys.",
+          "Here we saw three API calls: (two) list users, and one GetSendQuota ... All were denied"
         ]
       },
       {
         "source": "T1087.004",
-        "target": "T1526",
+        "target": "T1580",
         "source_step": 4,
         "target_step": 5,
         "source_technique_name": "Cloud Account",
-        "target_technique_name": "Cloud Service Discovery",
+        "target_technique_name": "Cloud Infrastructure Discovery",
         "sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "evidence_quotes": [
-          "we saw three API calls: (two) list users, and one GetSendQuota (our threat hunting team will tell us why this is important). All were denied and all came from the same access key, but different user agents.",
-          "Most of that user's activity was Amazon SES-related (around 95%)... GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account.'"
+          "the attacker used the API GetCallerIdentity using multiple access keys and from the same IP",
+          "GetSendQuota was an Amazon email service feature that \"provides the sending limits for the Amazon SES account.\""
         ]
       },
       {
-        "source": "T1526",
-        "target": "T1496",
+        "source": "T1580",
+        "target": "T1098",
         "source_step": 5,
         "target_step": 6,
-        "source_technique_name": "Cloud Service Discovery",
-        "target_technique_name": "Resource Hijacking",
+        "source_technique_name": "Cloud Infrastructure Discovery",
+        "target_technique_name": "Account Manipulation",
         "sources": [
           "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
         ],
         "evidence_quotes": [
-          "Most of that user's activity was Amazon SES-related (around 95%)... GetSendQuota was an Amazon email service feature that 'provides the sending limits for the Amazon SES account.'",
-          "'UpdateAccountSendingEnabled,' specifically, seemed interesting, as it was called several times (but not excessively, and it seemed to toggle a useful service on or off). Documentation indicated that it 'enables or disables email sending across your entire Amazon SES account in the current AWS region.'"
+          "GetSendQuota was an Amazon email service feature that \"provides the sending limits for the Amazon SES account.\"",
+          "\"UpdateAccountSendingEnabled,\" specifically, seemed interesting ... enables or disables email sending across your entire Amazon SES account"
+        ]
+      },
+      {
+        "source": "T1098",
+        "target": "T1078.004",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Account Manipulation",
+        "target_technique_name": "Cloud Accounts",
+        "sources": [
+          "https://expel.com/blog/incident-report-stolen-aws-access-keys/"
+        ],
+        "evidence_quotes": [
+          "\"UpdateAccountSendingEnabled,\" specifically, seemed interesting ... enables or disables email sending across your entire Amazon SES account",
+          "the attacker was attempting to use seven different access keys and accounts"
         ]
       }
     ]
@@ -351,7 +448,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "expel-case-study-4-2023-january",
-  "analyzed_at": "2026-04-15T20:54:39.154695+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 31859
+  "analyzed_at": "2026-04-23T18:44:01.013610+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 42345
 }

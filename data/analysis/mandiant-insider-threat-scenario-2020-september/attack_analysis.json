@@ -7,9 +7,21 @@
         {
           "technique_id": "T1078",
           "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
           "inferred": false,
-          "evidence_quote": "Fired employee uses credentials",
+          "evidence_quote": "successful login to uh ci server so basically uh mr orange is is trying to log back into the environment",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_id": "T1213",
+          "technique_name": "Data from Information Repositories",
+          "inferred": false,
+          "evidence_quote": "before mr orange juice fires he downloads some configuration information and network diagrams",
           "validated": true
         }
       ]
@@ -21,10 +33,30 @@
         {
           "technique_id": "T1136",
           "technique_name": "Create Account",
-          "subtechnique_id": "T1136.003",
+          "subtechnique_id": "T1136.001",
           "inferred": false,
-          "evidence_quote": "create a new user",
+          "evidence_quote": "he wanted to create a persistence uh so he did create a user on a ci server",
           "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery",
+          "inferred": false,
+          "evidence_quote": "he actually did run some uh recon tools against the subnets",
+          "validated": true
+        },
+        {
+          "technique_id": "T1083",
+          "technique_name": "File and Directory Discovery",
+          "inferred": false,
+          "evidence_quote": "he did find some additional crunch credentials um and some files on a critical server",
+          "validated": false
         }
       ]
     },
@@ -35,23 +67,9 @@
         {
           "technique_id": "T1552",
           "technique_name": "Unsecured Credentials",
-          "subtechnique_id": null,
+          "subtechnique_id": "T1552.001",
           "inferred": false,
-          "evidence_quote": "steal credentials",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0004",
-      "tactic_name": "Privilege Escalation",
-      "techniques": [
-        {
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts",
-          "subtechnique_id": "T1078.004",
-          "inferred": true,
-          "evidence_quote": "Access CI/CD server, create a new user, steal credentials",
+          "evidence_quote": "he did find some additional crunch credentials um and some files on a critical server",
           "validated": true
         }
       ]
@@ -63,9 +81,8 @@
         {
           "technique_id": "T1021",
           "technique_name": "Remote Services",
-          "subtechnique_id": null,
           "inferred": true,
-          "evidence_quote": "Access CI/CD server",
+          "evidence_quote": "he did access servers housing their work",
           "validated": true
         }
       ]
@@ -77,9 +94,8 @@
         {
           "technique_id": "T1485",
           "technique_name": "Data Destruction",
-          "subtechnique_id": null,
           "inferred": false,
-          "evidence_quote": "Deleted production databases",
+          "evidence_quote": "he uh destroyed all all the databases that he was working on",
           "validated": true
         }
       ]
@@ -88,228 +104,436 @@
   "attack_chain": [
     {
       "step": 1,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "A recently fired employee leverages their existing (or retained) cloud credentials to authenticate and re-enter the environment, bypassing standard access revocation controls.",
-      "evidence_quote": "Fired employee uses credentials",
+      "technique_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "description": "Before being fired, the insider (Mr. Orange) downloaded configuration information and network diagrams from internal repositories.",
+      "aws_services_involved": [],
+      "evidence_quote": "before mr orange juice fires he downloads some configuration information and network diagrams",
+      "ordering_confidence": 1.0,
+      "event_time_precision": "relative",
       "evidence_sources": [
         "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "before mr orange juice fires he downloads some configuration information and network diagrams"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "before mr orange juice fires he downloads some configuration information and network diagrams"
+        }
       ],
+      "event_time": null,
       "validated": true
     },
     {
       "step": 2,
-      "technique_id": "T1021",
-      "technique_name": "Remote Services",
-      "description": "The attacker accesses the CI/CD server remotely, using retained or stolen credentials to pivot into the build/deployment infrastructure.",
-      "evidence_quote": "Access CI/CD server",
+      "technique_id": "T1110",
+      "technique_name": "Brute Force",
+      "description": "On day two, after termination, authorization attempts were made against specific public-facing systems from a single IP address.",
+      "aws_services_involved": [],
+      "evidence_quote": "authorization attempts you know against specific uh public facing systems from a single ip address",
+      "ordering_confidence": 0.8,
+      "event_time_precision": "relative",
       "evidence_sources": [
         "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
       ],
-      "aws_services_involved": [
-        "AWS CodePipeline",
-        "AWS CodeBuild"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "authorization attempts you know against specific uh public facing systems from a single ip address"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "authorization attempts you know against specific uh public facing systems from a single ip address"
+        }
       ],
+      "event_time": null,
       "validated": true
     },
     {
       "step": 3,
-      "technique_id": "T1136.003",
-      "technique_name": "Create Account: Cloud Account",
-      "description": "From the CI/CD server, the attacker creates a new cloud user account to establish a secondary, persistent foothold that survives potential revocation of the original account.",
-      "evidence_quote": "create a new user",
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "description": "Attacker successfully logged into the public-facing CI/CD server using still-valid credentials that had not been revoked after termination.",
+      "aws_services_involved": [],
+      "evidence_quote": "successful login to uh ci server so basically uh mr orange is is trying to log back into the environment",
+      "ordering_confidence": 1.0,
+      "event_time_precision": "relative",
       "evidence_sources": [
         "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
       ],
-      "aws_services_involved": [
-        "AWS IAM"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
       "validated": true
     },
     {
       "step": 4,
-      "technique_id": "T1552",
-      "technique_name": "Unsecured Credentials",
-      "description": "The attacker harvests additional credentials from the CI/CD environment (e.g., stored secrets, environment variables, or configuration files) to enable further lateral movement or privilege escalation.",
-      "evidence_quote": "steal credentials",
+      "technique_id": "T1136.001",
+      "technique_name": "Create Account: Local Account",
+      "description": "Created a new user account on the CI server to establish persistence.",
+      "aws_services_involved": [],
+      "evidence_quote": "he did create a user on a ci server",
+      "ordering_confidence": 1.0,
+      "event_time_precision": "relative",
       "evidence_sources": [
         "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
       ],
-      "aws_services_involved": [
-        "AWS Secrets Manager",
-        "AWS Systems Manager Parameter Store"
-      ],
+      "evidence_chunks": [],
+      "event_time": null,
       "validated": true
     },
     {
       "step": 5,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "Using escalated privileges gained from stolen credentials, the attacker deletes the production databases, causing severe operational impact.",
-      "evidence_quote": "Deleted production databases",
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery",
+      "description": "Downloaded and executed reconnaissance tools to scan the internal subnets from the CI server.",
+      "aws_services_involved": [],
+      "evidence_quote": "he actually did run some uh recon tools against the subnets",
+      "ordering_confidence": 0.9,
+      "event_time_precision": "relative",
       "evidence_sources": [
         "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
       ],
-      "aws_services_involved": [
-        "Amazon RDS",
-        "Amazon DynamoDB"
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "he actually did run some uh recon tools against the subnets"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "he actually did run some uh recon tools against the subnets"
+        }
       ],
+      "event_time": null,
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1552.001",
+      "technique_name": "Unsecured Credentials: Credentials In Files",
+      "description": "Discovered additional credentials and sensitive files on a critical server.",
+      "aws_services_involved": [],
+      "evidence_quote": "he did find some additional crunch credentials um and some files on a critical server",
+      "ordering_confidence": 0.9,
+      "event_time_precision": "relative",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "he did find some additional crunch credentials um and some files on a critical server"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "he did find some additional crunch credentials um and some files on a critical server"
+        }
+      ],
+      "event_time": null,
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "description": "Used discovered credentials to laterally move to servers housing production work/projects.",
+      "aws_services_involved": [],
+      "evidence_quote": "he did access servers housing their work",
+      "ordering_confidence": 0.8,
+      "event_time_precision": "relative",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "he did access servers housing their work"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "he did access servers housing their work"
+        }
+      ],
+      "event_time": null,
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1485",
+      "technique_name": "Data Destruction",
+      "description": "Performed destructive actions by deleting/destroying all production databases related to his prior projects.",
+      "aws_services_involved": [],
+      "evidence_quote": "he proceeded to perform destructive acting so he basically he he uh destroyed all all the databases",
+      "ordering_confidence": 1.0,
+      "event_time_precision": "relative",
+      "evidence_sources": [
+        "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 295,
+          "char_end": 52503,
+          "quote": "he proceeded to perform destructive acting so he basically he he uh destroyed all all the databases"
+        },
+        {
+          "chunk_id": "link_00.md#c002",
+          "source_file": "link_00.md",
+          "char_start": 159,
+          "char_end": 52385,
+          "quote": "he proceeded to perform destructive acting so he basically he he uh destroyed all all the databases"
+        }
+      ],
+      "event_time": null,
       "validated": true
     }
   ],
   "aws_services": [
-    "AWS IAM",
-    "AWS CodePipeline",
-    "AWS CodeBuild",
-    "Amazon RDS",
-    "Amazon DynamoDB",
-    "AWS Secrets Manager",
-    "AWS Systems Manager Parameter Store"
+    "CI/CD server",
+    "Production Databases"
   ],
-  "impact_type": "Data Destruction",
-  "confidence_score": 0.4,
-  "initial_access_vector": "Fired employee reuses valid cloud credentials that were not properly revoked upon termination",
-  "persistence_mechanism": "Creation of a new cloud IAM user account from the compromised CI/CD server to maintain access independently of the original credentials",
-  "privilege_escalation": "Credentials stolen from the CI/CD server environment used to assume higher-privileged roles or access production resources",
-  "data_exfiltrated": false,
+  "impact_type": "Data Destruction (Insider Threat)",
+  "confidence_score": 0.7,
+  "data_exfiltrated": true,
+  "initial_access_vector": "Fired employee re-used still-valid credentials to log back into a public-facing CI/CD server (access was not terminated immediately after termination).",
+  "persistence_mechanism": "Created a new user account on the CI/CD server.",
+  "privilege_escalation": "Discovered additional credentials stored in files on a critical server and used them to access production systems.",
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "A recently fired employee leverages their existing (or retained) cloud credentials to authenticate and re-enter the environment, bypassing standard access revocation controls.",
-        "tactic_id": "TA0005",
-        "evidence_quote": "Fired employee uses credentials",
+        "technique_id": "T1213",
+        "technique_name": "Data from Information Repositories",
+        "description": "Before being fired, the insider (Mr. Orange) downloaded configuration information and network diagrams from internal repositories.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "before mr orange juice fires he downloads some configuration information and network diagrams",
         "evidence_sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
-        "aws_services_involved": [
-          "AWS IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 2,
-        "technique_id": "T1021",
-        "technique_name": "Remote Services",
-        "description": "The attacker accesses the CI/CD server remotely, using retained or stolen credentials to pivot into the build/deployment infrastructure.",
-        "tactic_id": "TA0008",
-        "evidence_quote": "Access CI/CD server",
+        "technique_id": "T1110",
+        "technique_name": "Brute Force",
+        "description": "On day two, after termination, authorization attempts were made against specific public-facing systems from a single IP address.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "authorization attempts you know against specific uh public facing systems from a single ip address",
         "evidence_sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
-        "aws_services_involved": [
-          "AWS CodePipeline",
-          "AWS CodeBuild"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 3,
-        "technique_id": "T1136.003",
-        "technique_name": "Cloud Account",
-        "description": "From the CI/CD server, the attacker creates a new cloud user account to establish a secondary, persistent foothold that survives potential revocation of the original account.",
-        "tactic_id": "TA0003",
-        "evidence_quote": "create a new user",
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Attacker successfully logged into the public-facing CI/CD server using still-valid credentials that had not been revoked after termination.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "successful login to uh ci server so basically uh mr orange is is trying to log back into the environment",
         "evidence_sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
-        "aws_services_involved": [
-          "AWS IAM"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 4,
-        "technique_id": "T1552",
-        "technique_name": "Unsecured Credentials",
-        "description": "The attacker harvests additional credentials from the CI/CD environment (e.g., stored secrets, environment variables, or configuration files) to enable further lateral movement or privilege escalation.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "steal credentials",
+        "technique_id": "T1136.001",
+        "technique_name": "Local Account",
+        "description": "Created a new user account on the CI server to establish persistence.",
+        "tactic_id": "TA0003",
+        "evidence_quote": "he did create a user on a ci server",
         "evidence_sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
-        "aws_services_involved": [
-          "AWS Secrets Manager",
-          "AWS Systems Manager Parameter Store"
-        ]
+        "aws_services_involved": []
       },
       {
         "step": 5,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "Using escalated privileges gained from stolen credentials, the attacker deletes the production databases, causing severe operational impact.",
-        "tactic_id": "TA0040",
-        "evidence_quote": "Deleted production databases",
+        "technique_id": "T1046",
+        "technique_name": "Network Service Discovery",
+        "description": "Downloaded and executed reconnaissance tools to scan the internal subnets from the CI server.",
+        "tactic_id": "TA0007",
+        "evidence_quote": "he actually did run some uh recon tools against the subnets",
         "evidence_sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
-        "aws_services_involved": [
-          "Amazon RDS",
-          "Amazon DynamoDB"
-        ]
+        "aws_services_involved": []
+      },
+      {
+        "step": 6,
+        "technique_id": "T1552.001",
+        "technique_name": "Credentials In Files",
+        "description": "Discovered additional credentials and sensitive files on a critical server.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "he did find some additional crunch credentials um and some files on a critical server",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 7,
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "description": "Used discovered credentials to laterally move to servers housing production work/projects.",
+        "tactic_id": "TA0008",
+        "evidence_quote": "he did access servers housing their work",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": []
+      },
+      {
+        "step": 8,
+        "technique_id": "T1485",
+        "technique_name": "Data Destruction",
+        "description": "Performed destructive actions by deleting/destroying all production databases related to his prior projects.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "he proceeded to perform destructive acting so he basically he he uh destroyed all all the databases",
+        "evidence_sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1078.004",
-        "target": "T1021",
+        "source": "T1213",
+        "target": "T1110",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Cloud Accounts",
+        "source_technique_name": "Data from Information Repositories",
+        "target_technique_name": "Brute Force",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "before mr orange juice fires he downloads some configuration information and network diagrams",
+          "authorization attempts you know against specific uh public facing systems from a single ip address"
+        ]
+      },
+      {
+        "source": "T1110",
+        "target": "T1078",
+        "source_step": 2,
+        "target_step": 3,
+        "source_technique_name": "Brute Force",
+        "target_technique_name": "Valid Accounts",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "authorization attempts you know against specific uh public facing systems from a single ip address",
+          "successful login to uh ci server so basically uh mr orange is is trying to log back into the environment"
+        ]
+      },
+      {
+        "source": "T1078",
+        "target": "T1136.001",
+        "source_step": 3,
+        "target_step": 4,
+        "source_technique_name": "Valid Accounts",
+        "target_technique_name": "Local Account",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "successful login to uh ci server so basically uh mr orange is is trying to log back into the environment",
+          "he did create a user on a ci server"
+        ]
+      },
+      {
+        "source": "T1136.001",
+        "target": "T1046",
+        "source_step": 4,
+        "target_step": 5,
+        "source_technique_name": "Local Account",
+        "target_technique_name": "Network Service Discovery",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "he did create a user on a ci server",
+          "he actually did run some uh recon tools against the subnets"
+        ]
+      },
+      {
+        "source": "T1046",
+        "target": "T1552.001",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Network Service Discovery",
+        "target_technique_name": "Credentials In Files",
+        "sources": [
+          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
+        ],
+        "evidence_quotes": [
+          "he actually did run some uh recon tools against the subnets",
+          "he did find some additional crunch credentials um and some files on a critical server"
+        ]
+      },
+      {
+        "source": "T1552.001",
+        "target": "T1021",
+        "source_step": 6,
+        "target_step": 7,
+        "source_technique_name": "Credentials In Files",
         "target_technique_name": "Remote Services",
         "sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
         "evidence_quotes": [
-          "Fired employee uses credentials",
-          "Access CI/CD server"
+          "he did find some additional crunch credentials um and some files on a critical server",
+          "he did access servers housing their work"
         ]
       },
       {
         "source": "T1021",
-        "target": "T1136.003",
-        "source_step": 2,
-        "target_step": 3,
-        "source_technique_name": "Remote Services",
-        "target_technique_name": "Cloud Account",
-        "sources": [
-          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
-        ],
-        "evidence_quotes": [
-          "Access CI/CD server",
-          "create a new user"
-        ]
-      },
-      {
-        "source": "T1136.003",
-        "target": "T1552",
-        "source_step": 3,
-        "target_step": 4,
-        "source_technique_name": "Cloud Account",
-        "target_technique_name": "Unsecured Credentials",
-        "sources": [
-          "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
-        ],
-        "evidence_quotes": [
-          "create a new user",
-          "steal credentials"
-        ]
-      },
-      {
-        "source": "T1552",
         "target": "T1485",
-        "source_step": 4,
-        "target_step": 5,
-        "source_technique_name": "Unsecured Credentials",
+        "source_step": 7,
+        "target_step": 8,
+        "source_technique_name": "Remote Services",
         "target_technique_name": "Data Destruction",
         "sources": [
           "https://web.archive.org/web/20201103091354/https://www.youtube.com/watch?v=rtEjI_5TPdw&feature=youtu.be/"
         ],
         "evidence_quotes": [
-          "steal credentials",
-          "Deleted production databases"
+          "he did access servers housing their work",
+          "he proceeded to perform destructive acting so he basically he he uh destroyed all all the databases"
         ]
       }
     ]
@@ -320,7 +544,7 @@
   },
   "schema_version": "1.0",
   "incident_slug": "mandiant-insider-threat-scenario-2020-september",
-  "analyzed_at": "2026-04-15T21:00:08.639031+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 555
+  "analyzed_at": "2026-04-23T18:48:13.025065+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 105333
 }

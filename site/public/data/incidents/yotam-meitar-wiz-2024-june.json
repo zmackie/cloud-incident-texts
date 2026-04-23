@@ -1,5 +1,263 @@
 {
+  "attack_chain": [
+    {
+      "step": 1,
+      "technique_id": "T1595.002",
+      "technique_name": "Active Scanning: Vulnerability Scanning",
+      "description": "Attackers scanned internet-exposed applications from a Proton VPN IP and found a vulnerable application deployed in the Kubernetes cluster.",
+      "aws_services_involved": [
+        "EC2",
+        "VPC Security Groups"
+      ],
+      "evidence_quote": "an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 245,
+          "char_end": 50506,
+          "quote": "an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 98,
+          "char_end": 50377,
+          "quote": "an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": false
+    },
+    {
+      "step": 2,
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "description": "Attackers exploited a known vulnerability in an application deployed to the Kubernetes cluster that had been unintentionally exposed to the internet via a misconfigured Security Group, achieving code execution on the EC2 hosting the pod.",
+      "aws_services_involved": [
+        "EC2",
+        "EKS/Kubernetes",
+        "VPC Security Groups"
+      ],
+      "evidence_quote": "once they had scanned the vulnerable application they were able to run code on the ec2 which was hosting the kubernetes Pod",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 3,
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+      "description": "Attacker leveraged the IAM role attached to the EC2/Kubernetes pod (inherited by the container) to access AWS APIs via the AWS CLI.",
+      "aws_services_involved": [
+        "EC2",
+        "IAM"
+      ],
+      "evidence_quote": "that machine had an IM Ro associated with it which allowed access to that secret",
+      "ordering_confidence": 0.85,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 245,
+          "char_end": 50506,
+          "quote": "that machine had an IM Ro associated with it which allowed access to that secret"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 98,
+          "char_end": 50377,
+          "quote": "that machine had an IM Ro associated with it which allowed access to that secret"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 4,
+      "technique_id": "T1555.006",
+      "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+      "description": "Using the overprivileged EC2 instance role, attacker retrieved the IdP's AWS access key from AWS Secrets Manager.",
+      "aws_services_involved": [
+        "Secrets Manager",
+        "IAM"
+      ],
+      "evidence_quote": "that same key was accessed by some ec2 instance role from some ec2 IP address",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 5,
+      "technique_id": "T1550.001",
+      "technique_name": "Use Alternate Authentication Material: Application Access Token",
+      "description": "Attacker used the stolen IdP IAM user access key to call STS and generate session tokens mimicking legitimate IdP session naming conventions, bypassing the proprietary identity provider (and its MFA/IP restrictions).",
+      "aws_services_involved": [
+        "STS",
+        "IAM"
+      ],
+      "evidence_quote": "they got the key that's used the access key used by the identity provider to create these sessions... they could generate SDS tokens they can make it look just like a session that came through the identity provider",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 6,
+      "technique_id": "T1078.004",
+      "technique_name": "Valid Accounts: Cloud Accounts",
+      "description": "Attacker assumed roles via STS with the faked IdP-style session names to obtain broad privileges across hundreds of AWS accounts, bypassing the IdP entirely.",
+      "aws_services_involved": [
+        "STS",
+        "IAM",
+        "CloudTrail"
+      ],
+      "evidence_quote": "they all looked like they're coming from SDS following this convention",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 245,
+          "char_end": 50506,
+          "quote": "they all looked like they're coming from SDS following this convention"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 98,
+          "char_end": 50377,
+          "quote": "they all looked like they're coming from SDS following this convention"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 7,
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage Object",
+      "description": "Attacker accessed S3 buckets containing MongoDB backups (BSON files) with customer PII.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "almost everything the attackers had taken had come from S3 buckets",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 245,
+          "char_end": 50506,
+          "quote": "almost everything the attackers had taken had come from S3 buckets"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 98,
+          "char_end": 50377,
+          "quote": "almost everything the attackers had taken had come from S3 buckets"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 8,
+      "technique_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "description": "Attackers exfiltrated hundreds of gigabytes of JSON data (MongoDB backups / customer databases) out of the AWS environment.",
+      "aws_services_involved": [
+        "S3"
+      ],
+      "evidence_quote": "it was a few hundreds of gigabytes of Json just sent over from the attacker",
+      "ordering_confidence": 0.9,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [
+        {
+          "chunk_id": "link_00.clean.md#c002",
+          "source_file": "link_00.clean.md",
+          "char_start": 245,
+          "char_end": 50506,
+          "quote": "it was a few hundreds of gigabytes of Json just sent over from the attacker"
+        },
+        {
+          "chunk_id": "link_00.md#c001",
+          "source_file": "link_00.md",
+          "char_start": 98,
+          "char_end": 50377,
+          "quote": "it was a few hundreds of gigabytes of Json just sent over from the attacker"
+        }
+      ],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    },
+    {
+      "step": 9,
+      "technique_id": "T1657",
+      "technique_name": "Financial Theft",
+      "description": "Attackers sent a ransom note demanding payment within 48 hours under threat of releasing the stolen data; the company negotiated and paid the ransom.",
+      "aws_services_involved": [],
+      "evidence_quote": "we have all your data... we will release it in 48 hours... the company paid the ransom",
+      "ordering_confidence": 0.95,
+      "evidence_sources": [
+        "https://www.youtube.com/watch?v=f066e7WndTQ"
+      ],
+      "evidence_chunks": [],
+      "event_time": null,
+      "event_time_precision": "unknown",
+      "validated": true
+    }
+  ],
   "tactics_used": [
+    {
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "techniques": [
+        {
+          "technique_id": "T1595.002",
+          "technique_name": "Active Scanning: Vulnerability Scanning",
+          "inferred": false,
+          "evidence_quote": "an external IP address... which was able to connect to this this application to through just presumably scanning",
+          "validated": false
+        }
+      ]
+    },
     {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
@@ -8,7 +266,40 @@
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application",
           "inferred": false,
-          "evidence_quote": "Root Cause: Compromised vulnerable application (k8s Pod)",
+          "evidence_quote": "this application which was deployed actually had a very well-known exploitable vulnerability in it",
+          "validated": true
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell",
+          "inferred": false,
+          "evidence_quote": "this is a bash history from the machine itself",
+          "validated": false
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_id": "T1552.005",
+          "technique_name": "Unsecured Credentials: Cloud Instance Metadata API",
+          "inferred": true,
+          "evidence_quote": "that machine had an IM Ro associated with it which allowed access to that secret",
+          "validated": true
+        },
+        {
+          "technique_id": "T1555.006",
+          "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+          "inferred": false,
+          "evidence_quote": "that same key was accessed by some ec2 instance role",
           "validated": true
         }
       ]
@@ -18,50 +309,30 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
-          "technique_id": "T1611",
-          "technique_name": "Escape to Host",
-          "inferred": true,
-          "evidence_quote": "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access",
-          "validated": true
-        },
-        {
           "technique_id": "T1078.004",
           "technique_name": "Valid Accounts: Cloud Accounts",
           "inferred": false,
-          "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
+          "evidence_quote": "this user is the one which basically has all the Privileges because it's the only one that grants access to any other users",
           "validated": true
         }
       ]
     },
     {
-      "tactic_id": "TA0006",
-      "tactic_name": "Credential Access",
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_id": "T1552.007",
-          "technique_name": "Unsecured Credentials: Container API",
+          "technique_id": "T1550.001",
+          "technique_name": "Use Alternate Authentication Material: Application Access Token",
           "inferred": false,
-          "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
+          "evidence_quote": "they could generate SDS tokens they can make it look just like a session that came through the identity provider",
           "validated": true
         },
         {
-          "technique_id": "T1528",
-          "technique_name": "Steal Application Access Token",
+          "technique_id": "T1036",
+          "technique_name": "Masquerading",
           "inferred": false,
-          "evidence_quote": "uncovering expert impersonation of a unique identity provider",
-          "validated": true
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0003",
-      "tactic_name": "Persistence",
-      "techniques": [
-        {
-          "technique_id": "T1556.006",
-          "technique_name": "Modify Authentication Process: Multi-Factor Authentication",
-          "inferred": true,
-          "evidence_quote": "uncovering expert impersonation of a unique identity provider",
+          "evidence_quote": "they mimic the same way the identity provider worked they created an SDS session with the same convention for a session name",
           "validated": true
         }
       ]
@@ -72,9 +343,9 @@
       "techniques": [
         {
           "technique_id": "T1530",
-          "technique_name": "Data from Cloud Storage",
+          "technique_name": "Data from Cloud Storage Object",
           "inferred": false,
-          "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+          "evidence_quote": "almost everything the attackers had taken had come from S3 buckets",
           "validated": true
         }
       ]
@@ -84,10 +355,10 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_id": "T1537",
-          "technique_name": "Transfer Data to Cloud Account",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
           "inferred": true,
-          "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+          "evidence_quote": "a few hundreds of gigabytes of Json just sent over from the attacker",
           "validated": true
         }
       ]
@@ -97,245 +368,140 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_id": "T1485",
-          "technique_name": "Data Destruction",
-          "inferred": true,
-          "evidence_quote": "most cloud ransom attack attacks follow a more straightforward playbook: compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft",
+          "inferred": false,
+          "evidence_quote": "the company paid the ransom",
           "validated": true
         },
         {
-          "technique_id": "T1486",
-          "technique_name": "Data Encrypted for Impact",
-          "inferred": false,
-          "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service",
+          "inferred": true,
+          "evidence_quote": "they take a lot of data and they only use that part of the extortion to demand a ransom",
           "validated": true
         }
       ]
     }
   ],
-  "attack_chain": [
-    {
-      "step": 1,
-      "technique_id": "T1190",
-      "technique_name": "Exploit Public-Facing Application",
-      "description": "Attacker exploited a vulnerability in a public-facing application running inside a Kubernetes Pod to gain initial code execution within the cluster.",
-      "evidence_quote": "Root Cause: Compromised vulnerable application (k8s Pod)",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "EKS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 2,
-      "technique_id": "T1552.007",
-      "technique_name": "Unsecured Credentials: Container API",
-      "description": "From the compromised Pod, the attacker accessed overprivileged Kubernetes Secrets to retrieve IDP-related credentials, leveraging excessive RBAC permissions on the pod's service account.",
-      "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "EKS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 3,
-      "technique_id": "T1611",
-      "technique_name": "Escape to Host / Privilege Escalation via Kubernetes Vulnerability",
-      "description": "The attacker leveraged a Kubernetes vulnerability to escalate from pod-level access to full administrative access over the cluster or cloud environment.",
-      "evidence_quote": "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "EKS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 4,
-      "technique_id": "T1528",
-      "technique_name": "Steal Application Access Token",
-      "description": "Using the retrieved IDP-related credentials, the attacker impersonated the identity provider to obtain cloud access tokens, enabling them to act with elevated cloud permissions.",
-      "evidence_quote": "uncovering expert impersonation of a unique identity provider",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "STS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 5,
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts",
-      "description": "The attacker used the stolen IDP credentials and impersonated identity to authenticate to AWS as a valid cloud account, achieving full administrative access to the AWS environment.",
-      "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "IAM",
-        "STS"
-      ],
-      "validated": true
-    },
-    {
-      "step": 6,
-      "technique_id": "T1530",
-      "technique_name": "Data from Cloud Storage",
-      "description": "With full administrative AWS access, the attacker accessed and collected data from S3 buckets in preparation for exfiltration.",
-      "evidence_quote": "S3 data exfiltration and 'Ransomware'",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 7,
-      "technique_id": "T1537",
-      "technique_name": "Transfer Data to Cloud Account",
-      "description": "The attacker exfiltrated the collected S3 data to an external location, consistent with the described data exfiltration prior to ransom demand.",
-      "evidence_quote": "compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    },
-    {
-      "step": 8,
-      "technique_id": "T1485",
-      "technique_name": "Data Destruction",
-      "description": "As part of the ransomware operation, the attacker likely deleted or corrupted S3 data (cloud 'ransomware' pattern: exfiltrate then delete/encrypt to extort victim).",
-      "evidence_quote": "S3 data exfiltration and 'Ransomware'",
-      "evidence_sources": [
-        "https://www.youtube.com/watch?v=f066e7WndTQ"
-      ],
-      "aws_services_involved": [
-        "S3"
-      ],
-      "validated": true
-    }
-  ],
   "aws_services": [
-    "EKS",
+    "EC2",
     "S3",
     "IAM",
-    "STS"
+    "Secrets Manager",
+    "STS",
+    "CloudTrail",
+    "EKS/Kubernetes",
+    "VPC Security Groups",
+    "AMI"
   ],
-  "impact_type": "Ransomware / Extortion",
-  "confidence_score": 0.6,
-  "initial_access_vector": "Exploitation of a vulnerable public-facing application running in a Kubernetes Pod (Amazon EKS)",
-  "persistence_mechanism": "Impersonation of an Identity Provider (IDP) to maintain persistent valid cloud credentials",
-  "privilege_escalation": "Accessed overprivileged Kubernetes Secrets from compromised Pod to retrieve IDP credentials; exploited a Kubernetes vulnerability to escalate to full administrative access",
+  "impact_type": "Data Exfiltration",
+  "initial_access_vector": "Exploitation of a known vulnerability in a Kubernetes-deployed application unintentionally exposed to the internet via a misconfigured Security Group.",
+  "persistence_mechanism": "None explicitly described; attackers retained access via the stolen IdP IAM user access key, which could be used to mint STS tokens at will.",
+  "privilege_escalation": "Leveraged overprivileged EC2 instance role to read a Secrets Manager secret containing the identity provider's IAM user access key, which held privileges to assume roles across the environment via STS.",
   "data_exfiltrated": true,
+  "confidence_score": 0.9,
   "attack_chain_graph": {
     "nodes": [
       {
         "step": 1,
-        "technique_id": "T1190",
-        "technique_name": "Exploit Public-Facing Application",
-        "description": "Attacker exploited a vulnerability in a public-facing application running inside a Kubernetes Pod to gain initial code execution within the cluster.",
-        "tactic_id": "TA0001",
-        "evidence_quote": "Root Cause: Compromised vulnerable application (k8s Pod)",
+        "technique_id": "T1595.002",
+        "technique_name": "Active Scanning: Vulnerability Scanning",
+        "description": "Attackers scanned internet-exposed applications from a Proton VPN IP and found a vulnerable application deployed in the Kubernetes cluster.",
+        "tactic_id": "",
+        "evidence_quote": "an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "EKS"
+          "EC2",
+          "VPC Security Groups"
         ]
       },
       {
         "step": 2,
-        "technique_id": "T1552.007",
-        "technique_name": "Container API",
-        "description": "From the compromised Pod, the attacker accessed overprivileged Kubernetes Secrets to retrieve IDP-related credentials, leveraging excessive RBAC permissions on the pod's service account.",
-        "tactic_id": "TA0006",
-        "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
+        "technique_id": "T1190",
+        "technique_name": "Exploit Public-Facing Application",
+        "description": "Attackers exploited a known vulnerability in an application deployed to the Kubernetes cluster that had been unintentionally exposed to the internet via a misconfigured Security Group, achieving code execution on the EC2 hosting the pod.",
+        "tactic_id": "TA0001",
+        "evidence_quote": "once they had scanned the vulnerable application they were able to run code on the ec2 which was hosting the kubernetes Pod",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "EKS"
+          "EC2",
+          "EKS/Kubernetes",
+          "VPC Security Groups"
         ]
       },
       {
         "step": 3,
-        "technique_id": "T1611",
-        "technique_name": "Escape to Host",
-        "description": "The attacker leveraged a Kubernetes vulnerability to escalate from pod-level access to full administrative access over the cluster or cloud environment.",
-        "tactic_id": "TA0004",
-        "evidence_quote": "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access",
+        "technique_id": "T1552.005",
+        "technique_name": "Cloud Instance Metadata API",
+        "description": "Attacker leveraged the IAM role attached to the EC2/Kubernetes pod (inherited by the container) to access AWS APIs via the AWS CLI.",
+        "tactic_id": "TA0006",
+        "evidence_quote": "that machine had an IM Ro associated with it which allowed access to that secret",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "EKS"
+          "EC2",
+          "IAM"
         ]
       },
       {
         "step": 4,
-        "technique_id": "T1528",
-        "technique_name": "Steal Application Access Token",
-        "description": "Using the retrieved IDP-related credentials, the attacker impersonated the identity provider to obtain cloud access tokens, enabling them to act with elevated cloud permissions.",
+        "technique_id": "T1555.006",
+        "technique_name": "Cloud Secrets Management Stores",
+        "description": "Using the overprivileged EC2 instance role, attacker retrieved the IdP's AWS access key from AWS Secrets Manager.",
         "tactic_id": "TA0006",
-        "evidence_quote": "uncovering expert impersonation of a unique identity provider",
+        "evidence_quote": "that same key was accessed by some ec2 instance role from some ec2 IP address",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "IAM",
-          "STS"
+          "Secrets Manager",
+          "IAM"
         ]
       },
       {
         "step": 5,
-        "technique_id": "T1078.004",
-        "technique_name": "Cloud Accounts",
-        "description": "The attacker used the stolen IDP credentials and impersonated identity to authenticate to AWS as a valid cloud account, achieving full administrative access to the AWS environment.",
+        "technique_id": "T1550.001",
+        "technique_name": "Application Access Token",
+        "description": "Attacker used the stolen IdP IAM user access key to call STS and generate session tokens mimicking legitimate IdP session naming conventions, bypassing the proprietary identity provider (and its MFA/IP restrictions).",
         "tactic_id": "TA0005",
-        "evidence_quote": "Exploit overprivileged secrets access to retrieve IDP-related credentials",
+        "evidence_quote": "they got the key that's used the access key used by the identity provider to create these sessions... they could generate SDS tokens they can make it look just like a session that came through the identity provider",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "IAM",
-          "STS"
+          "STS",
+          "IAM"
         ]
       },
       {
         "step": 6,
-        "technique_id": "T1530",
-        "technique_name": "Data from Cloud Storage",
-        "description": "With full administrative AWS access, the attacker accessed and collected data from S3 buckets in preparation for exfiltration.",
-        "tactic_id": "TA0009",
-        "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+        "technique_id": "T1078.004",
+        "technique_name": "Cloud Accounts",
+        "description": "Attacker assumed roles via STS with the faked IdP-style session names to obtain broad privileges across hundreds of AWS accounts, bypassing the IdP entirely.",
+        "tactic_id": "TA0005",
+        "evidence_quote": "they all looked like they're coming from SDS following this convention",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
-          "S3"
+          "STS",
+          "IAM",
+          "CloudTrail"
         ]
       },
       {
         "step": 7,
-        "technique_id": "T1537",
-        "technique_name": "Transfer Data to Cloud Account",
-        "description": "The attacker exfiltrated the collected S3 data to an external location, consistent with the described data exfiltration prior to ransom demand.",
-        "tactic_id": "TA0010",
-        "evidence_quote": "compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
+        "technique_id": "T1530",
+        "technique_name": "Data from Cloud Storage",
+        "description": "Attacker accessed S3 buckets containing MongoDB backups (BSON files) with customer PII.",
+        "tactic_id": "TA0009",
+        "evidence_quote": "almost everything the attackers had taken had come from S3 buckets",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
@@ -345,123 +511,150 @@
       },
       {
         "step": 8,
-        "technique_id": "T1485",
-        "technique_name": "Data Destruction",
-        "description": "As part of the ransomware operation, the attacker likely deleted or corrupted S3 data (cloud 'ransomware' pattern: exfiltrate then delete/encrypt to extort victim).",
-        "tactic_id": "TA0040",
-        "evidence_quote": "S3 data exfiltration and 'Ransomware'",
+        "technique_id": "T1567",
+        "technique_name": "Exfiltration Over Web Service",
+        "description": "Attackers exfiltrated hundreds of gigabytes of JSON data (MongoDB backups / customer databases) out of the AWS environment.",
+        "tactic_id": "TA0010",
+        "evidence_quote": "it was a few hundreds of gigabytes of Json just sent over from the attacker",
         "evidence_sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "aws_services_involved": [
           "S3"
         ]
+      },
+      {
+        "step": 9,
+        "technique_id": "T1657",
+        "technique_name": "Financial Theft",
+        "description": "Attackers sent a ransom note demanding payment within 48 hours under threat of releasing the stolen data; the company negotiated and paid the ransom.",
+        "tactic_id": "TA0040",
+        "evidence_quote": "we have all your data... we will release it in 48 hours... the company paid the ransom",
+        "evidence_sources": [
+          "https://www.youtube.com/watch?v=f066e7WndTQ"
+        ],
+        "aws_services_involved": []
       }
     ],
     "edges": [
       {
-        "source": "T1190",
-        "target": "T1552.007",
+        "source": "T1595.002",
+        "target": "T1190",
         "source_step": 1,
         "target_step": 2,
-        "source_technique_name": "Exploit Public-Facing Application",
-        "target_technique_name": "Container API",
+        "source_technique_name": "Active Scanning: Vulnerability Scanning",
+        "target_technique_name": "Exploit Public-Facing Application",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "Root Cause: Compromised vulnerable application (k8s Pod)",
-          "Exploit overprivileged secrets access to retrieve IDP-related credentials"
+          "an external IP address in this case it's just a proton VPN IP which was able to connect to this this application to through just presumably scanning",
+          "once they had scanned the vulnerable application they were able to run code on the ec2 which was hosting the kubernetes Pod"
         ]
       },
       {
-        "source": "T1552.007",
-        "target": "T1611",
+        "source": "T1190",
+        "target": "T1552.005",
         "source_step": 2,
         "target_step": 3,
-        "source_technique_name": "Container API",
-        "target_technique_name": "Escape to Host",
+        "source_technique_name": "Exploit Public-Facing Application",
+        "target_technique_name": "Cloud Instance Metadata API",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-          "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access"
+          "once they had scanned the vulnerable application they were able to run code on the ec2 which was hosting the kubernetes Pod",
+          "that machine had an IM Ro associated with it which allowed access to that secret"
         ]
       },
       {
-        "source": "T1611",
-        "target": "T1528",
+        "source": "T1552.005",
+        "target": "T1555.006",
         "source_step": 3,
         "target_step": 4,
-        "source_technique_name": "Escape to Host",
-        "target_technique_name": "Steal Application Access Token",
+        "source_technique_name": "Cloud Instance Metadata API",
+        "target_technique_name": "Cloud Secrets Management Stores",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "revealing clever privilege escalation from a Kubernetes vulnerability to full administrative access",
-          "uncovering expert impersonation of a unique identity provider"
+          "that machine had an IM Ro associated with it which allowed access to that secret",
+          "that same key was accessed by some ec2 instance role from some ec2 IP address"
         ]
       },
       {
-        "source": "T1528",
-        "target": "T1078.004",
+        "source": "T1555.006",
+        "target": "T1550.001",
         "source_step": 4,
         "target_step": 5,
-        "source_technique_name": "Steal Application Access Token",
+        "source_technique_name": "Cloud Secrets Management Stores",
+        "target_technique_name": "Application Access Token",
+        "sources": [
+          "https://www.youtube.com/watch?v=f066e7WndTQ"
+        ],
+        "evidence_quotes": [
+          "that same key was accessed by some ec2 instance role from some ec2 IP address",
+          "they got the key that's used the access key used by the identity provider to create these sessions... they could generate SDS tokens they can make it look just like a session that came through the identity provider"
+        ]
+      },
+      {
+        "source": "T1550.001",
+        "target": "T1078.004",
+        "source_step": 5,
+        "target_step": 6,
+        "source_technique_name": "Application Access Token",
         "target_technique_name": "Cloud Accounts",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "uncovering expert impersonation of a unique identity provider",
-          "Exploit overprivileged secrets access to retrieve IDP-related credentials"
+          "they got the key that's used the access key used by the identity provider to create these sessions... they could generate SDS tokens they can make it look just like a session that came through the identity provider",
+          "they all looked like they're coming from SDS following this convention"
         ]
       },
       {
         "source": "T1078.004",
         "target": "T1530",
-        "source_step": 5,
-        "target_step": 6,
+        "source_step": 6,
+        "target_step": 7,
         "source_technique_name": "Cloud Accounts",
         "target_technique_name": "Data from Cloud Storage",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "Exploit overprivileged secrets access to retrieve IDP-related credentials",
-          "S3 data exfiltration and 'Ransomware'"
+          "they all looked like they're coming from SDS following this convention",
+          "almost everything the attackers had taken had come from S3 buckets"
         ]
       },
       {
         "source": "T1530",
-        "target": "T1537",
-        "source_step": 6,
-        "target_step": 7,
+        "target": "T1567",
+        "source_step": 7,
+        "target_step": 8,
         "source_technique_name": "Data from Cloud Storage",
-        "target_technique_name": "Transfer Data to Cloud Account",
+        "target_technique_name": "Exfiltration Over Web Service",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "S3 data exfiltration and 'Ransomware'",
-          "compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data"
+          "almost everything the attackers had taken had come from S3 buckets",
+          "it was a few hundreds of gigabytes of Json just sent over from the attacker"
         ]
       },
       {
-        "source": "T1537",
-        "target": "T1485",
-        "source_step": 7,
-        "target_step": 8,
-        "source_technique_name": "Transfer Data to Cloud Account",
-        "target_technique_name": "Data Destruction",
+        "source": "T1567",
+        "target": "T1657",
+        "source_step": 8,
+        "target_step": 9,
+        "source_technique_name": "Exfiltration Over Web Service",
+        "target_technique_name": "Financial Theft",
         "sources": [
           "https://www.youtube.com/watch?v=f066e7WndTQ"
         ],
         "evidence_quotes": [
-          "compromising a credential, exfiltrating data, and demanding ransom payments to avoid publication of sensitive data",
-          "S3 data exfiltration and 'Ransomware'"
+          "it was a few hundreds of gigabytes of Json just sent over from the attacker",
+          "we have all your data... we will release it in 48 hours... the company paid the ransom"
         ]
       }
     ]
@@ -472,17 +665,22 @@
   },
   "schema_version": "1.0",
   "incident_slug": "yotam-meitar-wiz-2024-june",
-  "analyzed_at": "2026-04-15T21:15:17.350388+00:00",
-  "model": "claude-sonnet-4-6",
-  "source_chars": 16115,
+  "analyzed_at": "2026-04-23T18:57:43.219029+00:00",
+  "model": "claude-opus-4-7",
+  "source_chars": 101285,
   "incident_name": "Yotam Meitar (Wiz)",
   "incident_date": "2024, June",
   "incident_root_cause": "Compromised vulnerable application (k8s Pod)",
-  "impact_type_raw": "Ransomware / Data Exfiltration",
+  "impact_type_raw": "Data Exfiltration and Ransom (extortion without encryption)",
   "aws_services_raw": [
-    "Amazon EKS",
-    "Amazon S3",
-    "AWS IAM",
-    "AWS STS"
+    "EC2",
+    "S3",
+    "IAM",
+    "Secrets Manager",
+    "STS",
+    "CloudTrail",
+    "EKS/Kubernetes",
+    "Security Groups",
+    "AMI"
   ]
 }
